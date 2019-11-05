@@ -1,0 +1,1194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SINUModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ActividadMilitar">
+    <Key>
+      <PropertyRef Name="IdActividadMilitar" />
+    </Key>
+    <Property Name="SolicitoIngresoAnterior" Type="Boolean" />
+    <Property Name="Ingreso" Type="Boolean" />
+    <Property Name="FechaIngreso" Type="DateTime" Precision="0" />
+    <Property Name="FechaBaja" Type="DateTime" Precision="0" />
+    <Property Name="CausaMotivoNoingreso" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="MotivoBaja" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Jerarquia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Destino" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdSituacionRevista" Type="Int32" Nullable="false" />
+    <Property Name="IdFuerza" Type="Int32" Nullable="false" />
+    <Property Name="IdBaja" Type="Int32" Nullable="false" />
+    <Property Name="IdActividadMilitar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Persona" Relationship="Self.PersonaActividadMilitar" FromRole="ActividadMilitar" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FechaToken" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+    <NavigationProperty Name="Postulante" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="AspNetUsers" ToRole="Postulante" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Baja">
+    <Key>
+      <PropertyRef Name="IdBaja" />
+    </Key>
+    <Property Name="BajaCausa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdBaja" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="Configuracion">
+    <Key>
+      <PropertyRef Name="IdConfiguracion" />
+    </Key>
+    <Property Name="NombreDato" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ValorDato" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+    <Property Name="TipoDato" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UsoDato" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="UltModif" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="IdConfiguracion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="DocPresentado">
+    <Key>
+      <PropertyRef Name="IdDocPresentado" />
+    </Key>
+    <Property Name="IdTipoDocPresentado" Type="Int32" />
+    <Property Name="PathAlmacenamiento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdInscripcion" Type="Int32" />
+    <Property Name="IdDocPresentado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_DocPresentado_Inscripcion" FromRole="DocPresentado" ToRole="Inscripcion" />
+    <NavigationProperty Name="TipoDocPresentado" Relationship="Self.FK_DocPresentado_TipoDocPresentado" FromRole="DocPresentado" ToRole="TipoDocPresentado" />
+  </EntityType>
+  <EntityType Name="Domicilio">
+    <Key>
+      <PropertyRef Name="IdDomicilio" />
+    </Key>
+    <Property Name="IdDomicilio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Calle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+    <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+    <Property Name="Localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_DomicilioActual" FromRole="Domicilio" ToRole="Persona" />
+    <NavigationProperty Name="Persona1" Relationship="Self.FK_Persona_DomicilioDNI" FromRole="Domicilio" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="EstablecimientoRindeExamen">
+    <Key>
+      <PropertyRef Name="IdEstablecimientoRindeExamen" />
+    </Key>
+    <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Departamento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Comentario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdEstablecimientoRindeExamen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_EstablecimientoRindeExamen" FromRole="EstablecimientoRindeExamen" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Estado">
+    <Key>
+      <PropertyRef Name="IdEstado" />
+    </Key>
+    <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_Secuencia_Estado" FromRole="Estado" ToRole="Secuencia_EtapaEstado" />
+  </EntityType>
+  <EntityType Name="EstadoOcupacional">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstadoOcupacional1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="CargaOcupacionActual" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="SituacionOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="EstadoOcupacional" ToRole="SituacionOcupacional" />
+  </EntityType>
+  <EntityType Name="Estudio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Completo" Type="Boolean" Nullable="false" />
+    <Property Name="IdNiveldEstudio" Type="Int32" />
+    <Property Name="IdInstitutos" Type="Int32" />
+    <Property Name="Promedio" Type="Double" />
+    <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
+    <Property Name="ultimoAnioCursado" Type="Int32" />
+    <NavigationProperty Name="Institutos" Relationship="Self.FK_Estudio_Institutos" FromRole="Estudio" ToRole="Institutos" />
+    <NavigationProperty Name="NiveldEstudio" Relationship="Self.FK_Estudio_NiveldEstudio" FromRole="Estudio" ToRole="NiveldEstudio" />
+    <NavigationProperty Name="Persona" Relationship="Self.PersonaEstudio" FromRole="Estudio" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="Etapa">
+    <Key>
+      <PropertyRef Name="IdEtapa" />
+    </Key>
+    <Property Name="IdEtapa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_Secuencia_Etapa" FromRole="Etapa" ToRole="Secuencia_EtapaEstado" />
+  </EntityType>
+  <EntityType Name="Familiares">
+    <Key>
+      <PropertyRef Name="IdFamiliar" />
+    </Key>
+    <Property Name="IdRegistroPostulante" Type="Int32" Nullable="false" />
+    <Property Name="IdPersona" Type="Int32" Nullable="false" />
+    <Property Name="idParentesco" Type="Int32" Nullable="false" />
+    <Property Name="IdFamiliar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Familiares_Persona" FromRole="Familiares" ToRole="Persona" />
+    <NavigationProperty Name="Postulante" Relationship="Self.FK_Familiares_Postulante" FromRole="Familiares" ToRole="Postulante" />
+  </EntityType>
+  <EntityType Name="Inscripcion">
+    <Key>
+      <PropertyRef Name="IdInscripcion" />
+    </Key>
+    <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+    <Property Name="Numero" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="IdRegistroPostulante" Type="Int32" />
+    <Property Name="IdPreferencia" Type="Int32" />
+    <Property Name="IdSecuencia" Type="Int32" />
+    <Property Name="IdEstablecimientoRindeExamen" Type="Int32" />
+    <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+    <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
+    <Property Name="IdInscripcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DocPresentado" Relationship="Self.FK_DocPresentado_Inscripcion" FromRole="Inscripcion" ToRole="DocPresentado" />
+    <NavigationProperty Name="EstablecimientoRindeExamen" Relationship="Self.FK_Inscripcion_EstablecimientoRindeExamen" FromRole="Inscripcion" ToRole="EstablecimientoRindeExamen" />
+    <NavigationProperty Name="Institucion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Inscripcion" ToRole="Institucion" />
+    <NavigationProperty Name="OficinasYDelegaciones" Relationship="Self.FK_Inscripcion_OficinasYDelegaciones" FromRole="Inscripcion" ToRole="OficinasYDelegaciones" />
+    <NavigationProperty Name="Postulante" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Inscripcion" ToRole="Postulante" />
+    <NavigationProperty Name="Preferencia" Relationship="Self.FK_Inscripcion_Preferencia" FromRole="Inscripcion" ToRole="Preferencia" />
+    <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_Inscripcion_Secuencia_EtapaEstado" FromRole="Inscripcion" ToRole="Secuencia_EtapaEstado" />
+  </EntityType>
+  <EntityType Name="Institucion">
+    <Key>
+      <PropertyRef Name="IdInstitucion" />
+    </Key>
+    <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CodigoPcia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Institutos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Departamento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Estudio" Relationship="Self.FK_Estudio_Institutos" FromRole="Institutos" ToRole="Estudio" />
+  </EntityType>
+  <EntityType Name="NiveldEstudio">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nivel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Estudio" Relationship="Self.FK_Estudio_NiveldEstudio" FromRole="NiveldEstudio" ToRole="Estudio" />
+  </EntityType>
+  <EntityType Name="NivelIdioma">
+    <Key>
+      <PropertyRef Name="IdNivelIdioma" />
+    </Key>
+    <Property Name="IdNivelIdioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nivel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PersonaIdioma" Relationship="Self.FK_PersonaIdioma_NivelIdioma" FromRole="NivelIdioma" ToRole="PersonaIdioma" />
+    <NavigationProperty Name="PersonaIdioma1" Relationship="Self.FK_PersonaIdioma_NivelIdiomaEscribe" FromRole="NivelIdioma" ToRole="PersonaIdioma" />
+    <NavigationProperty Name="PersonaIdioma2" Relationship="Self.FK_PersonaIdioma_NivelIdiomaLee" FromRole="NivelIdioma" ToRole="PersonaIdioma" />
+  </EntityType>
+  <EntityType Name="OficinasYDelegaciones">
+    <Key>
+      <PropertyRef Name="IdOficinasYDelegaciones" />
+    </Key>
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Provincia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Email1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Email2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_OficinasYDelegaciones" FromRole="OficinasYDelegaciones" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Persona">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdSexo" Type="Int32" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdReligion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="idTipoNacionalidad" Type="Int32" Nullable="false" />
+    <Property Name="IdLugarNacimientoLocalidad" Type="Int32" Nullable="false" />
+    <Property Name="IdDomicilioDNI" Type="Int32" Nullable="false" />
+    <Property Name="IdDomicilioActual" Type="Int32" Nullable="false" />
+    <Property Name="IdPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Domicilio" Relationship="Self.FK_Persona_DomicilioActual" FromRole="Persona" ToRole="Domicilio" />
+    <NavigationProperty Name="Domicilio1" Relationship="Self.FK_Persona_DomicilioDNI" FromRole="Persona" ToRole="Domicilio" />
+    <NavigationProperty Name="Familiares" Relationship="Self.FK_Familiares_Persona" FromRole="Persona" ToRole="Familiares" />
+    <NavigationProperty Name="Sexo" Relationship="Self.FK_Persona_Sexo" FromRole="Persona" ToRole="Sexo" />
+    <NavigationProperty Name="TipoNacionalidad" Relationship="Self.FK_Persona_TipoNacionalidad" FromRole="Persona" ToRole="TipoNacionalidad" />
+    <NavigationProperty Name="PersonaIdioma" Relationship="Self.FK_PersonaIdioma_Persona" FromRole="Persona" ToRole="PersonaIdioma" />
+    <NavigationProperty Name="Postulante" Relationship="Self.FK_Postulante_Persona" FromRole="Persona" ToRole="Postulante" />
+    <NavigationProperty Name="ActividadMilitar" Relationship="Self.PersonaActividadMilitar" FromRole="Persona" ToRole="ActividadMilitar" />
+    <NavigationProperty Name="Estudio" Relationship="Self.PersonaEstudio" FromRole="Persona" ToRole="Estudio" />
+    <NavigationProperty Name="SituacionOcupacional" Relationship="Self.PersonaSituacionOcupacional" FromRole="Persona" ToRole="SituacionOcupacional" />
+  </EntityType>
+  <EntityType Name="PersonaIdioma">
+    <Key>
+      <PropertyRef Name="IdPersonaIdioma" />
+    </Key>
+    <Property Name="IdPersona" Type="Int32" Nullable="false" />
+    <Property Name="CodIdioma" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Habla" Type="Int32" Nullable="false" />
+    <Property Name="Lee" Type="Int32" Nullable="false" />
+    <Property Name="Escribe" Type="Int32" Nullable="false" />
+    <Property Name="IdPersonaIdioma" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="NivelIdioma" Relationship="Self.FK_PersonaIdioma_NivelIdioma" FromRole="PersonaIdioma" ToRole="NivelIdioma" />
+    <NavigationProperty Name="NivelIdioma1" Relationship="Self.FK_PersonaIdioma_NivelIdiomaEscribe" FromRole="PersonaIdioma" ToRole="NivelIdioma" />
+    <NavigationProperty Name="NivelIdioma2" Relationship="Self.FK_PersonaIdioma_NivelIdiomaLee" FromRole="PersonaIdioma" ToRole="NivelIdioma" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_PersonaIdioma_Persona" FromRole="PersonaIdioma" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="Postulante">
+    <Key>
+      <PropertyRef Name="IdRegistroPostulante" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdPersona" Type="Int32" Nullable="false" />
+    <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IdRegistroPostulante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="Postulante" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Familiares" Relationship="Self.FK_Familiares_Postulante" FromRole="Postulante" ToRole="Familiares" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Postulante" ToRole="Inscripcion" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Postulante_Persona" FromRole="Postulante" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="PostulanteViaje">
+    <Key>
+      <PropertyRef Name="IdPostulanteViaje" />
+    </Key>
+    <Property Name="FechaInicioviaje" Type="DateTime" Precision="0" />
+    <Property Name="codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="IdPostulanteViaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Preferencia">
+    <Key>
+      <PropertyRef Name="IdPreferencia" />
+    </Key>
+    <Property Name="Preferencia1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="IdPreferencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Preferencia" FromRole="Preferencia" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Secuencia_EtapaEstado">
+    <Key>
+      <PropertyRef Name="IdSecuencia" />
+    </Key>
+    <Property Name="IdSecuencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+    <Property Name="IdEstado" Type="Int32" Nullable="false" />
+    <Property Name="Anterior" Type="Int32" Nullable="false" />
+    <Property Name="Siguiente" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Estado" Relationship="Self.FK_Secuencia_Estado" FromRole="Secuencia_EtapaEstado" ToRole="Estado" />
+    <NavigationProperty Name="Etapa" Relationship="Self.FK_Secuencia_Etapa" FromRole="Secuencia_EtapaEstado" ToRole="Etapa" />
+    <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Secuencia_EtapaEstado" FromRole="Secuencia_EtapaEstado" ToRole="Inscripcion" />
+  </EntityType>
+  <EntityType Name="Sexo">
+    <Key>
+      <PropertyRef Name="IdSexo" />
+    </Key>
+    <Property Name="IdSexo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_Sexo" FromRole="Sexo" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="SituacionOcupacional">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdEstadoOcupacional" Type="Int32" Nullable="false" />
+    <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EstadoOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="SituacionOcupacional" ToRole="EstadoOcupacional" />
+    <NavigationProperty Name="Persona" Relationship="Self.PersonaSituacionOcupacional" FromRole="SituacionOcupacional" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TipoDocPresentado">
+    <Key>
+      <PropertyRef Name="IdTipoDocPresentado" />
+    </Key>
+    <Property Name="Tipo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Obligatorio" Type="Boolean" Nullable="false" />
+    <Property Name="IdTipoDocPresentado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="DocPresentado" Relationship="Self.FK_DocPresentado_TipoDocPresentado" FromRole="TipoDocPresentado" ToRole="DocPresentado" />
+  </EntityType>
+  <EntityType Name="TipoNacionalidad">
+    <Key>
+      <PropertyRef Name="IdTipoNacionalidad" />
+    </Key>
+    <Property Name="Tipo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdTipoNacionalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_TipoNacionalidad" FromRole="TipoNacionalidad" ToRole="Persona" />
+  </EntityType>
+  <EntityType Name="Fuerza">
+    <Key>
+      <PropertyRef Name="IdFuerza" />
+    </Key>
+    <Property Name="Fuerza1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdFuerza" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InscripcionEtapaEstado">
+    <Key>
+      <PropertyRef Name="IdEtapa" />
+      <PropertyRef Name="IdInscripcionEtapaEstado" />
+    </Key>
+    <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Precision="0" />
+    <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SituacionRevista">
+    <Key>
+      <PropertyRef Name="IdSituacionRevista" />
+    </Key>
+    <Property Name="SituacionRevista1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdSituacionRevista" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vEstCivil">
+    <Key>
+      <PropertyRef Name="Codigo_n" />
+    </Key>
+    <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Codigo_n" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vLOCALIDAD">
+    <Key>
+      <PropertyRef Name="IdLocalidad" />
+    </Key>
+    <Property Name="CODIGO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="PROVINCIA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CODIGO_POSTAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IdLocalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="vParentesco">
+    <Key>
+      <PropertyRef Name="Descripcion" />
+      <PropertyRef Name="Grado" />
+      <PropertyRef Name="Consanguineo" />
+      <PropertyRef Name="Relacion" />
+      <PropertyRef Name="idParentesco" />
+    </Key>
+    <Property Name="Descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Grado" Type="Int32" Nullable="false" />
+    <Property Name="Consanguineo" Type="Boolean" Nullable="false" />
+    <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idParentesco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="vPersona_Datos">
+    <Key>
+      <PropertyRef Name="Apellido" />
+      <PropertyRef Name="Nombres" />
+      <PropertyRef Name="Sexo" />
+      <PropertyRef Name="DNI" />
+      <PropertyRef Name="CUIL" />
+    </Key>
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Sexo" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+    <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Lugar_Nac" Type="String" MaxLength="178" FixedLength="false" Unicode="false" />
+    <Property Name="DomicilioDNI" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
+    <Property Name="DomicilioActual" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="VPersonaEstudio">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+      <PropertyRef Name="Nombres" />
+      <PropertyRef Name="Apellido" />
+      <PropertyRef Name="IdEstudio" />
+      <PropertyRef Name="Completo" />
+    </Key>
+    <Property Name="IdPersona" Type="Int32" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IdEstudio" Type="Int32" Nullable="false" />
+    <Property Name="Titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Completo" Type="Boolean" Nullable="false" />
+    <Property Name="IdNiveldEstudio" Type="Int32" />
+    <Property Name="IdInstitutos" Type="Int32" />
+    <Property Name="Promedio" Type="Double" />
+    <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
+    <Property Name="ultimoAnioCursado" Type="Int32" />
+  </EntityType>
+  <EntityType Name="vPostulante_Usuario_datos">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Apellido" />
+      <PropertyRef Name="Nombres" />
+      <PropertyRef Name="Genero" />
+      <PropertyRef Name="DNI" />
+      <PropertyRef Name="CUIL" />
+      <PropertyRef Name="FechaRegistro" />
+      <PropertyRef Name="Etapa" />
+      <PropertyRef Name="Estado" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="Genero" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+    <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DomDNI" Type="String" MaxLength="218" FixedLength="false" Unicode="true" />
+    <Property Name="DOMAct" Type="String" MaxLength="218" FixedLength="false" Unicode="true" />
+    <Property Name="Preferencia" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="OficinaIncorp" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vProvincia_Depto_Localidad">
+    <Key>
+      <PropertyRef Name="IdLocalidad" />
+    </Key>
+    <Property Name="Provincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+    <Property Name="DepartPartido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Localidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="IdLocalidad" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vRELIGION">
+    <Key>
+      <PropertyRef Name="CODIGO" />
+    </Key>
+    <Property Name="CODIGO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="vSecuencia_EtapaEstado">
+    <Key>
+      <PropertyRef Name="IdSecuencia" />
+      <PropertyRef Name="Etapa" />
+      <PropertyRef Name="Estado" />
+      <PropertyRef Name="Anterior" />
+      <PropertyRef Name="Siguiente" />
+    </Key>
+    <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+    <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Anterior" Type="Int32" Nullable="false" />
+    <Property Name="Siguiente" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vSeguridad_Grupos">
+    <Key>
+      <PropertyRef Name="codGrupo" />
+      <PropertyRef Name="codAplicacion" />
+    </Key>
+    <Property Name="codGrupo" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="80" FixedLength="true" Unicode="false" />
+    <Property Name="Comentario" Type="String" MaxLength="500" FixedLength="true" Unicode="false" />
+    <Property Name="FecUltimaAct" Type="DateTime" Precision="0" />
+    <Property Name="codAplicacion" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vSeguridad_Grupos_Usuarios">
+    <Key>
+      <PropertyRef Name="codAplicacion" />
+      <PropertyRef Name="codUsuario" />
+      <PropertyRef Name="codGrupo" />
+    </Key>
+    <Property Name="FechUltimaAct" Type="DateTime" Precision="0" />
+    <Property Name="codAplicacion" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="codUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="codGrupo" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vSeguridad_Usuarios">
+    <Key>
+      <PropertyRef Name="codUsuario" />
+      <PropertyRef Name="FechUltimaAct" />
+    </Key>
+    <Property Name="codUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="mr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Grado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Destino" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Comentario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="FechUltimaAct" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Postulante_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Postulante">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocPresentado_Inscripcion">
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="0..1" />
+    <End Role="DocPresentado" Type="Self.DocPresentado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inscripcion">
+        <PropertyRef Name="IdInscripcion" />
+      </Principal>
+      <Dependent Role="DocPresentado">
+        <PropertyRef Name="IdInscripcion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocPresentado_TipoDocPresentado">
+    <End Role="TipoDocPresentado" Type="Self.TipoDocPresentado" Multiplicity="0..1" />
+    <End Role="DocPresentado" Type="Self.DocPresentado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoDocPresentado">
+        <PropertyRef Name="IdTipoDocPresentado" />
+      </Principal>
+      <Dependent Role="DocPresentado">
+        <PropertyRef Name="IdTipoDocPresentado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_DomicilioActual">
+    <End Role="Domicilio" Type="Self.Domicilio" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domicilio">
+        <PropertyRef Name="IdDomicilio" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="IdDomicilioActual" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_DomicilioDNI">
+    <End Role="Domicilio" Type="Self.Domicilio" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domicilio">
+        <PropertyRef Name="IdDomicilio" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="IdDomicilioDNI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_EstablecimientoRindeExamen">
+    <End Role="EstablecimientoRindeExamen" Type="Self.EstablecimientoRindeExamen" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstablecimientoRindeExamen">
+        <PropertyRef Name="IdEstablecimientoRindeExamen" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdEstablecimientoRindeExamen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Secuencia_Estado">
+    <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+    <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="IdEstado" />
+      </Principal>
+      <Dependent Role="Secuencia_EtapaEstado">
+        <PropertyRef Name="IdEstado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SituacionOcupacional_EstadoOcupacional">
+    <End Role="EstadoOcupacional" Type="Self.EstadoOcupacional" Multiplicity="1" />
+    <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoOcupacional">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SituacionOcupacional">
+        <PropertyRef Name="IdEstadoOcupacional" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudio_Institutos">
+    <End Role="Institutos" Type="Self.Institutos" Multiplicity="0..1" />
+    <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institutos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Estudio">
+        <PropertyRef Name="IdInstitutos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudio_NiveldEstudio">
+    <End Role="NiveldEstudio" Type="Self.NiveldEstudio" Multiplicity="0..1" />
+    <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NiveldEstudio">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Estudio">
+        <PropertyRef Name="IdNiveldEstudio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Secuencia_Etapa">
+    <End Role="Etapa" Type="Self.Etapa" Multiplicity="1" />
+    <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Etapa">
+        <PropertyRef Name="IdEtapa" />
+      </Principal>
+      <Dependent Role="Secuencia_EtapaEstado">
+        <PropertyRef Name="IdEtapa" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Familiares_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="Familiares">
+        <PropertyRef Name="IdPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Familiares_Postulante">
+    <End Role="Postulante" Type="Self.Postulante" Multiplicity="1" />
+    <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Postulante">
+        <PropertyRef Name="IdRegistroPostulante" />
+      </Principal>
+      <Dependent Role="Familiares">
+        <PropertyRef Name="IdRegistroPostulante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_Institucion">
+    <End Role="Institucion" Type="Self.Institucion" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Institucion">
+        <PropertyRef Name="IdInstitucion" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdPreferencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_OficinasYDelegaciones">
+    <End Role="OficinasYDelegaciones" Type="Self.OficinasYDelegaciones" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OficinasYDelegaciones">
+        <PropertyRef Name="IdOficinasYDelegaciones" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdDelegacionOficinaIngresoInscribio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_Postulante">
+    <End Role="Postulante" Type="Self.Postulante" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Postulante">
+        <PropertyRef Name="IdRegistroPostulante" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdRegistroPostulante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_Preferencia">
+    <End Role="Preferencia" Type="Self.Preferencia" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Preferencia">
+        <PropertyRef Name="IdPreferencia" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdPreferencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inscripcion_Secuencia_EtapaEstado">
+    <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="0..1" />
+    <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Secuencia_EtapaEstado">
+        <PropertyRef Name="IdSecuencia" />
+      </Principal>
+      <Dependent Role="Inscripcion">
+        <PropertyRef Name="IdSecuencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonaIdioma_NivelIdioma">
+    <End Role="NivelIdioma" Type="Self.NivelIdioma" Multiplicity="1" />
+    <End Role="PersonaIdioma" Type="Self.PersonaIdioma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NivelIdioma">
+        <PropertyRef Name="IdNivelIdioma" />
+      </Principal>
+      <Dependent Role="PersonaIdioma">
+        <PropertyRef Name="Habla" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonaIdioma_NivelIdiomaEscribe">
+    <End Role="NivelIdioma" Type="Self.NivelIdioma" Multiplicity="1" />
+    <End Role="PersonaIdioma" Type="Self.PersonaIdioma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NivelIdioma">
+        <PropertyRef Name="IdNivelIdioma" />
+      </Principal>
+      <Dependent Role="PersonaIdioma">
+        <PropertyRef Name="Escribe" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonaIdioma_NivelIdiomaLee">
+    <End Role="NivelIdioma" Type="Self.NivelIdioma" Multiplicity="1" />
+    <End Role="PersonaIdioma" Type="Self.PersonaIdioma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NivelIdioma">
+        <PropertyRef Name="IdNivelIdioma" />
+      </Principal>
+      <Dependent Role="PersonaIdioma">
+        <PropertyRef Name="Lee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_Sexo">
+    <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sexo">
+        <PropertyRef Name="IdSexo" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="IdSexo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Persona_TipoNacionalidad">
+    <End Role="TipoNacionalidad" Type="Self.TipoNacionalidad" Multiplicity="1" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoNacionalidad">
+        <PropertyRef Name="IdTipoNacionalidad" />
+      </Principal>
+      <Dependent Role="Persona">
+        <PropertyRef Name="idTipoNacionalidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonaIdioma_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="PersonaIdioma" Type="Self.PersonaIdioma" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="PersonaIdioma">
+        <PropertyRef Name="IdPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Postulante_Persona">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+    <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona">
+        <PropertyRef Name="IdPersona" />
+      </Principal>
+      <Dependent Role="Postulante">
+        <PropertyRef Name="IdPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+  </Association>
+  <Association Name="PersonaActividadMilitar">
+    <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+  </Association>
+  <Association Name="PersonaEstudio">
+    <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+  </Association>
+  <Association Name="PersonaSituacionOcupacional">
+    <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+    <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="SINUEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="ActividadMilitar" EntityType="Self.ActividadMilitar" />
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+    <EntitySet Name="Baja" EntityType="Self.Baja" />
+    <EntitySet Name="Configuracion" EntityType="Self.Configuracion" />
+    <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" />
+    <EntitySet Name="Domicilio" EntityType="Self.Domicilio" />
+    <EntitySet Name="EstablecimientoRindeExamen" EntityType="Self.EstablecimientoRindeExamen" />
+    <EntitySet Name="Estado" EntityType="Self.Estado" />
+    <EntitySet Name="EstadoOcupacional" EntityType="Self.EstadoOcupacional" />
+    <EntitySet Name="Estudio" EntityType="Self.Estudio" />
+    <EntitySet Name="Etapa" EntityType="Self.Etapa" />
+    <EntitySet Name="Familiares" EntityType="Self.Familiares" />
+    <EntitySet Name="Inscripcion" EntityType="Self.Inscripcion" />
+    <EntitySet Name="Institucion" EntityType="Self.Institucion" />
+    <EntitySet Name="Institutos" EntityType="Self.Institutos" />
+    <EntitySet Name="NiveldEstudio" EntityType="Self.NiveldEstudio" />
+    <EntitySet Name="NivelIdioma" EntityType="Self.NivelIdioma" />
+    <EntitySet Name="OficinasYDelegaciones" EntityType="Self.OficinasYDelegaciones" />
+    <EntitySet Name="Persona" EntityType="Self.Persona" />
+    <EntitySet Name="PersonaIdioma" EntityType="Self.PersonaIdioma" />
+    <EntitySet Name="Postulante" EntityType="Self.Postulante" />
+    <EntitySet Name="PostulanteViaje" EntityType="Self.PostulanteViaje" />
+    <EntitySet Name="Preferencia" EntityType="Self.Preferencia" />
+    <EntitySet Name="Secuencia_EtapaEstado" EntityType="Self.Secuencia_EtapaEstado" />
+    <EntitySet Name="Sexo" EntityType="Self.Sexo" />
+    <EntitySet Name="SituacionOcupacional" EntityType="Self.SituacionOcupacional" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" />
+    <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" />
+    <EntitySet Name="Fuerza" EntityType="Self.Fuerza" />
+    <EntitySet Name="InscripcionEtapaEstado" EntityType="Self.InscripcionEtapaEstado" />
+    <EntitySet Name="SituacionRevista" EntityType="Self.SituacionRevista" />
+    <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" />
+    <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
+    <EntitySet Name="vParentesco" EntityType="Self.vParentesco" />
+    <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" />
+    <EntitySet Name="VPersonaEstudio" EntityType="Self.VPersonaEstudio" />
+    <EntitySet Name="vPostulante_Usuario_datos" EntityType="Self.vPostulante_Usuario_datos" />
+    <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" />
+    <EntitySet Name="vRELIGION" EntityType="Self.vRELIGION" />
+    <EntitySet Name="vSecuencia_EtapaEstado" EntityType="Self.vSecuencia_EtapaEstado" />
+    <EntitySet Name="vSeguridad_Grupos" EntityType="Self.vSeguridad_Grupos" />
+    <EntitySet Name="vSeguridad_Grupos_Usuarios" EntityType="Self.vSeguridad_Grupos_Usuarios" />
+    <EntitySet Name="vSeguridad_Usuarios" EntityType="Self.vSeguridad_Usuarios" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Postulante_AspNetUsers" Association="Self.FK_Postulante_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="Postulante" EntitySet="Postulante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocPresentado_Inscripcion" Association="Self.FK_DocPresentado_Inscripcion">
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+      <End Role="DocPresentado" EntitySet="DocPresentado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocPresentado_TipoDocPresentado" Association="Self.FK_DocPresentado_TipoDocPresentado">
+      <End Role="TipoDocPresentado" EntitySet="TipoDocPresentado" />
+      <End Role="DocPresentado" EntitySet="DocPresentado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_DomicilioActual" Association="Self.FK_Persona_DomicilioActual">
+      <End Role="Domicilio" EntitySet="Domicilio" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_DomicilioDNI" Association="Self.FK_Persona_DomicilioDNI">
+      <End Role="Domicilio" EntitySet="Domicilio" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_EstablecimientoRindeExamen" Association="Self.FK_Inscripcion_EstablecimientoRindeExamen">
+      <End Role="EstablecimientoRindeExamen" EntitySet="EstablecimientoRindeExamen" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Secuencia_Estado" Association="Self.FK_Secuencia_Estado">
+      <End Role="Estado" EntitySet="Estado" />
+      <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SituacionOcupacional_EstadoOcupacional" Association="Self.FK_SituacionOcupacional_EstadoOcupacional">
+      <End Role="EstadoOcupacional" EntitySet="EstadoOcupacional" />
+      <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudio_Institutos" Association="Self.FK_Estudio_Institutos">
+      <End Role="Institutos" EntitySet="Institutos" />
+      <End Role="Estudio" EntitySet="Estudio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudio_NiveldEstudio" Association="Self.FK_Estudio_NiveldEstudio">
+      <End Role="NiveldEstudio" EntitySet="NiveldEstudio" />
+      <End Role="Estudio" EntitySet="Estudio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Secuencia_Etapa" Association="Self.FK_Secuencia_Etapa">
+      <End Role="Etapa" EntitySet="Etapa" />
+      <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Familiares_Persona" Association="Self.FK_Familiares_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Familiares" EntitySet="Familiares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Familiares_Postulante" Association="Self.FK_Familiares_Postulante">
+      <End Role="Postulante" EntitySet="Postulante" />
+      <End Role="Familiares" EntitySet="Familiares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_Institucion" Association="Self.FK_Inscripcion_Institucion">
+      <End Role="Institucion" EntitySet="Institucion" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_OficinasYDelegaciones" Association="Self.FK_Inscripcion_OficinasYDelegaciones">
+      <End Role="OficinasYDelegaciones" EntitySet="OficinasYDelegaciones" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_Postulante" Association="Self.FK_Inscripcion_Postulante">
+      <End Role="Postulante" EntitySet="Postulante" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_Preferencia" Association="Self.FK_Inscripcion_Preferencia">
+      <End Role="Preferencia" EntitySet="Preferencia" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inscripcion_Secuencia_EtapaEstado" Association="Self.FK_Inscripcion_Secuencia_EtapaEstado">
+      <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+      <End Role="Inscripcion" EntitySet="Inscripcion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonaIdioma_NivelIdioma" Association="Self.FK_PersonaIdioma_NivelIdioma">
+      <End Role="NivelIdioma" EntitySet="NivelIdioma" />
+      <End Role="PersonaIdioma" EntitySet="PersonaIdioma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonaIdioma_NivelIdiomaEscribe" Association="Self.FK_PersonaIdioma_NivelIdiomaEscribe">
+      <End Role="NivelIdioma" EntitySet="NivelIdioma" />
+      <End Role="PersonaIdioma" EntitySet="PersonaIdioma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonaIdioma_NivelIdiomaLee" Association="Self.FK_PersonaIdioma_NivelIdiomaLee">
+      <End Role="NivelIdioma" EntitySet="NivelIdioma" />
+      <End Role="PersonaIdioma" EntitySet="PersonaIdioma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_Sexo" Association="Self.FK_Persona_Sexo">
+      <End Role="Sexo" EntitySet="Sexo" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Persona_TipoNacionalidad" Association="Self.FK_Persona_TipoNacionalidad">
+      <End Role="TipoNacionalidad" EntitySet="TipoNacionalidad" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonaIdioma_Persona" Association="Self.FK_PersonaIdioma_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="PersonaIdioma" EntitySet="PersonaIdioma" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Postulante_Persona" Association="Self.FK_Postulante_Persona">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="Postulante" EntitySet="Postulante" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+    <AssociationSet Name="PersonaActividadMilitar" Association="Self.PersonaActividadMilitar">
+      <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="PersonaEstudio" Association="Self.PersonaEstudio">
+      <End Role="Estudio" EntitySet="Estudio" />
+      <End Role="Persona" EntitySet="Persona" />
+    </AssociationSet>
+    <AssociationSet Name="PersonaSituacionOcupacional" Association="Self.PersonaSituacionOcupacional">
+      <End Role="Persona" EntitySet="Persona" />
+      <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(SINUModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(SINUModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spIngresaASeguridad">
+      <Parameter Name="USUARIO" Mode="In" Type="String" />
+      <Parameter Name="Grupo" Mode="In" Type="String" />
+      <Parameter Name="mr" Mode="In" Type="String" />
+      <Parameter Name="Grado" Mode="In" Type="String" />
+      <Parameter Name="Destino" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spPrueba">
+      <Parameter Name="USUARIO" Mode="In" Type="String" />
+      <Parameter Name="Funcion" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="tablasnuevas" />
+    <FunctionImport Name="VaciarASPNETUser">
+      <Parameter Name="correoregistrado" Mode="In" Type="String" />
+      <Parameter Name="eliminar" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spValidarUsuario" ReturnType="Collection(SINUModel.spValidarUsuario_Result)">
+      <Parameter Name="USUARIO" Mode="In" Type="String" />
+      <Parameter Name="Funcion" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spValidarUsuario_Result">
+    <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
+    <Property Type="Int32" Name="Logueo" Nullable="false" />
+  </ComplexType>
+</Schema>

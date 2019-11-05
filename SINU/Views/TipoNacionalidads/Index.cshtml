@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SINU.Models.TipoNacionalidad>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tipo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdTipoNacionalidad }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdTipoNacionalidad }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdTipoNacionalidad })
+        </td>
+    </tr>
+}
+
+</table>

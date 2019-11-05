@@ -1,0 +1,1 @@
+El buzón de correo no está disponible. La respuesta del servidor fue: 5.7.54 SMTP; Unable to relay recipient in non-accepted domain

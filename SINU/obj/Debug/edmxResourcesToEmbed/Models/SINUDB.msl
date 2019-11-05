@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SINUModelStoreContainer" CdmEntityContainer="SINUEntities">
+    <EntitySetMapping Name="C__MigrationHistory">
+      <EntityTypeMapping TypeName="SINUModel.C__MigrationHistory">
+        <MappingFragment StoreEntitySet="__MigrationHistory">
+          <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+          <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+          <ScalarProperty Name="Model" ColumnName="Model" />
+          <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ActividadMilitar">
+      <EntityTypeMapping TypeName="SINUModel.ActividadMilitar">
+        <MappingFragment StoreEntitySet="ActividadMilitar">
+          <ScalarProperty Name="SolicitoIngresoAnterior" ColumnName="SolicitoIngresoAnterior" />
+          <ScalarProperty Name="Ingreso" ColumnName="Ingreso" />
+          <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="CausaMotivoNoingreso" ColumnName="CausaMotivoNoingreso" />
+          <ScalarProperty Name="MotivoBaja" ColumnName="MotivoBaja" />
+          <ScalarProperty Name="Jerarquia" ColumnName="Jerarquia" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+          <ScalarProperty Name="IdSituacionRevista" ColumnName="IdSituacionRevista" />
+          <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
+          <ScalarProperty Name="IdBaja" ColumnName="IdBaja" />
+          <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="SINUModel.AspNetRoles">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="SINUModel.AspNetUserClaims">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="SINUModel.AspNetUserLogins">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="SINUModel.AspNetUsers">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="FechaToken" ColumnName="FechaToken" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Baja">
+      <EntityTypeMapping TypeName="SINUModel.Baja">
+        <MappingFragment StoreEntitySet="Baja">
+          <ScalarProperty Name="BajaCausa" ColumnName="BajaCausa" />
+          <ScalarProperty Name="IdBaja" ColumnName="IdBaja" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Configuracion">
+      <EntityTypeMapping TypeName="SINUModel.Configuracion">
+        <MappingFragment StoreEntitySet="Configuracion">
+          <ScalarProperty Name="NombreDato" ColumnName="NombreDato" />
+          <ScalarProperty Name="ValorDato" ColumnName="ValorDato" />
+          <ScalarProperty Name="TipoDato" ColumnName="TipoDato" />
+          <ScalarProperty Name="UsoDato" ColumnName="UsoDato" />
+          <ScalarProperty Name="UltModif" ColumnName="UltModif" />
+          <ScalarProperty Name="Eliminado" ColumnName="Eliminado" />
+          <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocPresentado">
+      <EntityTypeMapping TypeName="SINUModel.DocPresentado">
+        <MappingFragment StoreEntitySet="DocPresentado">
+          <ScalarProperty Name="IdTipoDocPresentado" ColumnName="IdTipoDocPresentado" />
+          <ScalarProperty Name="PathAlmacenamiento" ColumnName="PathAlmacenamiento" />
+          <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+          <ScalarProperty Name="IdDocPresentado" ColumnName="IdDocPresentado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Domicilio">
+      <EntityTypeMapping TypeName="SINUModel.Domicilio">
+        <MappingFragment StoreEntitySet="Domicilio">
+          <ScalarProperty Name="IdDomicilio" ColumnName="IdDomicilio" />
+          <ScalarProperty Name="Calle" ColumnName="Calle" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="Piso" ColumnName="Piso" />
+          <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstablecimientoRindeExamen">
+      <EntityTypeMapping TypeName="SINUModel.EstablecimientoRindeExamen">
+        <MappingFragment StoreEntitySet="EstablecimientoRindeExamen">
+          <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estado">
+      <EntityTypeMapping TypeName="SINUModel.Estado">
+        <MappingFragment StoreEntitySet="Estado">
+          <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstadoOcupacional">
+      <EntityTypeMapping TypeName="SINUModel.EstadoOcupacional">
+        <MappingFragment StoreEntitySet="EstadoOcupacional">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EstadoOcupacional1" ColumnName="EstadoOcupacional" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="CargaOcupacionActual" ColumnName="CargaOcupacionActual" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estudio">
+      <EntityTypeMapping TypeName="SINUModel.Estudio">
+        <MappingFragment StoreEntitySet="Estudio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Completo" ColumnName="Completo" />
+          <ScalarProperty Name="IdNiveldEstudio" ColumnName="IdNiveldEstudio" />
+          <ScalarProperty Name="IdInstitutos" ColumnName="IdInstitutos" />
+          <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+          <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
+          <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Etapa">
+      <EntityTypeMapping TypeName="SINUModel.Etapa">
+        <MappingFragment StoreEntitySet="Etapa">
+          <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Familiares">
+      <EntityTypeMapping TypeName="SINUModel.Familiares">
+        <MappingFragment StoreEntitySet="Familiares">
+          <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
+          <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+          <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+          <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inscripcion">
+      <EntityTypeMapping TypeName="SINUModel.Inscripcion">
+        <MappingFragment StoreEntitySet="Inscripcion">
+          <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+          <ScalarProperty Name="Numero" ColumnName="Numero" />
+          <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
+          <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
+          <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+          <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
+          <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
+          <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
+          <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Institucion">
+      <EntityTypeMapping TypeName="SINUModel.Institucion">
+        <MappingFragment StoreEntitySet="Institucion">
+          <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+          <ScalarProperty Name="CodigoPcia" ColumnName="CodigoPcia" />
+          <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Institutos">
+      <EntityTypeMapping TypeName="SINUModel.Institutos">
+        <MappingFragment StoreEntitySet="Institutos">
+          <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NiveldEstudio">
+      <EntityTypeMapping TypeName="SINUModel.NiveldEstudio">
+        <MappingFragment StoreEntitySet="NiveldEstudio">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NivelIdioma">
+      <EntityTypeMapping TypeName="SINUModel.NivelIdioma">
+        <MappingFragment StoreEntitySet="NivelIdioma">
+          <ScalarProperty Name="IdNivelIdioma" ColumnName="IdNivelIdioma" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OficinasYDelegaciones">
+      <EntityTypeMapping TypeName="SINUModel.OficinasYDelegaciones">
+        <MappingFragment StoreEntitySet="OficinasYDelegaciones">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+          <ScalarProperty Name="CP" ColumnName="CP" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Email1" ColumnName="Email1" />
+          <ScalarProperty Name="Email2" ColumnName="Email2" />
+          <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Persona">
+      <EntityTypeMapping TypeName="SINUModel.Persona">
+        <MappingFragment StoreEntitySet="Persona">
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+          <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
+          <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+          <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
+          <ScalarProperty Name="IdLugarNacimientoLocalidad" ColumnName="IdLugarNacimientoLocalidad" />
+          <ScalarProperty Name="IdDomicilioDNI" ColumnName="IdDomicilioDNI" />
+          <ScalarProperty Name="IdDomicilioActual" ColumnName="IdDomicilioActual" />
+          <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonaIdioma">
+      <EntityTypeMapping TypeName="SINUModel.PersonaIdioma">
+        <MappingFragment StoreEntitySet="PersonaIdioma">
+          <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+          <ScalarProperty Name="CodIdioma" ColumnName="CodIdioma" />
+          <ScalarProperty Name="Habla" ColumnName="Habla" />
+          <ScalarProperty Name="Lee" ColumnName="Lee" />
+          <ScalarProperty Name="Escribe" ColumnName="Escribe" />
+          <ScalarProperty Name="IdPersonaIdioma" ColumnName="IdPersonaIdioma" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Postulante">
+      <EntityTypeMapping TypeName="SINUModel.Postulante">
+        <MappingFragment StoreEntitySet="Postulante">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+          <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostulanteViaje">
+      <EntityTypeMapping TypeName="SINUModel.PostulanteViaje">
+        <MappingFragment StoreEntitySet="PostulanteViaje">
+          <ScalarProperty Name="FechaInicioviaje" ColumnName="FechaInicioviaje" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="IdPostulanteViaje" ColumnName="IdPostulanteViaje" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Preferencia">
+      <EntityTypeMapping TypeName="SINUModel.Preferencia">
+        <MappingFragment StoreEntitySet="Preferencia">
+          <ScalarProperty Name="Preferencia1" ColumnName="Preferencia" />
+          <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Secuencia_EtapaEstado">
+      <EntityTypeMapping TypeName="SINUModel.Secuencia_EtapaEstado">
+        <MappingFragment StoreEntitySet="Secuencia_EtapaEstado">
+          <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+          <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+          <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+          <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+          <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sexo">
+      <EntityTypeMapping TypeName="SINUModel.Sexo">
+        <MappingFragment StoreEntitySet="Sexo">
+          <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SituacionOcupacional">
+      <EntityTypeMapping TypeName="SINUModel.SituacionOcupacional">
+        <MappingFragment StoreEntitySet="SituacionOcupacional">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IdEstadoOcupacional" ColumnName="IdEstadoOcupacional" />
+          <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
+          <ScalarProperty Name="Oficio" ColumnName="Oficio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="SINUModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoDocPresentado">
+      <EntityTypeMapping TypeName="SINUModel.TipoDocPresentado">
+        <MappingFragment StoreEntitySet="TipoDocPresentado">
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Obligatorio" ColumnName="Obligatorio" />
+          <ScalarProperty Name="IdTipoDocPresentado" ColumnName="IdTipoDocPresentado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TipoNacionalidad">
+      <EntityTypeMapping TypeName="SINUModel.TipoNacionalidad">
+        <MappingFragment StoreEntitySet="TipoNacionalidad">
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdTipoNacionalidad" ColumnName="IdTipoNacionalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Fuerza">
+      <EntityTypeMapping TypeName="SINUModel.Fuerza">
+        <MappingFragment StoreEntitySet="Fuerza">
+          <ScalarProperty Name="Fuerza1" ColumnName="Fuerza" />
+          <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InscripcionEtapaEstado">
+      <EntityTypeMapping TypeName="SINUModel.InscripcionEtapaEstado">
+        <MappingFragment StoreEntitySet="InscripcionEtapaEstado">
+          <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SituacionRevista">
+      <EntityTypeMapping TypeName="SINUModel.SituacionRevista">
+        <MappingFragment StoreEntitySet="SituacionRevista">
+          <ScalarProperty Name="SituacionRevista1" ColumnName="SituacionRevista" />
+          <ScalarProperty Name="IdSituacionRevista" ColumnName="IdSituacionRevista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vEstCivil">
+      <EntityTypeMapping TypeName="SINUModel.vEstCivil">
+        <MappingFragment StoreEntitySet="vEstCivil">
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="Codigo_n" ColumnName="Codigo_n" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vLOCALIDAD">
+      <EntityTypeMapping TypeName="SINUModel.vLOCALIDAD">
+        <MappingFragment StoreEntitySet="vLOCALIDAD">
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+          <ScalarProperty Name="PROVINCIA" ColumnName="PROVINCIA" />
+          <ScalarProperty Name="CODIGO_POSTAL" ColumnName="CODIGO_POSTAL" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+          <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vParentesco">
+      <EntityTypeMapping TypeName="SINUModel.vParentesco">
+        <MappingFragment StoreEntitySet="vParentesco">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Grado" ColumnName="Grado" />
+          <ScalarProperty Name="Consanguineo" ColumnName="Consanguineo" />
+          <ScalarProperty Name="Relacion" ColumnName="Relacion" />
+          <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vPersona_Datos">
+      <EntityTypeMapping TypeName="SINUModel.vPersona_Datos">
+        <MappingFragment StoreEntitySet="vPersona_Datos">
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+          <ScalarProperty Name="Religion" ColumnName="Religion" />
+          <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
+          <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+          <ScalarProperty Name="Lugar_Nac" ColumnName="Lugar Nac" />
+          <ScalarProperty Name="DomicilioDNI" ColumnName="DomicilioDNI" />
+          <ScalarProperty Name="DomicilioActual" ColumnName="DomicilioActual" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VPersonaEstudio">
+      <EntityTypeMapping TypeName="SINUModel.VPersonaEstudio">
+        <MappingFragment StoreEntitySet="VPersonaEstudio">
+          <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="IdEstudio" ColumnName="IdEstudio" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="Completo" ColumnName="Completo" />
+          <ScalarProperty Name="IdNiveldEstudio" ColumnName="IdNiveldEstudio" />
+          <ScalarProperty Name="IdInstitutos" ColumnName="IdInstitutos" />
+          <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+          <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
+          <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vPostulante_Usuario_datos">
+      <EntityTypeMapping TypeName="SINUModel.vPostulante_Usuario_datos">
+        <MappingFragment StoreEntitySet="vPostulante_Usuario_datos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Genero" ColumnName="Genero" />
+          <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+          <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
+          <ScalarProperty Name="Religion" ColumnName="Religion" />
+          <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
+          <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+          <ScalarProperty Name="DomDNI" ColumnName="DomDNI" />
+          <ScalarProperty Name="DOMAct" ColumnName="DOMAct" />
+          <ScalarProperty Name="Preferencia" ColumnName="Preferencia" />
+          <ScalarProperty Name="OficinaIncorp" ColumnName="OficinaIncorp" />
+          <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+          <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vProvincia_Depto_Localidad">
+      <EntityTypeMapping TypeName="SINUModel.vProvincia_Depto_Localidad">
+        <MappingFragment StoreEntitySet="vProvincia_Depto_Localidad">
+          <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+          <ScalarProperty Name="DepartPartido" ColumnName="DepartPartido" />
+          <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+          <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vRELIGION">
+      <EntityTypeMapping TypeName="SINUModel.vRELIGION">
+        <MappingFragment StoreEntitySet="vRELIGION">
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+          <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vSecuencia_EtapaEstado">
+      <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstado">
+        <MappingFragment StoreEntitySet="vSecuencia_EtapaEstado">
+          <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+          <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+          <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vSeguridad_Grupos">
+      <EntityTypeMapping TypeName="SINUModel.vSeguridad_Grupos">
+        <MappingFragment StoreEntitySet="vSeguridad_Grupos">
+          <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="FecUltimaAct" ColumnName="FecUltimaAct" />
+          <ScalarProperty Name="codAplicacion" ColumnName="codAplicacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vSeguridad_Grupos_Usuarios">
+      <EntityTypeMapping TypeName="SINUModel.vSeguridad_Grupos_Usuarios">
+        <MappingFragment StoreEntitySet="vSeguridad_Grupos_Usuarios">
+          <ScalarProperty Name="FechUltimaAct" ColumnName="FechUltimaAct" />
+          <ScalarProperty Name="codAplicacion" ColumnName="codAplicacion" />
+          <ScalarProperty Name="codUsuario" ColumnName="codUsuario" />
+          <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vSeguridad_Usuarios">
+      <EntityTypeMapping TypeName="SINUModel.vSeguridad_Usuarios">
+        <MappingFragment StoreEntitySet="vSeguridad_Usuarios">
+          <ScalarProperty Name="codUsuario" ColumnName="codUsuario" />
+          <ScalarProperty Name="mr" ColumnName="mr" />
+          <ScalarProperty Name="Grado" ColumnName="Grado" />
+          <ScalarProperty Name="Destino" ColumnName="Destino" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="FechUltimaAct" ColumnName="FechUltimaAct" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="SINUModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRoles">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+      <EndProperty Name="AspNetUsers">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonaActividadMilitar" TypeName="SINUModel.PersonaActividadMilitar" StoreEntitySet="PersonaActividadMilitar">
+      <EndProperty Name="ActividadMilitar">
+        <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
+      </EndProperty>
+      <EndProperty Name="Persona">
+        <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonaEstudio" TypeName="SINUModel.PersonaEstudio" StoreEntitySet="PersonaEstudio">
+      <EndProperty Name="Estudio">
+        <ScalarProperty Name="Id" ColumnName="IdEstudio" />
+      </EndProperty>
+      <EndProperty Name="Persona">
+        <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonaSituacionOcupacional" TypeName="SINUModel.PersonaSituacionOcupacional" StoreEntitySet="PersonaSituacionOcupacional">
+      <EndProperty Name="Persona">
+        <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+      </EndProperty>
+      <EndProperty Name="SituacionOcupacional">
+        <ScalarProperty Name="Id" ColumnName="IdSituacionOcupacional" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SINUModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SINUModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SINUModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="SINUModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SINUModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="SINUModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="SINUModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SINUModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SINUModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spIngresaASeguridad" FunctionName="SINUModel.Store.spIngresaASeguridad" />
+    <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
+    <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
+    <FunctionImportMapping FunctionImportName="spValidarUsuario" FunctionName="SINUModel.Store.spValidarUsuario" />
+  </EntityContainerMapping>
+</Mapping>
