@@ -367,6 +367,8 @@
     <Compile Include="ViewModels\Rol.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\SINU.dll" />
+    <Content Include="bin\SINU.pdb" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

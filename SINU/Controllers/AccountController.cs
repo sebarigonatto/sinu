@@ -11,9 +11,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Globalization;
 using System.Security.Claims;
-using RazorEngine.Configuration;
 using RazorEngine.Templating;
-using RazorEngine;
+
 
 
 namespace SINU.Controllers
@@ -192,7 +191,7 @@ namespace SINU.Controllers
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 
-                    if (result.Succeeded)
+                    if (result.Succeeded) 
                     {
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
