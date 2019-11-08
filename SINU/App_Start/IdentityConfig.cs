@@ -16,10 +16,8 @@ using System.Net.Mime;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
-using System.Linq;
 using System.Web;
 using System.IO;
-using System.Collections.Generic;
 
 namespace SINU
 {
