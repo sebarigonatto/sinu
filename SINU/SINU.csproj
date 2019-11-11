@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201911011619467_fechatoken.Designer.cs">
       <DependentUpon>201911011619467_fechatoken.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111515067_fechacreacion1.cs" />
+    <Compile Include="Migrations\201911111515067_fechacreacion1.Designer.cs">
+      <DependentUpon>201911111515067_fechacreacion1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActividadMilitar.cs">
@@ -618,6 +622,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911011619467_fechatoken.resx">
       <DependentUpon>201911011619467_fechatoken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111515067_fechacreacion1.resx">
+      <DependentUpon>201911111515067_fechacreacion1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

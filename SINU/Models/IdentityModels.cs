@@ -11,6 +11,8 @@ namespace SINU.Models
     public class ApplicationUser : IdentityUser
     {
         public DateTime? FechaToken { get; set; }
+        public DateTime FechaCreacion { get; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
