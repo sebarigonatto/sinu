@@ -7,91 +7,54 @@
         <div class="card-deck mb-2 text-center">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
-                    <h1>TITULO</h1>
-
-
+                    <h1>Periodos de Inscripción</h1>
                 </div>
                 <div class="card-body">
+
                 </div>
             </div>
         </div>
-        @{
-            List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
-            Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
-            var per = 0; //contador de periodo para una institucion
-            string InstAnterior; //id de la institucion que se esta armando el card
-            while (inst < Periodos.Count())
-            {
-                <h3>******************************************************</h3>
-                InstAnterior = Periodos[inst].NombreInst;
-                //proceso de carga de titulo y de explicacion en la tarjeta
-                //titulo:: Periodos[inst].NombreInst
-                // ayuda : Periodos[inst].Tooltip
-                <h2>@InstAnterior</h2>
-                <h2>@Periodos[inst].Tooltip</h2>
-                per = 0;
-                while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
-                {
-                    per++;
-                    // armado de la fila de un nuevo periodo
-                    //mostrar FechaInicio y Fecha Fin con el contador de per
-                    <h3>@Periodos[inst].FechaInicio</h3>
-                    <h3>@Periodos[inst].FechaFinal</h3>
-                    <h3>@per</h3>
-                    <h3>------</h3>
-                    inst++;
-                }
-
-            }
-        }
-
-        @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
-
 
         <div class="card-deck mb-1 text-center">
+            @{
+                List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
+                Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
+                var per = 0; //contador de periodo para una institucion
+                string InstAnterior; //id de la institucion que se esta armando el card
+                while (inst < Periodos.Count())
+                {       InstAnterior = Periodos[inst].NombreInst;
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-header">
+                                <h4 class="my-0 font-weight-normal">@InstAnterior</h4>@*//ayuda : Periodos[inst].Tooltip*@
+                            </div>
 
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Free</h4>
-                </div>
-                <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>10 users included</li>
-                        <li>2 GB of storage</li>
-                        <li>Email support</li>
-                        <li>Help center access</li>
-                    </ul>
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
-                </div>
-            </div>
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">Pro</h4>
-                </div>
-                <div class="card-body">
-                    <div class="card-body">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab"
-                                   data-toggle="tab" href="#home">Primera Inscripcion</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab"
-                                   data-toggle="tab" href="#profile">Primera Inscripcion</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane show active" id="home">
-                                One
-                            </div>
-                            <div class="tab-pane" id="profile">
-                                Two
-                            </div>
+                            @{
+                                per = 0;
+                                while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
+                                {
+                                    per++;
+                                    // armado de la fila de un nuevo periodo
+                                    //mostrar FechaInicio y Fecha Fin con el contador de per
+                                    <div class="card-body">
+                                        <h1 class="card-title pricing-card-title">Periodo <small class="text-muted">@per</small></h1>
+                                        <ul class="list-unstyled mt-3 mb-4">
+                                            <li>@Periodos[inst].FechaInicio</li>
+                                            <li>@Periodos[inst].FechaFinal</li>
+                                        </ul>
+
+                                    </div>
+
+                                    inst++;
+                                }
+                               
+                                @Html.ActionLink("Inscribite", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-block btn-outline-primary" })
+                            }
                         </div>
-                    </div>
-                </div>
-            </div>
+                }
+            }
+
+            @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
+
 
         </div>
 
