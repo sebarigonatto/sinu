@@ -18,5 +18,6 @@ namespace SINU.Models
         public System.DateTime FechaFinal { get; set; }
         public string NombreInst { get; set; }
         public string Tooltip { get; set; }
+        public int IdInstitucion { get; set; }
     }
 }

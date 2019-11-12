@@ -30,5 +30,10 @@ namespace SINU.Models
         public string Lugar_Nac { get; set; }
         public string DomicilioDNI { get; set; }
         public string DomicilioActual { get; set; }
+        public string ComoSeEntero { get; set; }
+        public System.DateTime EmpezoACargarDatos { get; set; }
+        public System.DateTime PidioIngresoAlSist { get; set; }
+        public Nullable<int> IdPeriodoInscripcion { get; set; }
+        public Nullable<System.DateTime> ff { get; set; }
     }
 }
