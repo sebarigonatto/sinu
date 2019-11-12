@@ -4,17 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SINUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
+      <Schema Namespace="SINUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActividadMilitar">
           <Key>
             <PropertyRef Name="IdActividadMilitar" />
@@ -32,58 +22,6 @@
           <Property Name="IdFuerza" Type="int" Nullable="false" />
           <Property Name="IdBaja" Type="int" Nullable="false" />
           <Property Name="IdActividadMilitar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ClaimType" Type="nvarchar(max)" />
-          <Property Name="ClaimValue" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="FechaToken" Type="datetime" />
         </EntityType>
         <EntityType Name="Baja">
           <Key>
@@ -122,6 +60,7 @@
           <Property Name="Numero" Type="varchar" MaxLength="10" />
           <Property Name="Piso" Type="nchar" MaxLength="3" />
           <Property Name="Unidad" Type="nchar" MaxLength="5" />
+          <Property Name="IdLocalidad" Type="int" />
           <Property Name="Localidad" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="EstablecimientoRindeExamen">
@@ -175,19 +114,17 @@
           <Key>
             <PropertyRef Name="IdFamiliar" />
           </Key>
-          <Property Name="IdRegistroPostulante" Type="int" Nullable="false" />
+          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="idParentesco" Type="int" Nullable="false" />
           <Property Name="IdFamiliar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.Fuerza' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Fuerza">
           <Key>
             <PropertyRef Name="IdFuerza" />
           </Key>
           <Property Name="Fuerza" Type="varchar" MaxLength="50" />
-          <Property Name="IdFuerza" Type="int" Nullable="false" />
+          <Property Name="IdFuerza" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Inscripcion">
           <Key>
@@ -195,9 +132,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.Fuerza' no tiene definida ninguna c
           </Key>
           <Property Name="FechaInscripcion" Type="date" />
           <Property Name="Numero" Type="varchar" MaxLength="15" />
-          <Property Name="IdRegistroPostulante" Type="int" />
+          <Property Name="IdPostulantePersona" Type="int" />
           <Property Name="IdPreferencia" Type="int" />
-          <Property Name="IdSecuencia" Type="int" />
           <Property Name="IdEstablecimientoRindeExamen" Type="int" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
           <Property Name="FechaRindeExamen" Type="datetime" />
@@ -207,10 +143,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.Fuerza' no tiene definida ninguna c
 advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="InscripcionEtapaEstado">
           <Key>
-            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
           </Key>
-          <Property Name="IdEtapa" Type="int" Nullable="false" />
+          <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="date" />
           <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
         </EntityType>
@@ -263,6 +199,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
           <Property Name="Email1" Type="varchar" MaxLength="100" />
           <Property Name="Email2" Type="varchar" MaxLength="100" />
           <Property Name="IdOficinasYDelegaciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PeriodosInscripciones">
+          <Key>
+            <PropertyRef Name="IdPeriodoInscripcion" />
+          </Key>
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="IdInstitucion" Type="int" Nullable="false" />
+          <Property Name="IdPeriodoInscripcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -329,22 +274,22 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
         </EntityType>
         <EntityType Name="Postulante">
           <Key>
-            <PropertyRef Name="IdRegistroPostulante" />
+            <PropertyRef Name="IdPersona" />
           </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
-          <Property Name="IdRegistroPostulante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="PostulanteViaje">
           <Key>
             <PropertyRef Name="IdPostulanteViaje" />
           </Key>
           <Property Name="FechaInicioviaje" Type="date" />
-          <Property Name="codigo" Type="varchar" MaxLength="8" />
-          <Property Name="IdPostulanteViaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="codigovPais" Type="varchar" MaxLength="8" />
           <Property Name="Comentario" Type="varchar" MaxLength="200" />
+          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
+          <Property Name="IdPostulanteViaje" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Preferencia">
           <Key>
@@ -379,14 +324,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
           <Property Name="Oficio" Type="varchar" MaxLength="60" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.SituacionRevista' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="SituacionRevista">
           <Key>
             <PropertyRef Name="IdSituacionRevista" />
           </Key>
           <Property Name="SituacionRevista" Type="varchar" MaxLength="50" />
-          <Property Name="IdSituacionRevista" Type="int" Nullable="false" />
+          <Property Name="IdSituacionRevista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -416,6 +359,40 @@ advertencia 6002: La tabla o vista 'SINU.dbo.SituacionRevista' no tiene definida
           <Property Name="IdTipoNacionalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDelegaciones' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDelegaciones">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDestVigRelacDerog' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDestVigRelacDerog">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscolaridad' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscolaridad">
+          <Property Name="CLAVE1" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPC" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscuelasInstitutos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscuelasInstitutos">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEstCivil">
           <Key>
@@ -425,6 +402,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Codigo_n" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vIdiomas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vIdiomas">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vLOCALIDAD">
@@ -437,6 +420,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ningu
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="30" />
           <Property Name="IdLocalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vNivelIdioma' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vNivelIdioma">
+          <Property Name="NIVEL" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vPaises' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vPaises">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="CODIGO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA_NAVAL" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParentesco">
@@ -452,6 +449,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ning
           <Property Name="Consanguineo" Type="bit" Nullable="false" />
           <Property Name="Relacion" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="idParentesco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vPeriodosInscrip">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="Tooltip" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Datos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -540,6 +549,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulante_Usuario_datos' no tiene
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vProv' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vProv">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="CODIGO_VAR" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vProvincia_Depto_Localidad">
           <Key>
@@ -617,59 +633,57 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Comentario" Type="varchar" MaxLength="150" />
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT019_GRUPO_SANGUINEO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT019_GRUPO_SANGUINEO">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="GRUPO" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT156_DIRECCION_DEST' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT156_DIRECCION_DEST">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vTipoDocIdentif' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vTipoDocIdentif">
+          <Property Name="CODIGO" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="40" />
+        </EntityType>-->
+        <Association Name="FK_ActividadMilitar_Baja">
+          <End Role="Baja" Type="Self.Baja" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="Baja">
+              <PropertyRef Name="IdBaja" />
             </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdBaja" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+        <Association Name="FK_ActividadMilitar_Fuerza">
+          <End Role="Fuerza" Type="Self.Fuerza" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="Fuerza">
+              <PropertyRef Name="IdFuerza" />
             </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdFuerza" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+        <Association Name="FK_ActividadMilitar_SituacionRevista">
+          <End Role="SituacionRevista" Type="Self.SituacionRevista" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
+            <Principal Role="SituacionRevista">
+              <PropertyRef Name="IdSituacionRevista" />
             </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdSituacionRevista" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -738,10 +752,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Postulante">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="Familiares">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPostulantePersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -786,10 +800,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Postulante">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="Inscripcion">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPostulantePersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -805,15 +819,39 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Inscripcion_Secuencia_EtapaEstado">
-          <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="0..1" />
-          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+        <Association Name="FK_InscripcionEtapaEstado_Inscripcion">
+          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="1" />
+          <End Role="InscripcionEtapaEstado" Type="Self.InscripcionEtapaEstado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inscripcion">
+              <PropertyRef Name="IdInscripcion" />
+            </Principal>
+            <Dependent Role="InscripcionEtapaEstado">
+              <PropertyRef Name="IdInscripcionEtapaEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InscripcionEtapaEstado_Secuencia_EtapaEstado">
+          <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="1" />
+          <End Role="InscripcionEtapaEstado" Type="Self.InscripcionEtapaEstado" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Secuencia_EtapaEstado">
               <PropertyRef Name="IdSecuencia" />
             </Principal>
-            <Dependent Role="Inscripcion">
+            <Dependent Role="InscripcionEtapaEstado">
               <PropertyRef Name="IdSecuencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodosInscripciones_Institucion">
+          <End Role="Institucion" Type="Self.Institucion" Multiplicity="1" />
+          <End Role="PeriodosInscripciones" Type="Self.PeriodosInscripciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institucion">
+              <PropertyRef Name="IdInstitucion" />
+            </Principal>
+            <Dependent Role="PeriodosInscripciones">
+              <PropertyRef Name="IdInstitucion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -985,27 +1023,27 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Postulante_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Postulante">
-              <PropertyRef Name="Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Postulante_Persona">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="Postulante">
               <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostulanteViaje_Postulante">
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="1" />
+          <End Role="PostulanteViaje" Type="Self.PostulanteViaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulante">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="PostulanteViaje">
+              <PropertyRef Name="IdPostulantePersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1100,13 +1138,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="eliminar" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="SINUModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ActividadMilitar" EntityType="Self.ActividadMilitar" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Baja" EntityType="Self.Baja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configuracion" EntityType="Self.Configuracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" Schema="dbo" store:Type="Tables" />
@@ -1117,12 +1149,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="Estudio" EntityType="Self.Estudio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Etapa" EntityType="Self.Etapa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Familiares" EntityType="Self.Familiares" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fuerza" EntityType="Self.Fuerza" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inscripcion" EntityType="Self.Inscripcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Institucion" EntityType="Self.Institucion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Institutos" EntityType="Self.Institutos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NiveldEstudio" EntityType="Self.NiveldEstudio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NivelIdioma" EntityType="Self.NivelIdioma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OficinasYDelegaciones" EntityType="Self.OficinasYDelegaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeriodosInscripciones" EntityType="Self.PeriodosInscripciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PersonaIdioma" EntityType="Self.PersonaIdioma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Postulante" EntityType="Self.Postulante" Schema="dbo" store:Type="Tables" />
@@ -1131,18 +1165,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="Secuencia_EtapaEstado" EntityType="Self.Secuencia_EtapaEstado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SituacionOcupacional" EntityType="Self.SituacionOcupacional" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SituacionRevista" EntityType="Self.SituacionRevista" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Fuerza" EntityType="Self.Fuerza" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Fuerza].[Fuerza] AS [Fuerza], 
-    [Fuerza].[IdFuerza] AS [IdFuerza]
-    FROM [dbo].[Fuerza] AS [Fuerza]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="InscripcionEtapaEstado" EntityType="Self.InscripcionEtapaEstado" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [InscripcionEtapaEstado].[IdEtapa] AS [IdEtapa], 
+    [InscripcionEtapaEstado].[IdSecuencia] AS [IdSecuencia], 
     [InscripcionEtapaEstado].[Fecha] AS [Fecha], 
     [InscripcionEtapaEstado].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado]
     FROM [dbo].[InscripcionEtapaEstado] AS [InscripcionEtapaEstado]</DefiningQuery>
@@ -1164,12 +1193,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [PersonaSituacionOcupacional].[IdPersona] AS [IdPersona], 
     [PersonaSituacionOcupacional].[IdSituacionOcupacional] AS [IdSituacionOcupacional]
     FROM [dbo].[PersonaSituacionOcupacional] AS [PersonaSituacionOcupacional]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="SituacionRevista" EntityType="Self.SituacionRevista" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [SituacionRevista].[SituacionRevista] AS [SituacionRevista], 
-    [SituacionRevista].[IdSituacionRevista] AS [IdSituacionRevista]
-    FROM [dbo].[SituacionRevista] AS [SituacionRevista]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1195,6 +1218,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vParentesco].[Relacion] AS [Relacion], 
     [vParentesco].[idParentesco] AS [idParentesco]
     FROM [dbo].[vParentesco] AS [vParentesco]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vPeriodosInscrip].[FechaInicio] AS [FechaInicio], 
+    [vPeriodosInscrip].[FechaFinal] AS [FechaFinal], 
+    [vPeriodosInscrip].[NombreInst] AS [NombreInst], 
+    [vPeriodosInscrip].[Tooltip] AS [Tooltip]
+    FROM [dbo].[vPeriodosInscrip] AS [vPeriodosInscrip]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1309,21 +1340,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vSeguridad_Usuarios].[FechUltimaAct] AS [FechUltimaAct]
     FROM [dbo].[vSeguridad_Usuarios] AS [vSeguridad_Usuarios]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          <AssociationSet Name="FK_ActividadMilitar_Baja" Association="Self.FK_ActividadMilitar_Baja">
+            <End Role="Baja" EntitySet="Baja" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          <AssociationSet Name="FK_ActividadMilitar_Fuerza" Association="Self.FK_ActividadMilitar_Fuerza">
+            <End Role="Fuerza" EntitySet="Fuerza" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          <AssociationSet Name="FK_ActividadMilitar_SituacionRevista" Association="Self.FK_ActividadMilitar_SituacionRevista">
+            <End Role="SituacionRevista" EntitySet="SituacionRevista" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
           <AssociationSet Name="FK_DocPresentado_Inscripcion" Association="Self.FK_DocPresentado_Inscripcion">
             <End Role="Inscripcion" EntitySet="Inscripcion" />
@@ -1369,9 +1396,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="Preferencia" EntitySet="Preferencia" />
             <End Role="Inscripcion" EntitySet="Inscripcion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Inscripcion_Secuencia_EtapaEstado" Association="Self.FK_Inscripcion_Secuencia_EtapaEstado">
-            <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+          <AssociationSet Name="FK_InscripcionEtapaEstado_Inscripcion" Association="Self.FK_InscripcionEtapaEstado_Inscripcion">
             <End Role="Inscripcion" EntitySet="Inscripcion" />
+            <End Role="InscripcionEtapaEstado" EntitySet="InscripcionEtapaEstado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" Association="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado">
+            <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+            <End Role="InscripcionEtapaEstado" EntitySet="InscripcionEtapaEstado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodosInscripciones_Institucion" Association="Self.FK_PeriodosInscripciones_Institucion">
+            <End Role="Institucion" EntitySet="Institucion" />
+            <End Role="PeriodosInscripciones" EntitySet="PeriodosInscripciones" />
           </AssociationSet>
           <AssociationSet Name="FK_Persona_DomicilioActual" Association="Self.FK_Persona_DomicilioActual">
             <End Role="Domicilio" EntitySet="Domicilio" />
@@ -1429,13 +1464,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
             <End Role="PersonaSituacionOcupacional" EntitySet="PersonaSituacionOcupacional" />
           </AssociationSet>
-          <AssociationSet Name="FK_Postulante_AspNetUsers" Association="Self.FK_Postulante_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Postulante" EntitySet="Postulante" />
-          </AssociationSet>
           <AssociationSet Name="FK_Postulante_Persona" Association="Self.FK_Postulante_Persona">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Postulante" EntitySet="Postulante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostulanteViaje_Postulante" Association="Self.FK_PostulanteViaje_Postulante">
+            <End Role="Postulante" EntitySet="Postulante" />
+            <End Role="PostulanteViaje" EntitySet="PostulanteViaje" />
           </AssociationSet>
           <AssociationSet Name="FK_Secuencia_Estado" Association="Self.FK_Secuencia_Estado">
             <End Role="Estado" EntitySet="Estado" />
@@ -1450,20 +1485,11 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SINUModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="ActividadMilitar">
           <Key>
             <PropertyRef Name="IdActividadMilitar" />
@@ -1481,58 +1507,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdFuerza" Type="Int32" Nullable="false" />
           <Property Name="IdBaja" Type="Int32" Nullable="false" />
           <Property Name="IdActividadMilitar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Baja" Relationship="Self.FK_ActividadMilitar_Baja" FromRole="ActividadMilitar" ToRole="Baja" />
+          <NavigationProperty Name="Fuerza" Relationship="Self.FK_ActividadMilitar_Fuerza" FromRole="ActividadMilitar" ToRole="Fuerza" />
+          <NavigationProperty Name="SituacionRevista" Relationship="Self.FK_ActividadMilitar_SituacionRevista" FromRole="ActividadMilitar" ToRole="SituacionRevista" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaActividadMilitar" FromRole="ActividadMilitar" ToRole="Persona" />
-        </EntityType>
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FechaToken" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
-          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
-          <NavigationProperty Name="Postulante" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="AspNetUsers" ToRole="Postulante" />
-          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
         <EntityType Name="Baja">
           <Key>
@@ -1540,6 +1518,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </Key>
           <Property Name="BajaCausa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdBaja" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ActividadMilitar" Relationship="Self.FK_ActividadMilitar_Baja" FromRole="Baja" ToRole="ActividadMilitar" />
         </EntityType>
         <EntityType Name="Configuracion">
           <Key>
@@ -1573,6 +1552,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="IdLocalidad" Type="Int32" />
           <Property Name="Localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_DomicilioActual" FromRole="Domicilio" ToRole="Persona" />
           <NavigationProperty Name="Persona1" Relationship="Self.FK_Persona_DomicilioDNI" FromRole="Domicilio" ToRole="Persona" />
@@ -1635,12 +1615,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Key>
             <PropertyRef Name="IdFamiliar" />
           </Key>
-          <Property Name="IdRegistroPostulante" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="idParentesco" Type="Int32" Nullable="false" />
           <Property Name="IdFamiliar" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Familiares_Persona" FromRole="Familiares" ToRole="Persona" />
           <NavigationProperty Name="Postulante" Relationship="Self.FK_Familiares_Postulante" FromRole="Familiares" ToRole="Postulante" />
+        </EntityType>
+        <EntityType Name="Fuerza">
+          <Key>
+            <PropertyRef Name="IdFuerza" />
+          </Key>
+          <Property Name="Fuerza1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdFuerza" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ActividadMilitar" Relationship="Self.FK_ActividadMilitar_Fuerza" FromRole="Fuerza" ToRole="ActividadMilitar" />
         </EntityType>
         <EntityType Name="Inscripcion">
           <Key>
@@ -1648,9 +1636,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </Key>
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
           <Property Name="Numero" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="IdRegistroPostulante" Type="Int32" />
+          <Property Name="IdPostulantePersona" Type="Int32" />
           <Property Name="IdPreferencia" Type="Int32" />
-          <Property Name="IdSecuencia" Type="Int32" />
           <Property Name="IdEstablecimientoRindeExamen" Type="Int32" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
           <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
@@ -1661,7 +1648,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <NavigationProperty Name="OficinasYDelegaciones" Relationship="Self.FK_Inscripcion_OficinasYDelegaciones" FromRole="Inscripcion" ToRole="OficinasYDelegaciones" />
           <NavigationProperty Name="Postulante" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Inscripcion" ToRole="Postulante" />
           <NavigationProperty Name="Preferencia" Relationship="Self.FK_Inscripcion_Preferencia" FromRole="Inscripcion" ToRole="Preferencia" />
-          <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_Inscripcion_Secuencia_EtapaEstado" FromRole="Inscripcion" ToRole="Secuencia_EtapaEstado" />
+          <NavigationProperty Name="InscripcionEtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="Inscripcion" ToRole="InscripcionEtapaEstado" />
         </EntityType>
         <EntityType Name="Institucion">
           <Key>
@@ -1673,6 +1660,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="CodigoPcia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
+          <NavigationProperty Name="PeriodosInscripciones" Relationship="Self.FK_PeriodosInscripciones_Institucion" FromRole="Institucion" ToRole="PeriodosInscripciones" />
         </EntityType>
         <EntityType Name="Institutos">
           <Key>
@@ -1719,6 +1707,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Email2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_OficinasYDelegaciones" FromRole="OficinasYDelegaciones" ToRole="Inscripcion" />
+        </EntityType>
+        <EntityType Name="PeriodosInscripciones">
+          <Key>
+            <PropertyRef Name="IdPeriodoInscripcion" />
+          </Key>
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodoInscripcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Institucion" Relationship="Self.FK_PeriodosInscripciones_Institucion" FromRole="PeriodosInscripciones" ToRole="Institucion" />
         </EntityType>
         <EntityType Name="Persona">
           <Key>
@@ -1769,26 +1767,27 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
         </EntityType>
         <EntityType Name="Postulante">
           <Key>
-            <PropertyRef Name="IdRegistroPostulante" />
+            <PropertyRef Name="IdPersona" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdAspNetUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdRegistroPostulante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="Postulante" ToRole="AspNetUsers" />
           <NavigationProperty Name="Familiares" Relationship="Self.FK_Familiares_Postulante" FromRole="Postulante" ToRole="Familiares" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Postulante" ToRole="Inscripcion" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Postulante_Persona" FromRole="Postulante" ToRole="Persona" />
+          <NavigationProperty Name="PostulanteViaje" Relationship="Self.FK_PostulanteViaje_Postulante" FromRole="Postulante" ToRole="PostulanteViaje" />
         </EntityType>
         <EntityType Name="PostulanteViaje">
           <Key>
             <PropertyRef Name="IdPostulanteViaje" />
           </Key>
           <Property Name="FechaInicioviaje" Type="DateTime" Precision="0" />
-          <Property Name="codigo" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IdPostulanteViaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="codigovPais" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulanteViaje" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Postulante" Relationship="Self.FK_PostulanteViaje_Postulante" FromRole="PostulanteViaje" ToRole="Postulante" />
         </EntityType>
         <EntityType Name="Preferencia">
           <Key>
@@ -1809,7 +1808,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado" Relationship="Self.FK_Secuencia_Estado" FromRole="Secuencia_EtapaEstado" ToRole="Estado" />
           <NavigationProperty Name="Etapa" Relationship="Self.FK_Secuencia_Etapa" FromRole="Secuencia_EtapaEstado" ToRole="Etapa" />
-          <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Secuencia_EtapaEstado" FromRole="Secuencia_EtapaEstado" ToRole="Inscripcion" />
+          <NavigationProperty Name="InscripcionEtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" FromRole="Secuencia_EtapaEstado" ToRole="InscripcionEtapaEstado" />
         </EntityType>
         <EntityType Name="Sexo">
           <Key>
@@ -1829,6 +1828,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EstadoOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="SituacionOcupacional" ToRole="EstadoOcupacional" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaSituacionOcupacional" FromRole="SituacionOcupacional" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="SituacionRevista">
+          <Key>
+            <PropertyRef Name="IdSituacionRevista" />
+          </Key>
+          <Property Name="SituacionRevista1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdSituacionRevista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ActividadMilitar" Relationship="Self.FK_ActividadMilitar_SituacionRevista" FromRole="SituacionRevista" ToRole="ActividadMilitar" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1859,28 +1866,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdTipoNacionalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_TipoNacionalidad" FromRole="TipoNacionalidad" ToRole="Persona" />
         </EntityType>
-        <EntityType Name="Fuerza">
-          <Key>
-            <PropertyRef Name="IdFuerza" />
-          </Key>
-          <Property Name="Fuerza1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdFuerza" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="InscripcionEtapaEstado">
           <Key>
-            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
           </Key>
-          <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Precision="0" />
           <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SituacionRevista">
-          <Key>
-            <PropertyRef Name="IdSituacionRevista" />
-          </Key>
-          <Property Name="SituacionRevista1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdSituacionRevista" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inscripcion" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="InscripcionEtapaEstado" ToRole="Inscripcion" />
+          <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" FromRole="InscripcionEtapaEstado" ToRole="Secuencia_EtapaEstado" />
         </EntityType>
         <EntityType Name="vEstCivil">
           <Key>
@@ -1913,6 +1908,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Consanguineo" Type="Boolean" Nullable="false" />
           <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idParentesco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="vPeriodosInscrip">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+          </Key>
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPersona_Datos">
           <Key>
@@ -2060,43 +2065,39 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Comentario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="FechUltimaAct" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+        <Association Name="FK_ActividadMilitar_Baja">
+          <End Role="Baja" Type="Self.Baja" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="Baja">
+              <PropertyRef Name="IdBaja" />
             </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdBaja" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+        <Association Name="FK_ActividadMilitar_Fuerza">
+          <End Role="Fuerza" Type="Self.Fuerza" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="Fuerza">
+              <PropertyRef Name="IdFuerza" />
             </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdFuerza" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Postulante_AspNetUsers">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+        <Association Name="FK_ActividadMilitar_SituacionRevista">
+          <End Role="SituacionRevista" Type="Self.SituacionRevista" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
+            <Principal Role="SituacionRevista">
+              <PropertyRef Name="IdSituacionRevista" />
             </Principal>
-            <Dependent Role="Postulante">
-              <PropertyRef Name="Id" />
+            <Dependent Role="ActividadMilitar">
+              <PropertyRef Name="IdSituacionRevista" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2237,10 +2238,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="Familiares" Type="Self.Familiares" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Postulante">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="Familiares">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPostulantePersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2273,10 +2274,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Postulante">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="Inscripcion">
-              <PropertyRef Name="IdRegistroPostulante" />
+              <PropertyRef Name="IdPostulantePersona" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2292,15 +2293,27 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Inscripcion_Secuencia_EtapaEstado">
-          <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="0..1" />
-          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
+        <Association Name="FK_InscripcionEtapaEstado_Inscripcion">
+          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="1" />
+          <End Role="InscripcionEtapaEstado" Type="Self.InscripcionEtapaEstado" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Secuencia_EtapaEstado">
-              <PropertyRef Name="IdSecuencia" />
+            <Principal Role="Inscripcion">
+              <PropertyRef Name="IdInscripcion" />
             </Principal>
-            <Dependent Role="Inscripcion">
-              <PropertyRef Name="IdSecuencia" />
+            <Dependent Role="InscripcionEtapaEstado">
+              <PropertyRef Name="IdInscripcionEtapaEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeriodosInscripciones_Institucion">
+          <End Role="Institucion" Type="Self.Institucion" Multiplicity="1" />
+          <End Role="PeriodosInscripciones" Type="Self.PeriodosInscripciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Institucion">
+              <PropertyRef Name="IdInstitucion" />
+            </Principal>
+            <Dependent Role="PeriodosInscripciones">
+              <PropertyRef Name="IdInstitucion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2378,7 +2391,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
         </Association>
         <Association Name="FK_Postulante_Persona">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
-          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Persona">
               <PropertyRef Name="IdPersona" />
@@ -2388,9 +2401,29 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="*" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+        <Association Name="FK_PostulanteViaje_Postulante">
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="1" />
+          <End Role="PostulanteViaje" Type="Self.PostulanteViaje" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulante">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="PostulanteViaje">
+              <PropertyRef Name="IdPostulantePersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InscripcionEtapaEstado_Secuencia_EtapaEstado">
+          <End Role="Secuencia_EtapaEstado" Type="Self.Secuencia_EtapaEstado" Multiplicity="1" />
+          <End Role="InscripcionEtapaEstado" Type="Self.InscripcionEtapaEstado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Secuencia_EtapaEstado">
+              <PropertyRef Name="IdSecuencia" />
+            </Principal>
+            <Dependent Role="InscripcionEtapaEstado">
+              <PropertyRef Name="IdSecuencia" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <Association Name="PersonaActividadMilitar">
           <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
@@ -2405,12 +2438,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="*" />
         </Association>
         <EntityContainer Name="SINUEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
           <EntitySet Name="ActividadMilitar" EntityType="Self.ActividadMilitar" />
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Baja" EntityType="Self.Baja" />
           <EntitySet Name="Configuracion" EntityType="Self.Configuracion" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" />
@@ -2421,12 +2449,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="Estudio" EntityType="Self.Estudio" />
           <EntitySet Name="Etapa" EntityType="Self.Etapa" />
           <EntitySet Name="Familiares" EntityType="Self.Familiares" />
+          <EntitySet Name="Fuerza" EntityType="Self.Fuerza" />
           <EntitySet Name="Inscripcion" EntityType="Self.Inscripcion" />
           <EntitySet Name="Institucion" EntityType="Self.Institucion" />
           <EntitySet Name="Institutos" EntityType="Self.Institutos" />
           <EntitySet Name="NiveldEstudio" EntityType="Self.NiveldEstudio" />
           <EntitySet Name="NivelIdioma" EntityType="Self.NivelIdioma" />
           <EntitySet Name="OficinasYDelegaciones" EntityType="Self.OficinasYDelegaciones" />
+          <EntitySet Name="PeriodosInscripciones" EntityType="Self.PeriodosInscripciones" />
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="PersonaIdioma" EntityType="Self.PersonaIdioma" />
           <EntitySet Name="Postulante" EntityType="Self.Postulante" />
@@ -2435,15 +2465,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="Secuencia_EtapaEstado" EntityType="Self.Secuencia_EtapaEstado" />
           <EntitySet Name="Sexo" EntityType="Self.Sexo" />
           <EntitySet Name="SituacionOcupacional" EntityType="Self.SituacionOcupacional" />
+          <EntitySet Name="SituacionRevista" EntityType="Self.SituacionRevista" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" />
           <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" />
-          <EntitySet Name="Fuerza" EntityType="Self.Fuerza" />
           <EntitySet Name="InscripcionEtapaEstado" EntityType="Self.InscripcionEtapaEstado" />
-          <EntitySet Name="SituacionRevista" EntityType="Self.SituacionRevista" />
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" />
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
           <EntitySet Name="vParentesco" EntityType="Self.vParentesco" />
+          <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" />
           <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" />
           <EntitySet Name="VPersonaEstudio" EntityType="Self.VPersonaEstudio" />
           <EntitySet Name="vPostulante_Usuario_datos" EntityType="Self.vPostulante_Usuario_datos" />
@@ -2453,17 +2483,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="vSeguridad_Grupos" EntityType="Self.vSeguridad_Grupos" />
           <EntitySet Name="vSeguridad_Grupos_Usuarios" EntityType="Self.vSeguridad_Grupos_Usuarios" />
           <EntitySet Name="vSeguridad_Usuarios" EntityType="Self.vSeguridad_Usuarios" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          <AssociationSet Name="FK_ActividadMilitar_Baja" Association="Self.FK_ActividadMilitar_Baja">
+            <End Role="Baja" EntitySet="Baja" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          <AssociationSet Name="FK_ActividadMilitar_Fuerza" Association="Self.FK_ActividadMilitar_Fuerza">
+            <End Role="Fuerza" EntitySet="Fuerza" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
-          <AssociationSet Name="FK_Postulante_AspNetUsers" Association="Self.FK_Postulante_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Postulante" EntitySet="Postulante" />
+          <AssociationSet Name="FK_ActividadMilitar_SituacionRevista" Association="Self.FK_ActividadMilitar_SituacionRevista">
+            <End Role="SituacionRevista" EntitySet="SituacionRevista" />
+            <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
           </AssociationSet>
           <AssociationSet Name="FK_DocPresentado_Inscripcion" Association="Self.FK_DocPresentado_Inscripcion">
             <End Role="Inscripcion" EntitySet="Inscripcion" />
@@ -2529,9 +2559,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="Preferencia" EntitySet="Preferencia" />
             <End Role="Inscripcion" EntitySet="Inscripcion" />
           </AssociationSet>
-          <AssociationSet Name="FK_Inscripcion_Secuencia_EtapaEstado" Association="Self.FK_Inscripcion_Secuencia_EtapaEstado">
-            <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+          <AssociationSet Name="FK_InscripcionEtapaEstado_Inscripcion" Association="Self.FK_InscripcionEtapaEstado_Inscripcion">
             <End Role="Inscripcion" EntitySet="Inscripcion" />
+            <End Role="InscripcionEtapaEstado" EntitySet="InscripcionEtapaEstado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeriodosInscripciones_Institucion" Association="Self.FK_PeriodosInscripciones_Institucion">
+            <End Role="Institucion" EntitySet="Institucion" />
+            <End Role="PeriodosInscripciones" EntitySet="PeriodosInscripciones" />
           </AssociationSet>
           <AssociationSet Name="FK_PersonaIdioma_NivelIdioma" Association="Self.FK_PersonaIdioma_NivelIdioma">
             <End Role="NivelIdioma" EntitySet="NivelIdioma" />
@@ -2561,9 +2595,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Postulante" EntitySet="Postulante" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          <AssociationSet Name="FK_PostulanteViaje_Postulante" Association="Self.FK_PostulanteViaje_Postulante">
+            <End Role="Postulante" EntitySet="Postulante" />
+            <End Role="PostulanteViaje" EntitySet="PostulanteViaje" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" Association="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado">
+            <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
+            <End Role="InscripcionEtapaEstado" EntitySet="InscripcionEtapaEstado" />
           </AssociationSet>
           <AssociationSet Name="PersonaActividadMilitar" Association="Self.PersonaActividadMilitar">
             <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
@@ -2616,7 +2654,11 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="Apellido" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spPrueba">
+          <FunctionImport Name="spPrueba" ReturnType="Collection(SINUModel.spPrueba_Result)">
+            <Parameter Name="USUARIO" Mode="In" Type="String" />
+            <Parameter Name="Funcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spValidarUsuario" ReturnType="Collection(SINUModel.spValidarUsuario_Result)">
             <Parameter Name="USUARIO" Mode="In" Type="String" />
             <Parameter Name="Funcion" Mode="In" Type="String" />
           </FunctionImport>
@@ -2624,10 +2666,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <FunctionImport Name="VaciarASPNETUser">
             <Parameter Name="correoregistrado" Mode="In" Type="String" />
             <Parameter Name="eliminar" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spValidarUsuario" ReturnType="Collection(SINUModel.spValidarUsuario_Result)">
-            <Parameter Name="USUARIO" Mode="In" Type="String" />
-            <Parameter Name="Funcion" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -2641,6 +2679,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="spPrueba_Result">
+          <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
+          <Property Type="Int32" Name="Logueo" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="spValidarUsuario_Result">
           <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
           <Property Type="Int32" Name="Logueo" Nullable="false" />
@@ -2651,16 +2693,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SINUModelStoreContainer" CdmEntityContainer="SINUEntities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="SINUModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ActividadMilitar">
             <EntityTypeMapping TypeName="SINUModel.ActividadMilitar">
               <MappingFragment StoreEntitySet="ActividadMilitar">
@@ -2677,52 +2709,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
                 <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
                 <ScalarProperty Name="IdBaja" ColumnName="IdBaja" />
                 <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="SINUModel.AspNetRoles">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="SINUModel.AspNetUserClaims">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="SINUModel.AspNetUserLogins">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="SINUModel.AspNetUsers">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="FechaToken" ColumnName="FechaToken" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2765,6 +2751,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="Piso" ColumnName="Piso" />
                 <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
                 <ScalarProperty Name="Localidad" ColumnName="Localidad" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2824,10 +2811,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Familiares">
             <EntityTypeMapping TypeName="SINUModel.Familiares">
               <MappingFragment StoreEntitySet="Familiares">
-                <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
                 <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fuerza">
+            <EntityTypeMapping TypeName="SINUModel.Fuerza">
+              <MappingFragment StoreEntitySet="Fuerza">
+                <ScalarProperty Name="Fuerza1" ColumnName="Fuerza" />
+                <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2836,9 +2831,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               <MappingFragment StoreEntitySet="Inscripcion">
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
                 <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
                 <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
                 <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
@@ -2901,6 +2895,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PeriodosInscripciones">
+            <EntityTypeMapping TypeName="SINUModel.PeriodosInscripciones">
+              <MappingFragment StoreEntitySet="PeriodosInscripciones">
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Persona">
             <EntityTypeMapping TypeName="SINUModel.Persona">
               <MappingFragment StoreEntitySet="Persona">
@@ -2939,11 +2943,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Postulante">
             <EntityTypeMapping TypeName="SINUModel.Postulante">
               <MappingFragment StoreEntitySet="Postulante">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
                 <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
-                <ScalarProperty Name="IdRegistroPostulante" ColumnName="IdRegistroPostulante" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2951,9 +2954,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <EntityTypeMapping TypeName="SINUModel.PostulanteViaje">
               <MappingFragment StoreEntitySet="PostulanteViaje">
                 <ScalarProperty Name="FechaInicioviaje" ColumnName="FechaInicioviaje" />
-                <ScalarProperty Name="codigo" ColumnName="codigo" />
-                <ScalarProperty Name="IdPostulanteViaje" ColumnName="IdPostulanteViaje" />
+                <ScalarProperty Name="codigovPais" ColumnName="codigovPais" />
                 <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
+                <ScalarProperty Name="IdPostulanteViaje" ColumnName="IdPostulanteViaje" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2994,6 +2998,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SituacionRevista">
+            <EntityTypeMapping TypeName="SINUModel.SituacionRevista">
+              <MappingFragment StoreEntitySet="SituacionRevista">
+                <ScalarProperty Name="SituacionRevista1" ColumnName="SituacionRevista" />
+                <ScalarProperty Name="IdSituacionRevista" ColumnName="IdSituacionRevista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="SINUModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -3024,28 +3036,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Fuerza">
-            <EntityTypeMapping TypeName="SINUModel.Fuerza">
-              <MappingFragment StoreEntitySet="Fuerza">
-                <ScalarProperty Name="Fuerza1" ColumnName="Fuerza" />
-                <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="InscripcionEtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.InscripcionEtapaEstado">
               <MappingFragment StoreEntitySet="InscripcionEtapaEstado">
-                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SituacionRevista">
-            <EntityTypeMapping TypeName="SINUModel.SituacionRevista">
-              <MappingFragment StoreEntitySet="SituacionRevista">
-                <ScalarProperty Name="SituacionRevista1" ColumnName="SituacionRevista" />
-                <ScalarProperty Name="IdSituacionRevista" ColumnName="IdSituacionRevista" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3077,6 +3073,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
                 <ScalarProperty Name="Consanguineo" ColumnName="Consanguineo" />
                 <ScalarProperty Name="Relacion" ColumnName="Relacion" />
                 <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPeriodosInscrip">
+            <EntityTypeMapping TypeName="SINUModel.vPeriodosInscrip">
+              <MappingFragment StoreEntitySet="vPeriodosInscrip">
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3211,14 +3217,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="SINUModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetRoles">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-            <EndProperty Name="AspNetUsers">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="PersonaActividadMilitar" TypeName="SINUModel.PersonaActividadMilitar" StoreEntitySet="PersonaActividadMilitar">
             <EndProperty Name="ActividadMilitar">
               <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
@@ -3268,9 +3266,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SINUModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SINUModel.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="spIngresaASeguridad" FunctionName="SINUModel.Store.spIngresaASeguridad" />
-          <FunctionImportMapping FunctionImportName="spPrueba" FunctionName="SINUModel.Store.spPrueba" />
-          <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
-          <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
+          <FunctionImportMapping FunctionImportName="spPrueba" FunctionName="SINUModel.Store.spPrueba">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spPrueba_Result">
+                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
+                <ScalarProperty Name="Logueo" ColumnName="Logueo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spValidarUsuario" FunctionName="SINUModel.Store.spValidarUsuario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SINUModel.spValidarUsuario_Result">
@@ -3279,6 +3282,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
+          <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

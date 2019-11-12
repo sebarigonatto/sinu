@@ -12,12 +12,11 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUserLogins
+    public partial class vPeriodosInscrip
     {
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
-        public string UserId { get; set; }
-    
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFinal { get; set; }
+        public string NombreInst { get; set; }
+        public string Tooltip { get; set; }
     }
 }

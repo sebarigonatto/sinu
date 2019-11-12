@@ -17,7 +17,7 @@ namespace SINU.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Secuencia_EtapaEstado()
         {
-            this.Inscripcion = new HashSet<Inscripcion>();
+            this.InscripcionEtapaEstado = new HashSet<InscripcionEtapaEstado>();
         }
     
         public int IdSecuencia { get; set; }
@@ -29,6 +29,6 @@ namespace SINU.Models
         public virtual Estado Estado { get; set; }
         public virtual Etapa Etapa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inscripcion> Inscripcion { get; set; }
+        public virtual ICollection<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
     }
 }

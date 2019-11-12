@@ -14,8 +14,11 @@ namespace SINU.Models
     
     public partial class InscripcionEtapaEstado
     {
-        public int IdEtapa { get; set; }
+        public int IdSecuencia { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public int IdInscripcionEtapaEstado { get; set; }
+    
+        public virtual Inscripcion Inscripcion { get; set; }
+        public virtual Secuencia_EtapaEstado Secuencia_EtapaEstado { get; set; }
     }
 }

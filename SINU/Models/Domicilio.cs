@@ -26,6 +26,7 @@ namespace SINU.Models
         public string Numero { get; set; }
         public string Piso { get; set; }
         public string Unidad { get; set; }
+        public Nullable<int> IdLocalidad { get; set; }
         public string Localidad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

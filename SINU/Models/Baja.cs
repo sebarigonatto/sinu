@@ -14,7 +14,16 @@ namespace SINU.Models
     
     public partial class Baja
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Baja()
+        {
+            this.ActividadMilitar = new HashSet<ActividadMilitar>();
+        }
+    
         public string BajaCausa { get; set; }
         public int IdBaja { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActividadMilitar> ActividadMilitar { get; set; }
     }
 }

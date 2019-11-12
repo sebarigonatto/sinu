@@ -1,31 +1,98 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<SINU.Models.vPeriodosInscrip>
+
+@{
+    ViewBag.Title = "Sistema de Inscripcion Unificada";
 }
+    <div class="container">
+        <div class="card-deck mb-2 text-center">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h1>TITULO</h1>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+        @{
+            List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
+            Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
+            var per = 0; //contador de periodo para una institucion
+            string InstAnterior; //id de la institucion que se esta armando el card
+            while (inst < Periodos.Count())
+            {
+                <h3>******************************************************</h3>
+                InstAnterior = Periodos[inst].NombreInst;
+                //proceso de carga de titulo y de explicacion en la tarjeta
+                //titulo:: Periodos[inst].NombreInst
+                // ayuda : Periodos[inst].Tooltip
+                <h2>@InstAnterior</h2>
+                <h2>@Periodos[inst].Tooltip</h2>
+                per = 0;
+                while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
+                {
+                    per++;
+                    // armado de la fila de un nuevo periodo
+                    //mostrar FechaInicio y Fecha Fin con el contador de per
+                    <h3>@Periodos[inst].FechaInicio</h3>
+                    <h3>@Periodos[inst].FechaFinal</h3>
+                    <h3>@per</h3>
+                    <h3>------</h3>
+                    inst++;
+                }
+
+            }
+        }
+
+        @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
+
+
+        <div class="card-deck mb-1 text-center">
+
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Free</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>10 users included</li>
+                        <li>2 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>
+                </div>
+            </div>
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Pro</h4>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab"
+                                   data-toggle="tab" href="#home">Primera Inscripcion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab"
+                                   data-toggle="tab" href="#profile">Primera Inscripcion</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane show active" id="home">
+                                One
+                            </div>
+                            <div class="tab-pane" id="profile">
+                                Two
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>

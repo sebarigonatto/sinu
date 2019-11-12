@@ -14,7 +14,16 @@ namespace SINU.Models
     
     public partial class SituacionRevista
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SituacionRevista()
+        {
+            this.ActividadMilitar = new HashSet<ActividadMilitar>();
+        }
+    
         public string SituacionRevista1 { get; set; }
         public int IdSituacionRevista { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActividadMilitar> ActividadMilitar { get; set; }
     }
 }

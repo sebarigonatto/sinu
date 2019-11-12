@@ -27,12 +27,7 @@ namespace SINU.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<ActividadMilitar> ActividadMilitar { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Baja> Baja { get; set; }
         public virtual DbSet<Configuracion> Configuracion { get; set; }
         public virtual DbSet<DocPresentado> DocPresentado { get; set; }
@@ -43,12 +38,14 @@ namespace SINU.Models
         public virtual DbSet<Estudio> Estudio { get; set; }
         public virtual DbSet<Etapa> Etapa { get; set; }
         public virtual DbSet<Familiares> Familiares { get; set; }
+        public virtual DbSet<Fuerza> Fuerza { get; set; }
         public virtual DbSet<Inscripcion> Inscripcion { get; set; }
         public virtual DbSet<Institucion> Institucion { get; set; }
         public virtual DbSet<Institutos> Institutos { get; set; }
         public virtual DbSet<NiveldEstudio> NiveldEstudio { get; set; }
         public virtual DbSet<NivelIdioma> NivelIdioma { get; set; }
         public virtual DbSet<OficinasYDelegaciones> OficinasYDelegaciones { get; set; }
+        public virtual DbSet<PeriodosInscripciones> PeriodosInscripciones { get; set; }
         public virtual DbSet<Persona> Persona { get; set; }
         public virtual DbSet<PersonaIdioma> PersonaIdioma { get; set; }
         public virtual DbSet<Postulante> Postulante { get; set; }
@@ -57,15 +54,15 @@ namespace SINU.Models
         public virtual DbSet<Secuencia_EtapaEstado> Secuencia_EtapaEstado { get; set; }
         public virtual DbSet<Sexo> Sexo { get; set; }
         public virtual DbSet<SituacionOcupacional> SituacionOcupacional { get; set; }
+        public virtual DbSet<SituacionRevista> SituacionRevista { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoDocPresentado> TipoDocPresentado { get; set; }
         public virtual DbSet<TipoNacionalidad> TipoNacionalidad { get; set; }
-        public virtual DbSet<Fuerza> Fuerza { get; set; }
         public virtual DbSet<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
-        public virtual DbSet<SituacionRevista> SituacionRevista { get; set; }
         public virtual DbSet<vEstCivil> vEstCivil { get; set; }
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
+        public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
         public virtual DbSet<vPersona_Datos> vPersona_Datos { get; set; }
         public virtual DbSet<VPersonaEstudio> VPersonaEstudio { get; set; }
         public virtual DbSet<vPostulante_Usuario_datos> vPostulante_Usuario_datos { get; set; }
@@ -212,7 +209,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spIngresaASeguridad", uSUARIOParameter, grupoParameter, mrParameter, gradoParameter, destinoParameter, nombreParameter, apellidoParameter);
         }
     
-        public virtual int spPrueba(string uSUARIO, string funcion)
+        public virtual ObjectResult<spPrueba_Result> spPrueba(string uSUARIO, string funcion)
         {
             var uSUARIOParameter = uSUARIO != null ?
                 new ObjectParameter("USUARIO", uSUARIO) :
@@ -222,7 +219,20 @@ namespace SINU.Models
                 new ObjectParameter("Funcion", funcion) :
                 new ObjectParameter("Funcion", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPrueba", uSUARIOParameter, funcionParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spPrueba_Result>("spPrueba", uSUARIOParameter, funcionParameter);
+        }
+    
+        public virtual ObjectResult<spValidarUsuario_Result> spValidarUsuario(string uSUARIO, string funcion)
+        {
+            var uSUARIOParameter = uSUARIO != null ?
+                new ObjectParameter("USUARIO", uSUARIO) :
+                new ObjectParameter("USUARIO", typeof(string));
+    
+            var funcionParameter = funcion != null ?
+                new ObjectParameter("Funcion", funcion) :
+                new ObjectParameter("Funcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spValidarUsuario_Result>("spValidarUsuario", uSUARIOParameter, funcionParameter);
         }
     
         public virtual int tablasnuevas()
@@ -241,19 +251,6 @@ namespace SINU.Models
                 new ObjectParameter("eliminar", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
-        }
-    
-        public virtual ObjectResult<spValidarUsuario_Result> spValidarUsuario(string uSUARIO, string funcion)
-        {
-            var uSUARIOParameter = uSUARIO != null ?
-                new ObjectParameter("USUARIO", uSUARIO) :
-                new ObjectParameter("USUARIO", typeof(string));
-    
-            var funcionParameter = funcion != null ?
-                new ObjectParameter("Funcion", funcion) :
-                new ObjectParameter("Funcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spValidarUsuario_Result>("spValidarUsuario", uSUARIOParameter, funcionParameter);
         }
     }
 }
