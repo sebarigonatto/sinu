@@ -409,6 +409,7 @@
     <Content Include="Models\SINUDB.edmx.diagram">
       <DependentUpon>SINUDB.edmx</DependentUpon>
     </Content>
+    <Content Include="Documentacion\SINUentrevista1y2.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
