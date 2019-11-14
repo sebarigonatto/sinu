@@ -2,8 +2,15 @@
 
 @{
     ViewBag.Title = "Sistema de Inscripcion Unificada";
+
 }
-    <div class="container">
+<style type="text/css">
+    body{
+        background-color:#343a40;
+    }
+</style>
+
+    <div class="container fixed-top" style="height:100%;background-color:#343a40;width:2000px;margin-top:5%  ">
         <div class="card-deck mb-2 text-center">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
@@ -15,6 +22,10 @@
             </div>
         </div>
 
+      
+
+
+       
         <div class="card-deck mb-1 text-center">
             @{
                 List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
@@ -22,34 +33,35 @@
                 var per = 0; //contador de periodo para una institucion
                 string InstAnterior; //id de la institucion que se esta armando el card
                 while (inst < Periodos.Count())
-                {       InstAnterior = Periodos[inst].NombreInst;
-                        <div class="card mb-4 shadow-sm">
-                            <div class="card-header">
-                                <h4 class="my-0 font-weight-normal">@InstAnterior</h4>@*//ayuda : Periodos[inst].Tooltip*@
-                            </div>
-
-                            @{
-                                per = 0;
-                                while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
-                                {
-                                    per++;
-                                    // armado de la fila de un nuevo periodo
-                                    //mostrar FechaInicio y Fecha Fin con el contador de per
-                                    <div class="card-body">
-                                        <h1 class="card-title pricing-card-title">Periodo <small class="text-muted">@per</small></h1>
-                                        <ul class="list-unstyled mt-3 mb-4">
-                                            <li>@Periodos[inst].FechaInicio</li>
-                                            <li>@Periodos[inst].FechaFinal</li>
-                                        </ul>
-
-                                    </div>
-
-                                    inst++;
-                                }
-                               
-                                @Html.ActionLink("Inscribite", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-block btn-outline-primary" })
-                            }
+                {
+                    InstAnterior = Periodos[inst].NombreInst;
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">@InstAnterior</h4>@*//ayuda : Periodos[inst].Tooltip*@
                         </div>
+
+                        @{
+                            per = 0;
+                            while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
+                            {
+                                per++;
+                                // armado de la fila de un nuevo periodo
+                                //mostrar FechaInicio y Fecha Fin con el contador de per
+                                <div class="card-body">
+                                    <h1 class="card-title pricing-card-title">Periodo <small class="text-muted">@per</small></h1>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>@Periodos[inst].FechaInicio</li>
+                                        <li>@Periodos[inst].FechaFinal</li>
+                                    </ul>
+
+                                </div>
+
+                                inst++;
+                            }
+
+                            @Html.ActionLink("Inscribite", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-block btn-outline-primary" })
+                        }
+                    </div>
                 }
             }
 
