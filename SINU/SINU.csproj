@@ -377,6 +377,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\A_A_insignia.gif" />
     <Content Include="Imagenes\escAra.gif" />
     <Content Include="Imagenes\escudo4.png" />
     <Content Include="Imagenes\logo-footer.png" />

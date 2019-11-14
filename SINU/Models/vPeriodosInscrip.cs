@@ -19,5 +19,6 @@ namespace SINU.Models
         public string NombreInst { get; set; }
         public string Tooltip { get; set; }
         public int IdInstitucion { get; set; }
+        public string Titulo { get; set; }
     }
 }

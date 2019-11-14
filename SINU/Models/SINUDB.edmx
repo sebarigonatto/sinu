@@ -156,6 +156,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
           </Key>
           <Property Name="NombreInst" Type="varchar" MaxLength="60" />
           <Property Name="Direccion" Type="varchar" MaxLength="150" />
+          <Property Name="Titulo" Type="varchar" MaxLength="100" />
           <Property Name="Tooltip" Type="varchar" MaxLength="100" />
           <Property Name="CodigoPcia" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IdInstitucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -409,6 +410,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida
           <Property Name="NombreInst" Type="varchar" MaxLength="60" />
           <Property Name="Tooltip" Type="varchar" MaxLength="100" />
           <Property Name="IdInstitucion" Type="int" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Datos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1155,7 +1157,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vPeriodosInscrip].[FechaFinal] AS [FechaFinal], 
     [vPeriodosInscrip].[NombreInst] AS [NombreInst], 
     [vPeriodosInscrip].[Tooltip] AS [Tooltip], 
-    [vPeriodosInscrip].[IdInstitucion] AS [IdInstitucion]
+    [vPeriodosInscrip].[IdInstitucion] AS [IdInstitucion], 
+    [vPeriodosInscrip].[Titulo] AS [Titulo]
     FROM [dbo].[vPeriodosInscrip] AS [vPeriodosInscrip]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" store:Type="Views" store:Schema="dbo">
@@ -1596,6 +1599,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
           <NavigationProperty Name="PeriodosInscripciones" Relationship="Self.FK_PeriodosInscripciones_Institucion" FromRole="Institucion" ToRole="PeriodosInscripciones" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Institutos">
           <Key>
@@ -1855,6 +1859,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPersona_Datos">
           <Key>
@@ -2787,6 +2792,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Institucion">
             <EntityTypeMapping TypeName="SINUModel.Institucion">
               <MappingFragment StoreEntitySet="Institucion">
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
@@ -3023,6 +3029,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vPeriodosInscrip">
             <EntityTypeMapping TypeName="SINUModel.vPeriodosInscrip">
               <MappingFragment StoreEntitySet="vPeriodosInscrip">
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
