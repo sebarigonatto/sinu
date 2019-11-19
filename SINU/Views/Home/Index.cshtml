@@ -10,23 +10,24 @@
     }
 </style>
 
+
+
     <div class="container fixed-top" style="height:100%;background-color:#343a40;width:2000px;margin-top:5%  ">
         <div class="card-deck mb-2 text-center">
             <div class="card mb-4 shadow-sm">
                 <div class="card-header">
-                    <h1>Periodos de Inscripción</h1>
+                    <h1>Modalidades de Inscripción</h1>
                 </div>
-                <div class="card-body"> 
-
+                <div class="card-body">
+                    <p class="lead justify-content-center">
+                        Educamos a nuestros hombres y mujeres para que desarrollen su mayor potencial, personal y profesional inculcando valores éticos y morales al servicio de una sociedad integrada.
+                     </p>
+                    <a class="btn btn-primary btn-lg" href="http://www.incorporacion.armada.mil.ar/" role="button">Mas Información</a>
                 </div>
             </div>
         </div>
 
-      
-
-
-       
-        <div class="card-deck mb-1 text-center">
+         <div class="card-deck mb-1 text-center">
             @{
                 List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
                 Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
@@ -35,33 +36,33 @@
                 while (inst < Periodos.Count())
                 {
                     InstAnterior = Periodos[inst].NombreInst;
-                    <div class="card mb-4 shadow-sm">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">@InstAnterior</h4>@*//ayuda : Periodos[inst].Tooltip*@
-                        </div>
+                         <div class="card mb-4 shadow-sm">
+                             <div class="card-header" data-toggle="tooltip" title="@Periodos[inst].Tooltip">
+                                 @*//ayuda : Periodos[inst].Tooltip*@
+                                 <h4 class="my-0 font-weight-normal ">@Periodos[inst].Titulo @InstAnterior</h4>
+                             </div>
 
-                        @{
-                            per = 0;
-                            while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
-                            {
-                                per++;
-                                // armado de la fila de un nuevo periodo
-                                //mostrar FechaInicio y Fecha Fin con el contador de per
-                                <div class="card-body">
-                                    <h1 class="card-title pricing-card-title">Periodo <small class="text-muted">@per</small></h1>
-                                    <ul class="list-unstyled mt-3 mb-4">
-                                        <li>@Periodos[inst].FechaInicio</li>
-                                        <li>@Periodos[inst].FechaFinal</li>
-                                    </ul>
+                             @{
+                                 per = 0;
+                                 while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
+                                 {
+                                     per++;
+                                     // armado de la fila de un nuevo periodo
+                                     //mostrar FechaInicio y Fecha Fin con el contador de per
+                                     <div class="card-body">
+                                         <h1 class="card-title pricing-card-title">Periodo <small class="text-muted">@per</small></h1>
+                                         <ul class="list-unstyled mt-3 mb-4">
+                                             <li>@Periodos[inst].FechaInicio</li>
+                                             <li>@Periodos[inst].FechaFinal</li>
+                                         </ul>
 
-                                </div>
-
-                                inst++;
-                            }
-
-                            @Html.ActionLink("Inscribite", "Register", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-block btn-outline-primary" })
-                        }
-                    </div>
+                                     </div>
+                                     //pasamos como parametros el ID del Instituto = preferencia del postulante 
+                                     @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+                                     inst++;
+                                 }
+                             }
+                         </div>
                 }
             }
 

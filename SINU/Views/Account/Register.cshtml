@@ -37,6 +37,9 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+    //parametro enviado oculto al controlador para almacenar la preferencia
+    @Html.HiddenFor(model => model.IdInstituto)
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Registrarse" />
