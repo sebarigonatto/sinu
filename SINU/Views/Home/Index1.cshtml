@@ -51,20 +51,20 @@
             }
 
             @@media screen and (min-width: 601px) {
-            tcard {
+            .tcard {
                 font-size: 30px;
                 }
             }
 
              @@media screen and (min-width: 731px) {
-                tcard {
+                .tcard {
                 font-size: 40px;
                 }
              }
 
 
             @@media screen and (max-width: 600px) {
-              tcard {
+              .tcard {
                 font-size:25px;
                
               }
@@ -79,7 +79,9 @@
                     margin-right: 15px;
                     margin-top: -30px;
                     border-radius: 6px;
-                    box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+                    box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+                    background-color:white
+                    
                     }
 
 
@@ -98,11 +100,13 @@
             align-items: center;
         }
         .card1{
+             margin-bottom:35px !important;
             align-items: center;
-    text-align: center;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
-    background-color: #06203A;
-    color: white;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+            background-color: #052240   ;
+            color: white;
+           
         }
     </style>
 </head>
@@ -141,10 +145,10 @@
     <!-- Page Content -->
     <div class="container">
         <div class="mb-5">
-            <h2 class="my-4">Periodos de Inscripción:</h2>
+            <h2 class="my-4 tcard">Periodos de Inscripción:</h2>
         </div>
         <!-- /.row -->
-        <div class="card-deck   ">
+        <div class="card-deck ">
             @{
                 List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
                 Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
@@ -156,10 +160,10 @@
                     <div class="card card1" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);">
                         <img class="card-img imgi" src="~/Imagenes/A_A_insignia.gif" alt="Card image cap" style="">
                         <div class="card-header container-fluid" >
-                            <h3 class="card-title">@InstAnterior</h3>@*//ayuda : Periodos[inst].Tooltip*@
+                            <h6 class="tcard">@InstAnterior</h6>@*//ayuda : Periodos[inst].Tooltip*@
                         </div>
                         <div class="card-body container-fluid">
-                            <h4 class="">@Periodos[inst].Titulo </h4>@**@
+                            <h5 class="">@Periodos[inst].Titulo </h5>@**@
                             @{
                                 per = 0;
                                 while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
@@ -169,10 +173,10 @@
                                     //mostrar FechaInicio y Fecha Fin con el contador de per
 
                                     <div class="row card-footer">
-                                        <h5>@per&ordm;&ensp;</h5>
-                                        <h5> @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h5>
+                                        <h6>@per&ordm;&ensp;</h6>
+                                        <p> @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</p>
                                         <hr />
-                                        <h5>@Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h5>
+                                        <p>@Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</p>
                                     </div>
 
 
