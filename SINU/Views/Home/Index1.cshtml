@@ -180,7 +180,7 @@
                                     </div>
 
 
-
+                                    @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
                                     inst++;
                                 }
 
@@ -211,10 +211,10 @@
         <!-- Call to Action Section -->
         <div class="row mb-4">
             <div class="col-md-8">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
+                <p>Si usted ya se encuentra registrado por favor inicie sesion.</p>
             </div>
             <div class="col-md-4">
-                <a class="btn btn-lg btn-secondary btn-block" href="#">Call to Action</a>
+                <a>@Html.ActionLink("Iniciar Sesion", "Login", "Account",null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
             </div>
         </div>
 
