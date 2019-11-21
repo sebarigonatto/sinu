@@ -377,7 +377,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Imagenes\A_A_insignia.gif" />
+    <Content Include="Imagenes\4.png" />
     <Content Include="Imagenes\escAra.gif" />
     <Content Include="Imagenes\escudo4.png" />
     <Content Include="Imagenes\logo-footer.png" />
@@ -386,6 +386,8 @@
     <Content Include="Documentacion\AdjuntoPaso2.pdf" />
     <Content Include="Documentacion\Ayuda de codigo.docx" />
     <Content Include="Documentacion\otro.docx" />
+    <Content Include="Imagenes\2.png" />
+    <Content Include="Imagenes\6.png" />
     <Content Include="Models\SINUDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SINUDB.edmx</DependentUpon>
@@ -539,7 +541,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <None Include="Views\Home\Index1.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -553,7 +555,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
