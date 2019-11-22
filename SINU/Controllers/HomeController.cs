@@ -15,11 +15,7 @@ namespace SINU.Controllers
         {
             return View(db.vPeriodosInscrip.ToList());
         }
-        public ActionResult Index1()
-        {
-            return View(db.vPeriodosInscrip.ToList());
-        }
-
+       
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -82,14 +82,28 @@ namespace SINU.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Apellido")]
+        [Display(Name = "Apellidos")]
         public string Apellido { get; set; }
+
+        [Required]
+        [Display(Name = "Nombres")]
+        public string Nombre { get; set; }
+
+        [Required]
+        [Display(Name = "DNI")]
+        [MaxLength(9, ErrorMessage = "DNI tener una longintud minima de 9 digitos"), MinLength(8, ErrorMessage = "DNI tener una longintud minima de 8 digitos")]
+        [RegularExpression("^\\d+$", ErrorMessage = "DNI debe contener sólo números.")]
+        public string DNI { get; set; }
 
         public DateTime FeachaToken { get; set; }
         
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse no sera necesario mostra su valor en la vista Register.cshtml
         //sera requerido al momento de guardar su preferencia en el controlador AccountController.cs
         public int IdInstituto { get; set; }
+        //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse
+        [Required]
+        [Display(Name = "Delegacion - Oficina")]
+        public int idOficinaYDelegacion { get; set; }
     }
 
     public class ResetPasswordViewModel
