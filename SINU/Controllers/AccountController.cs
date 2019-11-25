@@ -198,11 +198,13 @@ namespace SINU.Controllers
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
 
-
                     var result = await UserManager.CreateAsync(user, model.Password);
 
                     if (result.Succeeded) 
                     {
+                        //crea una persona, un postulante y una inscripcion
+                        //var r = db.spCreaPostulante(model.Apellido,model.Nombre,model.DNI,model.Email,model.IdInstituto,model.idOficinaYDelegacion);
+
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
@@ -274,7 +276,7 @@ namespace SINU.Controllers
                 if (result.Succeeded)
                 {
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE.
-                    //var r = db.spIngresaASeguridad( UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
+                    var r = db.spIngresaASeguridad( UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {
