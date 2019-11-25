@@ -20,7 +20,7 @@
         }
 
         .carousel-item {
-            height: 35vh;
+            height: 40vh;
             min-height: 200px;
             background: no-repeat center center scroll;
             -webkit-background-size: cover;
@@ -112,10 +112,14 @@
         .centrar {
             margin: auto;
         }
+        .btn1{
+            background-color = #0072bb;
+            border=
+        }
     </style>
 </head>
 <body>
-    <header>
+    <header class="mb-2">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
             <div class="carousel-inner" role="listbox" style="display: flex;justify-content: center;align-items: center;">
@@ -145,14 +149,14 @@
         </div>
     </header>
     <div class="container">
-        <div class="card-deck mb-2 text-center">
+        <div class="card-deck mb-4 text-center">
             <div class="card mb-4 shadow-sm">
-                <div class="card-header">
+                <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
                     <h1>Modalidades de Inscripción</h1>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="border: solid 1px;">
                     <p class="lead justify-content-center">
-                        Educamos a nuestros hombres y mujeres para que desarrollen su mayor potencial, personal y profesional inculcando valores éticos y morales al servicio de una sociedad integrada.
+                        <b>@ViewBag.TextoPAGINAPRINCIPAL</b>
                     </p>
                     <a class="btn btn-primary btn-lg" href="http://www.incorporacion.armada.mil.ar/" role="button">Mas Información</a>
                 </div>
@@ -191,6 +195,7 @@
 
                                     <div class="row card-footer lead justify-content-center">
                                         @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+                                        
                                     </div>
 
                                     inst++;
@@ -240,5 +245,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+<script type="text/javascript">
+
+
+
+</script>
 </body>
 </html>

@@ -172,8 +172,11 @@ namespace SINU.Controllers
         {
            //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
             ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
-           
-           
+            if (idInstitucion != 0)
+            {
+                ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+            };
+
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
             return View(new RegisterViewModel { IdInstituto = idInstitucion });
         }

@@ -836,7 +836,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PersonaActividadMilitar_ActividadMilitar">
-          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="1" />
+          <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PersonaActividadMilitar" Type="Self.PersonaActividadMilitar" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ActividadMilitar">
@@ -860,7 +862,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PersonaEstudio_Estudio">
-          <End Role="Estudio" Type="Self.Estudio" Multiplicity="1" />
+          <End Role="Estudio" Type="Self.Estudio" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PersonaEstudio" Type="Self.PersonaEstudio" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Estudio">
@@ -944,7 +948,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PersonaSituacionOcupacional_SituacionOcupacional">
-          <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="1" />
+          <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PersonaSituacionOcupacional" Type="Self.PersonaSituacionOcupacional" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SituacionOcupacional">

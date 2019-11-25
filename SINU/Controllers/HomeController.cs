@@ -16,6 +16,7 @@ namespace SINU.Controllers
         SINUEntities db= new SINUEntities();
         public ActionResult Index()
         {
+            ViewBag.TextoPAGINAPRINCIPAL = db.Configuracion.FirstOrDefault(b => b.NombreDato == "TextoPAGINAPRINCIPAL").ValorDato;
             return View(db.vPeriodosInscrip.ToList());
         }
        
