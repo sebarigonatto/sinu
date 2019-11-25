@@ -362,6 +362,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
     <Compile Include="ViewModels\ProvLocalidades.cs" />
     <Compile Include="ViewModels\Rol.cs" />
@@ -373,6 +374,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\stacktable.css" />
     <Content Include="Documentacion\Error sucedido por enviar desde ara a otro correo no ara.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -418,6 +420,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\stacktable.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -457,11 +460,6 @@
     <Content Include="Views\Fuerzas\Details.cshtml" />
     <Content Include="Views\Fuerzas\Edit.cshtml" />
     <Content Include="Views\Fuerzas\Index.cshtml" />
-    <Content Include="Views\OficinasYDelegaciones\Create.cshtml" />
-    <Content Include="Views\OficinasYDelegaciones\Delete.cshtml" />
-    <Content Include="Views\OficinasYDelegaciones\Details.cshtml" />
-    <Content Include="Views\OficinasYDelegaciones\Edit.cshtml" />
-    <Content Include="Views\OficinasYDelegaciones\Index.cshtml" />
     <Content Include="Views\Sexoes\Create.cshtml" />
     <Content Include="Views\Sexoes\Delete.cshtml" />
     <Content Include="Views\Sexoes\Details.cshtml" />

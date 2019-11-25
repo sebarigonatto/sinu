@@ -1,17 +1,106 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@model SINU.ViewModels.vContacto
+@{
+    //List<SINU.Models.Configuracion> lstConfiguracion = Model.ToList()[0] as List<SINU.Models.Configuracion>;
+    //List<SINU.Models.OficinasYDelegaciones> lstOfi = Model.ToList()[1] as List<SINU.Models.OficinasYDelegaciones>;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@*<h2>@ViewBag.Title.</h2>
+    <h3>@ViewBag.Message</h3>*@
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="jumbotronP">
+    <h2 class="font-jumb">
+        Contactos
+    </h2>
+    <br />
+    <address style="font-size:large">
+        Mail de Contacto: @Model.Configuracion.First(p => p.NombreDato == "ResponsableMail").ValorDato <br />
+        Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato +"  "+ @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato
+        Piso: @Model.Configuracion.First(p => p.NombreDato == "ResponsablePisoOfic").ValorDato<br />
+        Telefono: @Model.Configuracion.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+
+    </address>
+</div>
+
+
+
+<table id="tabla1" class="table" border="0">
+
+    <tr >
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Descripcion)
+        </th>
+        <th>
+
+            @Html.DisplayNameFor(m => m.listoficinas[0].Direccion)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Localidad)
+        </th>
+        <th>
+
+            @Html.DisplayNameFor(m => m.listoficinas[0].Provincia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Celular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
+        </th>
+        
+        <th></th>
+    </tr>
+    @foreach (var item in Model.listoficinas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email1)
+            </td>
+
+        </tr>
+    }
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tabla1').stacktable();
+        });
+    </script>
+
+}
+@*@Scripts.Render("~/bundles/stacktable")*@
+
+
+
+
+
+
