@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -25,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.6</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -188,177 +190,175 @@
     <Compile Include="Migrations\201911011619467_fechatoken.Designer.cs">
       <DependentUpon>201911011619467_fechatoken.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911111515067_fechacreacion1.cs" />
+    <Compile Include="Migrations\201911111515067_fechacreacion1.Designer.cs">
+      <DependentUpon>201911111515067_fechacreacion1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActividadMilitar.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetRoles.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserClaims.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogins.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUsers.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Baja.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Configuracion.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocPresentado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domicilio.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstablecimientoRindeExamen.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstadoOcupacional.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudio.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Etapa.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Familiares.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fuerza.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inscripcion.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InscripcionEtapaEstado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institucion.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institutos.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NiveldEstudio.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NivelIdioma.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OficinasYDelegaciones.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PeriodosInscripciones.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonaIdioma.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Postulante.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostulanteViaje.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Preferencia.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Secuencia_EtapaEstado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sexo.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUBD.Context.cs">
+    <Compile Include="Models\SINUDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUBD.Context.tt</DependentUpon>
+      <DependentUpon>SINUDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUBD.cs">
+    <Compile Include="Models\SINUDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUBD.Designer.cs">
+    <Compile Include="Models\SINUDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUBD.edmx</DependentUpon>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionOcupacional.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionRevista.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spPrueba_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoDocPresentado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoNacionalidad.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEstCivil.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vParentesco.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPeriodosInscrip.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VPersonaEstudio.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Datos.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPostulante_Usuario_datos.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vProvincia_Depto_Localidad.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vRELIGION.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSecuencia_EtapaEstado.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos_Usuarios.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Usuarios.cs">
-      <DependentUpon>SINUBD.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -368,47 +368,138 @@
     <Compile Include="ViewModels\Rol.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\SINU.dll" />
-    <Content Include="bin\SINU.pdb" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\stacktable.css" />
     <Content Include="Documentacion\Error sucedido por enviar desde ara a otro correo no ara.txt" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\4.png" />
     <Content Include="Imagenes\escAra.gif" />
     <Content Include="Imagenes\escudo4.png" />
     <Content Include="Imagenes\logo-footer.png" />
     <Content Include="Imagenes\stamp.png" />
-    <Content Include="Models\SINUBD.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUBD.edmx</DependentUpon>
-      <LastGenOutput>SINUBD.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SINUBD.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUBD.edmx</DependentUpon>
-      <LastGenOutput>SINUBD.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Documentacion\AdjuntoPaso1.pdf" />
     <Content Include="Documentacion\AdjuntoPaso2.pdf" />
     <Content Include="Documentacion\Ayuda de codigo.docx" />
     <Content Include="Documentacion\otro.docx" />
-    <Content Include="Plantillas\PlantillaMailConfirmacion.cshtml" />
-    <EntityDeploy Include="Models\SINUBD.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SINUBD.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SINUBD.edmx.diagram">
-      <DependentUpon>SINUBD.edmx</DependentUpon>
+    <Content Include="Imagenes\2.png" />
+    <Content Include="Imagenes\6.png" />
+    <Content Include="Models\SINUDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+      <LastGenOutput>SINUDB.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\SINUDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+      <LastGenOutput>SINUDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Plantillas\PlantillaMailConfirmacion.cshtml" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <EntityDeploy Include="Models\SINUDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SINUDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SINUDB.edmx.diagram">
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="Documentacion\SINUentrevista1y2.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.bootstrap.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.bootstrap.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.bootstrap4.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.bootstrap4.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.dataTables.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.dataTables.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.foundation.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.foundation.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.jqueryui.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.jqueryui.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.semanticui.css" />
+    <Content Include="Scripts\Buttons-1.6.1\css\buttons.semanticui.min.css" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.bootstrap.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.bootstrap.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.bootstrap4.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.bootstrap4.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.colVis.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.colVis.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.flash.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.flash.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.foundation.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.foundation.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.html5.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.html5.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.jqueryui.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.jqueryui.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.print.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.print.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.semanticui.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\buttons.semanticui.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\dataTables.buttons.js" />
+    <Content Include="Scripts\Buttons-1.6.1\js\dataTables.buttons.min.js" />
+    <Content Include="Scripts\Buttons-1.6.1\swf\flashExport.swf" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.bootstrap.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.bootstrap.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.foundation.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.foundation.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.jqueryui.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.jqueryui.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.semanticui.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\dataTables.semanticui.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\jquery.dataTables.css" />
+    <Content Include="Scripts\DataTables-1.10.20\css\jquery.dataTables.min.css" />
+    <Content Include="Scripts\DataTables-1.10.20\images\sort_asc.png" />
+    <Content Include="Scripts\DataTables-1.10.20\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\DataTables-1.10.20\images\sort_both.png" />
+    <Content Include="Scripts\DataTables-1.10.20\images\sort_desc.png" />
+    <Content Include="Scripts\DataTables-1.10.20\images\sort_desc_disabled.png" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.bootstrap.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.bootstrap.min.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.foundation.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.foundation.min.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.jqueryui.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.jqueryui.min.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.semanticui.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\dataTables.semanticui.min.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\jquery.dataTables.js" />
+    <Content Include="Scripts\DataTables-1.10.20\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\datatables.css" />
+    <Content Include="Scripts\datatables.js" />
+    <Content Include="Scripts\datatables.min.css" />
+    <Content Include="Scripts\datatables.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\Buttons-1.6.1\css\common.scss" />
+    <Content Include="Scripts\Buttons-1.6.1\css\mixins.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -420,7 +511,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\stacktable.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -434,7 +524,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -470,36 +559,45 @@
     <Content Include="Views\TipoNacionalidads\Details.cshtml" />
     <Content Include="Views\TipoNacionalidads\Edit.cshtml" />
     <Content Include="Views\TipoNacionalidads\Index.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911011619467_fechatoken.resx">
       <DependentUpon>201911011619467_fechatoken.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911111515067_fechacreacion1.resx">
+      <DependentUpon>201911111515067_fechacreacion1.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

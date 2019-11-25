@@ -15,8 +15,11 @@ namespace SINU.Models
     public partial class PostulanteViaje
     {
         public Nullable<System.DateTime> FechaInicioviaje { get; set; }
-        public string codigo { get; set; }
-        public int IdPostulanteViaje { get; set; }
+        public string codigovPais { get; set; }
         public string Comentario { get; set; }
+        public int IdPostulantePersona { get; set; }
+        public int IdPostulanteViaje { get; set; }
+    
+        public virtual Postulante Postulante { get; set; }
     }
 }

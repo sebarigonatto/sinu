@@ -168,9 +168,14 @@ namespace SINU.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(int idInstitucion = 0)
         {
-            return View();
+           //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
+            ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+           
+           
+            //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
+            return View(new RegisterViewModel { IdInstituto = idInstitucion });
         }
 
         //
@@ -179,7 +184,9 @@ namespace SINU.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
-        {
+        {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
+
+            
             if (ModelState.IsValid)
             {
                 try

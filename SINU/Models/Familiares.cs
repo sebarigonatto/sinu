@@ -14,7 +14,7 @@ namespace SINU.Models
     
     public partial class Familiares
     {
-        public int IdRegistroPostulante { get; set; }
+        public int IdPostulantePersona { get; set; }
         public int IdPersona { get; set; }
         public int idParentesco { get; set; }
         public int IdFamiliar { get; set; }

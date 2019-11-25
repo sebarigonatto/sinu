@@ -18,6 +18,7 @@ namespace SINU.Models
         public Institucion()
         {
             this.Inscripcion = new HashSet<Inscripcion>();
+            this.PeriodosInscripciones = new HashSet<PeriodosInscripciones>();
         }
     
         public string NombreInst { get; set; }
@@ -25,8 +26,11 @@ namespace SINU.Models
         public string Tooltip { get; set; }
         public string CodigoPcia { get; set; }
         public int IdInstitucion { get; set; }
+        public string Titulo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PeriodosInscripciones> PeriodosInscripciones { get; set; }
     }
 }

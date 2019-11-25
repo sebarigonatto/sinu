@@ -19,7 +19,6 @@ namespace SINU.Models
         {
             this.Familiares = new HashSet<Familiares>();
             this.PersonaIdioma = new HashSet<PersonaIdioma>();
-            this.Postulante = new HashSet<Postulante>();
             this.ActividadMilitar = new HashSet<ActividadMilitar>();
             this.Estudio = new HashSet<Estudio>();
             this.SituacionOcupacional = new HashSet<SituacionOcupacional>();
@@ -51,8 +50,7 @@ namespace SINU.Models
         public virtual TipoNacionalidad TipoNacionalidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PersonaIdioma> PersonaIdioma { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Postulante> Postulante { get; set; }
+        public virtual Postulante Postulante { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActividadMilitar> ActividadMilitar { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

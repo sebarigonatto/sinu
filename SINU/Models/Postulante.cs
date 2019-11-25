@@ -19,19 +19,20 @@ namespace SINU.Models
         {
             this.Familiares = new HashSet<Familiares>();
             this.Inscripcion = new HashSet<Inscripcion>();
+            this.PostulanteViaje = new HashSet<PostulanteViaje>();
         }
     
-        public string Id { get; set; }
+        public string IdAspNetUser { get; set; }
         public int IdPersona { get; set; }
         public string ComoSeEntero { get; set; }
         public System.DateTime FechaRegistro { get; set; }
-        public int IdRegistroPostulante { get; set; }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Familiares> Familiares { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }
         public virtual Persona Persona { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PostulanteViaje> PostulanteViaje { get; set; }
     }
 }

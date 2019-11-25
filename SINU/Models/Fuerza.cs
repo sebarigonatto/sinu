@@ -14,7 +14,16 @@ namespace SINU.Models
     
     public partial class Fuerza
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Fuerza()
+        {
+            this.ActividadMilitar = new HashSet<ActividadMilitar>();
+        }
+    
         public string Fuerza1 { get; set; }
         public int IdFuerza { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActividadMilitar> ActividadMilitar { get; set; }
     }
 }

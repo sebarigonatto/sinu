@@ -18,13 +18,13 @@ namespace SINU.Models
         public Inscripcion()
         {
             this.DocPresentado = new HashSet<DocPresentado>();
+            this.InscripcionEtapaEstado = new HashSet<InscripcionEtapaEstado>();
         }
     
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
         public string Numero { get; set; }
-        public Nullable<int> IdRegistroPostulante { get; set; }
+        public Nullable<int> IdPostulantePersona { get; set; }
         public Nullable<int> IdPreferencia { get; set; }
-        public Nullable<int> IdSecuencia { get; set; }
         public Nullable<int> IdEstablecimientoRindeExamen { get; set; }
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         public Nullable<System.DateTime> FechaRindeExamen { get; set; }
@@ -37,6 +37,7 @@ namespace SINU.Models
         public virtual OficinasYDelegaciones OficinasYDelegaciones { get; set; }
         public virtual Postulante Postulante { get; set; }
         public virtual Preferencia Preferencia { get; set; }
-        public virtual Secuencia_EtapaEstado Secuencia_EtapaEstado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
     }
 }
