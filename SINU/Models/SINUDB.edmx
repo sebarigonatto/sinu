@@ -1053,6 +1053,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="DNI" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdPreferenciaInstituto" Type="int" Mode="In" />
+          <Parameter Name="IdDelegacionOficinaIngresoInscribio" Type="int" Mode="In" />
+        </Function>
         <Function Name="spIngresaASeguridad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Grupo" Type="varchar" Mode="In" />
@@ -2622,6 +2630,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="correoregistrado" Mode="In" Type="String" />
             <Parameter Name="eliminar" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spCreaPostulante">
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="DNI" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="IdPreferenciaInstituto" Mode="In" Type="Int32" />
+            <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3247,6 +3263,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
           <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
+          <FunctionImportMapping FunctionImportName="spCreaPostulante" FunctionName="SINUModel.Store.spCreaPostulante" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

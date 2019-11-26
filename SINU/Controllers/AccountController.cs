@@ -12,8 +12,7 @@ using System.Web.Mvc;
 using System.Globalization;
 using System.Security.Claims;
 using RazorEngine.Templating;
-
-
+using System.Collections.Generic;
 
 namespace SINU.Controllers
 {
@@ -189,7 +188,8 @@ namespace SINU.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
 
-            
+            IEnumerable<SelectListItem> DeleyOfic = db.OficinasYDelegaciones.Select(b => new SelectListItem { Value = b.n , Text = b. });
+            ViewData["idOficinaYDelegacion"] = DeleyOfic;
             if (ModelState.IsValid)
             {
                 try
@@ -203,7 +203,7 @@ namespace SINU.Controllers
                     if (result.Succeeded) 
                     {
                         //crea una persona, un postulante y una inscripcion
-                        //var r = db.spCreaPostulante(model.Apellido,model.Nombre,model.DNI,model.Email,model.IdInstituto,model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(model.Apellido,model.Nombre,model.DNI,model.Email,model.IdInstituto,model.idOficinaYDelegacion);
 
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -250,6 +250,7 @@ namespace SINU.Controllers
                 catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
                 {
                     HttpContext.Session["funcion"] = ex.Message;
+                    
                     return View("Error");
                 }
 

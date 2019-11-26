@@ -252,5 +252,34 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
         }
+    
+        public virtual int spCreaPostulante(string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
+        {
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var idPreferenciaInstitutoParameter = idPreferenciaInstituto.HasValue ?
+                new ObjectParameter("IdPreferenciaInstituto", idPreferenciaInstituto) :
+                new ObjectParameter("IdPreferenciaInstituto", typeof(int));
+    
+            var idDelegacionOficinaIngresoInscribioParameter = idDelegacionOficinaIngresoInscribio.HasValue ?
+                new ObjectParameter("IdDelegacionOficinaIngresoInscribio", idDelegacionOficinaIngresoInscribio) :
+                new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
+        }
     }
 }
