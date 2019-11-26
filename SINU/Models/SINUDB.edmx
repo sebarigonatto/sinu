@@ -739,18 +739,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Inscripcion_Preferencia">
-          <End Role="Preferencia" Type="Self.Preferencia" Multiplicity="0..1" />
-          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Preferencia">
-              <PropertyRef Name="IdPreferencia" />
-            </Principal>
-            <Dependent Role="Inscripcion">
-              <PropertyRef Name="IdPreferencia" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InscripcionEtapaEstado_Inscripcion">
           <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="1" />
           <End Role="InscripcionEtapaEstado" Type="Self.InscripcionEtapaEstado" Multiplicity="*" />
@@ -1343,10 +1331,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </AssociationSet>
           <AssociationSet Name="FK_Inscripcion_Postulante" Association="Self.FK_Inscripcion_Postulante">
             <End Role="Postulante" EntitySet="Postulante" />
-            <End Role="Inscripcion" EntitySet="Inscripcion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Inscripcion_Preferencia" Association="Self.FK_Inscripcion_Preferencia">
-            <End Role="Preferencia" EntitySet="Preferencia" />
             <End Role="Inscripcion" EntitySet="Inscripcion" />
           </AssociationSet>
           <AssociationSet Name="FK_InscripcionEtapaEstado_Inscripcion" Association="Self.FK_InscripcionEtapaEstado_Inscripcion">

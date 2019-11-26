@@ -20,7 +20,7 @@ namespace SINU.Models
             this.Inscripcion = new HashSet<Inscripcion>();
         }
     
-        public string IdOficinasYDelegaciones { get; set; }
+        public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Direccion { get; set; }
         public string Localidad { get; set; }

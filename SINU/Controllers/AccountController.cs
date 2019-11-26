@@ -188,7 +188,7 @@ namespace SINU.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
 
-            IEnumerable<SelectListItem> DeleyOfic = db.OficinasYDelegaciones.Select(b => new SelectListItem { Value = b.n , Text = b. });
+            IEnumerable<SelectListItem> DeleyOfic = db.OficinasYDelegaciones.Select(b => new SelectListItem { Value = b.IdOficinasYDelegaciones.ToString() , Text = b.Nombre});
             ViewData["idOficinaYDelegacion"] = DeleyOfic;
             if (ModelState.IsValid)
             {
