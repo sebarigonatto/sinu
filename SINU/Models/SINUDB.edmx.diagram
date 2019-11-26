@@ -41,7 +41,6 @@
         <EntityTypeShape EntityType="SINUModel.vLOCALIDAD" Width="1.5" PointX="10.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vParentesco" Width="1.5" PointX="10.75" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vPeriodosInscrip" Width="1.5" PointX="11.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="SINUModel.vPersona_Datos" Width="1.5" PointX="12.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.VPersonaEstudio" Width="1.5" PointX="12.75" PointY="10" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vPostulante_Usuario_datos" Width="1.5" PointX="11.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vProvincia_Depto_Localidad" Width="1.5" PointX="13.75" PointY="2" IsExpanded="true" />
@@ -83,6 +82,7 @@
         <AssociationConnector Association="SINUModel.PersonaActividadMilitar" ManuallyRouted="false" />
         <AssociationConnector Association="SINUModel.PersonaEstudio" ManuallyRouted="false" />
         <AssociationConnector Association="SINUModel.PersonaSituacionOcupacional" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_DatosBasicos" Width="1.5" PointX="17.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

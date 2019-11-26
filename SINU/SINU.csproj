@@ -336,7 +336,7 @@
     <Compile Include="Models\VPersonaEstudio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\vPersona_Datos.cs">
+    <Compile Include="Models\vPersona_DatosBasicos.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPostulante_Usuario_datos.cs">
@@ -569,6 +569,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Vaciar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

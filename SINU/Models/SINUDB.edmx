@@ -413,17 +413,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida
           <Property Name="Titulo" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Datos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vPersona_Datos">
+advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vPersona_DatosBasicos">
           <Key>
+            <PropertyRef Name="IdPersona" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
             <PropertyRef Name="Sexo" />
             <PropertyRef Name="DNI" />
             <PropertyRef Name="CUIL" />
-            <PropertyRef Name="EmpezoACargarDatos" />
-            <PropertyRef Name="PidioIngresoAlSist" />
+            <PropertyRef Name="AspnetUser" />
+            <PropertyRef Name="Confirmado" />
           </Key>
+          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="IdPostulante" Type="int" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Sexo" Type="nchar" MaxLength="15" Nullable="false" />
@@ -441,10 +444,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Datos' no tiene definida n
           <Property Name="DomicilioDNI" Type="nvarchar" MaxLength="124" />
           <Property Name="DomicilioActual" Type="nvarchar" MaxLength="124" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
-          <Property Name="EmpezoACargarDatos" Type="datetime" Nullable="false" />
-          <Property Name="PidioIngresoAlSist" Type="datetime" Nullable="false" />
-          <Property Name="IdPeriodoInscripcion" Type="int" />
+          <Property Name="EmpezoACargarDatos" Type="datetime" />
+          <Property Name="PidioIngresoAlSist" Type="datetime" />
+          <Property Name="IdPreferencia" Type="int" />
+          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="fi" Type="date" />
           <Property Name="ff" Type="date" />
+          <Property Name="AspnetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Confirmado" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.VPersonaEstudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1067,6 +1074,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="Funcion" Type="varchar" Mode="In" />
         </Function>
         <Function Name="tablasnuevas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Vaciar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
+          <Parameter Name="eliminandotabla" Type="int" Mode="In" />
+        </Function>
         <Function Name="VaciarASPNETUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoregistrado" Type="nvarchar" Mode="In" />
           <Parameter Name="eliminar" Type="int" Mode="In" />
@@ -1163,30 +1174,36 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vPeriodosInscrip].[Titulo] AS [Titulo]
     FROM [dbo].[vPeriodosInscrip] AS [vPeriodosInscrip]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="vPersona_DatosBasicos" EntityType="Self.vPersona_DatosBasicos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vPersona_Datos].[Apellido] AS [Apellido], 
-    [vPersona_Datos].[Nombres] AS [Nombres], 
-    [vPersona_Datos].[Sexo] AS [Sexo], 
-    [vPersona_Datos].[FechaNacimiento] AS [FechaNacimiento], 
-    [vPersona_Datos].[DNI] AS [DNI], 
-    [vPersona_Datos].[CUIL] AS [CUIL], 
-    [vPersona_Datos].[Religion] AS [Religion], 
-    [vPersona_Datos].[EstCivil] AS [EstCivil], 
-    [vPersona_Datos].[FechaCasamiento] AS [FechaCasamiento], 
-    [vPersona_Datos].[Telefono] AS [Telefono], 
-    [vPersona_Datos].[Celular] AS [Celular], 
-    [vPersona_Datos].[Email] AS [Email], 
-    [vPersona_Datos].[Nacionalidad] AS [Nacionalidad], 
-    [vPersona_Datos].[Lugar Nac] AS [Lugar Nac], 
-    [vPersona_Datos].[DomicilioDNI] AS [DomicilioDNI], 
-    [vPersona_Datos].[DomicilioActual] AS [DomicilioActual], 
-    [vPersona_Datos].[ComoSeEntero] AS [ComoSeEntero], 
-    [vPersona_Datos].[EmpezoACargarDatos] AS [EmpezoACargarDatos], 
-    [vPersona_Datos].[PidioIngresoAlSist] AS [PidioIngresoAlSist], 
-    [vPersona_Datos].[IdPeriodoInscripcion] AS [IdPeriodoInscripcion], 
-    [vPersona_Datos].[ff] AS [ff]
-    FROM [dbo].[vPersona_Datos] AS [vPersona_Datos]</DefiningQuery>
+    [vPersona_DatosBasicos].[IdPersona] AS [IdPersona], 
+    [vPersona_DatosBasicos].[IdPostulante] AS [IdPostulante], 
+    [vPersona_DatosBasicos].[Apellido] AS [Apellido], 
+    [vPersona_DatosBasicos].[Nombres] AS [Nombres], 
+    [vPersona_DatosBasicos].[Sexo] AS [Sexo], 
+    [vPersona_DatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
+    [vPersona_DatosBasicos].[DNI] AS [DNI], 
+    [vPersona_DatosBasicos].[CUIL] AS [CUIL], 
+    [vPersona_DatosBasicos].[Religion] AS [Religion], 
+    [vPersona_DatosBasicos].[EstCivil] AS [EstCivil], 
+    [vPersona_DatosBasicos].[FechaCasamiento] AS [FechaCasamiento], 
+    [vPersona_DatosBasicos].[Telefono] AS [Telefono], 
+    [vPersona_DatosBasicos].[Celular] AS [Celular], 
+    [vPersona_DatosBasicos].[Email] AS [Email], 
+    [vPersona_DatosBasicos].[Nacionalidad] AS [Nacionalidad], 
+    [vPersona_DatosBasicos].[Lugar Nac] AS [Lugar Nac], 
+    [vPersona_DatosBasicos].[DomicilioDNI] AS [DomicilioDNI], 
+    [vPersona_DatosBasicos].[DomicilioActual] AS [DomicilioActual], 
+    [vPersona_DatosBasicos].[ComoSeEntero] AS [ComoSeEntero], 
+    [vPersona_DatosBasicos].[EmpezoACargarDatos] AS [EmpezoACargarDatos], 
+    [vPersona_DatosBasicos].[PidioIngresoAlSist] AS [PidioIngresoAlSist], 
+    [vPersona_DatosBasicos].[IdPreferencia] AS [IdPreferencia], 
+    [vPersona_DatosBasicos].[NombreInst] AS [NombreInst], 
+    [vPersona_DatosBasicos].[fi] AS [fi], 
+    [vPersona_DatosBasicos].[ff] AS [ff], 
+    [vPersona_DatosBasicos].[AspnetUser] AS [AspnetUser], 
+    [vPersona_DatosBasicos].[Confirmado] AS [Confirmado]
+    FROM [dbo].[vPersona_DatosBasicos] AS [vPersona_DatosBasicos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VPersonaEstudio" EntityType="Self.VPersonaEstudio" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1859,38 +1876,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
           <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vPersona_Datos">
-          <Key>
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="Sexo" />
-            <PropertyRef Name="DNI" />
-            <PropertyRef Name="CUIL" />
-            <PropertyRef Name="EmpezoACargarDatos" />
-            <PropertyRef Name="PidioIngresoAlSist" />
-          </Key>
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Sexo" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
-          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lugar_Nac" Type="String" MaxLength="178" FixedLength="false" Unicode="false" />
-          <Property Name="DomicilioDNI" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
-          <Property Name="DomicilioActual" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
-          <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="EmpezoACargarDatos" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PidioIngresoAlSist" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IdPeriodoInscripcion" Type="Int32" />
-          <Property Name="ff" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="VPersonaEstudio">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -2421,7 +2406,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
           <EntitySet Name="vParentesco" EntityType="Self.vParentesco" />
           <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" />
-          <EntitySet Name="vPersona_Datos" EntityType="Self.vPersona_Datos" />
           <EntitySet Name="VPersonaEstudio" EntityType="Self.VPersonaEstudio" />
           <EntitySet Name="vPostulante_Usuario_datos" EntityType="Self.vPostulante_Usuario_datos" />
           <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" />
@@ -2622,6 +2606,11 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="IdPreferenciaInstituto" Mode="In" Type="Int32" />
             <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="Vaciar" ReturnType="Collection(String)">
+            <Parameter Name="valoremail" Mode="In" Type="String" />
+            <Parameter Name="eliminandotabla" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="vPersona_DatosBasicos" EntityType="SINUModel.vPersona_DatosBasicos" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2642,6 +2631,45 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
           <Property Type="Int32" Name="Logueo" Nullable="false" />
         </ComplexType>
+        <EntityType Name="vPersona_DatosBasicos">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="Sexo" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="CUIL" />
+            <PropertyRef Name="AspnetUser" />
+            <PropertyRef Name="Confirmado" />
+          </Key>
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulante" Type="Int32" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CUIL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lugar_Nac" Type="String" MaxLength="178" FixedLength="false" Unicode="false" />
+          <Property Name="DomicilioDNI" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
+          <Property Name="DomicilioActual" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
+          <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmpezoACargarDatos" Type="DateTime" Precision="3" />
+          <Property Name="PidioIngresoAlSist" Type="DateTime" Precision="3" />
+          <Property Name="IdPreferencia" Type="Int32" />
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="fi" Type="DateTime" Precision="0" />
+          <Property Name="ff" Type="DateTime" Precision="0" />
+          <Property Name="AspnetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Confirmado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3044,33 +3072,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_Datos">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Datos">
-              <MappingFragment StoreEntitySet="vPersona_Datos">
-                <ScalarProperty Name="ff" ColumnName="ff" />
-                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
-                <ScalarProperty Name="PidioIngresoAlSist" ColumnName="PidioIngresoAlSist" />
-                <ScalarProperty Name="EmpezoACargarDatos" ColumnName="EmpezoACargarDatos" />
-                <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
-                <ScalarProperty Name="Religion" ColumnName="Religion" />
-                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
-                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
-                <ScalarProperty Name="Lugar_Nac" ColumnName="Lugar Nac" />
-                <ScalarProperty Name="DomicilioDNI" ColumnName="DomicilioDNI" />
-                <ScalarProperty Name="DomicilioActual" ColumnName="DomicilioActual" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VPersonaEstudio">
             <EntityTypeMapping TypeName="SINUModel.VPersonaEstudio">
               <MappingFragment StoreEntitySet="VPersonaEstudio">
@@ -3248,6 +3249,40 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
           <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
           <FunctionImportMapping FunctionImportName="spCreaPostulante" FunctionName="SINUModel.Store.spCreaPostulante" />
+          <FunctionImportMapping FunctionImportName="Vaciar" FunctionName="SINUModel.Store.Vaciar" />
+          <EntitySetMapping Name="vPersona_DatosBasicos">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_DatosBasicos">
+              <MappingFragment StoreEntitySet="vPersona_DatosBasicos">
+                <ScalarProperty Name="Confirmado" ColumnName="Confirmado" />
+                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
+                <ScalarProperty Name="ff" ColumnName="ff" />
+                <ScalarProperty Name="fi" ColumnName="fi" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
+                <ScalarProperty Name="PidioIngresoAlSist" ColumnName="PidioIngresoAlSist" />
+                <ScalarProperty Name="EmpezoACargarDatos" ColumnName="EmpezoACargarDatos" />
+                <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
+                <ScalarProperty Name="DomicilioActual" ColumnName="DomicilioActual" />
+                <ScalarProperty Name="DomicilioDNI" ColumnName="DomicilioDNI" />
+                <ScalarProperty Name="Lugar_Nac" ColumnName="Lugar Nac" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="IdPostulante" ColumnName="IdPostulante" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

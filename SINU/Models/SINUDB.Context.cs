@@ -63,7 +63,6 @@ namespace SINU.Models
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
         public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
-        public virtual DbSet<vPersona_Datos> vPersona_Datos { get; set; }
         public virtual DbSet<VPersonaEstudio> VPersonaEstudio { get; set; }
         public virtual DbSet<vPostulante_Usuario_datos> vPostulante_Usuario_datos { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
@@ -72,6 +71,7 @@ namespace SINU.Models
         public virtual DbSet<vSeguridad_Grupos> vSeguridad_Grupos { get; set; }
         public virtual DbSet<vSeguridad_Grupos_Usuarios> vSeguridad_Grupos_Usuarios { get; set; }
         public virtual DbSet<vSeguridad_Usuarios> vSeguridad_Usuarios { get; set; }
+        public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -280,6 +280,19 @@ namespace SINU.Models
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
+        }
+    
+        public virtual ObjectResult<string> Vaciar(string valoremail, Nullable<int> eliminandotabla)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            var eliminandotablaParameter = eliminandotabla.HasValue ?
+                new ObjectParameter("eliminandotabla", eliminandotabla) :
+                new ObjectParameter("eliminandotabla", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Vaciar", valoremailParameter, eliminandotablaParameter);
         }
     }
 }

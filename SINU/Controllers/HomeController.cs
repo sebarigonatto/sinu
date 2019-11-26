@@ -26,6 +26,8 @@ namespace SINU.Controllers
 
             return View();
         }
+     
+       
 
         public ActionResult Contact()
         {
@@ -33,6 +35,27 @@ namespace SINU.Controllers
             myModel.Configuracion = db.Configuracion.ToList();
             myModel.listoficinas = db.OficinasYDelegaciones.ToList();
             return View(myModel);
+        }
+
+        public ActionResult Vaciar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Vaciar(string email)
+        {
+            try
+            {
+                var res = db.Vaciar(email, 1);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.vaciar = ex;
+                return View();
+            }
+            ViewBag.vaciar = "Exito, en la eliminacion de los registros del correo" + email;
+            return View();
         }
     }
 }
