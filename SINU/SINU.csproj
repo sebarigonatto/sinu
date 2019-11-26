@@ -380,7 +380,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Imagenes\4.png" />
-    <Content Include="Imagenes\escAra.gif" />
+    <Content Include="Imagenes\ara.png" />
     <Content Include="Imagenes\escudo4.png" />
     <Content Include="Imagenes\logo-footer.png" />
     <Content Include="Imagenes\stamp.png" />

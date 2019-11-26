@@ -41,14 +41,15 @@
 
         @@media screen and (min-width: 731px) {
             titulo {
-                font-size: 80px;
+                font-size: 90px;
             }
         }
 
 
         @@media screen and (max-width: 600px) {
             titulo {
-                font-size: 35px;
+                font-size: 50px;
+                text-align: center;
             }
         }
 
@@ -92,9 +93,8 @@
             position: absolute;
             color: white;
             background-color: #00000082;
-            height: 50%;
-            width: 90%;
-            border-radius: 8px;
+            height: 100%;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -139,19 +139,19 @@
                     </div>
                 </div>
                 <div class="content-title">
-                    <titulo class=" ">Armada Argentina</titulo>
+                   <titulo class=" ">Armada Argentina</titulo>
                 </div>
 
             </div>
         </div>
     </header>
-    <div class="container">
-        <div class="card-deck mb-4 text-center">
-            <div class="card mb-4 shadow-sm">
+    <div class="container" >
+        <div class="card-deck mb-4 text-center" >
+            <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
                 <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
-                    <h1>Modalidades de Inscripción</h1>
+                    <h2>Modalidades de Inscripción</h2>
                 </div>
-                <div class="card-body" style="border: solid 1px;">
+                <div class="card-body" >
                     <p class="lead justify-content-center">
                         <b>@ViewBag.TextoPAGINAPRINCIPAL</b>
                     </p>
@@ -169,7 +169,7 @@
                 while (inst < Periodos.Count())
                 {
                     InstAnterior = Periodos[inst].NombreInst;
-                    <div class="card card1" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);">
+                    <div class="card card1" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
 
                         @{string imagen = @Periodos[inst].IdInstitucion + ".png"; }
                         <img class="card-img imgi" src="~/Imagenes/@imagen" alt="Card image cap" style="">
@@ -186,9 +186,9 @@
                                     per++;
                                     // armado de la fila de un nuevo periodo
                                     //mostrar FechaInicio y Fecha Fin con el contador de per  <h6>@per&ordm;&ensp;</h6>
-                                    <h4>Inicio @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h4>
+                                    <h5>Inicio @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h5>
                                     <br />
-                                    <h4>Cierre @Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h4>
+                                    <h5>Cierre @Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h5>
 
                                     <div class="row card-footer lead justify-content-center">
                                         @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
@@ -226,7 +226,7 @@
 
         <footer class="footer">
             <div class="container-fluid">
-                <div class="row text-center">
+                <div class="row " style="float:right">
                     <div class="col-lg-12">&copy; @DateTime.Now.Year - SINU - Armada Argentina</div>
                 </div>
             </div>
