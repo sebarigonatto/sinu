@@ -379,8 +379,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Imagenes\favicon.ico" />
     <Content Include="Imagenes\4.png" />
     <Content Include="Imagenes\ara.png" />
+    <Content Include="Imagenes\carrucel1.jpg" />
+    <Content Include="Imagenes\carrucel2.jpg" />
+    <Content Include="Imagenes\carrucel3.jpg" />
     <Content Include="Imagenes\escudo4.png" />
     <Content Include="Imagenes\logo-footer.png" />
     <Content Include="Imagenes\stamp.png" />
@@ -597,6 +601,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
