@@ -169,11 +169,12 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Register(int idInstitucion = 0)
         {
-           //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
+            idInstitucion = (idInstitucion == 0) ? 1:idInstitucion;
+            //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
             ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
             if (idInstitucion != 0)
             {
-                ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+                ViewBag.Inst = (idInstitucion == 1) ? "--": db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
             };
 
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
@@ -276,7 +277,7 @@ namespace SINU.Controllers
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
-                    //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE.
+                    //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad( UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
