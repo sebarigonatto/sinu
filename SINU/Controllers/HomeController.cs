@@ -54,7 +54,7 @@ namespace SINU.Controllers
                 ViewBag.vaciar = ex;
                 return View();
             }
-            ViewBag.vaciar = "Exito, en la eliminacion de los registros del correo" + email;
+            ViewBag.vaciar = "Exito, en la eliminacion de los registros del correo:  " + email;
             return View();
         }
     }

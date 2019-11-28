@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Security.Claims;
 using RazorEngine.Templating;
 using System.Collections.Generic;
+using System.Web.Routing;
 
 namespace SINU.Controllers
 {
@@ -101,7 +102,7 @@ namespace SINU.Controllers
                     {
                         case SignInStatus.Success:
                             //return RedirectToLocal(returnUrl);
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Postulante", new { @email = model.Email });
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
                             var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");
@@ -172,6 +173,7 @@ namespace SINU.Controllers
             idInstitucion = (idInstitucion == 0) ? 1:idInstitucion;
             //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
             ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+
             if (idInstitucion != 0)
             {
                 ViewBag.Inst = (idInstitucion == 1) ? "--": db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
@@ -189,8 +191,7 @@ namespace SINU.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
 
-            IEnumerable<SelectListItem> DeleyOfic = db.OficinasYDelegaciones.Select(b => new SelectListItem { Value = b.IdOficinasYDelegaciones.ToString() , Text = b.Nombre});
-            ViewData["idOficinaYDelegacion"] = DeleyOfic;
+            ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
             if (ModelState.IsValid)
             {
                 try

@@ -147,7 +147,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
             <PropertyRef Name="IdInscripcionEtapaEstado" />
           </Key>
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
-          <Property Name="Fecha" Type="date" />
+          <Property Name="Fecha" Type="datetime" />
           <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Institucion">
@@ -421,37 +421,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene def
             <PropertyRef Name="Nombres" />
             <PropertyRef Name="Sexo" />
             <PropertyRef Name="DNI" />
-            <PropertyRef Name="CUIL" />
             <PropertyRef Name="AspnetUser" />
-            <PropertyRef Name="Confirmado" />
           </Key>
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="IdPostulante" Type="int" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Sexo" Type="nchar" MaxLength="15" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="date" />
           <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="CUIL" Type="varchar" MaxLength="11" Nullable="false" />
-          <Property Name="Religion" Type="varchar" MaxLength="112" />
-          <Property Name="EstCivil" Type="varchar" MaxLength="112" />
-          <Property Name="FechaCasamiento" Type="date" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="Nacionalidad" Type="varchar" MaxLength="50" />
-          <Property Name="Lugar Nac" Type="varchar" MaxLength="178" />
-          <Property Name="DomicilioDNI" Type="nvarchar" MaxLength="124" />
-          <Property Name="DomicilioActual" Type="nvarchar" MaxLength="124" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
           <Property Name="EmpezoACargarDatos" Type="datetime" />
           <Property Name="PidioIngresoAlSist" Type="datetime" />
           <Property Name="IdPreferencia" Type="int" />
           <Property Name="NombreInst" Type="varchar" MaxLength="60" />
-          <Property Name="fi" Type="date" />
-          <Property Name="ff" Type="date" />
           <Property Name="AspnetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Confirmado" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="IdSecuencia" Type="int" />
+          <Property Name="Etapa_Estado" Type="varchar" MaxLength="76" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.VPersonaEstudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1181,28 +1169,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vPersona_DatosBasicos].[Apellido] AS [Apellido], 
     [vPersona_DatosBasicos].[Nombres] AS [Nombres], 
     [vPersona_DatosBasicos].[Sexo] AS [Sexo], 
-    [vPersona_DatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
     [vPersona_DatosBasicos].[DNI] AS [DNI], 
-    [vPersona_DatosBasicos].[CUIL] AS [CUIL], 
-    [vPersona_DatosBasicos].[Religion] AS [Religion], 
-    [vPersona_DatosBasicos].[EstCivil] AS [EstCivil], 
-    [vPersona_DatosBasicos].[FechaCasamiento] AS [FechaCasamiento], 
     [vPersona_DatosBasicos].[Telefono] AS [Telefono], 
     [vPersona_DatosBasicos].[Celular] AS [Celular], 
     [vPersona_DatosBasicos].[Email] AS [Email], 
-    [vPersona_DatosBasicos].[Nacionalidad] AS [Nacionalidad], 
-    [vPersona_DatosBasicos].[Lugar Nac] AS [Lugar Nac], 
-    [vPersona_DatosBasicos].[DomicilioDNI] AS [DomicilioDNI], 
-    [vPersona_DatosBasicos].[DomicilioActual] AS [DomicilioActual], 
     [vPersona_DatosBasicos].[ComoSeEntero] AS [ComoSeEntero], 
     [vPersona_DatosBasicos].[EmpezoACargarDatos] AS [EmpezoACargarDatos], 
     [vPersona_DatosBasicos].[PidioIngresoAlSist] AS [PidioIngresoAlSist], 
     [vPersona_DatosBasicos].[IdPreferencia] AS [IdPreferencia], 
     [vPersona_DatosBasicos].[NombreInst] AS [NombreInst], 
-    [vPersona_DatosBasicos].[fi] AS [fi], 
-    [vPersona_DatosBasicos].[ff] AS [ff], 
     [vPersona_DatosBasicos].[AspnetUser] AS [AspnetUser], 
-    [vPersona_DatosBasicos].[Confirmado] AS [Confirmado]
+    [vPersona_DatosBasicos].[IdSecuencia] AS [IdSecuencia], 
+    [vPersona_DatosBasicos].[Etapa_Estado] AS [Etapa_Estado]
     FROM [dbo].[vPersona_DatosBasicos] AS [vPersona_DatosBasicos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VPersonaEstudio" EntityType="Self.VPersonaEstudio" store:Type="Views" store:Schema="dbo">
@@ -1826,7 +1804,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <PropertyRef Name="IdInscripcionEtapaEstado" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
           <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="InscripcionEtapaEstado" ToRole="Inscripcion" />
           <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" FromRole="InscripcionEtapaEstado" ToRole="Secuencia_EtapaEstado" />
@@ -2638,37 +2616,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <PropertyRef Name="Nombres" />
             <PropertyRef Name="Sexo" />
             <PropertyRef Name="DNI" />
-            <PropertyRef Name="CUIL" />
             <PropertyRef Name="AspnetUser" />
-            <PropertyRef Name="Confirmado" />
           </Key>
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdPostulante" Type="Int32" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Sexo" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
           <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="CUIL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Lugar_Nac" Type="String" MaxLength="178" FixedLength="false" Unicode="false" />
-          <Property Name="DomicilioDNI" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
-          <Property Name="DomicilioActual" Type="String" MaxLength="124" FixedLength="false" Unicode="true" />
           <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="EmpezoACargarDatos" Type="DateTime" Precision="3" />
           <Property Name="PidioIngresoAlSist" Type="DateTime" Precision="3" />
           <Property Name="IdPreferencia" Type="Int32" />
           <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="fi" Type="DateTime" Precision="0" />
-          <Property Name="ff" Type="DateTime" Precision="0" />
           <Property Name="AspnetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Confirmado" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IdSecuencia" Type="Int32" />
+          <Property Name="Etapa_Estado" Type="String" MaxLength="76" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3253,28 +3219,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vPersona_DatosBasicos">
             <EntityTypeMapping TypeName="SINUModel.vPersona_DatosBasicos">
               <MappingFragment StoreEntitySet="vPersona_DatosBasicos">
-                <ScalarProperty Name="Confirmado" ColumnName="Confirmado" />
+                <ScalarProperty Name="Etapa_Estado" ColumnName="Etapa_Estado" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
-                <ScalarProperty Name="ff" ColumnName="ff" />
-                <ScalarProperty Name="fi" ColumnName="fi" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
                 <ScalarProperty Name="PidioIngresoAlSist" ColumnName="PidioIngresoAlSist" />
                 <ScalarProperty Name="EmpezoACargarDatos" ColumnName="EmpezoACargarDatos" />
                 <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
-                <ScalarProperty Name="DomicilioActual" ColumnName="DomicilioActual" />
-                <ScalarProperty Name="DomicilioDNI" ColumnName="DomicilioDNI" />
-                <ScalarProperty Name="Lugar_Nac" ColumnName="Lugar Nac" />
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Celular" ColumnName="Celular" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
-                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
-                <ScalarProperty Name="Religion" ColumnName="Religion" />
-                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
                 <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="Sexo" ColumnName="Sexo" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />

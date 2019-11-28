@@ -11,35 +11,33 @@ namespace SINU.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class vPersona_DatosBasicos
     {
+        [ScaffoldColumn(false)]
         public int IdPersona { get; set; }
+        [ScaffoldColumn(false)]
         public Nullable<int> IdPostulante { get; set; }
         public string Apellido { get; set; }
         public string Nombres { get; set; }
         public string Sexo { get; set; }
-        public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public string DNI { get; set; }
-        public string CUIL { get; set; }
-        public string Religion { get; set; }
-        public string EstCivil { get; set; }
-        public Nullable<System.DateTime> FechaCasamiento { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
-        public string Nacionalidad { get; set; }
-        public string Lugar_Nac { get; set; }
-        public string DomicilioDNI { get; set; }
-        public string DomicilioActual { get; set; }
         public string ComoSeEntero { get; set; }
+        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
+        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         public Nullable<int> IdPreferencia { get; set; }
         public string NombreInst { get; set; }
-        public Nullable<System.DateTime> fi { get; set; }
-        public Nullable<System.DateTime> ff { get; set; }
+        [ScaffoldColumn(false)]
         public string AspnetUser { get; set; }
-        public string Confirmado { get; set; }
+        [ScaffoldColumn(false)]
+        public Nullable<int> IdSecuencia { get; set; }
+        [ScaffoldColumn(false)]
+        public string Etapa_Estado { get; set; }
     }
 }

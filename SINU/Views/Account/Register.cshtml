@@ -1,7 +1,7 @@
 ﻿@model SINU.Models.RegisterViewModel
 @{
     ViewBag.Title = "Registrarse";
-   
+
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -10,7 +10,7 @@
 {
     @Html.AntiForgeryToken()
     <h4>@ViewBag.Inst</h4>
-   
+
 
 
     <hr />
@@ -39,7 +39,7 @@
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>          
+        </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
@@ -57,10 +57,10 @@
         @Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)ViewBag.OficinaYDelegacion, "---Seleccione la mas cercana ---", htmlAttributes: new { @class = "form-control" })
-            @*@Html.DropDownList("IdOficinasYDelegaciones", ViewData["OficinaYDelegacion"] as SelectList, "---Seleccione la mas cercana ---")*@
         </div>
     </div>
-
+    <br />
+    @Html.HiddenFor(model => model.IdInstituto)
     @*<div class="form-group">
             @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -69,7 +69,7 @@
         </div>*@
 
     //parametro enviado oculto al controlador para almacenar la preferencia
-    @Html.HiddenFor(model => model.IdInstituto)
+
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -77,7 +77,7 @@
         </div>
     </div>
 }
-    
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
