@@ -22,6 +22,7 @@ else
             <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
         }
     }
-    <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path.ToString() }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+
 </ul>
 }

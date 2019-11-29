@@ -12,13 +12,13 @@ namespace SINU.Controllers
     {
         SINUEntities db = new SINUEntities();
         // GET: Postulante
-        public ActionResult Index(string email)
-       
+        public ActionResult Index()
         {
+            var mail= HttpContext.User.Identity.Name.ToString();
             DatosBasicos datosba = new DatosBasicos();
             datosba.Sexo = db.Sexo.ToList();
             datosba.vPeriodosInscrips = db.vPeriodosInscrip.ToList();
-            datosba.vPersona_DatosBasicos=db.vPersona_DatosBasicos.FirstOrDefault(b => b.Email == email);
+            datosba.vPersona_DatosBasicos=db.vPersona_DatosBasicos.FirstOrDefault(b => b.Email == mail);
             return View(datosba);
         }
 

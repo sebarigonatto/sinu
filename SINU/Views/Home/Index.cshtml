@@ -214,12 +214,21 @@
         <hr>
 
         <!-- Call to Action Section -->
-
-        <div class="row lead justify-content-center">
-            <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
-                <a>@Html.ActionLink("Iniciar Sesion", "Login", "Account", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="row lead justify-content-center">
+                <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
+                    <a>@Html.ActionLink("Iniciar Sesion", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path }, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+                </div>
             </div>
-        </div>
+        } else {
+            <div class="row lead justify-content-center">
+                <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
+                    <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante",null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+                </div>
+            </div>
+        }
+
 
 
         <hr />
