@@ -247,6 +247,7 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadatos.cs" />
     <Compile Include="Models\NiveldEstudio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -256,6 +257,7 @@
     <Compile Include="Models\OficinasYDelegaciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\PeriodosInscripciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -517,7 +519,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\Postulante\Indexa.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -578,6 +579,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
     <Content Include="Views\Postulante\Index.cshtml" />
+    <Content Include="Views\Postulante\Secuencias.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

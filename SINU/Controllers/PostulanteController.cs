@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SINU.Authorize;
+
 using SINU.Models;
 using SINU.ViewModels;
 
 namespace SINU.Controllers
 {
+    [Authorize]
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
         // GET: Postulante
+        //[AuthorizacionPermiso]
         public ActionResult Index()
         {
+       
             var mail= HttpContext.User.Identity.Name.ToString();
             DatosBasicos datosba = new DatosBasicos();
             datosba.Sexo = db.Sexo.ToList();
@@ -21,10 +26,10 @@ namespace SINU.Controllers
             datosba.vPersona_DatosBasicos=db.vPersona_DatosBasicos.FirstOrDefault(b => b.Email == mail);
             return View(datosba);
         }
-
-        // GET: Postulante/Details/5
-        public ActionResult Details(int id)
+              
+        public ActionResult Secuencias()
         {
+
             return View();
         }
 

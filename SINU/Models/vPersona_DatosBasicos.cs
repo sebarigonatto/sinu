@@ -15,9 +15,7 @@ namespace SINU.Models
 
     public partial class vPersona_DatosBasicos
     {
-        [ScaffoldColumn(false)]
         public int IdPersona { get; set; }
-        [ScaffoldColumn(false)]
         public Nullable<int> IdPostulante { get; set; }
         public string Apellido { get; set; }
         public string Nombres { get; set; }
@@ -27,17 +25,12 @@ namespace SINU.Models
         public string Celular { get; set; }
         public string Email { get; set; }
         public string ComoSeEntero { get; set; }
-        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
-        [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         public Nullable<int> IdPreferencia { get; set; }
         public string NombreInst { get; set; }
-        [ScaffoldColumn(false)]
         public string AspnetUser { get; set; }
-        [ScaffoldColumn(false)]
         public Nullable<int> IdSecuencia { get; set; }
-        [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
     }
 }

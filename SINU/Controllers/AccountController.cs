@@ -101,13 +101,7 @@ namespace SINU.Controllers
                     switch (result)
                     {
                         case SignInStatus.Success:
-                            if (returnUrl == HttpContext.Request.Url.AbsolutePath) {
-                                return RedirectToAction("Index", "Home");
-                            }
-                            else {
-                                return RedirectToLocal(returnUrl);
-                            } ;
-                            
+                            return RedirectToAction("Index","Postulante");
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
                             var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");
