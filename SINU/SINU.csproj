@@ -324,7 +324,13 @@
     <Compile Include="Models\TipoNacionalidad.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vEntrevistaLugarFecha.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vEstCivil.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
@@ -578,8 +584,9 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
+    <Content Include="Views\Postulante\DatosBasicos.cshtml" />
     <Content Include="Views\Postulante\Index.cshtml" />
-    <Content Include="Views\Postulante\Secuencias.cshtml" />
+    <Content Include="Views\Postulante\Entrevista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,21 +7,18 @@ namespace SINU.Models
     public class vPersona_DatosBasicosMetadata
     {
         [ScaffoldColumn(false)]
-        [Required]
         public int IdPersona { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public Nullable<int> IdPostulante { get; set; }
         [Required]
         public string Apellido { get; set; }
         [Required]
         public string Nombres { get; set; }
-        [Required]
+        [ScaffoldColumn(false)]
         public string Sexo { get; set; }
         [Required]
         public string DNI { get; set; }
         [Required]
-        //[CelTel("Celular", ErrorMessage = "Not valid")]
         public string Telefono { get; set; }
         [Required]
         public string Celular { get; set; }
@@ -29,25 +26,26 @@ namespace SINU.Models
         public string Email { get; set; }
         [Required]
         public string ComoSeEntero { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         [Required]
         public Nullable<int> IdPreferencia { get; set; }
-        [Required]
+        [ScaffoldColumn(false)]
         public string NombreInst { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public string AspnetUser { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public Nullable<int> IdSecuencia { get; set; }
-        [Required]
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
+        [Required]
+        public int IdSexo { get; set; }
+        [Required]
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        [ScaffoldColumn(false)]
+        public string Oficina { get; set; }
     }
 
     //[AttributeUsage(AttributeTargets.Class)]

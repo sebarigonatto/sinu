@@ -72,6 +72,8 @@ namespace SINU.Models
         public virtual DbSet<vSeguridad_Grupos_Usuarios> vSeguridad_Grupos_Usuarios { get; set; }
         public virtual DbSet<vSeguridad_Usuarios> vSeguridad_Usuarios { get; set; }
         public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
+        public virtual DbSet<vEntrevistaLugarFecha> vEntrevistaLugarFecha { get; set; }
+        public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

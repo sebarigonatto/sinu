@@ -12,11 +12,11 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vSeguridad_Grupos_Usuarios
+    public partial class vInscripcionEtapaEstadoUltimoEstado
     {
-        public string codAplicacion { get; set; }
-        public string codUsuario { get; set; }
-        public string codGrupo { get; set; }
-        public string codFuncion { get; set; }
+        public int IdSecuencia { get; set; }
+        public int IdInscripcionEtapaEstado { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
+        public string Email { get; set; }
     }
 }

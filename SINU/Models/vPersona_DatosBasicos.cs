@@ -11,8 +11,7 @@ namespace SINU.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class vPersona_DatosBasicos
     {
         public int IdPersona { get; set; }
@@ -32,5 +31,8 @@ namespace SINU.Models
         public string AspnetUser { get; set; }
         public Nullable<int> IdSecuencia { get; set; }
         public string Etapa_Estado { get; set; }
+        public int IdSexo { get; set; }
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        public string Oficina { get; set; }
     }
 }

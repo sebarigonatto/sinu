@@ -1,129 +1,217 @@
-﻿@model SINU.ViewModels.DatosBasicos
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    @@media (min-width: 576px) {
+        .rounded-nav {
+            border-radius: 50rem !important;
+        }
+    }
 
-<h2>Etapas de la Inscripción</h2>
+    @@media (min-width: 576px) {
+        .rounded-nav .nav-link {
+            border-radius: 50rem !important;
+        }
+    }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    /* With arrow tabs */
 
-    <div class="form-group">
-        <h4>Datos Baicos</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    .with-arrow .nav-link.active {
+        position: relative;
+    }
 
-    <div class="form-group" >
-        <div class="form-group row ">
+        .with-arrow .nav-link.active::after {
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #052240;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+        }
 
+    /* lined tabs */
 
-            <div class="col-sm-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.Apellido, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.Apellido, "", new { @class = "text-danger" })
+    .lined .nav-link {
+        border: none;
+        border-bottom: 3px solid transparent;
+    }
+
+        .lined .nav-link:hover {
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+
+        .lined .nav-link.active {
+            background: none;
+            color: #555;
+            border-color: #052240;
+        }
+
+    .atab {
+        color: #052240 !important;
+    }
+
+    .borderdiv1 {
+        border-left: 1px solid #dee2e6 !important;
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+
+    @@media screen and (max-width: 600px) {
+        .tabb {
+            flex-wrap: nowrap !important;
+        }
+
+        .borderdiv1 {
+            border-left: 0px !important;
+        }
+    }
+
+    .bli {
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+    .Tabdesabilitado{
+       pointer-events: none;
+    }
+</style>
+
+<h2>Secuencias del POSTULANTE</h2>
+<br />
+
+@* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
+<div class="p-1 bg-white rounded shadow mb-1">
+
+    <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center">
+
+        @* PERSONA DATOS BASICOS *@
+        <li class="nav-item flex-sm-fill" id="5">
+            <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">Datos Basicos</a>
+        </li>
+
+        @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
+        <li class="nav-item flex-sm-fill" id="9">
+            <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">Entrevista</a>
+        </li>
+
+        @* DOCUMENTACION *@
+        <li class="nav-item flex-sm-fill" id="11">
+            <a id="profile2-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">Profile</a>
+        </li>
+
+        @* --------------------------------------- *@
+        <li class="nav-item flex-sm-fill" id="15">
+            <a id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">Contact</a>
+        </li>
+    </ul>
+
+    <div id="myTab2Content" class="tab-content">
+
+        @* VISTA VPERSONA DATOS BASICOS *@
+
+        <div id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab" class="tab-pane fade px-4 py-3 show active">
+            @*  CUANDO YA TIENE EL REGISTRO VALIDADO *@
+            @if (ViewBag.secuenciaactual >= 5)
+            {
+                @Html.Action("DatosBasicos", "Postulante")
+            }
+
+        </div>
+
+            @* VISTA DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
+        <div id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab" class="tab-pane fade px-4 py-3">
+            @* SI CUANDO YA TIENE LA ENTREVISTA ASIGNADA *@
+            @if (ViewBag.secuenciaactual >= 9)
+            {
+                @Html.Action("Entrevista", "Postulante")
+            }
+
+        </div>
+
+        @* VISTA DE ---------------- *@
+        <div id="profile2" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-3">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2 mr-2">
+                        <ul class="nav nav-tabs with-arrow lined  flex-sm-column text-center tabb mb-1" id="myTab" role="tablist" style="border-bottom:0px solid;">
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                            </li>
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                            </li>
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
+                    <!-- /.col-md-4 -->
+                    <div class="col-sm-9 borderdiv1">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <h2>Home</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <h2>Profile</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <h2>Contact</h2>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.Nombres, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.Nombres, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.DNI, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.DNI, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                @* revisar aqui con el tema de id de sexo *@
-                @* revisar tambien el tema sobre la delgacion si se puede editar tambien?????? *@
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Sexo, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.vPersona_DatosBasicos.Sexo, new SelectList(Model.Sexo, "Descripcion", "Descripcion"), null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Sexo)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.Telefono, "", new { @class = "text-danger" })
-                    </div>
+                    <!-- /.col-md-8 -->
                 </div>
 
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.Celular, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.Celular, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.Email, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.NombreInst, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.vPersona_DatosBasicos.IdPreferencia, new SelectList(Model.vPeriodosInscrips, "IdInstitucion", "NombreInst"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.NombreInst)
-                    </div>
-                </div>
-
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.vPersona_DatosBasicos.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.vPersona_DatosBasicos.ComoSeEntero, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.vPersona_DatosBasicos.ComoSeEntero, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-            <br />
-        </div>
-        <div class="form-group pl-3">
-            
-                <button value="Editar" class="btn btn-success">Editar</button>
-           
-          
-                <input type="submit" value="Gurdar" class="btn btn-success" />
-           
+            <!-- /.container -->
         </div>
 
-        
-    </div>
-    </div>
-}
+        @* VISTA DE ---------------- *@
+        <div id="contact2" role="tabpanel" aria-labelledby="contact-tab" class="tab-pane fade px-4 py-3">
+            <p class="leade ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+            <p class="leade  mb-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    </div>
+    <!-- End lined tabs -->
 </div>
 
+
+
 @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            (function () {
 
+                $("#TabGeneral li").each(function () {
 
+                    if ($(this).attr('id') > @ViewBag.secuenciaactual) {
+
+                        $(this).addClass('Tabdesabilitado').css("background-color","red");
+
+                    };
+                });
+
+            })();
+        });
 
     </script>
-}
 
+}

@@ -15,6 +15,7 @@ namespace SINU.ViewModels
 
         public List<vPeriodosInscrip> vPeriodosInscrips { get; set; }
 
+        public List<OficinasYDelegaciones> OficinasYDelegaciones { get; set; }
 
     }
 }
