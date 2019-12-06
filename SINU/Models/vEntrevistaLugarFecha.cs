@@ -26,5 +26,6 @@ namespace SINU.Models
         public int IdSecuencia { get; set; }
         public string Etapa { get; set; }
         public string Estado { get; set; }
+        public string Email { get; set; }
     }
 }

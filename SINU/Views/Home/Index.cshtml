@@ -138,8 +138,10 @@
 
                     </div>
                 </div>
+
+
                 <div class="content-title">
-                   <titulo class=" ">Armada Argentina</titulo>
+                    <titulo class=" ">Armada Argentina</titulo>
                 </div>
 
             </div>
@@ -214,7 +216,7 @@
         <hr>
 
         <!-- Call to Action Section -->
-        @if (!User.Identity.IsAuthenticated)
+        @if (!Request.IsAuthenticated)
         {
             <div class="row lead justify-content-center">
                 <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">

@@ -42,6 +42,14 @@
           <Property Name="Eliminado" Type="bit" Nullable="false" />
           <Property Name="IdConfiguracion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="ConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="IdConfiguracion" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="DocPresentado">
           <Key>
             <PropertyRef Name="IdDocPresentado" />
@@ -361,6 +369,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="IdTipoNacionalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="NombreDato" />
+            <PropertyRef Name="TipoDato" />
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="NombreDato" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="ValorDato" Type="varchar" MaxLength="3000" />
+          <Property Name="TipoDato" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UsoDato" Type="varchar" MaxLength="500" />
+          <Property Name="IdConfiguracion" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
@@ -384,6 +406,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -595,15 +618,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos' no tiene definid
 advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSeguridad_Grupos_Usuarios">
           <Key>
-            <PropertyRef Name="codAplicacion" />
             <PropertyRef Name="codUsuario" />
-            <PropertyRef Name="codGrupo" />
             <PropertyRef Name="codFuncion" />
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="codAplicacion" />
           </Key>
-          <Property Name="codAplicacion" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="codUsuario" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="codGrupo" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="codFuncion" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="codGrupo" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="codAplicacion" Type="char" MaxLength="30" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1087,6 +1110,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="IdPreferenciaInstituto" Type="int" Mode="In" />
           <Parameter Name="IdDelegacionOficinaIngresoInscribio" Type="int" Mode="In" />
         </Function>
+        <Function Name="spDatosBasicosUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Nombres" Type="varchar" Mode="In" />
+          <Parameter Name="IdSexo" Type="int" Mode="In" />
+          <Parameter Name="DNI" Type="varchar" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Celular" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="IdDelegacionOficinaIngresoInscribio" Type="int" Mode="In" />
+          <Parameter Name="ComoSeEntero" Type="varchar" Mode="In" />
+          <Parameter Name="IdPreferencia" Type="int" Mode="In" />
+          <Parameter Name="IdPersona" Type="int" Mode="In" />
+          <Parameter Name="IdPostulante" Type="int" Mode="In" />
+        </Function>
         <Function Name="spIngresaASeguridad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Grupo" Type="varchar" Mode="In" />
@@ -1096,15 +1133,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="spPrueba" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="USUARIO" Type="varchar" Mode="In" />
-          <Parameter Name="Funcion" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="spValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Funcion" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="tablasnuevas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="Vaciar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
           <Parameter Name="eliminandotabla" Type="int" Mode="In" />
@@ -1145,6 +1177,11 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfiguracionAdmin" EntityType="Self.ConfiguracionAdmin" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ConfiguracionAdmin].[IdConfiguracion] AS [IdConfiguracion]
+    FROM [dbo].[ConfiguracionAdmin] AS [ConfiguracionAdmin]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="InscripcionEtapaEstado" EntityType="Self.InscripcionEtapaEstado" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [InscripcionEtapaEstado].[IdSecuencia] AS [IdSecuencia], 
@@ -1170,6 +1207,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [PersonaSituacionOcupacional].[IdSituacionOcupacional] AS [IdSituacionOcupacional]
     FROM [dbo].[PersonaSituacionOcupacional] AS [PersonaSituacionOcupacional]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vConfiguracionAdmin" EntityType="Self.vConfiguracionAdmin" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vConfiguracionAdmin].[NombreDato] AS [NombreDato], 
+    [vConfiguracionAdmin].[ValorDato] AS [ValorDato], 
+    [vConfiguracionAdmin].[TipoDato] AS [TipoDato], 
+    [vConfiguracionAdmin].[UsoDato] AS [UsoDato], 
+    [vConfiguracionAdmin].[IdConfiguracion] AS [IdConfiguracion]
+    FROM [dbo].[vConfiguracionAdmin] AS [vConfiguracionAdmin]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vEntrevistaLugarFecha].[Apellido] AS [Apellido], 
@@ -1183,7 +1229,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vEntrevistaLugarFecha].[IdInscripcion] AS [IdInscripcion], 
     [vEntrevistaLugarFecha].[IdSecuencia] AS [IdSecuencia], 
     [vEntrevistaLugarFecha].[Etapa] AS [Etapa], 
-    [vEntrevistaLugarFecha].[Estado] AS [Estado]
+    [vEntrevistaLugarFecha].[Estado] AS [Estado], 
+    [vEntrevistaLugarFecha].[Email] AS [Email]
     FROM [dbo].[vEntrevistaLugarFecha] AS [vEntrevistaLugarFecha]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" store:Type="Views" store:Schema="dbo">
@@ -1328,10 +1375,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </EntitySet>
           <EntitySet Name="vSeguridad_Grupos_Usuarios" EntityType="Self.vSeguridad_Grupos_Usuarios" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vSeguridad_Grupos_Usuarios].[codAplicacion] AS [codAplicacion], 
     [vSeguridad_Grupos_Usuarios].[codUsuario] AS [codUsuario], 
+    [vSeguridad_Grupos_Usuarios].[codFuncion] AS [codFuncion], 
     [vSeguridad_Grupos_Usuarios].[codGrupo] AS [codGrupo], 
-    [vSeguridad_Grupos_Usuarios].[codFuncion] AS [codFuncion]
+    [vSeguridad_Grupos_Usuarios].[codAplicacion] AS [codAplicacion]
     FROM [dbo].[vSeguridad_Grupos_Usuarios] AS [vSeguridad_Grupos_Usuarios]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vSeguridad_Usuarios" EntityType="Self.vSeguridad_Usuarios" store:Type="Views" store:Schema="dbo">
@@ -2663,6 +2710,22 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="vPersona_DatosBasicos" EntityType="SINUModel.vPersona_DatosBasicos" />
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="SINUModel.vEntrevistaLugarFecha" />
           <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="SINUModel.vInscripcionEtapaEstadoUltimoEstado" />
+          <EntitySet Name="ConfiguracionAdmin" EntityType="SINUModel.ConfiguracionAdmin" />
+          <EntitySet Name="vConfiguracionAdmin" EntityType="SINUModel.vConfiguracionAdmin" />
+          <FunctionImport Name="spDatosBasicosUpdate">
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="IdSexo" Mode="In" Type="Int32" />
+            <Parameter Name="DNI" Mode="In" Type="String" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Celular" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
+            <Parameter Name="ComoSeEntero" Mode="In" Type="String" />
+            <Parameter Name="IdPreferencia" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -2736,6 +2799,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
           <Key>
@@ -2746,6 +2810,24 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="NombreDato" />
+            <PropertyRef Name="TipoDato" />
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="NombreDato" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="ValorDato" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="TipoDato" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UsoDato" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3308,14 +3390,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SINUModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SINUModel.Store.sp_upgraddiagrams" />
           <FunctionImportMapping FunctionImportName="spIngresaASeguridad" FunctionName="SINUModel.Store.spIngresaASeguridad" />
-          <FunctionImportMapping FunctionImportName="spPrueba" FunctionName="SINUModel.Store.spPrueba">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spPrueba_Result">
-                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
-                <ScalarProperty Name="Logueo" ColumnName="Logueo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spValidarUsuario" FunctionName="SINUModel.Store.spValidarUsuario">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SINUModel.spValidarUsuario_Result">
@@ -3324,7 +3398,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="tablasnuevas" FunctionName="SINUModel.Store.tablasnuevas" />
           <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
           <FunctionImportMapping FunctionImportName="spCreaPostulante" FunctionName="SINUModel.Store.spCreaPostulante" />
           <FunctionImportMapping FunctionImportName="Vaciar" FunctionName="SINUModel.Store.Vaciar" />
@@ -3357,6 +3430,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vEntrevistaLugarFecha">
             <EntityTypeMapping TypeName="SINUModel.vEntrevistaLugarFecha">
               <MappingFragment StoreEntitySet="vEntrevistaLugarFecha">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
@@ -3382,6 +3456,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ConfiguracionAdmin">
+            <EntityTypeMapping TypeName="SINUModel.ConfiguracionAdmin">
+              <MappingFragment StoreEntitySet="ConfiguracionAdmin">
+                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vConfiguracionAdmin">
+            <EntityTypeMapping TypeName="SINUModel.vConfiguracionAdmin">
+              <MappingFragment StoreEntitySet="vConfiguracionAdmin">
+                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
+                <ScalarProperty Name="UsoDato" ColumnName="UsoDato" />
+                <ScalarProperty Name="TipoDato" ColumnName="TipoDato" />
+                <ScalarProperty Name="ValorDato" ColumnName="ValorDato" />
+                <ScalarProperty Name="NombreDato" ColumnName="NombreDato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDatosBasicosUpdate" FunctionName="SINUModel.Store.spDatosBasicosUpdate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

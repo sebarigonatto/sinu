@@ -61,10 +61,12 @@ namespace SINU.Controllers
 
             return PartialView(entrevistafh);
         }
-        // GET: Postulante/Create
-        public ActionResult Create()
+
+        [HttpPost]
+        public JsonResult GuardaDatosBasicos(DatosBasicos person)
         {
-            return View();
+            
+            return Json(person);
         }
 
         // POST: Postulante/Create

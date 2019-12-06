@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    @@media (min-width: 576px) {
+        .rounded-nav {
+            border-radius: 50rem !important;
+        }
+    }
+
+    @@media (min-width: 576px) {
+        .rounded-nav .nav-link {
+            border-radius: 50rem !important;
+        }
+    }
+
+    /* With arrow tabs */
+
+    .with-arrow .nav-link.active {
+        position: relative;
+    }
+
+        .with-arrow .nav-link.active::after {
+            content: '';
+            border-left: 6px solid transparent !important;
+            border-right: 6px solid transparent !important;
+            border-top: 6px solid #052240 !important;
+            position: absolute !important;
+            bottom: -6px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            display: block !important;
+        }
+
+    /* lined tabs */
+
+    .lined .nav-link {
+        border: none !important;
+        border-bottom: 2px solid transparent !important;
+    }
+
+        .lined .nav-link:hover {
+            border: none;
+            border-bottom: 2px #555 solid !important;
+        }
+
+        .lined .nav-link.active {
+            background: none !important;
+            color: #000000 !important;
+            border-color: #052240 !important;
+        }
+
+    .atab {
+        color: #052240 !important;
+    }
+
+    .borderdiv1 {
+        border-left: 1px solid #000000 !important;
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+
+    @@media screen and (max-width: 768px) {
+        .tabb {
+            flex-wrap: nowrap !important;
+        }
+
+        .borderdiv1 {
+            border-left: 0px !important;
+        }
+    }
+
+    .bli {
+        border-bottom: 1px solid #555 !important;
+    }
+
+    .Tabdesabilitado {
+        pointer-events: none;
+    }
+
+    @@media (min-width: 1200px) {
+        .container {
+            max-width: 95% !important;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .container {
+            max-width: 95% !important;
+        }
+    }
+
+    @@media (min-width: 768px) {
+        .container {
+            max-width: 95% !important;
+        }
+    }
+
+    @@media (min-width: 576px) {
+        .container {
+            max-width: 95% !important;
+        }
+    }
+</style>
+<h2 class="text-center">Delegacion</h2>
+<br />
+<div class="container h-75">
+    <div class="row">
+        <div class="col-md-2 mr-2  bd-sidebar ">
+            <ul class="nav nav-tabs with-arrow lined  flex-md-column text-center tabb mb-1" id="myTab" role="tablist" style="border-bottom:0px solid; color:white">
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Incriptos</a>
+                </li>
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9 borderdiv1">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active pt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    @Html.Action("Details", "Delegacion")
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h2>Profile</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <h2>Contact</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#example').DataTable({
+                responsive: true,
+            });
+        });
+    </script>
+
+}

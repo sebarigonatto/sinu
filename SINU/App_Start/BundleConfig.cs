@@ -10,6 +10,7 @@ namespace SINU
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                          "~/Scripts/jquery-{version}.js",
+                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/Scripts/datatables.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -26,8 +27,10 @@ namespace SINU
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/stacktable.js"));
-            
+                      "~/Scripts/stacktable.js",
+                      "~/Scripts/respond.js"));
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

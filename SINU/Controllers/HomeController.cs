@@ -19,15 +19,10 @@ namespace SINU.Controllers
             ViewBag.TextoPAGINAPRINCIPAL = db.Configuracion.FirstOrDefault(b => b.NombreDato == "TextoPAGINAPRINCIPAL").ValorDato;
             return View(db.vPeriodosInscrip.ToList());
         }
-       
         public ActionResult About()
         {
-            
-
             return View();
         }
-     
-       
 
         public ActionResult Contact()
         {

@@ -74,6 +74,8 @@ namespace SINU.Models
         public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
         public virtual DbSet<vEntrevistaLugarFecha> vEntrevistaLugarFecha { get; set; }
         public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
+        public virtual DbSet<ConfiguracionAdmin> ConfiguracionAdmin { get; set; }
+        public virtual DbSet<vConfiguracionAdmin> vConfiguracionAdmin { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -295,6 +297,59 @@ namespace SINU.Models
                 new ObjectParameter("eliminandotabla", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Vaciar", valoremailParameter, eliminandotablaParameter);
+        }
+    
+        public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)
+        {
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("Nombres", nombres) :
+                new ObjectParameter("Nombres", typeof(string));
+    
+            var idSexoParameter = idSexo.HasValue ?
+                new ObjectParameter("IdSexo", idSexo) :
+                new ObjectParameter("IdSexo", typeof(int));
+    
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var celularParameter = celular != null ?
+                new ObjectParameter("Celular", celular) :
+                new ObjectParameter("Celular", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var idDelegacionOficinaIngresoInscribioParameter = idDelegacionOficinaIngresoInscribio.HasValue ?
+                new ObjectParameter("IdDelegacionOficinaIngresoInscribio", idDelegacionOficinaIngresoInscribio) :
+                new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
+    
+            var comoSeEnteroParameter = comoSeEntero != null ?
+                new ObjectParameter("ComoSeEntero", comoSeEntero) :
+                new ObjectParameter("ComoSeEntero", typeof(string));
+    
+            var idPreferenciaParameter = idPreferencia.HasValue ?
+                new ObjectParameter("IdPreferencia", idPreferencia) :
+                new ObjectParameter("IdPreferencia", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var idPostulanteParameter = idPostulante.HasValue ?
+                new ObjectParameter("IdPostulante", idPostulante) :
+                new ObjectParameter("IdPostulante", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
         }
     }
 }

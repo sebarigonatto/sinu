@@ -2,6 +2,10 @@
     ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+@{HtmlHelper.UnobtrusiveJavaScriptEnabled = true;}
 <style>
     @@media (min-width: 576px) {
         .rounded-nav {
@@ -74,8 +78,9 @@
     .bli {
         border-bottom: 1px solid #dee2e6 !important;
     }
-    .Tabdesabilitado{
-       pointer-events: none;
+
+    .Tabdesabilitado {
+        pointer-events: none;
     }
 </style>
 
@@ -121,7 +126,7 @@
 
         </div>
 
-            @* VISTA DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
+        @* VISTA DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
         <div id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab" class="tab-pane fade px-4 py-3">
             @* SI CUANDO YA TIENE LA ENTREVISTA ASIGNADA *@
             @if (ViewBag.secuenciaactual >= 9)
@@ -210,6 +215,15 @@
                 });
 
             })();
+
+            function OnSuccess(response) {
+                alert("exito");
+            };
+
+            function OnFailure(response) {
+                alert("Error occured.");
+            };
+
         });
 
     </script>
