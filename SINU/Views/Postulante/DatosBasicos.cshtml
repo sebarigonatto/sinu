@@ -1,13 +1,14 @@
 ﻿@model SINU.ViewModels.DatosBasicos
 <br />
-@using (Ajax.BeginForm("GuardaDatosBasicos", "Postulante", null, 
-    new AjaxOptions
-        {
-            HttpMethod = "POST",
-            OnSuccess = "OnSuccess",
-            OnFailure = "OnFailure",
-            UpdateTargetId = "resultTarget"
-        },
+@using (Ajax.BeginForm("GuardaDatosBasicos", "Postulante", null,
+    new AjaxOptions {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla",
+                        LoadingElementId="carga",
+                        LoadingElementDuration=1000,
+                        //UpdateTargetId = "resultTarget"
+    },
     new { id = "MyNewNameId" }))
 {
     @Html.AntiForgeryToken()
@@ -22,6 +23,11 @@
 
 
                 <div class="col-sm-6">
+
+
+                    @Html.HiddenFor(model => model.vPersona_DatosBasicos.IdPersona)
+                    @Html.HiddenFor(model => model.vPersona_DatosBasicos.IdPostulante)
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicos.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -118,12 +124,33 @@
 }
 
 
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="MSGexito">
+                <p>Se cargaron los Datos con Exito</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 
-      
+
 
     </script>
 

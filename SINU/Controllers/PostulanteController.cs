@@ -63,10 +63,21 @@ namespace SINU.Controllers
         }
 
         [HttpPost]
-        public JsonResult GuardaDatosBasicos(DatosBasicos person)
+        public ActionResult GuardaDatosBasicos(DatosBasicos person)
         {
-            
-            return Json(person);
+            try
+            {
+                var p = person.vPersona_DatosBasicos;
+                var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
+                //var result = db.spDatosBasicosUpdate()
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                string msgerror = ex.Message + " " + ex.InnerException.Message;
+                return Json(msgerror);
+            }
+           
         }
 
         // POST: Postulante/Create

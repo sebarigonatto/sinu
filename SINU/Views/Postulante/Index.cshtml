@@ -2,10 +2,8 @@
     ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
-@{HtmlHelper.UnobtrusiveJavaScriptEnabled = true;}
+
 <style>
     @@media (min-width: 576px) {
         .rounded-nav {
@@ -215,16 +213,19 @@
                 });
 
             })();
-
-            function OnSuccess(response) {
-                alert("exito");
-            };
-
-            function OnFailure(response) {
-                alert("Error occured.");
-            };
-
+          
         });
+
+         function Exito(response,status,xhr) {
+
+             $("#MSGexito").html(response + status + xhr.text);
+             $(".modal").modal("show");
+            
+         };
+
+         function Falla(response) {
+                alert("Error occured." );
+         };
 
     </script>
 
