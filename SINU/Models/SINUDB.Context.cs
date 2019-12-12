@@ -63,8 +63,6 @@ namespace SINU.Models
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
         public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
-        public virtual DbSet<VPersonaEstudio> VPersonaEstudio { get; set; }
-        public virtual DbSet<vPostulante_Usuario_datos> vPostulante_Usuario_datos { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
         public virtual DbSet<vRELIGION> vRELIGION { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstado> vSecuencia_EtapaEstado { get; set; }
@@ -76,6 +74,10 @@ namespace SINU.Models
         public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
         public virtual DbSet<ConfiguracionAdmin> ConfiguracionAdmin { get; set; }
         public virtual DbSet<vConfiguracionAdmin> vConfiguracionAdmin { get; set; }
+        public virtual DbSet<vPersona_DatosPer> vPersona_DatosPer { get; set; }
+        public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
+        public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
+        public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -350,6 +352,35 @@ namespace SINU.Models
                 new ObjectParameter("IdPostulante", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
+        }
+    
+        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad)
+        {
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var cUILParameter = cUIL != null ?
+                new ObjectParameter("CUIL", cUIL) :
+                new ObjectParameter("CUIL", typeof(string));
+    
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
+            var idEstadoCivilParameter = idEstadoCivil != null ?
+                new ObjectParameter("IdEstadoCivil", idEstadoCivil) :
+                new ObjectParameter("IdEstadoCivil", typeof(string));
+    
+            var idReligionParameter = idReligion != null ?
+                new ObjectParameter("IdReligion", idReligion) :
+                new ObjectParameter("IdReligion", typeof(string));
+    
+            var idTipoNacionalidadParameter = idTipoNacionalidad.HasValue ?
+                new ObjectParameter("idTipoNacionalidad", idTipoNacionalidad) :
+                new ObjectParameter("idTipoNacionalidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter);
         }
     }
 }

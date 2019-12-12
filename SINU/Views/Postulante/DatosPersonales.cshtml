@@ -1,0 +1,143 @@
+﻿@model SINU.ViewModels.DatosPersonalesVM
+<br />
+@* DATOS PERSONALES *@
+@*@{
+    ViewBag.Title = "Secuencias";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+@using (Ajax.BeginForm("DatosPersonales", "Postulante", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "Exito(data,status,xhr)",
+        OnFailure = "Falla",
+        //LoadingElementId = "carga",
+        //LoadingElementDuration = 1000,
+        //UpdateTargetId = "resultTarget"
+    },
+    new { id = "MyNewNameId" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="form-group row ">
+
+
+                <div class="col-sm-6">
+
+
+                    @Html.HiddenFor(model => model.vPersona_DatosPerVM.IdPersona)
+                    @Html.HiddenFor(model => model.vPersona_DatosPerVM.Email)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.CUIL, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_DatosPerVM.CUIL, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.CUIL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento ,"{0:dd.MM.yy}" , new { htmlAttributes = new { @class = "form-control" , @type = "text", @id = "datepicker"} })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.edad, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_DatosPerVM.edad, new { htmlAttributes = new { @class = "form-control", @readonly="readonly" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.edad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vEstCivilVM, new { @class = "col-md-6 control-label" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdEstadoCivil)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vRELIGIONVM, new { @class = "col-md-6 control-label" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdReligion, new SelectList(Model.vRELIGIONVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdReligion)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TipoNacionalidadVM, new { @class = "col-md-6 control-label" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, new SelectList(Model.TipoNacionalidadVM, "idTipoNacionalidad", "Descripcion"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad)
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+            </div>
+            <div class="form-group pl-3">
+                <input type="submit" value="Guadar Datos" class="btn btn-success" />
+            </div>
+
+
+        </div>
+    </div>
+}
+
+
+
+@*<div class="modal " tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="MSGexito">
+                    <p>Se cargaron los Datos con Exito</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+@section Scripts {
+
+    <script type="text/javascript">
+          
+
+        //$(document).ready(function () {
+        //    $('#datepicker').datepicker({
+        //        format: 'dd/mm/yyyy'
+        //    });
+        //    $("#datepicker").change(function () {
+        //        var cumple = $(this).val();
+        //        alert(cumple);
+        //        var Edad = new Date(cumple).getFullYear();
+        //        alert(Edad);
+
+        //    });
+        //    //$("#vPersona_DatosPerVM_edad").
+        //});
+
+
+    </script>
+}

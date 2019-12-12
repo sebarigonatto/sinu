@@ -48,35 +48,19 @@ namespace SINU.Models
         public string Oficina { get; set; }
     }
 
-    //[AttributeUsage(AttributeTargets.Class)]
-    //public class CelTelAttribute : ValidationAttribute,ic
-    //{
-    //    private readonly string _celular;
-
-    //    public CelTelAttribute(string Celular)
-    //    {
-    //        _celular = Celular;
-    //    }
-
-    //    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    //    {
-
-    //        var currentValue = (DateTime)value;
-
-    //        var Cel = validationContext.ObjectType.GetProperty(_celular).ToString();
-    //        //var Cel1 = validationContext.ObjectInstance.
-    //        if (Cel == null || Cel == "")
-    //        {
-    //            return new ValidationResult("Celular No Ingresado");
-    //        }
-    //        return ValidationResult.Success;
-        //}
-    //}
-  
-
-    //public class EnrollmentMetadata
-    //{
-    //    [Range(0, 4)]
-    //    public Nullable<decimal> Grade;
-    //}
+    public class vPersona_DatosPerMetadata
+    {
+        public string Email { get; set; }
+        public int IdPersona { get; set; }
+        public string CUIL { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")] 
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        public Nullable<int> edad { get; set; }
+        public string IdEstadoCivil { get; set; }
+        public string EstadoCivil { get; set; }
+        public string IdReligion { get; set; }
+        public string Religion { get; set; }
+        public int idTipoNacionalidad { get; set; }
+        public string Nacionalidad { get; set; }
+    }
 }

@@ -27,11 +27,14 @@ namespace SINU.Models
         public string Piso { get; set; }
         public string Unidad { get; set; }
         public Nullable<int> IdLocalidad { get; set; }
-        public string Localidad { get; set; }
+        public string Prov_Loc_CP { get; set; }
+        public string IdPais { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona1 { get; set; }
+        public virtual Domicilio Domicilio1 { get; set; }
+        public virtual Domicilio Domicilio2 { get; set; }
     }
 }

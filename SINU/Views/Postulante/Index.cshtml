@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Secuencias";
+        ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -44,7 +44,8 @@
 
         .lined .nav-link:hover {
             border: none;
-            border-bottom: 3px solid transparent;
+            border-bottom: 3px solid #555;
+
         }
 
         .lined .nav-link.active {
@@ -92,22 +93,26 @@
 
         @* PERSONA DATOS BASICOS *@
         <li class="nav-item flex-sm-fill" id="5">
-            <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">Datos Basicos</a>
+            <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">
+            Datos Basicos</a>
         </li>
 
         @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
         <li class="nav-item flex-sm-fill" id="9">
-            <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">Entrevista</a>
+            <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
+            Entrevista</a>
         </li>
 
         @* DOCUMENTACION *@
         <li class="nav-item flex-sm-fill" id="11">
-            <a id="profile2-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">Profile</a>
+            <a id="profile2-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
+            Documentacion</a>
         </li>
 
         @* --------------------------------------- *@
         <li class="nav-item flex-sm-fill" id="15">
-            <a id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">Contact</a>
+            <a id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">
+            Contact</a>
         </li>
     </ul>
 
@@ -134,35 +139,42 @@
 
         </div>
 
-        @* VISTA DE ---------------- *@
+        @* VISTA DE Documentacion que se divide en varias vistas *@
         <div id="profile2" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-3">
 
             <div class="container">
                 <div class="row">
                     <div class="col-sm-2 mr-2">
-                        <ul class="nav nav-tabs with-arrow lined  flex-sm-column text-center tabb mb-1" id="myTab" role="tablist" style="border-bottom:0px solid;">
+                        <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom:0px solid;">
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                                Datos Personales</a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                                Domicilio</a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                                Contact</a>
                             </li>
                         </ul>
                     </div>
                     <!-- /.col-md-4 -->
                     <div class="col-sm-9 borderdiv1">
                         <div class="tab-content" id="myTabContent">
+
+                            @* VISTA DE DATOS PERSONALES *@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <h2>Home</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                                @Html.Action("DatosPersonales", "Postulante")
                             </div>
+
+                            @* VISTA DE DOMICILIO *@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <h2>Profile</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                                @*///////////////////////*@
                             </div>
+
+
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <h2>Contact</h2>
                                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
@@ -207,7 +219,7 @@
 
                     if ($(this).attr('id') > @ViewBag.secuenciaactual) {
 
-                        $(this).addClass('Tabdesabilitado').css("background-color","red");
+                        //$(this).addClass('Tabdesabilitado').css("background-color","red");
 
                     };
                 });
@@ -216,17 +228,36 @@
           
         });
 
-         function Exito(response,status,xhr) {
 
-             $("#MSGexito").html(response + status + xhr.text);
-             $(".modal").modal("show");
-            
-         };
+        /////////////////////////////////////////////////////////////////////////////////
+        /*FUNCION DE LA VISTA DE DATOSBASICOS */
 
-         function Falla(response) {
+          function Exito(response,status,xhr) {
+              alert("success: " + response.success + " " + response.msg);
+             //$("#MSGexito").html("success: " + response.success + " " + response.msg);
+             //$(".modal").modal("show");
+          };
+
+            function Falla(response) {
                 alert("Error occured." );
-         };
+            };
 
+         //////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /*FUNCION DE LA VISTA DE DATOSPERSONALES */
+
+          //function Exito(response,status,xhr) {
+
+          //   $("#MSGexito").html("success: " + response.success + " " + response.msg);
+          //   $(".modal").modal("show");
+          //};
+
+          //  function Falla(response) {
+          //      alert("Error occured." );
+          //  };
+
+         //////////////////////////////////////////////////////////////////////////////
     </script>
 
 }

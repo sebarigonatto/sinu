@@ -12,12 +12,15 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vProvincia_Depto_Localidad
+    public partial class vPersona_Idioma
     {
-        public string Provincia { get; set; }
-        public string DepartPartido { get; set; }
-        public string Localidad { get; set; }
-        public int IdLocalidad { get; set; }
-        public string CODIGO_POSTAL { get; set; }
+        public string Email { get; set; }
+        public int IdPersona { get; set; }
+        public int Habla { get; set; }
+        public int Lee { get; set; }
+        public int Escribe { get; set; }
+        public string Idioma { get; set; }
+        public string CodIdioma { get; set; }
+        public string Nivel { get; set; }
     }
 }

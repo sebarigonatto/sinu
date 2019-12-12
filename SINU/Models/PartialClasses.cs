@@ -9,8 +9,8 @@ namespace SINU.Models
     {
     }
 
-    //[MetadataType(typeof(EnrollmentMetadata))]
-    //public partial class Enrollment
-    //{
-    //}
+    [MetadataType(typeof(vPersona_DatosPerMetadata))]
+    public partial class vPersona_DatosPer
+    {
+    }
 }

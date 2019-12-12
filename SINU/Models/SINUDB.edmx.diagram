@@ -41,8 +41,6 @@
         <EntityTypeShape EntityType="SINUModel.vLOCALIDAD" Width="1.5" PointX="10.75" PointY="8" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vParentesco" Width="1.5" PointX="10.75" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vPeriodosInscrip" Width="1.5" PointX="11.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="SINUModel.VPersonaEstudio" Width="1.5" PointX="12.75" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="SINUModel.vPostulante_Usuario_datos" Width="1.5" PointX="11.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vProvincia_Depto_Localidad" Width="1.5" PointX="13.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vRELIGION" Width="1.5" PointX="13.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstado" Width="1.5" PointX="14.75" PointY="5" IsExpanded="true" />
@@ -87,6 +85,11 @@
         <EntityTypeShape EntityType="SINUModel.vInscripcionEtapaEstadoUltimoEstado" Width="1.5" PointX="14.375" PointY="17.75" />
         <EntityTypeShape EntityType="SINUModel.ConfiguracionAdmin" Width="1.5" PointX="16.375" PointY="17.75" />
         <EntityTypeShape EntityType="SINUModel.vConfiguracionAdmin" Width="1.5" PointX="18.375" PointY="13.75" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_DatosPer" Width="1.5" PointX="18.375" PointY="16.75" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_Domicilio" Width="3.125" PointX="19.375" PointY="0.75" />
+        <AssociationConnector Association="SINUModel.FK_Domicilio_Domicilio" />
+        <EntityTypeShape EntityType="SINUModel.VPersona_Estudio" Width="1.5" PointX="19.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_Idioma" Width="1.5" PointX="10.375" PointY="20.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
