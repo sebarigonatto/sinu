@@ -319,6 +319,9 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_vPaises_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -349,6 +352,9 @@
     <Compile Include="Models\vPeriodosInscrip.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vPersona_ActividadMilitar.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vPersona_DatosBasicos.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -362,6 +368,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Idioma.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPersona_SituacionOcupacional.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vProvincia_Depto_Localidad.cs">

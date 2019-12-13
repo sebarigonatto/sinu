@@ -137,14 +137,13 @@ namespace SINU.Controllers
         {
             try
             {
-                DatosPersonalesVM datosba = new DatosPersonalesVM()
+                DomicilioVM datosdomi = new DomicilioVM()
                 {
-                    //vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.Email == USUmail),
-                    //TipoNacionalidadVM = db.TipoNacionalidad.ToList(),
-                    //vEstCivilVM = db.vEstCivil.ToList(),
-                    //vRELIGIONVM = db.vRELIGION.ToList()
+                    sp_vPaises_ResultVM = db.sp_vPaises("").ToList(),
+                    vProvincia_Depto_LocalidadsVM = db.vProvincia_Depto_Localidad.ToList(),
+                    vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.Email == USUmail)
                 };
-                return PartialView(datosba);
+                return PartialView(datosdomi);
             }
             catch (Exception ex)
             {

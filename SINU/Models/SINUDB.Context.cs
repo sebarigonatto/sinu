@@ -78,6 +78,8 @@ namespace SINU.Models
         public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
         public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
         public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
+        public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
+        public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -381,6 +383,15 @@ namespace SINU.Models
                 new ObjectParameter("idTipoNacionalidad", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter);
+        }
+    
+        public virtual ObjectResult<sp_vPaises_Result> sp_vPaises(string cODIGO)
+        {
+            var cODIGOParameter = cODIGO != null ?
+                new ObjectParameter("CODIGO", cODIGO) :
+                new ObjectParameter("CODIGO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPaises_Result>("sp_vPaises", cODIGOParameter);
         }
     }
 }
