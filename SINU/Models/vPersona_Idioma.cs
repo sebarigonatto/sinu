@@ -15,12 +15,15 @@ namespace SINU.Models
     public partial class vPersona_Idioma
     {
         public string Email { get; set; }
-        public int IdPersona { get; set; }
+        public Nullable<int> IdPersona { get; set; }
         public int Habla { get; set; }
         public int Lee { get; set; }
         public int Escribe { get; set; }
         public string Idioma { get; set; }
         public string CodIdioma { get; set; }
-        public string Nivel { get; set; }
+        public string NivelHabla { get; set; }
+        public string NivelEscribe { get; set; }
+        public string NivelLee { get; set; }
+        public int IdPersonaIdioma { get; set; }
     }
 }

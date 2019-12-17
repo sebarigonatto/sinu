@@ -77,9 +77,9 @@ namespace SINU.Models
         public virtual DbSet<vPersona_DatosPer> vPersona_DatosPer { get; set; }
         public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
         public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
-        public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
         public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
         public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
+        public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -392,6 +392,125 @@ namespace SINU.Models
                 new ObjectParameter("CODIGO", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPaises_Result>("sp_vPaises", cODIGOParameter);
+        }
+    
+        public virtual int spEstudiosIU(Nullable<int> idEstudio, Nullable<int> idPersona, string titulo, Nullable<bool> completo, Nullable<int> idNiveldEstudio, Nullable<int> idInstitutos, Nullable<double> promedio, Nullable<int> cantidadMateriaAdeudadas, Nullable<int> ultimoAnioCursado)
+        {
+            var idEstudioParameter = idEstudio.HasValue ?
+                new ObjectParameter("IdEstudio", idEstudio) :
+                new ObjectParameter("IdEstudio", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("Titulo", titulo) :
+                new ObjectParameter("Titulo", typeof(string));
+    
+            var completoParameter = completo.HasValue ?
+                new ObjectParameter("Completo", completo) :
+                new ObjectParameter("Completo", typeof(bool));
+    
+            var idNiveldEstudioParameter = idNiveldEstudio.HasValue ?
+                new ObjectParameter("IdNiveldEstudio", idNiveldEstudio) :
+                new ObjectParameter("IdNiveldEstudio", typeof(int));
+    
+            var idInstitutosParameter = idInstitutos.HasValue ?
+                new ObjectParameter("IdInstitutos", idInstitutos) :
+                new ObjectParameter("IdInstitutos", typeof(int));
+    
+            var promedioParameter = promedio.HasValue ?
+                new ObjectParameter("Promedio", promedio) :
+                new ObjectParameter("Promedio", typeof(double));
+    
+            var cantidadMateriaAdeudadasParameter = cantidadMateriaAdeudadas.HasValue ?
+                new ObjectParameter("CantidadMateriaAdeudadas", cantidadMateriaAdeudadas) :
+                new ObjectParameter("CantidadMateriaAdeudadas", typeof(int));
+    
+            var ultimoAnioCursadoParameter = ultimoAnioCursado.HasValue ?
+                new ObjectParameter("ultimoAnioCursado", ultimoAnioCursado) :
+                new ObjectParameter("ultimoAnioCursado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosIU", idEstudioParameter, idPersonaParameter, tituloParameter, completoParameter, idNiveldEstudioParameter, idInstitutosParameter, promedioParameter, cantidadMateriaAdeudadasParameter, ultimoAnioCursadoParameter);
+        }
+    
+        public virtual int spDomiciliosU(Nullable<int> idDomicilioDNI, string calle, string numero, string piso, string unidad, Nullable<int> idLocalidad, string prov_Loc_CP, string idPais, Nullable<int> idDomicilioActual, string eventualCalle, string eventualNumero, string eventualPiso, string eventualUnidad, Nullable<int> eventualIdLocalidad, string eventualProv_Loc_CP, string eventualIdPais)
+        {
+            var idDomicilioDNIParameter = idDomicilioDNI.HasValue ?
+                new ObjectParameter("IdDomicilioDNI", idDomicilioDNI) :
+                new ObjectParameter("IdDomicilioDNI", typeof(int));
+    
+            var calleParameter = calle != null ?
+                new ObjectParameter("Calle", calle) :
+                new ObjectParameter("Calle", typeof(string));
+    
+            var numeroParameter = numero != null ?
+                new ObjectParameter("Numero", numero) :
+                new ObjectParameter("Numero", typeof(string));
+    
+            var pisoParameter = piso != null ?
+                new ObjectParameter("Piso", piso) :
+                new ObjectParameter("Piso", typeof(string));
+    
+            var unidadParameter = unidad != null ?
+                new ObjectParameter("Unidad", unidad) :
+                new ObjectParameter("Unidad", typeof(string));
+    
+            var idLocalidadParameter = idLocalidad.HasValue ?
+                new ObjectParameter("IdLocalidad", idLocalidad) :
+                new ObjectParameter("IdLocalidad", typeof(int));
+    
+            var prov_Loc_CPParameter = prov_Loc_CP != null ?
+                new ObjectParameter("Prov_Loc_CP", prov_Loc_CP) :
+                new ObjectParameter("Prov_Loc_CP", typeof(string));
+    
+            var idPaisParameter = idPais != null ?
+                new ObjectParameter("IdPais", idPais) :
+                new ObjectParameter("IdPais", typeof(string));
+    
+            var idDomicilioActualParameter = idDomicilioActual.HasValue ?
+                new ObjectParameter("IdDomicilioActual", idDomicilioActual) :
+                new ObjectParameter("IdDomicilioActual", typeof(int));
+    
+            var eventualCalleParameter = eventualCalle != null ?
+                new ObjectParameter("EventualCalle", eventualCalle) :
+                new ObjectParameter("EventualCalle", typeof(string));
+    
+            var eventualNumeroParameter = eventualNumero != null ?
+                new ObjectParameter("EventualNumero", eventualNumero) :
+                new ObjectParameter("EventualNumero", typeof(string));
+    
+            var eventualPisoParameter = eventualPiso != null ?
+                new ObjectParameter("EventualPiso", eventualPiso) :
+                new ObjectParameter("EventualPiso", typeof(string));
+    
+            var eventualUnidadParameter = eventualUnidad != null ?
+                new ObjectParameter("EventualUnidad", eventualUnidad) :
+                new ObjectParameter("EventualUnidad", typeof(string));
+    
+            var eventualIdLocalidadParameter = eventualIdLocalidad.HasValue ?
+                new ObjectParameter("EventualIdLocalidad", eventualIdLocalidad) :
+                new ObjectParameter("EventualIdLocalidad", typeof(int));
+    
+            var eventualProv_Loc_CPParameter = eventualProv_Loc_CP != null ?
+                new ObjectParameter("EventualProv_Loc_CP", eventualProv_Loc_CP) :
+                new ObjectParameter("EventualProv_Loc_CP", typeof(string));
+    
+            var eventualIdPaisParameter = eventualIdPais != null ?
+                new ObjectParameter("EventualIdPais", eventualIdPais) :
+                new ObjectParameter("EventualIdPais", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDomiciliosU", idDomicilioDNIParameter, calleParameter, numeroParameter, pisoParameter, unidadParameter, idLocalidadParameter, prov_Loc_CPParameter, idPaisParameter, idDomicilioActualParameter, eventualCalleParameter, eventualNumeroParameter, eventualPisoParameter, eventualUnidadParameter, eventualIdLocalidadParameter, eventualProv_Loc_CPParameter, eventualIdPaisParameter);
+        }
+    
+        public virtual int spEstudiosEliminar(Nullable<int> idEstudio)
+        {
+            var idEstudioParameter = idEstudio.HasValue ?
+                new ObjectParameter("IdEstudio", idEstudio) :
+                new ObjectParameter("IdEstudio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosEliminar", idEstudioParameter);
         }
     }
 }

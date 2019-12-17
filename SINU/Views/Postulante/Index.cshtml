@@ -213,6 +213,7 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
             (function () {
 
                 $("#TabGeneral li").each(function () {
@@ -225,12 +226,53 @@
                 });
 
             })();
-          
+
+ /////////////////////////////////////////////////////////////////////////////////
+            /*FUNCION DE LA VISTA DE DOMICILIOS */
+
+            //variable para guardar el ID dropboxlist que se utilizara de acuerdo con el dropboxlist de provincia seleccionado
+            var localidad;
+            //al selecciona una provincia tanto en el domicilio eventual como en el real llama a esta funcion
+            $("#ProviR,#ProviE").change(function () {
+                //alert($(this).attr("id"));
+                //guardo id del la localidad real o guardo id del la localidad eventual
+                localidad = ($(this).attr("id") == "ProviR") ? "#LocaliR" : "#LocaliE";
+                //limio el dropboxlist antes de cargarlo
+                $(localidad).empty();
+                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia selecciona
+                $.getJSON('/Postulante/DropEnCascada', {
+                    Provincia: $(this).val(),
+                },
+                    function (data) {
+                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
+                        $.each(data, function () {
+                            $(localidad).append('<option value=' +
+                                this.Value + '>' + this.Text + '</option>');
+                        });
+
+                    });
+            });
+
+            $("#LocaliR,#LocaliE").change(function () {
+                //variable para el TexBOXFOR de CP
+                var cpbox;
+                //segun tipo de localidad seleccionada se guardara su texboxfor correspondiente
+                cpbox = ($(this).attr("id") == "LocaliR") ? "#CPReal" : "#CPEventual";
+                //alert(cpbox);
+                $.getJSON('/Postulante/DropEnCascada', {
+                    Localidad: $(this).val(),
+                },
+                    function (data) {
+                        //alert(data.Text);
+                        $(cpbox).val(data.Text);
+                        //alert($("#postal").val());
+                    });
+            });
         });
+ //////////////////////////////////////////////////////////////////////////////
 
-
-        /////////////////////////////////////////////////////////////////////////////////
-        /*FUNCION DE LA VISTA DE DATOSBASICOS */
+ /////////////////////////////////////////////////////////////////////////////////
+        /*FUNCIONES DE AJAX.BeginForm */
 
           function Exito(response,status,xhr) {
               alert("success: " + response.success + " " + response.msg);
@@ -241,21 +283,6 @@
             function Falla(response) {
                 alert("Error occured." );
             };
-
-         //////////////////////////////////////////////////////////////////////////////
-
-        /////////////////////////////////////////////////////////////////////////////////
-        /*FUNCION DE LA VISTA DE DATOSPERSONALES */
-
-          //function Exito(response,status,xhr) {
-
-          //   $("#MSGexito").html("success: " + response.success + " " + response.msg);
-          //   $(".modal").modal("show");
-          //};
-
-          //  function Falla(response) {
-          //      alert("Error occured." );
-          //  };
 
          //////////////////////////////////////////////////////////////////////////////
     </script>

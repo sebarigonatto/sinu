@@ -36,5 +36,9 @@ namespace SINU.Models
         public string EventualCodigo_Postal { get; set; }
         public string EventualProv_Loc { get; set; }
         public string Localidad { get; set; }
+        public Nullable<int> EventualIdLocalidad { get; set; }
+        public string EventualIdPais { get; set; }
+        public int IdDomicilioDNI { get; set; }
+        public int IdDomicilioActual { get; set; }
     }
 }

@@ -33,9 +33,11 @@ namespace SINU.ViewModels
     public class DomicilioVM
     {
         public vPersona_Domicilio vPersona_DomicilioVM { get; set; }
-        public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadsVM { get; set; }
+        [DisplayName("Pais")]
         public List<sp_vPaises_Result> sp_vPaises_ResultVM { get; set; }
-
+        [DisplayName("Provincias")]
+        public List<string> provincias { get; set; }
+        public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadsVM { get; set; }
     }
 
 }
