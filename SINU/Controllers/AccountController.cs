@@ -101,7 +101,11 @@ namespace SINU.Controllers
                     switch (result)
                     {
                         case SignInStatus.Success:
-                            return RedirectToAction("Index","Postulante");
+                            //VER  redigir al controlador segun el tipo de usuario o CodGrupo ej /Postulante/index /Delegacion/index.. /Administracion/index ../Consultor/index
+                            //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion
+                             return RedirectToAction("Index",db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg=>sg.codUsuario==model.Email).codGrupo.TrimEnd());
+                            //el codigo anterior reemplaza al comentado                       
+                          // return RedirectToAction("Index","Postulante");
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
                             var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");

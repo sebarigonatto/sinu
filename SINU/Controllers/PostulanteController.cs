@@ -22,7 +22,7 @@ namespace SINU.Controllers
 //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
 
         public ActionResult Index()
-        {
+        {//error cdo existe uno registrado antes de los cambios de secuencia
             ViewBag.secuenciaactual = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.Email == USUmail).IdSecuencia;
             return View();
         }
