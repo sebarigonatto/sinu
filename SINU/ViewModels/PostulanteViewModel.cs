@@ -43,7 +43,8 @@ namespace SINU.ViewModels
 
     public class EstudiosVM
     {
-        public IList<VPersona_Estudio> vPersona_EstudioVM { get; set; }
+        public IList<VPersona_Estudio> vPersona_EstudioListVM { get; set; }
+        public VPersona_Estudio vPersona_EstudioIdVM { get; set; }
         [DisplayName("Instituto")]
         public List<Institutos> InstitutoVM { get; set; }
         [DisplayName("Nivel")]

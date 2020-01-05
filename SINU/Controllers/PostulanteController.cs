@@ -180,7 +180,7 @@ namespace SINU.Controllers
         }
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
-        public ActionResult Domicilio(DomicilioVM Datos)
+        public JsonResult Domicilio(DomicilioVM Datos)
         {
             try
             {
@@ -250,9 +250,7 @@ namespace SINU.Controllers
             {
                 EstudiosVM estudio = new EstudiosVM()
                 {
-                    vPersona_EstudioVM = db.VPersona_Estudio.Where(m=>m.Email==USUmail).ToList(),
-                    //InstitutoVM = db.Institutos.ToList(),
-                    NivelEstudioVM = db.NiveldEstudio.ToList()
+                    vPersona_EstudioListVM = db.VPersona_Estudio.ToList()
                 };
                 return PartialView(estudio);
             }
@@ -262,8 +260,50 @@ namespace SINU.Controllers
                 return View(ex);
             }
         }
-
-
+        
+        public ActionResult EstudiosCUD(int? ID)
+        {
+            try
+            {
+                EstudiosVM estudio = new EstudiosVM()
+                    {
+                        NivelEstudioVM = db.NiveldEstudio.ToList()
+                    };
+                if (ID != null)
+                {
+                    estudio.vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
+                    return PartialView(estudio);
+                }
+                else
+                {
+                    return PartialView(estudio);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                //revisar como mostrar error en la vista
+                return View(ex);
+            }
+        }
+        [HttpPost]
+        public ActionResult EstudiosCUD(EstudiosVM Datos)
+        {
+            try
+            {
+                //EstudiosVM estudio = new EstudiosVM()
+                //{
+                //    vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID),
+                //    NivelEstudioVM = db.NiveldEstudio.ToList()
+                //};
+                return Json(new { success = true, msg = "" });
+            }
+            catch (Exception ex)
+            {
+                //revisar como mostrar error en la vista
+                return Json(new { success = false, msg = ex.InnerException.Message});
+            }
+        }
 
 
 

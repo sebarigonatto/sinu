@@ -749,6 +749,7 @@
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
     <Content Include="Views\Postulante\Domicilio.cshtml" />
     <Content Include="Views\Postulante\Estudios.cshtml" />
+    <Content Include="Views\Postulante\EstudiosCUD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
