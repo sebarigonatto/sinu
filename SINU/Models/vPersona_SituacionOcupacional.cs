@@ -22,5 +22,8 @@ namespace SINU.Models
         public bool CargaOcupacionActual { get; set; }
         public string Oficio { get; set; }
         public string OcupacionActual { get; set; }
+        public int IdSituacionOcupacional { get; set; }
+        public string DomicilioLaboral { get; set; }
+        public Nullable<int> AniosTrabajados { get; set; }
     }
 }

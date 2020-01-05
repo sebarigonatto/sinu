@@ -28,6 +28,7 @@ namespace SINU.Models
         public Nullable<double> Promedio { get; set; }
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         public Nullable<int> ultimoAnioCursado { get; set; }
+        public string NombreYPaisInstituto { get; set; }
     
         public virtual Institutos Institutos { get; set; }
         public virtual NiveldEstudio NiveldEstudio { get; set; }

@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="~/Imagenes/favicon.ico" type="image/x-icon" />
-
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -46,6 +47,7 @@
     <dynamic-section name="scripts" />
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery-ui")
     @RenderSection("scripts", required: false)
 </body>
 </html>

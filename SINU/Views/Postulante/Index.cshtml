@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <style>
     @@media (min-width: 576px) {
         .rounded-nav {
@@ -147,16 +146,16 @@
                     <div class="col-sm-2 mr-2">
                         <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom:0px solid;">
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#DatosPersonales" role="tab" aria-controls="DatosPersonales" aria-selected="true">
                                 Datos Personales</a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false">
                                 Domicilio</a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
-                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
-                                Contact</a>
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Estudios" role="tab" aria-controls="Estudios" aria-selected="false">
+                                Estudios</a>
                             </li>
                         </ul>
                     </div>
@@ -165,19 +164,22 @@
                         <div class="tab-content" id="myTabContent">
 
                             @* VISTA DE DATOS PERSONALES *@
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-pane fade show active" id="DatosPersonales" role="tabpanel" aria-labelledby="DatosPersonales-tab">
                                 @Html.Action("DatosPersonales", "Postulante")
                             </div>
 
                             @* VISTA DE DOMICILIO *@
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                @Html.Action("Domicilio","Postulante")
+                            <div class="tab-pane fade" id="Domicilio" role="tabpanel" aria-labelledby="Domicilio-tab">
+                                @Html.Action("Domicilio", "Postulante")
                             </div>
-
+                            @* VISTA DE ESTUDIOS *@
+                            <div class="tab-pane fade" id="Estudios" role="tabpanel" aria-labelledby="Estudios-tab">
+                                @Html.Action("Estudios", "Postulante")
+                            </div>
 
                             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <h2>Contact</h2>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
+                                <p>Lorem 123123ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
 
                             </div>
                         </div>
@@ -231,58 +233,111 @@
             /*FUNCION DE LA VISTA DE DOMICILIOS */
 
             //variable para guardar el ID dropboxlist que se utilizara de acuerdo con el dropboxlist de provincia seleccionado
-            var localidad;
-            //al selecciona una provincia tanto en el domicilio eventual como en el real llama a esta funcion
-            $("#ProviR,#ProviE").change(function () {
-                //alert($(this).attr("id"));
-                //guardo id del la localidad real o guardo id del la localidad eventual
-                localidad = ($(this).attr("id") == "ProviR") ? "#LocaliR" : "#LocaliE";
-                //limio el dropboxlist antes de cargarlo
-                $(localidad).empty();
-                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia selecciona
+            //aplico el combobox al a los drodbox de la vista
+            //la seleccion de un item segun el combobox llama a una funcion
+             //aplico el combobox al a los drodbox de la vista
+            //la seleccion de un item segun el combobox llama a una funcion
+            //aplico el combobox al a los drodbox de la vista
+            //la seleccion de un item segun el combobox llama a una funcion
+            $(".combobox").combobox({
+                select: function (event, ui) {
+                    //alert($(ui.item).val() + " " + $(this).attr("id"));
+                    var Combo = $(this).attr("id");
+                    var ValC = $(this).val();
+
+                    switch (Combo) {
+                        case "ListaPaisR":
+                        case "ListaPaisE":
+                            PAIS(Combo,1)
+                            break;
+                        case "ComboProvinciaR":
+                        case "ComboProvinciaE":
+                            PROVINCIA(Combo, ValC);
+                            break;
+                        case "ComboLocalidadR":
+                        case "ComboLocalidadE":
+                            LOCALIDAD(Combo, ValC);
+                            break;
+                        default:
+                    }
+                }
+            });
+            $("#toggle").on("click", function () {
+                $(".combobox").toggle();
+            });
+
+            $("#ComboProvinciaR-I,#ComboProvinciaE-I").attr("placeholder", "Seleccione una Provincia");
+            $("#ComboLocalidadR-I,#ComboLocalidadE-I").attr("placeholder", "Seleccione una Localidad");
+
+            //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
+            PAIS("ListaPaisR",0);
+            PAIS("ListaPaisE", 0);
+
+            //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
+            function PAIS(Combo, PRI) {
+                var Comboelemt = (Combo == "ListaPaisR") ? ["#ProvinciaR,#LocalidadR", "#ComboProvinciaR-D,#ComboLocalidadR-D", "#CPR", "#ComboProvinciaR-I,#ComboLocalidadR-I"]
+                                                         : ["#ProvinciaE,#LocalidadE", "#ComboProvinciaE-D,#ComboLocalidadE-D", "#CPE", "#ComboProvinciaE-I,#ComboLocalidadE-I"];
+                //alert(Comboelemt[0]+","+Comboelemt[1]+","+Comboelemt[2])
+                if ($("#" + Combo).val() != "AR") {
+                    $(Comboelemt[0]).show();
+                    $(Comboelemt[1]).hide();
+                    $(Comboelemt[2]).attr("readonly", false);
+                } else {
+                    $(Comboelemt[0]).hide();
+                    $(Comboelemt[1]).show();
+                    $(Comboelemt[2]).attr("readonly", true);
+                };
+                if(PRI == 1){
+                    $(Comboelemt[0]+","+Comboelemt[3]+","+Comboelemt[2]).val("");
+                }
+            };
+
+            //Funcion de Provincia que actualiza los combobox de localidad
+            function PROVINCIA(Combo, ValC) {
+                var ComboLocalidad=(Combo == "ComboProvinciaR")?"#ComboLocalidadR":"#ComboLocalidadE";
+
+                $(ComboLocalidad + "-I").val("");
+                $(ComboLocalidad).empty();
+                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
                 $.getJSON('/Postulante/DropEnCascada', {
-                    Provincia: $(this).val(),
+                    Provincia: ValC,
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
                         $.each(data, function () {
-                            $(localidad).append('<option value=' +
+                            $(ComboLocalidad).append('<option value=' +
                                 this.Value + '>' + this.Text + '</option>');
                         });
-
                     });
-            });
+            };
 
-            $("#LocaliR,#LocaliE").change(function () {
-                //variable para el TexBOXFOR de CP
-                var cpbox;
-                //segun tipo de localidad seleccionada se guardara su texboxfor correspondiente
-                cpbox = ($(this).attr("id") == "LocaliR") ? "#CPReal" : "#CPEventual";
-                //alert(cpbox);
+            //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
+            function LOCALIDAD(Combo, ValC) {
+                var ComboCP = (Combo=="ComboLocalidadR") ? "#CPR" : "#CPE";
+                //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
                 $.getJSON('/Postulante/DropEnCascada', {
-                    Localidad: $(this).val(),
+                    Localidad: ValC,
                 },
                     function (data) {
-                        //alert(data.Text);
-                        $(cpbox).val(data.Text);
-                        //alert($("#postal").val());
+                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
+                        $(ComboCP).val(data.Text);
                     });
-            });
+            };
         });
  //////////////////////////////////////////////////////////////////////////////
 
  /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm */
 
-          function Exito(response,status,xhr) {
-              alert("success: " + response.success + " " + response.msg);
+        function Exito(response,status,xhr) {
+           alert("success: " + response.success + " " + response.msg);
              //$("#MSGexito").html("success: " + response.success + " " + response.msg);
              //$(".modal").modal("show");
-          };
+        };
 
-            function Falla(response) {
-                alert("Error occured." );
-            };
+        function Falla(response) {
+           alert("Error occured." );
+        };
 
          //////////////////////////////////////////////////////////////////////////////
     </script>

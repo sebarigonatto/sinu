@@ -37,7 +37,16 @@ namespace SINU.ViewModels
         public List<sp_vPaises_Result> sp_vPaises_ResultVM { get; set; }
         [DisplayName("Provincias")]
         public List<string> provincias { get; set; }
-        public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadsVM { get; set; }
+        public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadREALVM { get; set; }
+        public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadEVENTUALVM { get; set; }
     }
 
+    public class EstudiosVM
+    {
+        public IList<VPersona_Estudio> vPersona_EstudioVM { get; set; }
+        [DisplayName("Instituto")]
+        public List<Institutos> InstitutoVM { get; set; }
+        [DisplayName("Nivel")]
+        public List<NiveldEstudio> NivelEstudioVM { get; set; }
+    }
 }

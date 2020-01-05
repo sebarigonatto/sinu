@@ -117,7 +117,7 @@ namespace SINU.Controllers
             }
             else
             {
-                return View("Register");
+                return RedirectToAction("Register");
             }
         }
 

@@ -111,6 +111,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Promedio" Type="float" />
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
+          <Property Name="NombreYPaisInstituto" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Etapa">
           <Key>
@@ -334,6 +335,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="IdEstadoOcupacional" Type="int" Nullable="false" />
           <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
           <Property Name="Oficio" Type="varchar" MaxLength="60" />
+          <Property Name="AniosTrabajados" Type="int" />
+          <Property Name="DomicilioLaboral" Type="varchar" MaxLength="400" />
         </EntityType>
         <EntityType Name="SituacionRevista">
           <Key>
@@ -639,16 +642,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no t
           <Key>
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEstadoOcupacional" />
+            <PropertyRef Name="IdSituacionOcupacional" />
             <PropertyRef Name="CargaOcupacionActual" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="IdEstadoOcupacional" Type="int" Nullable="false" />
+          <Property Name="IdSituacionOcupacional" Type="int" Nullable="false" />
           <Property Name="EstadoOcupacional" Type="varchar" MaxLength="50" />
           <Property Name="Descripcion" Type="varchar" MaxLength="60" />
-          <Property Name="CargaOcupacionActual" Type="bit" Nullable="false" />
-          <Property Name="Oficio" Type="varchar" MaxLength="60" />
           <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
+          <Property Name="DomicilioLaboral" Type="varchar" MaxLength="400" />
+          <Property Name="AniosTrabajados" Type="int" />
+          <Property Name="Oficio" Type="varchar" MaxLength="60" />
+          <Property Name="CargaOcupacionActual" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1203,6 +1210,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
         <Function Name="sp_vPaises" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CODIGO" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spActividadMilitarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdActividadMilitar" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spActividadMilitarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdActividadMilitar" Type="int" Mode="In" />
+          <Parameter Name="IdPersona" Type="int" Mode="In" />
+          <Parameter Name="SolicitoIngresoAnterior" Type="bit" Mode="In" />
+          <Parameter Name="Ingreso" Type="bit" Mode="In" />
+          <Parameter Name="FechaIngreso" Type="date" Mode="In" />
+          <Parameter Name="FechaBaja" Type="date" Mode="In" />
+          <Parameter Name="CausaMotivoNoingreso" Type="varchar" Mode="In" />
+          <Parameter Name="MotivoBaja" Type="varchar" Mode="In" />
+          <Parameter Name="Jerarquia" Type="varchar" Mode="In" />
+          <Parameter Name="Cargo" Type="varchar" Mode="In" />
+          <Parameter Name="Destino" Type="varchar" Mode="In" />
+          <Parameter Name="IdSituacionRevista" Type="int" Mode="In" />
+          <Parameter Name="IdFuerza" Type="int" Mode="In" />
+          <Parameter Name="IdBaja" Type="int" Mode="In" />
+        </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -1265,6 +1291,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="CantidadMateriaAdeudadas" Type="int" Mode="In" />
           <Parameter Name="ultimoAnioCursado" Type="int" Mode="In" />
         </Function>
+        <Function Name="spIdiomasIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPersonaIdioma" Type="int" Mode="In" />
+          <Parameter Name="IdPersona" Type="int" Mode="In" />
+          <Parameter Name="CodIdioma" Type="varchar" Mode="In" />
+          <Parameter Name="Habla" Type="int" Mode="In" />
+          <Parameter Name="Lee" Type="int" Mode="In" />
+          <Parameter Name="Escribe" Type="int" Mode="In" />
+        </Function>
         <Function Name="spIngresaASeguridad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Grupo" Type="varchar" Mode="In" />
@@ -1273,6 +1307,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="Destino" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spSituacionOcupacionalIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSituacionOcupacional" Type="int" Mode="In" />
+          <Parameter Name="IdPersona" Type="int" Mode="In" />
+          <Parameter Name="IdEstadoOcupacional" Type="int" Mode="In" />
+          <Parameter Name="OcupacionActual" Type="varchar" Mode="In" />
+          <Parameter Name="Oficio" Type="varchar" Mode="In" />
+          <Parameter Name="AniosTrabajados" Type="int" Mode="In" />
+          <Parameter Name="DomicilioLaboral" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
@@ -1536,11 +1579,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [vPersona_SituacionOcupacional].[Email] AS [Email], 
     [vPersona_SituacionOcupacional].[IdPersona] AS [IdPersona], 
     [vPersona_SituacionOcupacional].[IdEstadoOcupacional] AS [IdEstadoOcupacional], 
+    [vPersona_SituacionOcupacional].[IdSituacionOcupacional] AS [IdSituacionOcupacional], 
     [vPersona_SituacionOcupacional].[EstadoOcupacional] AS [EstadoOcupacional], 
     [vPersona_SituacionOcupacional].[Descripcion] AS [Descripcion], 
-    [vPersona_SituacionOcupacional].[CargaOcupacionActual] AS [CargaOcupacionActual], 
+    [vPersona_SituacionOcupacional].[OcupacionActual] AS [OcupacionActual], 
+    [vPersona_SituacionOcupacional].[DomicilioLaboral] AS [DomicilioLaboral], 
+    [vPersona_SituacionOcupacional].[AniosTrabajados] AS [AniosTrabajados], 
     [vPersona_SituacionOcupacional].[Oficio] AS [Oficio], 
-    [vPersona_SituacionOcupacional].[OcupacionActual] AS [OcupacionActual]
+    [vPersona_SituacionOcupacional].[CargaOcupacionActual] AS [CargaOcupacionActual]
     FROM [dbo].[vPersona_SituacionOcupacional] AS [vPersona_SituacionOcupacional]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" store:Type="Views" store:Schema="dbo">
@@ -1860,6 +1906,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <NavigationProperty Name="Institutos" Relationship="Self.FK_Estudio_Institutos" FromRole="Estudio" ToRole="Institutos" />
           <NavigationProperty Name="NiveldEstudio" Relationship="Self.FK_Estudio_NiveldEstudio" FromRole="Estudio" ToRole="NiveldEstudio" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaEstudio" FromRole="Estudio" ToRole="Persona" />
+          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Etapa">
           <Key>
@@ -2088,6 +2135,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EstadoOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="SituacionOcupacional" ToRole="EstadoOcupacional" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaSituacionOcupacional" FromRole="SituacionOcupacional" ToRole="Persona" />
+          <Property Name="AniosTrabajados" Type="Int32" />
+          <Property Name="DomicilioLaboral" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SituacionRevista">
           <Key>
@@ -2933,6 +2982,42 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <FunctionImport Name="spEstudiosEliminar">
           <Parameter Name="IdEstudio" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spActividadMilitarEliminar">
+          <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spActividadMilitarIU">
+            <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="SolicitoIngresoAnterior" Mode="In" Type="Boolean" />
+            <Parameter Name="Ingreso" Mode="In" Type="Boolean" />
+            <Parameter Name="FechaIngreso" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaBaja" Mode="In" Type="DateTime" />
+            <Parameter Name="CausaMotivoNoingreso" Mode="In" Type="String" />
+            <Parameter Name="MotivoBaja" Mode="In" Type="String" />
+            <Parameter Name="Jerarquia" Mode="In" Type="String" />
+            <Parameter Name="Cargo" Mode="In" Type="String" />
+            <Parameter Name="Destino" Mode="In" Type="String" />
+            <Parameter Name="IdSituacionRevista" Mode="In" Type="Int32" />
+            <Parameter Name="IdFuerza" Mode="In" Type="Int32" />
+            <Parameter Name="IdBaja" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spIdiomasIU">
+            <Parameter Name="IdPersonaIdioma" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="CodIdioma" Mode="In" Type="String" />
+            <Parameter Name="Habla" Mode="In" Type="Int32" />
+            <Parameter Name="Lee" Mode="In" Type="Int32" />
+            <Parameter Name="Escribe" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spSituacionOcupacionalIU">
+            <Parameter Name="IdSituacionOcupacional" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdEstadoOcupacional" Mode="In" Type="Int32" />
+            <Parameter Name="OcupacionActual" Mode="In" Type="String" />
+            <Parameter Name="Oficio" Mode="In" Type="String" />
+            <Parameter Name="AniosTrabajados" Mode="In" Type="Int32" />
+            <Parameter Name="DomicilioLaboral" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -3146,6 +3231,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEstadoOcupacional" />
             <PropertyRef Name="CargaOcupacionActual" />
+            <PropertyRef Name="IdSituacionOcupacional" />
           </Key>
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
@@ -3155,6 +3241,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="CargaOcupacionActual" Type="Boolean" Nullable="false" />
           <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="IdSituacionOcupacional" Type="Int32" Nullable="false" />
+          <Property Name="DomicilioLaboral" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="AniosTrabajados" Type="Int32" />
         </EntityType>
         <ComplexType Name="sp_vPaises_Result">
           <Property Type="String" Name="CODIGO" Nullable="true" MaxLength="8" />
@@ -3286,6 +3375,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Estudio">
             <EntityTypeMapping TypeName="SINUModel.Estudio">
               <MappingFragment StoreEntitySet="Estudio">
+                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Completo" ColumnName="Completo" />
@@ -3490,6 +3580,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="SituacionOcupacional">
             <EntityTypeMapping TypeName="SINUModel.SituacionOcupacional">
               <MappingFragment StoreEntitySet="SituacionOcupacional">
+                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
+                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdEstadoOcupacional" ColumnName="IdEstadoOcupacional" />
                 <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
@@ -3873,6 +3965,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vPersona_SituacionOcupacional">
             <EntityTypeMapping TypeName="SINUModel.vPersona_SituacionOcupacional">
               <MappingFragment StoreEntitySet="vPersona_SituacionOcupacional">
+                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
+                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
+                <ScalarProperty Name="IdSituacionOcupacional" ColumnName="IdSituacionOcupacional" />
                 <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
                 <ScalarProperty Name="Oficio" ColumnName="Oficio" />
                 <ScalarProperty Name="CargaOcupacionActual" ColumnName="CargaOcupacionActual" />
@@ -3912,6 +4007,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spEstudiosEliminar" FunctionName="SINUModel.Store.spEstudiosEliminar" />
+          <FunctionImportMapping FunctionImportName="spActividadMilitarEliminar" FunctionName="SINUModel.Store.spActividadMilitarEliminar" />
+          <FunctionImportMapping FunctionImportName="spActividadMilitarIU" FunctionName="SINUModel.Store.spActividadMilitarIU" />
+          <FunctionImportMapping FunctionImportName="spIdiomasIU" FunctionName="SINUModel.Store.spIdiomasIU" />
+          <FunctionImportMapping FunctionImportName="spSituacionOcupacionalIU" FunctionName="SINUModel.Store.spSituacionOcupacionalIU" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

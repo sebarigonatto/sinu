@@ -24,6 +24,8 @@ namespace SINU.Models
         public int IdEstadoOcupacional { get; set; }
         public string OcupacionActual { get; set; }
         public string Oficio { get; set; }
+        public Nullable<int> AniosTrabajados { get; set; }
+        public string DomicilioLaboral { get; set; }
     
         public virtual EstadoOcupacional EstadoOcupacional { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -512,5 +512,137 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosEliminar", idEstudioParameter);
         }
+    
+        public virtual int spActividadMilitarEliminar(Nullable<int> idActividadMilitar)
+        {
+            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
+                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
+                new ObjectParameter("IdActividadMilitar", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarEliminar", idActividadMilitarParameter);
+        }
+    
+        public virtual int spActividadMilitarIU(Nullable<int> idActividadMilitar, Nullable<int> idPersona, Nullable<bool> solicitoIngresoAnterior, Nullable<bool> ingreso, Nullable<System.DateTime> fechaIngreso, Nullable<System.DateTime> fechaBaja, string causaMotivoNoingreso, string motivoBaja, string jerarquia, string cargo, string destino, Nullable<int> idSituacionRevista, Nullable<int> idFuerza, Nullable<int> idBaja)
+        {
+            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
+                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
+                new ObjectParameter("IdActividadMilitar", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var solicitoIngresoAnteriorParameter = solicitoIngresoAnterior.HasValue ?
+                new ObjectParameter("SolicitoIngresoAnterior", solicitoIngresoAnterior) :
+                new ObjectParameter("SolicitoIngresoAnterior", typeof(bool));
+    
+            var ingresoParameter = ingreso.HasValue ?
+                new ObjectParameter("Ingreso", ingreso) :
+                new ObjectParameter("Ingreso", typeof(bool));
+    
+            var fechaIngresoParameter = fechaIngreso.HasValue ?
+                new ObjectParameter("FechaIngreso", fechaIngreso) :
+                new ObjectParameter("FechaIngreso", typeof(System.DateTime));
+    
+            var fechaBajaParameter = fechaBaja.HasValue ?
+                new ObjectParameter("FechaBaja", fechaBaja) :
+                new ObjectParameter("FechaBaja", typeof(System.DateTime));
+    
+            var causaMotivoNoingresoParameter = causaMotivoNoingreso != null ?
+                new ObjectParameter("CausaMotivoNoingreso", causaMotivoNoingreso) :
+                new ObjectParameter("CausaMotivoNoingreso", typeof(string));
+    
+            var motivoBajaParameter = motivoBaja != null ?
+                new ObjectParameter("MotivoBaja", motivoBaja) :
+                new ObjectParameter("MotivoBaja", typeof(string));
+    
+            var jerarquiaParameter = jerarquia != null ?
+                new ObjectParameter("Jerarquia", jerarquia) :
+                new ObjectParameter("Jerarquia", typeof(string));
+    
+            var cargoParameter = cargo != null ?
+                new ObjectParameter("Cargo", cargo) :
+                new ObjectParameter("Cargo", typeof(string));
+    
+            var destinoParameter = destino != null ?
+                new ObjectParameter("Destino", destino) :
+                new ObjectParameter("Destino", typeof(string));
+    
+            var idSituacionRevistaParameter = idSituacionRevista.HasValue ?
+                new ObjectParameter("IdSituacionRevista", idSituacionRevista) :
+                new ObjectParameter("IdSituacionRevista", typeof(int));
+    
+            var idFuerzaParameter = idFuerza.HasValue ?
+                new ObjectParameter("IdFuerza", idFuerza) :
+                new ObjectParameter("IdFuerza", typeof(int));
+    
+            var idBajaParameter = idBaja.HasValue ?
+                new ObjectParameter("IdBaja", idBaja) :
+                new ObjectParameter("IdBaja", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarIU", idActividadMilitarParameter, idPersonaParameter, solicitoIngresoAnteriorParameter, ingresoParameter, fechaIngresoParameter, fechaBajaParameter, causaMotivoNoingresoParameter, motivoBajaParameter, jerarquiaParameter, cargoParameter, destinoParameter, idSituacionRevistaParameter, idFuerzaParameter, idBajaParameter);
+        }
+    
+        public virtual int spIdiomasIU(Nullable<int> idPersonaIdioma, Nullable<int> idPersona, string codIdioma, Nullable<int> habla, Nullable<int> lee, Nullable<int> escribe)
+        {
+            var idPersonaIdiomaParameter = idPersonaIdioma.HasValue ?
+                new ObjectParameter("IdPersonaIdioma", idPersonaIdioma) :
+                new ObjectParameter("IdPersonaIdioma", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var codIdiomaParameter = codIdioma != null ?
+                new ObjectParameter("CodIdioma", codIdioma) :
+                new ObjectParameter("CodIdioma", typeof(string));
+    
+            var hablaParameter = habla.HasValue ?
+                new ObjectParameter("Habla", habla) :
+                new ObjectParameter("Habla", typeof(int));
+    
+            var leeParameter = lee.HasValue ?
+                new ObjectParameter("Lee", lee) :
+                new ObjectParameter("Lee", typeof(int));
+    
+            var escribeParameter = escribe.HasValue ?
+                new ObjectParameter("Escribe", escribe) :
+                new ObjectParameter("Escribe", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spIdiomasIU", idPersonaIdiomaParameter, idPersonaParameter, codIdiomaParameter, hablaParameter, leeParameter, escribeParameter);
+        }
+    
+        public virtual int spSituacionOcupacionalIU(Nullable<int> idSituacionOcupacional, Nullable<int> idPersona, Nullable<int> idEstadoOcupacional, string ocupacionActual, string oficio, Nullable<int> aniosTrabajados, string domicilioLaboral)
+        {
+            var idSituacionOcupacionalParameter = idSituacionOcupacional.HasValue ?
+                new ObjectParameter("IdSituacionOcupacional", idSituacionOcupacional) :
+                new ObjectParameter("IdSituacionOcupacional", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var idEstadoOcupacionalParameter = idEstadoOcupacional.HasValue ?
+                new ObjectParameter("IdEstadoOcupacional", idEstadoOcupacional) :
+                new ObjectParameter("IdEstadoOcupacional", typeof(int));
+    
+            var ocupacionActualParameter = ocupacionActual != null ?
+                new ObjectParameter("OcupacionActual", ocupacionActual) :
+                new ObjectParameter("OcupacionActual", typeof(string));
+    
+            var oficioParameter = oficio != null ?
+                new ObjectParameter("Oficio", oficio) :
+                new ObjectParameter("Oficio", typeof(string));
+    
+            var aniosTrabajadosParameter = aniosTrabajados.HasValue ?
+                new ObjectParameter("AniosTrabajados", aniosTrabajados) :
+                new ObjectParameter("AniosTrabajados", typeof(int));
+    
+            var domicilioLaboralParameter = domicilioLaboral != null ?
+                new ObjectParameter("DomicilioLaboral", domicilioLaboral) :
+                new ObjectParameter("DomicilioLaboral", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSituacionOcupacionalIU", idSituacionOcupacionalParameter, idPersonaParameter, idEstadoOcupacionalParameter, ocupacionActualParameter, oficioParameter, aniosTrabajadosParameter, domicilioLaboralParameter);
+        }
     }
 }

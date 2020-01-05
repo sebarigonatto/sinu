@@ -4,7 +4,7 @@
     ViewBag.Title = "Domicilio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }*@
-
+    @*<link href="~/Content/Conbobox.css" rel="stylesheet" />*@
 @using (Ajax.BeginForm("Domicilio", "Postulante", null,
     new AjaxOptions
     {
@@ -56,12 +56,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.Piso, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DomicilioVM.Piso, new
-                            {
-                                htmlAttributes = new
-                                {
-                                    @class = "form-control"@*@readonly = "readonly"*@}
-})
+                            @Html.EditorFor(model => model.vPersona_DomicilioVM.Piso, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Piso, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -73,13 +68,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-6">
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.sp_vPaises_ResultVM, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
 
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisR" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.IdPais)
                         </div>
                     </div>
@@ -87,7 +83,12 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.provincias, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control", @id = "ProviR" })
+                            @* se reemplaza por un input en el caso de que se eliga un pais distinto a "ARGENTINA" *@
+                           
+                                @Html.TextBoxFor(model => model.vPersona_DomicilioVM.Provincia, new { @class = "form-control", @id = "ProvinciaR" })
+                                @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox", @id = "ComboProvinciaR" })
+
+                            
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Provincia)
                         </div>
                     </div>
@@ -95,7 +96,11 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.Localidad, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadsVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control", @id = "LocaliR" })
+                            
+                                @Html.TextBoxFor(model => model.vPersona_DomicilioVM.Localidad, new { @class = "form-control", @id = "LocalidadR" })
+                                @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadREALVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox", @id = "ComboLocalidadR" })
+                          
+
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Localidad)
                         </div>
                     </div>
@@ -103,8 +108,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.CODIGO_POSTAL, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @* @Html.TextBoxFor(m => m.vPersona_DomicilioVM.CODIGO_POSTAL, new { @class = "form-control", @id = "CodigoPostal " })*@
-                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.CODIGO_POSTAL, new { @class = "form-control", @id = "CPReal" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.CODIGO_POSTAL, new { @class = "form-control", @id = "CPR" ,@readonly =true })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.CODIGO_POSTAL, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -154,7 +158,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualPais, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualPais)
                         </div>
                     </div>
@@ -162,7 +166,8 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualProvincia, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualProvincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control", @id = "ProviE" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualProvincia, new { @class = "form-control", @id = "ProvinciaE" })
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualProvincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox", @id = "ComboProvinciaE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualProvincia)
                         </div>
                     </div>
@@ -170,7 +175,8 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualLocalidad, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadsVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control", @id = "LocaliE" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualLocalidad, new { @class = "form-control", @id = "LocalidadE" })
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadEVENTUALVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox", @id = "ComboLocalidadE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualLocalidad)
                         </div>
                     </div>
@@ -178,8 +184,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @* @Html.TextBoxFor(m => m.vPersona_DomicilioVM.CODIGO_POSTAL, new { @class = "form-control", @id = "CodigoPostal " })*@
-                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPEventual" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -188,7 +193,7 @@
                 <br />
             </div>
             <div class="form-group pl-3">
-                <input type="submit" value="Guadar Datos" class="btn btn-success " id="jejeje" />
+                <input type="submit" value="Guadar Datos" class="btn btn-success " id="jejeje" placeholder="" />
             </div>
 
 
@@ -196,106 +201,113 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
 
 @*@section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
- 
 
-    <script>
 
+    <script type="text/javascript">
+
+        
         $(document).ready(function () {
 
-            //variable para guardar el ID dropboxlist que se utilizara de acuerdo con el dropboxlist de provincia seleccionado
-            var localidad;
-            //al selecciona una provincia tanto en el domicilio eventual como en el real llama a esta funcion
-            $("#ProviR,#ProviE").change(function () {
-                //alert($(this).attr("id"));
-                //guardo id del la localidad real o guardo id del la localidad eventual
-                localidad = ($(this).attr("id") == "ProviR") ? "#LocaliR" : "#LocaliE";
-                //limio el dropboxlist antes de cargarlo
-                $(localidad).empty();
-                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia selecciona
+            //aplico el combobox al a los drodbox de la vista
+            //la seleccion de un item segun el combobox llama a una funcion
+            $(".combobox").combobox({
+                select: function (event, ui) {
+                    //alert($(ui.item).val() + " " + $(this).attr("id"));
+                    var Combo = $(this).attr("id");
+                    var ValC = $(this).val();
+
+                    switch (Combo) {
+                        case "ListaPaisR":
+                        case "ListaPaisE":
+                            PAIS(Combo,1)
+                            break;
+                        case "ComboProvinciaR":
+                        case "ComboProvinciaE":
+                            PROVINCIA(Combo, ValC);
+                            break;
+                        case "ComboLocalidadR":
+                        case "ComboLocalidadE":
+                            LOCALIDAD(Combo, ValC);
+                            break;
+                        default:
+                    }
+                }
+            });
+            $("#toggle").on("click", function () {
+                $(".combobox").toggle();
+            });
+
+            $("#ComboProvinciaR-I,#ComboProvinciaE-I").attr("placeholder", "Seleccione una Provincia");
+            $("#ComboLocalidadR-I,#ComboLocalidadE-I").attr("placeholder", "Seleccione una Localidad");
+
+            //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
+            PAIS("ListaPaisR",0);
+            PAIS("ListaPaisE", 0);
+
+            //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
+            function PAIS(Combo, PRI) {
+                var Comboelemt = (Combo == "ListaPaisR") ? ["#ProvinciaR,#LocalidadR", "#ComboProvinciaR-D,#ComboLocalidadR-D", "#CPR","#ComboProvinciaR-I,#ComboLocalidadR-I"] : ["#ProvinciaE,#LocalidadE", "#ComboProvinciaE-D,#ComboLocalidadE-D", "#CPE","#ComboProvinciaE-I,#ComboLocalidadE-I"];
+                //alert(Comboelemt[0]+","+Comboelemt[1]+","+Comboelemt[2])
+                if ($("#" + Combo).val() != "AR") {
+                    $(Comboelemt[0]).show();
+                    $(Comboelemt[1]).hide();
+                    $(Comboelemt[2]).attr("readonly", false);
+                } else {
+                    $(Comboelemt[0]).hide();
+                    $(Comboelemt[1]).show();
+                    $(Comboelemt[2]).attr("readonly", true);
+                };
+                if(PRI == 1){
+                    $(Comboelemt[0]+","+Comboelemt[3]+","+Comboelemt[2]).val("");
+                }
+            };
+
+            //Funcion de Provincia que actualiza los combobox de localidad
+            function PROVINCIA(Combo, ValC) {
+                var ComboLocalidad=(Combo == "ComboProvinciaR")?"#ComboLocalidadR":"#ComboLocalidadE";
+
+                $(ComboLocalidad + "-I").val("");
+                $(ComboLocalidad).empty();
+                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
                 $.getJSON('/Postulante/DropEnCascada', {
-                    Provincia: $(this).val(),
+                    Provincia: ValC,
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
                         $.each(data, function () {
-                            $(localidad).append('<option value=' +
+                            $(ComboLocalidad).append('<option value=' +
                                 this.Value + '>' + this.Text + '</option>');
                         });
-
                     });
+            };
 
-            });
-
-            $("#LocaliR,#LocaliE").change(function () {
-                //variable para el TexBOXFOR de CP
-                var cpbox;
-                //segun tipo de localidad seleccionada se guardara su texboxfor correspondiente
-                cpbox = ($(this).attr("id") == "LocaliR") ? "#CPReal" : "#CPEventual";
-                //alert(cpbox);
+            //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
+            function LOCALIDAD(Combo, ValC) {
+                var ComboCP = (Combo=="ComboLocalidadR") ? "#CPR" : "#CPE";
+                //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
                 $.getJSON('/Postulante/DropEnCascada', {
-                    Localidad: $(this).val(),
+                    Localidad: ValC,
                 },
                     function (data) {
-                        //alert(data.Text);
-                        $(cpbox).val(data.Text);
-                        //alert($("#postal").val());
+                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
+                        $(ComboCP).val(data.Text);
                     });
-
-
-            });
-
-
-
-            //var availableTags = [
-            //    "ActionScript",
-            //    "AppleScript",
-            //    "Asp",
-            //    "BASIC",
-            //    "C",
-            //    "C++",
-            //    "Clojure",
-            //    "COBOL",
-            //    "ColdFusion",
-            //    "Erlang",
-            //    "Fortran",
-            //    "Groovy",
-            //    "Haskell",
-            //    "Java",
-            //    "JavaScript",
-            //    "Lisp",
-            //    "Perl",
-            //    "PHP",
-            //    "Python",
-            //    "Ruby",
-            //    "Scala",
-            //    "Scheme"
-            //];
-            //$("#tags").autocomplete({
-            //    source: availableTags
-            //});
-
-
+            };
         });
 
+        //Si lallamada POST tuvo exito
         function Exito(response, status, xhr) {
             alert("success: " + response.success + " " + response.msg);
-            //$("#MSGexito").html("success: " + response.success + " " + response.msg);
-            //$(".modal").modal("show");
         };
 
+        //Si lallamada POST tuvo error
         function Falla(response) {
             alert("Error occured.");
         };
-
-
-
 
     </script>
 
