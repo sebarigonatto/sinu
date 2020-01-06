@@ -202,7 +202,7 @@
 }
 
 
-@*@section Scripts {
+@section Scripts {
 
     @Scripts.Render("~/bundles/jqueryval")
 
@@ -273,7 +273,7 @@
                 $(ComboLocalidad + "-I").val("");
                 $(ComboLocalidad).empty();
                 //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
-                $.getJSON('/Postulante/DropEnCascada', {
+                $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                     Provincia: ValC,
                 },
                     function (data) {
@@ -289,7 +289,7 @@
             function LOCALIDAD(Combo, ValC) {
                 var ComboCP = (Combo=="ComboLocalidadR") ? "#CPR" : "#CPE";
                 //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
-                $.getJSON('/Postulante/DropEnCascada', {
+                $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                     Localidad: ValC,
                 },
                     function (data) {
@@ -311,4 +311,4 @@
 
     </script>
 
-}*@
+}

@@ -57,6 +57,11 @@
             .tcard {
                 font-size: 30px;
             }
+            .back-color {
+                background-color: #1717178a !important;
+            }
+        }
+
         }
 
         @@media screen and (min-width: 731px) {
@@ -69,6 +74,9 @@
         @@media screen and (max-width: 600px) {
             .tcard {
                 font-size: 25px;
+            }
+            .back-color {
+                background-color: #000000d4 !important
             }
         }
 
@@ -84,8 +92,7 @@
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
             background-color: white
         }
-
-
+       
 
 
         .content-title {
@@ -109,13 +116,38 @@
             color: white;
         }
 
+        .nav-link:hover {
+            color:#a7a7a7 !important
+        }
+
         .centrar {
             margin: auto;
         }
-        
+        .nav-link{
+            color:white !important;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top  back-color" style="margin-bottom:10px;background-color: #1717178a ;">
+        <div class="container">
+            @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
+
+            <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="color:white !important">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    @*<li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>*@
+                    <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+
+            </div>
+        </div>
+    </div>
     <header class="mb-2">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
@@ -147,13 +179,15 @@
             </div>
         </div>
     </header>
-    <div class="container" >
-        <div class="card-deck mb-4 text-center" >
+
+
+    <div class="container">
+        <div class="card-deck mb-4 text-center">
             <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
                 <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
                     <h2>Modalidades de Inscripción</h2>
                 </div>
-                <div class="card-body" >
+                <div class="card-body">
                     <p class="lead justify-content-center">
                         <b>@ViewBag.TextoPAGINAPRINCIPAL</b>
                     </p>
@@ -194,7 +228,7 @@
 
                                     <div class="row card-footer lead justify-content-center">
                                         @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
-                                        
+
                                     </div>
 
                                     inst++;
@@ -216,17 +250,12 @@
         <hr>
 
         <!-- Call to Action Section -->
-        @if (!Request.IsAuthenticated)
+        @if (Request.IsAuthenticated)
         {
+    
             <div class="row lead justify-content-center">
                 <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
-                    <a>@Html.ActionLink("Iniciar Sesion", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path }, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
-                </div>
-            </div>
-        } else {
-            <div class="row lead justify-content-center">
-                <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
-                    <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante",null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+                    <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
                 </div>
             </div>
         }
@@ -253,10 +282,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-<script type="text/javascript">
+
+    <script type="text/javascript">
 
 
 
-</script>
+    </script>
 </body>
 </html>

@@ -26,5 +26,8 @@ namespace SINU.Models
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string Nivel { get; set; }
+        public string NombreYPaisInstituto { get; set; }
+        public string Jurisdiccion { get; set; }
+        public string Localidad { get; set; }
     }
 }

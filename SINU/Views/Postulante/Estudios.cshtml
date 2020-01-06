@@ -51,8 +51,8 @@
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalCenterTitle">
@@ -62,7 +62,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" id="EstudioCUDVista" style="overflow:auto;height:25rem">
+                    <div class="modal-body" id="EstudioCUDVista" style="overflow:auto;height:25rem;">
 
                         
                         ...
@@ -104,10 +104,12 @@
                     cell.innerHTML = i + 1;
                 });
             }).draw();
-
+            var fila;
             TEstudio.on('select.dt', function (e, dt, type, index) {
+                fila = index;
                 var data = dt.rows(index).data();
                 //alert(data[0][0] + " " + index);
+                $('#EstudioCUDVista').html("");
 
                 $.ajax({
                     cache: false,
@@ -125,10 +127,10 @@
                     },
                     //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
                     statusCode: {
-                        403: function (context) {
+                        500:
+                        function(context) {
                             // alert("error de autorizacion");
-                            var response = $.parseJSON(context.responseText);
-                            window.location = response.NoAuth;
+                            $('#EstudioCUDVista').html(context.responseText);
                         }
                     }
                 });
@@ -137,6 +139,7 @@
             });
 
             $("#NuevoEstudio").on("click", function () {
+                $('#EstudioCUDVista').html("");
                 $.ajax({
                     cache: false,
                     asyn: true,
@@ -152,7 +155,13 @@
                         //$.validator.unobtrusive.parse('#EstudioCUDVista')
                     },
                     //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
-                    
+                     statusCode: {
+                        500:
+                        function(context) {
+                            // alert("error de autorizacion");
+                            $('#EstudioCUDVista').html(context.responseText);
+                        }
+                    }
                 });
             });
         });

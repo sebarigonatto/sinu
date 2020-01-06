@@ -219,7 +219,7 @@ namespace SINU.Controllers
 
 
         //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
-        public JsonResult DropEnCascada(string? Provincia,int? Localidad)
+        public JsonResult DropEnCascadaDomicilio(string? Provincia,int? Localidad)
         {
             if (Provincia != null) { 
 
@@ -250,7 +250,7 @@ namespace SINU.Controllers
             {
                 EstudiosVM estudio = new EstudiosVM()
                 {
-                    vPersona_EstudioListVM = db.VPersona_Estudio.ToList()
+                    vPersona_EstudioListVM = db.VPersona_Estudio.Where(m=>m.Email==USUmail).ToList()
                 };
                 return PartialView(estudio);
             }
@@ -266,18 +266,42 @@ namespace SINU.Controllers
             try
             {
                 EstudiosVM estudio = new EstudiosVM()
-                    {
-                        NivelEstudioVM = db.NiveldEstudio.ToList()
-                    };
-                if (ID != null)
                 {
-                    estudio.vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
-                    return PartialView(estudio);
+                    NivelEstudioVM = db.NiveldEstudio.ToList(),
+                    Provincia = db.Institutos                        
+                        .DistinctBy(m=>m.Jurisdiccion)
+                        .OrderBy(m=>m.Jurisdiccion)
+                        .Select(m =>m.Jurisdiccion)
+                        .ToList()
+                    
+                };
+
+                estudio.vPersona_EstudioIdVM = (ID != null)? db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID):null;
+                if (estudio.vPersona_EstudioIdVM != null && estudio.vPersona_EstudioIdVM.IdInstitutos != null)
+                {
+                    estudio.Localidad = db.Institutos
+                        .Where(m=>m.Jurisdiccion==estudio.vPersona_EstudioIdVM.Jurisdiccion)
+                        .DistinctBy(m => m.Localidad)
+                        .OrderBy(m => m.Localidad)
+                        .Select(m => m.Localidad)
+                        .ToList();
+                    estudio.InstitutoVM = db.Institutos
+                        .Where(m => m.Localidad == estudio.vPersona_EstudioIdVM.Localidad)
+                        .OrderBy(m => m.Nombre)
+                        .Select(m => new SelectListItem
+                        {
+                            Value = m.Id.ToString(),
+                            Text = m.Nombre
+                        })
+                        .ToList();
                 }
                 else
                 {
-                    return PartialView(estudio);
+                    estudio.Localidad = new List<string>();
+                    estudio.InstitutoVM = new List<SelectListItem>();
                 }
+
+                return PartialView(estudio);
                 
             }
             catch (Exception ex)

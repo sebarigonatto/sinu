@@ -595,8 +595,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEstudio" />
             <PropertyRef Name="Completo" />
-            <PropertyRef Name="Nombre" />
             <PropertyRef Name="Nivel" />
+            <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
@@ -610,6 +610,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
           <Property Name="Nivel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NombreYPaisInstituto" Type="varchar" MaxLength="500" />
+          <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" />
+          <Property Name="Localidad" Type="varchar" MaxLength="60" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -794,18 +797,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Principal>
             <Dependent Role="DocPresentado">
               <PropertyRef Name="IdTipoDocPresentado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Domicilio_Domicilio">
-          <End Role="Domicilio" Type="Self.Domicilio" Multiplicity="1" />
-          <End Role="Domicilio1" Type="Self.Domicilio" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Domicilio">
-              <PropertyRef Name="IdDomicilio" />
-            </Principal>
-            <Dependent Role="Domicilio1">
-              <PropertyRef Name="IdDomicilio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1556,7 +1547,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [VPersona_Estudio].[Promedio] AS [Promedio], 
     [VPersona_Estudio].[CantidadMateriaAdeudadas] AS [CantidadMateriaAdeudadas], 
     [VPersona_Estudio].[ultimoAnioCursado] AS [ultimoAnioCursado], 
-    [VPersona_Estudio].[Nivel] AS [Nivel]
+    [VPersona_Estudio].[Nivel] AS [Nivel], 
+    [VPersona_Estudio].[NombreYPaisInstituto] AS [NombreYPaisInstituto], 
+    [VPersona_Estudio].[Jurisdiccion] AS [Jurisdiccion], 
+    [VPersona_Estudio].[Localidad] AS [Localidad]
     FROM [dbo].[VPersona_Estudio] AS [VPersona_Estudio]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" store:Type="Views" store:Schema="dbo">
@@ -1661,10 +1655,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <AssociationSet Name="FK_DocPresentado_TipoDocPresentado" Association="Self.FK_DocPresentado_TipoDocPresentado">
             <End Role="TipoDocPresentado" EntitySet="TipoDocPresentado" />
             <End Role="DocPresentado" EntitySet="DocPresentado" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Domicilio_Domicilio" Association="Self.FK_Domicilio_Domicilio">
-            <End Role="Domicilio" EntitySet="Domicilio" />
-            <End Role="Domicilio1" EntitySet="Domicilio" />
           </AssociationSet>
           <AssociationSet Name="FK_Estudio_Institutos" Association="Self.FK_Estudio_Institutos">
             <End Role="Institutos" EntitySet="Institutos" />
@@ -3208,6 +3198,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
           <Property Name="ultimoAnioCursado" Type="Int32" />
           <Property Name="Nivel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPersona_ActividadMilitar">
           <Key>
@@ -3931,6 +3924,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="VPersona_Estudio">
             <EntityTypeMapping TypeName="SINUModel.VPersona_Estudio">
               <MappingFragment StoreEntitySet="VPersona_Estudio">
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
+                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
                 <ScalarProperty Name="Nivel" ColumnName="Nivel" />
                 <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
                 <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
