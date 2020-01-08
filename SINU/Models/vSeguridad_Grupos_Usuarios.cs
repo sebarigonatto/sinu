@@ -14,9 +14,9 @@ namespace SINU.Models
     
     public partial class vSeguridad_Grupos_Usuarios
     {
-        public string codAplicacion { get; set; }
         public string codUsuario { get; set; }
-        public string codGrupo { get; set; }
         public string codFuncion { get; set; }
+        public string codGrupo { get; set; }
+        public string codAplicacion { get; set; }
     }
 }

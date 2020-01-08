@@ -27,9 +27,9 @@ namespace SINU.Models
         public Nullable<int> IdPreferencia { get; set; }
         public Nullable<int> IdEstablecimientoRindeExamen { get; set; }
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        public Nullable<System.DateTime> FechaEntrevista { get; set; }
         public Nullable<System.DateTime> FechaRindeExamen { get; set; }
         public int IdInscripcion { get; set; }
-        public Nullable<System.DateTime> FechaEntrevista { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocPresentado> DocPresentado { get; set; }
@@ -37,7 +37,6 @@ namespace SINU.Models
         public virtual Institucion Institucion { get; set; }
         public virtual OficinasYDelegaciones OficinasYDelegaciones { get; set; }
         public virtual Postulante Postulante { get; set; }
-        public virtual Preferencia Preferencia { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
     }

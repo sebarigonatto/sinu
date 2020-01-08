@@ -46,31 +46,17 @@
         </table>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="NuevoEstudio">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalEstudio" id="NuevoEstudio">
             Agregar Estudio
         </button>
 
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">
-                            ESTUDIO
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="EstudioCUDVista" style="overflow:auto;height:25rem;">
+        <div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+            <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                <div class="modal-content   " id="ModalEstudioCuerpo">
+                  
+                    @*--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------*@
 
-                        
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -82,10 +68,12 @@
 
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script type="text/javascript">
+    <script type="text/javascript" >
 
         $(document).ready(function () {
 
+            
+            //aplico DATATABLES a las tablas necesrias
             var TEstudio = $('#TablaEstudio').DataTable({
                 responsive: {
                     details: false
@@ -99,72 +87,168 @@
                 "order": [[ 1, 'asc' ]]
             });
 
-            TEstudio.on('order.dt search.dt', function () {
-                TEstudio.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            }).draw();
-            var fila;
-            TEstudio.on('select.dt', function (e, dt, type, index) {
-                fila = index;
-                var data = dt.rows(index).data();
-                //alert(data[0][0] + " " + index);
-                $('#EstudioCUDVista').html("");
+            //index de la fila seleccionada de la tabla
+            var indexrow;
 
+            //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+            $("#ModalEstudio").on('hidden.bs.modal', function () {
+                TEstudio.rows(indexrow).deselect();
+                $("#myPartialViewContainer").load('@Url.Action("Skits","KitSection")' + '?id=' + id + '&status=' + status);
+            
+            });
+
+            //al seleccionar una fila 
+            //guardo el index de la fila seleccionada
+            //se llama al modal y se le envia la id de estudio correspondiete
+            TEstudio.on('select.dt', function (e, dt, type, index) {
+                indexrow = index;
+                var data = dt.rows(index).data();
+                var id = data[0][0];
+                ModalEstudioCUD(id);
+                $("#ModalEstudio").modal("show");
+            });
+
+            //se llama al modal para cargar un nuevo estudio
+            $("#NuevoEstudio").on("click", function () {
+                ModalEstudioCUD(null);
+            });
+
+            
+
+            function ModalEstudioCUD(idrec) {
+                
+                $('#ModalEstudioCuerpo').html("");
+                
                 $.ajax({
                     cache: false,
                     asyn: true,
                     type: "GET",
                     url: '/Postulante/EstudiosCUD',
-                    data: { Id: data[0][0] },
+                    data: { ID: idrec },
                     //si no surge error al redireccionar se reemplaza el contenido de la div
                     success: function (response) {
-                        $('#EstudioCUDVista').html(response)
+                        $('#ModalEstudioCuerpo').html(response);
+                        
                         //con esto  funciona la validacion del lado del cliente con la vista parcial
-                        //$('#EstudioCUDVista').removeData("validator");
-                        //$('#EstudioCUDVista').removeData("unobtrusiveValidation");
-                        //$.validator.unobtrusive.parse('#EstudioCUDVista')
+                        $('#ModalEstudioCuerpo').removeData("validator");
+                        $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
+                        $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
+
+                        $(".combobox").combobox({
+                            select: function (event, ui) {
+
+                                //alert($(this).val() + " " + $(this).attr("id"));
+                                var Combo = $(this).attr("id");
+                                var ValC = $(ui.item).text();
+                                //alert(ValC);
+                                if (Combo != "ComboIdInstEST") {
+                                    ComboCascada(Combo, ValC);
+                                };
+                            }
+                        });
+
+                        $("#toggle").on("click", function () {
+                            $(".combobox").toggle();
+                        });
+                        $("#ComboJuriEST-I").attr("placeholder", "Seleccione una Juridiccion");
+                        $("#ComboLocaliEST-I").attr("placeholder", "Seleccione una Localidad");
+                        $("#ComboIdInstEST-I").attr("placeholder", "Seleccione una Instituto");
+
+                        //alert($("#IdInstEST").val() + " " + idrec);
+                        if ($("#IdInstEST").val() != "" && idrec != null) {
+                            //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
+                            $("#checkext").attr("checked", "checked");
+                            
+                        };
+
+                        //lamo la funcion INSTEXT y mando cero por que esla primera carga
+                        INSTEXT("#checkext", 0);
+
+                        //cada vez que el checkbox de instituto en el exterior cambia de valor
+                        $("#checkext").on("change", function () {
+                            INSTEXT(this,1);
+                        });
+
+                        //ELIMINA EL ESTUDIO SELECCIONADO
+                        $("#EliminaEST").on("click", function () {
+                            $.getJSON('/Postulante/EliminaEST',
+                                { ID: idrec }, function (response) {
+                                    alert(response.success + " " + response.msg);
+                                });
+                        });
+                        $("#EliminaEST,#GuardarEST").on("click", function () {
+                            
+                            $("#ModalEstudio").modal("hide");
+                        });
+
                     },
+
                     //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
                     statusCode: {
                         500:
-                        function(context) {
-                            // alert("error de autorizacion");
-                            $('#EstudioCUDVista').html(context.responseText);
-                        }
+                            function (context) {
+                                // alert("error de autorizacion");
+                                $('#ModalEstudioCuerpo').html(context.responseText);
+                            }
                     }
                 });
-                $("#exampleModalCenter").modal("show");
-               
-            });
 
-            $("#NuevoEstudio").on("click", function () {
-                $('#EstudioCUDVista').html("");
-                $.ajax({
-                    cache: false,
-                    asyn: true,
-                    type: "GET",
-                    url: '/Postulante/EstudiosCUD',
-                    data: { ID : null },
-                    //si no surge error al redireccionar se reemplaza el contenido de la div
-                    success: function (response) {
-                        $('#EstudioCUDVista').html(response)
-                        //con esto  funciona la validacion del lado del cliente con la vista parcial
-                        //$('#EstudioCUDVista').removeData("validator");
-                        //$('#EstudioCUDVista').removeData("unobtrusiveValidation");
-                        //$.validator.unobtrusive.parse('#EstudioCUDVista')
-                    },
-                    //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
-                     statusCode: {
-                        500:
-                        function(context) {
-                            // alert("error de autorizacion");
-                            $('#EstudioCUDVista').html(context.responseText);
-                        }
-                    }
-                });
-            });
+               
+            };
+
+            function INSTEXT(elemn,pri) {
+                if ($(elemn).is(":checked")) {
+                    $("#JuriEST,#IdInstEST").show();
+                    $("label[for='Provincia']").text("Pais");
+                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").hide();
+                    $("#ComboJuriEST-I,#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $("#ComboIdInstEST").val(0);
+                } else {
+                    $("#JuriEST,#IdInstEST").hide().val("");
+                    $("label[for='Provincia']").text("Provincia/Juridiccion");
+                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").show();
+                };
+                if (pri !=0) {
+                    $("#JuriEST,#IdInstEST").val("");
+
+                }
+
+            }
+            
+            function ComboCascada(Combo, ValC) {
+                var OPC;
+                if (Combo == "ComboJuriEST") {
+                    OPC = 0;
+                    $("#ComboLocaliEST,#ComboIdInstEST").empty();
+                    $("#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                } else {
+                    OPC = 1;
+                    $("#ComboIdInstEST").empty();
+                }
+                
+                $.getJSON('/Postulante/DropCascadaEST', {
+                    opc: OPC,val: ValC
+                },
+                    function (data) {
+                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
+                        var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
+                        $.each(data, function () {
+                            
+                            $(combocas).append("<option value="+ this.Value + " >" + this.Text + "</option>");
+                        });
+                    });
+            }
+
         });
+
+        function Exito(response, status, xhr) {
+            alert("success: " + response.success + " " + response.msg);
+        };
+
+        //Si lallamada POST tuvo error
+        function Falla(response) {
+            alert("success: " + response.success + " " + response.msg);
+        };
 
     </script>
 }

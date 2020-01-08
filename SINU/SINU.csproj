@@ -201,197 +201,203 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActividadMilitar.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Aprender01_Result.cs">
+      <DependentUpon>SINUModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Baja.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Configuracion.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfiguracionAdmin.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocPresentado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domicilio.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstablecimientoRindeExamen.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstadoOcupacional.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudio.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Etapa.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Familiares.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fuerza.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inscripcion.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InscripcionEtapaEstado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institucion.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institutos.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Metadatos.cs" />
     <Compile Include="Models\NiveldEstudio.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NivelIdioma.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OficinasYDelegaciones.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\PeriodosInscripciones.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonaIdioma.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Postulante.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostulanteViaje.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Preferencia.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Secuencia_EtapaEstado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sexo.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUDB.Context.cs">
+    <Compile Include="Models\SINUModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUDB.Context.tt</DependentUpon>
+      <DependentUpon>SINUModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUDB.cs">
+    <Compile Include="Models\SINUModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUDB.Designer.cs">
+    <Compile Include="Models\SINUModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUDB.edmx</DependentUpon>
+      <DependentUpon>SINUModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionOcupacional.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionRevista.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\spPrueba_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_vPaises_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoDocPresentado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoNacionalidad.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vConfiguracionAdmin.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEstCivil.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vParentesco.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPeriodosInscrip.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_ActividadMilitar.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_DatosBasicos.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_DatosPer.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Domicilio.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VPersona_Estudio.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPersona_Familiar.cs">
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Idioma.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_SituacionOcupacional.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vProvincia_Depto_Localidad.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vRELIGION.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSecuencia_EtapaEstado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos_Usuarios.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Usuarios.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
+      <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -471,15 +477,15 @@
     <Content Include="Documentacion\otro.docx" />
     <Content Include="Imagenes\2.png" />
     <Content Include="Imagenes\6.png" />
-    <Content Include="Models\SINUDB.Context.tt">
+    <Content Include="Models\SINUModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUDB.edmx</DependentUpon>
-      <LastGenOutput>SINUDB.Context.cs</LastGenOutput>
+      <DependentUpon>SINUModel.edmx</DependentUpon>
+      <LastGenOutput>SINUModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\SINUDB.tt">
+    <Content Include="Models\SINUModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUDB.edmx</DependentUpon>
-      <LastGenOutput>SINUDB.cs</LastGenOutput>
+      <DependentUpon>SINUModel.edmx</DependentUpon>
+      <LastGenOutput>SINUModel.cs</LastGenOutput>
     </Content>
     <Content Include="Plantillas\PlantillaMailConfirmacion.cshtml" />
     <Content Include="Content\bootstrap.min.css.map" />
@@ -488,14 +494,14 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <EntityDeploy Include="Models\SINUDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SINUDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SINUDB.edmx.diagram">
-      <DependentUpon>SINUDB.edmx</DependentUpon>
-    </Content>
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
+    <EntityDeploy Include="Models\SINUModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SINUModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SINUModel.edmx.diagram">
+      <DependentUpon>SINUModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

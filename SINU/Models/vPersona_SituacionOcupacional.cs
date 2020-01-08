@@ -17,13 +17,13 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         public int IdEstadoOcupacional { get; set; }
+        public int IdSituacionOcupacional { get; set; }
         public string EstadoOcupacional { get; set; }
         public string Descripcion { get; set; }
-        public bool CargaOcupacionActual { get; set; }
-        public string Oficio { get; set; }
         public string OcupacionActual { get; set; }
-        public int IdSituacionOcupacional { get; set; }
         public string DomicilioLaboral { get; set; }
         public Nullable<int> AniosTrabajados { get; set; }
+        public string Oficio { get; set; }
+        public bool CargaOcupacionActual { get; set; }
     }
 }

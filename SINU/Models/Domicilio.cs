@@ -34,7 +34,5 @@ namespace SINU.Models
         public virtual ICollection<Persona> Persona { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona1 { get; set; }
-        public virtual Domicilio Domicilio1 { get; set; }
-        public virtual Domicilio Domicilio2 { get; set; }
     }
 }

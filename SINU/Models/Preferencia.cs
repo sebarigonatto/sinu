@@ -14,16 +14,7 @@ namespace SINU.Models
     
     public partial class Preferencia
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Preferencia()
-        {
-            this.Inscripcion = new HashSet<Inscripcion>();
-        }
-    
         public string Preferencia1 { get; set; }
         public int IdPreferencia { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Inscripcion> Inscripcion { get; set; }
     }
 }

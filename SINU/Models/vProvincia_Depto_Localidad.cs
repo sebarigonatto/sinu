@@ -17,7 +17,7 @@ namespace SINU.Models
         public string Provincia { get; set; }
         public string DepartPartido { get; set; }
         public string Localidad { get; set; }
-        public int IdLocalidad { get; set; }
         public string CODIGO_POSTAL { get; set; }
+        public int IdLocalidad { get; set; }
     }
 }

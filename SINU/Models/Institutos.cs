@@ -14,19 +14,10 @@ namespace SINU.Models
     
     public partial class Institutos
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Institutos()
-        {
-            this.Estudio = new HashSet<Estudio>();
-        }
-    
         public string Jurisdiccion { get; set; }
         public string Localidad { get; set; }
         public string Departamento { get; set; }
         public string Nombre { get; set; }
         public int Id { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Estudio> Estudio { get; set; }
     }
 }

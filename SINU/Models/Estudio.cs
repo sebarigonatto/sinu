@@ -24,13 +24,12 @@ namespace SINU.Models
         public string Titulo { get; set; }
         public bool Completo { get; set; }
         public Nullable<int> IdNiveldEstudio { get; set; }
-        public Nullable<int> IdInstitutos { get; set; }
+        public int IdInstitutos { get; set; }
         public Nullable<double> Promedio { get; set; }
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string NombreYPaisInstituto { get; set; }
     
-        public virtual Institutos Institutos { get; set; }
         public virtual NiveldEstudio NiveldEstudio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Persona> Persona { get; set; }

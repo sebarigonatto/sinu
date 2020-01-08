@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SINUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="SINUModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ActividadMilitar">
           <Key>
             <PropertyRef Name="IdActividadMilitar" />
@@ -22,6 +22,25 @@
           <Property Name="IdFuerza" Type="int" Nullable="false" />
           <Property Name="IdBaja" Type="int" Nullable="false" />
           <Property Name="IdActividadMilitar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="FechaToken" Type="datetime" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Baja">
           <Key>
@@ -107,7 +126,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Titulo" Type="varchar" MaxLength="60" />
           <Property Name="Completo" Type="bit" Nullable="false" />
           <Property Name="IdNiveldEstudio" Type="int" />
-          <Property Name="IdInstitutos" Type="int" />
+          <Property Name="IdInstitutos" Type="int" Nullable="false" />
           <Property Name="Promedio" Type="float" />
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
@@ -387,6 +406,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene defin
           <Property Name="IdConfiguracion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDelegaciones' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDelegaciones">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDestVigRelacDerog' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDestVigRelacDerog">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
@@ -413,6 +451,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscolaridad' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscolaridad">
+          <Property Name="CLAVE1" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPC" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscuelasInstitutos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscuelasInstitutos">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEstCivil">
           <Key>
@@ -422,6 +475,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Codigo_n" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vIdiomas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vIdiomas">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
@@ -446,6 +505,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ningu
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="30" />
           <Property Name="IdLocalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vPaises' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vPaises">
+          <Property Name="id" Type="int" />
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParentesco">
@@ -559,10 +625,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Domicilio' no tiene defini
             <PropertyRef Name="EventualIdPais" />
             <PropertyRef Name="IdDomicilioDNI" />
             <PropertyRef Name="IdDomicilioActual" />
-            <PropertyRef Name="IdPersona" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="IdPersona" Type="int" />
           <Property Name="Calle" Type="nchar" MaxLength="100" />
           <Property Name="Numero" Type="varchar" MaxLength="10" />
           <Property Name="Piso" Type="nchar" MaxLength="3" />
@@ -595,8 +660,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdEstudio" />
             <PropertyRef Name="Completo" />
-            <PropertyRef Name="Nivel" />
-            <PropertyRef Name="Nombre" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
@@ -605,14 +668,35 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
           <Property Name="Titulo" Type="varchar" MaxLength="60" />
           <Property Name="Completo" Type="bit" Nullable="false" />
           <Property Name="IdInstitutos" Type="int" />
-          <Property Name="Nombre" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="201" />
           <Property Name="Promedio" Type="float" />
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
-          <Property Name="Nivel" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nivel" Type="varchar" MaxLength="50" />
           <Property Name="NombreYPaisInstituto" Type="varchar" MaxLength="500" />
           <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" />
           <Property Name="Localidad" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vPersona_Familiar">
+          <Key>
+            <PropertyRef Name="IdPersonaPostulante" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="IdFamiliar" Type="int" />
+          <Property Name="IdPersonaPostulante" Type="int" Nullable="false" />
+          <Property Name="IdPersonaFamiliar" Type="int" />
+          <Property Name="idParentesco" Type="int" />
+          <Property Name="IdSexo" Type="int" />
+          <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" />
+          <Property Name="Relacion" Type="varchar" MaxLength="60" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" />
+          <Property Name="Genero" Type="nchar" MaxLength="15" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" />
+          <Property Name="EstCivil" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -660,6 +744,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no t
           <Property Name="Oficio" Type="varchar" MaxLength="60" />
           <Property Name="CargaOcupacionActual" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vProv' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vProv">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="CODIGO_VAR" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vProvincia_Depto_Localidad">
@@ -740,6 +831,24 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Comentario" Type="varchar" MaxLength="150" />
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT019_GRUPO_SANGUINEO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT019_GRUPO_SANGUINEO">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="GRUPO" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT156_DIRECCION_DEST' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT156_DIRECCION_DEST">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vTipoDocIdentif' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vTipoDocIdentif">
+          <Property Name="CODIGO" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="40" />
+        </EntityType>-->
         <Association Name="FK_ActividadMilitar_Baja">
           <End Role="Baja" Type="Self.Baja" Multiplicity="1" />
           <End Role="ActividadMilitar" Type="Self.ActividadMilitar" Multiplicity="*" />
@@ -797,18 +906,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Principal>
             <Dependent Role="DocPresentado">
               <PropertyRef Name="IdTipoDocPresentado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Estudio_Institutos">
-          <End Role="Institutos" Type="Self.Institutos" Multiplicity="0..1" />
-          <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Institutos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Estudio">
-              <PropertyRef Name="IdInstitutos" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1106,6 +1203,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Postulante_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postulante">
+              <PropertyRef Name="IdAspNetUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Postulante_Persona">
           <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
           <End Role="Postulante" Type="Self.Postulante" Multiplicity="0..1" />
@@ -1166,6 +1275,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Aprender01" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="f_codAplicacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1281,6 +1391,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="Promedio" Type="float" Mode="In" />
           <Parameter Name="CantidadMateriaAdeudadas" Type="int" Mode="In" />
           <Parameter Name="ultimoAnioCursado" Type="int" Mode="In" />
+          <Parameter Name="NombreYPaisInstituto" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spIdiomasIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPersonaIdioma" Type="int" Mode="In" />
@@ -1308,6 +1419,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Parameter Name="AniosTrabajados" Type="int" Mode="In" />
           <Parameter Name="DomicilioLaboral" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Funcion" Type="varchar" Mode="In" />
@@ -1322,6 +1434,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
         </Function>
         <EntityContainer Name="SINUModelStoreContainer">
           <EntitySet Name="ActividadMilitar" EntityType="Self.ActividadMilitar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Baja" EntityType="Self.Baja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configuracion" EntityType="Self.Configuracion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" Schema="dbo" store:Type="Tables" />
@@ -1553,6 +1666,24 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
     [VPersona_Estudio].[Localidad] AS [Localidad]
     FROM [dbo].[VPersona_Estudio] AS [VPersona_Estudio]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vPersona_Familiar" EntityType="Self.vPersona_Familiar" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vPersona_Familiar].[Email] AS [Email], 
+    [vPersona_Familiar].[IdFamiliar] AS [IdFamiliar], 
+    [vPersona_Familiar].[IdPersonaPostulante] AS [IdPersonaPostulante], 
+    [vPersona_Familiar].[IdPersonaFamiliar] AS [IdPersonaFamiliar], 
+    [vPersona_Familiar].[idParentesco] AS [idParentesco], 
+    [vPersona_Familiar].[IdSexo] AS [IdSexo], 
+    [vPersona_Familiar].[IdEstadoCivil] AS [IdEstadoCivil], 
+    [vPersona_Familiar].[Relacion] AS [Relacion], 
+    [vPersona_Familiar].[Apellido] AS [Apellido], 
+    [vPersona_Familiar].[Nombres] AS [Nombres], 
+    [vPersona_Familiar].[Genero] AS [Genero], 
+    [vPersona_Familiar].[FechaNacimiento] AS [FechaNacimiento], 
+    [vPersona_Familiar].[DNI] AS [DNI], 
+    [vPersona_Familiar].[EstCivil] AS [EstCivil]
+    FROM [dbo].[vPersona_Familiar] AS [vPersona_Familiar]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vPersona_Idioma].[Email] AS [Email], 
@@ -1656,10 +1787,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="TipoDocPresentado" EntitySet="TipoDocPresentado" />
             <End Role="DocPresentado" EntitySet="DocPresentado" />
           </AssociationSet>
-          <AssociationSet Name="FK_Estudio_Institutos" Association="Self.FK_Estudio_Institutos">
-            <End Role="Institutos" EntitySet="Institutos" />
-            <End Role="Estudio" EntitySet="Estudio" />
-          </AssociationSet>
           <AssociationSet Name="FK_Estudio_NiveldEstudio" Association="Self.FK_Estudio_NiveldEstudio">
             <End Role="NiveldEstudio" EntitySet="NiveldEstudio" />
             <End Role="Estudio" EntitySet="Estudio" />
@@ -1756,6 +1883,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
             <End Role="PersonaSituacionOcupacional" EntitySet="PersonaSituacionOcupacional" />
           </AssociationSet>
+          <AssociationSet Name="FK_Postulante_AspNetUsers" Association="Self.FK_Postulante_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Postulante" EntitySet="Postulante" />
+          </AssociationSet>
           <AssociationSet Name="FK_Postulante_Persona" Association="Self.FK_Postulante_Persona">
             <End Role="Persona" EntitySet="Persona" />
             <End Role="Postulante" EntitySet="Postulante" />
@@ -1777,7 +1908,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SINUModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1802,6 +1934,26 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <NavigationProperty Name="Fuerza" Relationship="Self.FK_ActividadMilitar_Fuerza" FromRole="ActividadMilitar" ToRole="Fuerza" />
           <NavigationProperty Name="SituacionRevista" Relationship="Self.FK_ActividadMilitar_SituacionRevista" FromRole="ActividadMilitar" ToRole="SituacionRevista" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaActividadMilitar" FromRole="ActividadMilitar" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaToken" Type="DateTime" Precision="3" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Postulante" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="AspNetUsers" ToRole="Postulante" />
         </EntityType>
         <EntityType Name="Baja">
           <Key>
@@ -1844,12 +1996,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
           <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <Property Name="IdLocalidad" Type="Int32" />
+          <Property Name="Prov_Loc_CP" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IdPais" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_DomicilioActual" FromRole="Domicilio" ToRole="Persona" />
           <NavigationProperty Name="Persona1" Relationship="Self.FK_Persona_DomicilioDNI" FromRole="Domicilio" ToRole="Persona" />
-          <Property Name="Prov_Loc_CP" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="IdPais" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Domicilio1" Relationship="SINUModel.FK_Domicilio_Domicilio" FromRole="Domicilio" ToRole="Domicilio1" />
-          <NavigationProperty Name="Domicilio2" Relationship="SINUModel.FK_Domicilio_Domicilio" FromRole="Domicilio1" ToRole="Domicilio" />
         </EntityType>
         <EntityType Name="EstablecimientoRindeExamen">
           <Key>
@@ -1889,14 +2039,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Completo" Type="Boolean" Nullable="false" />
           <Property Name="IdNiveldEstudio" Type="Int32" />
-          <Property Name="IdInstitutos" Type="Int32" />
+          <Property Name="IdInstitutos" Type="Int32" Nullable="false" />
           <Property Name="Promedio" Type="Double" />
           <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
           <Property Name="ultimoAnioCursado" Type="Int32" />
-          <NavigationProperty Name="Institutos" Relationship="Self.FK_Estudio_Institutos" FromRole="Estudio" ToRole="Institutos" />
+          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NiveldEstudio" Relationship="Self.FK_Estudio_NiveldEstudio" FromRole="Estudio" ToRole="NiveldEstudio" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaEstudio" FromRole="Estudio" ToRole="Persona" />
-          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Etapa">
           <Key>
@@ -1935,6 +2084,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdPreferencia" Type="Int32" />
           <Property Name="IdEstablecimientoRindeExamen" Type="Int32" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
           <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="DocPresentado" Relationship="Self.FK_DocPresentado_Inscripcion" FromRole="Inscripcion" ToRole="DocPresentado" />
@@ -1942,9 +2092,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <NavigationProperty Name="Institucion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Inscripcion" ToRole="Institucion" />
           <NavigationProperty Name="OficinasYDelegaciones" Relationship="Self.FK_Inscripcion_OficinasYDelegaciones" FromRole="Inscripcion" ToRole="OficinasYDelegaciones" />
           <NavigationProperty Name="Postulante" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Inscripcion" ToRole="Postulante" />
-          <NavigationProperty Name="Preferencia" Relationship="Self.FK_Inscripcion_Preferencia" FromRole="Inscripcion" ToRole="Preferencia" />
           <NavigationProperty Name="InscripcionEtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="Inscripcion" ToRole="InscripcionEtapaEstado" />
-          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Institucion">
           <Key>
@@ -1952,12 +2100,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </Key>
           <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CodigoPcia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
           <NavigationProperty Name="PeriodosInscripciones" Relationship="Self.FK_PeriodosInscripciones_Institucion" FromRole="Institucion" ToRole="PeriodosInscripciones" />
-          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Institutos">
           <Key>
@@ -1968,7 +2116,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Departamento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombre" Type="String" MaxLength="201" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Estudio" Relationship="Self.FK_Estudio_Institutos" FromRole="Institutos" ToRole="Estudio" />
         </EntityType>
         <EntityType Name="NiveldEstudio">
           <Key>
@@ -2070,6 +2217,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_Postulante_AspNetUsers" FromRole="Postulante" ToRole="AspNetUsers" />
           <NavigationProperty Name="Familiares" Relationship="Self.FK_Familiares_Postulante" FromRole="Postulante" ToRole="Familiares" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Postulante" ToRole="Inscripcion" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Postulante_Persona" FromRole="Postulante" ToRole="Persona" />
@@ -2092,7 +2240,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </Key>
           <Property Name="Preferencia1" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="IdPreferencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Preferencia" FromRole="Preferencia" ToRole="Inscripcion" />
         </EntityType>
         <EntityType Name="Secuencia_EtapaEstado">
           <Key>
@@ -2123,10 +2270,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdEstadoOcupacional" Type="Int32" Nullable="false" />
           <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EstadoOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="SituacionOcupacional" ToRole="EstadoOcupacional" />
-          <NavigationProperty Name="Persona" Relationship="Self.PersonaSituacionOcupacional" FromRole="SituacionOcupacional" ToRole="Persona" />
           <Property Name="AniosTrabajados" Type="Int32" />
           <Property Name="DomicilioLaboral" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EstadoOcupacional" Relationship="Self.FK_SituacionOcupacional_EstadoOcupacional" FromRole="SituacionOcupacional" ToRole="EstadoOcupacional" />
+          <NavigationProperty Name="Persona" Relationship="Self.PersonaSituacionOcupacional" FromRole="SituacionOcupacional" ToRole="Persona" />
         </EntityType>
         <EntityType Name="SituacionRevista">
           <Key>
@@ -2165,6 +2312,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdTipoNacionalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_TipoNacionalidad" FromRole="TipoNacionalidad" ToRole="Persona" />
         </EntityType>
+        <EntityType Name="ConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="InscripcionEtapaEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -2176,6 +2329,42 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="InscripcionEtapaEstado" ToRole="Inscripcion" />
           <NavigationProperty Name="Secuencia_EtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" FromRole="InscripcionEtapaEstado" ToRole="Secuencia_EtapaEstado" />
         </EntityType>
+        <EntityType Name="vConfiguracionAdmin">
+          <Key>
+            <PropertyRef Name="NombreDato" />
+            <PropertyRef Name="TipoDato" />
+            <PropertyRef Name="IdConfiguracion" />
+          </Key>
+          <Property Name="NombreDato" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ValorDato" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
+          <Property Name="TipoDato" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UsoDato" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vEntrevistaLugarFecha">
+          <Key>
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
+          </Key>
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="vEstCivil">
           <Key>
             <PropertyRef Name="Codigo_n" />
@@ -2183,6 +2372,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Codigo_n" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdInscripcionEtapaEstado" />
+          </Key>
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -2221,6 +2420,191 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
           <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vPersona_ActividadMilitar">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdActividadMilitar" />
+            <PropertyRef Name="IdFuerza" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdActividadMilitar" Type="Int32" Nullable="false" />
+          <Property Name="IdFuerza" Type="Int32" Nullable="false" />
+          <Property Name="Fuerza" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Jerarquia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Destino" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaIngreso" Type="DateTime" Precision="0" />
+          <Property Name="FechaBaja" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="vPersona_DatosBasicos">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdSexo" />
+            <PropertyRef Name="Sexo" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="AspnetUser" />
+          </Key>
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulante" Type="Int32" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdSexo" Type="Int32" Nullable="false" />
+          <Property Name="Sexo" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+          <Property Name="Oficina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmpezoACargarDatos" Type="DateTime" Precision="3" />
+          <Property Name="PidioIngresoAlSist" Type="DateTime" Precision="3" />
+          <Property Name="IdPreferencia" Type="Int32" />
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="AspnetUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdSecuencia" Type="Int32" />
+          <Property Name="Etapa_Estado" Type="String" MaxLength="76" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vPersona_DatosPer">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="CUIL" />
+            <PropertyRef Name="IdEstadoCivil" />
+            <PropertyRef Name="IdReligion" />
+            <PropertyRef Name="idTipoNacionalidad" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="edad" Type="Int32" />
+          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EstadoCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="IdReligion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoNacionalidad" Type="Int32" Nullable="false" />
+          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vPersona_Domicilio">
+          <Key>
+            <PropertyRef Name="IdPais" />
+            <PropertyRef Name="EventualIdPais" />
+            <PropertyRef Name="IdDomicilioDNI" />
+            <PropertyRef Name="IdDomicilioActual" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" />
+          <Property Name="Calle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Pais" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Provincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="Localidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CODIGO_POSTAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prov_Loc_CP" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IdPais" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdLocalidad" Type="Int32" />
+          <Property Name="EventualCalle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="EventualNumero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EventualPiso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="EventualUnidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="EventualPais" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EventualProvincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="EventualLocalidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EventualCodigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EventualProv_Loc" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="EventualIdLocalidad" Type="Int32" />
+          <Property Name="EventualIdPais" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdDomicilioDNI" Type="Int32" Nullable="false" />
+          <Property Name="IdDomicilioActual" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VPersona_Estudio">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdEstudio" />
+            <PropertyRef Name="Completo" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdNiveldEstudio" Type="Int32" />
+          <Property Name="IdEstudio" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Completo" Type="Boolean" Nullable="false" />
+          <Property Name="IdInstitutos" Type="Int32" />
+          <Property Name="Nombre" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="Promedio" Type="Double" />
+          <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
+          <Property Name="ultimoAnioCursado" Type="Int32" />
+          <Property Name="Nivel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vPersona_Familiar">
+          <Key>
+            <PropertyRef Name="IdPersonaPostulante" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdFamiliar" Type="Int32" />
+          <Property Name="IdPersonaPostulante" Type="Int32" Nullable="false" />
+          <Property Name="IdPersonaFamiliar" Type="Int32" />
+          <Property Name="idParentesco" Type="Int32" />
+          <Property Name="IdSexo" Type="Int32" />
+          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Genero" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vPersona_Idioma">
+          <Key>
+            <PropertyRef Name="Habla" />
+            <PropertyRef Name="Lee" />
+            <PropertyRef Name="Escribe" />
+            <PropertyRef Name="CodIdioma" />
+            <PropertyRef Name="NivelHabla" />
+            <PropertyRef Name="NivelEscribe" />
+            <PropertyRef Name="NivelLee" />
+            <PropertyRef Name="IdPersonaIdioma" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" />
+          <Property Name="Habla" Type="Int32" Nullable="false" />
+          <Property Name="Lee" Type="Int32" Nullable="false" />
+          <Property Name="Escribe" Type="Int32" Nullable="false" />
+          <Property Name="Idioma" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="CodIdioma" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelHabla" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelEscribe" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NivelLee" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdPersonaIdioma" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vPersona_SituacionOcupacional">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdEstadoOcupacional" />
+            <PropertyRef Name="IdSituacionOcupacional" />
+            <PropertyRef Name="CargaOcupacionActual" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdEstadoOcupacional" Type="Int32" Nullable="false" />
+          <Property Name="IdSituacionOcupacional" Type="Int32" Nullable="false" />
+          <Property Name="EstadoOcupacional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="DomicilioLaboral" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="AniosTrabajados" Type="Int32" />
+          <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="CargaOcupacionActual" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="vProvincia_Depto_Localidad">
           <Key>
             <PropertyRef Name="IdLocalidad" />
@@ -2228,8 +2612,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Provincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
           <Property Name="DepartPartido" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Localidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="IdLocalidad" Type="Int32" Nullable="false" />
           <Property Name="CODIGO_POSTAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdLocalidad" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="vRELIGION">
           <Key>
@@ -2265,15 +2649,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
         </EntityType>
         <EntityType Name="vSeguridad_Grupos_Usuarios">
           <Key>
-            <PropertyRef Name="codAplicacion" />
             <PropertyRef Name="codUsuario" />
-            <PropertyRef Name="codGrupo" />
             <PropertyRef Name="codFuncion" />
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="codAplicacion" />
           </Key>
-          <Property Name="codAplicacion" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="codUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codFuncion" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="codGrupo" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="codFuncion" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="false" />
+          <Property Name="codAplicacion" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="vSeguridad_Usuarios">
           <Key>
@@ -2322,6 +2706,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Principal>
             <Dependent Role="ActividadMilitar">
               <PropertyRef Name="IdSituacionRevista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Postulante_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Postulante">
+              <PropertyRef Name="IdAspNetUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2409,18 +2805,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Estudio_Institutos">
-          <End Role="Institutos" Type="Self.Institutos" Multiplicity="0..1" />
-          <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Institutos">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Estudio">
-              <PropertyRef Name="IdInstitutos" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Estudio_NiveldEstudio">
           <End Role="NiveldEstudio" Type="Self.NiveldEstudio" Multiplicity="0..1" />
           <End Role="Estudio" Type="Self.Estudio" Multiplicity="*" />
@@ -2502,18 +2886,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             </Principal>
             <Dependent Role="Inscripcion">
               <PropertyRef Name="IdPostulantePersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Inscripcion_Preferencia">
-          <End Role="Preferencia" Type="Self.Preferencia" Multiplicity="0..1" />
-          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Preferencia">
-              <PropertyRef Name="IdPreferencia" />
-            </Principal>
-            <Dependent Role="Inscripcion">
-              <PropertyRef Name="IdPreferencia" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2661,8 +3033,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
           <End Role="SituacionOcupacional" Type="Self.SituacionOcupacional" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="SINUEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SINUEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ActividadMilitar" EntityType="Self.ActividadMilitar" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
           <EntitySet Name="Baja" EntityType="Self.Baja" />
           <EntitySet Name="Configuracion" EntityType="Self.Configuracion" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" />
@@ -2693,11 +3066,23 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" />
           <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" />
+          <EntitySet Name="ConfiguracionAdmin" EntityType="Self.ConfiguracionAdmin" />
           <EntitySet Name="InscripcionEtapaEstado" EntityType="Self.InscripcionEtapaEstado" />
+          <EntitySet Name="vConfiguracionAdmin" EntityType="Self.vConfiguracionAdmin" />
+          <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" />
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" />
+          <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="Self.vInscripcionEtapaEstadoUltimoEstado" />
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
           <EntitySet Name="vParentesco" EntityType="Self.vParentesco" />
           <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" />
+          <EntitySet Name="vPersona_ActividadMilitar" EntityType="Self.vPersona_ActividadMilitar" />
+          <EntitySet Name="vPersona_DatosBasicos" EntityType="Self.vPersona_DatosBasicos" />
+          <EntitySet Name="vPersona_DatosPer" EntityType="Self.vPersona_DatosPer" />
+          <EntitySet Name="vPersona_Domicilio" EntityType="Self.vPersona_Domicilio" />
+          <EntitySet Name="VPersona_Estudio" EntityType="Self.VPersona_Estudio" />
+          <EntitySet Name="vPersona_Familiar" EntityType="Self.vPersona_Familiar" />
+          <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" />
+          <EntitySet Name="vPersona_SituacionOcupacional" EntityType="Self.vPersona_SituacionOcupacional" />
           <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" />
           <EntitySet Name="vRELIGION" EntityType="Self.vRELIGION" />
           <EntitySet Name="vSecuencia_EtapaEstado" EntityType="Self.vSecuencia_EtapaEstado" />
@@ -2715,6 +3100,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <AssociationSet Name="FK_ActividadMilitar_SituacionRevista" Association="Self.FK_ActividadMilitar_SituacionRevista">
             <End Role="SituacionRevista" EntitySet="SituacionRevista" />
             <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Postulante_AspNetUsers" Association="Self.FK_Postulante_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Postulante" EntitySet="Postulante" />
           </AssociationSet>
           <AssociationSet Name="FK_DocPresentado_Inscripcion" Association="Self.FK_DocPresentado_Inscripcion">
             <End Role="Inscripcion" EntitySet="Inscripcion" />
@@ -2744,10 +3133,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="EstadoOcupacional" EntitySet="EstadoOcupacional" />
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
           </AssociationSet>
-          <AssociationSet Name="FK_Estudio_Institutos" Association="Self.FK_Estudio_Institutos">
-            <End Role="Institutos" EntitySet="Institutos" />
-            <End Role="Estudio" EntitySet="Estudio" />
-          </AssociationSet>
           <AssociationSet Name="FK_Estudio_NiveldEstudio" Association="Self.FK_Estudio_NiveldEstudio">
             <End Role="NiveldEstudio" EntitySet="NiveldEstudio" />
             <End Role="Estudio" EntitySet="Estudio" />
@@ -2774,10 +3159,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </AssociationSet>
           <AssociationSet Name="FK_Inscripcion_Postulante" Association="Self.FK_Inscripcion_Postulante">
             <End Role="Postulante" EntitySet="Postulante" />
-            <End Role="Inscripcion" EntitySet="Inscripcion" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Inscripcion_Preferencia" Association="Self.FK_Inscripcion_Preferencia">
-            <End Role="Preferencia" EntitySet="Preferencia" />
             <End Role="Inscripcion" EntitySet="Inscripcion" />
           </AssociationSet>
           <AssociationSet Name="FK_InscripcionEtapaEstado_Inscripcion" Association="Self.FK_InscripcionEtapaEstado_Inscripcion">
@@ -2836,6 +3217,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <End Role="Persona" EntitySet="Persona" />
             <End Role="SituacionOcupacional" EntitySet="SituacionOcupacional" />
           </AssociationSet>
+          <FunctionImport Name="Aprender01" ReturnType="Collection(SINUModel.Aprender01_Result)" />
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -2866,27 +3248,27 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="spIngresaASeguridad">
-            <Parameter Name="USUARIO" Mode="In" Type="String" />
-            <Parameter Name="Grupo" Mode="In" Type="String" />
-            <Parameter Name="mr" Mode="In" Type="String" />
-            <Parameter Name="Grado" Mode="In" Type="String" />
+          <FunctionImport Name="sp_vPaises" ReturnType="Collection(SINUModel.sp_vPaises_Result)">
+            <Parameter Name="CODIGO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spActividadMilitarEliminar">
+            <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spActividadMilitarIU">
+            <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+            <Parameter Name="SolicitoIngresoAnterior" Mode="In" Type="Boolean" />
+            <Parameter Name="Ingreso" Mode="In" Type="Boolean" />
+            <Parameter Name="FechaIngreso" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaBaja" Mode="In" Type="DateTime" />
+            <Parameter Name="CausaMotivoNoingreso" Mode="In" Type="String" />
+            <Parameter Name="MotivoBaja" Mode="In" Type="String" />
+            <Parameter Name="Jerarquia" Mode="In" Type="String" />
+            <Parameter Name="Cargo" Mode="In" Type="String" />
             <Parameter Name="Destino" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="Apellido" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="spPrueba" ReturnType="Collection(SINUModel.spPrueba_Result)">
-            <Parameter Name="USUARIO" Mode="In" Type="String" />
-            <Parameter Name="Funcion" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="spValidarUsuario" ReturnType="Collection(SINUModel.spValidarUsuario_Result)">
-            <Parameter Name="USUARIO" Mode="In" Type="String" />
-            <Parameter Name="Funcion" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="tablasnuevas" />
-          <FunctionImport Name="VaciarASPNETUser">
-            <Parameter Name="correoregistrado" Mode="In" Type="String" />
-            <Parameter Name="eliminar" Mode="In" Type="Int32" />
+            <Parameter Name="IdSituacionRevista" Mode="In" Type="Int32" />
+            <Parameter Name="IdFuerza" Mode="In" Type="Int32" />
+            <Parameter Name="IdBaja" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spCreaPostulante">
             <Parameter Name="Apellido" Mode="In" Type="String" />
@@ -2896,15 +3278,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="IdPreferenciaInstituto" Mode="In" Type="Int32" />
             <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="Vaciar" ReturnType="Collection(String)">
-            <Parameter Name="valoremail" Mode="In" Type="String" />
-            <Parameter Name="eliminandotabla" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="vPersona_DatosBasicos" EntityType="SINUModel.vPersona_DatosBasicos" />
-          <EntitySet Name="vEntrevistaLugarFecha" EntityType="SINUModel.vEntrevistaLugarFecha" />
-          <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="SINUModel.vInscripcionEtapaEstadoUltimoEstado" />
-          <EntitySet Name="ConfiguracionAdmin" EntityType="SINUModel.ConfiguracionAdmin" />
-          <EntitySet Name="vConfiguracionAdmin" EntityType="SINUModel.vConfiguracionAdmin" />
           <FunctionImport Name="spDatosBasicosUpdate">
             <Parameter Name="Apellido" Mode="In" Type="String" />
             <Parameter Name="Nombres" Mode="In" Type="String" />
@@ -2919,12 +3292,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
             <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="vPersona_DatosPer" EntityType="SINUModel.vPersona_DatosPer" />
-          <EntitySet Name="vPersona_Domicilio" EntityType="SINUModel.vPersona_Domicilio" />
-          <AssociationSet Name="FK_Domicilio_Domicilio" Association="SINUModel.FK_Domicilio_Domicilio">
-            <End Role="Domicilio" EntitySet="Domicilio" />
-            <End Role="Domicilio1" EntitySet="Domicilio" />
-          </AssociationSet>
           <FunctionImport Name="spDatosPersonalesUpdate">
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
             <Parameter Name="CUIL" Mode="In" Type="String" />
@@ -2932,23 +3299,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="IdEstadoCivil" Mode="In" Type="String" />
             <Parameter Name="IdReligion" Mode="In" Type="String" />
             <Parameter Name="idTipoNacionalidad" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="VPersona_Estudio" EntityType="SINUModel.VPersona_Estudio" />
-          <EntitySet Name="vPersona_ActividadMilitar" EntityType="SINUModel.vPersona_ActividadMilitar" />
-          <EntitySet Name="vPersona_SituacionOcupacional" EntityType="SINUModel.vPersona_SituacionOcupacional" />
-          <FunctionImport Name="sp_vPaises" ReturnType="Collection(SINUModel.sp_vPaises_Result)">
-          <Parameter Name="CODIGO" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="spEstudiosIU">
-            <Parameter Name="IdEstudio" Mode="In" Type="Int32" />
-            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
-            <Parameter Name="Titulo" Mode="In" Type="String" />
-            <Parameter Name="Completo" Mode="In" Type="Boolean" />
-            <Parameter Name="IdNiveldEstudio" Mode="In" Type="Int32" />
-            <Parameter Name="IdInstitutos" Mode="In" Type="Int32" />
-            <Parameter Name="Promedio" Mode="In" Type="Double" />
-            <Parameter Name="CantidadMateriaAdeudadas" Mode="In" Type="Int32" />
-            <Parameter Name="ultimoAnioCursado" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spDomiciliosU">
             <Parameter Name="IdDomicilioDNI" Mode="In" Type="Int32" />
@@ -2968,28 +3318,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="EventualProv_Loc_CP" Mode="In" Type="String" />
             <Parameter Name="EventualIdPais" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="vPersona_Idioma" EntityType="SINUModel.vPersona_Idioma" />
           <FunctionImport Name="spEstudiosEliminar">
-          <Parameter Name="IdEstudio" Mode="In" Type="Int32" />
+            <Parameter Name="IdEstudio" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spActividadMilitarEliminar">
-          <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spActividadMilitarIU">
-            <Parameter Name="IdActividadMilitar" Mode="In" Type="Int32" />
+          <FunctionImport Name="spEstudiosIU">
+            <Parameter Name="IdEstudio" Mode="In" Type="Int32" />
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
-            <Parameter Name="SolicitoIngresoAnterior" Mode="In" Type="Boolean" />
-            <Parameter Name="Ingreso" Mode="In" Type="Boolean" />
-            <Parameter Name="FechaIngreso" Mode="In" Type="DateTime" />
-            <Parameter Name="FechaBaja" Mode="In" Type="DateTime" />
-            <Parameter Name="CausaMotivoNoingreso" Mode="In" Type="String" />
-            <Parameter Name="MotivoBaja" Mode="In" Type="String" />
-            <Parameter Name="Jerarquia" Mode="In" Type="String" />
-            <Parameter Name="Cargo" Mode="In" Type="String" />
-            <Parameter Name="Destino" Mode="In" Type="String" />
-            <Parameter Name="IdSituacionRevista" Mode="In" Type="Int32" />
-            <Parameter Name="IdFuerza" Mode="In" Type="Int32" />
-            <Parameter Name="IdBaja" Mode="In" Type="Int32" />
+            <Parameter Name="Titulo" Mode="In" Type="String" />
+            <Parameter Name="Completo" Mode="In" Type="Boolean" />
+            <Parameter Name="IdNiveldEstudio" Mode="In" Type="Int32" />
+            <Parameter Name="IdInstitutos" Mode="In" Type="Int32" />
+            <Parameter Name="Promedio" Mode="In" Type="Double" />
+            <Parameter Name="CantidadMateriaAdeudadas" Mode="In" Type="Int32" />
+            <Parameter Name="ultimoAnioCursado" Mode="In" Type="Int32" />
+            <Parameter Name="NombreYPaisInstituto" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spIdiomasIU">
             <Parameter Name="IdPersonaIdioma" Mode="In" Type="Int32" />
@@ -2998,6 +3340,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="Habla" Mode="In" Type="Int32" />
             <Parameter Name="Lee" Mode="In" Type="Int32" />
             <Parameter Name="Escribe" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spIngresaASeguridad">
+            <Parameter Name="USUARIO" Mode="In" Type="String" />
+            <Parameter Name="Grupo" Mode="In" Type="String" />
+            <Parameter Name="mr" Mode="In" Type="String" />
+            <Parameter Name="Grado" Mode="In" Type="String" />
+            <Parameter Name="Destino" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spSituacionOcupacionalIU">
             <Parameter Name="IdSituacionOcupacional" Mode="In" Type="Int32" />
@@ -3008,7 +3359,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
             <Parameter Name="AniosTrabajados" Mode="In" Type="Int32" />
             <Parameter Name="DomicilioLaboral" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spTransaction" />
+          <FunctionImport Name="spValidarUsuario" ReturnType="Collection(SINUModel.spValidarUsuario_Result)">
+            <Parameter Name="USUARIO" Mode="In" Type="String" />
+            <Parameter Name="Funcion" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Vaciar" ReturnType="Collection(Int32)">
+            <Parameter Name="valoremail" Mode="In" Type="String" />
+            <Parameter Name="eliminandotabla" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="VaciarASPNETUser">
+            <Parameter Name="correoregistrado" Mode="In" Type="String" />
+            <Parameter Name="eliminar" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="Aprender01_Result">
+          <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
+          <Property Type="Int32" Name="IdInscripcionEtapaEstado" Nullable="false" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
+        </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -3020,257 +3389,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="spPrueba_Result">
-          <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
-          <Property Type="Int32" Name="Logueo" Nullable="false" />
+        <ComplexType Name="sp_vPaises_Result">
+          <Property Type="String" Name="CODIGO" Nullable="true" MaxLength="8" />
+          <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="spValidarUsuario_Result">
           <Property Type="String" Name="codFuncion" Nullable="false" MaxLength="30" />
           <Property Type="Int32" Name="Logueo" Nullable="false" />
         </ComplexType>
-        <EntityType Name="vPersona_DatosBasicos">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="Sexo" />
-            <PropertyRef Name="DNI" />
-            <PropertyRef Name="AspnetUser" />
-            <PropertyRef Name="IdSexo" />
-          </Key>
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdPostulante" Type="Int32" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Sexo" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="EmpezoACargarDatos" Type="DateTime" Precision="3" />
-          <Property Name="PidioIngresoAlSist" Type="DateTime" Precision="3" />
-          <Property Name="IdPreferencia" Type="Int32" />
-          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="AspnetUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdSecuencia" Type="Int32" />
-          <Property Name="Etapa_Estado" Type="String" MaxLength="76" FixedLength="false" Unicode="false" />
-          <Property Name="IdSexo" Type="Int32" Nullable="false" />
-          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
-          <Property Name="Oficina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vEntrevistaLugarFecha">
-          <Key>
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdInscripcion" />
-            <PropertyRef Name="IdSecuencia" />
-            <PropertyRef Name="Etapa" />
-            <PropertyRef Name="Estado" />
-          </Key>
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
-          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
-          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
-          <Key>
-            <PropertyRef Name="IdSecuencia" />
-            <PropertyRef Name="IdInscripcionEtapaEstado" />
-          </Key>
-          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ConfiguracionAdmin">
-          <Key>
-            <PropertyRef Name="IdConfiguracion" />
-          </Key>
-          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vConfiguracionAdmin">
-          <Key>
-            <PropertyRef Name="NombreDato" />
-            <PropertyRef Name="TipoDato" />
-            <PropertyRef Name="IdConfiguracion" />
-          </Key>
-          <Property Name="NombreDato" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="ValorDato" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" />
-          <Property Name="TipoDato" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="UsoDato" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdConfiguracion" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vPersona_DatosPer">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="CUIL" />
-            <PropertyRef Name="IdEstadoCivil" />
-            <PropertyRef Name="IdReligion" />
-            <PropertyRef Name="idTipoNacionalidad" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="CUIL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
-          <Property Name="edad" Type="Int32" />
-          <Property Name="IdEstadoCivil" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="IdReligion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="idTipoNacionalidad" Type="Int32" Nullable="false" />
-          <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vPersona_Domicilio">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdPais" />
-            <PropertyRef Name="EventualIdPais" />
-            <PropertyRef Name="IdDomicilioDNI" />
-            <PropertyRef Name="IdDomicilioActual" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="Calle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="Pais" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Provincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="CODIGO_POSTAL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Prov_Loc_CP" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="IdPais" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IdLocalidad" Type="Int32" />
-          <Property Name="EventualCalle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="EventualNumero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="EventualPiso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="EventualUnidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="EventualPais" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EventualProvincia" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="EventualLocalidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="EventualCodigo_Postal" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EventualProv_Loc" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="Localidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="EventualIdLocalidad" Type="Int32" />
-          <Property Name="EventualIdPais" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="IdDomicilioDNI" Type="Int32" Nullable="false" />
-          <Property Name="IdDomicilioActual" Type="Int32" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_Domicilio_Domicilio">
-          <End Type="SINUModel.Domicilio" Role="Domicilio" Multiplicity="1" />
-          <End Type="SINUModel.Domicilio" Role="Domicilio1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Domicilio">
-              <PropertyRef Name="IdDomicilio" />
-            </Principal>
-            <Dependent Role="Domicilio1">
-              <PropertyRef Name="IdDomicilio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="VPersona_Estudio">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdEstudio" />
-            <PropertyRef Name="Completo" />
-            <PropertyRef Name="Nombre" />
-            <PropertyRef Name="Nivel" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdNiveldEstudio" Type="Int32" />
-          <Property Name="IdEstudio" Type="Int32" Nullable="false" />
-          <Property Name="Titulo" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="Completo" Type="Boolean" Nullable="false" />
-          <Property Name="IdInstitutos" Type="Int32" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
-          <Property Name="Promedio" Type="Double" />
-          <Property Name="CantidadMateriaAdeudadas" Type="Int32" />
-          <Property Name="ultimoAnioCursado" Type="Int32" />
-          <Property Name="Nivel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vPersona_ActividadMilitar">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdActividadMilitar" />
-            <PropertyRef Name="IdFuerza" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdActividadMilitar" Type="Int32" Nullable="false" />
-          <Property Name="IdFuerza" Type="Int32" Nullable="false" />
-          <Property Name="Fuerza" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Jerarquia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Cargo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Destino" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaIngreso" Type="DateTime" Precision="0" />
-          <Property Name="FechaBaja" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="vPersona_SituacionOcupacional">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="IdEstadoOcupacional" />
-            <PropertyRef Name="CargaOcupacionActual" />
-            <PropertyRef Name="IdSituacionOcupacional" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoOcupacional" Type="Int32" Nullable="false" />
-          <Property Name="EstadoOcupacional" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="CargaOcupacionActual" Type="Boolean" Nullable="false" />
-          <Property Name="Oficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="IdSituacionOcupacional" Type="Int32" Nullable="false" />
-          <Property Name="DomicilioLaboral" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="AniosTrabajados" Type="Int32" />
-        </EntityType>
-        <ComplexType Name="sp_vPaises_Result">
-          <Property Type="String" Name="CODIGO" Nullable="true" MaxLength="8" />
-          <Property Type="String" Name="DESCRIPCION" Nullable="true" MaxLength="255" />
-        </ComplexType>
-        <EntityType Name="vPersona_Idioma">
-          <Key>
-            <PropertyRef Name="Habla" />
-            <PropertyRef Name="Lee" />
-            <PropertyRef Name="Escribe" />
-            <PropertyRef Name="CodIdioma" />
-            <PropertyRef Name="NivelHabla" />
-            <PropertyRef Name="NivelEscribe" />
-            <PropertyRef Name="NivelLee" />
-            <PropertyRef Name="IdPersonaIdioma" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" />
-          <Property Name="Habla" Type="Int32" Nullable="false" />
-          <Property Name="Lee" Type="Int32" Nullable="false" />
-          <Property Name="Escribe" Type="Int32" Nullable="false" />
-          <Property Name="Idioma" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="CodIdioma" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="NivelHabla" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NivelEscribe" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="NivelLee" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersonaIdioma" Type="Int32" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SINUModelStoreContainer" CdmEntityContainer="SINUEntities">
+        <EntityContainerMapping StorageEntityContainer="SINUModelStoreContainer" CdmEntityContainer="SINUEntities1">
           <EntitySetMapping Name="ActividadMilitar">
             <EntityTypeMapping TypeName="SINUModel.ActividadMilitar">
               <MappingFragment StoreEntitySet="ActividadMilitar">
@@ -3287,6 +3419,26 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
                 <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
                 <ScalarProperty Name="IdBaja" ColumnName="IdBaja" />
                 <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="SINUModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FechaToken" ColumnName="FechaToken" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3324,14 +3476,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Domicilio">
             <EntityTypeMapping TypeName="SINUModel.Domicilio">
               <MappingFragment StoreEntitySet="Domicilio">
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-                <ScalarProperty Name="Prov_Loc_CP" ColumnName="Prov_Loc_CP" />
                 <ScalarProperty Name="IdDomicilio" ColumnName="IdDomicilio" />
                 <ScalarProperty Name="Calle" ColumnName="Calle" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="Piso" ColumnName="Piso" />
                 <ScalarProperty Name="Unidad" ColumnName="Unidad" />
                 <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
+                <ScalarProperty Name="Prov_Loc_CP" ColumnName="Prov_Loc_CP" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3368,7 +3520,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Estudio">
             <EntityTypeMapping TypeName="SINUModel.Estudio">
               <MappingFragment StoreEntitySet="Estudio">
-                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Completo" ColumnName="Completo" />
@@ -3377,6 +3528,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
                 <ScalarProperty Name="Promedio" ColumnName="Promedio" />
                 <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
                 <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
+                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3409,13 +3561,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Inscripcion">
             <EntityTypeMapping TypeName="SINUModel.Inscripcion">
               <MappingFragment StoreEntitySet="Inscripcion">
-                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
                 <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
                 <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
                 <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
                 <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
+                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
                 <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
               </MappingFragment>
@@ -3424,9 +3576,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="Institucion">
             <EntityTypeMapping TypeName="SINUModel.Institucion">
               <MappingFragment StoreEntitySet="Institucion">
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
                 <ScalarProperty Name="CodigoPcia" ColumnName="CodigoPcia" />
                 <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
@@ -3573,12 +3725,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="SituacionOcupacional">
             <EntityTypeMapping TypeName="SINUModel.SituacionOcupacional">
               <MappingFragment StoreEntitySet="SituacionOcupacional">
-                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
-                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdEstadoOcupacional" ColumnName="IdEstadoOcupacional" />
                 <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
                 <ScalarProperty Name="Oficio" ColumnName="Oficio" />
+                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
+                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3620,6 +3772,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ConfiguracionAdmin">
+            <EntityTypeMapping TypeName="SINUModel.ConfiguracionAdmin">
+              <MappingFragment StoreEntitySet="ConfiguracionAdmin">
+                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="InscripcionEtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.InscripcionEtapaEstado">
               <MappingFragment StoreEntitySet="InscripcionEtapaEstado">
@@ -3629,12 +3788,52 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vConfiguracionAdmin">
+            <EntityTypeMapping TypeName="SINUModel.vConfiguracionAdmin">
+              <MappingFragment StoreEntitySet="vConfiguracionAdmin">
+                <ScalarProperty Name="NombreDato" ColumnName="NombreDato" />
+                <ScalarProperty Name="ValorDato" ColumnName="ValorDato" />
+                <ScalarProperty Name="TipoDato" ColumnName="TipoDato" />
+                <ScalarProperty Name="UsoDato" ColumnName="UsoDato" />
+                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vEntrevistaLugarFecha">
+            <EntityTypeMapping TypeName="SINUModel.vEntrevistaLugarFecha">
+              <MappingFragment StoreEntitySet="vEntrevistaLugarFecha">
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vEstCivil">
             <EntityTypeMapping TypeName="SINUModel.vEstCivil">
               <MappingFragment StoreEntitySet="vEstCivil">
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Codigo_n" ColumnName="Codigo_n" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
+            <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
+              <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3663,22 +3862,188 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vPeriodosInscrip">
             <EntityTypeMapping TypeName="SINUModel.vPeriodosInscrip">
               <MappingFragment StoreEntitySet="vPeriodosInscrip">
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_ActividadMilitar">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_ActividadMilitar">
+              <MappingFragment StoreEntitySet="vPersona_ActividadMilitar">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
+                <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
+                <ScalarProperty Name="Fuerza" ColumnName="Fuerza" />
+                <ScalarProperty Name="Jerarquia" ColumnName="Jerarquia" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
+                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_DatosBasicos">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_DatosBasicos">
+              <MappingFragment StoreEntitySet="vPersona_DatosBasicos">
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdPostulante" ColumnName="IdPostulante" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
+                <ScalarProperty Name="Oficina" ColumnName="Oficina" />
+                <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
+                <ScalarProperty Name="EmpezoACargarDatos" ColumnName="EmpezoACargarDatos" />
+                <ScalarProperty Name="PidioIngresoAlSist" ColumnName="PidioIngresoAlSist" />
+                <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="Etapa_Estado" ColumnName="Etapa_Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_DatosPer">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_DatosPer">
+              <MappingFragment StoreEntitySet="vPersona_DatosPer">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
+                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_Domicilio">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_Domicilio">
+              <MappingFragment StoreEntitySet="vPersona_Domicilio">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Piso" ColumnName="Piso" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="CODIGO_POSTAL" ColumnName="CODIGO_POSTAL" />
+                <ScalarProperty Name="Prov_Loc_CP" ColumnName="Prov_Loc_CP" />
+                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
+                <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
+                <ScalarProperty Name="EventualCalle" ColumnName="EventualCalle" />
+                <ScalarProperty Name="EventualNumero" ColumnName="EventualNumero" />
+                <ScalarProperty Name="EventualPiso" ColumnName="EventualPiso" />
+                <ScalarProperty Name="EventualUnidad" ColumnName="EventualUnidad" />
+                <ScalarProperty Name="EventualPais" ColumnName="EventualPais" />
+                <ScalarProperty Name="EventualProvincia" ColumnName="EventualProvincia" />
+                <ScalarProperty Name="EventualLocalidad" ColumnName="EventualLocalidad" />
+                <ScalarProperty Name="EventualCodigo_Postal" ColumnName="EventualCodigo_Postal" />
+                <ScalarProperty Name="EventualProv_Loc" ColumnName="EventualProv_Loc" />
+                <ScalarProperty Name="EventualIdLocalidad" ColumnName="EventualIdLocalidad" />
+                <ScalarProperty Name="EventualIdPais" ColumnName="EventualIdPais" />
+                <ScalarProperty Name="IdDomicilioDNI" ColumnName="IdDomicilioDNI" />
+                <ScalarProperty Name="IdDomicilioActual" ColumnName="IdDomicilioActual" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VPersona_Estudio">
+            <EntityTypeMapping TypeName="SINUModel.VPersona_Estudio">
+              <MappingFragment StoreEntitySet="VPersona_Estudio">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdNiveldEstudio" ColumnName="IdNiveldEstudio" />
+                <ScalarProperty Name="IdEstudio" ColumnName="IdEstudio" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Completo" ColumnName="Completo" />
+                <ScalarProperty Name="IdInstitutos" ColumnName="IdInstitutos" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
+                <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
+                <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_Familiar">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar">
+              <MappingFragment StoreEntitySet="vPersona_Familiar">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
+                <ScalarProperty Name="IdPersonaPostulante" ColumnName="IdPersonaPostulante" />
+                <ScalarProperty Name="IdPersonaFamiliar" ColumnName="IdPersonaFamiliar" />
+                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="Relacion" ColumnName="Relacion" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_Idioma">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_Idioma">
+              <MappingFragment StoreEntitySet="vPersona_Idioma">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Habla" ColumnName="Habla" />
+                <ScalarProperty Name="Lee" ColumnName="Lee" />
+                <ScalarProperty Name="Escribe" ColumnName="Escribe" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+                <ScalarProperty Name="CodIdioma" ColumnName="CodIdioma" />
+                <ScalarProperty Name="NivelHabla" ColumnName="NivelHabla" />
+                <ScalarProperty Name="NivelEscribe" ColumnName="NivelEscribe" />
+                <ScalarProperty Name="NivelLee" ColumnName="NivelLee" />
+                <ScalarProperty Name="IdPersonaIdioma" ColumnName="IdPersonaIdioma" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vPersona_SituacionOcupacional">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_SituacionOcupacional">
+              <MappingFragment StoreEntitySet="vPersona_SituacionOcupacional">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdEstadoOcupacional" ColumnName="IdEstadoOcupacional" />
+                <ScalarProperty Name="IdSituacionOcupacional" ColumnName="IdSituacionOcupacional" />
+                <ScalarProperty Name="EstadoOcupacional" ColumnName="EstadoOcupacional" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
+                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
+                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
+                <ScalarProperty Name="Oficio" ColumnName="Oficio" />
+                <ScalarProperty Name="CargaOcupacionActual" ColumnName="CargaOcupacionActual" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="vProvincia_Depto_Localidad">
             <EntityTypeMapping TypeName="SINUModel.vProvincia_Depto_Localidad">
               <MappingFragment StoreEntitySet="vProvincia_Depto_Localidad">
-                <ScalarProperty Name="CODIGO_POSTAL" ColumnName="CODIGO_POSTAL" />
                 <ScalarProperty Name="Provincia" ColumnName="Provincia" />
                 <ScalarProperty Name="DepartPartido" ColumnName="DepartPartido" />
                 <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="CODIGO_POSTAL" ColumnName="CODIGO_POSTAL" />
                 <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3716,10 +4081,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <EntitySetMapping Name="vSeguridad_Grupos_Usuarios">
             <EntityTypeMapping TypeName="SINUModel.vSeguridad_Grupos_Usuarios">
               <MappingFragment StoreEntitySet="vSeguridad_Grupos_Usuarios">
-                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
-                <ScalarProperty Name="codAplicacion" ColumnName="codAplicacion" />
                 <ScalarProperty Name="codUsuario" ColumnName="codUsuario" />
+                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
                 <ScalarProperty Name="codGrupo" ColumnName="codGrupo" />
+                <ScalarProperty Name="codAplicacion" ColumnName="codAplicacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3761,6 +4126,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               <ScalarProperty Name="Id" ColumnName="IdSituacionOcupacional" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Aprender01" FunctionName="SINUModel.Store.Aprender01">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.Aprender01_Result">
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="SINUModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="SINUModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="SINUModel.Store.sp_dropdiagram" />
@@ -3785,196 +4159,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="SINUModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="SINUModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="spIngresaASeguridad" FunctionName="SINUModel.Store.spIngresaASeguridad" />
-          <FunctionImportMapping FunctionImportName="spValidarUsuario" FunctionName="SINUModel.Store.spValidarUsuario">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spValidarUsuario_Result">
-                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
-                <ScalarProperty Name="Logueo" ColumnName="Logueo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
-          <FunctionImportMapping FunctionImportName="spCreaPostulante" FunctionName="SINUModel.Store.spCreaPostulante" />
-          <FunctionImportMapping FunctionImportName="Vaciar" FunctionName="SINUModel.Store.Vaciar" />
-          <EntitySetMapping Name="vPersona_DatosBasicos">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_DatosBasicos">
-              <MappingFragment StoreEntitySet="vPersona_DatosBasicos">
-                <ScalarProperty Name="Oficina" ColumnName="Oficina" />
-                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
-                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
-                <ScalarProperty Name="Etapa_Estado" ColumnName="Etapa_Estado" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="AspnetUser" ColumnName="AspnetUser" />
-                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
-                <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
-                <ScalarProperty Name="PidioIngresoAlSist" ColumnName="PidioIngresoAlSist" />
-                <ScalarProperty Name="EmpezoACargarDatos" ColumnName="EmpezoACargarDatos" />
-                <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="IdPostulante" ColumnName="IdPostulante" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vEntrevistaLugarFecha">
-            <EntityTypeMapping TypeName="SINUModel.vEntrevistaLugarFecha">
-              <MappingFragment StoreEntitySet="vEntrevistaLugarFecha">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
-            <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
-              <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ConfiguracionAdmin">
-            <EntityTypeMapping TypeName="SINUModel.ConfiguracionAdmin">
-              <MappingFragment StoreEntitySet="ConfiguracionAdmin">
-                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vConfiguracionAdmin">
-            <EntityTypeMapping TypeName="SINUModel.vConfiguracionAdmin">
-              <MappingFragment StoreEntitySet="vConfiguracionAdmin">
-                <ScalarProperty Name="IdConfiguracion" ColumnName="IdConfiguracion" />
-                <ScalarProperty Name="UsoDato" ColumnName="UsoDato" />
-                <ScalarProperty Name="TipoDato" ColumnName="TipoDato" />
-                <ScalarProperty Name="ValorDato" ColumnName="ValorDato" />
-                <ScalarProperty Name="NombreDato" ColumnName="NombreDato" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spDatosBasicosUpdate" FunctionName="SINUModel.Store.spDatosBasicosUpdate" />
-          <EntitySetMapping Name="vPersona_DatosPer">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_DatosPer">
-              <MappingFragment StoreEntitySet="vPersona_DatosPer">
-                <ScalarProperty Name="Nacionalidad" ColumnName="Nacionalidad" />
-                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
-                <ScalarProperty Name="Religion" ColumnName="Religion" />
-                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="edad" ColumnName="edad" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_Domicilio">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Domicilio">
-              <MappingFragment StoreEntitySet="vPersona_Domicilio">
-                <ScalarProperty Name="IdDomicilioActual" ColumnName="IdDomicilioActual" />
-                <ScalarProperty Name="IdDomicilioDNI" ColumnName="IdDomicilioDNI" />
-                <ScalarProperty Name="EventualIdPais" ColumnName="EventualIdPais" />
-                <ScalarProperty Name="EventualIdLocalidad" ColumnName="EventualIdLocalidad" />
-                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
-                <ScalarProperty Name="EventualProv_Loc" ColumnName="EventualProv_Loc" />
-                <ScalarProperty Name="EventualCodigo_Postal" ColumnName="EventualCodigo_Postal" />
-                <ScalarProperty Name="EventualLocalidad" ColumnName="EventualLocalidad" />
-                <ScalarProperty Name="EventualProvincia" ColumnName="EventualProvincia" />
-                <ScalarProperty Name="EventualPais" ColumnName="EventualPais" />
-                <ScalarProperty Name="EventualUnidad" ColumnName="EventualUnidad" />
-                <ScalarProperty Name="EventualPiso" ColumnName="EventualPiso" />
-                <ScalarProperty Name="EventualNumero" ColumnName="EventualNumero" />
-                <ScalarProperty Name="EventualCalle" ColumnName="EventualCalle" />
-                <ScalarProperty Name="IdLocalidad" ColumnName="IdLocalidad" />
-                <ScalarProperty Name="IdPais" ColumnName="IdPais" />
-                <ScalarProperty Name="Prov_Loc_CP" ColumnName="Prov_Loc_CP" />
-                <ScalarProperty Name="CODIGO_POSTAL" ColumnName="CODIGO_POSTAL" />
-                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
-                <ScalarProperty Name="Pais" ColumnName="Pais" />
-                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
-                <ScalarProperty Name="Piso" ColumnName="Piso" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="Calle" ColumnName="Calle" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spDatosPersonalesUpdate" FunctionName="SINUModel.Store.spDatosPersonalesUpdate" />
-          <EntitySetMapping Name="VPersona_Estudio">
-            <EntityTypeMapping TypeName="SINUModel.VPersona_Estudio">
-              <MappingFragment StoreEntitySet="VPersona_Estudio">
-                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
-                <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
-                <ScalarProperty Name="NombreYPaisInstituto" ColumnName="NombreYPaisInstituto" />
-                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
-                <ScalarProperty Name="ultimoAnioCursado" ColumnName="ultimoAnioCursado" />
-                <ScalarProperty Name="CantidadMateriaAdeudadas" ColumnName="CantidadMateriaAdeudadas" />
-                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdInstitutos" ColumnName="IdInstitutos" />
-                <ScalarProperty Name="Completo" ColumnName="Completo" />
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-                <ScalarProperty Name="IdEstudio" ColumnName="IdEstudio" />
-                <ScalarProperty Name="IdNiveldEstudio" ColumnName="IdNiveldEstudio" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_ActividadMilitar">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_ActividadMilitar">
-              <MappingFragment StoreEntitySet="vPersona_ActividadMilitar">
-                <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
-                <ScalarProperty Name="FechaIngreso" ColumnName="FechaIngreso" />
-                <ScalarProperty Name="Destino" ColumnName="Destino" />
-                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
-                <ScalarProperty Name="Jerarquia" ColumnName="Jerarquia" />
-                <ScalarProperty Name="Fuerza" ColumnName="Fuerza" />
-                <ScalarProperty Name="IdFuerza" ColumnName="IdFuerza" />
-                <ScalarProperty Name="IdActividadMilitar" ColumnName="IdActividadMilitar" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_SituacionOcupacional">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_SituacionOcupacional">
-              <MappingFragment StoreEntitySet="vPersona_SituacionOcupacional">
-                <ScalarProperty Name="AniosTrabajados" ColumnName="AniosTrabajados" />
-                <ScalarProperty Name="DomicilioLaboral" ColumnName="DomicilioLaboral" />
-                <ScalarProperty Name="IdSituacionOcupacional" ColumnName="IdSituacionOcupacional" />
-                <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
-                <ScalarProperty Name="Oficio" ColumnName="Oficio" />
-                <ScalarProperty Name="CargaOcupacionActual" ColumnName="CargaOcupacionActual" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="EstadoOcupacional" ColumnName="EstadoOcupacional" />
-                <ScalarProperty Name="IdEstadoOcupacional" ColumnName="IdEstadoOcupacional" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_vPaises" FunctionName="SINUModel.Store.sp_vPaises">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SINUModel.sp_vPaises_Result">
@@ -3983,30 +4167,28 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spEstudiosIU" FunctionName="SINUModel.Store.spEstudiosIU" />
-          <FunctionImportMapping FunctionImportName="spDomiciliosU" FunctionName="SINUModel.Store.spDomiciliosU" />
-          <EntitySetMapping Name="vPersona_Idioma">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Idioma">
-              <MappingFragment StoreEntitySet="vPersona_Idioma">
-                <ScalarProperty Name="IdPersonaIdioma" ColumnName="IdPersonaIdioma" />
-                <ScalarProperty Name="NivelLee" ColumnName="NivelLee" />
-                <ScalarProperty Name="NivelEscribe" ColumnName="NivelEscribe" />
-                <ScalarProperty Name="NivelHabla" ColumnName="NivelHabla" />
-                <ScalarProperty Name="CodIdioma" ColumnName="CodIdioma" />
-                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
-                <ScalarProperty Name="Escribe" ColumnName="Escribe" />
-                <ScalarProperty Name="Lee" ColumnName="Lee" />
-                <ScalarProperty Name="Habla" ColumnName="Habla" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spEstudiosEliminar" FunctionName="SINUModel.Store.spEstudiosEliminar" />
           <FunctionImportMapping FunctionImportName="spActividadMilitarEliminar" FunctionName="SINUModel.Store.spActividadMilitarEliminar" />
           <FunctionImportMapping FunctionImportName="spActividadMilitarIU" FunctionName="SINUModel.Store.spActividadMilitarIU" />
+          <FunctionImportMapping FunctionImportName="spCreaPostulante" FunctionName="SINUModel.Store.spCreaPostulante" />
+          <FunctionImportMapping FunctionImportName="spDatosBasicosUpdate" FunctionName="SINUModel.Store.spDatosBasicosUpdate" />
+          <FunctionImportMapping FunctionImportName="spDatosPersonalesUpdate" FunctionName="SINUModel.Store.spDatosPersonalesUpdate" />
+          <FunctionImportMapping FunctionImportName="spDomiciliosU" FunctionName="SINUModel.Store.spDomiciliosU" />
+          <FunctionImportMapping FunctionImportName="spEstudiosEliminar" FunctionName="SINUModel.Store.spEstudiosEliminar" />
+          <FunctionImportMapping FunctionImportName="spEstudiosIU" FunctionName="SINUModel.Store.spEstudiosIU" />
           <FunctionImportMapping FunctionImportName="spIdiomasIU" FunctionName="SINUModel.Store.spIdiomasIU" />
+          <FunctionImportMapping FunctionImportName="spIngresaASeguridad" FunctionName="SINUModel.Store.spIngresaASeguridad" />
           <FunctionImportMapping FunctionImportName="spSituacionOcupacionalIU" FunctionName="SINUModel.Store.spSituacionOcupacionalIU" />
+          <FunctionImportMapping FunctionImportName="spTransaction" FunctionName="SINUModel.Store.spTransaction" />
+          <FunctionImportMapping FunctionImportName="spValidarUsuario" FunctionName="SINUModel.Store.spValidarUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spValidarUsuario_Result">
+                <ScalarProperty Name="codFuncion" ColumnName="codFuncion" />
+                <ScalarProperty Name="Logueo" ColumnName="Logueo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Vaciar" FunctionName="SINUModel.Store.Vaciar" />
+          <FunctionImportMapping FunctionImportName="VaciarASPNETUser" FunctionName="SINUModel.Store.VaciarASPNETUser" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

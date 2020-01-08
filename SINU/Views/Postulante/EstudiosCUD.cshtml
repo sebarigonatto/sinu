@@ -5,135 +5,158 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }*@
 
+
+
+
 @using (Ajax.BeginForm("EstudiosCUD", "Postulante", null,
-    new AjaxOptions
-    {
-        HttpMethod = "POST",
-        OnSuccess = "Exito(data,status,xhr)",
-        OnFailure = "Falla",
+new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "Exito(data,status,xhr)",
+    OnFailure = "Falla",
 //LoadingElementId = "carga",
 //LoadingElementDuration = 1000,
 //UpdateTargetId = "resultTarget"
 },
-    new { id = "MyNewNameId" }))
+new { id = "MyNewNameId" }))
 {
     @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">
+            ESTUDIO
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body  ui-front" style="overflow:auto;height:30rem;">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-12">
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-12">
+                    @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdEstudio)
+                    @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdPersona)
 
-                @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdEstudio)
-                @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdPersona)
-                <div class="form-group row ">
+                    <div class="form-group row ">
 
 
-                    <div class="col-sm-6">
+                        <div class="col-sm-6">
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nivel, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdNiveldEstudio, new SelectList(Model.NivelEstudioVM, "Id", "Nivel"), "Seleccione un Nivel", htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nivel, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nivel, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdNiveldEstudio, new SelectList(Model.NivelEstudioVM, "Id", "Nivel"), "Seleccione un Nivel", htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nivel, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.Label("Instituto en el Exterior?", htmlAttributes: new { @class = "control-label col-md-auto" })
+                                    @Html.CheckBox("esxterior", new { @id = "checkext", @class = "d-inline-flex col-auto" })
+                                </div>
+                            </div>
 
-                            @Html.EditorFor(model => model.vPersona_EstudioIdVM.Completo, new { htmlAttributes = new { @class = "form-control  d-inline" } })
-                            <div class="col-md-10">
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Completo, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Provincia, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new { @class = "form-control", @id = "JuriEST" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new SelectList(Model.Provincia, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox", @id = "ComboJuriEST" })
+                                    @Html.ValidationMessageFor(model => model.Provincia, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Titulo, new { htmlAttributes = new { @class = "form-control " } })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Titulo, "", new { @class = "text-danger" })
+                            <div class="form-group" id="DIVlocali">
+                                @Html.LabelFor(model => model.Localidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Localidad, new SelectList(Model.Localidad, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox", @id = "ComboLocaliEST" })
+                                    @Html.ValidationMessageFor(model => model.Localidad, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.Promedio, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Promedio, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Promedio, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-6">
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Provincia, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new SelectList(Model.Provincia, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Provincia, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Localidad, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Localidad, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Localidad, new SelectList(Model.Localidad, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.Localidad, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Nombre, new { htmlAttributes = new { @class = "form-control  " } })
-                                @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.Nombre, new { @class = "form-control", @id = "IdInstEST" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox", @id = "ComboIdInstEST" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
 
 
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-2" })
 
-                        <input type="submit" value="Save" class="btn btn-default" />
+                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Completo, new { htmlAttributes = new { @class = "form-control  d-inline" } })
+                                <div class="col-md-10">
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Completo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.Titulo, new { htmlAttributes = new { @class = "form-control " } })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Titulo, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Promedio, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.Promedio, new { htmlAttributes = new { @class = "form-control  " } })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Promedio, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { htmlAttributes = new { @class = "form-control  " } })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.ultimoAnioCursado, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+        
+            <div class="float-sm-right">
+                <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
+                @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
+                @if (Model.vPersona_EstudioIdVM.IdEstudio != 0)
+                {
+                    <input type="button" value="Eliminar" class="btn btn-danger " id="EliminaEST" />
+                }
+                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarEST"/>
 
-    </div>
- }
-            <div>
-                @Html.ActionLink("Back to List", "Index")
             </div>
-
-
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        //Si lallamada POST tuvo exito
-        function Exito(response, status, xhr) {
-            alert("success: " + response.success + " " + response.msg);
-        };
-
-        //Si lallamada POST tuvo error
-        function Falla(response) {
-            alert("Error occured.");
-        };
-    </script>
+    </div>
 }
+
+
+
+
+
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript">
+            //Si lallamada POST tuvo exito
+            function Exito(response, status, xhr) {
+                alert("success: " + response.success + " " + response.msg);
+            };
+
+            //Si lallamada POST tuvo error
+            function Falla(response) {
+                alert("Error occured.");
+            };
+        </script>
+    }*@

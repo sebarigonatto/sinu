@@ -221,6 +221,7 @@ namespace SINU.Controllers
         //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
         public JsonResult DropEnCascadaDomicilio(string? Provincia,int? Localidad)
         {
+
             if (Provincia != null) { 
 
                 var result = db.vProvincia_Depto_Localidad
@@ -243,15 +244,22 @@ namespace SINU.Controllers
             }
         }
 
-        //----------------------------------Estudios----------------------------------------------------------------------//
+//----------------------------------Estudios----------------------------------------------------------------------//
         public ActionResult Estudios()
         {
             try
             {
-                EstudiosVM estudio = new EstudiosVM()
+                EstudiosVM estudio = new EstudiosVM();
+                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.Email == USUmail).ToList();
+                foreach (var item in estudio.vPersona_EstudioListVM)
                 {
-                    vPersona_EstudioListVM = db.VPersona_Estudio.Where(m=>m.Email==USUmail).ToList()
-                };
+                    if(item.NombreYPaisInstituto !=null)
+                    { 
+                    string[] paisyinst = item.NombreYPaisInstituto.Split('-');
+                    item.Jurisdiccion = paisyinst[0];
+                    item.Nombre = paisyinst[1];
+                    }
+                }
                 return PartialView(estudio);
             }
             catch (Exception ex)
@@ -276,8 +284,24 @@ namespace SINU.Controllers
                     
                 };
 
-                estudio.vPersona_EstudioIdVM = (ID != null)? db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID):null;
-                if (estudio.vPersona_EstudioIdVM != null && estudio.vPersona_EstudioIdVM.IdInstitutos != null)
+                if (ID != null) {
+                    estudio.vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
+                    if (estudio.vPersona_EstudioIdVM.IdInstitutos == 0)
+                    {
+                        string[] paisinst = estudio.vPersona_EstudioIdVM.NombreYPaisInstituto.Split('-');
+                        estudio.vPersona_EstudioIdVM.Jurisdiccion = paisinst[0];
+                        estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
+                    };
+                }else{
+                    VPersona_Estudio nuevoestu = new VPersona_Estudio()
+                    {
+                        IdPersona= db.Persona.FirstOrDefault(m => m.Email == USUmail).IdPersona,
+                        IdEstudio=0
+                    };
+                    estudio.vPersona_EstudioIdVM = nuevoestu;
+                };
+
+                if (estudio.vPersona_EstudioIdVM.IdInstitutos != 0)
                 {
                     estudio.Localidad = db.Institutos
                         .Where(m=>m.Jurisdiccion==estudio.vPersona_EstudioIdVM.Jurisdiccion)
@@ -294,9 +318,11 @@ namespace SINU.Controllers
                             Text = m.Nombre
                         })
                         .ToList();
+                    estudio.vPersona_EstudioIdVM.Nombre = "";
                 }
                 else
                 {
+                    
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();
                 }
@@ -315,12 +341,19 @@ namespace SINU.Controllers
         {
             try
             {
-                //EstudiosVM estudio = new EstudiosVM()
-                //{
-                //    vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID),
-                //    NivelEstudioVM = db.NiveldEstudio.ToList()
-                //};
-                return Json(new { success = true, msg = "" });
+                var e = Datos.vPersona_EstudioIdVM;
+                if (e.IdInstitutos != null )
+                {
+                    e.NombreYPaisInstituto = null;
+                }else
+                {
+                    e.IdInstitutos = 0;
+                    e.NombreYPaisInstituto = e.Jurisdiccion + "-" + e.Nombre;
+                }
+
+                db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado,e.NombreYPaisInstituto);
+             
+                return Json(new { success = true, msg = "Se Inserto correctamente el estudio nuevo" });
             }
             catch (Exception ex)
             {
@@ -329,6 +362,59 @@ namespace SINU.Controllers
             }
         }
 
+        public JsonResult EliminaEST(int ID)
+        {
+            try
+            {
+                var estu = db.Estudio.Find(ID);
+                if (estu != null)
+                {
+                    db.spEstudiosEliminar(ID);
+                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, msg = ex.InnerException.Message });
+            }
+        }
+
+
+        public JsonResult DropCascadaEST(int opc, string val)
+        {
+            if (opc == 0)
+            {
+                var result = db.Institutos
+                                 .Where(m => m.Jurisdiccion == val)
+                                 .DistinctBy(m=>m.Localidad)
+                                 .Select(m => new SelectListItem
+                                 {
+                                     Value = m.Localidad,
+                                     Text = m.Localidad
+                                 })
+                                 .OrderBy(m => m.Text)
+                                 .ToList();
+
+              
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var result = db.Institutos
+                                 .Where(m => m.Localidad == val)
+                                 .Select(m => new SelectListItem
+                                 {
+                                     Value = m.Id.ToString(),
+                                     Text = m.Nombre
+                                 })
+                                 .OrderBy(m => m.Text)
+                                 .ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+
+        }
 
 
 

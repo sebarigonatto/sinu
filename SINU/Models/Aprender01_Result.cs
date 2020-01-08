@@ -11,9 +11,10 @@ namespace SINU.Models
 {
     using System;
     
-    public partial class spPrueba_Result
+    public partial class Aprender01_Result
     {
-        public string codFuncion { get; set; }
-        public int Logueo { get; set; }
+        public int IdSecuencia { get; set; }
+        public int IdInscripcionEtapaEstado { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace SINU.Models
         }
     
         public virtual DbSet<ActividadMilitar> ActividadMilitar { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Baja> Baja { get; set; }
         public virtual DbSet<Configuracion> Configuracion { get; set; }
         public virtual DbSet<DocPresentado> DocPresentado { get; set; }
@@ -58,28 +59,34 @@ namespace SINU.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoDocPresentado> TipoDocPresentado { get; set; }
         public virtual DbSet<TipoNacionalidad> TipoNacionalidad { get; set; }
+        public virtual DbSet<ConfiguracionAdmin> ConfiguracionAdmin { get; set; }
         public virtual DbSet<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
+        public virtual DbSet<vConfiguracionAdmin> vConfiguracionAdmin { get; set; }
+        public virtual DbSet<vEntrevistaLugarFecha> vEntrevistaLugarFecha { get; set; }
         public virtual DbSet<vEstCivil> vEstCivil { get; set; }
+        public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
         public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
+        public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
+        public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
+        public virtual DbSet<vPersona_DatosPer> vPersona_DatosPer { get; set; }
+        public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
+        public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
+        public virtual DbSet<vPersona_Familiar> vPersona_Familiar { get; set; }
+        public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
+        public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
         public virtual DbSet<vRELIGION> vRELIGION { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstado> vSecuencia_EtapaEstado { get; set; }
         public virtual DbSet<vSeguridad_Grupos> vSeguridad_Grupos { get; set; }
         public virtual DbSet<vSeguridad_Grupos_Usuarios> vSeguridad_Grupos_Usuarios { get; set; }
         public virtual DbSet<vSeguridad_Usuarios> vSeguridad_Usuarios { get; set; }
-        public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
-        public virtual DbSet<vEntrevistaLugarFecha> vEntrevistaLugarFecha { get; set; }
-        public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
-        public virtual DbSet<ConfiguracionAdmin> ConfiguracionAdmin { get; set; }
-        public virtual DbSet<vConfiguracionAdmin> vConfiguracionAdmin { get; set; }
-        public virtual DbSet<vPersona_DatosPer> vPersona_DatosPer { get; set; }
-        public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
-        public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
-        public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
-        public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
-        public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
+    
+        public virtual ObjectResult<Aprender01_Result> Aprender01()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Aprender01_Result>("Aprender01");
+        }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -184,81 +191,83 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual int spIngresaASeguridad(string uSUARIO, string grupo, string mr, string grado, string destino, string nombre, string apellido)
+        public virtual ObjectResult<sp_vPaises_Result> sp_vPaises(string cODIGO)
         {
-            var uSUARIOParameter = uSUARIO != null ?
-                new ObjectParameter("USUARIO", uSUARIO) :
-                new ObjectParameter("USUARIO", typeof(string));
+            var cODIGOParameter = cODIGO != null ?
+                new ObjectParameter("CODIGO", cODIGO) :
+                new ObjectParameter("CODIGO", typeof(string));
     
-            var grupoParameter = grupo != null ?
-                new ObjectParameter("Grupo", grupo) :
-                new ObjectParameter("Grupo", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPaises_Result>("sp_vPaises", cODIGOParameter);
+        }
     
-            var mrParameter = mr != null ?
-                new ObjectParameter("mr", mr) :
-                new ObjectParameter("mr", typeof(string));
+        public virtual int spActividadMilitarEliminar(Nullable<int> idActividadMilitar)
+        {
+            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
+                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
+                new ObjectParameter("IdActividadMilitar", typeof(int));
     
-            var gradoParameter = grado != null ?
-                new ObjectParameter("Grado", grado) :
-                new ObjectParameter("Grado", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarEliminar", idActividadMilitarParameter);
+        }
+    
+        public virtual int spActividadMilitarIU(Nullable<int> idActividadMilitar, Nullable<int> idPersona, Nullable<bool> solicitoIngresoAnterior, Nullable<bool> ingreso, Nullable<System.DateTime> fechaIngreso, Nullable<System.DateTime> fechaBaja, string causaMotivoNoingreso, string motivoBaja, string jerarquia, string cargo, string destino, Nullable<int> idSituacionRevista, Nullable<int> idFuerza, Nullable<int> idBaja)
+        {
+            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
+                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
+                new ObjectParameter("IdActividadMilitar", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var solicitoIngresoAnteriorParameter = solicitoIngresoAnterior.HasValue ?
+                new ObjectParameter("SolicitoIngresoAnterior", solicitoIngresoAnterior) :
+                new ObjectParameter("SolicitoIngresoAnterior", typeof(bool));
+    
+            var ingresoParameter = ingreso.HasValue ?
+                new ObjectParameter("Ingreso", ingreso) :
+                new ObjectParameter("Ingreso", typeof(bool));
+    
+            var fechaIngresoParameter = fechaIngreso.HasValue ?
+                new ObjectParameter("FechaIngreso", fechaIngreso) :
+                new ObjectParameter("FechaIngreso", typeof(System.DateTime));
+    
+            var fechaBajaParameter = fechaBaja.HasValue ?
+                new ObjectParameter("FechaBaja", fechaBaja) :
+                new ObjectParameter("FechaBaja", typeof(System.DateTime));
+    
+            var causaMotivoNoingresoParameter = causaMotivoNoingreso != null ?
+                new ObjectParameter("CausaMotivoNoingreso", causaMotivoNoingreso) :
+                new ObjectParameter("CausaMotivoNoingreso", typeof(string));
+    
+            var motivoBajaParameter = motivoBaja != null ?
+                new ObjectParameter("MotivoBaja", motivoBaja) :
+                new ObjectParameter("MotivoBaja", typeof(string));
+    
+            var jerarquiaParameter = jerarquia != null ?
+                new ObjectParameter("Jerarquia", jerarquia) :
+                new ObjectParameter("Jerarquia", typeof(string));
+    
+            var cargoParameter = cargo != null ?
+                new ObjectParameter("Cargo", cargo) :
+                new ObjectParameter("Cargo", typeof(string));
     
             var destinoParameter = destino != null ?
                 new ObjectParameter("Destino", destino) :
                 new ObjectParameter("Destino", typeof(string));
     
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
+            var idSituacionRevistaParameter = idSituacionRevista.HasValue ?
+                new ObjectParameter("IdSituacionRevista", idSituacionRevista) :
+                new ObjectParameter("IdSituacionRevista", typeof(int));
     
-            var apellidoParameter = apellido != null ?
-                new ObjectParameter("Apellido", apellido) :
-                new ObjectParameter("Apellido", typeof(string));
+            var idFuerzaParameter = idFuerza.HasValue ?
+                new ObjectParameter("IdFuerza", idFuerza) :
+                new ObjectParameter("IdFuerza", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spIngresaASeguridad", uSUARIOParameter, grupoParameter, mrParameter, gradoParameter, destinoParameter, nombreParameter, apellidoParameter);
-        }
+            var idBajaParameter = idBaja.HasValue ?
+                new ObjectParameter("IdBaja", idBaja) :
+                new ObjectParameter("IdBaja", typeof(int));
     
-        public virtual ObjectResult<spPrueba_Result> spPrueba(string uSUARIO, string funcion)
-        {
-            var uSUARIOParameter = uSUARIO != null ?
-                new ObjectParameter("USUARIO", uSUARIO) :
-                new ObjectParameter("USUARIO", typeof(string));
-    
-            var funcionParameter = funcion != null ?
-                new ObjectParameter("Funcion", funcion) :
-                new ObjectParameter("Funcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spPrueba_Result>("spPrueba", uSUARIOParameter, funcionParameter);
-        }
-    
-        public virtual ObjectResult<spValidarUsuario_Result> spValidarUsuario(string uSUARIO, string funcion)
-        {
-            var uSUARIOParameter = uSUARIO != null ?
-                new ObjectParameter("USUARIO", uSUARIO) :
-                new ObjectParameter("USUARIO", typeof(string));
-    
-            var funcionParameter = funcion != null ?
-                new ObjectParameter("Funcion", funcion) :
-                new ObjectParameter("Funcion", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spValidarUsuario_Result>("spValidarUsuario", uSUARIOParameter, funcionParameter);
-        }
-    
-        public virtual int tablasnuevas()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("tablasnuevas");
-        }
-    
-        public virtual int VaciarASPNETUser(string correoregistrado, Nullable<int> eliminar)
-        {
-            var correoregistradoParameter = correoregistrado != null ?
-                new ObjectParameter("correoregistrado", correoregistrado) :
-                new ObjectParameter("correoregistrado", typeof(string));
-    
-            var eliminarParameter = eliminar.HasValue ?
-                new ObjectParameter("eliminar", eliminar) :
-                new ObjectParameter("eliminar", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarIU", idActividadMilitarParameter, idPersonaParameter, solicitoIngresoAnteriorParameter, ingresoParameter, fechaIngresoParameter, fechaBajaParameter, causaMotivoNoingresoParameter, motivoBajaParameter, jerarquiaParameter, cargoParameter, destinoParameter, idSituacionRevistaParameter, idFuerzaParameter, idBajaParameter);
         }
     
         public virtual int spCreaPostulante(string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
@@ -288,19 +297,6 @@ namespace SINU.Models
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
-        }
-    
-        public virtual ObjectResult<string> Vaciar(string valoremail, Nullable<int> eliminandotabla)
-        {
-            var valoremailParameter = valoremail != null ?
-                new ObjectParameter("valoremail", valoremail) :
-                new ObjectParameter("valoremail", typeof(string));
-    
-            var eliminandotablaParameter = eliminandotabla.HasValue ?
-                new ObjectParameter("eliminandotabla", eliminandotabla) :
-                new ObjectParameter("eliminandotabla", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("Vaciar", valoremailParameter, eliminandotablaParameter);
         }
     
         public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)
@@ -385,56 +381,6 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter);
         }
     
-        public virtual ObjectResult<sp_vPaises_Result> sp_vPaises(string cODIGO)
-        {
-            var cODIGOParameter = cODIGO != null ?
-                new ObjectParameter("CODIGO", cODIGO) :
-                new ObjectParameter("CODIGO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPaises_Result>("sp_vPaises", cODIGOParameter);
-        }
-    
-        public virtual int spEstudiosIU(Nullable<int> idEstudio, Nullable<int> idPersona, string titulo, Nullable<bool> completo, Nullable<int> idNiveldEstudio, Nullable<int> idInstitutos, Nullable<double> promedio, Nullable<int> cantidadMateriaAdeudadas, Nullable<int> ultimoAnioCursado)
-        {
-            var idEstudioParameter = idEstudio.HasValue ?
-                new ObjectParameter("IdEstudio", idEstudio) :
-                new ObjectParameter("IdEstudio", typeof(int));
-    
-            var idPersonaParameter = idPersona.HasValue ?
-                new ObjectParameter("IdPersona", idPersona) :
-                new ObjectParameter("IdPersona", typeof(int));
-    
-            var tituloParameter = titulo != null ?
-                new ObjectParameter("Titulo", titulo) :
-                new ObjectParameter("Titulo", typeof(string));
-    
-            var completoParameter = completo.HasValue ?
-                new ObjectParameter("Completo", completo) :
-                new ObjectParameter("Completo", typeof(bool));
-    
-            var idNiveldEstudioParameter = idNiveldEstudio.HasValue ?
-                new ObjectParameter("IdNiveldEstudio", idNiveldEstudio) :
-                new ObjectParameter("IdNiveldEstudio", typeof(int));
-    
-            var idInstitutosParameter = idInstitutos.HasValue ?
-                new ObjectParameter("IdInstitutos", idInstitutos) :
-                new ObjectParameter("IdInstitutos", typeof(int));
-    
-            var promedioParameter = promedio.HasValue ?
-                new ObjectParameter("Promedio", promedio) :
-                new ObjectParameter("Promedio", typeof(double));
-    
-            var cantidadMateriaAdeudadasParameter = cantidadMateriaAdeudadas.HasValue ?
-                new ObjectParameter("CantidadMateriaAdeudadas", cantidadMateriaAdeudadas) :
-                new ObjectParameter("CantidadMateriaAdeudadas", typeof(int));
-    
-            var ultimoAnioCursadoParameter = ultimoAnioCursado.HasValue ?
-                new ObjectParameter("ultimoAnioCursado", ultimoAnioCursado) :
-                new ObjectParameter("ultimoAnioCursado", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosIU", idEstudioParameter, idPersonaParameter, tituloParameter, completoParameter, idNiveldEstudioParameter, idInstitutosParameter, promedioParameter, cantidadMateriaAdeudadasParameter, ultimoAnioCursadoParameter);
-        }
-    
         public virtual int spDomiciliosU(Nullable<int> idDomicilioDNI, string calle, string numero, string piso, string unidad, Nullable<int> idLocalidad, string prov_Loc_CP, string idPais, Nullable<int> idDomicilioActual, string eventualCalle, string eventualNumero, string eventualPiso, string eventualUnidad, Nullable<int> eventualIdLocalidad, string eventualProv_Loc_CP, string eventualIdPais)
         {
             var idDomicilioDNIParameter = idDomicilioDNI.HasValue ?
@@ -513,74 +459,49 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosEliminar", idEstudioParameter);
         }
     
-        public virtual int spActividadMilitarEliminar(Nullable<int> idActividadMilitar)
+        public virtual int spEstudiosIU(Nullable<int> idEstudio, Nullable<int> idPersona, string titulo, Nullable<bool> completo, Nullable<int> idNiveldEstudio, Nullable<int> idInstitutos, Nullable<double> promedio, Nullable<int> cantidadMateriaAdeudadas, Nullable<int> ultimoAnioCursado, string nombreYPaisInstituto)
         {
-            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
-                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
-                new ObjectParameter("IdActividadMilitar", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarEliminar", idActividadMilitarParameter);
-        }
-    
-        public virtual int spActividadMilitarIU(Nullable<int> idActividadMilitar, Nullable<int> idPersona, Nullable<bool> solicitoIngresoAnterior, Nullable<bool> ingreso, Nullable<System.DateTime> fechaIngreso, Nullable<System.DateTime> fechaBaja, string causaMotivoNoingreso, string motivoBaja, string jerarquia, string cargo, string destino, Nullable<int> idSituacionRevista, Nullable<int> idFuerza, Nullable<int> idBaja)
-        {
-            var idActividadMilitarParameter = idActividadMilitar.HasValue ?
-                new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
-                new ObjectParameter("IdActividadMilitar", typeof(int));
+            var idEstudioParameter = idEstudio.HasValue ?
+                new ObjectParameter("IdEstudio", idEstudio) :
+                new ObjectParameter("IdEstudio", typeof(int));
     
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
                 new ObjectParameter("IdPersona", typeof(int));
     
-            var solicitoIngresoAnteriorParameter = solicitoIngresoAnterior.HasValue ?
-                new ObjectParameter("SolicitoIngresoAnterior", solicitoIngresoAnterior) :
-                new ObjectParameter("SolicitoIngresoAnterior", typeof(bool));
+            var tituloParameter = titulo != null ?
+                new ObjectParameter("Titulo", titulo) :
+                new ObjectParameter("Titulo", typeof(string));
     
-            var ingresoParameter = ingreso.HasValue ?
-                new ObjectParameter("Ingreso", ingreso) :
-                new ObjectParameter("Ingreso", typeof(bool));
+            var completoParameter = completo.HasValue ?
+                new ObjectParameter("Completo", completo) :
+                new ObjectParameter("Completo", typeof(bool));
     
-            var fechaIngresoParameter = fechaIngreso.HasValue ?
-                new ObjectParameter("FechaIngreso", fechaIngreso) :
-                new ObjectParameter("FechaIngreso", typeof(System.DateTime));
+            var idNiveldEstudioParameter = idNiveldEstudio.HasValue ?
+                new ObjectParameter("IdNiveldEstudio", idNiveldEstudio) :
+                new ObjectParameter("IdNiveldEstudio", typeof(int));
     
-            var fechaBajaParameter = fechaBaja.HasValue ?
-                new ObjectParameter("FechaBaja", fechaBaja) :
-                new ObjectParameter("FechaBaja", typeof(System.DateTime));
+            var idInstitutosParameter = idInstitutos.HasValue ?
+                new ObjectParameter("IdInstitutos", idInstitutos) :
+                new ObjectParameter("IdInstitutos", typeof(int));
     
-            var causaMotivoNoingresoParameter = causaMotivoNoingreso != null ?
-                new ObjectParameter("CausaMotivoNoingreso", causaMotivoNoingreso) :
-                new ObjectParameter("CausaMotivoNoingreso", typeof(string));
+            var promedioParameter = promedio.HasValue ?
+                new ObjectParameter("Promedio", promedio) :
+                new ObjectParameter("Promedio", typeof(double));
     
-            var motivoBajaParameter = motivoBaja != null ?
-                new ObjectParameter("MotivoBaja", motivoBaja) :
-                new ObjectParameter("MotivoBaja", typeof(string));
+            var cantidadMateriaAdeudadasParameter = cantidadMateriaAdeudadas.HasValue ?
+                new ObjectParameter("CantidadMateriaAdeudadas", cantidadMateriaAdeudadas) :
+                new ObjectParameter("CantidadMateriaAdeudadas", typeof(int));
     
-            var jerarquiaParameter = jerarquia != null ?
-                new ObjectParameter("Jerarquia", jerarquia) :
-                new ObjectParameter("Jerarquia", typeof(string));
+            var ultimoAnioCursadoParameter = ultimoAnioCursado.HasValue ?
+                new ObjectParameter("ultimoAnioCursado", ultimoAnioCursado) :
+                new ObjectParameter("ultimoAnioCursado", typeof(int));
     
-            var cargoParameter = cargo != null ?
-                new ObjectParameter("Cargo", cargo) :
-                new ObjectParameter("Cargo", typeof(string));
+            var nombreYPaisInstitutoParameter = nombreYPaisInstituto != null ?
+                new ObjectParameter("NombreYPaisInstituto", nombreYPaisInstituto) :
+                new ObjectParameter("NombreYPaisInstituto", typeof(string));
     
-            var destinoParameter = destino != null ?
-                new ObjectParameter("Destino", destino) :
-                new ObjectParameter("Destino", typeof(string));
-    
-            var idSituacionRevistaParameter = idSituacionRevista.HasValue ?
-                new ObjectParameter("IdSituacionRevista", idSituacionRevista) :
-                new ObjectParameter("IdSituacionRevista", typeof(int));
-    
-            var idFuerzaParameter = idFuerza.HasValue ?
-                new ObjectParameter("IdFuerza", idFuerza) :
-                new ObjectParameter("IdFuerza", typeof(int));
-    
-            var idBajaParameter = idBaja.HasValue ?
-                new ObjectParameter("IdBaja", idBaja) :
-                new ObjectParameter("IdBaja", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarIU", idActividadMilitarParameter, idPersonaParameter, solicitoIngresoAnteriorParameter, ingresoParameter, fechaIngresoParameter, fechaBajaParameter, causaMotivoNoingresoParameter, motivoBajaParameter, jerarquiaParameter, cargoParameter, destinoParameter, idSituacionRevistaParameter, idFuerzaParameter, idBajaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosIU", idEstudioParameter, idPersonaParameter, tituloParameter, completoParameter, idNiveldEstudioParameter, idInstitutosParameter, promedioParameter, cantidadMateriaAdeudadasParameter, ultimoAnioCursadoParameter, nombreYPaisInstitutoParameter);
         }
     
         public virtual int spIdiomasIU(Nullable<int> idPersonaIdioma, Nullable<int> idPersona, string codIdioma, Nullable<int> habla, Nullable<int> lee, Nullable<int> escribe)
@@ -610,6 +531,39 @@ namespace SINU.Models
                 new ObjectParameter("Escribe", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spIdiomasIU", idPersonaIdiomaParameter, idPersonaParameter, codIdiomaParameter, hablaParameter, leeParameter, escribeParameter);
+        }
+    
+        public virtual int spIngresaASeguridad(string uSUARIO, string grupo, string mr, string grado, string destino, string nombre, string apellido)
+        {
+            var uSUARIOParameter = uSUARIO != null ?
+                new ObjectParameter("USUARIO", uSUARIO) :
+                new ObjectParameter("USUARIO", typeof(string));
+    
+            var grupoParameter = grupo != null ?
+                new ObjectParameter("Grupo", grupo) :
+                new ObjectParameter("Grupo", typeof(string));
+    
+            var mrParameter = mr != null ?
+                new ObjectParameter("mr", mr) :
+                new ObjectParameter("mr", typeof(string));
+    
+            var gradoParameter = grado != null ?
+                new ObjectParameter("Grado", grado) :
+                new ObjectParameter("Grado", typeof(string));
+    
+            var destinoParameter = destino != null ?
+                new ObjectParameter("Destino", destino) :
+                new ObjectParameter("Destino", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spIngresaASeguridad", uSUARIOParameter, grupoParameter, mrParameter, gradoParameter, destinoParameter, nombreParameter, apellidoParameter);
         }
     
         public virtual int spSituacionOcupacionalIU(Nullable<int> idSituacionOcupacional, Nullable<int> idPersona, Nullable<int> idEstadoOcupacional, string ocupacionActual, string oficio, Nullable<int> aniosTrabajados, string domicilioLaboral)
@@ -643,6 +597,50 @@ namespace SINU.Models
                 new ObjectParameter("DomicilioLaboral", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spSituacionOcupacionalIU", idSituacionOcupacionalParameter, idPersonaParameter, idEstadoOcupacionalParameter, ocupacionActualParameter, oficioParameter, aniosTrabajadosParameter, domicilioLaboralParameter);
+        }
+    
+        public virtual int spTransaction()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spTransaction");
+        }
+    
+        public virtual ObjectResult<spValidarUsuario_Result> spValidarUsuario(string uSUARIO, string funcion)
+        {
+            var uSUARIOParameter = uSUARIO != null ?
+                new ObjectParameter("USUARIO", uSUARIO) :
+                new ObjectParameter("USUARIO", typeof(string));
+    
+            var funcionParameter = funcion != null ?
+                new ObjectParameter("Funcion", funcion) :
+                new ObjectParameter("Funcion", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spValidarUsuario_Result>("spValidarUsuario", uSUARIOParameter, funcionParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> Vaciar(string valoremail, Nullable<int> eliminandotabla)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            var eliminandotablaParameter = eliminandotabla.HasValue ?
+                new ObjectParameter("eliminandotabla", eliminandotabla) :
+                new ObjectParameter("eliminandotabla", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Vaciar", valoremailParameter, eliminandotablaParameter);
+        }
+    
+        public virtual int VaciarASPNETUser(string correoregistrado, Nullable<int> eliminar)
+        {
+            var correoregistradoParameter = correoregistrado != null ?
+                new ObjectParameter("correoregistrado", correoregistrado) :
+                new ObjectParameter("correoregistrado", typeof(string));
+    
+            var eliminarParameter = eliminar.HasValue ?
+                new ObjectParameter("eliminar", eliminar) :
+                new ObjectParameter("eliminar", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
         }
     }
 }

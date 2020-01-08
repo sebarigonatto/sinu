@@ -2,7 +2,7 @@
     $.widget("custom.combobox", {
         _create: function () {
             this.wrapper = $("<span>")
-                .addClass("custom-combobox")
+                .addClass("custom-combobox ")
                 .attr("id", this.element[0].id + '-D')
                 .insertAfter(this.element);
 
