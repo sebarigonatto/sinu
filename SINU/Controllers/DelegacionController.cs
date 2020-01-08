@@ -12,7 +12,7 @@ namespace SINU.Controllers
         SINUEntities db = new SINUEntities();
         // GET: Delegacion
         public ActionResult Index()
-        {
+        {// tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
             return View();
         }
 
