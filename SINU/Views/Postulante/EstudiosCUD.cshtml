@@ -41,7 +41,7 @@ new { id = "MyNewNameId" }))
                     <div class="form-group row ">
 
 
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
 
                             <div class="form-group">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nivel, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -83,7 +83,7 @@ new { id = "MyNewNameId" }))
                         </div>
 
 
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-2" })
 
@@ -140,23 +140,3 @@ new { id = "MyNewNameId" }))
             </div>
     </div>
 }
-
-
-
-
-
-
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/javascript">
-            //Si lallamada POST tuvo exito
-            function Exito(response, status, xhr) {
-                alert("success: " + response.success + " " + response.msg);
-            };
-
-            //Si lallamada POST tuvo error
-            function Falla(response) {
-                alert("Error occured.");
-            };
-        </script>
-    }*@

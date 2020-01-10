@@ -10,9 +10,8 @@ namespace SINU
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                          "~/Scripts/jquery-{version}.js",
-                         "~/Scripts/jquery.unobtrusive-ajax.min.js"
-                        //"~/Scripts/datatables.min.js"
-                        ));
+                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                         "~/Scripts/DataTables/datatables.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
                      "~/Scripts/jquery-ui-*",
@@ -34,7 +33,8 @@ namespace SINU
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/bootstrap-datepicker.min.js",
                       "~/Scripts/stacktable.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js"
+                      ));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -43,7 +43,9 @@ namespace SINU
                       "~/Content/themes/base/jquery-ui.css",
                       "~/Content/Conbobox.css",
                       "~/Content/bootstrap-datepicker.standalone.min.css",
+                      "~/Scripts/DataTables/datatables.css",
                       "~/Content/site.css"
+                      
                      ));
         }
     }

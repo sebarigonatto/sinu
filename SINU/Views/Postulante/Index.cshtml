@@ -1,8 +1,7 @@
 ﻿@{
-        ViewBag.Title = "Secuencias";
+    ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     @@media (min-width: 576px) {
         .rounded-nav {
@@ -44,7 +43,6 @@
         .lined .nav-link:hover {
             border: none;
             border-bottom: 3px solid #555;
-
         }
 
         .lined .nav-link.active {
@@ -93,25 +91,29 @@
         @* PERSONA DATOS BASICOS *@
         <li class="nav-item flex-sm-fill" id="5">
             <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">
-            Datos Basicos</a>
+                Datos Basicos
+            </a>
         </li>
 
         @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
         <li class="nav-item flex-sm-fill" id="9">
             <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-            Entrevista</a>
+                Entrevista
+            </a>
         </li>
 
         @* DOCUMENTACION *@
         <li class="nav-item flex-sm-fill" id="11">
             <a id="profile2-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-            Documentacion</a>
+                Documentacion
+            </a>
         </li>
 
         @* --------------------------------------- *@
         <li class="nav-item flex-sm-fill" id="15">
             <a id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">
-            Contact</a>
+                Contact
+            </a>
         </li>
     </ul>
 
@@ -147,15 +149,18 @@
                         <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom:0px solid;">
                             <li class="nav-item flex-sm-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#DatosPersonales" role="tab" aria-controls="DatosPersonales" aria-selected="true">
-                                Datos Personales</a>
+                                    Datos Personales
+                                </a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false">
-                                Domicilio</a>
+                                    Domicilio
+                                </a>
                             </li>
                             <li class="nav-item flex-sm-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Estudios" role="tab" aria-controls="Estudios" aria-selected="false">
-                                Estudios</a>
+                                    Estudios
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -207,7 +212,17 @@
     <!-- End lined tabs -->
 </div>
 
+@*////////////////////////////////////////////////////////////////////////////////////////////*@
+<!-- MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR -->
+<div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content   " id="ModalEstudioCuerpo">
 
+            @*--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------*@
+
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -215,9 +230,8 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-
+            
             (function () {
-
                 $("#TabGeneral li").each(function () {
 
                     if ($(this).attr('id') > @ViewBag.secuenciaactual) {
@@ -229,13 +243,13 @@
 
             })();
 
- /////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////////
             /*FUNCION DE LA VISTA DE DOMICILIOS */
 
             //variable para guardar el ID dropboxlist que se utilizara de acuerdo con el dropboxlist de provincia seleccionado
             //aplico el combobox al a los drodbox de la vista
             //la seleccion de un item segun el combobox llama a una funcion
-             //aplico el combobox al a los drodbox de la vista
+            //aplico el combobox al a los drodbox de la vista
             //la seleccion de un item segun el combobox llama a una funcion
             //aplico el combobox al a los drodbox de la vista
             //la seleccion de un item segun el combobox llama a una funcion
@@ -248,7 +262,7 @@
                     switch (Combo) {
                         case "ListaPaisR":
                         case "ListaPaisE":
-                            PAIS(Combo,1)
+                            PAIS(Combo, 1)
                             break;
                         case "ComboProvinciaR":
                         case "ComboProvinciaE":
@@ -270,13 +284,13 @@
             $("#ComboLocalidadR-I,#ComboLocalidadE-I").attr("placeholder", "Seleccione una Localidad");
 
             //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
-            PAIS("ListaPaisR",0);
+            PAIS("ListaPaisR", 0);
             PAIS("ListaPaisE", 0);
 
             //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
             function PAIS(Combo, PRI) {
                 var Comboelemt = (Combo == "ListaPaisR") ? ["#ProvinciaR,#LocalidadR", "#ComboProvinciaR-D,#ComboLocalidadR-D", "#CPR", "#ComboProvinciaR-I,#ComboLocalidadR-I"]
-                                                         : ["#ProvinciaE,#LocalidadE", "#ComboProvinciaE-D,#ComboLocalidadE-D", "#CPE", "#ComboProvinciaE-I,#ComboLocalidadE-I"];
+                    : ["#ProvinciaE,#LocalidadE", "#ComboProvinciaE-D,#ComboLocalidadE-D", "#CPE", "#ComboProvinciaE-I,#ComboLocalidadE-I"];
                 //alert(Comboelemt[0]+","+Comboelemt[1]+","+Comboelemt[2])
                 if ($("#" + Combo).val() != "AR") {
                     $(Comboelemt[0]).show();
@@ -287,14 +301,14 @@
                     $(Comboelemt[1]).show();
                     $(Comboelemt[2]).attr("readonly", true);
                 };
-                if(PRI == 1){
-                    $(Comboelemt[0]+","+Comboelemt[3]+","+Comboelemt[2]).val("");
+                if (PRI == 1) {
+                    $(Comboelemt[0] + "," + Comboelemt[3] + "," + Comboelemt[2]).val("");
                 }
             };
 
             //Funcion de Provincia que actualiza los combobox de localidad
             function PROVINCIA(Combo, ValC) {
-                var ComboLocalidad=(Combo == "ComboProvinciaR")?"#ComboLocalidadR":"#ComboLocalidadE";
+                var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
 
                 $(ComboLocalidad + "-I").val("");
                 $(ComboLocalidad).empty();
@@ -313,7 +327,7 @@
 
             //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
             function LOCALIDAD(Combo, ValC) {
-                var ComboCP = (Combo=="ComboLocalidadR") ? "#CPR" : "#CPE";
+                var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
                 //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
                 $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                     Localidad: ValC,
@@ -323,8 +337,203 @@
                         $(ComboCP).val(data.Text);
                     });
             };
+
+            //////////////////////////////////////////////////////////////////////////////
+            /* FUNCION DE LA VISTA DE ESTUDIOS */
+
+           //aplico DATATABLES a las tablas necesrias
+            TablaEST()
+
+            //index de la fila seleccionada de la tabla
+            var indexrow;
+
+            //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+            function TablaEST() {
+                var TEstudio = $('#TablaEstudio').DataTable({
+     
+                    responsive: {
+                        details: false
+                    },
+                    "autoWidth": true,
+                    select: 'single',
+                    "columnDefs": [{
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+                    }],
+                    "order": [[1, 'asc']]
+                });
+
+                //al seleccionar una fila
+                //guardo el index de la fila seleccionada
+                //se llama al modal y se le envia la id de estudio correspondiete
+                TEstudio.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+                        ModalEstudioCUD(id);
+                        $("#ModalEstudio").modal("show");
+                });
+                //para deselecciponar la fila que fue seleccionada
+                TEstudio.rows(indexrow).deselect();
+
+                $("#Estudios").resize();
+            };
+
+            //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+            $("#ModalEstudio").on('hidden.bs.modal', function () {
+
+                $("#Estudios").load('@Url.Action("Estudios","Postulante")', function () {
+                    TablaEST();
+                });
+            });
+
+           
+            
+
+            //se llama al modal para cargar un nuevo estudio
+            $("#NuevoEstudio").on("click", function () {
+                ModalEstudioCUD(null);
+            });
+
+
+
+            function ModalEstudioCUD(idrec) {
+
+                $('#ModalEstudioCuerpo').html("");
+
+                $.ajax({
+                    cache: false,
+                    asyn: true,
+                    type: "GET",
+                    url: '/Postulante/EstudiosCUD',
+                    data: { ID: idrec },
+                    //si no surge error al redireccionar se reemplaza el contenido de la div
+                    success: function (response) {
+                        $('#ModalEstudioCuerpo').html(response);
+
+                        //con esto  funciona la validacion del lado del cliente con la vista parcial
+                        $('#ModalEstudioCuerpo').removeData("validator");
+                        $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
+                        $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
+
+                        $(".combobox").combobox({
+                            select: function (event, ui) {
+
+                                //alert($(this).val() + " " + $(this).attr("id"));
+                                var Combo = $(this).attr("id");
+                                var ValC = $(ui.item).text();
+                                //alert(ValC);
+                                if (Combo != "ComboIdInstEST") {
+                                    ComboCascada(Combo, ValC);
+                                };
+                            }
+                        });
+
+                        $("#toggle").on("click", function () {
+                            $(".combobox").toggle();
+                        });
+                        $("#ComboJuriEST-I").attr("placeholder", "Seleccione una Juridiccion");
+                        $("#ComboLocaliEST-I").attr("placeholder", "Seleccione una Localidad");
+                        $("#ComboIdInstEST-I").attr("placeholder", "Seleccione una Instituto");
+
+                        //alert($("#IdInstEST").val() + " " + idrec);
+                        if ($("#IdInstEST").val() != "" && idrec != null) {
+                            //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
+                            $("#checkext").attr("checked", "checked");
+
+                        };
+
+                        //lamo la funcion INSTEXT y mando cero por que esla primera carga
+                        INSTEXT("#checkext", 0);
+
+                        //cada vez que el checkbox de instituto en el exterior cambia de valor
+                        $("#checkext").on("change", function () {
+                            INSTEXT(this, 1);
+                        });
+
+                        //ELIMINA EL ESTUDIO SELECCIONADO
+                        $("#EliminaEST").on("click", function () {
+                            $.getJSON('/Postulante/EliminaEST',
+                                { ID: idrec }, function (response) {
+                                    alert(response.success + " " + response.msg);
+                                });
+                        });
+                        $("#EliminaEST,#GuardarEST").on("click", function () {
+
+                            $("#ModalEstudio").modal("hide");
+                        });
+
+                    },
+
+                    //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
+                    statusCode: {
+                        500:
+                            function (context) {
+                                // alert("error de autorizacion");
+                                $('#ModalEstudioCuerpo').html(context.responseText);
+                            }
+                    }
+                });
+
+                
+            };
+
+            function INSTEXT(elemn, pri) {
+                if ($(elemn).is(":checked")) {
+                    $("#JuriEST,#IdInstEST").show();
+                    $("label[for='Provincia']").text("Pais");
+                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").hide();
+                    $("#ComboJuriEST-I,#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $("#ComboIdInstEST").val(0);
+                } else {
+                    $("#JuriEST,#IdInstEST").hide().val("");
+                    $("label[for='Provincia']").text("Provincia/Juridiccion");
+                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").show();
+                };
+                if (pri != 0) {
+                    $("#JuriEST,#IdInstEST").val("");
+
+                }
+
+            }
+
+            function ComboCascada(Combo, ValC) {
+                var OPC;
+                if (Combo == "ComboJuriEST") {
+                    OPC = 0;
+                    $("#ComboLocaliEST,#ComboIdInstEST").empty();
+                    $("#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                } else {
+                   valprov = $("#ComboJuriEST").val();
+                    ValC = valprov + "-" +  ValC;
+                    //alert(ValC);
+                    OPC = 1;
+                    $("#ComboIdInstEST").empty();
+                }
+
+                $.getJSON('/Postulante/DropCascadaEST', {
+                    opc: OPC, val: ValC
+                },
+                    function (data) {
+                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
+                        var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
+                        $.each(data, function () {
+
+                            $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
+                        });
+                    });
+            };
+
         });
- //////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
 
  /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm */

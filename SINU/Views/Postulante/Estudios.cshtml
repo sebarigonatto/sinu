@@ -1,16 +1,16 @@
 ﻿@model  SINU.ViewModels.EstudiosVM
 
-@{
+@*@{
     ViewBag.Title = "Estudios";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 
-<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css" />
+@*<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css" />*@
 <h1>Estudios</h1>
 
-    <div class="form-group">
+    <div class="form-group" id="divTABLE" >
 
-        <table id="TablaEstudio" class="table table-striped table-bordered nowrap" style="width:100%">
+        <table id="TablaEstudio" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
             <thead>
                 <tr>
                     <th hidden>IdEstudio</th>
@@ -50,21 +50,11 @@
             Agregar Estudio
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-            <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content   " id="ModalEstudioCuerpo">
-                  
-                    @*--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------*@
-
-                </div>
-            </div>
-        </div>
+       
     </div>
 
-@section Scripts {
+@*section Scripts {
 
-    <script type="text/javascript" src="~/Scripts/DataTables/datatables.js"></script>
 
     @Scripts.Render("~/bundles/jqueryval")
 
@@ -74,51 +64,65 @@
 
             
             //aplico DATATABLES a las tablas necesrias
-            var TEstudio = $('#TablaEstudio').DataTable({
-                responsive: {
-                    details: false
-                },
-                select: 'single',
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 0
-                } ],
-                "order": [[ 1, 'asc' ]]
-            });
+            TablaEST()
 
             //index de la fila seleccionada de la tabla
             var indexrow;
+            //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+
+            function TablaEST() {
+                var TEstudio = $('#TablaEstudio').DataTable({
+                    responsive: {
+                        details: false
+                    },
+                    "autoWidth": true,
+                    select: 'single',
+                    "columnDefs": [{
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": 0
+                    }],
+                    "order": [[1, 'asc']]
+                });
+
+                //al seleccionar una fila
+                //guardo el index de la fila seleccionada
+                //se llama al modal y se le envia la id de estudio correspondiete
+                TEstudio.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+                        ModalEstudioCUD(id);
+                        $("#ModalEstudio").modal("show");
+                });
+                //para deselecciponar la fila que fue seleccionada
+                TEstudio.rows(indexrow).deselect();
+
+
+            };
 
             //al cerrarse el modal la fila seleccionada es DESELECCIONADA
             $("#ModalEstudio").on('hidden.bs.modal', function () {
-                TEstudio.rows(indexrow).deselect();
-                $("#myPartialViewContainer").load('@Url.Action("Skits","KitSection")' + '?id=' + id + '&status=' + status);
-            
+
+                $("#Estudios").load('@Url.Action("Estudios","Postulante")', function () {
+                    TablaEST();
+                });
             });
 
-            //al seleccionar una fila 
-            //guardo el index de la fila seleccionada
-            //se llama al modal y se le envia la id de estudio correspondiete
-            TEstudio.on('select.dt', function (e, dt, type, index) {
-                indexrow = index;
-                var data = dt.rows(index).data();
-                var id = data[0][0];
-                ModalEstudioCUD(id);
-                $("#ModalEstudio").modal("show");
-            });
+           
+            
 
             //se llama al modal para cargar un nuevo estudio
             $("#NuevoEstudio").on("click", function () {
                 ModalEstudioCUD(null);
             });
 
-            
+
 
             function ModalEstudioCUD(idrec) {
-                
+
                 $('#ModalEstudioCuerpo').html("");
-                
+
                 $.ajax({
                     cache: false,
                     asyn: true,
@@ -128,7 +132,7 @@
                     //si no surge error al redireccionar se reemplaza el contenido de la div
                     success: function (response) {
                         $('#ModalEstudioCuerpo').html(response);
-                        
+
                         //con esto  funciona la validacion del lado del cliente con la vista parcial
                         $('#ModalEstudioCuerpo').removeData("validator");
                         $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
@@ -158,7 +162,7 @@
                         if ($("#IdInstEST").val() != "" && idrec != null) {
                             //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
                             $("#checkext").attr("checked", "checked");
-                            
+
                         };
 
                         //lamo la funcion INSTEXT y mando cero por que esla primera carga
@@ -166,7 +170,7 @@
 
                         //cada vez que el checkbox de instituto en el exterior cambia de valor
                         $("#checkext").on("change", function () {
-                            INSTEXT(this,1);
+                            INSTEXT(this, 1);
                         });
 
                         //ELIMINA EL ESTUDIO SELECCIONADO
@@ -177,7 +181,7 @@
                                 });
                         });
                         $("#EliminaEST,#GuardarEST").on("click", function () {
-                            
+
                             $("#ModalEstudio").modal("hide");
                         });
 
@@ -193,10 +197,10 @@
                     }
                 });
 
-               
+
             };
 
-            function INSTEXT(elemn,pri) {
+            function INSTEXT(elemn, pri) {
                 if ($(elemn).is(":checked")) {
                     $("#JuriEST,#IdInstEST").show();
                     $("label[for='Provincia']").text("Pais");
@@ -208,13 +212,13 @@
                     $("label[for='Provincia']").text("Provincia/Juridiccion");
                     $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").show();
                 };
-                if (pri !=0) {
+                if (pri != 0) {
                     $("#JuriEST,#IdInstEST").val("");
 
                 }
 
             }
-            
+
             function ComboCascada(Combo, ValC) {
                 var OPC;
                 if (Combo == "ComboJuriEST") {
@@ -222,22 +226,26 @@
                     $("#ComboLocaliEST,#ComboIdInstEST").empty();
                     $("#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
                 } else {
+                   valprov = $("#ComboJuriEST").val();
+                    ValC = valprov + "-" +  ValC;
+                    //alert(ValC);
                     OPC = 1;
                     $("#ComboIdInstEST").empty();
                 }
-                
+
                 $.getJSON('/Postulante/DropCascadaEST', {
-                    opc: OPC,val: ValC
+                    opc: OPC, val: ValC
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                         var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
                         $.each(data, function () {
-                            
-                            $(combocas).append("<option value="+ this.Value + " >" + this.Text + "</option>");
+
+                            $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                         });
                     });
-            }
+            };
+
 
         });
 
@@ -251,4 +259,4 @@
         };
 
     </script>
-}
+}*@

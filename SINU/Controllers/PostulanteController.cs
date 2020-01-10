@@ -402,8 +402,13 @@ namespace SINU.Controllers
             }
             else
             {
+                //recibo 2 parametroe en val uno pára privincia y otro es localidad
+                string[] valpro = val.Split('-');
+                string juri = valpro[0];
+                string loca = valpro[1];
                 var result = db.Institutos
-                                 .Where(m => m.Localidad == val)
+                                 .Where(m => m.Jurisdiccion == juri)
+                                 .Where(m=>m.Localidad== loca)
                                  .Select(m => new SelectListItem
                                  {
                                      Value = m.Id.ToString(),
