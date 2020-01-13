@@ -219,6 +219,7 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RESPONSE.cs" />
     <Compile Include="Models\DocPresentado.cs">
       <DependentUpon>SINUModel.tt</DependentUpon>
     </Compile>
