@@ -20,13 +20,34 @@ namespace SINU.Controllers
         SINUEntities db= new SINUEntities();
         public ActionResult Index() {
             string autorizacion = "201abe0636a5bf59e44159128323256d1ac62150";
+            //string consulta = @"<?xml version=""1.0"" encoding=""iso-8859-1""?>
+                                //<CLEANSING>
+                                //<ADDRESSES> 
+                                //    <ID>ARMADA01</ID>
+                                //        <PROVINCE>BUENOS AIRES</PROVINCE>
+                                //        <DISTRICT></DISTRICT>
+                                //        <CITY>MONTE GRANDE</CITY>
+                                //        <NEIGHBOURHOOD></NEIGHBOURHOOD>
+                                //        <ZIP>1842</ZIP>
+                                //        <DOOR></DOOR>
+                                //        <ADDRESS>SARMIENTO  00955  PB</ADDRESS>
+                                //        <STREET></STREET>
+                                //        <NUMBER></NUMBER>
+                                //</ADDRESSES> 
+                                //</CLEANSING>";
             string consulta = @"<?xml version=""1.0"" encoding=""iso-8859-1""?>
                                 <CLEANSING>
-                                <QUERY>
-                                        <TABLE>DISTRICT</TABLE>
-                                        <PROVINCE>JUJUY</PROVINCE>
-                                        <DISTRICT>%</DISTRICT>
-                                </QUERY>
+                                <ADDRESSES>                                     
+                                        <PROVINCE>CAPITAL FEDERAL</PROVINCE>
+                                        <DISTRICT>CAPITAL FEDERAL</DISTRICT>
+                                        <CITY>CIUDAD AUTONOMA BUENOS AIRES</CITY>
+                                        <NEIGHBOURHOOD></NEIGHBOURHOOD>
+                                        <ZIP></ZIP>
+                                        <DOOR></DOOR>
+                                        <ADDRESS></ADDRESS>
+                                        <STREET>CARACAS</STREET>
+                                        <NUMBER>87</NUMBER>
+                                </ADDRESSES> 
                                 </CLEANSING>";
             String respuesta;
            
