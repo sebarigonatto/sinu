@@ -222,6 +222,7 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RESPONSE.cs" />
     <Compile Include="Models\DocPresentado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
