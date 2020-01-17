@@ -1,0 +1,194 @@
+﻿@model  IEnumerable<SINU.Models.vPersona_Idioma>
+
+@*@{
+    ViewBag.Title = "Idiomas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+
+<h1>Idiomas</h1>
+
+<div class="form-group" id="divTABLE">
+
+    <table id="TablaIdioma" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>IdPersonaIdioma</th>
+                <th>@Html.DisplayNameFor(m => m.Idioma)</th>
+                <th>@Html.DisplayNameFor(m => m.NivelHabla)</th>
+                <th>@Html.DisplayNameFor(m => m.NivelEscribe)</th>
+                <th>@Html.DisplayNameFor(m => m.NivelLee)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersonaIdioma)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Idioma)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NivelHabla)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NivelLee)</td>
+
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalIdioma" id="NuevoIdioma">
+        Agregar Idioma
+    </button>
+
+
+</div>
+
+<!-- MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR -->
+@*<div class="modal fade " id="ModalIdioma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content" id="ModalIdiomaCuerpo">
+            <h1>asdad</h1>
+            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+
+        </div>
+    </div>
+</div>*@
+
+@*@section Scripts {
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                //aplico DATATABLES a las tablas necesrias
+                TablaIDIO()
+
+                //index de la fila seleccionada de la tabla
+                var indexrow;
+
+                //se llama al modal para cargar un nuevo estudio
+                $("#NuevoIdioma").on("click", function () {
+                    //alert("modal nuevo estudio!!!");
+                    ModalIdiomaCUD(null);
+                });
+
+                //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+                function TablaIDIO() {
+
+                    var TIdioma = $('#TablaIdioma').DataTable({
+
+                        responsive: {
+                            details: false
+                        },
+                        "autoWidth": true,
+                        select: 'single',
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    });
+
+                    //al seleccionar una fila
+                    //guardo el index de la fila seleccionada
+                    //se llama al modal y se le envia la id de estudio correspondiete
+                    TIdioma.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+
+                        ModalIdiomaCUD(id);
+                        $("#ModalIdioma").modal("show");
+                    });
+            
+                    //para deselecciponar la fila que fue seleccionada
+                    TIdioma.rows(indexrow).deselect();
+
+                };
+
+                //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+                //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
+                $("#ModalIdioma").on('hidden.bs.modal', function () {
+
+                    $("#Estudios").load('@Url.Action("Idioma","Postulante")', function () {
+
+                        //se llama al modal para cargar un nuevo estudio
+                        $("#NuevoIdioma").on("click", function () {
+                            //alert("modal nuevo estudio!!!");
+                            ModalCargaCUD(null);
+                        });
+
+                          TIdioma.rows(indexrow).deselect();
+                        //aplico datatable a la tabla de estudio
+
+                    });
+                     TablaIDIO();
+                });
+
+                //funcion que carga el modal de estudio
+                //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
+                function ModalIdiomaCUD(idrec) {
+
+                    //elimino el contenido html
+                    $('#ModalIdiomaCuerpo').html("");
+
+                    $.ajax({
+                        cache: false,
+                        asyn: true,
+                        type: "GET",
+                        url: '/Postulante/IdiomaCUD',
+                        data: { ID: idrec },
+                        //si no surge error al redireccionar se reemplaza el contenido de la div
+                        success: function (response) {
+                            $('#ModalIdiomaCuerpo').html(response);
+
+                            //con esto  funciona la validacion del lado del cliente con la vista parcial
+                            $('#ModalIdiomaCuerpo').removeData("validator");
+                            $('#ModalIdiomaCuerpo').removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse('#ModalIdiomaCuerpo');
+
+                            //se aplicael selecpicker a alos conbo/s con autocomplete
+                            var comboiddio = $("#ComboIdioma").selectpicker({
+                                liveSearch: true,
+                                size: 6,
+                                width: "40vh"
+                            });
+                            comboiddio.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                                alert($(this).attr("id") + " - " + clickedIndex + " - " + isSelected + " - " + previousValue);
+                                alert($(this).val());
+                            });
+
+                            //ELIMINA EL ESTUDIO SELECCIONADO
+                            $("#EliminaIDIO").on("click", function () {
+                                $.getJSON('/Postulante/EliminaIDIO',
+                                    { ID: idrec }, function (response) {
+                                        alert(response.success + " - " + response.msg);
+                                    });
+                            });
+
+                            $("#EliminaIDIO,#GuardarIDIO").on("click", function () {
+                                $("#ModalIdioma").modal("hide");
+                            });
+                        },
+
+                        //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
+                        statusCode: {
+                            500:
+                                function (context) {
+                                    $('#ModaldiomaCuerpo').html(context.responseText);
+                                }
+                        }
+                    });
+
+                };
+            });
+
+    </script>
+}
+*@

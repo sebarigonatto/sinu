@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SINU.Models
@@ -53,7 +52,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         public string CUIL { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")] 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public Nullable<int> edad { get; set; }
         public string IdEstadoCivil { get; set; }

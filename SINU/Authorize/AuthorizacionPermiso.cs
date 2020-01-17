@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SINU.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using SINU.Models;
 
 namespace SINU.Authorize
 {

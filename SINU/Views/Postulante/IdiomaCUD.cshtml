@@ -1,0 +1,94 @@
+﻿@model SINU.ViewModels.IdiomasVM
+
+
+
+@using (Ajax.BeginForm("IdiomaCUD", "Postulante", null,
+new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "Exito(data,status,xhr)",
+    OnFailure = "Falla",
+//LoadingElementId = "carga",
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
+new { id = "BeginFormIdiomaCUD" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">
+            IDIOMA
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body  ui-front" style="overflow:auto;height:30rem;">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+
+                <div class="form-group row ">
+
+                    <div class="col-md-12">
+
+                        @Html.HiddenFor(model => model.VPersona_IdiomaIdVM.IdPersona)
+                        @Html.HiddenFor(model => model.VPersona_IdiomaIdVM.IdPersonaIdioma)
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VPersona_IdiomaIdVM.Idioma, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.CodIdioma, new SelectList(Model.Sp_VIdiomas_VM, "CODIGO", "DESCRIPCION"), "Seleccione un Idioma", htmlAttributes: new { @class = "form-control", @id = "ComboIdioma" })
+                                @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.CodIdioma, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.VPersona_IdiomaIdVM.NivelHabla, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Habla, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione una Nivel", htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Habla, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.VPersona_IdiomaIdVM.NivelEscribe, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Escribe, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione una Nivel", htmlAttributes: new { @class = "form-control " })
+                                @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Escribe, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.VPersona_IdiomaIdVM.NivelLee, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Lee, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione una Nivel", htmlAttributes: new { @class = "form-control " })
+                                @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Lee, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <hr />
+            <div class="float-md-right">
+                <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
+                @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
+                @if (Model.VPersona_IdiomaIdVM.IdPersonaIdioma != 0)
+                {
+                    <input type="button" value="Eliminar" class="btn btn-danger " id="EliminaIDIO" />
+                }
+                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarIDIO" />
+
+            </div>
+        </div>
+    </div>
+}
+
+

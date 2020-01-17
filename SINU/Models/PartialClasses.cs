@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using SINU.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SINU.Models
 {

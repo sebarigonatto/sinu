@@ -1,9 +1,7 @@
-﻿using System;
+﻿using SINU.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Web.Mvc;
-using SINU.Models;
 
 namespace SINU.ViewModels
 {
@@ -44,7 +42,7 @@ namespace SINU.ViewModels
     public class EstudiosVM
     {
         public IList<VPersona_Estudio> vPersona_EstudioListVM { get; set; }
-        public VPersona_Estudio vPersona_EstudioIdVM { get; set; } 
+        public VPersona_Estudio vPersona_EstudioIdVM { get; set; }
         [DisplayName("Nivel")]
         public List<NiveldEstudio> NivelEstudioVM { get; set; }
         [DisplayName("Provincia/Juridiccion")]
@@ -53,6 +51,14 @@ namespace SINU.ViewModels
         public List<string> Localidad { get; set; }
         [DisplayName("Instituto")]
         public List<SelectListItem> InstitutoVM { get; set; }
-     
+
+    }
+
+    public class IdiomasVM
+    {
+        public vPersona_Idioma VPersona_IdiomaIdVM { get; set; }
+        public List<NivelIdioma> NivelIdiomaVM { get; set; }
+        public List<sp_vIdiomas_Result> Sp_VIdiomas_VM { get; set; }
+
     }
 }

@@ -202,203 +202,215 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActividadMilitar.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Antropometria.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Aprender01_Result.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUsers.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Baja.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Configuracion.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfiguracionAdmin.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocPresentado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domicilio.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstablecimientoRindeExamen.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstadoOcupacional.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estudio.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Etapa.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Familiares.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fuerza.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inscripcion.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InscripcionEtapaEstado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institucion.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Institutos.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Metadatos.cs" />
     <Compile Include="Models\NiveldEstudio.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NivelIdioma.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OficinasYDelegaciones.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\PeriodosInscripciones.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Persona.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PersonaIdioma.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Postulante.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PostulanteViaje.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Preferencia.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Secuencia_EtapaEstado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sexo.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUModel.Context.cs">
+    <Compile Include="Models\SINUDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUModel.Context.tt</DependentUpon>
+      <DependentUpon>SINUDB.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUModel.cs">
+    <Compile Include="Models\SINUDB.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SINUModel.Designer.cs">
+    <Compile Include="Models\SINUDB.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SINUModel.edmx</DependentUpon>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionOcupacional.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SituacionRevista.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_vIdiomas_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_vPaises_Result.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoDocPresentado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TipoNacionalidad.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vConfiguracionAdmin.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEstCivil.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vParentesco.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPeriodosInscrip.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_ActividadMilitar.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPersona_Antropometria.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_DatosBasicos.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_DatosPer.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Domicilio.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VPersona_Estudio.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Familiar.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_Idioma.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPersona_Purificar.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_SituacionOcupacional.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vProvincia_Depto_Localidad.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vRELIGION.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSecuencia_EtapaEstado.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos_Usuarios.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Usuarios.cs">
-      <DependentUpon>SINUModel.tt</DependentUpon>
+      <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -423,6 +435,168 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-select.css" />
+    <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Models\SINUDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+      <LastGenOutput>SINUDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SINUDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+      <LastGenOutput>SINUDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\bootstrap-select.js" />
+    <Content Include="Scripts\bootstrap-select.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\i18n\defaults-am_ET.js" />
+    <Content Include="Scripts\i18n\defaults-am_ET.min.js" />
+    <Content Include="Scripts\i18n\defaults-ar_AR.js" />
+    <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
+    <Content Include="Scripts\i18n\defaults-bg_BG.js" />
+    <Content Include="Scripts\i18n\defaults-bg_BG.min.js" />
+    <Content Include="Scripts\i18n\defaults-cs_CZ.js" />
+    <Content Include="Scripts\i18n\defaults-cs_CZ.min.js" />
+    <Content Include="Scripts\i18n\defaults-da_DK.js" />
+    <Content Include="Scripts\i18n\defaults-da_DK.min.js" />
+    <Content Include="Scripts\i18n\defaults-de_DE.js" />
+    <Content Include="Scripts\i18n\defaults-de_DE.min.js" />
+    <Content Include="Scripts\i18n\defaults-en_US.js" />
+    <Content Include="Scripts\i18n\defaults-en_US.min.js" />
+    <Content Include="Scripts\i18n\defaults-es_CL.js" />
+    <Content Include="Scripts\i18n\defaults-es_CL.min.js" />
+    <Content Include="Scripts\i18n\defaults-es_ES.js" />
+    <Content Include="Scripts\i18n\defaults-es_ES.min.js" />
+    <Content Include="Scripts\i18n\defaults-et_EE.js" />
+    <Content Include="Scripts\i18n\defaults-et_EE.min.js" />
+    <Content Include="Scripts\i18n\defaults-eu.js" />
+    <Content Include="Scripts\i18n\defaults-eu.min.js" />
+    <Content Include="Scripts\i18n\defaults-fa_IR.js" />
+    <Content Include="Scripts\i18n\defaults-fa_IR.min.js" />
+    <Content Include="Scripts\i18n\defaults-fi_FI.js" />
+    <Content Include="Scripts\i18n\defaults-fi_FI.min.js" />
+    <Content Include="Scripts\i18n\defaults-fr_FR.js" />
+    <Content Include="Scripts\i18n\defaults-fr_FR.min.js" />
+    <Content Include="Scripts\i18n\defaults-hr_HR.js" />
+    <Content Include="Scripts\i18n\defaults-hr_HR.min.js" />
+    <Content Include="Scripts\i18n\defaults-hu_HU.js" />
+    <Content Include="Scripts\i18n\defaults-hu_HU.min.js" />
+    <Content Include="Scripts\i18n\defaults-id_ID.js" />
+    <Content Include="Scripts\i18n\defaults-id_ID.min.js" />
+    <Content Include="Scripts\i18n\defaults-it_IT.js" />
+    <Content Include="Scripts\i18n\defaults-it_IT.min.js" />
+    <Content Include="Scripts\i18n\defaults-ja_JP.js" />
+    <Content Include="Scripts\i18n\defaults-ja_JP.min.js" />
+    <Content Include="Scripts\i18n\defaults-kh_KM.js" />
+    <Content Include="Scripts\i18n\defaults-kh_KM.min.js" />
+    <Content Include="Scripts\i18n\defaults-ko_KR.js" />
+    <Content Include="Scripts\i18n\defaults-ko_KR.min.js" />
+    <Content Include="Scripts\i18n\defaults-lt_LT.js" />
+    <Content Include="Scripts\i18n\defaults-lt_LT.min.js" />
+    <Content Include="Scripts\i18n\defaults-lv_LV.js" />
+    <Content Include="Scripts\i18n\defaults-lv_LV.min.js" />
+    <Content Include="Scripts\i18n\defaults-nb_NO.js" />
+    <Content Include="Scripts\i18n\defaults-nb_NO.min.js" />
+    <Content Include="Scripts\i18n\defaults-nl_NL.js" />
+    <Content Include="Scripts\i18n\defaults-nl_NL.min.js" />
+    <Content Include="Scripts\i18n\defaults-pl_PL.js" />
+    <Content Include="Scripts\i18n\defaults-pl_PL.min.js" />
+    <Content Include="Scripts\i18n\defaults-pt_BR.js" />
+    <Content Include="Scripts\i18n\defaults-pt_BR.min.js" />
+    <Content Include="Scripts\i18n\defaults-pt_PT.js" />
+    <Content Include="Scripts\i18n\defaults-pt_PT.min.js" />
+    <Content Include="Scripts\i18n\defaults-ro_RO.js" />
+    <Content Include="Scripts\i18n\defaults-ro_RO.min.js" />
+    <Content Include="Scripts\i18n\defaults-ru_RU.js" />
+    <Content Include="Scripts\i18n\defaults-ru_RU.min.js" />
+    <Content Include="Scripts\i18n\defaults-sk_SK.js" />
+    <Content Include="Scripts\i18n\defaults-sk_SK.min.js" />
+    <Content Include="Scripts\i18n\defaults-sl_SI.js" />
+    <Content Include="Scripts\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Scripts\i18n\defaults-sv_SE.js" />
+    <Content Include="Scripts\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Scripts\i18n\defaults-tr_TR.js" />
+    <Content Include="Scripts\i18n\defaults-tr_TR.min.js" />
+    <Content Include="Scripts\i18n\defaults-ua_UA.js" />
+    <Content Include="Scripts\i18n\defaults-ua_UA.min.js" />
+    <Content Include="Scripts\i18n\defaults-vi_VN.js" />
+    <Content Include="Scripts\i18n\defaults-vi_VN.min.js" />
+    <Content Include="Scripts\i18n\defaults-zh_CN.js" />
+    <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
+    <Content Include="Scripts\i18n\defaults-zh_TW.js" />
+    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\umd\popper.js" />
     <Content Include="wsCPA.asmx" />
     <Content Include="Content\bootstrap-datepicker.standalone.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -432,48 +606,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\stacktable.css" />
-    <Content Include="Content\Conbobox.css" />
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_444444_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_555555_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_777620_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_777777_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_ffffff_256x240.png" />
-    <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\jquery-ui.min.css" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\theme.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Documentacion\Error sucedido por enviar desde ara a otro correo no ara.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -493,16 +625,6 @@
     <Content Include="Documentacion\otro.docx" />
     <Content Include="Imagenes\2.png" />
     <Content Include="Imagenes\6.png" />
-    <Content Include="Models\SINUModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUModel.edmx</DependentUpon>
-      <LastGenOutput>SINUModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SINUModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SINUModel.edmx</DependentUpon>
-      <LastGenOutput>SINUModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Plantillas\PlantillaMailConfirmacion.cshtml" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -511,14 +633,15 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
-    <EntityDeploy Include="Models\SINUModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SINUModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\SINUModel.edmx.diagram">
-      <DependentUpon>SINUModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
+    <EntityDeploy Include="Models\SINUDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SINUDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SINUDB.edmx.diagram">
+      <DependentUpon>SINUDB.edmx</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -671,14 +794,6 @@
     <Content Include="Scripts\DataTables\Select-1.3.1\js\select.jqueryui.min.js" />
     <Content Include="Scripts\DataTables\Select-1.3.1\js\select.semanticui.js" />
     <Content Include="Scripts\DataTables\Select-1.3.1\js\select.semanticui.min.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -689,15 +804,57 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\i18n\defaults-zh_TW.js.map" />
+    <Content Include="Scripts\i18n\defaults-zh_CN.js.map" />
+    <Content Include="Scripts\i18n\defaults-vi_VN.js.map" />
+    <Content Include="Scripts\i18n\defaults-ua_UA.js.map" />
+    <Content Include="Scripts\i18n\defaults-tr_TR.js.map" />
+    <Content Include="Scripts\i18n\defaults-sv_SE.js.map" />
+    <Content Include="Scripts\i18n\defaults-sl_SI.js.map" />
+    <Content Include="Scripts\i18n\defaults-sk_SK.js.map" />
+    <Content Include="Scripts\i18n\defaults-ru_RU.js.map" />
+    <Content Include="Scripts\i18n\defaults-ro_RO.js.map" />
+    <Content Include="Scripts\i18n\defaults-pt_PT.js.map" />
+    <Content Include="Scripts\i18n\defaults-pt_BR.js.map" />
+    <Content Include="Scripts\i18n\defaults-pl_PL.js.map" />
+    <Content Include="Scripts\i18n\defaults-nl_NL.js.map" />
+    <Content Include="Scripts\i18n\defaults-nb_NO.js.map" />
+    <Content Include="Scripts\i18n\defaults-lv_LV.js.map" />
+    <Content Include="Scripts\i18n\defaults-lt_LT.js.map" />
+    <Content Include="Scripts\i18n\defaults-ko_KR.js.map" />
+    <Content Include="Scripts\i18n\defaults-kh_KM.js.map" />
+    <Content Include="Scripts\i18n\defaults-ja_JP.js.map" />
+    <Content Include="Scripts\i18n\defaults-it_IT.js.map" />
+    <Content Include="Scripts\i18n\defaults-id_ID.js.map" />
+    <Content Include="Scripts\i18n\defaults-hu_HU.js.map" />
+    <Content Include="Scripts\i18n\defaults-hr_HR.js.map" />
+    <Content Include="Scripts\i18n\defaults-fr_FR.js.map" />
+    <Content Include="Scripts\i18n\defaults-fi_FI.js.map" />
+    <Content Include="Scripts\i18n\defaults-fa_IR.js.map" />
+    <Content Include="Scripts\i18n\defaults-eu.js.map" />
+    <Content Include="Scripts\i18n\defaults-et_EE.js.map" />
+    <Content Include="Scripts\i18n\defaults-es_ES.js.map" />
+    <Content Include="Scripts\i18n\defaults-es_CL.js.map" />
+    <Content Include="Scripts\i18n\defaults-en_US.js.map" />
+    <Content Include="Scripts\i18n\defaults-de_DE.js.map" />
+    <Content Include="Scripts\i18n\defaults-da_DK.js.map" />
+    <Content Include="Scripts\i18n\defaults-cs_CZ.js.map" />
+    <Content Include="Scripts\i18n\defaults-bg_BG.js.map" />
+    <Content Include="Scripts\i18n\defaults-ar_AR.js.map" />
+    <Content Include="Scripts\i18n\defaults-am_ET.js.map" />
+    <Content Include="Scripts\bootstrap-select.min.js.map" />
+    <Content Include="Scripts\bootstrap-select.js.map" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\JQuery-Conbobox.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.js" />
-    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -705,10 +862,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -757,15 +910,6 @@
     <Content Include="Views\TipoNacionalidads\Details.cshtml" />
     <Content Include="Views\TipoNacionalidads\Edit.cshtml" />
     <Content Include="Views\TipoNacionalidads\Index.cshtml" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
     <Content Include="Views\Postulante\DatosBasicos.cshtml" />
@@ -777,6 +921,18 @@
     <Content Include="Views\Postulante\Domicilio.cshtml" />
     <Content Include="Views\Postulante\Estudios.cshtml" />
     <Content Include="Views\Postulante\EstudiosCUD.cshtml" />
+    <Content Include="Views\Postulante\Idiomas.cshtml" />
+    <Content Include="Views\Postulante\IdiomaCUD.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -804,9 +960,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
@@ -824,6 +977,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

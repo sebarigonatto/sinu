@@ -3,17 +3,13 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RazorEngine;
 using RazorEngine.Configuration;
+using RazorEngine.Templating;
 using SINU.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Globalization;
-using System.Security.Claims;
-using RazorEngine.Templating;
-using System.Collections.Generic;
-using System.Web.Routing;
 
 namespace SINU.Controllers
 {
@@ -103,9 +99,9 @@ namespace SINU.Controllers
                         case SignInStatus.Success:
                             //VER  redigir al controlador segun el tipo de usuario o CodGrupo ej /Postulante/index /Delegacion/index.. /Administracion/index ../Consultor/index
                             //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion
-                             return RedirectToAction("Index",db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg=>sg.codUsuario==model.Email).codGrupo.TrimEnd());
-                            //el codigo anterior reemplaza al comentado                       
-                          // return RedirectToAction("Index","Postulante");
+                            return RedirectToAction("Index", db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd());
+                        //el codigo anterior reemplaza al comentado                       
+                        // return RedirectToAction("Index","Postulante");
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
                             var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");
@@ -173,13 +169,13 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Register(int idInstitucion = 0)
         {
-            idInstitucion = (idInstitucion == 0) ? 1:idInstitucion;
+            idInstitucion = (idInstitucion == 0) ? 1 : idInstitucion;
             //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
             ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
 
             if (idInstitucion != 0)
             {
-                ViewBag.Inst = (idInstitucion == 1) ? "--": db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+                ViewBag.Inst = (idInstitucion == 1) ? "--" : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
             };
 
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
@@ -205,10 +201,10 @@ namespace SINU.Controllers
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 
-                    if (result.Succeeded) 
+                    if (result.Succeeded)
                     {
                         //crea una persona, un postulante y una inscripcion
-                        var r = db.spCreaPostulante(model.Apellido,model.Nombre,model.DNI,model.Email,model.IdInstituto,model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
 
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -255,7 +251,7 @@ namespace SINU.Controllers
                 catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
                 {
                     HttpContext.Session["funcion"] = ex.Message;
-                    
+
                     return View("Error");
                 }
 
@@ -282,7 +278,7 @@ namespace SINU.Controllers
                 if (result.Succeeded)
                 {
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
-                    var r = db.spIngresaASeguridad( UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
+                    var r = db.spIngresaASeguridad(UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SINU.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using SINU.Models;
 
 namespace SINU.Controllers
 {
@@ -18,11 +15,11 @@ namespace SINU.Controllers
 
         // GET: Delegacion/Details/5
         public ActionResult Details()
-        { 
+        {
             //cargo todos los registros que ayan valido la cuenta, y esten en la carga de los datos basicos
             var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5).ToList();
             return PartialView(cargadatosbasicos);
-           
+
         }
 
         // GET: Delegacion/Create

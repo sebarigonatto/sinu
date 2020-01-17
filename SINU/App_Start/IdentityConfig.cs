@@ -1,23 +1,19 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-
 using SINU.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
-using System.IO;
 
 namespace SINU
 {
@@ -151,7 +147,7 @@ namespace SINU
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
             SINUEntities db = new SINUEntities();
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));

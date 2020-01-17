@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SINU.Models
@@ -96,7 +96,7 @@ namespace SINU.Models
         public string DNI { get; set; }
 
         public DateTime FeachaToken { get; set; }
-        
+
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse no sera necesario mostra su valor en la vista Register.cshtml
         //sera requerido al momento de guardar su preferencia en el controlador AccountController.cs
         public int IdInstituto { get; set; }

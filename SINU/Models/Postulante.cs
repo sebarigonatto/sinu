@@ -27,6 +27,7 @@ namespace SINU.Models
         public string ComoSeEntero { get; set; }
         public System.DateTime FechaRegistro { get; set; }
     
+        public virtual Antropometria Antropometria { get; set; }
         public virtual AspNetUsers AspNetUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Familiares> Familiares { get; set; }

@@ -162,6 +162,11 @@
                                     Estudios
                                 </a>
                             </li>
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Idioma" role="tab" aria-controls="Idioma" aria-selected="false">
+                                    Idioma
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.col-md-4 -->
@@ -181,12 +186,11 @@
                             <div class="tab-pane fade" id="Estudios" role="tabpanel" aria-labelledby="Estudios-tab">
                                 @Html.Action("Estudios", "Postulante")
                             </div>
-
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                <h2>Contact</h2>
-                                <p>Lorem 123123ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
-
+                            @* VISTA DE ESTUDIOS *@
+                            <div class="tab-pane fade" id="Idioma" role="tabpanel" aria-labelledby="Idioma-tab">
+                                @Html.Action("Idiomas", "Postulante")
                             </div>
+                            
                         </div>
                     </div>
                     <!-- /.col-md-8 -->
@@ -211,14 +215,23 @@
     </div>
     <!-- End lined tabs -->
 </div>
-
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
-<!-- MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR -->
+ @*MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@ 
 <div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
         <div class="modal-content   " id="ModalEstudioCuerpo">
 
-            @*--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------*@
+            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="ModalIdioma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content" id="ModalIdiomaCuerpo">
+            <h1>asdad</h1>
+            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
         </div>
     </div>
@@ -230,14 +243,13 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            
             (function () {
                 $("#TabGeneral li").each(function () {
 
                     if ($(this).attr('id') > @ViewBag.secuenciaactual) {
 
                         //$(this).addClass('Tabdesabilitado').css("background-color","red");
-
+            
                     };
                 });
 
@@ -246,52 +258,48 @@
             /////////////////////////////////////////////////////////////////////////////////
             /*FUNCION DE LA VISTA DE DOMICILIOS */
 
-            //variable para guardar el ID dropboxlist que se utilizara de acuerdo con el dropboxlist de provincia seleccionado
-            //aplico el combobox al a los drodbox de la vista
-            //la seleccion de un item segun el combobox llama a una funcion
-            //aplico el combobox al a los drodbox de la vista
-            //la seleccion de un item segun el combobox llama a una funcion
-            //aplico el combobox al a los drodbox de la vista
-            //la seleccion de un item segun el combobox llama a una funcion
-            $(".combobox").combobox({
-                select: function (event, ui) {
-                    //alert($(ui.item).val() + " " + $(this).attr("id"));
-                    var Combo = $(this).attr("id");
-                    var ValC = $(this).val();
-
-                    switch (Combo) {
+           //se aplicael selecpicker a alos conbo/s con autocomplete
+            /* https://developer.snapappointments.com/bootstrap-select/ */
+                $(".combobox").selectpicker({
+                    liveSearch: true,
+                    size: 6,
+                    width: "17rem",
+                    liveSearchPlaceholder: "Ingrese su busqueda",
+                    liveSearchStyle: 'contains',//'startsWith'
+                    noneResultsText:'No se Encuantran Resultados'
+                });
+           
+            $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                comboid = $(this).attr("id");
+                //alert(comboid);
+                switch (comboid) {
                         case "ListaPaisR":
                         case "ListaPaisE":
-                            PAIS(Combo, 1)
+                            PAIS(comboid, 1)
                             break;
                         case "ComboProvinciaR":
                         case "ComboProvinciaE":
-                            PROVINCIA(Combo, ValC);
+                            PROVINCIA(comboid);
                             break;
                         case "ComboLocalidadR":
                         case "ComboLocalidadE":
-                            LOCALIDAD(Combo, ValC);
+                            LOCALIDAD(comboid);
                             break;
                         default:
-                    }
                 }
             });
-            $("#toggle").on("click", function () {
-                $(".combobox").toggle();
-            });
-
-            $("#ComboProvinciaR-I,#ComboProvinciaE-I").attr("placeholder", "Seleccione una Provincia");
-            $("#ComboLocalidadR-I,#ComboLocalidadE-I").attr("placeholder", "Seleccione una Localidad");
 
             //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
             PAIS("ListaPaisR", 0);
             PAIS("ListaPaisE", 0);
 
-            //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
+        
+
+            ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
             function PAIS(Combo, PRI) {
-                var Comboelemt = (Combo == "ListaPaisR") ? ["#ProvinciaR,#LocalidadR", "#ComboProvinciaR-D,#ComboLocalidadR-D", "#CPR", "#ComboProvinciaR-I,#ComboLocalidadR-I"]
-                    : ["#ProvinciaE,#LocalidadE", "#ComboProvinciaE-D,#ComboLocalidadE-D", "#CPE", "#ComboProvinciaE-I,#ComboLocalidadE-I"];
-                //alert(Comboelemt[0]+","+Comboelemt[1]+","+Comboelemt[2])
+                var Comboelemt = (Combo == "ListaPaisR") ? [".Real", ".RealAR", "#CPR"]
+                                                         : [".Eventual", ".EventualAR", "#CPE"];
+                //alert($("#" + Combo).val());
                 if ($("#" + Combo).val() != "AR") {
                     $(Comboelemt[0]).show();
                     $(Comboelemt[1]).hide();
@@ -302,19 +310,21 @@
                     $(Comboelemt[2]).attr("readonly", true);
                 };
                 if (PRI == 1) {
-                    $(Comboelemt[0] + "," + Comboelemt[3] + "," + Comboelemt[2]).val("");
+                    $(Comboelemt[0] + "," + Comboelemt[2]).val("");
+                    $('.selectpicker').selectpicker('title', '');
                 }
             };
 
             //Funcion de Provincia que actualiza los combobox de localidad
-            function PROVINCIA(Combo, ValC) {
+            function PROVINCIA(Combo) {
+              
+                var ValP = $("#" + Combo).val();
+                //alert(Combo + " " + ValP);
                 var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
-
-                $(ComboLocalidad + "-I").val("");
                 $(ComboLocalidad).empty();
                 //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
                 $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-                    Provincia: ValC,
+                    Provincia: ValP,
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
@@ -322,35 +332,46 @@
                             $(ComboLocalidad).append('<option value=' +
                                 this.Value + '>' + this.Text + '</option>');
                         });
+                        //para actualizar el combobox
+                        $(ComboLocalidad).selectpicker('refresh');
                     });
             };
 
             //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
-            function LOCALIDAD(Combo, ValC) {
+            function LOCALIDAD(Combo) {
                 var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
                 //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
+                var valCP = $("#"+comboid).val();
                 $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-                    Localidad: ValC,
+                    Localidad: valCP,
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
                         $(ComboCP).val(data.Text);
                     });
+                ////para actualizar el combobox
             };
 
-            //////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
             /* FUNCION DE LA VISTA DE ESTUDIOS */
 
-           //aplico DATATABLES a las tablas necesrias
+            //aplico DATATABLES a las tablas necesrias
             TablaEST()
 
             //index de la fila seleccionada de la tabla
             var indexrow;
 
+            //se llama al modal para cargar un nuevo estudio
+            $("#NuevoEstudio").on("click", function () {
+                //alert("modal nuevo estudio!!!");
+                ModalEstudioCUD(null);
+            });
+
             //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
             function TablaEST() {
+
                 var TEstudio = $('#TablaEstudio').DataTable({
-     
+
                     responsive: {
                         details: false
                     },
@@ -381,25 +402,27 @@
             };
 
             //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+            //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
             $("#ModalEstudio").on('hidden.bs.modal', function () {
 
                 $("#Estudios").load('@Url.Action("Estudios","Postulante")', function () {
+
+                    //se llama al modal para cargar un nuevo estudio
+                    $("#NuevoEstudio").on("click", function () {
+                        //alert("modal nuevo estudio!!!");
+                        ModalEstudioCUD(null);
+                    });
+
+                    //aplico datatable a la tabla de estudio
                     TablaEST();
                 });
             });
 
-           
-            
-
-            //se llama al modal para cargar un nuevo estudio
-            $("#NuevoEstudio").on("click", function () {
-                ModalEstudioCUD(null);
-            });
-
-
-
+            //funcion que carga el modal de estudio
+            //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
             function ModalEstudioCUD(idrec) {
 
+                //elimino el contenido html
                 $('#ModalEstudioCuerpo').html("");
 
                 $.ajax({
@@ -417,31 +440,34 @@
                         $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
                         $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
 
-                        $(".combobox").combobox({
-                            select: function (event, ui) {
 
-                                //alert($(this).val() + " " + $(this).attr("id"));
-                                var Combo = $(this).attr("id");
-                                var ValC = $(ui.item).text();
-                                //alert(ValC);
-                                if (Combo != "ComboIdInstEST") {
-                                    ComboCascada(Combo, ValC);
-                                };
+                        //se aplicael selecpicker a alos conbo/s con autocomplete
+                        /* https://developer.snapappointments.com/bootstrap-select/ */
+                        $(".combobox").selectpicker({
+                            liveSearch: true,
+                            size: 6,
+                            width: "17rem",
+                            liveSearchPlaceholder: "Ingrese su busqueda",
+                            liveSearchStyle: 'contains',//'startsWith'
+                            noneResultsText: 'No se Encuantran Resultados',
+                            styleBase: 'form-control'
+                        });
+           
+                        $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+
+                            comboid = $(this).attr("id");
+                            if (comboid != "ComboIdInstEST") {
+                                //alert(comboid);
+                                valcombo = $('#' + comboid + ' option:selected').html();
+                                ComboCascada(comboid, valcombo);
                             }
                         });
 
-                        $("#toggle").on("click", function () {
-                            $(".combobox").toggle();
-                        });
-                        $("#ComboJuriEST-I").attr("placeholder", "Seleccione una Juridiccion");
-                        $("#ComboLocaliEST-I").attr("placeholder", "Seleccione una Localidad");
-                        $("#ComboIdInstEST-I").attr("placeholder", "Seleccione una Instituto");
-
+              
                         //alert($("#IdInstEST").val() + " " + idrec);
                         if ($("#IdInstEST").val() != "" && idrec != null) {
                             //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
                             $("#checkext").attr("checked", "checked");
-
                         };
 
                         //lamo la funcion INSTEXT y mando cero por que esla primera carga
@@ -456,9 +482,10 @@
                         $("#EliminaEST").on("click", function () {
                             $.getJSON('/Postulante/EliminaEST',
                                 { ID: idrec }, function (response) {
-                                    alert(response.success + " " + response.msg);
+                                    alert(response.success + " - " + response.msg);
                                 });
                         });
+
                         $("#EliminaEST,#GuardarEST").on("click", function () {
 
                             $("#ModalEstudio").modal("hide");
@@ -470,76 +497,198 @@
                     statusCode: {
                         500:
                             function (context) {
-                                // alert("error de autorizacion");
                                 $('#ModalEstudioCuerpo').html(context.responseText);
                             }
                     }
                 });
 
-                
+
             };
 
             function INSTEXT(elemn, pri) {
+                
                 if ($(elemn).is(":checked")) {
                     $("#JuriEST,#IdInstEST").show();
                     $("label[for='Provincia']").text("Pais");
-                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").hide();
-                    $("#ComboJuriEST-I,#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $(".INSAR").hide();
                     $("#ComboIdInstEST").val(0);
                 } else {
                     $("#JuriEST,#IdInstEST").hide().val("");
                     $("label[for='Provincia']").text("Provincia/Juridiccion");
-                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").show();
+                    $(".INSAR").show();
                 };
                 if (pri != 0) {
                     $("#JuriEST,#IdInstEST").val("");
 
                 }
 
-            }
+            };
 
             function ComboCascada(Combo, ValC) {
                 var OPC;
                 if (Combo == "ComboJuriEST") {
                     OPC = 0;
-                    $("#ComboLocaliEST,#ComboIdInstEST").empty();
-                    $("#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $("#ComboLocaliEST,#ComboIdInstEST").html("")
                 } else {
                    valprov = $("#ComboJuriEST").val();
                     ValC = valprov + "-" +  ValC;
                     //alert(ValC);
                     OPC = 1;
-                    $("#ComboIdInstEST").empty();
+                    $("#ComboIdInstEST").html("")
                 }
-
+                //alert("sdf");
                 $.getJSON('/Postulante/DropCascadaEST', {
                     opc: OPC, val: ValC
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                         var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
+                        alert(combocas);
                         $.each(data, function () {
 
                             $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                         });
+                            $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
+                        $(combocas).selectpicker('refresh');
+
                     });
             };
+            
+//////////////////////////////////////////////////////////////////////////////
+        /* FUNCION DE LA VISTA DE IDIOMA */
+
+            //aplico DATATABLES a las tablas necesrias
+                TablaIDIO()
+
+                //index de la fila seleccionada de la tabla
+                var indexrow;
+
+                //se llama al modal para cargar un nuevo estudio
+                $("#NuevoIdioma").on("click", function () {
+                    //alert("modal nuevo estudio!!!");
+                    ModalIdiomaCUD(null);
+                });
+
+                //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+                function TablaIDIO() {
+
+                    var TIdioma = $('#TablaIdioma').DataTable({
+
+                        responsive: {
+                            details: false
+                        },
+                        "autoWidth": true,
+                        select: 'single',
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    });
+
+                    //al seleccionar una fila
+                    //guardo el index de la fila seleccionada
+                    //se llama al modal y se le envia la id de estudio correspondiete
+                    TIdioma.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+
+                        ModalIdiomaCUD(id);
+                        $("#ModalIdioma").modal("show");
+                    });
+            
+                    //para deselecciponar la fila que fue seleccionada
+                    TIdioma.rows(indexrow).deselect();
+
+                };
+
+                //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+                //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
+                $("#ModalIdioma").on('hidden.bs.modal', function () {
+
+                    $("#Idioma").load('@Url.Action("Idiomas","Postulante")', function () {
+
+                        //se llama al modal para cargar un nuevo estudio
+                        $("#NuevoIdioma").on("click", function () {
+                            //alert("modal nuevo estudio!!!");
+                            ModalIdiomaCUD(null);
+                        });
+
+                        //aplico datatable a la tabla de estudio
+                        TablaIDIO();
+                    });
+                     
+                });
+
+                //funcion que carga el modal de estudio
+                //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
+                function ModalIdiomaCUD(idrec) {
+
+                    //elimino el contenido html
+                    $('#ModalIdiomaCuerpo').html("");
+
+                    $.ajax({
+                        cache: false,
+                        asyn: true,
+                        type: "GET",
+                        url: '/Postulante/IdiomaCUD',
+                        data: { ID: idrec },
+                        //si no surge error al redireccionar se reemplaza el contenido de la div
+                        success: function (response) {
+                            $('#ModalIdiomaCuerpo').html(response);
+
+                            //con esto  funciona la validacion del lado del cliente con la vista parcial
+                            $('#ModalIdiomaCuerpo').removeData("validator");
+                            $('#ModalIdiomaCuerpo').removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse('#ModalIdiomaCuerpo');
+
+                            //se aplicael selecpicker a alos conbo/s con autocomplete
+                            var comboiddio = $("#ComboIdioma").selectpicker({
+                                liveSearch: true,
+                                size: 6,
+                                width: "40vh"
+                            });
+                            comboiddio.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                                //alert($(this).attr("id") + " - " + clickedIndex + " - " + isSelected + " - " + previousValue);
+                                //alert($(this).val());
+                            });
+
+                            //ELIMINA EL ESTUDIO SELECCIONADO
+                            $("#EliminaIDIO").on("click", function () {
+                                $.getJSON('/Postulante/EliminaIDIO',
+                                    { ID: idrec }, function (response) {
+                                        alert(response.success + " - " + response.msg);
+                                    });
+                            });
+
+                            $("#EliminaIDIO,#GuardarIDIO").on("click", function () {
+                                
+                                $("#ModalIdioma").modal("hide");
+                            });
+                        },
+
+                        //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
+                        statusCode: {
+                            500:
+                                function (context) {
+                                    $('#ModaldiomaCuerpo').html(context.responseText);
+                                }
+                        }
+                    });
+
+                };
+
+
 
         });
-
-
-
-
-
-
-
-
 
  /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm */
 
         function Exito(response,status,xhr) {
-           alert("success: " + response.success + " " + response.msg);
+           alert("success: " + response.success + " - " + response.msg);
              //$("#MSGexito").html("success: " + response.success + " " + response.msg);
              //$(".modal").modal("show");
         };

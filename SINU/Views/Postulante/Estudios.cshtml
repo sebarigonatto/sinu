@@ -5,73 +5,94 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }*@
 
-@*<link rel="stylesheet" type="text/css" href="~/Scripts/DataTables/datatables.css" />*@
 <h1>Estudios</h1>
 
-    <div class="form-group" id="divTABLE" >
+<div class="form-group" id="divTABLE">
 
-        <table id="TablaEstudio" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
-            <thead>
+    <table id="TablaEstudio" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        @*<table id="example" class="display" cellspacing="0" width="100%">*@
+        <thead>
+            <tr>
+                <th hidden>IdEstudio</th>
+                <th hidden>IdPersona</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].CantidadMateriaAdeudadas)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].ultimoAnioCursado)</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.vPersona_EstudioListVM)
+            {
                 <tr>
-                    <th hidden>IdEstudio</th>
-                    <th hidden>IdPersona</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].CantidadMateriaAdeudadas)</th>
-                    <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].ultimoAnioCursado)</th>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nivel)</td>
+                    <td>@Html.DisplayTextFor(modelItem => item.Completo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Promedio)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CantidadMateriaAdeudadas)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ultimoAnioCursado)</td>
 
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.vPersona_EstudioListVM)
-                {
-                    <tr>
-                        <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
-                        <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nivel)</td>
-                        <td>@Html.DisplayTextFor(modelItem => item.Completo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Promedio)</td>
-                        <td>@Html.DisplayFor(modelItem => item.CantidadMateriaAdeudadas)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ultimoAnioCursado)</td>
+            }
+        </tbody>
 
-                    </tr>
-                }
-            </tbody>
+    </table>
 
-        </table>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalEstudio" id="NuevoEstudio">
+        Agregar Estudio
+    </button>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalEstudio" id="NuevoEstudio">
-            Agregar Estudio
-        </button>
 
-       
+</div>
+
+
+
+<!-- MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR -->
+@*<div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content   " id="ModalEstudioCuerpo">
+
+            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+
+        </div>
     </div>
+</div>*@
 
-@*section Scripts {
+@section Scripts {
 
 
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script type="text/javascript" >
+    @*<script type="text/javascript">
 
         $(document).ready(function () {
 
-            
+
             //aplico DATATABLES a las tablas necesrias
             TablaEST()
 
             //index de la fila seleccionada de la tabla
             var indexrow;
-            //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
 
+            //se llama al modal para cargar un nuevo estudio
+            $("#NuevoEstudio").on("click", function () {
+                //alert("modal nuevo estudio!!!");
+                ModalEstudioCUD(null);
+            });
+
+            //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
             function TablaEST() {
+
                 var TEstudio = $('#TablaEstudio').DataTable({
+
                     responsive: {
                         details: false
                     },
@@ -98,29 +119,31 @@
                 //para deselecciponar la fila que fue seleccionada
                 TEstudio.rows(indexrow).deselect();
 
-
+                $("#Estudios").resize();
             };
 
             //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+            //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
             $("#ModalEstudio").on('hidden.bs.modal', function () {
 
                 $("#Estudios").load('@Url.Action("Estudios","Postulante")', function () {
+
+                    //se llama al modal para cargar un nuevo estudio
+                    $("#NuevoEstudio").on("click", function () {
+                        //alert("modal nuevo estudio!!!");
+                        ModalEstudioCUD(null);
+                    });
+
+                    //aplico datatable a la tabla de estudio
                     TablaEST();
                 });
             });
 
-           
-            
-
-            //se llama al modal para cargar un nuevo estudio
-            $("#NuevoEstudio").on("click", function () {
-                ModalEstudioCUD(null);
-            });
-
-
-
+            //funcion que carga el modal de estudio
+            //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
             function ModalEstudioCUD(idrec) {
 
+                //elimino el contenido html
                 $('#ModalEstudioCuerpo').html("");
 
                 $.ajax({
@@ -138,31 +161,34 @@
                         $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
                         $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
 
-                        $(".combobox").combobox({
-                            select: function (event, ui) {
 
-                                //alert($(this).val() + " " + $(this).attr("id"));
-                                var Combo = $(this).attr("id");
-                                var ValC = $(ui.item).text();
-                                //alert(ValC);
-                                if (Combo != "ComboIdInstEST") {
-                                    ComboCascada(Combo, ValC);
-                                };
+                        //se aplicael selecpicker a alos conbo/s con autocomplete
+                        /* https://developer.snapappointments.com/bootstrap-select/ */
+                        $(".combobox").selectpicker({
+                            liveSearch: true,
+                            size: 6,
+                            width: "17rem",
+                            liveSearchPlaceholder: "Ingrese su busqueda",
+                            liveSearchStyle: 'contains',//'startsWith'
+                            noneResultsText: 'No se Encuantran Resultados',
+                            styleBase: 'form-control'
+                        });
+           
+                        $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+
+                            comboid = $(this).attr("id");
+                            if (comboid != "ComboIdInstEST") {
+                                //alert(comboid);
+                                valcombo = $('#' + comboid + ' option:selected').html();
+                                ComboCascada(comboid, valcombo);
                             }
                         });
 
-                        $("#toggle").on("click", function () {
-                            $(".combobox").toggle();
-                        });
-                        $("#ComboJuriEST-I").attr("placeholder", "Seleccione una Juridiccion");
-                        $("#ComboLocaliEST-I").attr("placeholder", "Seleccione una Localidad");
-                        $("#ComboIdInstEST-I").attr("placeholder", "Seleccione una Instituto");
-
+              
                         //alert($("#IdInstEST").val() + " " + idrec);
                         if ($("#IdInstEST").val() != "" && idrec != null) {
                             //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
                             $("#checkext").attr("checked", "checked");
-
                         };
 
                         //lamo la funcion INSTEXT y mando cero por que esla primera carga
@@ -177,9 +203,10 @@
                         $("#EliminaEST").on("click", function () {
                             $.getJSON('/Postulante/EliminaEST',
                                 { ID: idrec }, function (response) {
-                                    alert(response.success + " " + response.msg);
+                                    alert(response.success + " - " + response.msg);
                                 });
                         });
+
                         $("#EliminaEST,#GuardarEST").on("click", function () {
 
                             $("#ModalEstudio").modal("hide");
@@ -191,7 +218,6 @@
                     statusCode: {
                         500:
                             function (context) {
-                                // alert("error de autorizacion");
                                 $('#ModalEstudioCuerpo').html(context.responseText);
                             }
                     }
@@ -201,48 +227,51 @@
             };
 
             function INSTEXT(elemn, pri) {
+                
                 if ($(elemn).is(":checked")) {
                     $("#JuriEST,#IdInstEST").show();
                     $("label[for='Provincia']").text("Pais");
-                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").hide();
-                    $("#ComboJuriEST-I,#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $(".INSAR").hide();
                     $("#ComboIdInstEST").val(0);
                 } else {
                     $("#JuriEST,#IdInstEST").hide().val("");
                     $("label[for='Provincia']").text("Provincia/Juridiccion");
-                    $("#ComboJuriEST-D,#DIVlocali,#ComboIdInstEST-D").show();
+                    $(".INSAR").show();
                 };
                 if (pri != 0) {
                     $("#JuriEST,#IdInstEST").val("");
 
                 }
 
-            }
+            };
 
             function ComboCascada(Combo, ValC) {
                 var OPC;
                 if (Combo == "ComboJuriEST") {
                     OPC = 0;
-                    $("#ComboLocaliEST,#ComboIdInstEST").empty();
-                    $("#ComboLocaliEST-I,#ComboIdInstEST-I").val("");
+                    $("#ComboLocaliEST,#ComboIdInstEST").html("")
                 } else {
                    valprov = $("#ComboJuriEST").val();
                     ValC = valprov + "-" +  ValC;
                     //alert(ValC);
                     OPC = 1;
-                    $("#ComboIdInstEST").empty();
+                    $("#ComboIdInstEST").html("")
                 }
-
+                //alert("sdf");
                 $.getJSON('/Postulante/DropCascadaEST', {
                     opc: OPC, val: ValC
                 },
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                         var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
+                        alert(combocas);
                         $.each(data, function () {
 
                             $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                         });
+                            $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
+                        $(combocas).selectpicker('refresh');
+
                     });
             };
 
@@ -258,5 +287,5 @@
             alert("success: " + response.success + " " + response.msg);
         };
 
-    </script>
-}*@
+    </script>*@
+}
