@@ -51,30 +51,30 @@ namespace SINU.Controllers
                                 </CLEANSING>";
             String respuesta;
            
-            using (RefWebCPA.CleansingService cliente = new CleansingService())
-            {
-                respuesta = cliente.exec(autorizacion, consulta);
+            //using (RefWebCPA.CleansingService cliente = new CleansingService())
+            //{
+            //    respuesta = cliente.exec(autorizacion, consulta);
                 
-                //para salida por consola de visual studio
-                System.Diagnostics.Debug.WriteLine(respuesta.ToString());
-                //utlizar un XMLserializer para convertir la respuesta de tipo string a objeto del tipo a ser deserializado y acceder a sus propiedades
-                // la clase objeto se llama RESPONSE se genera a partir del xml valido obtenido como repuesta, creando un clase vacia y haciendo el pegado especial menu EDITAR>PEGADO ESPECIAL> PEGAR XML COMO CLASE
-                XmlSerializer serializer = new XmlSerializer(typeof(RESPONSE));
-                // Declaracion del objectO  del tipo a ser deserializado
-                RESPONSE distritos;
-                //XmlReader xmlReaderRespuesta = new XmlNodeReader(respuestaXML);
-                StringReader respuestastringReader = new StringReader(respuesta);
+            //    //para salida por consola de visual studio
+            //    System.Diagnostics.Debug.WriteLine(respuesta.ToString());
+            //    //utlizar un XMLserializer para convertir la respuesta de tipo string a objeto del tipo a ser deserializado y acceder a sus propiedades
+            //    // la clase objeto se llama RESPONSE se genera a partir del xml valido obtenido como repuesta, creando un clase vacia y haciendo el pegado especial menu EDITAR>PEGADO ESPECIAL> PEGAR XML COMO CLASE
+            //    XmlSerializer serializer = new XmlSerializer(typeof(RESPONSE));
+            //    // Declaracion del objectO  del tipo a ser deserializado
+            //    RESPONSE distritos;
+            //    //XmlReader xmlReaderRespuesta = new XmlNodeReader(respuestaXML);
+            //    StringReader respuestastringReader = new StringReader(respuesta);
              
-                // Se invoca al metodo Deserialize para restablecer el estado del objeto Reponse que representa los distritos de una provincia consultado
-                distritos = (RESPONSE)serializer.Deserialize(respuestastringReader);
+            //    // Se invoca al metodo Deserialize para restablecer el estado del objeto Reponse que representa los distritos de una provincia consultado
+            //    distritos = (RESPONSE)serializer.Deserialize(respuestastringReader);
 
-                int i = 0;
-                while (i < distritos.DISTRICT.Length)
-                {// acceso al objeto y sus propiedades
-                    System.Diagnostics.Debug.WriteLine(distritos.DISTRICT[i].DESCRIPTION);
-                    System.Diagnostics.Debug.WriteLine(distritos.DISTRICT[i].PROVINCE);
-                    i++;
-                }
+            //    int i = 0;
+            //    while (i < distritos.DISTRICT.Length)
+            //    {// acceso al objeto y sus propiedades
+            //        System.Diagnostics.Debug.WriteLine(distritos.DISTRICT[i].DESCRIPTION);
+            //        System.Diagnostics.Debug.WriteLine(distritos.DISTRICT[i].PROVINCE);
+            //        i++;
+            //    }
 
                 /* con este string XML se genero el archivo RESPONSE.CS utilizando el copiado especial
                  <?xml version="1.0" encoding="ISO-8859-1"?>
@@ -106,8 +106,8 @@ namespace SINU.Controllers
 
 
 
-            }
-            ;
+            //}
+            //;
             ViewBag.TextoPAGINAPRINCIPAL = db.Configuracion.FirstOrDefault(b => b.NombreDato == "TextoPAGINAPRINCIPAL").ValorDato;
             return View(db.vPeriodosInscrip.ToList());
         }
