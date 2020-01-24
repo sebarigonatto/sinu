@@ -23,8 +23,8 @@ namespace SINU.Authorize
         {
             //LOGICA DE VALIDACION segun fucion -------------------------------------
             List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, funciones[0]).ToList();
-            HttpContext.Current.Session["funcion"] = funciones[0];
-            //---------------------------------------------------------
+            //HttpContext.Current.Session["funcion"] = funciones[0];
+            //----------------------------------si devuelve algo esta autorizado cso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)

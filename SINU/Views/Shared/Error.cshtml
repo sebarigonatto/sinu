@@ -2,8 +2,11 @@
 
 @{
     ViewBag.Title = "Error";
+
 }
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">Error al procesar la solicitud.</h2>
+<!--verifico si al llamar a esta view mandaron un mensaje de error especifico -->
+<h2 class="text-danger"> @((Model == null) ? "" : Model.Exception.Message)</h2>
 
