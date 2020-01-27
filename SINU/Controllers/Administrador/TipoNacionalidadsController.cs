@@ -1,4 +1,5 @@
-﻿using SINU.Models;
+﻿using SINU.Authorize;
+using SINU.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace SINU.Controllers.Administrador
 {
+    [AuthorizacionPermiso("CRUDParam")]
     public class TipoNacionalidadsController : Controller
     {
         private SINUEntities db = new SINUEntities();

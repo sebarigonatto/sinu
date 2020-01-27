@@ -920,7 +920,7 @@
     <Content Include="Views\Postulante\Index.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
-    <Content Include="Views\Delegacion\Details.cshtml" />
+    <Content Include="Views\Delegacion\Listado.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
     <Content Include="Views\Postulante\Domicilio.cshtml" />
     <Content Include="Views\Postulante\Estudios.cshtml" />
@@ -940,6 +940,7 @@
     <Content Include="Views\Postulante\ActMilitar.cshtml" />
     <Content Include="Views\Postulante\ActMilitarCUD.cshtml" />
     <Content Include="Views\Postulante\SituOcupacional.cshtml" />
+    <Content Include="Views\Delegacion\Details.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
