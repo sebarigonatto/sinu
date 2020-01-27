@@ -1,4 +1,6 @@
-﻿using SINU.Models;
+﻿//Necesario para controlar permiso
+using SINU.Authorize;
+using SINU.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -6,6 +8,7 @@ using System.Web.Mvc;
 
 namespace SINU.Controllers.Administrador
 {
+    [AuthorizacionPermiso("CRUDParam")]
     public class FuerzasController : Controller
     {
         private SINUEntities db = new SINUEntities();
