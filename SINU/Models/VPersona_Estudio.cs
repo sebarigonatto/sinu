@@ -14,13 +14,12 @@ namespace SINU.Models
     
     public partial class VPersona_Estudio
     {
-        public string Email { get; set; }
         public int IdPersona { get; set; }
         public Nullable<int> IdNiveldEstudio { get; set; }
         public int IdEstudio { get; set; }
         public string Titulo { get; set; }
         public bool Completo { get; set; }
-        public Nullable<int> IdInstitutos { get; set; }
+        public int IdInstitutos { get; set; }
         public string Nombre { get; set; }
         public Nullable<double> Promedio { get; set; }
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }

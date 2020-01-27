@@ -27,7 +27,6 @@ namespace SINU.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ActividadMilitar> ActividadMilitar { get; set; }
         public virtual DbSet<Antropometria> Antropometria { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Baja> Baja { get; set; }
@@ -78,13 +77,15 @@ namespace SINU.Models
         public virtual DbSet<vPersona_Familiar> vPersona_Familiar { get; set; }
         public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
         public virtual DbSet<vPersona_Purificar> vPersona_Purificar { get; set; }
-        public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
         public virtual DbSet<vRELIGION> vRELIGION { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstado> vSecuencia_EtapaEstado { get; set; }
         public virtual DbSet<vSeguridad_Grupos> vSeguridad_Grupos { get; set; }
         public virtual DbSet<vSeguridad_Grupos_Usuarios> vSeguridad_Grupos_Usuarios { get; set; }
         public virtual DbSet<vSeguridad_Usuarios> vSeguridad_Usuarios { get; set; }
+        public virtual DbSet<ActividadMilitar> ActividadMilitar { get; set; }
+        public virtual DbSet<Interes> Interes { get; set; }
+        public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -203,6 +204,15 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
+        public virtual ObjectResult<sp_vIdiomas_Result> sp_vIdiomas(string cODIGO)
+        {
+            var cODIGOParameter = cODIGO != null ?
+                new ObjectParameter("CODIGO", cODIGO) :
+                new ObjectParameter("CODIGO", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vIdiomas_Result>("sp_vIdiomas", cODIGOParameter);
+        }
+    
         public virtual ObjectResult<sp_vPaises_Result> sp_vPaises(string cODIGO)
         {
             var cODIGOParameter = cODIGO != null ?
@@ -221,7 +231,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarEliminar", idActividadMilitarParameter);
         }
     
-        public virtual int spActividadMilitarIU(Nullable<int> idActividadMilitar, Nullable<int> idPersona, Nullable<bool> solicitoIngresoAnterior, Nullable<bool> ingreso, Nullable<System.DateTime> fechaIngreso, Nullable<System.DateTime> fechaBaja, string causaMotivoNoingreso, string motivoBaja, string jerarquia, string cargo, string destino, Nullable<int> idSituacionRevista, Nullable<int> idFuerza, Nullable<int> idBaja)
+        public virtual int spActividadMilitarIU(Nullable<int> idActividadMilitar, Nullable<int> idPersona, Nullable<bool> ingreso, Nullable<System.DateTime> fechaIngreso, Nullable<System.DateTime> fechaBaja, string causaMotivoNoingreso, string motivoBaja, string jerarquia, string cargo, string destino, Nullable<int> idSituacionRevista, Nullable<int> idFuerza, Nullable<int> idBaja)
         {
             var idActividadMilitarParameter = idActividadMilitar.HasValue ?
                 new ObjectParameter("IdActividadMilitar", idActividadMilitar) :
@@ -230,10 +240,6 @@ namespace SINU.Models
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
                 new ObjectParameter("IdPersona", typeof(int));
-    
-            var solicitoIngresoAnteriorParameter = solicitoIngresoAnterior.HasValue ?
-                new ObjectParameter("SolicitoIngresoAnterior", solicitoIngresoAnterior) :
-                new ObjectParameter("SolicitoIngresoAnterior", typeof(bool));
     
             var ingresoParameter = ingreso.HasValue ?
                 new ObjectParameter("Ingreso", ingreso) :
@@ -279,18 +285,14 @@ namespace SINU.Models
                 new ObjectParameter("IdBaja", idBaja) :
                 new ObjectParameter("IdBaja", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarIU", idActividadMilitarParameter, idPersonaParameter, solicitoIngresoAnteriorParameter, ingresoParameter, fechaIngresoParameter, fechaBajaParameter, causaMotivoNoingresoParameter, motivoBajaParameter, jerarquiaParameter, cargoParameter, destinoParameter, idSituacionRevistaParameter, idFuerzaParameter, idBajaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spActividadMilitarIU", idActividadMilitarParameter, idPersonaParameter, ingresoParameter, fechaIngresoParameter, fechaBajaParameter, causaMotivoNoingresoParameter, motivoBajaParameter, jerarquiaParameter, cargoParameter, destinoParameter, idSituacionRevistaParameter, idFuerzaParameter, idBajaParameter);
         }
     
-        public virtual int spAntropometriaIU(Nullable<int> idPostulantePersona, Nullable<int> idPersona, Nullable<int> altura, Nullable<decimal> peso, Nullable<decimal> iMC, Nullable<int> perimCabeza, Nullable<int> perimTorax, Nullable<int> perimCintura, Nullable<int> perimCaderas, Nullable<int> largoPantalon, Nullable<int> largoEntrep, Nullable<int> largoFalda, Nullable<int> cuello, Nullable<int> calzado)
+        public virtual int spAntropometriaIU(Nullable<int> idPostulantePersona, Nullable<int> altura, Nullable<decimal> peso, Nullable<decimal> iMC, Nullable<int> perimCabeza, Nullable<int> perimTorax, Nullable<int> perimCintura, Nullable<int> perimCaderas, Nullable<int> largoPantalon, Nullable<int> largoEntrep, Nullable<int> largoFalda, Nullable<int> cuello, Nullable<int> calzado)
         {
             var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
                 new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
                 new ObjectParameter("IdPostulantePersona", typeof(int));
-    
-            var idPersonaParameter = idPersona.HasValue ?
-                new ObjectParameter("IdPersona", idPersona) :
-                new ObjectParameter("IdPersona", typeof(int));
     
             var alturaParameter = altura.HasValue ?
                 new ObjectParameter("Altura", altura) :
@@ -340,7 +342,7 @@ namespace SINU.Models
                 new ObjectParameter("Calzado", calzado) :
                 new ObjectParameter("Calzado", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAntropometriaIU", idPostulantePersonaParameter, idPersonaParameter, alturaParameter, pesoParameter, iMCParameter, perimCabezaParameter, perimToraxParameter, perimCinturaParameter, perimCaderasParameter, largoPantalonParameter, largoEntrepParameter, largoFaldaParameter, cuelloParameter, calzadoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAntropometriaIU", idPostulantePersonaParameter, alturaParameter, pesoParameter, iMCParameter, perimCabezaParameter, perimToraxParameter, perimCinturaParameter, perimCaderasParameter, largoPantalonParameter, largoEntrepParameter, largoFaldaParameter, cuelloParameter, calzadoParameter);
         }
     
         public virtual int spCreaPostulante(string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
@@ -714,15 +716,6 @@ namespace SINU.Models
                 new ObjectParameter("eliminar", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
-        }
-    
-        public virtual ObjectResult<sp_vIdiomas_Result> sp_vIdiomas(string cODIGO)
-        {
-            var cODIGOParameter = cODIGO != null ?
-                new ObjectParameter("CODIGO", cODIGO) :
-                new ObjectParameter("CODIGO", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vIdiomas_Result>("sp_vIdiomas", cODIGOParameter);
         }
     }
 }

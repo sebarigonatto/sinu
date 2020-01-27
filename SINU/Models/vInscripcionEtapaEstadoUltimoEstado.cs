@@ -18,5 +18,6 @@ namespace SINU.Models
         public int IdInscripcionEtapaEstado { get; set; }
         public Nullable<System.DateTime> Fecha { get; set; }
         public string Email { get; set; }
+        public int IdPersona { get; set; }
     }
 }

@@ -1,0 +1,195 @@
+﻿@model  IEnumerable<SINU.Models.vPersona_ActividadMilitar>
+
+@*@{
+    ViewBag.Title = "Idiomas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+
+<h1>Actividad militar</h1>
+
+<div class="form-group" id="divTABLE">
+
+    <table id="TablaActMilitar" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>IdActividadMilitar</th>
+                <th>@Html.DisplayNameFor(m => m.Fuerza)</th>
+                <th>@Html.DisplayNameFor(m => m.Ingreso)</th>
+                <th>@Html.DisplayNameFor(m => m.Jerarquia)</th>
+                <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
+                <th>@Html.DisplayNameFor(m => m.FechaBaja)</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
+                <td >@Html.DisplayFor(modelItem => item.Fuerza)</td>
+                <td>@Html.DisplayTextFor(modelItem => item.Ingreso)</td>
+                <td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
+                <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
+                <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>
+            </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAct" id="NuevoAct">
+        Agregar Actividad militar
+    </button>
+
+
+</div>
+
+<!-- MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR -->
+@*<div class="modal fade " id="ModalAct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content" id="ModalActCuerpo">
+            <h1>Cuerpo de Vista Parcial</h1>
+            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+        </div>
+    </div>
+</div>*@
+
+@*@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //aplico DATATABLES a las tablas necesrias
+                TablaACT()
+
+                //index de la fila seleccionada de la tabla
+                var indexrow;
+
+                //se llama al modal para cargar un nuevo estudio
+                $("#NuevoAct").on("click", function () {
+                    //alert("modal nuevo estudio!!!");
+                    ModalACTCUD(null);
+                });
+
+                //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+                function TablaACT() {
+
+                    var TACT = $('#TablaActMilitar').DataTable({
+
+                        responsive: {
+                            details: false
+                        },
+                        "autoWidth": true,
+                        select: 'single',
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    });
+
+                    //al seleccionar una fila
+                    //guardo el index de la fila seleccionada
+                    //se llama al modal y se le envia la id de estudio correspondiete
+                    TACT.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+
+                        ModalACTCUD(id);
+                        $("#ModalAct").modal("show");
+                    });
+
+                    //para deselecciponar la fila que fue seleccionada
+                    TACT.rows(indexrow).deselect();
+                };
+
+
+                //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+                //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
+                $("#ModalAct").on('hidden.bs.modal', function () {
+
+                    //$("#Idioma").load('@Url.Action("Idiomas","Postulante")', function () {
+
+                        //se llama al modal para cargar un nuevo estudio
+                        $("#NuevoAct").on("click", function () {
+                            //alert("modal nuevo estudio!!!");
+                            ModalACTCUD(null);
+                        });
+
+                        //aplico datatable a la tabla
+                        //TablaACT();
+                    //});
+
+                });
+
+                //funcion que carga el modal de estudio
+                //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
+                function ModalACTCUD(idrec) {
+
+                    //elimino el contenido html
+                    $('#ModalActCuerpo').html("");
+
+                    $.ajax({
+                        cache: false,
+                        asyn: true,
+                        type: "GET",
+                        url: '/Postulante/ActMilitarCUD',
+                        data: { ID: idrec },
+                        //si no surge error al redireccionar se reemplaza el contenido de la div
+                        success: function (response) {
+                            $('#ModalActCuerpo').html(response);
+
+                            //con esto  funciona la validacion del lado del cliente con la vista parcial
+                            $('#ModalActCuerpo').removeData("validator");
+                            $('#ModalActCuerpo').removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse('#ModalActCuerpo');
+
+
+
+                            //ELIMINA EL ESTUDIO SELECCIONADO
+                            $("#EliminaACT").on("click", function () {
+                                $.getJSON('/Postulante/EliminaACT',
+                                    { ID: idrec },
+                                    function (response) {
+                                        alert(response.success + " - " + response.msg);
+                                    });
+                            });
+
+                            $("#EliminaIDIO,#GuardarIDIO").on("click", function () {
+
+                                $("#ModalIdioma").modal("hide");
+                            });
+                        },
+
+                        //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
+                        statusCode: {
+                            500:
+                                function (context) {
+                                    $('#ModaldiomaCuerpo').html(context.responseText);
+                                }
+                        }
+                    });
+
+                };
+        });
+        //Si lallamada POST tuvo exito
+            function Exito(response, status, xhr) {
+                alert("success: " + response.success + " " + response.msg);
+            };
+
+            //Si lallamada POST tuvo error
+            function Falla(response) {
+                alert("Error occured.");
+            };
+
+
+    </script>
+
+}*@

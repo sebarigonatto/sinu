@@ -24,6 +24,7 @@ namespace SINU.Models
         public string EstadoOcupacional1 { get; set; }
         public string Descripcion { get; set; }
         public bool CargaOcupacionActual { get; set; }
+        public string Explicacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SituacionOcupacional> SituacionOcupacional { get; set; }

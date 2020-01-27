@@ -222,7 +222,6 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RESPONSE.cs" />
     <Compile Include="Models\DocPresentado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -250,7 +249,6 @@
     <Compile Include="Models\Fuerza.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Inscripcion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -263,8 +261,9 @@
     <Compile Include="Models\Institutos.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Metadatos.cs" />
+    <Compile Include="Models\Interes.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NiveldEstudio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -274,7 +273,6 @@
     <Compile Include="Models\OficinasYDelegaciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\PeriodosInscripciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -293,6 +291,11 @@
     <Compile Include="Models\Preferencia.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RESPONSE.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadatos.cs" />
+    <Compile Include="Models\PartialClasses.cs" />
     <Compile Include="Models\Secuencia_EtapaEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -635,6 +638,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
+    <Content Include="Content\bootstrap-select.css.map" />
     <EntityDeploy Include="Models\SINUDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SINUDB.Designer.cs</LastGenOutput>
@@ -642,7 +646,6 @@
     <Content Include="Models\SINUDB.edmx.diagram">
       <DependentUpon>SINUDB.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -934,6 +937,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Postulante\ActMilitar.cshtml" />
+    <Content Include="Views\Postulante\ActMilitarCUD.cshtml" />
+    <Content Include="Views\Postulante\SituOcupacional.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

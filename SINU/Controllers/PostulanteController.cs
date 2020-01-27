@@ -15,13 +15,14 @@ namespace SINU.Controllers
 
         //ESTABLESCO LA VARIABLE MAIL DEL USUARIO QUE ESTA ACTUALMENTE LOGUEADO
         //ESTA CARIABLE ES UTILIZADA PARA BUSCAR EN LAS DISTINTAS VISTAS, UTILIZADAS EN EL CONTROLADOR, PARA  BUSCAR LOS REGISTROS DEL USUARIO LOGUEADO
-        private string USUmail => HttpContext.User.Identity.Name.ToString();
-
+        private int IDPER => db.Persona.FirstOrDefault(m=>m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+        private int IDFAMI;
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
-            ViewBag.secuenciaactual = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.Email == USUmail).IdSecuencia;
+
+            ViewBag.secuenciaactual = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == IDPER).IdSecuencia;
             return View();
         }
 
@@ -37,7 +38,7 @@ namespace SINU.Controllers
                     SexoVM = db.Sexo.ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
-                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.Email == USUmail)
+                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == IDPER)
                 };
 
 
@@ -79,7 +80,7 @@ namespace SINU.Controllers
         {
             vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
 
-            entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.Email == USUmail);
+            entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == IDPER);
             //se carga los texto parametrizados desde la tabla configuracion
             string[] consideraciones = {
                 db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
@@ -98,7 +99,7 @@ namespace SINU.Controllers
             {
                 DatosPersonalesVM datosba = new DatosPersonalesVM()
                 {
-                    vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.Email == USUmail),
+                    vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == IDPER),
                     TipoNacionalidadVM = db.TipoNacionalidad.ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList()
@@ -139,7 +140,7 @@ namespace SINU.Controllers
             {
                 DomicilioVM datosdomilio = new DomicilioVM()
                 {
-                    vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.Email == USUmail),
+                    vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == IDPER),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
                     provincias = db.vProvincia_Depto_Localidad.Select(m => m.Provincia).Distinct().ToList()
                 };
@@ -207,13 +208,13 @@ namespace SINU.Controllers
                 int result = db.spDomiciliosU(p.IdDomicilioDNI, p.Calle, p.Numero, p.Piso, p.Unidad, p.IdLocalidad, p.Prov_Loc_CP, p.IdPais,
                                               p.IdDomicilioActual, p.EventualCalle, p.EventualNumero, p.EventualPiso, p.EventualUnidad, p.EventualIdLocalidad, p.EventualProv_Loc, p.EventualIdPais);
                 //var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
-                return Json(new { success = true, msg = "" });
+                return Json(new { success = true, msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 //envio la error  a la vista
                 string msgerror = ex.Message + " " + ex.InnerException.Message;
-                return Json(new { success = false, msg = msgerror });
+                return Json(new { success = false, msg = msgerror }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -252,7 +253,7 @@ namespace SINU.Controllers
             try
             {
                 EstudiosVM estudio = new EstudiosVM();
-                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.Email == USUmail).ToList();
+                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.IdPersona == IDPER).ToList();
                 foreach (var item in estudio.vPersona_EstudioListVM)
                 {
                     if (item.IdInstitutos == 0)
@@ -294,7 +295,7 @@ namespace SINU.Controllers
                 {
                     VPersona_Estudio nuevoestu = new VPersona_Estudio()
                     {
-                        IdPersona = db.Persona.FirstOrDefault(m => m.Email == USUmail).IdPersona,
+                        IdPersona = IDPER,
                         IdInstitutos = 0,
                         IdEstudio = 0,
                         NombreYPaisInstituto = "-"
@@ -344,8 +345,9 @@ namespace SINU.Controllers
         {
             try
             {
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!         
                 var e = Datos.vPersona_EstudioIdVM;
-                if (e.IdInstitutos != null)
+                if (e.IdInstitutos != 0)
                 {
                     e.NombreYPaisInstituto = null;
                 }
@@ -432,7 +434,7 @@ namespace SINU.Controllers
             try
             {
                 List<vPersona_Idioma> idioma;
-                idioma = db.vPersona_Idioma.Where(m=>m.Email==USUmail).ToList();
+                idioma = db.vPersona_Idioma.Where(m=>m.IdPersona==IDPER).ToList();
 
                 return PartialView(idioma);
             }
@@ -462,7 +464,7 @@ namespace SINU.Controllers
                     idioma.VPersona_IdiomaIdVM = new vPersona_Idioma()
                     {
                         IdPersonaIdioma = 0,
-                        IdPersona = db.Persona.FirstOrDefault(m => m.Email == USUmail).IdPersona
+                        IdPersona = IDPER
                     };
                 }
 
@@ -483,12 +485,12 @@ namespace SINU.Controllers
             {
                 vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
                 db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
-                return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico" });
+                return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
-                return Json(new { success = true, msg = ex.InnerException.Message});
+                return Json(new { success = true, msg = ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -507,5 +509,146 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg =  ex.InnerException.Message});
             }
         }
+
+/*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
+        public ActionResult ActMilitar()
+        {
+            try
+            {
+                List<vPersona_ActividadMilitar> LISTactividad;
+                LISTactividad = db.vPersona_ActividadMilitar.Where(m => m.IdPersona == IDPER).ToList();
+
+                return PartialView(LISTactividad);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult ActMilitarCUD(int? ID)
+        {
+            try
+            {
+                ActividadMIlitarVM actividad = new ActividadMIlitarVM() {
+                    FuerzasVM = db.Fuerza.ToList(),
+                    IDPErsona = IDPER,
+                    BajaVM = db.Baja.ToList(),
+                    SituacionRevistaVM = db.SituacionRevista.ToList()
+                 };
+                if (ID!= null)
+                {
+                    actividad.ACTMilitarIDVM = db.ActividadMilitar.FirstOrDefault(m => m.IdActividadMilitar == ID);
+                }
+                else
+                {
+                    actividad.ACTMilitarIDVM = new ActividadMilitar()
+                    {
+                        IdActividadMilitar = 0,
+                    };
+                }
+                return PartialView(actividad);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost]
+        public JsonResult ActMilitarCUD(ActividadMIlitarVM datos)
+        {
+            try
+            {
+                var a = datos.ACTMilitarIDVM;
+                if (a.Ingreso == true)
+                {
+                    a.CausaMotivoNoingreso=null;
+                }
+                else
+                {
+                    a.FechaBaja = null;
+                    a.FechaIngreso = null;
+                    a.MotivoBaja = null;
+                    a.Jerarquia = null;
+                    a.Cargo = null;
+                    a.Destino = null;
+                    a.IdSituacionRevista = 0;
+                    a.IdBaja = 0;
+                }
+
+                db.spActividadMilitarIU(a.IdActividadMilitar, datos.IDPErsona, a.Ingreso, a.FechaIngreso, a.FechaBaja, a.CausaMotivoNoingreso, a.MotivoBaja, a.Jerarquia, a.Cargo, a.Destino, a.IdSituacionRevista, a.IdFuerza, a.IdBaja);
+                return Json(new { success = true  , msg = "Se inserto o actulaizo correctamente" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+            
+        }
+
+        public JsonResult EliminaACT(int ID)
+        {
+            try
+            {
+                db.spActividadMilitarEliminar(ID);
+                return Json(new { success = false, msg = "se elimino correctamente el registro"}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
+        public ActionResult SituOcupacional()
+        {
+            try
+            {
+                SituacionOcupacionalVM SituOcupacional = new SituacionOcupacionalVM() {
+                    EstadoDescripcionVM = db.EstadoOcupacional.Select(e => new SelectListItem
+                    {
+                        Value = e.Id.ToString(),
+                        Text = e.EstadoOcupacional1 + " - " + e.Descripcion
+                    }).ToList(),
+                    InteresesVM = db.Interes.ToList()
+                };
+
+                var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == IDPER);
+                if (situ == null)
+                {
+                    SituOcupacional.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
+                    {
+                        IdSituacionOcupacional = 0,
+                        IdPersona = IDPER
+                    };
+                }
+                else
+                {
+                    SituOcupacional.VPersona_SituacionOcupacionalVM = situ;
+                };
+                return PartialView(SituOcupacional);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SituOcupacional(SituacionOcupacionalVM situ)
+        {
+            try
+            {
+                var s = situ.VPersona_SituacionOcupacionalVM;
+                var result = db.spSituacionOcupacionalIU(s.IdSituacionOcupacional, s.IdPersona, s.IdEstadoOcupacional, s.OcupacionActual, s.Oficio, s.AniosTrabajados, s.DomicilioLaboral);
+                return Json(new { success = true, msg= "exito en guardar la situacion ocupacional" });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

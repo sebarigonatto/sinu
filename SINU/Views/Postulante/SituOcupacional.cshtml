@@ -1,0 +1,147 @@
+﻿@model SINU.ViewModels.SituacionOcupacionalVM
+
+@{
+    ViewBag.Title = "Situacion Ocupacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm("SituOcupacional", "Postulante", null,
+new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "Exito(data,status,xhr)",
+    OnFailure = "Falla",
+    //LoadingElementId = "carga",
+    //LoadingElementDuration = 1000,
+    //UpdateTargetId = "resultTarget"
+},
+new { id = "BeginFormSituOcupacional" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Situacion Ocupacional</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+
+            <div class="form-group row">
+
+
+                @Html.HiddenFor(model => model.VPersona_SituacionOcupacionalVM.IdSituacionOcupacional)
+                @Html.HiddenFor(model => model.VPersona_SituacionOcupacionalVM.IdPersona)
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.Oficio, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.VPersona_SituacionOcupacionalVM.Oficio, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.Oficio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.EstadoOcupacional, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, new SelectList(Model.EstadoDescripcionVM, "Value", "Text"), "Seleccione una OPCION", htmlAttributes: new { @class = "form-control comboboxSITU" })
+                            @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div id="SI">
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.OcupacionActual, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.VPersona_SituacionOcupacionalVM.OcupacionActual, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.OcupacionActual, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.DomicilioLaboral, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.VPersona_SituacionOcupacionalVM.DomicilioLaboral, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.DomicilioLaboral, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            @Html.Label("¿Posee algunos de estos Oficios?", htmlAttributes: new { @class = "control-label col-md-7" })
+                            <div class="col-md-7">
+                                @Html.DropDownListFor(model => model.InteresesVM, new SelectList(Model.InteresesVM, "IdInteres", "DescInteres"), null, htmlAttributes: new { @class = "form-control", @id = "Estado" , @multiple= true })
+                                @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        
+                        <br />
+                        <div class="form-group ">
+                            <div class="col-md-12">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#ModalInteres" id="Interes">
+                                    ¿Posee alguno de estos oficios?
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="float-md-right">
+            <input type="submit" value="Guardar" class="btn btn-primary btn-lg" id="GuardarACT" />
+        </div>
+
+    </div>
+ }
+
+ @section Scripts {
+ @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+     
+            //se aplicael selecpicker a alos conbo/s con autocomplete
+            /* https://developer.snapappointments.com/bootstrap-select/ */
+           var Interes = $("#Estado").selectpicker({
+                size: 6,
+                actionsBox: true,
+                deselectAllText: 'Deseleccionar Todo',
+                selectAllText: 'Seleccionar Todo',
+                noneSelectedText: 'Ninguna Opcion Seleccionada'
+            });
+           
+            Interes.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                comboid = $(this).attr("id");
+                if (comboid != "ComboIdInstEST") {
+                    //alert(comboid);
+                    valcombo = $('#' + comboid + ' option:selected').html();
+                }
+            });
+
+        });
+
+        
+ /////////////////////////////////////////////////////////////////////////////////
+        /*FUNCIONES DE AJAX.BeginForm */
+
+        function Exito(response,status,xhr) {
+           alert("success: " + response.success + " - " + response.msg);
+             //$("#MSGexito").html("success: " + response.success + " " + response.msg);
+             //$(".modal").modal("show");
+        };
+
+        function Falla(response) {
+           alert("Error occured." );
+        };
+
+         //////////////////////////////////////////////////////////////////////////////
+
+    </script>
+  }

@@ -61,4 +61,21 @@ namespace SINU.ViewModels
         public List<sp_vIdiomas_Result> Sp_VIdiomas_VM { get; set; }
 
     }
+
+    public class ActividadMIlitarVM
+    {
+        public int IDPErsona { get; set; }
+        public ActividadMilitar ACTMilitarIDVM { get; set;}
+        public List<Fuerza> FuerzasVM { get; set; }
+        public List<Baja> BajaVM { get; set; }
+        public List<SituacionRevista> SituacionRevistaVM { get; set; }
+    }
+    public class SituacionOcupacionalVM
+    {
+        public vPersona_SituacionOcupacional VPersona_SituacionOcupacionalVM { get; set; }
+        public List<SelectListItem> EstadoDescripcionVM { get; set; }
+        public List<Interes> InteresesVM { get; set; }
+
+
+    }
 }

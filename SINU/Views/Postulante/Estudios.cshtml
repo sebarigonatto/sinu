@@ -20,12 +20,10 @@
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].CantidadMateriaAdeudadas)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].ultimoAnioCursado)</th>
-
             </tr>
         </thead>
         <tbody>
+
             @foreach (var item in Model.vPersona_EstudioListVM)
             {
                 <tr>
@@ -36,9 +34,6 @@
                     <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
                     <td>@Html.DisplayFor(modelItem => item.Promedio)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CantidadMateriaAdeudadas)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ultimoAnioCursado)</td>
-
                 </tr>
             }
         </tbody>

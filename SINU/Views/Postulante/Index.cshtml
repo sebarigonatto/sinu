@@ -167,6 +167,11 @@
                                     Idioma
                                 </a>
                             </li>
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ActMIlitar" role="tab" aria-controls="ActMilitar" aria-selected="false">
+                                    Actividad Militar
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.col-md-4 -->
@@ -190,7 +195,10 @@
                             <div class="tab-pane fade" id="Idioma" role="tabpanel" aria-labelledby="Idioma-tab">
                                 @Html.Action("Idiomas", "Postulante")
                             </div>
-                            
+                            @* VISTA DE ACTIVIDAD MILITAR *@
+                            <div class="tab-pane fade" id="ActMIlitar" role="tabpanel" aria-labelledby="ActMilitar-tab">
+                                @Html.Action("ActMilitar", "Postulante")
+                            </div>
                         </div>
                     </div>
                     <!-- /.col-md-8 -->
@@ -216,7 +224,7 @@
     <!-- End lined tabs -->
 </div>
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
- @*MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@ 
+     @*MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@ 
 <div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
         <div class="modal-content   " id="ModalEstudioCuerpo">
@@ -237,12 +245,25 @@
     </div>
 </div>
 
+<div class="modal fade " id="ModalAct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content" id="ModalActCuerpo">
+            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $.ajaxSetup({
+                async: false
+            });
+
             (function () {
                 $("#TabGeneral li").each(function () {
 
@@ -398,13 +419,12 @@
                 //para deselecciponar la fila que fue seleccionada
                 TEstudio.rows(indexrow).deselect();
 
-                $("#Estudios").resize();
             };
 
             //al cerrarse el modal la fila seleccionada es DESELECCIONADA
             //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
             $("#ModalEstudio").on('hidden.bs.modal', function () {
-
+                alert("se cerro modal");
                 $("#Estudios").load('@Url.Action("Estudios","Postulante")', function () {
 
                     //se llama al modal para cargar un nuevo estudio
@@ -484,10 +504,11 @@
                                 { ID: idrec }, function (response) {
                                     alert(response.success + " - " + response.msg);
                                 });
+                            $("#ModalEstudio").modal("hide");
                         });
 
-                        $("#EliminaEST,#GuardarEST").on("click", function () {
-
+                        $("#GuardarEST").on("click", function () {
+                            //alert("se cerrara modal!!!");
                             $("#ModalEstudio").modal("hide");
                         });
 
@@ -543,7 +564,7 @@
                     function (data) {
                         //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                         var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
-                        alert(combocas);
+                        //alert(combocas);
                         $.each(data, function () {
 
                             $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
@@ -607,7 +628,7 @@
                 //al cerrarse el modal la fila seleccionada es DESELECCIONADA
                 //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
                 $("#ModalIdioma").on('hidden.bs.modal', function () {
-
+                    //alert("cerror modal");
                     $("#Idioma").load('@Url.Action("Idiomas","Postulante")', function () {
 
                         //se llama al modal para cargar un nuevo estudio
@@ -657,14 +678,16 @@
 
                             //ELIMINA EL ESTUDIO SELECCIONADO
                             $("#EliminaIDIO").on("click", function () {
+                                
                                 $.getJSON('/Postulante/EliminaIDIO',
                                     { ID: idrec }, function (response) {
                                         alert(response.success + " - " + response.msg);
                                     });
+                                $("#ModalIdioma").modal("hide");
+
                             });
 
-                            $("#EliminaIDIO,#GuardarIDIO").on("click", function () {
-                                
+                            $("#GuardarIDIO").on("click", function () {
                                 $("#ModalIdioma").modal("hide");
                             });
                         },
@@ -673,7 +696,145 @@
                         statusCode: {
                             500:
                                 function (context) {
-                                    $('#ModaldiomaCuerpo').html(context.responseText);
+                                    $('#ModalActCuerpo').html(context.responseText);
+                                }
+                        }
+                    });
+
+            };
+
+//////////////////////////////////////////////////////////////////////////////
+        /* FUNCION DE LA VISTA DE ACTIVIDAD MILITAR */
+
+            //aplico DATATABLES a las tablas necesrias
+                TablaACT()
+
+                //index de la fila seleccionada de la tabla
+                var indexrow;
+
+                //se llama al modal para cargar un nuevo estudio
+                $("#NuevoAct").on("click", function () {
+                    //alert("modal nuevo estudio!!!");
+                    ModalACTCUD(null);
+                });
+
+                //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
+                function TablaACT() {
+
+                    var TACT = $('#TablaActMilitar').DataTable({
+
+                        responsive: {
+                            details: false
+                        },
+                        "autoWidth": true,
+                        select: 'single',
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    });
+
+                    //al seleccionar una fila
+                    //guardo el index de la fila seleccionada
+                    //se llama al modal y se le envia la id de estudio correspondiete
+                    TACT.on('select.dt', function (e, dt, type, index) {
+                        indexrow = index;
+                        var data = dt.rows(index).data();
+                        var id = data[0][0];
+
+                        ModalACTCUD(id);
+                        $("#ModalAct").modal("show");
+                    });
+
+                    //para deselecciponar la fila que fue seleccionada
+                    TACT.rows(indexrow).deselect();
+                };
+
+
+                //al cerrarse el modal la fila seleccionada es DESELECCIONADA
+                //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
+                $("#ModalAct").on('hidden.bs.modal', function () {
+                    //alert("cerror modal");
+                    $("#ActMIlitar").load('@Url.Action("ActMIlitar","Postulante")', function () {
+
+                        //se llama al modal para cargar un nuevo estudio
+                        $("#NuevoAct").on("click", function () {
+                            //alert("modal nuevo estudio!!!");
+                            ModalACTCUD(null);
+                        });
+
+                        //aplico datatable a la tabla
+                        TablaACT();
+                    });
+
+                });
+            Boolean()
+            function IngreSINO() {
+                if ($("#IngresoSINO").val()=="true") {
+                    alert("si");
+                    $("#SI").show();
+                    $("#NO").hide();
+                    $("#NO input").val("");
+
+                } else {
+                    alert("no");
+
+                    $("#SI").hide();
+                    $("#SI input,#SI select").val("");
+                    $("#NO").show()
+                };
+            };
+                //funcion que carga el modal de estudio
+                //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
+                function ModalACTCUD(idrec) {
+
+                    //elimino el contenido html
+                    $('#ModalActCuerpo').html("");
+
+                    $.ajax({
+                        cache: false,
+                        asyn: true,
+                        type: "GET",
+                        url: '/Postulante/ActMilitarCUD',
+                        data: { ID: idrec },
+                        //si no surge error al redireccionar se reemplaza el contenido de la div
+                        success: function (response) {
+                            $('#ModalActCuerpo').html(response);
+
+                            //con esto  funciona la validacion del lado del cliente con la vista parcial
+                            $('#ModalActCuerpo').removeData("validator");
+                            $('#ModalActCuerpo').removeData("unobtrusiveValidation");
+                            $.validator.unobtrusive.parse('#ModalActCuerpo');
+
+                            //ELIMINA EL ESTUDIO SELECCIONADO
+                            $("#EliminaACT").on("click", function () {
+                                $.getJSON('/Postulante/EliminaACT',
+                                    { ID: idrec },
+                                    function (response) {
+                                        alert(response.success + " - " + response.msg);
+                                    });
+                                $("#ModalAct").modal("hide");
+
+                            });
+
+                            $("#GuardarACT").on("click", function () {
+                                $("#ModalAct").modal("hide");
+                            });
+                            IngreSINO();
+                            $("#IngresoSINO").on("change", function (e) {
+                                 IngreSINO()
+                               
+                            });
+
+                        },
+
+                        //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
+                        statusCode: {
+                            500:
+                                function (context) {
+                                    $('#ModaACTCuerpo').html(context.responseText);
                                 }
                         }
                     });
@@ -681,6 +842,7 @@
                 };
 
 
+                
 
         });
 

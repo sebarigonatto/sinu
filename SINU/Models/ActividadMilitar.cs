@@ -14,13 +14,6 @@ namespace SINU.Models
     
     public partial class ActividadMilitar
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ActividadMilitar()
-        {
-            this.Persona = new HashSet<Persona>();
-        }
-    
-        public Nullable<bool> SolicitoIngresoAnterior { get; set; }
         public Nullable<bool> Ingreso { get; set; }
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
@@ -34,10 +27,6 @@ namespace SINU.Models
         public int IdBaja { get; set; }
         public int IdActividadMilitar { get; set; }
     
-        public virtual Baja Baja { get; set; }
         public virtual Fuerza Fuerza { get; set; }
-        public virtual SituacionRevista SituacionRevista { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Persona> Persona { get; set; }
     }
 }

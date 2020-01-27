@@ -12,9 +12,18 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Baja
+    public partial class Interes
     {
-        public string BajaCausa { get; set; }
-        public int IdBaja { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Interes()
+        {
+            this.Persona = new HashSet<Persona>();
+        }
+    
+        public int IdInteres { get; set; }
+        public string DescInteres { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Persona> Persona { get; set; }
     }
 }

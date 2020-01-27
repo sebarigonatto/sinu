@@ -15,7 +15,7 @@ namespace SINU.Models
     public partial class vPersona_Domicilio
     {
         public string Email { get; set; }
-        public Nullable<int> IdPersona { get; set; }
+        public int IdPersona { get; set; }
         public string Calle { get; set; }
         public string Numero { get; set; }
         public string Piso { get; set; }

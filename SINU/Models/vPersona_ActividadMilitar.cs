@@ -14,7 +14,6 @@ namespace SINU.Models
     
     public partial class vPersona_ActividadMilitar
     {
-        public string Email { get; set; }
         public int IdPersona { get; set; }
         public int IdActividadMilitar { get; set; }
         public int IdFuerza { get; set; }
@@ -24,5 +23,6 @@ namespace SINU.Models
         public string Destino { get; set; }
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
+        public Nullable<bool> Ingreso { get; set; }
     }
 }

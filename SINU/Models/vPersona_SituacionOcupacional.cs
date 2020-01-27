@@ -14,7 +14,6 @@ namespace SINU.Models
     
     public partial class vPersona_SituacionOcupacional
     {
-        public string Email { get; set; }
         public int IdPersona { get; set; }
         public int IdEstadoOcupacional { get; set; }
         public int IdSituacionOcupacional { get; set; }
@@ -25,5 +24,7 @@ namespace SINU.Models
         public Nullable<int> AniosTrabajados { get; set; }
         public string Oficio { get; set; }
         public bool CargaOcupacionActual { get; set; }
+        public string Explicacion { get; set; }
+        public string DescInteres { get; set; }
     }
 }
