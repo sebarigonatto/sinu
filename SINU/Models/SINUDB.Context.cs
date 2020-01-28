@@ -86,6 +86,9 @@ namespace SINU.Models
         public virtual DbSet<ActividadMilitar> ActividadMilitar { get; set; }
         public virtual DbSet<Interes> Interes { get; set; }
         public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
+        public virtual DbSet<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
+        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
+        public virtual DbSet<vUsuariosAdministrativos> vUsuariosAdministrativos { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

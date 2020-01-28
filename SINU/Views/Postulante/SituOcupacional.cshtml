@@ -40,8 +40,8 @@ new { id = "BeginFormSituOcupacional" }))
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.EstadoOcupacional, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, new SelectList(Model.EstadoDescripcionVM, "Value", "Text"), "Seleccione una OPCION", htmlAttributes: new { @class = "form-control comboboxSITU" })
+                        <div class="col-md-7">
+                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, Model.EstadoDescripcionVM, "Seleccione una OPCION", htmlAttributes: new { @class = "form-control selectpicker" })
                             @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -73,8 +73,8 @@ new { id = "BeginFormSituOcupacional" }))
                         <div class="form-group ">
                             @Html.Label("¿Posee algunos de estos Oficios?", htmlAttributes: new { @class = "control-label col-md-7" })
                             <div class="col-md-7">
-                                @Html.DropDownListFor(model => model.InteresesVM, new SelectList(Model.InteresesVM, "IdInteres", "DescInteres"), null, htmlAttributes: new { @class = "form-control", @id = "Estado" , @multiple= true })
-                                @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(model=>model.IdInteres, Model.InteresesVM, new { @class = "form-control", @id = "Estado", @multiple = "multiple" })
+                                @Html.ValidationMessageFor(model => model.IdInteres, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         
@@ -124,6 +124,11 @@ new { id = "BeginFormSituOcupacional" }))
                     valcombo = $('#' + comboid + ' option:selected').html();
                 }
             });
+            @*var listInt = "@Model.VPersona_SituacionOcupacionalVM.DescInteres".split(',');
+            $.each(listInt, function (index, value) {
+                
+            });*@
+            
 
         });
 

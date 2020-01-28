@@ -73,9 +73,9 @@ namespace SINU.ViewModels
     public class SituacionOcupacionalVM
     {
         public vPersona_SituacionOcupacional VPersona_SituacionOcupacionalVM { get; set; }
-        public List<SelectListItem> EstadoDescripcionVM { get; set; }
-        public List<Interes> InteresesVM { get; set; }
-
+        public SelectList EstadoDescripcionVM { get; set; }
+        public List<SelectListItem> InteresesVM { get; set; }
+        public List<string> IdInteres { get; set; }
 
     }
 }

@@ -605,19 +605,17 @@ namespace SINU.Controllers
         {
             try
             {
-                SituacionOcupacionalVM SituOcupacional = new SituacionOcupacionalVM() {
-                    EstadoDescripcionVM = db.EstadoOcupacional.Select(e => new SelectListItem
-                    {
-                        Value = e.Id.ToString(),
-                        Text = e.EstadoOcupacional1 + " - " + e.Descripcion
-                    }).ToList(),
-                    InteresesVM = db.Interes.ToList()
-                };
+                var Activo = new SelectListGroup() { Name = "Activo" };
+                var Inactivo = new SelectListGroup() { Name="Inactivo"};
+
+                SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM();
+         
+                SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1);
 
                 var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == IDPER);
                 if (situ == null)
                 {
-                    SituOcupacional.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
+                    SituOcu.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
                     {
                         IdSituacionOcupacional = 0,
                         IdPersona = IDPER
@@ -625,9 +623,12 @@ namespace SINU.Controllers
                 }
                 else
                 {
-                    SituOcupacional.VPersona_SituacionOcupacionalVM = situ;
+                    SituOcu.VPersona_SituacionOcupacionalVM = situ;
+
+                    List<string> InteresesSeleccionados = db.Persona.Find(IDPER).Interes.Select(m => m.DescInteres).ToList();
+                    SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
                 };
-                return PartialView(SituOcupacional);
+                return PartialView(SituOcu);
             }
             catch (Exception)
             {
@@ -641,14 +642,34 @@ namespace SINU.Controllers
             try
             {
                 var s = situ.VPersona_SituacionOcupacionalVM;
-                var result = db.spSituacionOcupacionalIU(s.IdSituacionOcupacional, s.IdPersona, s.IdEstadoOcupacional, s.OcupacionActual, s.Oficio, s.AniosTrabajados, s.DomicilioLaboral);
+                db.spSituacionOcupacionalIU(s.IdSituacionOcupacional, s.IdPersona, s.IdEstadoOcupacional, s.OcupacionActual, s.Oficio, s.AniosTrabajados, s.DomicilioLaboral);
+
+
+                Interes ins = new Interes();
+                var per = db.Persona.Find(IDPER).Interes;
+                per.Clear();
+                if (situ.IdInteres != null)
+                {
+                    foreach (var item in situ.IdInteres)
+                    {
+                        ins = db.Interes.Find(Double.Parse(item));
+                        per.Add(ins);
+                    };
+                };    
+                db.SaveChanges();
+                //var asd = db.Persona.Find(IDPER).Interes.ToList();
                 return Json(new { success = true, msg= "exito en guardar la situacion ocupacional" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
         }
 
+        public JsonResult GuardaInteres()
+        {
+
+            return Json(new { },JsonRequestBehavior.AllowGet);
+        }
     }
 }
