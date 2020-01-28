@@ -1,5 +1,6 @@
 ﻿using SINU.Authorize;
 using SINU.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -9,40 +10,42 @@ namespace SINU.Controllers
     public class DelegacionController : Controller
     {
         SINUEntities db = new SINUEntities();
+        OficinasYDelegaciones UsuarioDelegacion;
         // GET: Delegacion
         public ActionResult Index()
-        {// tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
-         //cargo todos los registros que ayan valido la cuenta, y esten en la carga de los datos basicos
-            var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5).ToList();
-            return View("Index",cargadatosbasicos);
+        {
+            //busco la delegacion que pertenece al usuario con perfil de delegacion            
+            UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+            ViewBag.Delegacion = UsuarioDelegacion.Nombre;
 
-            //return View();
+            // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
+            //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
+            var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio== UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+            return View("Index",cargadatosbasicos);         
         }
 
         // GET: Delegacion/Details/5
         public ActionResult Details(int? id)
         {
-           
+            //busco la delegacion que pertenece al usuario con perfil de delegacion            
+            UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+            ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+
 
             if (id == null)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(new System.Exception("Falta el ID de Inscripcion que desea consultar."),"Delegacion","Details"));
             }
 
-            //vInscripcionDetalle InscripcionElegida = db.vInscripcionDetalle.Find(id);
+            List<vInscripcionDetalle> InscripcionElegida = db.vInscripcionDetalle.Where(m=>m.IdInscripcion==id &&m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();           
 
-            ////por ahora hago esto
-            var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdInscripcionEtapaEstado == id).ToList();
-
-            if (cargadatosbasicos == null)
+            if (InscripcionElegida.Count==0)
             {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(new System.Exception("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + "==> NO EXISTE"), "Delegacion", "Details"));
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(new System.Exception("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + "==> NO EXISTE o no le corresponde verlo"), "Delegacion", "Details"));
                
             }
-            vInscripcionEtapaEstadoUltimoEstado InscripcionElegida = cargadatosbasicos[0];
-            return View(InscripcionElegida);
-
-            //return PartialView(InscripcionElegida);
+            
+            return View(InscripcionElegida.ToList()[0]);
 
         }
 

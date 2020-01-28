@@ -1,35 +1,123 @@
-﻿@model SINU.Models.vInscripcionEtapaEstadoUltimoEstado
+﻿@model SINU.Models.vInscripcionDetalle
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+    <h2>Detalles Inscripcion selecionada de  @ViewBag.Delegacion</h2>
 
 <div>
-    <h4>vInscripcionEtapaEstadoUltimoEstado</h4>
+    <h4>@Model.IdInscripcion</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
+            @Html.DisplayNameFor(model => model.Apellido)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Fecha)
+            @Html.DisplayFor(model => model.Apellido)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Nombres)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Celular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Celular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComoSeEntero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComoSeEntero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preferencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preferencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRegistro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inscripto_En)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inscripto_En) - @Html.DisplayFor(model => model.Inscripto_En_descrip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaEntrevista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaEntrevista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRindeExamen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRindeExamen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rinde_En)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rinde_En)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdInscripcion  }) |
+    @Html.ActionLink("Regresar", "Index")
 </p>
