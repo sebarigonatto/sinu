@@ -6,7 +6,7 @@
 //     Los cambios manuales en este archivo se sobrescribirán si se regenera el código.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System.ComponentModel.DataAnnotations;
 namespace SINU.Models
 {
     using System;
@@ -17,6 +17,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public string Genero { get; set; }
         public Nullable<int> Altura { get; set; }
+        [Display(Name ="Pesos")]
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         public Nullable<int> PerimCabeza { get; set; }

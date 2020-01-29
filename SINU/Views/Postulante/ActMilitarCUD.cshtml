@@ -50,7 +50,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.Ingreso, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div id="NO">
+                            <div class="no">
                                 <div class="form-group ">
                                     @Html.LabelFor(model => model.ACTMilitarIDVM.CausaMotivoNoingreso, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
@@ -59,7 +59,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                     </div>
                                 </div>
                             </div>
-                            <div id="SI">
+                            <div class="si">
                                 <div class="form-group ">
                                     @Html.LabelFor(model => model.ACTMilitarIDVM.FechaIngreso, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
@@ -134,7 +134,7 @@ new { id = "BeginFormActMilitarCUD" }))
                 {
                     <input type="button" value="Eliminar" class="btn btn-danger " id="EliminaACT" />
                 }
-                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarACT" />
+                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarACT" onclick="$('#ModalAct').modal('hide')" />
 
             </div>
         </div>
