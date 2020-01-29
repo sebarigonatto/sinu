@@ -179,6 +179,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Authorize\AuthorizacionPermiso.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Administrador\AdministradorController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
@@ -950,6 +951,7 @@
     <Content Include="Views\Postulante\ActMilitarCUD.cshtml" />
     <Content Include="Views\Postulante\SituOcupacional.cshtml" />
     <Content Include="Views\Delegacion\Details.cshtml" />
+    <Content Include="Views\Administrador\UsuariosAdministrativos.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

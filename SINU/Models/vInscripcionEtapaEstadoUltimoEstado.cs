@@ -19,5 +19,6 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha { get; set; }
         public string Email { get; set; }
         public int IdPersona { get; set; }
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
     }
 }

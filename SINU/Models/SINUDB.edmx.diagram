@@ -96,7 +96,7 @@
         <AssociationConnector Association="SINUModel.PersonaInteres" />
         <EntityTypeShape EntityType="SINUModel.vPersona_SituacionOcupacional" Width="1.5" PointX="19.375" PointY="18.75" />
         <EntityTypeShape EntityType="SINUModel.Usuario_OficyDeleg" Width="1.5" PointX="10.5" PointY="24.5" />
-        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="21.375" PointY="17.75" />
+        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="3.375" PointX="21.375" PointY="17.75" />
         <EntityTypeShape EntityType="SINUModel.vUsuariosAdministrativos" Width="1.5" PointX="21.375" PointY="22.75" />
         <AssociationConnector Association="SINUModel.FK_Usuario_OficyDeleg_OficinasYDelegaciones" />
         </Diagram>

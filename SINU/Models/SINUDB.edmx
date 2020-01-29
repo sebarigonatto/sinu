@@ -516,6 +516,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1623,7 +1624,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha] AS [Fecha], 
     [vInscripcionEtapaEstadoUltimoEstado].[Email] AS [Email], 
-    [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona]
+    [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
+    [vInscripcionEtapaEstadoUltimoEstado].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio]
     FROM [dbo].[vInscripcionEtapaEstadoUltimoEstado] AS [vInscripcionEtapaEstadoUltimoEstado]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" store:Type="Views" store:Schema="dbo">
@@ -2508,6 +2510,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Fecha" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -4099,6 +4102,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
