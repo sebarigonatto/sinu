@@ -1,9 +1,9 @@
 ﻿@model SINU.ViewModels.SituacionOcupacionalVM
 
-@{
+@*@{
     ViewBag.Title = "Situacion Ocupacional";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 
 @using (Ajax.BeginForm("SituOcupacional", "Postulante", null,
 new AjaxOptions
@@ -41,7 +41,7 @@ new { id = "BeginFormSituOcupacional" }))
                     <div class="form-group">
                         @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.EstadoOcupacional, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, Model.EstadoDescripcionVM, "Seleccione una OPCION", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, Model.EstadoDescripcionVM, "Seleccione una OPCION", htmlAttributes: new { @class = "form-control selectpicker" ,@id = "inaoact"})
                             @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -70,6 +70,8 @@ new { id = "BeginFormSituOcupacional" }))
                                 @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger" })
                             </div>
                         </div>
+                    </div>
+
                         <div class="form-group ">
                             @Html.Label("¿Posee algunos de estos Oficios?", htmlAttributes: new { @class = "control-label col-md-7" })
                             <div class="col-md-7">
@@ -77,18 +79,7 @@ new { id = "BeginFormSituOcupacional" }))
                                 @Html.ValidationMessageFor(model => model.IdInteres, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        
-                        <br />
-                        <div class="form-group ">
-                            <div class="col-md-12">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#ModalInteres" id="Interes">
-                                    ¿Posee alguno de estos oficios?
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -100,16 +91,29 @@ new { id = "BeginFormSituOcupacional" }))
     </div>
  }
 
- @section Scripts {
+ @*@section Scripts {
  @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
 
         $(document).ready(function () {
      
-            //se aplicael selecpicker a alos conbo/s con autocomplete
-            /* https://developer.snapappointments.com/bootstrap-select/ */
-           var Interes = $("#Estado").selectpicker({
+               //se aplicael selecpicker a alos conbo/s con autocomplete
+        /* https://developer.snapappointments.com/bootstrap-select/ */
+            SITUOCUPA();
+
+            function SITUOCUPA(){
+                 var group = $("#inaoact option:selected").closest('optgroup').attr('label');
+                var text = $("#inaoact option:selected").html();
+                if (group == "Inactivo" || text == "Desocupado") {
+                    $("#SI").hide();
+                    $("#SI input").val("");
+                } else {
+                    $("#SI").show();
+                }
+            };
+
+            var Interes = $("#Estado").selectpicker({
                 size: 6,
                 actionsBox: true,
                 deselectAllText: 'Deseleccionar Todo',
@@ -117,19 +121,10 @@ new { id = "BeginFormSituOcupacional" }))
                 noneSelectedText: 'Ninguna Opcion Seleccionada'
             });
            
-            Interes.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                comboid = $(this).attr("id");
-                if (comboid != "ComboIdInstEST") {
-                    //alert(comboid);
-                    valcombo = $('#' + comboid + ' option:selected').html();
-                }
+            $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                SITUOCUPA();
             });
-            @*var listInt = "@Model.VPersona_SituacionOcupacionalVM.DescInteres".split(',');
-            $.each(listInt, function (index, value) {
-                
-            });*@
-            
-
+                 
         });
 
         
@@ -149,4 +144,4 @@ new { id = "BeginFormSituOcupacional" }))
          //////////////////////////////////////////////////////////////////////////////
 
     </script>
-  }
+  }*@

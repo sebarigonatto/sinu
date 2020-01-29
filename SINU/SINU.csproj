@@ -954,6 +954,7 @@
     <Content Include="Views\Administrador\UsuariosAdministrativos.cshtml" />
     <Content Include="Views\Shared\_Master.cshtml" />
     <Content Include="Views\Administrador\MenuPerfil.cshtml" />
+    <Content Include="Views\Postulante\Antropo.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

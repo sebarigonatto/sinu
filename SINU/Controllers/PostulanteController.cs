@@ -33,21 +33,20 @@ namespace SINU.Controllers
             try
             {
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
-                DatosBasicosVM datosba = new DatosBasicosVM()
-                {
+                DatosBasicosVM datosba = new DatosBasicosVM() 
+                { 
                     SexoVM = db.Sexo.ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == IDPER)
                 };
 
-
                 return PartialView(datosba);
             }
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
 
         }
@@ -109,7 +108,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
         }
 
@@ -174,7 +173,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
         }
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
@@ -268,7 +267,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
         }
 
@@ -337,7 +336,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
         }
         [HttpPost]
@@ -474,7 +473,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return View(ex);
+                return PartialView(ex);
             }
         }
 
@@ -600,17 +599,18 @@ namespace SINU.Controllers
             }
         }
 
-        /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
+ /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
         public ActionResult SituOcupacional()
         {
             try
             {
-                var Activo = new SelectListGroup() { Name = "Activo" };
-                var Inactivo = new SelectListGroup() { Name="Inactivo"};
-
+               
                 SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM();
          
                 SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1);
+
+                List<string> InteresesSeleccionados = db.Persona.Find(IDPER).Interes.Select(m => m.DescInteres).ToList();
+                SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
 
                 var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == IDPER);
                 if (situ == null)
@@ -618,16 +618,14 @@ namespace SINU.Controllers
                     SituOcu.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
                     {
                         IdSituacionOcupacional = 0,
-                        IdPersona = IDPER
+                        IdPersona = IDPER,   
                     };
                 }
                 else
                 {
                     SituOcu.VPersona_SituacionOcupacionalVM = situ;
-
-                    List<string> InteresesSeleccionados = db.Persona.Find(IDPER).Interes.Select(m => m.DescInteres).ToList();
-                    SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
                 };
+
                 return PartialView(SituOcu);
             }
             catch (Exception)
@@ -666,10 +664,14 @@ namespace SINU.Controllers
             }
         }
 
-        public JsonResult GuardaInteres()
+        /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
+        public ActionResult Antropo()
         {
+            vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona==IDPER);
 
-            return Json(new { },JsonRequestBehavior.AllowGet);
+            return PartialView(antropo);
         }
+
+
     }
 }
