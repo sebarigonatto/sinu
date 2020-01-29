@@ -4,17 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--El  ViewBag.Title debe cargarse en cada view o en el codigo del action que llama a una view   -->
     <title>@ViewBag.Title</title>
-
     <link rel="shortcut icon" href="~/Imagenes/favicon.ico" type="image/x-icon" />
-
+    
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <!-- aqui comienza el menú Principal con cada opcion según el grupo al que pertenece-->
+
     <div class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top" style="margin-bottom:10px">
         <div class="container">
             @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
@@ -25,30 +22,19 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-
-                    <!--Armado de los link standard para todos los perfiles/grupos     -->
-                    @*<li class="nav-item">@Html.ActionLink("texto a mostrar", "accion", "controlador", null, htmlAttributes: new { @class = "nav-link" })</li>*@
+                    @*<li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>*@
                     <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
-
-                    <!--Armado de link de prueba actual .. quitar en el definitivo     -->
                     <li class="nav-item">@Html.ActionLink("Eliminar Registro de Prueba", "Vaciar", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
-
-                    <!--Armado del menu para el perfil/grupo correspondiente     -->
-                    <!-- RenderSection(“NombreSeccion”, required) SI required= false esta sección es opcional, con valor a true le decimos que es obligatorio-->
-                    @RenderSection("MenuPerfil", false)
                 </ul>
-                <!--Coloca Link de SESION en extremo Derecho     -->
                 @Html.Partial("_LoginPartial")
 
             </div>
         </div>
     </div>
-    <!-- aqui TERMINA el menú Principal -->
 
     <div id="body1" class="container body-content">
         <br />
-        <!--Aquí se substituye con el contenido de la pagina VIEW que corresponda según la llamada ejecutada desde las Action -->
         @RenderBody()
 
         <footer class="fixed-bottom" style="background-color:white;height: 4%;">

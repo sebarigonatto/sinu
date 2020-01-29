@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Administración";
+}
+<!--
+<h2>MenuPerfil</h2>
+-->
+@section MenuPerfil{
+    <li class="nav-item">@Html.ActionLink("Usuarios", "Index", "Administrador", null, htmlAttributes: new { @class = "nav-link" })</li>
+    @*<li class="nav-item">@Html.DropDownList()*@
+    <div class="dropdown">
+        <button class="dropbtn">
+            Parametricas
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="~/Controllers/Administrador/FuerzasController.cs">Fuerzas</a>
+            <a href="~/Controllers/Administrador/OficinasYDelegacionesController.cs">Ofic./Deleg.</a>
+            <a href="~/Controllers/Administrador/TipoNacionalidadsController.cs">Nacionalidad</a>
+        </div>
+    </div>
+
+}
+

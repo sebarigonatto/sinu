@@ -1,28 +1,33 @@
-﻿@using Microsoft.AspNet.Identity
+﻿ <!--
+     Aqui se decide si se coloca "Iniciar Sesión" o  "Cerrar Sesión" dependiendo si está conectado o no al sistema el usuario activo 
+     la ubicacion es al extremo derecho
+ -->
+
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" } )
-        </li>
-        <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
-    </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+            </li>
+            <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesión</a></li>
+        </ul>
     }
 }
 else
 {
-<ul class="nav navbar-nav navbar-right">
-    @{
-        if (!HttpContext.Current.Request.Path.Contains("Register"))
-        {
-            <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+    <ul class="nav navbar-nav navbar-right">
+        @{
+            if (!HttpContext.Current.Request.Path.Contains("Register"))
+            {
+                <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+            }
         }
-    }
-    <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path.ToString() }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Iniciar Sesión", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path.ToString() }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
 
-</ul>
+    </ul>
 }
