@@ -41,7 +41,7 @@ new { id = "BeginFormSituOcupacional" }))
                     <div class="form-group">
                         @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.EstadoOcupacional, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-7">
-                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, Model.EstadoDescripcionVM, "Seleccione una OPCION", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.DropDownListFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, Model.EstadoDescripcionVM, "Seleccione una OPCION", htmlAttributes: new { @class = "form-control selectpicker" ,@id = "inaoact"})
                             @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.IdEstadoOcupacional, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -117,19 +117,12 @@ new { id = "BeginFormSituOcupacional" }))
                 noneSelectedText: 'Ninguna Opcion Seleccionada'
             });
            
-            Interes.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                comboid = $(this).attr("id");
-                if (comboid != "ComboIdInstEST") {
-                    //alert(comboid);
-                    valcombo = $('#' + comboid + ' option:selected').html();
-                }
-            });
-            @*var listInt = "@Model.VPersona_SituacionOcupacionalVM.DescInteres".split(',');
-            $.each(listInt, function (index, value) {
+            $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                comboid = $(e.target).closest('li').css("background-color","black");
+                    alert(comboid);
                 
-            });*@
-            
-
+            });
+                 
         });
 
         

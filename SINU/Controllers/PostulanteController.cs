@@ -605,9 +605,7 @@ namespace SINU.Controllers
         {
             try
             {
-                var Activo = new SelectListGroup() { Name = "Activo" };
-                var Inactivo = new SelectListGroup() { Name="Inactivo"};
-
+               
                 SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM();
          
                 SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1);
@@ -618,8 +616,10 @@ namespace SINU.Controllers
                     SituOcu.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
                     {
                         IdSituacionOcupacional = 0,
-                        IdPersona = IDPER
+                        IdPersona = IDPER,
                     };
+                    SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString() }).ToList();
+
                 }
                 else
                 {
