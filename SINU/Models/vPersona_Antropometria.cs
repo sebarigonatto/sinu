@@ -17,7 +17,6 @@ namespace SINU.Models
         public string Email { get; set; }
         public string Genero { get; set; }
         public Nullable<int> Altura { get; set; }
-        [Display(Name ="Pesos")]
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         public Nullable<int> PerimCabeza { get; set; }

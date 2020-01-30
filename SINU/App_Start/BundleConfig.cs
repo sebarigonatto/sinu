@@ -15,7 +15,8 @@ namespace SINU
         
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/JavaScript-Decimal.js"));
 
 
 
