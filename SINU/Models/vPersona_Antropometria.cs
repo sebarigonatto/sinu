@@ -17,7 +17,10 @@ namespace SINU.Models
         public string Email { get; set; }
         public string Genero { get; set; }
         public Nullable<int> Altura { get; set; }
-        [Display(Name ="Pesos")]
+        //[Display(Name ="Peso(en kg)")]
+        //[DataType(DataType.Text)]
+        //[DisplayFormat(DataFormatString = "{0:###,#}", ApplyFormatInEditMode = true)]
+        [RegularExpression("([0-9]{1,3})(,[0-9])?", ErrorMessage = "debe cumplir esta forma 999,9")]
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         public Nullable<int> PerimCabeza { get; set; }
