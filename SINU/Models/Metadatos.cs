@@ -62,4 +62,38 @@ namespace SINU.Models
         public int idTipoNacionalidad { get; set; }
         public string Nacionalidad { get; set; }
     }
+
+    public  class vPersona_AntropometriaMetadata
+    {
+        public string Email { get; set; }
+        public string Genero { get; set; }
+        [Required]
+        [Display(Name = "Altura(en cm)")]
+        public Nullable<int> Altura { get; set; }
+        [Required]
+        [Display(Name = "Peso(en kg)")]
+        [DisplayFormat(DataFormatString = "{0:F1}", ApplyFormatInEditMode = true)]
+        [RegularExpression("([0-9]{1,3})(,[0-9])?", ErrorMessage = "Debe cumplir esta forma 999,9")]
+        public Nullable<decimal> Peso { get; set; }
+        public Nullable<decimal> IMC { get; set; }
+        [Required]
+        public Nullable<int> PerimCabeza { get; set; }
+        [Required]
+        public Nullable<int> PerimTorax { get; set; }
+        [Required]
+        public Nullable<int> PerimCintura { get; set; }
+        [Required]
+        public Nullable<int> PerimCaderas { get; set; }
+        [Required]
+        public Nullable<int> LargoPantalon { get; set; }
+        [Required]
+        public Nullable<int> LargoEntrep { get; set; }
+        public Nullable<int> LargoFalda { get; set; }
+        [Required]
+        public Nullable<int> Cuello { get; set; }
+        [Required]
+        public Nullable<int> Calzado { get; set; }
+        [Required]
+        public int IdPersona { get; set; }
+    }
 }

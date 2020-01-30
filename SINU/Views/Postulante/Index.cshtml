@@ -177,6 +177,11 @@
                                     Situacion Ocupacional
                                 </a>
                             </li>
+                            <li class="nav-item flex-sm-fill bli">
+                                <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Antropometria" role="tab" aria-controls="Antropometria" aria-selected="false">  
+                                    Antropometria                                
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- /.col-md-4 -->
@@ -207,6 +212,10 @@
                             @* VISTA DE SITUACION OCUPACIONAL*@
                             <div class="tab-pane fade" id="SituOcu" role="tabpanel" aria-labelledby="SituOcu-tab">
                                 @Html.Action("SituOcupacional", "Postulante")
+                            </div>
+                            @* VISTA DE ANTROPOMETRIA *@
+                            <div class="tab-pane fade" id="Antropometria" role="tabpanel" aria-labelledby="Antropometria-tab">
+                                @Html.Action("Antropometria", "Postulante")
                             </div>
                         </div>
                     </div>
@@ -875,6 +884,48 @@
             $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 SITUOCUPA();
             });
+
+/////////////////////////////////////////////////////////////////////////////
+            /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
+
+
+
+              var sex = $("#Sexo");
+            sexo(sex.val());
+
+            sex.on("change", function () {
+                sexo(sex.val());
+            });
+
+            $("#antropo input").each(function () {
+                if ($(this).val()=="") {
+                    $(this).val(0);
+                }
+            });
+
+            $("#altura,#peso").on("change", function () {
+
+                var altura = $("#altura").val()/100,
+                    peso = $("#peso").val().replace(",", ".");
+                if (altura != 0 && peso != 0) {
+                    var imc = peso / (altura * altura);
+                    //alert(imc);
+                    $("#imc").attr("value",imc.toFixed(2).replace(".",","));
+                }
+
+            });
+
+            function sexo(element) {
+                //alert(element);
+                if (element != "Mujer") {
+                    $("#mujer").hide();
+                    $("#mujer input").val(0);
+                } else {
+                    $("#mujer").show();
+                }
+            };
+
+
                 
         });
 
