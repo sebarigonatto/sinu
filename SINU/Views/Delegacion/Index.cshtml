@@ -1,8 +1,18 @@
-﻿@{
-    ViewBag.Title = "Listado de Inscriptos";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿
+<!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML 
+    (REGLA DE NOMENCLATURA: TODAS LAS PARTIALVIEW DEBEN COMENZAR CON GUION BAJO EN EL NOMBRE)-->
 
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
+@{
+    ViewBag.Title = "Listado de Inscriptos";
+}
+@section MenuPerfil{
+
+    @Html.Partial("_MenuPerfilDeleg")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+<!-- INCORRECTO COLOCAR LOS STYLES AQUI-->
 <style>
     @@media (min-width: 576px) {
         .rounded-nav {
@@ -124,7 +134,7 @@
         <div class="col-sm-9 borderdiv1">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active pt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  @Html.Partial("Listado")
+                    @Html.Partial("_Listado")
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <h2>Profile</h2>

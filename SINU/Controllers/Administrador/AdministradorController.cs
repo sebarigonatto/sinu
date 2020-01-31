@@ -16,7 +16,7 @@ namespace SINU.Controllers.Administrador
         // GET: Administrador
         public ActionResult Index()
         {
-            IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos.Where(m=>true);
+            IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos.Where(m=>true);//TRAIGO TODOS LOS TIPOS DE USUARIOS 
             return View("UsuariosAdministrativos",usuarios);
         }
 

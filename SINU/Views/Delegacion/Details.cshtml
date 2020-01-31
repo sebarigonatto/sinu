@@ -1,11 +1,17 @@
 ﻿@model SINU.Models.vInscripcionDetalle
 
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Detalle";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "DETALLE INSCRIPTO";
 }
+@section MenuPerfil{
 
-    <h2>Detalles Inscripcion selecionada de  @ViewBag.Delegacion</h2>
+    @Html.Partial("_MenuPerfilDeleg")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+
+<h2>Detalles Inscripción seleccionada de  @ViewBag.Delegacion</h2>
 
 <div>
     <h4>@Model.IdInscripcion</h4>
@@ -118,6 +124,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdInscripcion  }) |
+    @Html.ActionLink("Modificar", "Edit", new { id = Model.IdInscripcion }) |
     @Html.ActionLink("Regresar", "Index")
 </p>

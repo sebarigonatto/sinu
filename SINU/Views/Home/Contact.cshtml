@@ -1,11 +1,15 @@
 ﻿@model SINU.ViewModels.vContacto
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    //List<SINU.Models.Configuracion> lstConfiguracion = Model.ToList()[0] as List<SINU.Models.Configuracion>;
-    //List<SINU.Models.OficinasYDelegaciones> lstOfi = Model.ToList()[1] as List<SINU.Models.OficinasYDelegaciones>;
-}
+    ViewBag.Title = "Contacto";
 
-@*<h2>@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>*@
+    ViewBag.Menu = SINU.Models.Func.CorrespondeMenu();
+}
+@section MenuPerfil{
+
+    @Html.Partial((String)@ViewBag.Menu);
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
 <div class="jumbotronP">
     <h2 class="font-jumb">
@@ -14,7 +18,7 @@
     <br />
     <address style="font-size:large">
         Mail de Contacto: @Model.Configuracion.First(p => p.NombreDato == "ResponsableMail").ValorDato <br />
-        Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato +"  "+ @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato
+        Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato -- @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato
         Piso: @Model.Configuracion.First(p => p.NombreDato == "ResponsablePisoOfic").ValorDato<br />
         Telefono: @Model.Configuracion.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
 
@@ -25,7 +29,7 @@
 
 <table id="tabla1" class="table" border="0">
 
-    <tr >
+    <tr>
         <th>
             @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
         </th>
@@ -54,7 +58,7 @@
         <th>
             @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
         </th>
-        
+
         <th></th>
     </tr>
     @foreach (var item in Model.listoficinas)

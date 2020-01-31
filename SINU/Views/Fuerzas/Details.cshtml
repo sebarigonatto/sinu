@@ -1,11 +1,16 @@
 ﻿@model SINU.Models.Fuerza
 
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detalle Fuerza";
 }
+@section MenuPerfil{
 
-<h2>Details</h2>
+    @Html.Partial("_MenuPerfilAdmin")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+<h2>Detalle Fuerza</h2>
 
 <div>
     <h4>Fuerza</h4>

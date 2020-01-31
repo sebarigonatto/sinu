@@ -1,12 +1,18 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = "Error General";
 
+    ViewBag.Menu = SINU.Models.Func.CorrespondeMenu();
 }
+@section MenuPerfil{
+    @*<li class="nav-item">@Html.ActionLink("Error", "", "", null, htmlAttributes: new { @class = "nav-link" })</li>*@
+    @Html.Partial((String)@ViewBag.Menu);
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">Error al procesar la solicitud.</h2>
 <!--verifico si al llamar a esta view mandaron un mensaje de error especifico -->
-<h2 class="text-danger"> @((Model == null) ? "" : Model.Exception.Message)</h2>
+<h2 class="text-danger"> @(((Model == null) ? "" : Model.Exception.Message + " - " + Model.ControllerName + " - " + Model.ActionName)+" "+ViewBag.Menu)</h2>
 

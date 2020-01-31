@@ -14,37 +14,54 @@ namespace SINU.Controllers
         // GET: Delegacion
         public ActionResult Index()
         {
-            //busco la delegacion que pertenece al usuario con perfil de delegacion            
-            UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-            ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+            try
+            {
+                //busco la delegacion que pertenece al usuario con perfil de delegacion            
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                ViewBag.Delegacion = UsuarioDelegacion.Nombre;
 
-            // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
-            //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
-            var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio== UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-            return View("Index",cargadatosbasicos);         
+                // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
+                //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
+                var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                return View("Index", cargadatosbasicos);
+
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
+            }
         }
 
         // GET: Delegacion/Details/5
         public ActionResult Details(int? id)
         {
-            //busco la delegacion que pertenece al usuario con perfil de delegacion            
-            UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-            ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-
-
-            if (id == null)
+            List<vInscripcionDetalle> InscripcionElegida;
+            try
             {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(new System.Exception("Falta el ID de Inscripcion que desea consultar."),"Delegacion","Details"));
+                //busco la delegacion que pertenece al usuario con perfil de delegacion            
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+
+
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
+                }
+
+                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+
+                if (InscripcionElegida.Count == 0)
+                {
+                    //return HttpNotFound("ese numero de ID no se encontro ");
+                    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
+                }
+
             }
-
-            List<vInscripcionDetalle> InscripcionElegida = db.vInscripcionDetalle.Where(m=>m.IdInscripcion==id &&m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();           
-
-            if (InscripcionElegida.Count==0)
+            catch (System.Exception ex)
             {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(new System.Exception("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + "==> NO EXISTE o no le corresponde verlo"), "Delegacion", "Details"));
-               
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
             }
-            
             return View(InscripcionElegida.ToList()[0]);
 
         }
@@ -52,7 +69,16 @@ namespace SINU.Controllers
         // GET: Delegacion/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
         }
 
         // POST: Delegacion/Create
@@ -65,16 +91,25 @@ namespace SINU.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (System.Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
 
         // GET: Delegacion/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Edit"));
+            }
         }
 
         // POST: Delegacion/Edit/5
@@ -87,16 +122,25 @@ namespace SINU.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (System.Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Edit"));
             }
         }
 
         // GET: Delegacion/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+            }
         }
 
         // POST: Delegacion/Delete/5
@@ -109,9 +153,9 @@ namespace SINU.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (System.Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
         }
     }

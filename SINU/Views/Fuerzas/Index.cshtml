@@ -1,9 +1,14 @@
 ﻿@model IEnumerable<SINU.Models.Fuerza>
-
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index Administración";
 }
+@section MenuPerfil{
+
+    @Html.Partial("_MenuPerfilAdmin")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
 
 <h2>Index</h2>
 
@@ -18,17 +23,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fuerza1)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdFuerza }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdFuerza }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdFuerza })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fuerza1)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdFuerza }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdFuerza }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdFuerza })
+            </td>
+        </tr>
+    }
 
 </table>

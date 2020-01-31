@@ -1,99 +1,55 @@
 ﻿@model IEnumerable<SINU.Models.vUsuariosAdministrativos>
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
     ViewBag.Title = "Administración";
 }
-    <style>
-/* Dropdown content (hidden by default) */
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropdown */
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-</style>
-<!--
-<h2>MenuPerfil</h2>
--->
 @section MenuPerfil{
-    <li class="nav-item">@Html.ActionLink("Usuarios", "Index", "Administrador", null, htmlAttributes: new { @class = "nav-link" })</li>
-    @*<li class="nav-item">@Html.DropDownList()*@
-    <div class="dropdown">
-        <button class="dropbtn">
-            Parametricas
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-content">
-            <a href="#Fuerzas">Fuerzas</a>
-            <a href="#OficinasYDelegacioness">Ofic./Deleg.</a>
-            <a href="#TipoNacionalidads">Nacionalidad</a>
-        </div>
-    </div>
 
+    @Html.Partial("_MenuPerfilAdmin")
 }
+    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.codGrupo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Delegacion)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.IdOficinasYDelegaciones)
-            </th>*@
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.codGrupo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Delegacion)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.IdOficinasYDelegaciones)
-                </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.codGrupo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delegacion)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IdOficinasYDelegaciones)
+                </th>*@
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codGrupo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Delegacion)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.IdOficinasYDelegaciones)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>

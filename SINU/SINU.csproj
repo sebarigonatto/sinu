@@ -217,6 +217,7 @@
     <Compile Include="Models\Baja.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClasesYFuncGenerales.cs" />
     <Compile Include="Models\Configuracion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -930,7 +931,7 @@
     <Content Include="Views\Postulante\Index.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
-    <Content Include="Views\Delegacion\Listado.cshtml" />
+    <Content Include="Views\Delegacion\_Listado.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
     <Content Include="Views\Postulante\Domicilio.cshtml" />
     <Content Include="Views\Postulante\Estudios.cshtml" />
@@ -952,9 +953,11 @@
     <Content Include="Views\Postulante\SituOcupacional.cshtml" />
     <Content Include="Views\Delegacion\Details.cshtml" />
     <Content Include="Views\Administrador\UsuariosAdministrativos.cshtml" />
-    <Content Include="Views\Shared\_Master.cshtml" />
-    <Content Include="Views\Administrador\MenuPerfil.cshtml" />
     <Content Include="Views\Postulante\Antropo.cshtml" />
+    <Content Include="Views\Shared\_MenuPerfilAdmin.cshtml" />
+    <Content Include="Views\Shared\_MenuPerfilDeleg.cshtml" />
+    <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />
+    <Content Include="Views\Shared\_MenuPerfilPostu.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

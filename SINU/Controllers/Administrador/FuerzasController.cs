@@ -24,12 +24,14 @@ namespace SINU.Controllers.Administrador
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de Fuerzas", "Fuerzas", "Details"));
             }
             Fuerza fuerza = db.Fuerza.Find(id);
             if (fuerza == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound("ese numero de ID no se encontro en la tabla de Fuerzas");
+                return View("Error", Func.ConstruyeError("Ese numero de ID no se encontro en la tabla de Fuerzas", "Fuerzas", "Details"));
             }
             return View(fuerza);
         }
@@ -62,12 +64,14 @@ namespace SINU.Controllers.Administrador
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de Fuerzas", "Fuerzas", "Edit"));
             }
             Fuerza fuerza = db.Fuerza.Find(id);
             if (fuerza == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound("ese numero de ID no se encontro en la tabla de Fuerzas");
+                return View("Error", Func.ConstruyeError("Ese numero de ID no se encontro en la tabla de Fuerzas", "Fuerzas", "Edit"));
             }
             return View(fuerza);
         }
@@ -92,13 +96,15 @@ namespace SINU.Controllers.Administrador
         public ActionResult Delete(int? id)
         {
             if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            {                
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);              
+                return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de Fuerzas", "Fuerzas", "Delete"));
             }
             Fuerza fuerza = db.Fuerza.Find(id);
             if (fuerza == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound("ese numero de ID no se encontro en la tabla de Fuerzas");
+                return View("Error", Func.ConstruyeError("Ese numero de ID no se encontro en la tabla de Fuerzas", "Fuerzas", "Delete"));
             }
             return View(fuerza);
         }

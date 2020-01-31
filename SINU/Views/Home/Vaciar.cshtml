@@ -1,11 +1,17 @@
-﻿
-
+﻿<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Eliminar Registros de Pruba";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    ViewBag.Title = "Eliminar Registros de Prueba";
 
-<h2>Eliminar Registros de Pruba</h2>
+    ViewBag.Menu = SINU.Models.Func.CorrespondeMenu();
+}
+@section MenuPerfil{
+
+    @Html.Partial((String)@ViewBag.Menu);
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+
+<h2>Eliminar Registros de Prueba</h2>
 
 <br />
 <h4>@ViewBag.vaciar</h4>

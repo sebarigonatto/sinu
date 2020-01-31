@@ -1,11 +1,16 @@
 ﻿@model SINU.Models.Fuerza
 
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Eliminación Fuerza";
 }
+@section MenuPerfil{
 
-<h2>Delete</h2>
+    @Html.Partial("_MenuPerfilAdmin")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+<h2>Eliminar Fuerza</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -22,7 +27,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

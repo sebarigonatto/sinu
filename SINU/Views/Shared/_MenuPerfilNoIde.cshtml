@@ -1,0 +1,65 @@
+﻿<!--
+
+ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS:
+    SE DEBE QUITAR EL STYLE Y UBICAR DONDE CORRESPONDE,
+    SE DEBE CREAR EL SUBMENU QUE AHORA ESTA CREADO CON UN BOTON TIPO COMBO DESPLEGABLE DE UNA MEJOR MANERA
+    SE DEBE RVISAR QUE CADA LINK DEL SUBMENÚ VAYA DONDE CORRESPONDA
+    CADA MENU DE CADA PERFIL SE DEBE CREAR CON LOS LINKS DEBIDOS PARA CADA PERFIL, AL MOMENTO QUE SE HIZO SE GENERARON LINKS MEDIO AL TUN TUN PARA PROBAR
+-->
+@{
+    //ViewBag.Title = "Sin usuario identificado";
+}
+<!--
+<h2>MenuPerfil</h2>
+-->
+<!--
+TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
+-->
+<style>
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            /* Add a grey background color to dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
+
+<li class="nav-item">@Html.ActionLink("NO IDENTIFICADO", "", "", null, htmlAttributes: new { @class = "nav-link" })</li>
+@*<li class="nav-item">@Html.DropDownList()*@
+@*<div class="dropdown">
+        <button class="dropbtn">
+            Tareas
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="~/Delegacion">Asignar Fecha Entrevista</a>
+            <a href="~/Delegacion">Listado Entrevistas</a>
+            <a href="~/Delegacion">Asignar Presentacion</a>
+        </div>
+    </div>*@
+
+
+

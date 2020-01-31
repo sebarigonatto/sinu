@@ -9,6 +9,7 @@ namespace SINU.Authorize
     public class AuthorizacionPermiso : AuthorizeAttribute
 
     {
+        private const string Url = "~/Error/AccionNoAutorizada";
         SINUEntities db = new SINUEntities();
         private readonly string[] funciones;
 
@@ -21,10 +22,10 @@ namespace SINU.Authorize
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //LOGICA DE VALIDACION segun fucion -------------------------------------
+            //LOGICA DE VALIDACION segun funcion -------------------------------------
             List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, funciones[0]).ToList();
             //HttpContext.Current.Session["funcion"] = funciones[0];
-            //----------------------------------si devuelve algo esta autorizado cso contrario no tiene permiso de esa funcion-----------------------
+            //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)
@@ -49,7 +50,7 @@ namespace SINU.Authorize
             //else
             {
                 //respuesta para view
-                context.Result = new RedirectResult("~/Error/AccionNoAutorizada");
+                context.Result = new RedirectResult(Url);
             }
         }
     }
