@@ -367,7 +367,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
             <PropertyRef Name="IdSexo" />
           </Key>
           <Property Name="IdSexo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Descripcion" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SituacionOcupacional">
           <Key>
@@ -588,7 +588,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Antropometria' no tiene de
             <PropertyRef Name="IdPersona" />
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="Genero" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Altura" Type="int" />
           <Property Name="Peso" Type="decimal" Precision="4" Scale="1" />
           <Property Name="IMC" Type="decimal" Precision="4" Scale="1" />
@@ -2386,7 +2386,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdSexo" />
           </Key>
           <Property Name="IdSexo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_Sexo" FromRole="Sexo" ToRole="Persona" />
         </EntityType>
         <EntityType Name="SituacionOcupacional">
@@ -2572,7 +2572,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdPersona" />
           </Key>
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Genero" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Altura" Type="Int32" />
           <Property Name="Peso" Type="Decimal" Precision="4" Scale="1" />
           <Property Name="IMC" Type="Decimal" Precision="4" Scale="1" />

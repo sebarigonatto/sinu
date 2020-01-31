@@ -11,4 +11,10 @@ namespace SINU.Models
     public partial class vPersona_DatosPer
     {
     }
+
+
+    [MetadataType(typeof(vPersona_AntropometriaMetadata))]
+    public partial class vPersona_Antropometria
+    {
+    }
 }

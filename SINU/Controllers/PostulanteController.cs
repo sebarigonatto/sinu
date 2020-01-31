@@ -653,25 +653,35 @@ namespace SINU.Controllers
                         ins = db.Interes.Find(Double.Parse(item));
                         per.Add(ins);
                     };
-                };    
+                };
                 db.SaveChanges();
                 //var asd = db.Persona.Find(IDPER).Interes.ToList();
-                return Json(new { success = true, msg= "exito en guardar la situacion ocupacional" });
+                return Json(new { success = true, msg = "exito en guardar la situacion ocupacional" });
             }
             catch (Exception ex)
             {
-                throw;
+                return Json(new { success = false, msg = ex.InnerException.Message });
             }
         }
-
-        /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
-        public ActionResult Antropo()
+            /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
+        public ActionResult Antropometria()
         {
             vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona==IDPER);
-
             return PartialView(antropo);
         }
+        [HttpPost]
+        public ActionResult Antropometria(vPersona_Antropometria a)
+        {
+            try
+            {
+                db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
+                return Json(new { success = true, msg = "exito en guardar la situacion ocupacional" });
+            }
+            catch (Exception ex )
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message});
+            }
 
-
+        }
     }
 }
