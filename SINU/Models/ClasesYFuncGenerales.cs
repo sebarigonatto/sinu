@@ -76,4 +76,19 @@ namespace SINU.Models
             return;
         }
     }
+
+    public class Usuario
+    {
+        public string Apellido { get; set; }
+        public string Nombres { get; set; }
+        public string Destino { get; set; }
+        public string Grado { get; set; }
+        public string MR { get; set; }
+        public string codGrupo { get; set; }
+        public string Email { get; set; }
+        public int IdOficinasYDelegaciones { get; set; }
+
+        public virtual OficinasYDelegaciones OficinasYDelegaciones { get; set; }
+
     }
+}
