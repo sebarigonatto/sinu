@@ -456,6 +456,7 @@
     <Content Include="bin\SINU.pdb" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Content\fontawesome.css" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Models\SINUDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -621,6 +622,9 @@
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
     <Content Include="Scripts\umd\popper.js" />
+    <Content Include="webfonts\fa-brands-400.svg" />
+    <Content Include="webfonts\fa-regular-400.svg" />
+    <Content Include="webfonts\fa-solid-900.svg" />
     <Content Include="wsCPA.asmx" />
     <Content Include="Content\bootstrap-datepicker.standalone.min.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -994,6 +998,18 @@
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="webfonts\fa-brands-400.eot" />
+    <Content Include="webfonts\fa-brands-400.ttf" />
+    <Content Include="webfonts\fa-brands-400.woff" />
+    <Content Include="webfonts\fa-brands-400.woff2" />
+    <Content Include="webfonts\fa-regular-400.eot" />
+    <Content Include="webfonts\fa-regular-400.ttf" />
+    <Content Include="webfonts\fa-regular-400.woff" />
+    <Content Include="webfonts\fa-regular-400.woff2" />
+    <Content Include="webfonts\fa-solid-900.eot" />
+    <Content Include="webfonts\fa-solid-900.ttf" />
+    <Content Include="webfonts\fa-solid-900.woff" />
+    <Content Include="webfonts\fa-solid-900.woff2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
