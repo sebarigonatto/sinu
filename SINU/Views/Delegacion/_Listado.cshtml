@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
 
 
-<table id="example" class="table table-bordered table-light" style="width:100%">
+<table  class="table table-filters table-bordered table-light" id="le-filters"  style="width:100%">
     <thead>
         <tr>
             <th>
@@ -10,7 +10,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th></th>
+            <th class="no-sort"></th>
         </tr>
     </thead>
     <tbody>
