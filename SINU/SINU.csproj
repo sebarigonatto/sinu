@@ -182,6 +182,7 @@
     <Compile Include="Controllers\Administrador\AdministradorController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
+    <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
     <Compile Include="Controllers\Administrador\TipoNacionalidadsController.cs" />
     <Compile Include="Controllers\DelegacionController.cs" />
@@ -434,6 +435,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Administrador.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
@@ -450,6 +452,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\SINU.dll" />
+    <Content Include="bin\SINU.pdb" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Imagenes\hombremedidas.jpg" />
@@ -463,6 +467,9 @@
       <DependentUpon>SINUDB.edmx</DependentUpon>
       <LastGenOutput>SINUDB.cs</LastGenOutput>
     </Content>
+    <Content Include="obj\Debug\SINU.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\SINU.dll" />
+    <Content Include="obj\Debug\SINU.pdb" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
@@ -659,6 +666,15 @@
     <Content Include="Models\SINUDB.edmx.diagram">
       <DependentUpon>SINUDB.edmx</DependentUpon>
     </Content>
+    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.csdl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.msl" />
+    <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.ssdl" />
+    <Content Include="obj\Debug\SINU.csproj.CopyComplete" />
+    <Content Include="obj\Debug\SINU.csproj.CoreCompileInputs.cache" />
+    <Content Include="obj\Debug\SINU.csproj.GenerateResource.cache" />
+    <Content Include="obj\Debug\SINU.csprojAssemblyReference.cache" />
+    <Content Include="obj\Debug\Tsc.out" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -963,6 +979,16 @@
     <Content Include="Views\Shared\_Master.cshtml" />
     <Content Include="Views\Administrador\MenuPerfil.cshtml" />
     <Content Include="Views\Postulante\Antropometria.cshtml" />
+    <Content Include="Views\OficinasYDelegaciones\Index.cshtml" />
+    <Content Include="Views\PeriodoInscripciones\Index.cshtml" />
+    <Content Include="Views\PeriodoInscripciones\Create.cshtml" />
+    <Content Include="Views\PeriodoInscripciones\Details.cshtml" />
+    <Content Include="Views\OficinasYDelegaciones\Edit.cshtml" />
+    <Content Include="Views\OficinasYDelegaciones\Delete.cshtml" />
+    <Content Include="Views\PeriodoInscripciones\Edit.cshtml" />
+    <Content Include="Views\PeriodoInscripciones\Delete.cshtml" />
+    <Content Include="Views\OficinasYDelegaciones\Details.cshtml" />
+    <Content Include="Views\OficinasYDelegaciones\Create.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -971,6 +997,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -988,6 +1015,8 @@
     <EmbeddedResource Include="Migrations\201911111515067_fechacreacion1.resx">
       <DependentUpon>201911111515067_fechacreacion1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="obj\Debug\SINU.Migrations.fechacreacion1.resources" />
+    <EmbeddedResource Include="obj\Debug\SINU.Migrations.fechatoken.resources" />
   </ItemGroup>
   <ItemGroup>
     <WebReferences Include="Web References\" />
