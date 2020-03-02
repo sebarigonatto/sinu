@@ -1,0 +1,98 @@
+﻿@model IEnumerable<SINU.Models.OficinasYDelegaciones>
+
+@{
+    ViewBag.Title = "Index";
+}
+@section MenuPerfil{
+
+    @Html.Partial("_MenuPerfilAdmin")
+}
+
+
+<div class="container">
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <div class="row d-flex justify-content-center">
+
+        <table class="table table-sm">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Localidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Provincia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Celular)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email2)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Localidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Provincia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Celular)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email2)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-success">@Html.ActionLink("Edit", "Edit", new { id = item.IdOficinasYDelegaciones })</button><br />
+                        <button type="button" class="btn btn-outline-info"> @Html.ActionLink("Details", "Details", new { id = item.IdOficinasYDelegaciones })</button><br />
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IdOficinasYDelegaciones })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

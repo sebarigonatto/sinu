@@ -2,7 +2,10 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section MenuPerfil{
+
+    @Html.Partial("_MenuPerfilAdmin")
 }
 
 <h2>Index</h2>
@@ -18,17 +21,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdSexo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdSexo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdSexo })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdSexo }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdSexo }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdSexo })
+            </td>
+        </tr>
+    }
 
 </table>
