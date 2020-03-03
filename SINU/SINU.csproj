@@ -454,9 +454,9 @@
   <ItemGroup>
     <Content Include="bin\SINU.dll" />
     <Content Include="bin\SINU.pdb" />
+    <Content Include="Content\all.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
-    <Content Include="Content\fontawesome.css" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Models\SINUDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

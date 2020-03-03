@@ -24,8 +24,9 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
+                    <i class="far fa-address-book"></i>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.IdInscripcionEtapaEstado}) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdInscripcionEtapaEstado }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>

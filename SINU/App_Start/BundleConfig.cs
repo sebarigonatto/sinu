@@ -39,10 +39,11 @@ namespace SINU
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                       "~/Content/all.css",
                       "~/Content/bootstrap-select.css",
                       "~/Content/bootstrap-datepicker.standalone.min.css",
                       "~/Scripts/DataTables/datatables.css",
-                      "~/Content/site.css"
+                     "~/Content/site.css"
 
                      ));
         }
