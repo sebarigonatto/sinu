@@ -1,10 +1,18 @@
 ﻿using SINU.Authorize;
 using SINU.Models;
+using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
+using System.Threading.Tasks;
 
 namespace SINU.Controllers.Administrador
 {
@@ -12,10 +20,36 @@ namespace SINU.Controllers.Administrador
 
     public class AdministradorController : Controller
     {
-        SINUEntities db = new SINUEntities();
+        private SINUEntities db = new SINUEntities();
+
+       private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        public AdministradorController()
+        {
+        }
+
+        public AdministradorController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+           
+        }
+
+
         // GET: Administrador
         public ActionResult Index()
         {
+            string menu = Func.CorrespondeMenu();        
             IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos.Where(m=>true);//TRAIGO TODOS LOS TIPOS DE USUARIOS 
             return View("UsuariosAdministrativos",usuarios);
         }
@@ -29,22 +63,52 @@ namespace SINU.Controllers.Administrador
         // GET: Administrador/Create
         public ActionResult Create()
         {
+            ////creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
+            //ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+
             return View();
         }
 
         // POST: Administrador/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+
+        public async Task<ActionResult> Create([Bind(Include = "Email,Nombre,Apellido,mr,Grado,Destino,Comentario,codGrupo,Password,ConfirmPassword,IdOficinasYDelegaciones")] UsuarioVm usuarioVm) //(FormCollection collection)
         {
             try
-            {
-                // TODO: Add insert logic here
+            {             
+                if (ModelState.IsValid)
+                {
+                    //cuando no existe el usuario creo uno nuevo con los datos que me dan
+                    ApplicationUser user = (await UserManager.FindByNameAsync(usuarioVm.Email)) ?? new ApplicationUser { UserName = usuarioVm.Email, Email = usuarioVm.Email };                    
 
-                return RedirectToAction("Index");
+                    //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear
+
+
+                    user.EmailConfirmed = true;
+                    IdentityResult result ;
+
+                    result = await UserManager.CreateAsync(user, usuarioVm.Password);
+                    if (result.Succeeded)
+                    {
+                        //Ingresa el regisrto de Usuario a la Base de Seguridad
+                        var r = db.spIngresaASeguridad(usuarioVm.Email, usuarioVm.codGrupo, usuarioVm.mr, usuarioVm.Grado, usuarioVm.Destino, usuarioVm.Nombre, usuarioVm.Apellido);
+                        if (usuarioVm.IdOficinasYDelegaciones>0)
+                        {
+                            Usuario_OficyDeleg x=  new Usuario_OficyDeleg();
+                            x.Email = usuarioVm.Email; x.IdOficinasYDelegaciones = usuarioVm.IdOficinasYDelegaciones;
+                            db.Usuario_OficyDeleg.Add(x);
+                            db.SaveChanges();
+                        }
+                        return RedirectToAction("Index");
+                    }
+
+                }
+                return View(usuarioVm);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Administrador", "Create"));
             }
         }
 
@@ -91,5 +155,15 @@ namespace SINU.Controllers.Administrador
                 return View();
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
     }
 }

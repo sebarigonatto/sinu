@@ -45,7 +45,14 @@ namespace SINU.Models
             String Respuesta = "";
             SINUEntities db = new SINUEntities();
             List<vSeguridad_Grupos_Usuarios> grupo = (db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario== HttpContext.Current.User.Identity.Name).ToList());
-            Respuesta = (grupo.Count > 0) ? ("_MenuPerfil"+(grupo[0].codGrupo.Trim()).Substring(0,5)) : "_MenuPerfilNoIde"; 
+            Respuesta = (grupo.Count > 0) ? ("_MenuPerfil"+(grupo[0].codGrupo.Trim()).Substring(0,5)) : "_MenuPerfilNoIde";
+
+            //-------------averigua el icono que le corresponde al grupo-------------------------
+            string perfil = (grupo.Count > 0) ? grupo[0].codGrupo.Trim(): "NoIdentificado";
+            Configuracion conf = db.Configuracion.First(b => (b.NombreDato == "IconoGrupo") && b.UsoDato.Contains(perfil));
+            string icono = conf.ValorDato;
+            //-------------fin-------------------------------------------------------------------
+
             return Respuesta;
         }
 
@@ -77,18 +84,4 @@ namespace SINU.Models
         }
     }
 
-    public class Usuario
-    {
-        public string Apellido { get; set; }
-        public string Nombres { get; set; }
-        public string Destino { get; set; }
-        public string Grado { get; set; }
-        public string MR { get; set; }
-        public string codGrupo { get; set; }
-        public string Email { get; set; }
-        public int IdOficinasYDelegaciones { get; set; }
-
-        public virtual OficinasYDelegaciones OficinasYDelegaciones { get; set; }
-
-    }
 }
