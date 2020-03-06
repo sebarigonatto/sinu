@@ -8,6 +8,8 @@ ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS/REVISADOS:
 -->
 @{
     //ViewBag.Title = "Administración";
+    ViewBag.Menu = SINU.Models.Func.CorrespondeMenu();
+
 }
 <!--
 <h2>MenuPerfil</h2>
@@ -15,55 +17,22 @@ ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS/REVISADOS:
 <!--
 TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
 -->
-<style>
-    /* Dropdown content (hidden by default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            float: none;
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-            background-color:dimgray;
-        }
-
-            /* Add a grey background color to dropdown links on hover */
-            .dropdown-content a:hover {
-                background-color: #ddd;
-            }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-</style>
-
 <li class="nav-item">@Html.ActionLink("Usuarios", "Index", "Administrador", null, htmlAttributes: new { @class = "nav-link" })</li>
-@*<li class="nav-item">@Html.DropDownList()*@
-<li class="dropdown">
-    <button class="btn nav-link bg-dark">
-        Mantenimiento
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-        <a href="~/Fuerzas">Fuerzas</a>
-        <a href="~/OficinasYDelegaciones">Ofic./Deleg.</a>
-        <a href="~/TipoNacionalidads">Nacionalidad</a>
-        <a href="~/PeriodoInscripciones">Periodo de inscripciones</a>
-        <a href="~/Sexoes">Sexo</a>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Matenimiento
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="~/Fuerzas">Fuerzas</a>
+        <a class="dropdown-item" href="~/OficinasYDelegaciones">Ofic./Deleg.</a>
+        <a class="dropdown-item" href="~/TipoNacionalidads">Nacionalidad</a>
+        <a class="dropdown-item" href="~/OficinasYDelegaciones">Ofic./Deleg.</a>
+        <a class="dropdown-item" href="~/Sexoes">Sexo</a>
     </div>
-
 </li>
 
-
-
+    @*<ul class="nav navbar-nav navbar-right">
+       <li class="nav navbar-text navbar-left my-2 my-sm-0">
+          <i class="fas fa-user-secret"></i>
+       </li>
+    </ul>*@

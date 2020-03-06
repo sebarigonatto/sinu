@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿ @{   ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
+ }
+
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -38,14 +42,15 @@
 
                     <!--Armado de link de prueba actual .. quitar en el definitivo     -->
                     @*<li class="nav-item">@Html.ActionLink("Eliminar Registro de Prueba", "Vaciar", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>*@
-                    
+
                     <!--Armado del menu para el perfil/grupo correspondiente     -->
                     <!-- RenderSection(“NombreSeccion”, required) SI required= false esta sección es opcional, con valor a true le decimos que es obligatorio-->
                     @RenderSection("MenuPerfil", false)
                 </ul>
+               
                 <!--Coloca Link de SESION en extremo Derecho     -->
                 @Html.Partial("_LoginPartial")
-
+                <i class="@ViewBag.IconoPerfil"></i>
             </div>
         </div>
     </div>
@@ -65,7 +70,7 @@
     <dynamic-section name="scripts" />
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false) 
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
