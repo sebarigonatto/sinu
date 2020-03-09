@@ -58,7 +58,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.SexoVM, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdSexo, new SelectList(Model.SexoVM, "IdSexo", "Descripcion"), null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdSexo, new SelectList(Model.SexoVM, "IdSexo", "Descripcion"), null, htmlAttributes: new { @class = "form-control selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdSexo)
                         </div>
                     </div>
@@ -67,6 +67,7 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+                            @*@Html.Label("Igrese ")*@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Telefono, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -77,6 +78,9 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Celular, new { htmlAttributes = new { @class = "form-control" } })
+                            <div>
+                                @Html.Label("Igrese numero de celular con el condigo de area sin 0 y el numero sin 15", new { @style = "color:#003042f7;font-size: 14px" })
+                            </div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Celular, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -92,7 +96,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPeriodosInscripsVM, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.NombreInst)
                         </div>
                     </div>
@@ -100,7 +104,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.OficinasYDelegacionesVM, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio)
                         </div>
                     </div>

@@ -17,7 +17,7 @@ namespace SINU.Controllers
         //ESTA CARIABLE ES UTILIZADA PARA BUSCAR EN LAS DISTINTAS VISTAS, UTILIZADAS EN EL CONTROLADOR, PARA  BUSCAR LOS REGISTROS DEL USUARIO LOGUEADO
         private int IDPER => db.Persona.FirstOrDefault(m=>m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
         private int IDFAMI;
-        //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
+ //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
@@ -26,7 +26,7 @@ namespace SINU.Controllers
             return View();
         }
 
-        //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
+//----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
         public ActionResult DatosBasicos()
         {
@@ -55,14 +55,19 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
+            
             try
             {
-                //se guarda los datos de las persona devueltos
-                var p = Datos.vPersona_DatosBasicosVM;
-                //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
-                var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
+                if (ModelState.IsValid)
+                {
+                    //se guarda los datos de las persona devueltos
+                    var p = Datos.vPersona_DatosBasicosVM;
+                    //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
+                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
 
-                return Json(new { success = true, msg = "" });
+                    return Json(new { success = true, msg = "se guardoron los datos correctamente" });
+                };
+                return Json(new { success = false, msg= "Datos no Validados" });
             }
             catch (Exception ex)
             {
@@ -73,7 +78,7 @@ namespace SINU.Controllers
 
         }
 
-        //----------------------------------ENTREVISTA----------------------------------------------------------------------//
+//----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
         public ActionResult Entrevista()
         {
@@ -90,7 +95,7 @@ namespace SINU.Controllers
             return PartialView(entrevistafh);
         }
 
-        //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
+//----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
         public ActionResult DatosPersonales()
         {
@@ -130,8 +135,7 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = msgerror });
             }
         }
-
-        //----------------------------------Domicilio----------------------------------------------------------------------//
+//----------------------------------Domicilio----------------------------------------------------------------------//
 
         public ActionResult Domicilio()
         {
@@ -246,7 +250,7 @@ namespace SINU.Controllers
             }
         }
 
-        //----------------------------------Estudios----------------------------------------------------------------------//
+//----------------------------------Estudios----------------------------------------------------------------------//
         public ActionResult Estudios()
         {
             try

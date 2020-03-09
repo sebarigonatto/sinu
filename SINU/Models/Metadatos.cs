@@ -18,8 +18,16 @@ namespace SINU.Models
         [Required]
         public string DNI { get; set; }
         [Required]
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(10, MinimumLength = 10, ErrorMessage = "El celular ingresado, tiene que tener al menos 10 digitos")]
+        //la expresion regular tiene dos partes, que pueden o no estar separada por un "-", 
+        //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
+        [RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         public string Telefono { get; set; }
         [Required]
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(10,MinimumLength =10,ErrorMessage ="El celular ingresado, tiene que tener al menos 10 digitos")]
+        [RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         public string Celular { get; set; }
         [Required]
         public string Email { get; set; }
