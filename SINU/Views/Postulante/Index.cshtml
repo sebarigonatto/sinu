@@ -78,6 +78,11 @@
     .Tabdesabilitado {
         pointer-events: none;
     }
+
+    /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
+    .bootstrap-select{
+        max-width:280px;
+    }
 </style>
 
 <h2>Secuencias del POSTULANTE</h2>
@@ -292,7 +297,14 @@
                     };
                 });
 
+                //ajusto la altura de los dropdownlist con la clase selectpicker
+                $(".selectpicker").selectpicker({
+                    size: 6,
+                });
+
             })();
+
+
 
             /////////////////////////////////////////////////////////////////////////////////
             /*FUNCION DE LA VISTA DE DOMICILIOS */
