@@ -49,7 +49,7 @@ namespace SINU.Controllers.Administrador
         // GET: Administrador
         public ActionResult Index()
         {
-            string menu = Func.CorrespondeMenu();        
+            //string menu = Func.CorrespondeMenu();        
             IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos.Where(m=>true);//TRAIGO TODOS LOS TIPOS DE USUARIOS 
             return View("UsuariosAdministrativos",usuarios);
         }
@@ -82,7 +82,7 @@ namespace SINU.Controllers.Administrador
                     //cuando no existe el usuario creo uno nuevo con los datos que me dan
                     ApplicationUser user = (await UserManager.FindByNameAsync(usuarioVm.Email)) ?? new ApplicationUser { UserName = usuarioVm.Email, Email = usuarioVm.Email };                    
 
-                    //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear
+                    //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear, por ahora dejo que aborte y luego decidimos que se hace
 
 
                     user.EmailConfirmed = true;

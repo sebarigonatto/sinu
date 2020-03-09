@@ -47,10 +47,10 @@
                     <!-- RenderSection(“NombreSeccion”, required) SI required= false esta sección es opcional, con valor a true le decimos que es obligatorio-->
                     @RenderSection("MenuPerfil", false)
                 </ul>
-               
+
+                <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
                 <!--Coloca Link de SESION en extremo Derecho     -->
                 @Html.Partial("_LoginPartial")
-                <i class="@ViewBag.IconoPerfil"></i>
             </div>
         </div>
     </div>

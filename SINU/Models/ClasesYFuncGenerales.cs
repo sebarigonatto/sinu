@@ -47,12 +47,6 @@ namespace SINU.Models
             List<vSeguridad_Grupos_Usuarios> grupo = (db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario== HttpContext.Current.User.Identity.Name).ToList());
             Respuesta = (grupo.Count > 0) ? ("_MenuPerfil"+(grupo[0].codGrupo.Trim()).Substring(0,5)) : "_MenuPerfilNoIde";
 
-            //-------------averigua el icono que le corresponde al grupo-------------------------
-            string perfil = (grupo.Count > 0) ? grupo[0].codGrupo.Trim(): "NoIdentificado";
-            Configuracion conf = db.Configuracion.First(b => (b.NombreDato == "IconoGrupo") && b.UsoDato.Contains(perfil));
-            string icono = conf.ValorDato;
-            //-------------fin-------------------------------------------------------------------
-
             return Respuesta;
         }
         public static string f_BuscaIcono()
@@ -60,20 +54,12 @@ namespace SINU.Models
             String Respuesta = "";
             SINUEntities db = new SINUEntities();
             List<vSeguridad_Grupos_Usuarios> grupo = (db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario == HttpContext.Current.User.Identity.Name).ToList());
-            if (grupo.Count == 0) //usuario desconocido
-                Respuesta = "fas fa-user-slash";
-            else
-            {
-                if (grupo[0].codGrupo.Trim()=="Administrador")
-                {
-                    Respuesta = "fas fa-user-secret";
-                }
-                if (grupo[0].codGrupo.Trim() == "Delegacion")
-                {
-                    Respuesta = "fas fa-user-tie";
-                }
+            //-------------averigua el icono que le corresponde al grupo-------------------------
+            string perfil = (grupo.Count > 0) ? grupo[0].codGrupo.Trim() : "NoIdentificado";
+            Configuracion conf = db.Configuracion.First(b => (b.NombreDato == "IconoGrupo") && b.UsoDato.Contains(perfil));
+            Respuesta = conf.ValorDato;
+            //-------------fin-------------------------------------------------------------------
 
-            }
             return Respuesta;
         }
         /// <summary>Construye el objeto error que maneja nuestra View de error del sistema
