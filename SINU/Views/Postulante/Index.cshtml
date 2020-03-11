@@ -281,11 +281,15 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript">
-
+     
         $(document).ready(function () {
+            //ver esto ya que en el navegador aparece nu aadvertencia relacionado si es asincronico o sincronico
             $.ajaxSetup({
                 async: false
             });
+
+            //para qu ela validacion de fecha reconosca el formato dd/MM/yyyy
+            jQuery.validator.methods["date"] = function (value, element) { return true; };
 
             (function () {
                 $("#TabGeneral li").each(function () {
@@ -293,31 +297,38 @@
                     if ($(this).attr('id') > @ViewBag.secuenciaactual) {
 
                         //$(this).addClass('Tabdesabilitado').css("background-color","red");
-            
                     };
                 });
 
                 //ajusto la altura de los dropdownlist con la clase selectpicker
                 $(".selectpicker").selectpicker({
-                    size: 6,
+                    size: 7,
                 });
-
             })();
 
+            $("#datepicker").datepicker({
+                format: "dd/mm/yyyy",
+                language: "es",
+            });
+
+/////////////////////////////////////////////////////////////////////////////////
+        /*FUNCION DE LA VISTA DE DATOS PERSONALES */
+
+          //--------------------------------------------------------------------------------------//
 
 
-            /////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
             /*FUNCION DE LA VISTA DE DOMICILIOS */
 
-           //se aplicael selecpicker a alos conbo/s con autocomplete
+           //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
             /* https://developer.snapappointments.com/bootstrap-select/ */
                 $(".combobox").selectpicker({
                     liveSearch: true,
-                    size: 6,
-                    width: "17rem",
+                    size: 7,
                     liveSearchPlaceholder: "Ingrese su busqueda",
                     liveSearchStyle: 'contains',//'startsWith'
-                    noneResultsText:'No se Encuantran Resultados'
+                    noneResultsText: 'No se Encuantran Resultados',
+                    noneSelectedText: 'Ninguna Opcion Seleccionada'
                 });
            
             $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
@@ -348,21 +359,31 @@
 
             ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
             function PAIS(Combo, PRI) {
-                var Comboelemt = (Combo == "ListaPaisR") ? [".Real", ".RealAR", "#CPR"]
-                                                         : [".Eventual", ".EventualAR", "#CPE"];
+
+                //los elementos html con la clase "Real,Eventual" corresponde a campos para los datos, de no ser de Argentina
+                //Los que posean la clase "RealAR,EventualAR" en caso de pertenecer a la Argentina
+                var Comboelemt = (Combo == "ListaPaisR") ?
+                      [".Real", ".RealAR", "#CPR"]
+                    : [".Eventual", ".EventualAR", "#CPE"];
+
                 //alert($("#" + Combo).val());
                 if ($("#" + Combo).val() != "AR") {
                     $(Comboelemt[0]).show();
                     $(Comboelemt[1]).hide();
+                    //se inhabilita la edicion del campo para el codigo postal
                     $(Comboelemt[2]).attr("readonly", false);
                 } else {
                     $(Comboelemt[0]).hide();
                     $(Comboelemt[1]).show();
+                    //se habilita la edicion del campo para el codigo postal
                     $(Comboelemt[2]).attr("readonly", true);
                 };
+
+                //limpio los campos de "provincia,localidad,codigopostal" si seselecciona otro pais
                 if (PRI == 1) {
+                    
                     $(Comboelemt[0] + "," + Comboelemt[2]).val("");
-                    $('.selectpicker').selectpicker('title', '');
+                    $(Comboelemt[1]).selectpicker('val', 'asdasd');
                 }
             };
 
@@ -372,13 +393,15 @@
                 var ValP = $("#" + Combo).val();
                 //alert(Combo + " " + ValP);
                 var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
+                //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
                 $(ComboLocalidad).empty();
-                //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
+
+                //llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
                 $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                     Provincia: ValP,
                 },
                     function (data) {
-                        //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
+                        //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
                         $.each(data, function () {
                             $(ComboLocalidad).append('<option value=' +
                                 this.Value + '>' + this.Text + '</option>');
@@ -913,6 +936,7 @@
                 if ($(this).val()=="") {
                     $(this).val(0);
                 }
+
             });
 
             $("#altura,#peso").on("change", function () {

@@ -9,31 +9,23 @@ namespace SINU.ViewModels
     public class DatosBasicosVM
     {
         public vPersona_DatosBasicos vPersona_DatosBasicosVM { get; set; }
-        [DisplayName("Sexo")]
         public List<Sexo> SexoVM { get; set; }
-        [DisplayName("Instituto a Inscribirse")]
         public List<vPeriodosInscrip> vPeriodosInscripsVM { get; set; }
-        [DisplayName("Oficinas y Delegaciones")]
         public List<OficinasYDelegaciones> OficinasYDelegacionesVM { get; set; }
     }
 
     public class DatosPersonalesVM
     {
         public vPersona_DatosPer vPersona_DatosPerVM { get; set; }
-        [DisplayName("Estado Civil")]
         public List<vEstCivil> vEstCivilVM { get; set; }
-        [DisplayName("Religion")]
         public List<vRELIGION> vRELIGIONVM { get; set; }
-        [DisplayName("Tipo de Nacionalidad")]
         public List<TipoNacionalidad> TipoNacionalidadVM { get; set; }
     }
 
     public class DomicilioVM
     {
         public vPersona_Domicilio vPersona_DomicilioVM { get; set; }
-        [DisplayName("Pais")]
         public List<sp_vPaises_Result> sp_vPaises_ResultVM { get; set; }
-        [DisplayName("Provincias")]
         public List<string> provincias { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadREALVM { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadEVENTUALVM { get; set; }

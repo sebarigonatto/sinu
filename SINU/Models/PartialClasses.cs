@@ -17,4 +17,9 @@ namespace SINU.Models
     public partial class vPersona_Antropometria
     {
     }
+    
+    [MetadataType(typeof(vPersona_DomicilioMetadata))]
+    public partial class vPersona_Domicilio
+    {
+    }
 }
