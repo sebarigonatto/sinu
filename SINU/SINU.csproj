@@ -434,7 +434,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Startup.cs" />
+    <Compile Include="C:\Users\jmorales\Desktop\Startup.cs">
+      <Link>Startup.cs</Link>
+    </Compile>
     <Compile Include="ViewModels\Administrador.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
@@ -994,6 +996,8 @@
     <Content Include="Views\OficinasYDelegaciones\Details.cshtml" />
     <Content Include="Views\OficinasYDelegaciones\Create.cshtml" />
     <Content Include="Views\Administrador\Create.cshtml" />
+    <Content Include="Views\Administrador\Details.cshtml" />
+    <Content Include="Views\Administrador\Edit.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

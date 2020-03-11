@@ -18,5 +18,12 @@ namespace SINU.Models
         public string Email { get; set; }
         public string Delegacion { get; set; }
         public Nullable<int> IdOficinasYDelegaciones { get; set; }
+        public string Destino { get; set; }
+        public string mr { get; set; }
+        public string Grado { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Comentario { get; set; }
+        public System.DateTime FechUltimaAct { get; set; }
     }
 }

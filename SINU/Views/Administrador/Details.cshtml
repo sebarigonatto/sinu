@@ -1,0 +1,85 @@
+﻿@model SINU.Models.vUsuariosAdministrativos
+
+<div>
+    <h4>Detalle Usuario Administrativo seleccionado</h4>
+    <hr />
+    <dl>
+        <dt>
+            @Html.LabelFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Nombre)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Apellido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Apellido)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.mr)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.mr)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Grado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grado)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Destino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Destino)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Comentario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.codGrupo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.codGrupo)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Delegacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Delegacion)
+        </dd>
+
+        <dt>
+            @* @Html.DisplayNameFor(model => model.IdOficinasYDelegaciones)*@
+        </dt>
+
+        <dd>
+            @* @Html.DisplayFor(model => model.IdOficinasYDelegaciones)*@
+        </dd>
+
+    </dl>
+    </div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })*@
+    @Html.ActionLink("Edit", "Edit", new { Email = Model.Email })|
+    @Html.ActionLink("Back to List", "Index")
+</p>

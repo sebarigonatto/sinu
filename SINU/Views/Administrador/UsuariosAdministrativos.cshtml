@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SINU.Models.vUsuariosAdministrativos>
 <!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
 @{
-    ViewBag.Title = "Administración";
+    ViewBag.Title = "Administración Usuarios";
 }
 @section MenuPerfil{
 
@@ -45,9 +45,9 @@
                         @Html.DisplayFor(modelItem => item.IdOficinasYDelegaciones)
                     </td>*@
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Edit", "Edit", new { Email=item.Email }) |
+                    @Html.ActionLink("Details", "Details", new { Email=item.Email }) |
+                    @Html.ActionLink("Delete", "Delete", new { Email=item.Email })
                 </td>
             </tr>
         }

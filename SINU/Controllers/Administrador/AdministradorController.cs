@@ -49,23 +49,22 @@ namespace SINU.Controllers.Administrador
         // GET: Administrador
         public ActionResult Index()
         {
-            string menu = Func.CorrespondeMenu();        
-            IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos.Where(m=>true);//TRAIGO TODOS LOS TIPOS DE USUARIOS 
+
+            IEnumerable<SINU.Models.vUsuariosAdministrativos> usuarios = db.vUsuariosAdministrativos;//.Where(m=>true);//TRAIGO TODOS LOS TIPOS DE USUARIOS 
             return View("UsuariosAdministrativos",usuarios);
         }
 
         // GET: Administrador/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string Email)
         {
-            return View();
+            vUsuariosAdministrativos Elegido = db.vUsuariosAdministrativos.First(m => m.Email==Email);
+
+            return View(Elegido);
         }
 
         // GET: Administrador/Create
         public ActionResult Create()
         {
-            ////creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
-            //ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
-
             return View();
         }
 
@@ -73,38 +72,42 @@ namespace SINU.Controllers.Administrador
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public async Task<ActionResult> Create([Bind(Include = "Email,Nombre,Apellido,mr,Grado,Destino,Comentario,codGrupo,Password,ConfirmPassword,IdOficinasYDelegaciones")] UsuarioVm usuarioVm) //(FormCollection collection)
+        public async Task<ActionResult> Create([Bind(Include = "Email,Nombre,Apellido,mr,Grado,Destino,Comentario,codGrupo,Password,ConfirmPassword,IdOficinasYDelegaciones")] vUsuariosAdministrativos usuario) //UsuarioVm usuarioVm) //(FormCollection collection)
         {
             try
             {             
                 if (ModelState.IsValid)
                 {
                     //cuando no existe el usuario creo uno nuevo con los datos que me dan
-                    ApplicationUser user = (await UserManager.FindByNameAsync(usuarioVm.Email)) ?? new ApplicationUser { UserName = usuarioVm.Email, Email = usuarioVm.Email };                    
+                    ApplicationUser user = (await UserManager.FindByNameAsync(usuario.Email)) ?? new ApplicationUser { UserName = usuario.Email, Email = usuario.Email };                    
 
-                    //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear
+                    //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear, por ahora dejo que aborte y luego decidimos que se hace
 
 
                     user.EmailConfirmed = true;
                     IdentityResult result ;
 
-                    result = await UserManager.CreateAsync(user, usuarioVm.Password);
+                    result = await UserManager.CreateAsync(user, usuario.Password);
                     if (result.Succeeded)
                     {
                         //Ingresa el regisrto de Usuario a la Base de Seguridad
-                        var r = db.spIngresaASeguridad(usuarioVm.Email, usuarioVm.codGrupo, usuarioVm.mr, usuarioVm.Grado, usuarioVm.Destino, usuarioVm.Nombre, usuarioVm.Apellido);
-                        if (usuarioVm.IdOficinasYDelegaciones>0)
+                        var r = db.spIngresaASeguridad(usuario.Email, usuario.codGrupo, usuario.mr, usuario.Grado, usuario.Destino, usuario.Nombre, usuario.Apellido);
+                        if (usuario.IdOficinasYDelegaciones>0)
                         {
                             Usuario_OficyDeleg x=  new Usuario_OficyDeleg();
-                            x.Email = usuarioVm.Email; x.IdOficinasYDelegaciones = usuarioVm.IdOficinasYDelegaciones;
-                            db.Usuario_OficyDeleg.Add(x);
+                            x.Email = usuario.Email;
+                            //x.IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones.HasValue ? usuario.IdOficinasYDelegaciones.Value : 0;
+                            //idoficinasydelegaciones puede ser nulo
+                            //equivalente corto y moderno es con el operador ??:
+                             x.IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones ?? 0 ;
+                           db.Usuario_OficyDeleg.Add(x);
                             db.SaveChanges();
                         }
                         return RedirectToAction("Index");
                     }
 
                 }
-                return View(usuarioVm);
+                return View(usuario);
             }
             catch (Exception ex)
             {
@@ -113,24 +116,45 @@ namespace SINU.Controllers.Administrador
         }
 
         // GET: Administrador/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string Email)
         {
-            return View();
-        }
+            vUsuariosAdministrativos usuario;
+            if (!String.IsNullOrEmpty(Email))
+            {
+                usuario = db.vUsuariosAdministrativos.First(m => m.Email == Email);
+                if (usuario == null)
+                {
+                    //return HttpNotFound("ese numero de ID no se encontro en la tabla de xxx");
+                    return View("Error", Func.ConstruyeError("Ese Email de Usuario no se encontró entre Usuarios Administrativos", "Administrador", "Edit"));
+                    //o puedo mandarlo al index devuelta e ignorar el error
+                    //return RedirectToAction("Index");
+                }
+                return View(usuario);
+            }
+            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+            return View("Error", Func.ConstruyeError("Falta el Email que desea buscar entre los Usuarios", "Administrador", "Edit"));
+            //o puedo mandarlo al index devuelta e ignorar el error
+            //return RedirectToAction("Index");
+       }
 
-        // POST: Administrador/Edit/5
+        // POST: Administrador/Edit/nnn@xx.com
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit([Bind(Include = "Email,Nombre,Apellido,mr,Grado,Destino,Comentario,codGrupo,Password,ConfirmPassword,Delegacion,FechUltimaAct,IdOficinasYDelegaciones")] vUsuariosAdministrativos usuario)//(int id, FormCollection collection)
         {
+            
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
 
-                return RedirectToAction("Index");
+
+                    return RedirectToAction("Index");
+                }
+                return View(usuario);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Administrador", "Edit"));
             }
         }
 
