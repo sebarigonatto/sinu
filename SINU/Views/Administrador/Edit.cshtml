@@ -1,0 +1,126 @@
+﻿@model SINU.Models.vUsuariosAdministrativos
+<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
+@{
+    ViewBag.Title = "Edicion Usuario Administrativo";
+    //creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
+    ViewBag.OficinaYDelegacion = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+    ViewBag.CodGrupos = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
+
+}
+@section MenuPerfil{
+
+    @Html.Partial("_MenuPerfilAdmin")
+}
+<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>@ViewBag.Title</h4>
+        <h4>@Model.Email</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <!-- escondo con hiddenfor los campos que no voy a cargar pero que hacen a la validacion del modelo
+    cuando pregunto ModelState.IsValid en el action del controller-->
+        @Html.HiddenFor(model => model.Delegacion)
+        @Html.HiddenFor(model => model.Email)
+        @Html.HiddenFor(model => model.FechUltimaAct)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.codGrupo, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.codGrupo, (SelectList)ViewBag.CodGrupos, "---Seleccione Perfil ---", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!--
+        <div class="form-group">
+           @* @Html.LabelFor(model => model.Delegacion, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+               @* @Html.EditorFor(model => model.Delegacion, new { htmlAttributes = new { @class = "form-control" } })*@
+               @* @Html.ValidationMessageFor(model => model.Delegacion, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+        -->
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Delegacion, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.IdOficinasYDelegaciones, (SelectList)ViewBag.OficinaYDelegacion, "---Seleccione la corresp ---", htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Grado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Grado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Destino, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Destino, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Destino, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.IdOficinasYDelegaciones, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IdOficinasYDelegaciones, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IdOficinasYDelegaciones, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

@@ -885,13 +885,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
 advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vUsuariosAdministrativos">
           <Key>
-            <PropertyRef Name="codGrupo" />
             <PropertyRef Name="Email" />
+            <PropertyRef Name="codGrupo" />
+            <PropertyRef Name="FechUltimaAct" />
           </Key>
-          <Property Name="codGrupo" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="codGrupo" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="Delegacion" Type="varchar" MaxLength="100" />
           <Property Name="IdOficinasYDelegaciones" Type="int" />
+          <Property Name="Destino" Type="varchar" MaxLength="100" />
+          <Property Name="mr" Type="varchar" MaxLength="100" />
+          <Property Name="Grado" Type="varchar" MaxLength="100" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Apellido" Type="varchar" MaxLength="100" />
+          <Property Name="Comentario" Type="varchar" MaxLength="150" />
+          <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_ActividadMilitar_Fuerza">
           <End Role="Fuerza" Type="Self.Fuerza" Multiplicity="1" />
@@ -1890,10 +1898,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySet>
           <EntitySet Name="vUsuariosAdministrativos" EntityType="Self.vUsuariosAdministrativos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vUsuariosAdministrativos].[codGrupo] AS [codGrupo], 
     [vUsuariosAdministrativos].[Email] AS [Email], 
+    [vUsuariosAdministrativos].[codGrupo] AS [codGrupo], 
     [vUsuariosAdministrativos].[Delegacion] AS [Delegacion], 
-    [vUsuariosAdministrativos].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones]
+    [vUsuariosAdministrativos].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones], 
+    [vUsuariosAdministrativos].[Destino] AS [Destino], 
+    [vUsuariosAdministrativos].[mr] AS [mr], 
+    [vUsuariosAdministrativos].[Grado] AS [Grado], 
+    [vUsuariosAdministrativos].[Nombre] AS [Nombre], 
+    [vUsuariosAdministrativos].[Apellido] AS [Apellido], 
+    [vUsuariosAdministrativos].[Comentario] AS [Comentario], 
+    [vUsuariosAdministrativos].[FechUltimaAct] AS [FechUltimaAct]
     FROM [dbo].[vUsuariosAdministrativos] AS [vUsuariosAdministrativos]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_ActividadMilitar_Fuerza" Association="Self.FK_ActividadMilitar_Fuerza">
@@ -3650,11 +3665,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Key>
             <PropertyRef Name="codGrupo" />
             <PropertyRef Name="Email" />
+            <PropertyRef Name="FechUltimaAct" />
           </Key>
           <Property Name="codGrupo" Type="String" Nullable="false" MaxLength="30" FixedLength="true" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" />
+          <Property Name="Destino" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="mr" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Grado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Comentario" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="FechUltimaAct" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_Usuario_OficyDeleg_OficinasYDelegaciones">
           <End Type="SINUModel.OficinasYDelegaciones" Role="OficinasYDelegaciones" Multiplicity="1" />
@@ -4566,6 +4589,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vUsuariosAdministrativos">
             <EntityTypeMapping TypeName="SINUModel.vUsuariosAdministrativos">
               <MappingFragment StoreEntitySet="vUsuariosAdministrativos">
+                <ScalarProperty Name="FechUltimaAct" ColumnName="FechUltimaAct" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="mr" ColumnName="mr" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
