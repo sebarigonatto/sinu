@@ -434,9 +434,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="C:\Users\jmorales\Desktop\Startup.cs">
-      <Link>Startup.cs</Link>
-    </Compile>
+    <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Administrador.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
