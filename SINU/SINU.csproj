@@ -996,6 +996,8 @@
     <Content Include="Views\Administrador\Create.cshtml" />
     <Content Include="Views\Administrador\Details.cshtml" />
     <Content Include="Views\Administrador\Edit.cshtml" />
+    <Content Include="Views\Administrador\Delete.cshtml" />
+    <Content Include="Views\Administrador\SetPassword.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

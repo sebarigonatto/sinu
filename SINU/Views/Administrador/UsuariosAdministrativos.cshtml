@@ -44,11 +44,12 @@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.IdOficinasYDelegaciones)
                     </td>*@
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { Email=item.Email }) |
-                    @Html.ActionLink("Details", "Details", new { Email=item.Email }) |
-                    @Html.ActionLink("Delete", "Delete", new { Email=item.Email })
-                </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { Email = item.Email }) |
+                @Html.ActionLink("Clave", "SetPassword", new { Email = item.Email }) |
+                @Html.ActionLink("Details", "Details", new { Email = item.Email }) |
+                @Html.ActionLink("Delete", "Delete", new { Email = item.Email })
+            </td>
             </tr>
         }
 
