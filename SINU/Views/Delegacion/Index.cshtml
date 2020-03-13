@@ -146,17 +146,22 @@
         </div>
     </div>
 </div>
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
 <!--Para establecer Formato de Tabla-->
 <!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
 <!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
 <!-- Rodear la tr de las th con <thead> </thead>-->
 <!-- Rodear el contenido de la tabla con <tbody>-->
 @section Scripts {
-    <script  type="text/javascript">
+    <script type="text/javascript">
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
-                 responsive: true,
+                responsive: true,
                 "language":
                 {
                     "sProcessing": "Procesando...",
@@ -180,21 +185,25 @@
                     "oAria": {
                         "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    },
+                    }
+                },
 
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false,
-                    },
-                    {
-                        "searchable": false,
-                        "targets": [0],
-                    }]
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
 
-                }
+                }]
+
+
             });
 
         });
     </script>
-   
+
 }
+

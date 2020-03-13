@@ -92,6 +92,7 @@ namespace SINU.Controllers.Administrador
                     {
                         //Ingresa el regisrto de Usuario a la Base de Seguridad
                         var r = db.spIngresaASeguridad(usuario.Email, usuario.codGrupo, usuario.mr, usuario.Grado, usuario.Destino, usuario.Nombre, usuario.Apellido);
+                        
                         if (usuario.IdOficinasYDelegaciones>0)
                         {
                             Usuario_OficyDeleg x = new Usuario_OficyDeleg
@@ -105,6 +106,7 @@ namespace SINU.Controllers.Administrador
                             db.Usuario_OficyDeleg.Add(x);
                             db.SaveChanges();
                         }
+                        //si llego aqui es que ya grabe en aspnetuser y en Usuario_OficyDeleg, así que vuelvo al listado 
                         return RedirectToAction("Index");
                     }
 

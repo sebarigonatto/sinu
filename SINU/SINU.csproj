@@ -981,7 +981,6 @@
     <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilPostu.cshtml" />
     <Content Include="Views\Shared\_Master.cshtml" />
-    <Content Include="Views\Administrador\MenuPerfil.cshtml" />
     <Content Include="Views\Postulante\Antropometria.cshtml" />
     <Content Include="Views\OficinasYDelegaciones\Index.cshtml" />
     <Content Include="Views\PeriodoInscripciones\Index.cshtml" />
