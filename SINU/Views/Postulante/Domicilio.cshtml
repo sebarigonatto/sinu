@@ -85,7 +85,7 @@
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.Provincia, new { @class = "form-control Real", @id = "ProvinciaR" })            
                             @* el "DropdownlistFor" se reemplaza por un "TextBoxFor" en el caso de que se eliga un pais distinto a "ARGENTINA" *@
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboProvinciaR" })
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, new SelectList(Model.provincias, "", ""), null, htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboProvinciaR" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Provincia)
                         </div>
                     </div>

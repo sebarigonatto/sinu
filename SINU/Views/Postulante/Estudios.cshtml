@@ -9,17 +9,18 @@
 
 <div class="form-group" id="divTABLE">
 
-    <table id="TablaEstudio" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+    <table id="TablaEstudio" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
         @*<table id="example" class="display" cellspacing="0" width="100%">*@
         <thead>
             <tr>
+                @* SE COMENTAN LAS COLUMNAS PARA MOSTRAR LA INFOMRACION MAS SOBRESALIENTE DE CADA REGISTRO *@
                 <th hidden>IdEstudio</th>
                 <th hidden>IdPersona</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>
+                @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>
+                @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>*@
             </tr>
         </thead>
         <tbody>
@@ -30,10 +31,10 @@
                     <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
                     <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nivel)</td>
-                    <td>@Html.DisplayTextFor(modelItem => item.Completo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                    @*<td>@Html.DisplayTextFor(modelItem => item.Completo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Promedio)</td>
+                    @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
                 </tr>
             }
         </tbody>

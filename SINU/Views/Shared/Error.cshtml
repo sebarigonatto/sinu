@@ -10,9 +10,55 @@
     @Html.Partial((String)@ViewBag.Menu);
 }
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+    <style>
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">Error al procesar la solicitud.</h2>
-<!--verifico si al llamar a esta view mandaron un mensaje de error especifico -->
-<h2 class="text-danger"> @(((Model == null) ? "" : Model.Exception.Message + " - " + Model.ControllerName + " - " + Model.ActionName)+" "+ViewBag.Menu)</h2>
+          @@media screen and (max-width: 600px) {
+            .bordererror {          
+                border-right: hidden !important;
+                border-bottom: #67676773  2px solid;
+            }
+          }
 
+          @@media screen and (min-width: 600px) {
+            .bordererror {          
+                border-bottom: hidden !important;
+                border-right: #67676773  2px solid;
+            }
+          }
+          .text-center{
+              text-align:center
+          }
+          .negro-sub{
+              text-decoration:underline;
+          }
+    </style>
+    <br />
+<div class="row" style="align-content:center;margin-top:5vw">
+    <div class="col-sm-6 bordererror">
+        <img class="img-fluid" accesskey="" src="~/Imagenes/monitor_error.png" />
+    </div>
+    <div class="col-sm-6 " >
+        <div>
+            <h1 class="text-black-50 text-center" style="font-size:20vh">Error!!</h1>
+            <h2 style="font-size:5vh; color:#ff3c3c; text-align:justify" >Error al procesar la solicitud.</h2>
+            <p class="text-danger" style="        text-align: left !important" >
+            
+
+            @if (Model == null)
+            {
+                <h1></h1>
+            } 
+            else { 
+        
+              <h2 > @Model.Exception.Message </h2> 
+              <h3> <b class="negro-sub">Controlador</b>: @Model.ControllerName </h3> 
+              <h3> <b class="negro-sub">Accion</b>: @Model.ActionName </h3>
+              <h3> <b class="negro-sub">Menu</b>: @ViewBag.Menu </h3>
+
+            }
+            
+            
+            </p>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,16 @@ namespace SINU.Models
     {
     }
 
+    [MetadataType(typeof(vPersona_DomicilioMetadata))]
+    public partial class vPersona_Domicilio
+    {
+    }
+
+    
+    [MetadataType(typeof(VPersona_EstudioMetadata))]
+    public partial class VPersona_Estudio
+    {
+    }
 
     [MetadataType(typeof(vPersona_AntropometriaMetadata))]
     public partial class vPersona_Antropometria

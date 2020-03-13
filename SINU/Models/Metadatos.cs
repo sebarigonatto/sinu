@@ -101,7 +101,7 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Peso(en kg)")]
         [DisplayFormat(DataFormatString = "{0:F1}", ApplyFormatInEditMode = true)]
-        [RegularExpression("([0-9]{1,3})(,[0-9])?", ErrorMessage = "Debe cumplir esta forma 999,9")]
+        [RegularExpression("([0-9]{1,3})(,[0-9])?", ErrorMessage = "Debe cumplir este formato 999,9")]
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         [Required]
@@ -130,6 +130,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         public string Calle { get; set; }
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
         public string Numero { get; set; }
         public string Piso { get; set; }
         public string Unidad { get; set; }
@@ -145,6 +146,7 @@ namespace SINU.Models
         [Display(Name = "Calle")]
         public string EventualCalle { get; set; }
         [Display(Name = "Numero")]
+        [RegularExpression("^[0-9]+$",ErrorMessage ="Solo se aceptan caracteres numericos")]
         public string EventualNumero { get; set; }
         [Display(Name = "Piso")]
         public string EventualPiso { get; set; }
@@ -163,6 +165,26 @@ namespace SINU.Models
         public string EventualIdPais { get; set; }
         public int IdDomicilioDNI { get; set; }
         public int IdDomicilioActual { get; set; }
+    }
+
+    public partial class VPersona_EstudioMetadata
+    {
+        public int IdPersona { get; set; }
+        public Nullable<int> IdNiveldEstudio { get; set; }
+        public int IdEstudio { get; set; }
+        public string Titulo { get; set; }
+        public bool Completo { get; set; }
+        public int IdInstitutos { get; set; }
+        public string Nombre { get; set; }
+        public Nullable<double> Promedio { get; set; }
+        [Display(Name ="Cantidad de Materias Adeudadas")]
+        public Nullable<int> CantidadMateriaAdeudadas { get; set; }
+        [Display(Name = "Ultimo año Cursado")]
+        public Nullable<int> ultimoAnioCursado { get; set; }
+        public string Nivel { get; set; }
+        public string NombreYPaisInstituto { get; set; }
+        public string Jurisdiccion { get; set; }
+        public string Localidad { get; set; }
     }
 
     public class vUsuariosAdministrativosMetadata

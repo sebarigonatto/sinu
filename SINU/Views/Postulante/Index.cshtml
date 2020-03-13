@@ -351,7 +351,7 @@
                 }
             });
 
-            //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
+            //al crgar la pagina se verifica si el pais del domiciolio REAL es "AR"
             PAIS("ListaPaisR", 0);
             PAIS("ListaPaisE", 0);
 
@@ -383,7 +383,7 @@
                 if (PRI == 1) {
                     
                     $(Comboelemt[0] + "," + Comboelemt[2]).val("");
-                    $(Comboelemt[1]).selectpicker('val', 'asdasd');
+                    $(Comboelemt[1]).selectpicker('val', '');
                 }
             };
 
@@ -401,10 +401,10 @@
                     Provincia: ValP,
                 },
                     function (data) {
+                        $(ComboLocalidad).append('<option value=' + '' + '>' + "Seleccione una Localidad" + '</option>');
                         //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
                         $.each(data, function () {
-                            $(ComboLocalidad).append('<option value=' +
-                                this.Value + '>' + this.Text + '</option>');
+                            $(ComboLocalidad).append('<option value=' + this.Value + '>' + this.Text + '</option>');
                         });
                         //para actualizar el combobox
                         $(ComboLocalidad).selectpicker('refresh');
@@ -446,17 +446,56 @@
 
                 var TEstudio = $('#TablaEstudio').DataTable({
 
-                    responsive: {
+                    responsive:
+                    {
                         details: false
                     },
                     "autoWidth": true,
+
+                    //ver si es necesario este fragmento
                     select: 'single',
                     "columnDefs": [{
                         "searchable": false,
                         "orderable": false,
-                        "targets": 0
+                        "targets": [0]
                     }],
-                    "order": [[1, 'asc']]
+                    "order": [[1, 'asc']],
+
+                      "language":
+                            {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                },
+
+                                "columnDefs": [{
+                                    "targets": 'no-sort',
+                                    "orderable": false,
+                                },
+                                {
+                                    "searchable": false,
+                                    "targets": [0],
+                                }]
+
+                            }
                 });
 
                 //al seleccionar una fila
@@ -513,19 +552,21 @@
                         $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
                         $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
 
-
+                      
                         //se aplicael selecpicker a alos conbo/s con autocomplete
                         /* https://developer.snapappointments.com/bootstrap-select/ */
                         $(".combobox").selectpicker({
                             liveSearch: true,
-                            size: 6,
-                            width: "17rem",
+                            width: '280px',
+                            size: 7,
                             liveSearchPlaceholder: "Ingrese su busqueda",
                             liveSearchStyle: 'contains',//'startsWith'
                             noneResultsText: 'No se Encuantran Resultados',
-                            styleBase: 'form-control'
+                            noneSelectedText: 'Ninguna Opcion Seleccionada'
                         });
-           
+
+                        $(".selectpicker").selectpicker();
+                        //evento que se desata cuando se selecciona un opcion de los combobox
                         $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
 
                             comboid = $(this).attr("id");
@@ -579,6 +620,7 @@
 
             };
 
+            //muestra o ocualta los campos relacionado con los campos si el instituto pertenece al exterior o no
             function INSTEXT(elemn, pri) {
                 
                 if ($(elemn).is(":checked")) {
@@ -593,9 +635,9 @@
                 };
                 if (pri != 0) {
                     $("#JuriEST,#IdInstEST").val("");
-
                 }
 
+                //$("#ESTUAR").selectpicker("val", "");
             };
 
             function ComboCascada(Combo, ValC) {
@@ -604,7 +646,7 @@
                     OPC = 0;
                     $("#ComboLocaliEST,#ComboIdInstEST").html("")
                 } else {
-                   valprov = $("#ComboJuriEST").val();
+                    valprov = $("#ComboJuriEST").val();
                     ValC = valprov + "-" +  ValC;
                     //alert(ValC);
                     OPC = 1;
@@ -622,7 +664,7 @@
 
                             $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                         });
-                            $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
+                        //refresco los combobox con los datos nuevos
                         $(combocas).selectpicker('refresh');
 
                     });
@@ -633,16 +675,15 @@
 
             //aplico DATATABLES a las tablas necesrias
                 TablaIDIO()
-
                 //index de la fila seleccionada de la tabla
                 var indexrow;
-
+                
                 //se llama al modal para cargar un nuevo estudio
                 $("#NuevoIdioma").on("click", function () {
                     //alert("modal nuevo estudio!!!");
                     ModalIdiomaCUD(null);
                 });
-
+        
                 //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
                 function TablaIDIO() {
 
@@ -658,7 +699,42 @@
                             "orderable": false,
                             "targets": 0
                         }],
-                        "order": [[1, 'asc']]
+                        "order": [[1, 'asc']],
+                          "language":
+                            {
+                                "sProcessing": "Procesando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "No se encontraron resultados",
+                                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "sInfoThousands": ",",
+                                "sLoadingRecords": "Cargando...",
+                                "oPaginate": {
+                                    "sFirst": "Primero",
+                                    "sLast": "Último",
+                                    "sNext": "Siguiente",
+                                    "sPrevious": "Anterior"
+                                },
+                                "oAria": {
+                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                },
+
+                                "columnDefs": [{
+                                    "targets": 'no-sort',
+                                    "orderable": false,
+                                },
+                                {
+                                    "searchable": false,
+                                    "targets": [0],
+                                }]
+
+                            }
                     });
 
                     //al seleccionar una fila
@@ -672,9 +748,10 @@
                         ModalIdiomaCUD(id);
                         $("#ModalIdioma").modal("show");
                     });
-            
+                                            
+                    $('#TablaIdioma').resize();
                     //para deselecciponar la fila que fue seleccionada
-                    TIdioma.rows(indexrow).deselect();
+                    //TIdioma.rows(indexrow).deselect();
 
                 };
 
@@ -683,7 +760,6 @@
                 $("#ModalIdioma").on('hidden.bs.modal', function () {
                     //alert("cerror modal");
                     $("#Idioma").load('@Url.Action("Idiomas","Postulante")', function () {
-
                         //se llama al modal para cargar un nuevo estudio
                         $("#NuevoIdioma").on("click", function () {
                             //alert("modal nuevo estudio!!!");
@@ -722,12 +798,9 @@
                             var comboiddio = $("#ComboIdioma").selectpicker({
                                 liveSearch: true,
                                 size: 6,
-                                width: "40vh"
                             });
-                            comboiddio.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                                //alert($(this).attr("id") + " - " + clickedIndex + " - " + isSelected + " - " + previousValue);
-                                //alert($(this).val());
-                            });
+
+                            $(".selectpicker").selectpicker();
 
                             //ELIMINA EL ESTUDIO SELECCIONADO
                             $("#EliminaIDIO").on("click", function () {
@@ -977,7 +1050,7 @@
         function Falla(response) {
            alert("Error occured." );
         };
-
+        
          //////////////////////////////////////////////////////////////////////////////
     </script>
 

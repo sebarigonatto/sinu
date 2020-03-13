@@ -238,14 +238,15 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = msgerror }, JsonRequestBehavior.AllowGet);
                 }
             }
-            string errors = "";
-            foreach (var i in ModelState)
-            {
-                errors = errors + " -- " + i.Value.Errors;
-            };
-           
 
-            return Json(new { success = false, msg = "Modelo no VALIDO - " + errors }, JsonRequestBehavior.AllowGet);
+            //ver como saber que capos causan el error
+            //string errors = "";
+            //foreach (var i in ModelState)
+            //{
+            //    errors = errors + " -- " + i.Value.Errors;
+            //};
+           
+            return Json(new { success = false, msg = "Modelo no VALIDO - " /*+ errors*/ }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -309,6 +310,7 @@ namespace SINU.Controllers
                 EstudiosVM estudio = new EstudiosVM()
                 {
                     NivelEstudioVM = db.NiveldEstudio.ToList(),
+                    //cargo los datos para el combobox de provincia
                     Provincia = db.Institutos
                         .DistinctBy(m => m.Jurisdiccion)
                         .OrderBy(m => m.Jurisdiccion)
@@ -316,10 +318,42 @@ namespace SINU.Controllers
                         .ToList()
 
                 };
-
+                //verifico si envio un ID 
+                //SI reciobio ID cargo los datos correspondiente
+                //caso contrario envio un nuevo registro de Estudio
                 if (ID != null)
                 {
                     estudio.vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
+
+                    //Si IdInstituto existe se carga los datos relacionados con el, provincia localidad y nombre de institutos
+                    //de NO existir se carga datos del campo "NombreYPaisInstituto"
+                    if (estudio.vPersona_EstudioIdVM.IdInstitutos != 0)
+                        {
+                            estudio.Localidad = db.Institutos
+                                .Where(m => m.Jurisdiccion == estudio.vPersona_EstudioIdVM.Jurisdiccion)
+                                .DistinctBy(m => m.Localidad)
+                                .OrderBy(m => m.Localidad)
+                                .Select(m => m.Localidad)
+                                .ToList();
+                            estudio.InstitutoVM = db.Institutos
+                                .Where(m => m.Localidad == estudio.vPersona_EstudioIdVM.Localidad)
+                                .OrderBy(m => m.Nombre)
+                                .Select(m => new SelectListItem
+                                {
+                                    Value = m.Id.ToString(),
+                                    Text = m.Nombre
+                                })
+                                .ToList();
+                            estudio.vPersona_EstudioIdVM.Nombre = "";
+                    }
+                    else
+                    {
+                            string[] paisinst = estudio.vPersona_EstudioIdVM.NombreYPaisInstituto.Split('-');
+                            estudio.vPersona_EstudioIdVM.Jurisdiccion = paisinst[0];
+                            estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
+                            estudio.Localidad = new List<string>();
+                            estudio.InstitutoVM = new List<SelectListItem>();
+                    }
                 }
                 else
                 {
@@ -331,35 +365,11 @@ namespace SINU.Controllers
                         NombreYPaisInstituto = "-"
                     };
                     estudio.vPersona_EstudioIdVM = nuevoestu;
-                };
-
-                if (estudio.vPersona_EstudioIdVM.IdInstitutos != 0)
-                {
-                    estudio.Localidad = db.Institutos
-                        .Where(m => m.Jurisdiccion == estudio.vPersona_EstudioIdVM.Jurisdiccion)
-                        .DistinctBy(m => m.Localidad)
-                        .OrderBy(m => m.Localidad)
-                        .Select(m => m.Localidad)
-                        .ToList();
-                    estudio.InstitutoVM = db.Institutos
-                        .Where(m => m.Localidad == estudio.vPersona_EstudioIdVM.Localidad)
-                        .OrderBy(m => m.Nombre)
-                        .Select(m => new SelectListItem
-                        {
-                            Value = m.Id.ToString(),
-                            Text = m.Nombre
-                        })
-                        .ToList();
-                    estudio.vPersona_EstudioIdVM.Nombre = "";
-                }
-                else
-                {
-                    string[] paisinst = estudio.vPersona_EstudioIdVM.NombreYPaisInstituto.Split('-');
-                    estudio.vPersona_EstudioIdVM.Jurisdiccion = paisinst[0];
-                    estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();
-                }
+                };
+
+                
 
                 return PartialView(estudio);
 
@@ -370,32 +380,37 @@ namespace SINU.Controllers
                 return PartialView(ex);
             }
         }
+
         [HttpPost]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
-            try
+            if (ModelState.IsValid)
             {
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!         
-                var e = Datos.vPersona_EstudioIdVM;
-                if (e.IdInstitutos != 0)
+                try
                 {
-                    e.NombreYPaisInstituto = null;
+                    var e = Datos.vPersona_EstudioIdVM;
+                    if (e.IdInstitutos != 0)
+                    {
+                        e.NombreYPaisInstituto = null;
+                    }
+                    else
+                    {
+                        //e.IdInstitutos = 0;
+                        e.NombreYPaisInstituto = e.Jurisdiccion + "-" + e.Nombre;
+                    }
+
+                    db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto);
+
+                    return Json(new { success = true, msg = "Se Inserto correctamente el estudio nuevo" });
                 }
-                else
+                catch (Exception ex)
                 {
-                    e.IdInstitutos = 0;
-                    e.NombreYPaisInstituto = e.Jurisdiccion + "-" + e.Nombre;
+                    //revisar como mostrar error en la vista
+                    return Json(new { success = false, msg = ex.InnerException.Message });
                 }
-
-                db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto);
-
-                return Json(new { success = true, msg = "Se Inserto correctamente el estudio nuevo" });
             }
-            catch (Exception ex)
-            {
-                //revisar como mostrar error en la vista
-                return Json(new { success = false, msg = ex.InnerException.Message });
-            }
+            return Json(new { success = false, msg = "Error en el Modelo Recibido" });
+
         }
 
 
@@ -458,7 +473,7 @@ namespace SINU.Controllers
 
         }
 
-        /*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
         public ActionResult Idiomas()
         {
             try
@@ -511,17 +526,21 @@ namespace SINU.Controllers
         [HttpPost]
         public JsonResult IdiomaCUD(IdiomasVM datos)
         {
-            try
+            if (ModelState.IsValid)
             {
-                vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
-                db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
-                return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico" }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
+                try
+                {
+                    vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
+                    db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
+                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico" }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
 
-                return Json(new { success = true, msg = ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                }
             }
+            return Json(new { success = true, msg = "El modelo recibido NO ES VALIDO"}, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult EliminaIDIO(int ID)
