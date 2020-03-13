@@ -31,6 +31,8 @@
         @Html.HiddenFor(model => model.Delegacion)
         @Html.HiddenFor(model => model.Email)
         @Html.HiddenFor(model => model.FechUltimaAct)
+        @Html.HiddenFor(model => model.Password)
+        @Html.HiddenFor(model => model.ConfirmPassword)
 
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -56,15 +58,8 @@
             </div>
         </div>
 
-        <!--
-        <div class="form-group">
-           @* @Html.LabelFor(model => model.Delegacion, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-               @* @Html.EditorFor(model => model.Delegacion, new { htmlAttributes = new { @class = "form-control" } })*@
-               @* @Html.ValidationMessageFor(model => model.Delegacion, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
-        -->
+
+        <!-- Este combo debe aparecer solo si es elegido la opcion DELEGACION en CodGrupo-->
         <div class="form-group">
 
             @Html.LabelFor(m => m.Delegacion, new { @class = "col-md-2 control-label" })
@@ -100,22 +95,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Comentario, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                @* @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.IdOficinasYDelegaciones, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.IdOficinasYDelegaciones, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdOficinasYDelegaciones, "", new { @class = "text-danger" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
             </div>
         </div>*@
 
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="GRABAR" class="btn btn-default" />
             </div>
         </div>
     </div>

@@ -92,17 +92,21 @@ namespace SINU.Controllers.Administrador
                     {
                         //Ingresa el regisrto de Usuario a la Base de Seguridad
                         var r = db.spIngresaASeguridad(usuario.Email, usuario.codGrupo, usuario.mr, usuario.Grado, usuario.Destino, usuario.Nombre, usuario.Apellido);
+                        
                         if (usuario.IdOficinasYDelegaciones>0)
                         {
-                            Usuario_OficyDeleg x=  new Usuario_OficyDeleg();
-                            x.Email = usuario.Email;
-                            //x.IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones.HasValue ? usuario.IdOficinasYDelegaciones.Value : 0;
-                            //idoficinasydelegaciones puede ser nulo
-                            //equivalente corto y moderno es con el operador ??:
-                             x.IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones ?? 0 ;
-                           db.Usuario_OficyDeleg.Add(x);
+                            Usuario_OficyDeleg x = new Usuario_OficyDeleg
+                            {
+                                Email = usuario.Email,
+                                //x.IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones.HasValue ? usuario.IdOficinasYDelegaciones.Value : 0;
+                                //idoficinasydelegaciones puede ser nulo
+                                //equivalente corto y moderno es con el operador ??:
+                                IdOficinasYDelegaciones = usuario.IdOficinasYDelegaciones ?? 0
+                            };
+                            db.Usuario_OficyDeleg.Add(x);
                             db.SaveChanges();
                         }
+                        //si llego aqui es que ya grabe en aspnetuser y en Usuario_OficyDeleg, así que vuelvo al listado 
                         return RedirectToAction("Index");
                     }
 
@@ -129,7 +133,13 @@ namespace SINU.Controllers.Administrador
                     //o puedo mandarlo al index devuelta e ignorar el error
                     //return RedirectToAction("Index");
                 }
+                ////se coloca cualquier password que cumpla la regla solicitada y si el Usuario desea cambiar la password los borra y recarga               
+                //usuario.Password = "123456A_";
+                //usuario.ConfirmPassword = "123456A_"; 
+
+                
                 return View(usuario);
+
             }
             //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
             return View("Error", Func.ConstruyeError("Falta el Email que desea buscar entre los Usuarios", "Administrador", "Edit"));
@@ -147,7 +157,7 @@ namespace SINU.Controllers.Administrador
                 if (ModelState.IsValid)
                 {
 
-
+                    //se debe crear el bloque de  grabacion
                     return RedirectToAction("Index");
                 }
                 return View(usuario);
@@ -159,26 +169,99 @@ namespace SINU.Controllers.Administrador
         }
 
         // GET: Administrador/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string Email)
         {
-            return View();
+            vUsuariosAdministrativos usuario;
+            if (!String.IsNullOrEmpty(Email))
+            {
+                usuario = db.vUsuariosAdministrativos.First(m => m.Email == Email);
+                if (usuario == null)
+                {
+                    //return HttpNotFound("ese numero de ID no se encontro en la tabla de xxx");
+                    return View("Error", Func.ConstruyeError("Ese Email de Usuario no se encontró entre Usuarios Administrativos", "Administrador", "Edit"));
+                    //o puedo mandarlo al index devuelta e ignorar el error
+                    //return RedirectToAction("Index");
+                }
+                return View(usuario);
+            }
+            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+            return View("Error", Func.ConstruyeError("Falta el Email que desea buscar entre los Usuarios", "Administrador", "Edit"));
+            //o puedo mandarlo al index devuelta e ignorar el error
+            //return RedirectToAction("Index");
         }
 
         // POST: Administrador/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string Email)
         {
             try
             {
-                // TODO: Add delete logic here
+                    vUsuariosAdministrativos usuario;
+                    if (!String.IsNullOrEmpty(Email))
+                    {
+                        usuario = db.vUsuariosAdministrativos.First(m => m.Email == Email);
+                        if (usuario == null)
+                        {
+                            //return HttpNotFound("ese numero de ID no se encontro en la tabla de xxx");
+                            return View("Error", Func.ConstruyeError("Ese Email de Usuario no se encontró entre Usuarios Administrativos", "Administrador", "Delete"));
+                            //o puedo mandarlo al index devuelta e ignorar el error
+                            //return RedirectToAction("Index");
+                        }
+                    //llamar a proceso de borrado
+                    return View("Error", Func.ConstruyeError("Se inicia proceso borrado que NO ESTA HECHO "+Email, "Administrador", "Delete"));
+                    //return RedirectToAction("Index");
+                }
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                    return View("Error", Func.ConstruyeError("Falta el Email que desea buscar entre los Usuarios", "Administrador", "Delete"));
+                    //o puedo mandarlo al index devuelta e ignorar el error
+                    //return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Administrador", "Delete"));
             }
         }
+        //
+        // GET: /Administrador/SetPassword
+        public ActionResult SetPassword(string Email)
+        {
+            SetPasswordVM model = new SetPasswordVM
+            {
+                Email = Email
+            };
+            return View(model);
+        }
+
+        //
+        // POST: /Administrador/SetPassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SetPassword(SetPasswordVM model)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                ApplicationUser Usuario = UserManager.FindByEmail(model.Email);
+                IdentityResult result =  await UserManager.RemovePasswordAsync(Usuario.Id);
+                if (result.Succeeded)
+                {
+                    
+                    result = await UserManager.AddPasswordAsync(Usuario.Id, model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                
+            }
+            //debo ver como mostrar los errores que aparecen en el result.errors
+            // Si llegamos a este punto, es que se ha producido un error, volvemos a mostrar el formulario
+            return View(model);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

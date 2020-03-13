@@ -982,7 +982,6 @@
     <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilPostu.cshtml" />
     <Content Include="Views\Shared\_Master.cshtml" />
-    <Content Include="Views\Administrador\MenuPerfil.cshtml" />
     <Content Include="Views\Postulante\Antropometria.cshtml" />
     <Content Include="Views\OficinasYDelegaciones\Index.cshtml" />
     <Content Include="Views\PeriodoInscripciones\Index.cshtml" />
@@ -997,6 +996,8 @@
     <Content Include="Views\Administrador\Create.cshtml" />
     <Content Include="Views\Administrador\Details.cshtml" />
     <Content Include="Views\Administrador\Edit.cshtml" />
+    <Content Include="Views\Administrador\Delete.cshtml" />
+    <Content Include="Views\Administrador\SetPassword.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
