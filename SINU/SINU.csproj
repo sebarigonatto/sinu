@@ -185,6 +185,7 @@
     <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
     <Compile Include="Controllers\Administrador\TipoNacionalidadsController.cs" />
+    <Compile Include="Controllers\ConsultorController.cs" />
     <Compile Include="Controllers\DelegacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -998,6 +999,8 @@
     <Content Include="Views\Administrador\Edit.cshtml" />
     <Content Include="Views\Administrador\Delete.cshtml" />
     <Content Include="Views\Administrador\SetPassword.cshtml" />
+    <Content Include="Views\Consultor\Index.cshtml" />
+    <Content Include="Views\Shared\_MenuPerfilConsu.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
