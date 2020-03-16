@@ -38,7 +38,7 @@ new { id = "BeginFormActMilitarCUD" }))
                             <div class="form-group">
                                 @Html.LabelFor(model => model.ACTMilitarIDVM.Fuerza, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-12">
-                                    @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdFuerza, new SelectList(Model.FuerzasVM, "IdFuerza", "Fuerza1"), "Seleccione una FUERZA", htmlAttributes: new { @class = "form-control " })
+                                    @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdFuerza, new SelectList(Model.FuerzasVM, "IdFuerza", "Fuerza1"), "Seleccione una FUERZA", htmlAttributes: new { @class = "form-control selectpicker" })
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.IdFuerza, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -46,7 +46,7 @@ new { id = "BeginFormActMilitarCUD" }))
                             <div class="form-group ">
                                 @Html.LabelFor(model => model.ACTMilitarIDVM.Ingreso, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.ACTMilitarIDVM.Ingreso, new { htmlAttributes = new { @class = "form-control", @id="IngresoSINO"} })
+                                    @Html.EditorFor(model => model.ACTMilitarIDVM.Ingreso, new { htmlAttributes = new { @class = "form-control selectpicker", @id="IngresoSINO"} })
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.Ingreso, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -78,7 +78,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                 <div class="form-group ">
                                     @Html.LabelFor(model => model.ACTMilitarIDVM.MotivoBaja, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-12">
-                                        @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdBaja, new SelectList(Model.BajaVM, "IdBaja", "BajaCausa"), "Seleccione Motiva de Baja", htmlAttributes: new { @class = "form-control " })
+                                        @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdBaja, new SelectList(Model.BajaVM, "IdBaja", "BajaCausa"), "Seleccione Motiva de Baja", htmlAttributes: new { @class = "form-control selectpicker" })
                                         @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.IdBaja, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                     <div class="form-group ">
                                         @Html.LabelFor(model => model.ACTMilitarIDVM.IdSituacionRevista, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-12">
-                                            @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdSituacionRevista, new SelectList(Model.SituacionRevistaVM, "IdSituacionRevista", "SituacionRevista1"), "Seleccione Motiva de Baja", htmlAttributes: new { @class = "form-control " })
+                                            @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdSituacionRevista, new SelectList(Model.SituacionRevistaVM, "IdSituacionRevista", "SituacionRevista1"), "Seleccione Motiva de Baja", htmlAttributes: new { @class = "form-control selectpicker" })
                                             @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.IdSituacionRevista, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
