@@ -39,7 +39,7 @@ new { id = "BeginFormIdiomaCUD" }))
                         <div class="form-group">
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.Idioma, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-12">
-                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.CodIdioma, new SelectList(Model.Sp_VIdiomas_VM, "CODIGO", "DESCRIPCION"), "Seleccione un Idioma", htmlAttributes: new { @class = "form-control ", @id = "ComboIdioma" })
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.CodIdioma, new SelectList(Model.Sp_VIdiomas_VM, "CODIGO", "DESCRIPCION"), "Seleccione un Idioma", htmlAttributes: new { @class = "form-control combobox", @id = "ComboIdioma" })
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.CodIdioma, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -84,7 +84,7 @@ new { id = "BeginFormIdiomaCUD" }))
                 {
                     <input type="button" value="Eliminar" class="btn btn-danger " id="EliminaIDIO" />
                 }
-                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarIDIO" />
+                <input type="submit" value="Guardar" class="btn btn-primary" id="Guardar_REG" />
 
             </div>
         </div>

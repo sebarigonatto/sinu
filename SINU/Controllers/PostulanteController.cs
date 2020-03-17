@@ -402,7 +402,7 @@ namespace SINU.Controllers
 
                     db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto);
 
-                    return Json(new { success = true, msg = "Se Inserto correctamente el estudio nuevo" });
+                    return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIOS" });
                 }
                 catch (Exception ex)
                 {
@@ -533,7 +533,7 @@ namespace SINU.Controllers
                 {
                     vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
                     db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
-                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico IDIOMA" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
@@ -628,7 +628,7 @@ namespace SINU.Controllers
                 }
 
                 db.spActividadMilitarIU(a.IdActividadMilitar, datos.IDPErsona, a.Ingreso, a.FechaIngreso, a.FechaBaja, a.CausaMotivoNoingreso, a.MotivoBaja, a.Jerarquia, a.Cargo, a.Destino, a.IdSituacionRevista, a.IdFuerza, a.IdBaja);
-                return Json(new { success = true  , msg = "Se inserto o actulaizo correctamente" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true  , msg = "Se inserto o actulaizo correctamente ACTMilitar" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

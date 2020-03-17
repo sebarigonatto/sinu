@@ -62,7 +62,7 @@ new { id = "BeginFormEstudioCUD" }))
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new { @class = "form-control", @id = "JuriEST" })
                                     <div class="INSAR">
-                                        @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new SelectList(Model.Provincia, "", ""), null, htmlAttributes: new { @class = "form-control combobox ESTUAR", @id = "ComboJuriEST" })
+                                        @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new SelectList(Model.Provincia, "", ""), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboJuriEST" })
                                     </div>
                                     @Html.ValidationMessageFor(model => model.Provincia, "", new { @class = "text-danger" })
                                 </div>
@@ -70,7 +70,7 @@ new { id = "BeginFormEstudioCUD" }))
                             <div class="form-group INSAR">
                                 @Html.LabelFor(model => model.Localidad, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Localidad, new SelectList(Model.Localidad, "", ""), null, htmlAttributes: new { @class = "form-control combobox ESTUAR", @id = "ComboLocaliEST" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Localidad, new SelectList(Model.Localidad, "", ""), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboLocaliEST" })
                                     @Html.ValidationMessageFor(model => model.Localidad, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -80,7 +80,7 @@ new { id = "BeginFormEstudioCUD" }))
                                     @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.Nombre, new { @class = "form-control", @id = "IdInstEST" })
                                     <div class="INSAR">
 
-                                        @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), null, htmlAttributes: new { @class = "form-control combobox ESTUAR", @id = "ComboIdInstEST" })
+                                        @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboIdInstEST" })
                                         </div>
                                         @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
                                     </div>
@@ -140,7 +140,7 @@ new { id = "BeginFormEstudioCUD" }))
                 {
                     <input type="button" value="Eliminar" class="btn btn-danger" id="EliminaEST" />
                 }
-                <input type="submit" value="Guardar" class="btn btn-primary" id="GuardarEST"/>
+                <input type="submit" value="Guardar" class="btn btn-primary" id="Guardar_REG"/>
 
             </div>
     </div>

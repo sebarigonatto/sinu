@@ -207,7 +207,7 @@
                                 @Html.Action("Estudios", "Postulante")
                             </div>
                             @* VISTA DE ESTUDIOS *@
-                            <div class="tab-pane fade" id="Idioma" role="tabpanel" aria-labelledby="Idioma-tab">
+                            <div class="tab-pane fade" id="Idiomas" role="tabpanel" aria-labelledby="Idioma-tab">
                                 @Html.Action("Idiomas", "Postulante")
                             </div>
                             @* VISTA DE ACTIVIDAD MILITAR *@
@@ -246,11 +246,15 @@
     </div>
     <!-- End lined tabs -->
 </div>
+
+
+
+
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
      @*MODAL DE LA VISTA ESTUDIO VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@ 
-<div class="modal fade " id="ModalEstudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content   " id="ModalEstudioCuerpo">
+        <div class="modal-content" id="ModalEIACuerpo">
 
             <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
@@ -258,11 +262,10 @@
     </div>
 </div>
 
-<div class="modal fade " id="ModalIdioma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+@*<div class="modal fade " id="ModalIdioma" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
         <div class="modal-content" id="ModalIdiomaCuerpo">
             <h1>asdad</h1>
-            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
         </div>
     </div>
@@ -271,18 +274,17 @@
 <div class="modal fade " id="ModalAct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
         <div class="modal-content" id="ModalActCuerpo">
-            <!--------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
         </div>
     </div>
-</div>
+</div>*@
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
+    <script src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
      
-        $(document).ready(function () {
+        @*$(document).ready(function () {
             //ver esto ya que en el navegador aparece nu aadvertencia relacionado si es asincronico o sincronico
             $.ajaxSetup({
                 async: false
@@ -327,8 +329,9 @@
                     var fechanac = $('#datepicker').datepicker('getDate');
                     var fechahoy = new Date();
                     var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+                    //condicion que verefica si cumplio años, si no cumplio se le resta un año a edad
                     if ((fechahoy.getMonth() <= fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate())) {
-                        alert("NO Cumplio AÑOS");
+                        //alert("NO Cumplio AÑOS");
                         edad--;
                     };
                     $("#edad").val(edad);
@@ -1039,7 +1042,7 @@
 
 
                 
-        });
+        });*@
 
  /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm */
