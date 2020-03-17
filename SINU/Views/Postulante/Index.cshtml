@@ -326,11 +326,12 @@
                 .on("changeDate", function (e) {
                     var fechanac = $('#datepicker').datepicker('getDate');
                     var fechahoy = new Date();
-                    var edad = Math.floor((fechahoy - fechanac) / 365 / 24 / 60 / 60 / 1000);
-                    if ((fechahoy.getMonth()<fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate()) ) {
+                    var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+                    if ((fechahoy.getMonth() <= fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate())) {
+                        alert("NO Cumplio AÑOS");
                         edad--;
                     };
-                    alert(edad);
+                    $("#edad").val(edad);
                 });
 
 

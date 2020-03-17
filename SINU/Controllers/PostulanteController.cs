@@ -150,16 +150,7 @@ namespace SINU.Controllers
             }
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
-        public JsonResult Calc_EDAD(string nac)
-        {
-            DateTime fechaNacimiento = new DateTime(nac);
-
-            DateTime now = DateTime.Today;
-            int edad = DateTime.Today.Year - fechaNacimiento.Year;
-
-            if (DateTime.Today < fechaNacimiento.AddYears(edad))
-                --edad;
-        }
+       
 //----------------------------------Domicilio----------------------------------------------------------------------//
 
         public ActionResult Domicilio()
