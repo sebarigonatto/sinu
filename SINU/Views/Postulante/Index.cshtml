@@ -81,7 +81,7 @@
 
     /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
     .bootstrap-select{
-        max-width:280px;
+        max-width:280px !important;
     }
 </style>
 
@@ -304,17 +304,34 @@
                 $(".selectpicker").selectpicker({
                     size: 7,
                 });
+
             })();
 
+           
+           
+
+///////////////////////////////////////////////////////////////////////////////// 
+
+            //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
+        /*FUNCION DE LA VISTA DE DATOS PERSONALES */
             $("#datepicker").datepicker({
-                format: "dd/mm/yyyy",
+                format: "dd-mm-yyyy",
                 language: "es",
+                autoclose: true,
+                startView: "years",
+               
             });
 
-/////////////////////////////////////////////////////////////////////////////////
-        /*FUNCION DE LA VISTA DE DATOS PERSONALES */
-
-          //--------------------------------------------------------------------------------------//
+            $('#datepicker').datepicker()
+                .on("changeDate", function (e) {
+                    var fechanac = $('#datepicker').datepicker('getDate');
+                    var fechahoy = new Date();
+                    var edad = Math.floor((fechahoy - fechanac) / 365 / 24 / 60 / 60 / 1000);
+                    if ((fechahoy.getMonth()<fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate()) ) {
+                        edad--;
+                    };
+                    alert(edad);
+                });
 
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -485,16 +502,6 @@
                                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                                 },
-
-                                "columnDefs": [{
-                                    "targets": 'no-sort',
-                                    "orderable": false,
-                                },
-                                {
-                                    "searchable": false,
-                                    "targets": [0],
-                                }]
-
                             }
                 });
 
@@ -557,7 +564,6 @@
                         /* https://developer.snapappointments.com/bootstrap-select/ */
                         $(".combobox").selectpicker({
                             liveSearch: true,
-                            width: '280px',
                             size: 7,
                             liveSearchPlaceholder: "Ingrese su busqueda",
                             liveSearchStyle: 'contains',//'startsWith'
@@ -724,16 +730,6 @@
                                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                                 },
-
-                                "columnDefs": [{
-                                    "targets": 'no-sort',
-                                    "orderable": false,
-                                },
-                                {
-                                    "searchable": false,
-                                    "targets": [0],
-                                }]
-
                             }
                     });
 
@@ -948,6 +944,9 @@
                                     });
                                 $("#ModalAct").modal("hide");
                             });
+
+                            $(".selectpicker").selectpicker();
+
                         },
 
                         //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
@@ -969,12 +968,16 @@
         /* https://developer.snapappointments.com/bootstrap-select/ */
             SITUOCUPA();
 
+            $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+                SITUOCUPA();
+            });
+
             function SITUOCUPA(){
                  var group = $("#inaoact option:selected").closest('optgroup').attr('label');
                 var text = $("#inaoact option:selected").html();
                 if (group == "Inactivo" || text == "Desocupado") {
                     $("#SI").hide();
-                    $("#SI input").val("");
+                    $("#SI input").val(""); 
                 } else {
                     $("#SI").show();
 
@@ -983,22 +986,21 @@
 
             $("#Estado").selectpicker({
                 size: 6,
+                width: 400,
                 actionsBox: true,
                 deselectAllText: 'Deseleccionar Todo',
                 selectAllText: 'Seleccionar Todo',
                 noneSelectedText: 'Ninguna Opcion Seleccionada'
             });
            
-            $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                SITUOCUPA();
-            });
+           
 
 /////////////////////////////////////////////////////////////////////////////
             /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
 
 
-
-              var sex = $("#Sexo");
+            //verifico el sexo del postulante para olcultar o mostrar determinados input
+            var sex = $("#Sexo");
             sexo(sex.val());
 
             sex.on("change", function () {
@@ -1011,7 +1013,7 @@
                 }
 
             });
-
+             
             $("#altura,#peso").on("change", function () {
 
                 var altura = $("#altura").val()/100,
