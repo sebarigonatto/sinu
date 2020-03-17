@@ -789,10 +789,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definid
           <Property Name="Relacion" Type="varchar" MaxLength="60" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" />
-          <Property Name="Genero" Type="nchar" MaxLength="15" />
+          <Property Name="Genero" Type="varchar" MaxLength="50" />
           <Property Name="FechaNacimiento" Type="date" />
           <Property Name="DNI" Type="varchar" MaxLength="8" />
           <Property Name="EstCivil" Type="varchar" MaxLength="112" />
+          <Property Name="Vive" Type="bit" />
+          <Property Name="ConVive" Type="bit" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1913,7 +1915,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_Familiar].[Genero] AS [Genero], 
     [vPersona_Familiar].[FechaNacimiento] AS [FechaNacimiento], 
     [vPersona_Familiar].[DNI] AS [DNI], 
-    [vPersona_Familiar].[EstCivil] AS [EstCivil]
+    [vPersona_Familiar].[EstCivil] AS [EstCivil], 
+    [vPersona_Familiar].[Vive] AS [Vive], 
+    [vPersona_Familiar].[ConVive] AS [ConVive]
     FROM [dbo].[vPersona_Familiar] AS [vPersona_Familiar]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" store:Type="Views" store:Schema="dbo">
@@ -2851,10 +2855,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Genero" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
           <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="Vive" Type="Boolean" />
+          <Property Name="ConVive" Type="Boolean" />
         </EntityType>
         <EntityType Name="vPersona_Idioma">
           <Key>
@@ -4541,6 +4547,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPersona_Familiar">
             <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar">
               <MappingFragment StoreEntitySet="vPersona_Familiar">
+                <ScalarProperty Name="ConVive" ColumnName="ConVive" />
+                <ScalarProperty Name="Vive" ColumnName="Vive" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
                 <ScalarProperty Name="IdPersonaPostulante" ColumnName="IdPersonaPostulante" />

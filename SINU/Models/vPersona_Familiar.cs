@@ -28,5 +28,7 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public string DNI { get; set; }
         public string EstCivil { get; set; }
+        public Nullable<bool> Vive { get; set; }
+        public Nullable<bool> ConVive { get; set; }
     }
 }
