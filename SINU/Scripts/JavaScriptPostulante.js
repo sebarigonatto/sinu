@@ -208,17 +208,6 @@ $(document).ready(function () {
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
 
-    //index de la fila seleccionada de la tabla
-    var indexrow;
-
-    //se llama al modal para cargar un nuevo estudio
-    $("#NuevoEstudio").on("click", function () {
-        //alert("modal nuevo estudio!!!");
-        ModalEstudioCUD(null);
-    });
-
-
-
 
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
@@ -227,7 +216,6 @@ $(document).ready(function () {
         //guardo el index de la fila seleccionada
         //se llama al modal y se le envia la id de estudio correspondiete
         Tabla.on('select.dt', function (e, dt, type, index) {
-            indexrow = index;
             var data = dt.rows(index).data();
             var id_registro = data[0][0];
             var id_Tabla = $(this).attr("id");
@@ -238,6 +226,12 @@ $(document).ready(function () {
         });
     };
 
+    //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
+    $(".Nuevo_REG").on("click", function () {
+        var id_Tabla = $(this).attr("data-IdTabla");
+        //alert(id_Tabla)
+        ModalEIACUD(null, id_Tabla);
+    });
 
     var url_Tabla ;
     var url_CUD ;
@@ -331,19 +325,18 @@ $(document).ready(function () {
                     $("#ModalEIA").modal("hide");
                 });
 
-
                 ///////////////////////////////ELIMINA///////////////////////////////////
 
-
                 //ELIMINA EL ESTUDIO SELECCIONADO
-                $("#EliminaEST").on("click", function () {
-                    $.getJSON('/Postulante/EliminaEST',
-                        { ID: idrec }, function (response) {
+                $(".Eliminar").on("click", function () {
+
+                    $.getJSON('/Postulante/' + url_Elim,
+                        { ID: id_registro },
+                        function (response) {
                             alert(response.success + " - " + response.msg);
                         });
-                    $("#ModalEstudio").modal("hide");
+                    $("#ModalEIA").modal("hide");
                 });
-
               
 
             },
@@ -362,228 +355,20 @@ $(document).ready(function () {
 
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     $("#ModalEIA").on('hidden.bs.modal', function () {
-        alert("se cerro modal");
-        $("#"+ url_Tabla).load('@Url.Action("Estudios","Postulante")', function () {
+        alert(url_Tabla);
+        $("#" + url_Tabla).load('/Postulante/' + url_Tabla, function () {
 
-            //se llama al modal para cargar un nuevo estudio
-            $("#NuevoEstudio").on("click", function () {
-                //alert("modal nuevo estudio!!!");
-                ModalEstudioCUD(null);
+            //se llama al modal para cargar un nuevo registrode la tabla actual
+            $(".Nuevo_REG").on("click", function () {
+                var id_Tabla = $(this).attr("data-IdTabla");
+                //alert(id_Tabla)
+                ModalEIACUD(null, id_Tabla);
             });
 
             //aplico datatable a la tabla de estudio
-            TablaEST();
+            TablasEIA();
         });
     });
-
-
-    //al cerrarse el modal la fila seleccionada es DESELECCIONADA
-    //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
-    $("#ModalIdioma").on('hidden.bs.modal', function () {
-        //alert("cerror modal");
-        $("#Idioma").load('@Url.Action("Idiomas","Postulante")', function () {
-            //se llama al modal para cargar un nuevo estudio
-            $("#NuevoIdioma").on("click", function () {
-                //alert("modal nuevo estudio!!!");
-                ModalIdiomaCUD(null);
-            });
-
-            //aplico datatable a la tabla de estudio
-            TablaIDIO();
-        });
-
-    });
-
-
-    //al cerrarse el modal la fila seleccionada es DESELECCIONADA
-    //se se actualiza la vista parcial en el caso que se elimine, modifique o se agregue un registro
-    $("#ModalAct").on('hidden.bs.modal', function () {
-        //alert("cerror modal");
-        $("#ActMIlitar").load('@Url.Action("ActMIlitar","Postulante")', function () {
-
-            //se llama al modal para cargar un nuevo estudio
-            $("#NuevoAct").on("click", function () {
-                //alert("modal nuevo estudio!!!");
-                ModalACTCUD(null);
-            });
-
-            //aplico datatable a la tabla
-            TablaACT();
-        });
-
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function ModalIdiomaCUD(idrec) {
-
-        //elimino el contenido html
-        $('#ModalIdiomaCuerpo').html("");
-
-        $.ajax({
-            cache: false,
-            asyn: false,
-            type: "GET",
-            url: '/Postulante/IdiomaCUD',
-            data: { ID: idrec },
-            //si no surge error al redireccionar se reemplaza el contenido de la div
-            success: function (response) {
-                $('#ModalIdiomaCuerpo').html(response);
-                //con esto  funciona la validacion del lado del cliente con la vista parcial
-                $('#ModalIdiomaCuerpo').removeData("validator");
-                $('#ModalIdiomaCuerpo').removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse('#ModalIdiomaCuerpo');
-
-
-
-
-                //se aplicael selecpicker a alos conbo/s con autocomplete
-                $("#ComboIdioma").selectpicker({
-                    liveSearch: true,
-                    size: 6,
-                });
-
-                $(".selectpicker").selectpicker();
-
-
-
-
-
-
-
-
-
-                //ELIMINA EL Idioma SELECCIONADO
-                $("#EliminaIDIO").on("click", function () {
-
-                    $.getJSON('/Postulante/EliminaIDIO',
-                        { ID: idrec }, function (response) {
-                            alert(response.success + " - " + response.msg);
-                        });
-                    $("#ModalIdioma").modal("hide");
-
-                });
-
-                $("#GuardarIDIO").on("click", function () {
-                    $("#ModalIdioma").modal("hide");
-                });
-            },
-
-            //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
-            statusCode: {
-                500:
-                    function (context) {
-                        $('#ModalActCuerpo').html(context.responseText);
-                    }
-            }
-        });
-
-    };
-
-
-
-
-
-
-
-
-    function ModalACTCUD(idrec) {
-
-        //elimino el contenido html
-        $('#ModalActCuerpo').html("");
-
-        $.ajax({
-            cache: false,
-            asyn: false,
-            type: "GET",
-            url: '/Postulante/ActMilitarCUD',
-            data: { ID: idrec },
-            //si no surge error al redireccionar se reemplaza el contenido de la div
-            success: function (response) {
-                $('#ModalActCuerpo').html(response);
-                //con esto  funciona la validacion del lado del cliente con la vista parcial
-                $('#ModalActCuerpo').removeData("validator");
-                $('#ModalActCuerpo').removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse('#ModalActCuerpo');
-
-
-
-
-                $(".selectpicker").selectpicker();
-
-
-
-
-                IngreSINO();
-                $("#IngresoSINO").on("change", function (e) {
-                    IngreSINO()
-
-                });
-
-
-                //ELIMINA LA ACTIVIDAD MILITAR SELECCIONADA SELECCIONADO
-                $("#EliminaACT").on("click", function () {
-                    $.getJSON('/Postulante/EliminaACT',
-                        { ID: idrec },
-                        function (response) {
-                            alert(response.success + " - " + response.msg);
-                        });
-                    $("#ModalAct").modal("hide");
-                });
-
-               
-
-            },
-
-            //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
-            statusCode: {
-                500:
-                    function (context) {
-                        $('#ModaACTCuerpo').html(context.responseText);
-                    }
-            }
-        });
-
-    };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   
 
@@ -610,7 +395,6 @@ $(document).ready(function () {
         }
 
     };
-
 
 
     function ComboCascada(Combo, ValC) {
@@ -644,45 +428,7 @@ $(document).ready(function () {
     };
 
     //////////////////////////////////////////////////////////////////////////////
-    /* FUNCION DE LA VISTA DE IDIOMA */
-
-    //aplico DATATABLES a las tablas necesrias
-    //TablaIDIO()
-    //index de la fila seleccionada de la tabla
-    var indexrow;
-
-    //se llama al modal para cargar un nuevo estudio
-    $("#NuevoIdioma").on("click", function () {
-        //alert("modal nuevo estudio!!!");
-        ModalIdiomaCUD(null);
-    });
-
-   
-
-   
-
-    //funcion que carga el modal de estudio
-    //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
-
-    //////////////////////////////////////////////////////////////////////////////
-    /* FUNCION DE LA VISTA DE ACTIVIDAD MILITAR */
-
-    //aplico DATATABLES a las tablas necesrias
-    //TablaACT()
-
-    //index de la fila seleccionada de la tabla
-    var indexrow;
-
-    //se llama al modal para cargar un nuevo estudio
-    $("#NuevoAct").on("click", function () {
-        //alert("modal nuevo estudio!!!");
-        ModalACTCUD(null);
-    });
-
-   
-
-
-    
+    /* FUNCION DE LA VISTA DE AACTIVIDAD MILITAR */
 
     function IngreSINO() {
         if ($("#IngresoSINO").val() == "true") {
@@ -699,6 +445,7 @@ $(document).ready(function () {
 
         };
     };
+
     //funcion que carga el modal de estudio
     //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
 
@@ -742,19 +489,22 @@ $(document).ready(function () {
 
 
     //verifico el sexo del postulante para olcultar o mostrar determinados input
-    var sex = $("#Sexo");
-    sexo(sex.val());
+    sexo($("#Sexo").val());
 
     sex.on("change", function () {
         sexo(sex.val());
     });
 
-    $("#antropo input").each(function () {
-        if ($(this).val() == "") {
-            $(this).val(0);
+    function sexo(element) {
+        //alert(element);
+        if (element != "Mujer") {
+            $("#mujer").hide();
+            $("#mujer input").val(0);
+        } else {
+            $("#mujer").show();
         }
+    };
 
-    });
 
     $("#altura,#peso").on("change", function () {
 
@@ -768,16 +518,13 @@ $(document).ready(function () {
 
     });
 
-    function sexo(element) {
-        //alert(element);
-        if (element != "Mujer") {
-            $("#mujer").hide();
-            $("#mujer input").val(0);
-        } else {
-            $("#mujer").show();
+    $("#antropo input").each(function () {
+        if ($(this).val() == "") {
+            $(this).val(0);
         }
-    };
 
+    });
+   
 
 
 });
