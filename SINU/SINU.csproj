@@ -226,6 +226,9 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataProblemaPantalla.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DocPresentado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -360,6 +363,9 @@
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VerificacionPantallas.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vEstCivil.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -370,6 +376,12 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VPantalla_Problema.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vParam_Grados.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vParentesco.cs">

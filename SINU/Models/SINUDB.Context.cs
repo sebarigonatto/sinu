@@ -89,6 +89,10 @@ namespace SINU.Models
         public virtual DbSet<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<vUsuariosAdministrativos> vUsuariosAdministrativos { get; set; }
+        public virtual DbSet<DataProblemaPantalla> DataProblemaPantalla { get; set; }
+        public virtual DbSet<VerificacionPantallas> VerificacionPantallas { get; set; }
+        public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
+        public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

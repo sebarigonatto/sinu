@@ -12,16 +12,15 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Familiares
+    public partial class DataProblemaPantalla
     {
         public int IdPostulantePersona { get; set; }
-        public int IdPersona { get; set; }
-        public int idParentesco { get; set; }
-        public int IdFamiliar { get; set; }
-        public bool Vive { get; set; }
-        public bool ConVive { get; set; }
+        public int IdPantalla { get; set; }
+        public int IdDataProblema { get; set; }
+        public string Comentario { get; set; }
     
         public virtual Persona Persona { get; set; }
+        public virtual VerificacionPantallas VerificacionPantallas { get; set; }
         public virtual Postulante Postulante { get; set; }
     }
 }

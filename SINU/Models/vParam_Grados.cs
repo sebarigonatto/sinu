@@ -12,16 +12,11 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Familiares
+    public partial class vParam_Grados
     {
-        public int IdPostulantePersona { get; set; }
-        public int IdPersona { get; set; }
-        public int idParentesco { get; set; }
-        public int IdFamiliar { get; set; }
-        public bool Vive { get; set; }
-        public bool ConVive { get; set; }
-    
-        public virtual Persona Persona { get; set; }
-        public virtual Postulante Postulante { get; set; }
+        public int ordengrupo { get; set; }
+        public Nullable<int> GRADO_NUMERICO { get; set; }
+        public string GRADO { get; set; }
+        public string DESCRIPCION { get; set; }
     }
 }
