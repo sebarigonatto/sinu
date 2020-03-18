@@ -577,9 +577,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene defini
 advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParam_Grados">
           <Key>
-            <PropertyRef Name="ordengrupo" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ordengrupo" Type="int" Nullable="false" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="TipoPersonal" Type="int" Nullable="false" />
           <Property Name="GRADO_NUMERICO" Type="int" />
           <Property Name="GRADO" Type="varchar" MaxLength="8" />
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="150" />
@@ -1755,7 +1756,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySet>
           <EntitySet Name="vParam_Grados" EntityType="Self.vParam_Grados" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vParam_Grados].[ordengrupo] AS [ordengrupo], 
+    [vParam_Grados].[ID] AS [ID], 
+    [vParam_Grados].[TipoPersonal] AS [TipoPersonal], 
     [vParam_Grados].[GRADO_NUMERICO] AS [GRADO_NUMERICO], 
     [vParam_Grados].[GRADO] AS [GRADO], 
     [vParam_Grados].[DESCRIPCION] AS [DESCRIPCION]
@@ -3926,12 +3928,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         </Association>
         <EntityType Name="vParam_Grados">
           <Key>
-            <PropertyRef Name="ordengrupo" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ordengrupo" Type="Int32" Nullable="false" />
           <Property Name="GRADO_NUMERICO" Type="Int32" />
           <Property Name="GRADO" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="DESCRIPCION" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="TipoPersonal" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4889,10 +4892,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vParam_Grados">
             <EntityTypeMapping TypeName="SINUModel.vParam_Grados">
               <MappingFragment StoreEntitySet="vParam_Grados">
+                <ScalarProperty Name="TipoPersonal" ColumnName="TipoPersonal" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
                 <ScalarProperty Name="GRADO" ColumnName="GRADO" />
                 <ScalarProperty Name="GRADO_NUMERICO" ColumnName="GRADO_NUMERICO" />
-                <ScalarProperty Name="ordengrupo" ColumnName="ordengrupo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
