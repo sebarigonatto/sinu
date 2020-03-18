@@ -14,9 +14,10 @@ namespace SINU.Models
     
     public partial class vParam_Grados
     {
-        public int ordengrupo { get; set; }
         public Nullable<int> GRADO_NUMERICO { get; set; }
         public string GRADO { get; set; }
         public string DESCRIPCION { get; set; }
+        public long ID { get; set; }
+        public int TipoPersonal { get; set; }
     }
 }
