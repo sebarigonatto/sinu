@@ -33,6 +33,16 @@ namespace SINU.Models
     public partial class vPersona_Antropometria
     {
     }
+    
+    [MetadataType(typeof(ActividadMilitarMetadadata))]
+    public partial class ActividadMilitar
+    {
+    }
+    
+    [MetadataType(typeof(vPersona_ActividadMilitarMetadata))]
+    public partial class vPersona_ActividadMilitar
+    {
+    }
 
     [MetadataType(typeof(vUsuariosAdministrativosMetadata))]
     public partial class vUsuariosAdministrativos

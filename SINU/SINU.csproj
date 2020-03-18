@@ -1014,6 +1014,7 @@
     <Content Include="Views\Administrador\SetPassword.cshtml" />
     <Content Include="Views\Consultor\Index.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilConsu.cshtml" />
+    <Content Include="Views\Postulante\Familia.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

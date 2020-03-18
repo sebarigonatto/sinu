@@ -225,12 +225,12 @@ namespace SINU.Controllers
                         p.EventualProv_Loc = null;
                     };
 
-                    int result = db.spDomiciliosU(
+                    db.spDomiciliosU(
                         p.IdDomicilioDNI, p.Calle, p.Numero, p.Piso, p.Unidad, p.IdLocalidad, p.Prov_Loc_CP, p.IdPais,
                         p.IdDomicilioActual, p.EventualCalle, p.EventualNumero, p.EventualPiso, p.EventualUnidad, p.EventualIdLocalidad, p.EventualProv_Loc, p.EventualIdPais
                     );
 
-                    return Json(new { success = true, msg = "Se guardaron con Exito datos de domicilio" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se guardaron con Exito datos de DOMICILIO" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
@@ -240,25 +240,14 @@ namespace SINU.Controllers
                 }
             }
 
-            //ver como saber que capos causan el error
-            //string errors = "";
-            //foreach (var i in ModelState)
-            //{
-            //    errors = errors + " -- " + i.Value.Errors;
-            //};
-           
             return Json(new { success = false, msg = "Modelo no VALIDO - " /*+ errors*/ }, JsonRequestBehavior.AllowGet);
         }
-
-
 
         //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
         public JsonResult DropEnCascadaDomicilio(string? Provincia, int? Localidad)
         {
-
             if (Provincia!=null)
             {
-
                 var localidades = db.vProvincia_Depto_Localidad
                                 .Where(m => m.Provincia == Provincia)
                                 .Select(m => new SelectListItem
@@ -317,7 +306,6 @@ namespace SINU.Controllers
                         .OrderBy(m => m.Jurisdiccion)
                         .Select(m => m.Jurisdiccion)
                         .ToList()
-
                 };
                 //verifico si envio un ID 
                 //SI reciobio ID cargo los datos correspondiente
@@ -369,9 +357,6 @@ namespace SINU.Controllers
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();
                 };
-
-                
-
                 return PartialView(estudio);
 
             }
@@ -608,6 +593,7 @@ namespace SINU.Controllers
         [HttpPost]
         public JsonResult ActMilitarCUD(ActividadMIlitarVM datos)
         {
+
             try
             {
                 var a = datos.ACTMilitarIDVM;
@@ -658,7 +644,7 @@ namespace SINU.Controllers
                
                 SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM();
          
-                SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1);
+                SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1",1);
 
                 List<string> InteresesSeleccionados = db.Persona.Find(ID_per).Interes.Select(m => m.DescInteres).ToList();
                 SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
@@ -679,9 +665,9 @@ namespace SINU.Controllers
 
                 return PartialView(SituOcu);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return PartialView(ex);
             }
         }
 
@@ -692,7 +678,6 @@ namespace SINU.Controllers
             {
                 var s = situ.VPersona_SituacionOcupacionalVM;
                 db.spSituacionOcupacionalIU(s.IdSituacionOcupacional, s.IdPersona, s.IdEstadoOcupacional, s.OcupacionActual, s.Oficio, s.AniosTrabajados, s.DomicilioLaboral);
-
 
                 Interes ins = new Interes();
                 var per = db.Persona.Find(ID_per).Interes;
@@ -706,7 +691,6 @@ namespace SINU.Controllers
                     };
                 };
                 db.SaveChanges();
-                //var asd = db.Persona.Find(ID_per).Interes.ToList();
                 return Json(new { success = true, msg = "exito en guardar la situacion ocupacional" });
             }
             catch (Exception ex)
@@ -714,7 +698,8 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message });
             }
         }
-            /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
+
+        /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
         public ActionResult Antropometria()
         {
             vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona==ID_per);
@@ -733,6 +718,21 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message});
             }
 
+        }
+
+        /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
+        public ActionResult Familia()
+        {
+            try
+            {
+                List<vPersona_Familiar> FAMI ;
+                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_per).ToList();
+                return PartialView(FAMI);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
         }
     }
 }
