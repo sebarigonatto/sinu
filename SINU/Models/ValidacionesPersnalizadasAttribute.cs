@@ -16,22 +16,22 @@ namespace SINU.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             ValidationResult valido = ValidationResult.Success;
-            var campomodelo = validationContext.MemberName;
-            var idinstituto = validationContext.ObjectInstance.
-            try
-            {
-                var db = new SINUEntities();
-                var priodosinstitutos = db.PeriodosInscripciones.Where(m=>m.IdInstitucion==)
-                if (true)
-                {
-                    validationContext.
-                }
-            }
-            catch (Exception)
-            {
+            //var campomodelo = validationContext.MemberName;
+            //var idinstituto = validationContext.ObjectInstance.
+            //try
+            //{
+            //    var db = new SINUEntities();
+            //    var priodosinstitutos = db.PeriodosInscripciones.Where(m=>m.IdInstitucion==)
+            //    if (true)
+            //    {
+            //        validationContext.
+            //    }
+            //}
+            //catch (Exception)
+            //{
 
-                throw;
-            }
+            //    throw;
+            //}
             return valido;
         }
     }
