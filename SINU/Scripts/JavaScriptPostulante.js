@@ -66,13 +66,20 @@ $(document).ready(function () {
     $('#datepicker').datepicker().on("changeDate", function (e) {
             var fechanac = $('#datepicker').datepicker('getDate');
             var fechahoy = new Date();
-            var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+        var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+        alert(edad);
+        alert("meshoy"+fechahoy.getMonth());
+        alert("mescumple" +fechanac.getMonth());
+        alert("diahoy"+fechahoy.getDate());
+        alert("diahoy" +fechanac.getDate());
+
             //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
-            if ((fechahoy.getMonth() <= fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate())) {
-                //alert("NO Cumplio AÑOS");
+        if (fechahoy.getMonth() <= fechanac.getMonth()) {
+            if (!(fechahoy.getDate() >= fechanac.getDate() && fechahoy.getMonth() == fechanac.getMonth())) {
                 edad--;
-            };
-            $("#edad").val(edad);
+            } ;
+        };
+        $("#edad").val(edad);
     });
 
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
@@ -466,7 +473,7 @@ $(document).ready(function () {
 
     //calculo de la IMC cuando los campos de altura y peso con cargados
     $("#altura,#peso").on("change", function () {
-
+        
         var altura = $("#altura").val() / 100,
             peso = $("#peso").val().replace(",", ".");
         if (altura != 0 && peso != 0) {

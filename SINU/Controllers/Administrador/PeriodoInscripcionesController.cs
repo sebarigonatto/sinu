@@ -42,7 +42,8 @@ namespace SINU.Controllers.Administrador
             // GET: PeriodoInscripciones/Create
             public ActionResult Create()
             {
-                var Institucion = db.Institucion.ToList();
+                //excluyo un registro de las tabla Institucion, "Necesito Orientacion"
+                var Institucion = db.Institucion.Where(m=>m.IdInstitucion!=1).ToList();
                 var listaInstitucion = new SelectList(Institucion, "IdInstitucion", "NombreInst");
                 ViewData["Institucion"] = listaInstitucion;
                 return View();
@@ -56,6 +57,7 @@ namespace SINU.Controllers.Administrador
             {
                 if (ModelState.IsValid)
                 {
+                
                     PeriodosInscripciones periodosInscripciones = new PeriodosInscripciones();
                     periodosInscripciones.FechaInicio = Convert.ToDateTime(ListaParametros["PeriodosInscripcionesVm.FechaInicio"]);
                     periodosInscripciones.FechaFinal = Convert.ToDateTime(ListaParametros["PeriodosInscripcionesVm.FechaFinal"]);
@@ -125,8 +127,9 @@ namespace SINU.Controllers.Administrador
             {
                 try
                 {
-                    // TODO: Add delete logic here
-
+                    var reg = db.PeriodosInscripciones.Find(id);
+                    db.PeriodosInscripciones.Remove(reg);
+                    db.SaveChanges();
                     return RedirectToAction("Index");
                 }
                 catch

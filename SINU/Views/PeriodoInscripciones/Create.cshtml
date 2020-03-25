@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker1", placeholder = "Formato: DD/MM/YYYY" } })
+                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker1", placeholder = "DD/MM/YYYY", @readOnly=true } })
                 @Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaInicio, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker2", placeholder = "Formato: DD/MM/YYYY" } })
+                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker2", placeholder = "DD/MM/YYYY", @readOnly=true  } })
                 @Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaFinal, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Institucions, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Institucion", ViewData["Institucion"] as SelectList, new { @id = "IdInstitucion" })
+                @Html.DropDownList("Institucion", ViewData["Institucion"] as SelectList,"asdas", new { @id = "IdInstitucion", @class = "selectpicker" })
                 @Html.ValidationMessageFor(model => model.PeriodosInscripcionesVm.IdInstitucion)
             </div>
         </div>
@@ -53,11 +53,16 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 @section Scripts {
-    <script>
-        $('#datepicker1').datepicker()
-        $('#datepicker2').datepicker()
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript">
+        //alterala validacion de la fechas 
+        jQuery.validator.methods["date"] = function (value, element) { return true; };
+        $('#datepicker1,#datepicker2').datepicker({
+            autoclose: true,
+        });
     </script>
 
 }

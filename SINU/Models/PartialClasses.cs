@@ -66,4 +66,9 @@ namespace SINU.Models
 
 
     }
+
+    [MetadataType(typeof(PeriodosInscripcionesMetadata))]
+    public partial class PeriodosInscripciones
+    {
+    }
 }

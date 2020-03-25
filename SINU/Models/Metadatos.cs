@@ -256,4 +256,17 @@ namespace SINU.Models
 
         public int IdOficinasYDelegaciones { get; set; }
     }
+
+    public partial class PeriodosInscripcionesMetadata
+    {
+        [Required]
+        //[ValidacionesPersnalizadas]
+        public System.DateTime FechaInicio { get; set; }
+        [Required]
+        public System.DateTime FechaFinal { get; set; }
+        [Required]
+        public int IdInstitucion { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
+
+    }
 }
