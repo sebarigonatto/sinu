@@ -260,7 +260,7 @@ namespace SINU.Models
     public partial class PeriodosInscripcionesMetadata
     {
         [Required]
-        //[ValidacionesPersnalizadas]
+        [ValidacionesPersnalizadas("IdInstitucion",ErrorMessage ="lafecha ingresada esta dentro de otro periodo")]
         public System.DateTime FechaInicio { get; set; }
         [Required]
         public System.DateTime FechaFinal { get; set; }

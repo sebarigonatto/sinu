@@ -35,10 +35,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Institucions, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PeriodosInscripcionesVm.IdInstitucion, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Institucion", ViewData["Institucion"] as SelectList,"asdas", new { @id = "IdInstitucion", @class = "selectpicker" })
-                @Html.ValidationMessageFor(model => model.PeriodosInscripcionesVm.IdInstitucion)
+                @Html.DropDownListFor(m => m.PeriodosInscripcionesVm.IdInstitucion, Model.Institucions, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "selectpicker" })
+                @Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.IdInstitucion, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -54,12 +54,12 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")*@
 
 
     <script type="text/javascript">
         //alterala validacion de la fechas 
-        jQuery.validator.methods["date"] = function (value, element) { return true; };
+        //jQuery.validator.methods["date"] = function (value, element) { return true; };
         $('#datepicker1,#datepicker2').datepicker({
             autoclose: true,
         });

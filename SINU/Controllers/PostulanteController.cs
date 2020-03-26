@@ -15,9 +15,9 @@ namespace SINU.Controllers
 
         //ESTABLESCO LA VARIABLE MAIL DEL USUARIO QUE ESTA ACTUALMENTE LOGUEADO
         //ESTA CARIABLE ES UTILIZADA PARA BUSCAR EN LAS DISTINTAS VISTAS, UTILIZADAS EN EL CONTROLADOR, PARA  BUSCAR LOS REGISTROS DEL USUARIO LOGUEADO
-        private int ID_per => db.Persona.FirstOrDefault(m=>m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+        private int ID_per => db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
         private int IDFAMI;
- //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
+        //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
@@ -26,15 +26,15 @@ namespace SINU.Controllers
             return View();
         }
 
-//----------------------------------DATOS BASICOS----------------------------------------------------------------------//
+        //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
         public ActionResult DatosBasicos()
         {
             try
             {
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
-                DatosBasicosVM datosba = new DatosBasicosVM() 
-                { 
+                DatosBasicosVM datosba = new DatosBasicosVM()
+                {
                     SexoVM = db.Sexo.ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
@@ -55,8 +55,8 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
-            
-           
+
+
             if (ModelState.IsValid)
             {
                 try
@@ -75,12 +75,12 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = msgerror });
                 }
             };
-            return Json(new { success = false, msg= "Modelo no VALIDO" });
-         
+            return Json(new { success = false, msg = "Modelo no VALIDO" });
+
 
         }
 
-//----------------------------------ENTREVISTA----------------------------------------------------------------------//
+        //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
         public ActionResult Entrevista()
         {
@@ -102,10 +102,10 @@ namespace SINU.Controllers
 
                 return PartialView(ex);
             }
-           
+
         }
 
-//----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
+        //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
         public ActionResult DatosPersonales()
         {
@@ -136,22 +136,40 @@ namespace SINU.Controllers
             if (ModelState.IsValid)
             {
                 try
-                    {
-                        var p = Datos.vPersona_DatosPerVM;
-                        var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
-                        return Json(new { success = true, msg = "se guadaron con exito los DATOS PERSONALES" });
-                    }
-                    catch (Exception ex)
-                    {
-                        //envio la error  a la vista
-                        string msgerror = ex.Message + " " + ex.InnerException.Message;
-                        return Json(new { success = false, msg = msgerror });
+                {
+                    var p = Datos.vPersona_DatosPerVM;
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
+                    return Json(new { success = true, msg = "se guadaron con exito los DATOS PERSONALES" });
+                }
+                catch (Exception ex)
+                {
+                    //envio la error  a la vista
+                    string msgerror = ex.Message + " " + ex.InnerException.Message;
+                    return Json(new { success = false, msg = msgerror });
                 }
             }
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
+
+        //----------------------------------Domicilio----------------------------------------------------------------------//
+
        
-//----------------------------------Domicilio----------------------------------------------------------------------//
+        public ActionResult Domicio_API()
+        {
+
+            Domiciolio_API domi = new Domiciolio_API()
+            {
+                vPersona_Domicilio_API = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_per),
+                Pais_API = db.sp_vPaises("").Select(m => new SelectListItem { Text = m.DESCRIPCION, Value = m.CODIGO }).ToList(),
+                Provincia_API = new List<SelectListItem>(),
+                Localidad_API= new List<SelectListItem>()
+
+            };
+            return View(domi);
+        }
+               
+
+
 
         public ActionResult Domicilio()
         {
