@@ -56,14 +56,8 @@ namespace SINU.Controllers.Administrador
         {
             if (ModelState.IsValid)
             {
-
-                //PeriodosInscripciones periodosInscripciones = new PeriodosInscripciones();
-                //periodosInscripciones.FechaInicio = Convert.ToDateTime(ListaParametros["PeriodosInscripcionesVm.FechaInicio"]);
-                //periodosInscripciones.FechaFinal = Convert.ToDateTime(ListaParametros["PeriodosInscripcionesVm.FechaFinal"]);
-                //periodosInscripciones.IdInstitucion = Convert.ToInt32(ListaParametros["Institucion"]);
-                //db.PeriodosInscripciones.Add(periodosInscripciones);
-                //db.SaveChanges();
-
+                db.PeriodosInscripciones.Add(ListaParametros.PeriodosInscripcionesVm);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             var Institucion = db.Institucion.Where(m => m.IdInstitucion != 1).ToList();

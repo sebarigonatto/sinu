@@ -263,6 +263,7 @@ namespace SINU.Models
         [ValidacionesPersnalizadas("IdInstitucion",ErrorMessage ="lafecha ingresada esta dentro de otro periodo")]
         public System.DateTime FechaInicio { get; set; }
         [Required]
+        [ValidacionesPersnalizadas("IdInstitucion", ErrorMessage = "lafecha ingresada esta dentro de otro periodo")]
         public System.DateTime FechaFinal { get; set; }
         [Required]
         public int IdInstitucion { get; set; }
