@@ -169,6 +169,7 @@
                 $("#Provincia").on('changed.bs.select', function () {
                     //alert($(this).val());
                     $("#Localidad").html("");
+                    $("#Localidad").selectpicker('refresh');
                     prov = $(this).val();
                 });
 
@@ -179,7 +180,7 @@
 
                 $("div.bs-searchbox input").keyup(function () {
                     //alert($(this).val());
-                    var busqueda = $(this).val().toString();
+                    var busqueda = $(this).val();
                     if (busqueda.length>2) {
 
                         client.open("GET", "http://api.zippopotam.us/ar/" + prov + "/" + busqueda, true);
@@ -197,7 +198,8 @@
             });
 
             function cargaLocalidades(response) {
-                 $("#Localidad").html("");
+                $("#Localidad").html("");
+                
                 var jsonrespuesta = JSON.parse(response)
                 $.each(jsonrespuesta.places, function (i, item) {
                     //alert(item["place name"] + item["post code"]);
