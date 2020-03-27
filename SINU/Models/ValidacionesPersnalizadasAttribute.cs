@@ -7,10 +7,10 @@ using System.ComponentModel.DataAnnotations;
 namespace SINU.Models
 {
     [AttributeUsage(AttributeTargets.Property,AllowMultiple =true)]
-    public class ValidacionesPersnalizadasAttribute : ValidationAttribute
+    public class VPers_ControlRangoPeriodos_Attribute : ValidationAttribute
     {
         string IdInst;
-        public ValidacionesPersnalizadasAttribute(string idinst)
+        public VPers_ControlRangoPeriodos_Attribute(string idinst)
         {
             this.IdInst = idinst;
         }
@@ -35,7 +35,7 @@ namespace SINU.Models
                         //DateTime fechainicioa =  (DateTime)value;
                         //if (fechainicioa < ultimoperiodo)
                         //{
-                            valido = new ValidationResult(ErrorMessage);
+                            valido = new ValidationResult(ErrorMessage + ": "+ priodosinstitutos[0].FechaInicio.ToShortDateString() + " - "+ priodosinstitutos[0].FechaFinal.ToShortDateString());
                         //}
                     }
                 }
@@ -49,4 +49,73 @@ namespace SINU.Models
             return valido;
         }
     }
+
+
+    //validacion especial para la comparacion de fechas de periodo de inscripcion
+
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    public class VPers_FIMenorFF_Attribute  : ValidationAttribute
+    {
+        //Resumen de esta validacion :
+        //     compara que la fecha final de un rango sea mayor que la fecha inicial del rango. 
+        //     Acepta rangos de 1 dia esto quiere decir que si ff==fI es correcto
+        //
+        
+        // Resumen de propiedad:
+        //     Obtiene la propiedad que se va a comparar con la propiedad actual.
+        //
+        // Devuelve:
+        //     La otra propiedad.
+        public string OtherProperty { get; }
+        //
+        // Resumen de propiedad:
+        //     Obtiene el nombre para mostrar de la otra propiedad.
+        //
+        // Devuelve:
+        //     El nombre para mostrar de la otra propiedad.
+        public string OtherPropertyDisplayName { get; }        //
+        // Resumen:
+        //     compra que la fecha final de un rango sea mayor que la fecha inicial del rango. 
+        //     Acepta rangos de 1 dia esto quiere decir que si ff==fI es correcto
+        //
+        // Parámetros:
+        //   otherProperty:
+        //     Propiedad que se va a comparar con la propiedad actual.
+        public VPers_FIMenorFF_Attribute(string otherProperty)
+        { OtherProperty = otherProperty; }
+
+
+
+
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            ValidationResult valido = ValidationResult.Success;
+            try
+            {
+                if (value != null)
+                {
+                    DateTime fechadelvalor = (DateTime)value;
+                    var OtroCampo = validationContext.ObjectType.GetProperty(OtherProperty);
+                    DateTime FechaAComparar = DateTime.Parse(OtroCampo.GetValue(validationContext.ObjectInstance, null).ToString());
+                   
+                    if (fechadelvalor<FechaAComparar)
+                    {
+                        
+                        valido = new ValidationResult(ErrorMessage );
+                        
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                valido = new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
+            }
+            return valido;
+        }
+    }
+
+
 }

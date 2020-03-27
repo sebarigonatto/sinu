@@ -260,10 +260,11 @@ namespace SINU.Models
     public partial class PeriodosInscripcionesMetadata
     {
         [Required]
-        [ValidacionesPersnalizadas("IdInstitucion",ErrorMessage ="lafecha ingresada esta dentro de otro periodo")]
+        [VPers_ControlRangoPeriodos_("IdInstitucion",ErrorMessage = "La fecha ingresada esta dentro de otro periodo")]
         public System.DateTime FechaInicio { get; set; }
         [Required]
-        [ValidacionesPersnalizadas("IdInstitucion", ErrorMessage = "lafecha ingresada esta dentro de otro periodo")]
+        [VPers_ControlRangoPeriodos_("IdInstitucion", ErrorMessage = "La fecha ingresada esta dentro de otro periodo")]
+        [VPers_FIMenorFF_("FechaInicio", ErrorMessage = "Fecha Final debe ser superior a fecha de Inicio del rango.")]
         public System.DateTime FechaFinal { get; set; }
         [Required]
         public int IdInstitucion { get; set; }
