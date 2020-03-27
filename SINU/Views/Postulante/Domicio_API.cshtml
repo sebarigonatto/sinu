@@ -183,14 +183,14 @@
                     if (busqueda.length>2) {
 
                         client.open("GET", "http://api.zippopotam.us/ar/" + prov + "/" + busqueda, true);
-                        client.send();
+                        
                         client.onreadystatechange = function () {
                             if (client.readyState == 4) {
                                 //alert(client.responseText);
                                 cargaLocalidades(client.responseText);
                             };
                         };
-                       
+                       client.send();
                     }
                 });
 

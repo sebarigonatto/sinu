@@ -67,7 +67,6 @@ namespace SINU.Controllers.Administrador
                 return RedirectToAction("Index");
             }
             var Institucion = db.Institucion.Where(m => m.IdInstitucion != 1).ToList();
-            AdministradorVm datos = new AdministradorVm();
             ListaParametros.Institucions = new SelectList(Institucion, "IdInstitucion", "NombreInst");
             return View(ListaParametros);
         }
