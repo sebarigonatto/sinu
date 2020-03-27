@@ -16,6 +16,7 @@ namespace SINU.Models
         }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+           
             ValidationResult valido = ValidationResult.Success;
             try
             {
