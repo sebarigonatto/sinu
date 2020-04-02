@@ -65,7 +65,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), null, htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdEstadoCivil)
                         </div>
                     </div>

@@ -16,7 +16,7 @@ namespace SINU.Models
         }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-           
+            
             ValidationResult valido = ValidationResult.Success;
             try
             {
@@ -28,23 +28,20 @@ namespace SINU.Models
                     //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
                     //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
                     var db = new SINUEntities();
-                    var priodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
-                    if (priodosinstitutos.Count>0 & value != null)
+                    var periodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
+                
+                    if (periodosinstitutos.Count>0)
                     {
                         //agarro el primer periodo ya que es el que tien la fecha de finalizacion mas ultimo
                         //DateTime ultimoperiodo = priodosinstitutos[0].FechaFinal;
                         //DateTime fechainicioa =  (DateTime)value;
-                        //if (fechainicioa < ultimoperiodo)
-                        //{
-                            valido = new ValidationResult(ErrorMessage + ": "+ priodosinstitutos[0].FechaInicio.ToShortDateString() + " - "+ priodosinstitutos[0].FechaFinal.ToShortDateString());
-                        //}
-                    }
+                        valido = new ValidationResult(ErrorMessage + ": "+ periodosinstitutos[0].FechaInicio.ToShortDateString() + " - "+ periodosinstitutos[0].FechaFinal.ToShortDateString());
+                    }   
+
                 }
-               
             }
             catch (Exception ex)
             {
-
                 valido = new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
             }
             return valido;
@@ -85,10 +82,6 @@ namespace SINU.Models
         public VPers_FIMenorFF_Attribute(string otherProperty)
         { OtherProperty = otherProperty; }
 
-
-
-
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             ValidationResult valido = ValidationResult.Success;
@@ -96,22 +89,29 @@ namespace SINU.Models
             {
                 if (value != null)
                 {
-                    DateTime fechadelvalor = (DateTime)value;
+                    DateTime fechadelfinal = (DateTime)value;
                     var OtroCampo = validationContext.ObjectType.GetProperty(OtherProperty);
-                    DateTime FechaAComparar = DateTime.Parse(OtroCampo.GetValue(validationContext.ObjectInstance, null).ToString());
+                    var idvalue = double.Parse(validationContext.ObjectType.GetProperty("IdInstitucion").GetValue(validationContext.ObjectInstance,null).ToString());
+                    DateTime fechainicial = DateTime.Parse(OtroCampo.GetValue(validationContext.ObjectInstance, null).ToString());
                    
-                    if (fechadelvalor<FechaAComparar)
+                    if (fechadelfinal <= fechainicial)
                     {
-                        
+                        ErrorMessage = "Fecha Final debe ser superior a fecha de Inicio del rango.";
                         valido = new ValidationResult(ErrorMessage );
-                        
                     }
-                }
 
+                    var periodos_inst = new SINUEntities().PeriodosInscripciones.Where(m => m.IdInstitucion == idvalue && (fechainicial < m.FechaInicio) && (m.FechaFinal < fechadelfinal)).ToList();
+                    if (periodos_inst.Count > 0)
+                    {
+                        ErrorMessage = "El Periodo ingresado no puede contener otro Periodo dentro de si mismo.";
+                        valido = new ValidationResult(ErrorMessage);
+                    }
+
+
+                }
             }
             catch (Exception ex)
             {
-
                 valido = new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
             }
             return valido;

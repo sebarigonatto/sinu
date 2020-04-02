@@ -1,22 +1,24 @@
 ﻿@model IEnumerable<SINU.Models.vPeriodosInscrip>
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SINU | Armada Argentina</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-
-
     <style type="text/css">
         body {
             padding-top: 0px;
+        }
+        .tamaño-card{
+            max-width:40%;
+        }
+        @@media screen and (max-width: 601px) {
+            header {
+                align-content:center;
+                margin-left: -5% !important;
+                margin-right:-5% !important;
+            }
+            .tamaño-card{
+                max-width:initial !important
+            }
+        }
+        .navbar {
+            background-color: #1717178a !important
         }
 
         .carousel-item {
@@ -127,28 +129,7 @@
             color:white !important;
         }
     </style>
-</head>
-<body>
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top  back-color" style="margin-bottom:10px;background-color: #1717178a ;">
-        <div class="container">
-            @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
-
-            <button class="navbar-toggler border-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="color:white !important">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    @*<li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>*@
-                    <li class="nav-item">@Html.ActionLink("Acerca de", "About", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contacto", "Contact", "Home", null, htmlAttributes: new { @class = "nav-link" })</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-
-            </div>
-        </div>
-    </div>
-    <header class="mb-2">
+    <header class="mb-2" style="margin-top: -25px;margin-left: -45%;margin-right: -45%;">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
             <div class="carousel-inner" role="listbox" style="display: flex;justify-content: center;align-items: center;">
@@ -181,7 +162,7 @@
     </header>
 
 
-    <div class="container">
+    <div class="container ">
         <div class="card-deck mb-4 text-center">
             <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
                 <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
@@ -196,7 +177,7 @@
             </div>
         </div>
         <!-- /.row -->
-        <div class="card-deck ">
+        <div class="card-deck d-flex align-items-center justify-content-center">
             @{
                 List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
                 Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
@@ -205,7 +186,7 @@
                 while (inst < Periodos.Count())
                 {
                     InstAnterior = Periodos[inst].NombreInst;
-                    <div class="card card1" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
+                    <div class="card card1 tamaño-card" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
 
                         @{string imagen = @Periodos[inst].IdInstitucion + ".png"; }
                         <img class="card-img imgi" src="~/Imagenes/@imagen" alt="Card image cap" style="">
@@ -253,40 +234,11 @@
         @if (Request.IsAuthenticated)
         {
     
-            <div class="row lead justify-content-center">
+            <div class="row lead justify-content-center mb-4" >
                 <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
                     <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
                 </div>
             </div>
         }
-
-
-
-        <hr />
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row " style="float:right">
-                    <div class="col-lg-12">&copy; @DateTime.Now.Year - SINU - Armada Argentina</div>
-                </div>
-            </div>
-        </footer>
-
     </div>
-    <!-- /.container -->
-    <!-- Footer -->
-    <!-- Bootstrap core JavaScript -->
-    @*<script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>*@
-
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-
-    <script type="text/javascript">
-
-
-
-    </script>
-</body>
-</html>
+ 

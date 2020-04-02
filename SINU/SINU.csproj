@@ -991,7 +991,6 @@
     <Content Include="Views\Postulante\SituOcupacional.cshtml" />
     <Content Include="Views\Delegacion\Details.cshtml" />
     <Content Include="Views\Administrador\UsuariosAdministrativos.cshtml" />
-    <Content Include="Views\Postulante\Antropo.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilAdmin.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilDeleg.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />

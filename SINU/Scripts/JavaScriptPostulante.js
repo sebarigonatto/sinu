@@ -40,7 +40,9 @@ $.extend(true, $.fn.dataTable.defaults, {
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
         },
     }
+    
 });
+
 
 $(document).ready(function () {
 
@@ -92,7 +94,11 @@ $(document).ready(function () {
         noneResultsText: 'No se Encuantran Resultados',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
     });
+    $(".selectpicker").selectpicker({
+        size: 7,
+        noneSelectedText: 'Ninguna Opcion Seleccionada'
 
+    });
     /////////////////////////////////////////////////////////////////////////////////
     /*FUNCION DE LA VISTA DE DOMICILIOS */
 
@@ -280,19 +286,20 @@ $(document).ready(function () {
                         ComboCascada(comboid, valcombo);
                     };
                 });
-                                         
+
+                  //lamo la funcion INSTEXT y mando cero por que esla primera carga
+                INST_EXT(0);  
+                
                 //sie estudio en el exterior oculto los combobox de Institutos Argentinos
                 if ($("#IdInstEST").val() != "" && id_registro != null) {
-                    //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
-                    $("#checkext").attr("checked", "checked");
+                    $("#DropdownEXT option[value='true']").attr("selected", true);
+                } else {
+                    $("#DropdownEXT option[value='false']").attr("selected", true);
                 };
 
-                //lamo la funcion INSTEXT y mando cero por que esla primera carga
-                INSTEXT( 0);
-
-                //cada vez que el checkbox de instituto en el exterior cambia de valor
-                $("#checkext").on("change", function () {
-                    INSTEXT(1);
+                //si  instituto en el exterior cambia de los campos de instituto
+                $("#DropdownEXT").on("change.bs.select", function () {
+                    INST_EXT(1);
                 });
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
@@ -355,15 +362,13 @@ $(document).ready(function () {
     
 
     //muestra o ocualta los campos relacionado con los campos si el instituto pertenece al exterior o no
-    function INSTEXT( pri) {
-
-        if ($("#checkext").is(":checked")) {
+    function INST_EXT(pri) {
+        if ($("#DropdownEXT").val() == "true") {
             $("#JuriEST,#IdInstEST").show();
             $("label[for='Provincia']").text("Pais");
             $(".INSAR").hide();
             $("#ComboIdInstEST").val(0);
             $(".COM_ESTUAR").selectpicker("val", "");
-
         } else {
             $("#JuriEST,#IdInstEST").hide().val("");
             $("label[for='Provincia']").text("Provincia/Juridiccion");

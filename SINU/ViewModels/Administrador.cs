@@ -12,7 +12,7 @@ namespace SINU.ViewModels
     public class AdministradorVm
     {
 
-        public SelectList Institucions { get; set; }
+        public SelectList Instituciones { get; set; }
         public PeriodosInscripciones PeriodosInscripcionesVm { get; set; }
     }
 

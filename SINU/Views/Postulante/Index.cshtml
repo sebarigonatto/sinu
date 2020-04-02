@@ -83,7 +83,13 @@
     .bootstrap-select {
         max-width: 280px !important;
     }
-</style>
+    .cambio{
+        border-color: #de1919 !important;
+    }
+    .cambio:focus{
+        box-shadow: 0 0 0 0.2rem rgba(249, 3, 3, 0.25)!important;
+    }
+   </style>
 
 <h2>Secuencias del POSTULANTE</h2>
 <br />
@@ -151,7 +157,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-2 mr-2">
-                        <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom:0px solid;">
+                        <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom: 0px solid;">
                             <li class="nav-item flex-sm-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#DatosPersonales" role="tab" aria-controls="DatosPersonales" aria-selected="true">
                                     Datos Personales
@@ -253,6 +259,8 @@
     <!-- End lined tabs -->
 </div>
 
+
+
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
@@ -266,15 +274,72 @@
 </div>
 
 
+<div class="modal fade" id="ModalCampos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hay Campos que modifico y no los guardo. Verifique los mismos.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
 
-        (function () {
+        //VER COMO ANEJAR LO DELOS CAMBIOS DE UN CAMPO Y NO SE LO ALLAS GUARDADO
+
+        //var select = [];
+        //$(document).ready( function () {
+        //    $("input, select").change(function () {
+        //        //alert("se modifico un campo de carga de datos!!!" + $(this).attr("id") + select.length);
+        //        var id_form_elemento = [$(this).closest("form").attr("id"),$(this).attr("id")];
+        //        select.push(id_form_elemento)
+        //    });
+        //});
+
+
+        //    $(window).unbind().bind('beforeunload', (e) => {
+        //        if (select.length>0) {
+        //            MarcaCambios();
+        //        return true;
+        //        }
+        //        return;
+        //    });
+
+
+        //    function MarcaCambios() {
+        //        $.each(select, function (e,i) {
+        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
+        //            $("#" + i[1]).addClass("cambio").focus();
+        //        });
+        //    };
+
+        //    $("#jeje").click(function () {
+        //        $.each(select, function (e,i) {
+        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
+        //        });
+        //    });
+
+
+
+            (function () {
             $("#TabGeneral li").each(function () {
 
-                //    if ($(this).attr('id') > @ViewBag.secuenciaactual) {
+                 //    if ($(this).attr('id') > @ViewBag.secuenciaactual) {
 
                 //    //$(this).addClass('Tabdesabilitado').css("background-color","red");
                 //};
@@ -285,12 +350,13 @@
 
         function Exito(response,status,xhr) {
            alert("success: " + response.success + " - " + response.msg);
-          
+
         };
 
         function Falla(response) {
            alert("Error occured." );
         };
+        var bPreguntar = true;
 
     </script>
 

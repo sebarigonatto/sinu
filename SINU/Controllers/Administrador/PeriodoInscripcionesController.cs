@@ -44,7 +44,7 @@ namespace SINU.Controllers.Administrador
         {
             //excluyo un registro de las tabla Institucion, "Necesito Orientacion"
             AdministradorVm datos = new AdministradorVm();
-            datos.Institucions = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+            datos.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
             return View(datos);
         }   
 
@@ -61,7 +61,7 @@ namespace SINU.Controllers.Administrador
                 return RedirectToAction("Index");
             }
             var Institucion = db.Institucion.Where(m => m.IdInstitucion != 1).ToList();
-            ListaParametros.Institucions = new SelectList(Institucion, "IdInstitucion", "NombreInst");
+            ListaParametros.Instituciones = new SelectList(Institucion, "IdInstitucion", "NombreInst");
             return View(ListaParametros);
         }
 
@@ -73,31 +73,34 @@ namespace SINU.Controllers.Administrador
             {
                 return View("Error", Func.ConstruyeError("Falta el NRO de ID que desea buscar en la tabla de Periodo de Inscripciones", "PeriodoInscripciones", "Edit"));
             }
-            PeriodosInscripciones periodosInscripciones = db.PeriodosInscripciones.Find(id);
-            if (periodosInscripciones == null)
+            AdministradorVm dato = new AdministradorVm()
+            {
+                PeriodosInscripcionesVm = db.PeriodosInscripciones.Find(id),
+                Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst")
+            };
+          
+            if (dato.PeriodosInscripcionesVm == null)
             {
                 return View("Error", Func.ConstruyeError("Ese numero de ID no se encontro en la tabla de Periodo de Inscripciones", "PeriodoInscripciones", "Edit"));
             }
-
-            var Institucion = db.Institucion.ToList();
-            ViewBag.listaInstirucion = new SelectList(Institucion, "IdInstitucion", "NombreInst");
-
-            return View(periodosInscripciones);
+            return View(dato);
         }
 
         //Accion que guarda los datos modificados de una fila
         // POST: PeriodoInscripciones/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FechaInicio,FechaFinal,IdInstitucion,IdPeriodoInscripcion")] PeriodosInscripciones periodosInscripciones)//aqui funciono el bind por que le paso el IdPeriodoInscripcion
+        public ActionResult Edit(AdministradorVm PeriodosInscripciones )//aqui funciono el bind por que le paso el IdPeriodoInscripcion
         {
             if (ModelState.IsValid)
             {
-                db.Entry(periodosInscripciones).State = EntityState.Modified;
+                PeriodosInscripciones periodo = PeriodosInscripciones.PeriodosInscripcionesVm;
+                db.Entry(periodo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(periodosInscripciones);
+            PeriodosInscripciones.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+            return View(PeriodosInscripciones);
         }
 
         //Toma una id y muesta los datos de la fila que se va dar de baja
