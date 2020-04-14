@@ -357,6 +357,7 @@
     <Compile Include="Models\Usuario_OficyDeleg.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ValidacionesPersnalizadasAttribute.cs" />
     <Compile Include="Models\vConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -990,7 +991,6 @@
     <Content Include="Views\Postulante\SituOcupacional.cshtml" />
     <Content Include="Views\Delegacion\Details.cshtml" />
     <Content Include="Views\Administrador\UsuariosAdministrativos.cshtml" />
-    <Content Include="Views\Postulante\Antropo.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilAdmin.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilDeleg.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />
@@ -1014,6 +1014,8 @@
     <Content Include="Views\Administrador\SetPassword.cshtml" />
     <Content Include="Views\Consultor\Index.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilConsu.cshtml" />
+    <Content Include="Views\Postulante\Familia.cshtml" />
+    <Content Include="Views\Postulante\Domicio_API.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

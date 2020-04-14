@@ -51,9 +51,10 @@ new { id = "BeginFormEstudioCUD" }))
                                 </div>
                             </div>
                             <div class="form-group">
+                                @Html.Label("Instituto en el Exterior?", htmlAttributes: new { @class = "control-label col-md-auto" })
+
                                 <div class="col-md-10">
-                                    @Html.Label("Instituto en el Exterior?", htmlAttributes: new { @class = "control-label col-md-auto" })
-                                    @Html.CheckBox("esxterior", new { @id = "checkext", @class = "d-inline-flex col-auto" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Completo, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker",@id="DropdownEXT" })
                                 </div>
                             </div>
 
@@ -91,9 +92,8 @@ new { id = "BeginFormEstudioCUD" }))
                         <div class="col-md-6">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-2" })
-
-                                @Html.EditorFor(model => model.vPersona_EstudioIdVM.Completo, new { htmlAttributes = new { @class = "form-control  d-inline" } })
                                 <div class="col-md-10">
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Completo, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker" })
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Completo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -140,7 +140,7 @@ new { id = "BeginFormEstudioCUD" }))
                 {
                     <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaEST" />
                 }
-                <input type="submit" value="Guardar" class="btn btn-primary" id="Guardar_REG"/>
+                <input type="submit" value="Guardar" class="btn btn-primary Guardar_REG" />
 
             </div>
     </div>

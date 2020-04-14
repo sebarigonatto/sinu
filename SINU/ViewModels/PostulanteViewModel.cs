@@ -70,4 +70,14 @@ namespace SINU.ViewModels
         public List<string> IdInteres { get; set; }
 
     }
+
+    public class Domiciolio_API
+    {
+        public vPersona_Domicilio vPersona_Domicilio_API { get; set; }
+        public List<SelectListItem> Pais_API { get; set; }
+        public List<SelectListItem> Provincia_API { get; set; }
+        public List<SelectListItem> Localidad_API { get; set; }
+
+    }
+
 }

@@ -92,6 +92,11 @@ textarea {
     }
 }
     /*FIN DE LO NECSARIO STACKTABLE-------------------------------*/
-
+.truncate {
+    max-width:100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 

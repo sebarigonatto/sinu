@@ -17,29 +17,32 @@
                 <th>@Html.DisplayNameFor(m => m.Fuerza)</th>
                 <th>@Html.DisplayNameFor(m => m.Ingreso)</th>
                 @*<th>@Html.DisplayNameFor(m => m.Jerarquia)</th>
-                <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
-                <th>@Html.DisplayNameFor(m => m.FechaBaja)</th>*@
+                    <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
+                    <th>@Html.DisplayNameFor(m => m.FechaBaja)</th>*@
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
-                <td >@Html.DisplayFor(modelItem => item.Fuerza)</td>
-                <td>@Html.DisplayTextFor(modelItem => item.Ingreso)</td>
-                @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
-                <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
-                <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
-            </tr>
+                <tr>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
+                    <td>
+                        @Html.Label(item.Ingreso.Value ? "SI" : "NO")
+
+                    </td>
+                    @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
+                </tr>
             }
         </tbody>
 
     </table>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA"  data-IdTabla="TablaActMilitar">
+    <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaActMilitar">
         Agregar Actividad militar
     </button>
 

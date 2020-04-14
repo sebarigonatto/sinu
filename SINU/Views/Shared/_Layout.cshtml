@@ -23,7 +23,7 @@
         <div class="container">
             @*muestro el icono como de un barco de frente delante del primer item del MENU*@
             <p class="nav navbar-text navbar-left">
-                <i class="fas fa-ship" style="color:deepskyblue"></i>
+                <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
             </p>
 
             @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
@@ -56,7 +56,7 @@
     </div>
     <!-- aqui TERMINA el menú Principal -->
 
-    <div id="body1" class="container body-content">
+    <div id="body" class="container body-content">
         <br />
         <!--Aquí se substituye con el contenido de la pagina VIEW que corresponda según la llamada ejecutada desde las Action -->
         @RenderBody()

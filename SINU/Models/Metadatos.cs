@@ -186,6 +186,43 @@ namespace SINU.Models
         public string Jurisdiccion { get; set; }
         public string Localidad { get; set; }
     }
+    public partial class ActividadMilitarMetadadata
+    {
+
+        public Nullable<bool> Ingreso { get; set; }
+        [Display(Name = "Fecha de Ingreso")]
+        public Nullable<System.DateTime> FechaIngreso { get; set; }
+        [Display(Name ="Fecha de Baja")]
+        public Nullable<System.DateTime> FechaBaja { get; set; }
+        public string CausaMotivoNoingreso { get; set; }
+        [Display(Name = "Descripcion de la Baja")]
+        public string MotivoBaja { get; set; }
+        public string Jerarquia { get; set; }
+        public string Cargo { get; set; }
+        public string Destino { get; set; }
+        [Display(Name = "Situacion de Revista")]
+        public int IdSituacionRevista { get; set; }
+        public int IdFuerza { get; set; }
+        [Display(Name = "Motivo de Baja")]
+        public int IdBaja { get; set; }
+        public int IdActividadMilitar { get; set; }
+
+        public virtual Fuerza Fuerza { get; set; }
+    }
+
+    public partial class vPersona_ActividadMilitarMetadata
+    {
+        public int IdPersona { get; set; }
+        public int IdActividadMilitar { get; set; }
+        public int IdFuerza { get; set; }
+        public string Fuerza { get; set; }
+        public string Jerarquia { get; set; }
+        public string Cargo { get; set; }
+        public string Destino { get; set; }
+        public Nullable<System.DateTime> FechaIngreso { get; set; }
+        public Nullable<System.DateTime> FechaBaja { get; set; }
+        public Nullable<bool> Ingreso { get; set; }
+    }
 
     public class vUsuariosAdministrativosMetadata
     {
@@ -218,5 +255,22 @@ namespace SINU.Models
         public string codGrupo { get; set; }
 
         public int IdOficinasYDelegaciones { get; set; }
+    }
+
+    public partial class PeriodosInscripcionesMetadata
+    {
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [VPers_ControlRangoPeriodos_("IdInstitucion",ErrorMessage = "La fecha de Inicio ingresada esta dentro de otro periodo")]
+        public System.DateTime FechaInicio { get; set; }
+        [Required]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",ApplyFormatInEditMode =true)]
+        [VPers_ControlRangoPeriodos_("IdInstitucion", ErrorMessage = "La fecha Final ingresada esta dentro de otro periodo")]
+        [VPers_FIMenorFF_("FechaInicio", ErrorMessage = "Fecha Final debe ser superior a fecha de Inicio del rango.")]
+        public System.DateTime FechaFinal { get; set; }
+        [Required]
+        public int IdInstitucion { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
+
     }
 }

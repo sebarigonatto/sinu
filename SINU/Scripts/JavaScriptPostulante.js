@@ -40,11 +40,13 @@ $.extend(true, $.fn.dataTable.defaults, {
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
         },
     }
+    
 });
+
 
 $(document).ready(function () {
 
-    //ver esto ya que en el navegador aparece nu aadvertencia relacionado si es asincronico o sincronico
+    //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     $.ajaxSetup({
         async: false
     });
@@ -52,23 +54,6 @@ $(document).ready(function () {
     //para qu ela validacion de fecha reconosca el formato dd/MM/yyyy
     jQuery.validator.methods["date"] = function (value, element) { return true; };
 
-    (function () {
-        $("#TabGeneral li").each(function () {
-
-            //    if ($(this).attr('id') > @ViewBag.secuenciaactual) {
-
-            //    //$(this).addClass('Tabdesabilitado').css("background-color","red");
-            //};
-        });
-
-        //ajusto la altura de los dropdownlist con la clase selectpicker
-        $(".selectpicker").selectpicker({
-            size: 7,
-        });
-
-    })();
-
-    ///////////////////////////////////////////////////////////////////////////////// 
 
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
@@ -79,25 +64,28 @@ $(document).ready(function () {
         startView: "years",
     });
 
-    //cuando se selecciona una fecha se calcula la edad
+    //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#datepicker').datepicker().on("changeDate", function (e) {
             var fechanac = $('#datepicker').datepicker('getDate');
             var fechahoy = new Date();
-            var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+        var edad = fechahoy.getFullYear() - fechanac.getFullYear();
+        alert(edad);
+        alert("meshoy"+fechahoy.getMonth());
+        alert("mescumple" +fechanac.getMonth());
+        alert("diahoy"+fechahoy.getDate());
+        alert("diahoy" +fechanac.getDate());
+
             //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
-            if ((fechahoy.getMonth() <= fechanac.getMonth()) && (fechahoy.getDate() < fechanac.getDate())) {
-                //alert("NO Cumplio AÑOS");
+        if (fechahoy.getMonth() <= fechanac.getMonth()) {
+            if (!(fechahoy.getDate() >= fechanac.getDate() && fechahoy.getMonth() == fechanac.getMonth())) {
                 edad--;
-            };
-            $("#edad").val(edad);
+            } ;
+        };
+        $("#edad").val(edad);
     });
 
-
-    /////////////////////////////////////////////////////////////////////////////////
-    /*FUNCION DE LA VISTA DE DOMICILIOS */
-
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
-    /* https://developer.snapappointments.com/bootstrap-select/ */
+    //https://developer.snapappointments.com/bootstrap-select/
     $(".combobox").selectpicker({
         liveSearch: true,
         size: 7,
@@ -106,8 +94,16 @@ $(document).ready(function () {
         noneResultsText: 'No se Encuantran Resultados',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
     });
+    $(".selectpicker").selectpicker({
+        size: 7,
+        noneSelectedText: 'Ninguna Opcion Seleccionada'
 
-    $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+    });
+    /////////////////////////////////////////////////////////////////////////////////
+    /*FUNCION DE LA VISTA DE DOMICILIOS */
+
+    //evento que se desata al elegirse un pais, provincia y localidad
+    $("#BeginFormDomicilio select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         comboid = $(this).attr("id");
         //alert(comboid);
         switch (comboid) {
@@ -136,8 +132,7 @@ $(document).ready(function () {
     ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
     function PAIS(Combo, PRI) {
 
-        //los elementos html con la clase "Real,Eventual" corresponde a campos para los datos, de no ser de Argentina
-        //Los que posean la clase "RealAR,EventualAR" en caso de pertenecer a la Argentina
+        //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
         var Comboelemt = (Combo == "ListaPaisR") ?
             [".Real", ".RealAR", "#CPR"]
             : [".Eventual", ".EventualAR", "#CPE"];
@@ -177,7 +172,6 @@ $(document).ready(function () {
             Provincia: ValP,
         },
             function (data) {
-                $(ComboLocalidad).append('<option value=' + '' + '>' + "Seleccione una Localidad" + '</option>');
                 //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
                 $.each(data, function () {
                     $(ComboLocalidad).append('<option value=' + this.Value + '>' + this.Text + '</option>');
@@ -208,20 +202,19 @@ $(document).ready(function () {
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
 
-
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
         var Tabla = $('table').DataTable();
         //al seleccionar una fila
         //guardo el index de la fila seleccionada
         //se llama al modal y se le envia la id de estudio correspondiete
+
         Tabla.on('select.dt', function (e, dt, type, index) {
             var data = dt.rows(index).data();
             var id_registro = data[0][0];
             var id_Tabla = $(this).attr("id");
             //llamo a la funcion para mostrar el modal y le envio 2 paremtros
             ModalEIACUD(id_registro, id_Tabla);
-
             $("#ModalEIA").modal("show");
         });
     };
@@ -233,10 +226,15 @@ $(document).ready(function () {
         ModalEIACUD(null, id_Tabla);
     });
 
+    //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla ;
     var url_CUD ;
     var url_Elim;
+    
     //armado el modal con la vista parcial correspondiente
+    //recibe 2 parametros 
+    //id_registro: id del registro a modificar o NULL en caso de agregar un nuevo registro
+    //id_Tabla: id de la tabla con lo datos que se va trabajar
     function ModalEIACUD(id_registro, id_Tabla) {
 
         //elimino el contenido html del modal
@@ -262,7 +260,6 @@ $(document).ready(function () {
                 $('#ModalEstudioCuerpo').removeData("validator");
                 $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
-
                                         
                 //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
                 /* https://developer.snapappointments.com/bootstrap-select/ */
@@ -275,11 +272,9 @@ $(document).ready(function () {
                     noneSelectedText: 'Ninguna Opcion Seleccionada'
                 });
                 //se aplica el selectpicker basico
-                $(".selectpicker").selectpicker();
-
+                $(".selectpicker").selectpicker({size: 7});
 
                 ////////////////////////////ESTUDIOS///////////////////////////////////
-
 
                 //evento que se desata cuando se selecciona un opcion de los combobox
                 $("#ComboJuriEST,#ComboLocaliEST").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
@@ -289,39 +284,35 @@ $(document).ready(function () {
                         //alert(comboid);
                         valcombo = $('#' + comboid + ' option:selected').html();
                         ComboCascada(comboid, valcombo);
-                    }
+                    };
                 });
-                                         
 
+                  //lamo la funcion INSTEXT y mando cero por que esla primera carga
+                INST_EXT(0);  
+                
                 //sie estudio en el exterior oculto los combobox de Institutos Argentinos
                 if ($("#IdInstEST").val() != "" && id_registro != null) {
-                    //alert($("#vPersona_EstudioIdVM_IdInstitutos").val());
-                    $("#checkext").attr("checked", "checked");
+                    $("#DropdownEXT option[value='true']").attr("selected", true);
+                } else {
+                    $("#DropdownEXT option[value='false']").attr("selected", true);
                 };
 
-                //lamo la funcion INSTEXT y mando cero por que esla primera carga
-                INSTEXT( 0);
-
-                //cada vez que el checkbox de instituto en el exterior cambia de valor
-                $("#checkext").on("change", function () {
-                    INSTEXT(1);
+                //si  instituto en el exterior cambia de los campos de instituto
+                $("#DropdownEXT").on("change.bs.select", function () {
+                    INST_EXT(1);
                 });
 
-
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
-
 
                 IngreSINO();
                 $("#IngresoSINO").on("change", function (e) {
                     IngreSINO()
-
                 });
-
 
                 /////////////////////////////////GUARDA////////////////////////////////////
 
-                $("#Guardar_REG").on("click", function () {
-                    //alert("se cerrara modal!!!");
+                $(".Guardar_REG").on("click", function () {
+                    alert("se cerrara modal!!!");
                     $("#ModalEIA").modal("hide");
                 });
 
@@ -329,7 +320,6 @@ $(document).ready(function () {
 
                 //ELIMINA EL ESTUDIO SELECCIONADO
                 $(".Eliminar").on("click", function () {
-
                     $.getJSON('/Postulante/' + url_Elim,
                         { ID: id_registro },
                         function (response) {
@@ -337,8 +327,6 @@ $(document).ready(function () {
                         });
                     $("#ModalEIA").modal("hide");
                 });
-              
-
             },
 
             //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
@@ -349,14 +337,15 @@ $(document).ready(function () {
                     }
             }
         });
-
-
     };
 
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     $("#ModalEIA").on('hidden.bs.modal', function () {
-        alert(url_Tabla);
+        
         $("#" + url_Tabla).load('/Postulante/' + url_Tabla, function () {
+
+            //aplico datatable a la tabla de estudio
+            TablasEIA();
 
             //se llama al modal para cargar un nuevo registrode la tabla actual
             $(".Nuevo_REG").on("click", function () {
@@ -365,26 +354,21 @@ $(document).ready(function () {
                 ModalEIACUD(null, id_Tabla);
             });
 
-            //aplico datatable a la tabla de estudio
-            TablasEIA();
         });
     });
 
   
 
-    //funcion que carga el modal de estudio
-    //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
+    
 
     //muestra o ocualta los campos relacionado con los campos si el instituto pertenece al exterior o no
-    function INSTEXT( pri) {
-
-        if ($("#checkext").is(":checked")) {
+    function INST_EXT(pri) {
+        if ($("#DropdownEXT").val() == "true") {
             $("#JuriEST,#IdInstEST").show();
             $("label[for='Provincia']").text("Pais");
             $(".INSAR").hide();
             $("#ComboIdInstEST").val(0);
             $(".COM_ESTUAR").selectpicker("val", "");
-
         } else {
             $("#JuriEST,#IdInstEST").hide().val("");
             $("label[for='Provincia']").text("Provincia/Juridiccion");
@@ -393,23 +377,22 @@ $(document).ready(function () {
         if (pri != 0) {
             $("#JuriEST,#IdInstEST").val("");
         }
-
     };
 
-
+    //funcion que arma los combos en cascada de la vista parcial Estudios
     function ComboCascada(Combo, ValC) {
         var OPC;
+        //en caso de que el combobox es de la provincia
         if (Combo == "ComboJuriEST") {
             OPC = 0;
             $("#ComboLocaliEST,#ComboIdInstEST").html("")
+            //cuando el combobox seleccionado es de la localidad
         } else {
             valprov = $("#ComboJuriEST").val();
             ValC = valprov + "-" + ValC;
-            //alert(ValC);
             OPC = 1;
             $("#ComboIdInstEST").html("")
         }
-        //alert("sdf");
         $.getJSON('/Postulante/DropCascadaEST', {
             opc: OPC, val: ValC
         },
@@ -418,7 +401,6 @@ $(document).ready(function () {
                 var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
                 //alert(combocas);
                 $.each(data, function () {
-
                     $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                 });
                 //refresco los combobox con los datos nuevos
@@ -442,16 +424,11 @@ $(document).ready(function () {
             $(".si input,.si select").val("");
             $(".no").show();
             $(".si").hide();
-
         };
     };
 
-    //funcion que carga el modal de estudio
-    //recibe "NULL" en caso de agregar un nuevo estudio y distinto a "NULL" para la modificacion o eliminacion
-
     //////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE SITUACION OCUPACIONAL */
-
 
     //se aplicael selecpicker a alos conbo/s con autocomplete
     /* https://developer.snapappointments.com/bootstrap-select/ */
@@ -473,6 +450,7 @@ $(document).ready(function () {
         }
     };
 
+    //le aplico al selectpicker las opciones de "sleccionar todo y deseleccionar todo"
     $("#Estado").selectpicker({
         size: 6,
         width: 400,
@@ -480,24 +458,17 @@ $(document).ready(function () {
         deselectAllText: 'Deseleccionar Todo',
         selectAllText: 'Seleccionar Todo',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
-    });
-
-
+    }); 
 
     /////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
 
-
     //verifico el sexo del postulante para olcultar o mostrar determinados input
     sexo($("#Sexo").val());
 
-    sex.on("change", function () {
-        sexo(sex.val());
-    });
-
-    function sexo(element) {
+    function sexo(sexo) {
         //alert(element);
-        if (element != "Mujer") {
+        if (sexo != "Mujer") {
             $("#mujer").hide();
             $("#mujer input").val(0);
         } else {
@@ -505,9 +476,9 @@ $(document).ready(function () {
         }
     };
 
-
+    //calculo de la IMC cuando los campos de altura y peso con cargados
     $("#altura,#peso").on("change", function () {
-
+        
         var altura = $("#altura").val() / 100,
             peso = $("#peso").val().replace(",", ".");
         if (altura != 0 && peso != 0) {
@@ -518,13 +489,12 @@ $(document).ready(function () {
 
     });
 
+    //cargo todo los campos con 0 para eviarlos al POST de Antropometria
     $("#antropo input").each(function () {
         if ($(this).val() == "") {
             $(this).val(0);
         }
 
     });
-   
-
 
 });
