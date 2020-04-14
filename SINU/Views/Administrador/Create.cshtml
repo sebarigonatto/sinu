@@ -6,8 +6,8 @@
     //creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
     ViewBag.OficinaYDelegacion = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
     ViewBag.CodGrupo = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
-
-}
+    ViewBag.Grado = new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION");
+    ;}
 @section MenuPerfil{
 
     @Html.Partial("_MenuPerfilAdmin")
@@ -60,7 +60,9 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Grado, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(m => m.Grado, (SelectList)ViewBag.Grado, "---Seleccione Grado ---", htmlAttributes: new { @class = "form-control" })
+
+            @*@Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })*@
             @Html.ValidationMessageFor(model => model.Grado, "", new { @class = "text-danger" })
         </div>
     </div>
