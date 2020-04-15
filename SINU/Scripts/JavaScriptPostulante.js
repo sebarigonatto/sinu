@@ -5,7 +5,7 @@ $.extend(true, $.fn.dataTable.defaults, {
         details: false
     },
     "autoWidth": true,
-
+    
     //ver si es necesario este fragmento
     select: 'single',
     "columnDefs": [{
@@ -51,13 +51,17 @@ $(document).ready(function () {
         async: false
     });
 
-    //para qu ela validacion de fecha reconosca el formato dd/MM/yyyy
-    jQuery.validator.methods["date"] = function (value, element) { return true; };
-
+    //cargo en "id_persona" el id de la persona que se esta llenando los datos
+    var id_persona
+    (function () {
+        id_persona = $("#vPersona_DatosBasicosVM_IdPersona").val();
+        //alert(id_persona);
+    })();
+        
 
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
-    $("#datepicker").datepicker({
+    $(".datepicker").datepicker({
         format: "dd-mm-yyyy",
         language: "es",
         autoclose: true,
@@ -65,15 +69,15 @@ $(document).ready(function () {
     });
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
-    $('#datepicker').datepicker().on("changeDate", function (e) {
-            var fechanac = $('#datepicker').datepicker('getDate');
-            var fechahoy = new Date();
+    $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
+        var fechanac = $('#fechacumpleaños').datepicker('getDate');
+        var fechahoy = new Date();
         var edad = fechahoy.getFullYear() - fechanac.getFullYear();
-        alert(edad);
-        alert("meshoy"+fechahoy.getMonth());
-        alert("mescumple" +fechanac.getMonth());
-        alert("diahoy"+fechahoy.getDate());
-        alert("diahoy" +fechanac.getDate());
+        //alert(edad);
+        //alert("meshoy"+fechahoy.getMonth());
+        //alert("mescumple" +fechanac.getMonth());
+        //alert("diahoy"+fechahoy.getDate());
+        //alert("diahoy" +fechanac.getDate());
 
             //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
         if (fechahoy.getMonth() <= fechanac.getMonth()) {
@@ -201,7 +205,7 @@ $(document).ready(function () {
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
-
+   
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
         var Tabla = $('table').DataTable();
@@ -210,20 +214,22 @@ $(document).ready(function () {
         //se llama al modal y se le envia la id de estudio correspondiete
 
         Tabla.on('select.dt', function (e, dt, type, index) {
-            var data = dt.rows(index).data();
-            var id_registro = data[0][0];
             var id_Tabla = $(this).attr("id");
-            //llamo a la funcion para mostrar el modal y le envio 2 paremtros
-            ModalEIACUD(id_registro, id_Tabla);
-            $("#ModalEIA").modal("show");
+            //solo utilizo modal para las que no tengan el id TABLAFAMILIA
+            if (id_Tabla != "TablaFamilia") {
+                var data = dt.rows(index).data();
+                var id_registro = data[0][0];
+                //llamo a la funcion para mostrar el modal y le envio 2 paremtros
+                ModalEIACUD(id_registro, id_persona, id_Tabla);
+                $("#ModalEIA").modal("show");
+            };
         });
     };
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
     $(".Nuevo_REG").on("click", function () {
         var id_Tabla = $(this).attr("data-IdTabla");
-        //alert(id_Tabla)
-        ModalEIACUD(null, id_Tabla);
+        ModalEIACUD(null, id_persona, id_Tabla);
     });
 
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
@@ -235,7 +241,7 @@ $(document).ready(function () {
     //recibe 2 parametros 
     //id_registro: id del registro a modificar o NULL en caso de agregar un nuevo registro
     //id_Tabla: id de la tabla con lo datos que se va trabajar
-    function ModalEIACUD(id_registro, id_Tabla) {
+    function ModalEIACUD(id_registro, id_persona, id_Tabla) {
 
         //elimino el contenido html del modal
         $('#ModalEIACuerpo').html("");
@@ -252,14 +258,14 @@ $(document).ready(function () {
             asyn: false,
             type: "GET",
             url: '/Postulante/' + url_CUD,
-            data: { ID: id_registro },
+            data: { ID: id_registro, ID_persona: id_persona },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
                 $('#ModalEIACuerpo').html(response);
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
                 $('#ModalEstudioCuerpo').removeData("validator");
                 $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
-                $.validator.unobtrusive.parse('#ModalEstudioCuerpo');
+                //$.validator.unobtrusive.parse('#ModalEstudioCuerpo');
                                         
                 //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
                 /* https://developer.snapappointments.com/bootstrap-select/ */
@@ -270,6 +276,13 @@ $(document).ready(function () {
                     liveSearchStyle: 'contains',//'startsWith'
                     noneResultsText: 'No se Encuantran Resultados',
                     noneSelectedText: 'Ninguna Opcion Seleccionada'
+                });
+                //se aplica datepicker a los campos que requieran el ingreso de fecha
+                $(".datepicker").datepicker({
+                    format: "dd-mm-yyyy",
+                    language: "es",
+                    autoclose: true,
+                    startView: "years",
                 });
                 //se aplica el selectpicker basico
                 $(".selectpicker").selectpicker({size: 7});
@@ -341,9 +354,9 @@ $(document).ready(function () {
 
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     $("#ModalEIA").on('hidden.bs.modal', function () {
-        
-        $("#" + url_Tabla).load('/Postulante/' + url_Tabla, function () {
-
+        //alert(id_persona + url_Tabla );
+        $("#" + url_Tabla).load('/Postulante/' + url_Tabla, { ID_persona: id_persona}, function () {
+            //alert("se recargo la vista de la tabla actual...")
             //aplico datatable a la tabla de estudio
             TablasEIA();
 
@@ -351,7 +364,7 @@ $(document).ready(function () {
             $(".Nuevo_REG").on("click", function () {
                 var id_Tabla = $(this).attr("data-IdTabla");
                 //alert(id_Tabla)
-                ModalEIACUD(null, id_Tabla);
+                ModalEIACUD(null,id_persona, id_Tabla);
             });
 
         });
@@ -496,5 +509,17 @@ $(document).ready(function () {
         }
 
     });
+ /////////////////////////////////////////////////////////////////////////////
+/* FUNCION DE LA VISTA DE FAMILIA */
+    $("#TablaFamilia").on('select.dt', function (e, dt, type, index) {
+        var data = dt.rows(index).data();
+        var id_registro = data[0][0];
+        //alert(id_registro);
+        //redirijo la pagina hacia la vista FamiliaCUD enviansole comparametro el IdFamiliar del registro que se selecciono
+        var url = "/Postulante/FamiliaCUD/" + id_registro;
+        window.location.href = url;
+    });
+
+   
 
 });

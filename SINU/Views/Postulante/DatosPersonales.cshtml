@@ -1,10 +1,9 @@
 ﻿@model SINU.ViewModels.DatosPersonalesVM
-<br />
 @* DATOS PERSONALES *@
 @*@{
-    ViewBag.Title = "Secuencias";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
+        ViewBag.Title = "Secuencias";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
 
 @using (Ajax.BeginForm("DatosPersonales", "Postulante", null,
     new AjaxOptions
@@ -13,13 +12,13 @@
         OnSuccess = "Exito(data,status,xhr)",
         OnFailure = "Falla",
         LoadingElementId = "carga",
-        //LoadingElementDuration = 1000,
-        //UpdateTargetId = "resultTarget"
-    },
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
     new { id = "BeginFormDatosPersonales" }))
 {
     @Html.AntiForgeryToken()
-
+    <h2>Datos Personales</h2>
     <div class="form-group">
 
 
@@ -45,7 +44,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosPerVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple", @readonly = true ,@id = "datepicker"})
+                            @Html.TextBoxFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @id = "fechacumpleaños" })
 
                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -55,7 +54,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosPerVM.edad, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosPerVM.edad, new { htmlAttributes = new { @class = "form-control", @readonly="readonly", @id="edad" } })
+                            @Html.EditorFor(model => model.vPersona_DatosPerVM.edad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "edad" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.edad, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -105,9 +104,9 @@
 @section Scripts {
 
     <script type="text/javascript">
-          
 
-       
+
+
 
 
     </script>

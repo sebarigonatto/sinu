@@ -8,9 +8,9 @@ new AjaxOptions
     HttpMethod = "POST",
     OnSuccess = "Exito(data,status,xhr)",
     OnFailure = "Falla",
-    //LoadingElementId = "ModalEIA",
-    //LoadingElementDuration = 1000,
-    //UpdateTargetId = "resultTarget"
+//LoadingElementId = "ModalEIA",
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
 },
 new { id = "BeginFormActMilitarCUD" }))
 {
@@ -62,16 +62,18 @@ new { id = "BeginFormActMilitarCUD" }))
                         </div>
                         <div class="si">
                             <div class="form-group ">
-                                @Html.LabelFor(model => model.ACTMilitarIDVM.FechaIngreso, htmlAttributes: new { @class = "control-label col-md-6" })
+                                @Html.LabelFor(model => model.ACTMilitarIDVM.FechaIngreso, htmlAttributes: new { @class = "control-label col-md-6 " })
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.ACTMilitarIDVM.FechaIngreso, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaIngreso, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true })
+
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.FechaIngreso, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group ">
                                 @Html.LabelFor(model => model.ACTMilitarIDVM.FechaBaja, htmlAttributes: new { @class = "control-label col-md-6" })
                                 <div class="col-md-12">
-                                    @Html.EditorFor(model => model.ACTMilitarIDVM.FechaBaja, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaBaja, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true })
+
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.FechaBaja, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -126,8 +128,11 @@ new { id = "BeginFormActMilitarCUD" }))
                     </div>
                 </div>
             </div>
-            <hr />
-            <div class="float-md-right">
+            
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <div class="float-md-right">
                 <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
 
                 @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
@@ -137,7 +142,6 @@ new { id = "BeginFormActMilitarCUD" }))
                 }
                 <input type="submit" value="Guardar" class="btn btn-primary Guardar_REG" />
 
-            </div>
         </div>
     </div>
 }

@@ -6,7 +6,7 @@
 }*@
 
 
-<h1>Idiomas</h1>
+<h2>Idiomas</h2>
 
 <div class="form-group" id="divTABLE">
 
@@ -14,24 +14,26 @@
         <thead>
             <tr>
                 <th hidden>IdPersonaIdioma</th>
+                <th hidden>idPersona</th>
                 <th>@Html.DisplayNameFor(m => m.Idioma)</th>
                 <th>@Html.DisplayNameFor(m => m.NivelHabla)</th>
-                <th>@Html.DisplayNameFor(m => m.NivelEscribe)</th>
-                <th>@Html.DisplayNameFor(m => m.NivelLee)</th>
+                <th class="oculto">@Html.DisplayNameFor(m => m.NivelEscribe)</th>
+                <th class="oculto" >@Html.DisplayNameFor(m => m.NivelLee)</th >
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersonaIdioma)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Idioma)</td>
-                    <td>@Html.DisplayFor(modelItem => item.NivelHabla)</td>
-                    <td>@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
-                    <td>@Html.DisplayFor(modelItem => item.NivelLee)</td>
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPersonaIdioma)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                <td>@Html.DisplayFor(modelItem => item.Idioma)</td>
+                <td>@Html.DisplayFor(modelItem => item.NivelHabla)</td>
+                <td class="oculto">@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
+                <td class="oculto">@Html.DisplayFor(modelItem => item.NivelLee)</td>
 
 
-                </tr>
+            </tr>
             }
         </tbody>
 

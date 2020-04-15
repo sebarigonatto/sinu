@@ -15,20 +15,23 @@ namespace SINU.Controllers
 
         //ESTABLESCO LA VARIABLE MAIL DEL USUARIO QUE ESTA ACTUALMENTE LOGUEADO
         //ESTA CARIABLE ES UTILIZADA PARA BUSCAR EN LAS DISTINTAS VISTAS, UTILIZADAS EN EL CONTROLADOR, PARA  BUSCAR LOS REGISTROS DEL USUARIO LOGUEADO
-        private int ID_per => db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-        private int IDFAMI;
+        //private int ID_persona;
+        //=> db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+        //private int ID_fami;
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
-
-            ViewBag.secuenciaactual = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_per).IdSecuencia;
-            return View();
+           Persona_SecuenciaVM persec = new Persona_SecuenciaVM(); 
+            persec.ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+            ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == persec.ID_PER).IdSecuencia;
+            return View(persec);
         }
 
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
-        public ActionResult DatosBasicos()
+        //ver el tema de la fecha de casamiento
+        public ActionResult DatosBasicos(int ID_persona)
         {
             try
             {
@@ -38,7 +41,7 @@ namespace SINU.Controllers
                     SexoVM = db.Sexo.ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
-                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_per)
+                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona)
                 };
 
                 return PartialView(datosba);
@@ -82,12 +85,12 @@ namespace SINU.Controllers
 
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
-        public ActionResult Entrevista()
+        public ActionResult Entrevista(int ID_persona)
         {
             vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
             try
             {
-                entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_per);
+                entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
                 //se carga los texto parametrizados desde la tabla configuracion
                 string[] consideraciones = {
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
@@ -107,13 +110,13 @@ namespace SINU.Controllers
 
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
-        public ActionResult DatosPersonales()
+        public ActionResult DatosPersonales(int ID_persona)
         {
             try
             {
                 DatosPersonalesVM datosba = new DatosPersonalesVM()
                 {
-                    vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_per),
+                    vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona),
                     TipoNacionalidadVM = db.TipoNacionalidad.ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList()
@@ -154,12 +157,12 @@ namespace SINU.Controllers
         //----------------------------------Domicilio----------------------------------------------------------------------//
 
        
-        public ActionResult Domicio_API()
+        public ActionResult Domicio_API(int ID_persona)
         {
 
             Domiciolio_API domi = new Domiciolio_API()
             {
-                vPersona_Domicilio_API = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_per),
+                vPersona_Domicilio_API = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                 Pais_API = db.sp_vPaises("").Select(m => new SelectListItem { Text = m.DESCRIPCION, Value = m.CODIGO }).ToList(),
                 Provincia_API = new List<SelectListItem>(),
                 Localidad_API= new List<SelectListItem>()
@@ -171,13 +174,13 @@ namespace SINU.Controllers
 
 
 
-        public ActionResult Domicilio()
+        public ActionResult Domicilio(int ID_persona)
         {
             try
             {
                 DomicilioVM datosdomilio = new DomicilioVM()
                 {
-                    vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_per),
+                    vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
                     provincias = db.vProvincia_Depto_Localidad.Select(m => m.Provincia).Distinct().ToList()
                 };
@@ -287,12 +290,12 @@ namespace SINU.Controllers
         }
 
 //----------------------------------Estudios----------------------------------------------------------------------//
-        public ActionResult Estudios()
+        public ActionResult Estudios(int ID_persona)
         {
             try
             {
                 EstudiosVM estudio = new EstudiosVM();
-                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.IdPersona == ID_per).ToList();
+                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.IdPersona == ID_persona).ToList();
                 foreach (var item in estudio.vPersona_EstudioListVM)
                 {
                     if (item.IdInstitutos == 0)
@@ -311,7 +314,7 @@ namespace SINU.Controllers
             }
         }
 
-        public ActionResult EstudiosCUD(int? ID)
+        public ActionResult EstudiosCUD(int? ID,int ID_persona )
         {
             try
             {
@@ -366,11 +369,12 @@ namespace SINU.Controllers
                 {
                     VPersona_Estudio nuevoestu = new VPersona_Estudio()
                     {
-                        IdPersona = ID_per,
+                        
                         IdInstitutos = 0,
                         IdEstudio = 0,
                         NombreYPaisInstituto = "-"
                     };
+                    nuevoestu.IdPersona = ID_persona;
                     estudio.vPersona_EstudioIdVM = nuevoestu;
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();
@@ -478,12 +482,12 @@ namespace SINU.Controllers
         }
 
 /*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
-        public ActionResult Idiomas()
+        public ActionResult Idiomas(int ID_persona)
         {
             try
             {
                 List<vPersona_Idioma> idioma;
-                idioma = db.vPersona_Idioma.Where(m=>m.IdPersona==ID_per).ToList();
+                idioma = db.vPersona_Idioma.Where(m=>m.IdPersona== ID_persona).ToList();
 
                 return PartialView(idioma);
             }
@@ -494,7 +498,7 @@ namespace SINU.Controllers
             }
         }
 
-        public ActionResult IdiomaCUD(int? ID)
+        public ActionResult IdiomaCUD(int? ID,int? ID_persona)
         {
             try
             {
@@ -513,7 +517,7 @@ namespace SINU.Controllers
                     idioma.VPersona_IdiomaIdVM = new vPersona_Idioma()
                     {
                         IdPersonaIdioma = 0,
-                        IdPersona = ID_per
+                        IdPersona = ID_persona
                     };
                 }
 
@@ -564,12 +568,12 @@ namespace SINU.Controllers
         }
 
 /*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
-        public ActionResult ActMilitar()
+        public ActionResult ActMilitar(int ID_persona)
         {
             try
             {
                 List<vPersona_ActividadMilitar> LISTactividad;
-                LISTactividad = db.vPersona_ActividadMilitar.Where(m => m.IdPersona == ID_per).ToList();
+                LISTactividad = db.vPersona_ActividadMilitar.Where(m => m.IdPersona == ID_persona).ToList();
 
                 return PartialView(LISTactividad);
             }
@@ -579,13 +583,13 @@ namespace SINU.Controllers
             }
         }
 
-        public ActionResult ActMilitarCUD(int? ID)
+        public ActionResult ActMilitarCUD(int? ID,int ID_persona)
         {
             try
             {
                 ActividadMIlitarVM actividad = new ActividadMIlitarVM() {
                     FuerzasVM = db.Fuerza.ToList(),
-                    IDPErsona = ID_per,
+                    IDPErsona = ID_persona,
                     BajaVM = db.Baja.ToList(),
                     SituacionRevistaVM = db.SituacionRevista.ToList()
                  };
@@ -655,7 +659,7 @@ namespace SINU.Controllers
         }
 
  /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
-        public ActionResult SituOcupacional()
+        public ActionResult SituOcupacional(int ID_persona)
         {
             try
             {
@@ -664,16 +668,16 @@ namespace SINU.Controllers
          
                 SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1",1);
 
-                List<string> InteresesSeleccionados = db.Persona.Find(ID_per).Interes.Select(m => m.DescInteres).ToList();
+                List<string> InteresesSeleccionados = db.Persona.Find(ID_persona).Interes.Select(m => m.DescInteres).ToList();
                 SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
 
-                var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == ID_per);
+                var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (situ == null)
                 {
                     SituOcu.VPersona_SituacionOcupacionalVM = new vPersona_SituacionOcupacional()
                     {
                         IdSituacionOcupacional = 0,
-                        IdPersona = ID_per,   
+                        IdPersona = ID_persona,   
                     };
                 }
                 else
@@ -698,7 +702,7 @@ namespace SINU.Controllers
                 db.spSituacionOcupacionalIU(s.IdSituacionOcupacional, s.IdPersona, s.IdEstadoOcupacional, s.OcupacionActual, s.Oficio, s.AniosTrabajados, s.DomicilioLaboral);
 
                 Interes ins = new Interes();
-                var per = db.Persona.Find(ID_per).Interes;
+                var per = db.Persona.Find(s.IdPersona).Interes;
                 per.Clear();
                 if (situ.IdInteres != null)
                 {
@@ -718,9 +722,9 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
-        public ActionResult Antropometria()
+        public ActionResult Antropometria(int ID_persona)
         {
-            vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona==ID_per);
+            vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona == ID_persona);
             return PartialView(antropo);
         }
         [HttpPost]
@@ -739,12 +743,12 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
-        public ActionResult Familia()
+        public ActionResult Familia(int ID_persona)
         {
             try
             {
                 List<vPersona_Familiar> FAMI ;
-                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_per).ToList();
+                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
                 return PartialView(FAMI);
             }
             catch (Exception)
@@ -752,5 +756,13 @@ namespace SINU.Controllers
                 return View();
             }
         }
+
+        public ActionResult FamiliaCUD(int id)
+        {
+            Persona_SecuenciaVM persec = new Persona_SecuenciaVM(); 
+            persec.ID_PER=db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona;
+            return View(persec);
+        }
+
     }
 }

@@ -62,31 +62,29 @@ new { id = "BeginFormIdiomaCUD" }))
                         <div class="form-group">
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.NivelLee, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-12">
-                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Lee, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione una Nivel", htmlAttributes: new { @class = "form-control selectpicker "})
+                                @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Lee, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione una Nivel", htmlAttributes: new { @class = "form-control selectpicker " })
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Lee, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-
-
-
 
                     </div>
                 </div>
 
 
             </div>
-            <hr />
-            <div class="float-md-right">
-                <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
-                @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
-                @if (Model.VPersona_IdiomaIdVM.IdPersonaIdioma != 0)
-                {
-                    <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaIDIO" />
-                }
-                <input type="submit" value="Guardar" class="btn btn-primary Guardar_REG" />
+            
+        </div>
+    </div>
+    <div class="modal-footer ">
+        <div class="float-md-right">
+            <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
+            @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
+            @if (Model.VPersona_IdiomaIdVM.IdPersonaIdioma != 0)
+            {
+                <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaIDIO" />
+            }
+            <input type="submit" value="Guardar" class="btn btn-primary Guardar_REG" />
 
-            </div>
         </div>
     </div>
 }

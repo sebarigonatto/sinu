@@ -1,0 +1,107 @@
+﻿@media (min-width: 576px) {
+    .rounded-nav {
+        border-radius: 50rem !important;
+    } 
+    .rounded-nav .nav-link {
+        border-radius: 50rem !important;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .tabb {
+        flex-wrap: nowrap !important;
+    }
+
+    .borderdiv1 {
+        border-left: 0px none !important;
+        padding-top: 15px;
+        padding-left: 15px !important;
+        margin:10px 10px;
+    }
+
+    .oculto {
+        display: none !important
+    }
+    /*.li2 li{
+        width:100%
+    }*/
+   
+}
+@media (min-width: 768px) {
+    .navbar1 {
+        display:block;
+        }
+}
+
+/*.oculto {
+    display: block !important
+}*/
+/* With arrow tabs */
+
+/*.with-arrow .nav-link.active {
+    position: relative;
+}
+
+    .with-arrow .nav-link.active::after {
+        content: '';
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid #dee2e6;
+        position: absolute;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+    }*/
+
+/* lined tabs */
+
+.lined .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-size:medium;
+}
+
+    .lined .nav-link:hover {
+        border: none;
+        border-bottom: 3px solid #dee2e6;
+    }
+
+    .lined .nav-link.active {
+        font-size:large;
+        background: none;
+        color: #555;
+        border-color: #ffffff;
+    }
+
+.atab {
+    color: #dee2e6 !important;
+}
+
+.borderdiv1 {
+    border-left: 1px solid #dee2e6 ;
+    padding-top:15px;
+    padding-left: 50px;
+}
+
+
+.bli {
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+.Tabdesabilitado {
+    pointer-events: none;
+}
+
+/*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
+.bootstrap-select {
+    max-width: 280px !important;
+}
+
+.cambio {
+    border-color: #de1919 !important;
+}
+
+    .cambio:focus {
+        box-shadow: 0 0 0 0.2rem rgba(249, 3, 3, 0.25) !important;
+    }

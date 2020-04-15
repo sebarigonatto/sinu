@@ -471,6 +471,7 @@
     <Content Include="Content\all.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
+    <Content Include="Content\CssPostulante.css" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
     <Content Include="Models\SINUDB.Context.tt">
@@ -1016,6 +1017,7 @@
     <Content Include="Views\Shared\_MenuPerfilConsu.cshtml" />
     <Content Include="Views\Postulante\Familia.cshtml" />
     <Content Include="Views\Postulante\Domicio_API.cshtml" />
+    <Content Include="Views\Postulante\FamiliaCUD.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

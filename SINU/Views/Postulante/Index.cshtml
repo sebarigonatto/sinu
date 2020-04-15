@@ -1,129 +1,43 @@
-﻿@{
+﻿@model SINU.ViewModels.Persona_SecuenciaVM
+@{
     ViewBag.Title = "Secuencias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    @@media (min-width: 576px) {
-        .rounded-nav {
-            border-radius: 50rem !important;
-        }
-    }
 
-    @@media (min-width: 576px) {
-        .rounded-nav .nav-link {
-            border-radius: 50rem !important;
-        }
-    }
-
-    /* With arrow tabs */
-
-    .with-arrow .nav-link.active {
-        position: relative;
-    }
-
-        .with-arrow .nav-link.active::after {
-            content: '';
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 6px solid #052240;
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: block;
-        }
-
-    /* lined tabs */
-
-    .lined .nav-link {
-        border: none;
-        border-bottom: 3px solid transparent;
-    }
-
-        .lined .nav-link:hover {
-            border: none;
-            border-bottom: 3px solid #555;
-        }
-
-        .lined .nav-link.active {
-            background: none;
-            color: #555;
-            border-color: #052240;
-        }
-
-    .atab {
-        color: #052240 !important;
-    }
-
-    .borderdiv1 {
-        border-left: 1px solid #dee2e6 !important;
-        margin-left: 15px;
-        padding-left: 10px;
-    }
-
-    @@media screen and (max-width: 600px) {
-        .tabb {
-            flex-wrap: nowrap !important;
-        }
-
-        .borderdiv1 {
-            border-left: 0px !important;
-        }
-    }
-
-    .bli {
-        border-bottom: 1px solid #dee2e6 !important;
-    }
-
-    .Tabdesabilitado {
-        pointer-events: none;
-    }
-
-    /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
-    .bootstrap-select {
-        max-width: 280px !important;
-    }
-    .cambio{
-        border-color: #de1919 !important;
-    }
-    .cambio:focus{
-        box-shadow: 0 0 0 0.2rem rgba(249, 3, 3, 0.25)!important;
-    }
-   </style>
-
-<h2>Secuencias del POSTULANTE</h2>
+<link href="~/Content/CssPostulante.css" rel="stylesheet" />
+<h3>Etapas de la Inscripcion</h3>
 <br />
 
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
-<div class="p-1 bg-white rounded shadow mb-1">
+<div class="p-1 bg-white rounded shadow mb-1" style="padding:0px !important">
 
-    <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center">
+    <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
 
         @* PERSONA DATOS BASICOS *@
         <li class="nav-item flex-sm-fill" id="5">
             <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">
-                Datos Basicos
+                1° Datos Basicos
             </a>
         </li>
 
         @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
         <li class="nav-item flex-sm-fill" id="9">
             <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                Entrevista
+               2° Entrevista
             </a>
         </li>
 
         @* DOCUMENTACION *@
         <li class="nav-item flex-sm-fill" id="11">
             <a id="profile2-tab" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                Documentacion
+               3° Documentacion
             </a>
         </li>
 
         @* --------------------------------------- *@
         <li class="nav-item flex-sm-fill" id="15">
             <a id="contact2-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact2" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">
-                Contact
+                4° Contact
             </a>
         </li>
     </ul>
@@ -134,9 +48,9 @@
 
         <div id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab" class="tab-pane fade px-4 py-3 show active">
             @*  CUANDO YA TIENE EL REGISTRO VALIDADO *@
-            @if (ViewBag.secuenciaactual >= 5)
+            @if (ViewBag.Secuencia >= 5)
             {
-                @Html.Action("DatosBasicos", "Postulante")
+                @Html.Action("DatosBasicos", "Postulante",new { ID_persona = Model.ID_PER } )
             }
 
         </div>
@@ -144,96 +58,155 @@
         @* VISTA DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
         <div id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab" class="tab-pane fade px-4 py-3">
             @* SI CUANDO YA TIENE LA ENTREVISTA ASIGNADA *@
-            @if (ViewBag.secuenciaactual >= 9)
+            @if (ViewBag.Secuencia >= 9)
             {
-                @Html.Action("Entrevista", "Postulante")
+                @Html.Action("Entrevista", "Postulante",new { ID_persona = Model.ID_PER } )
             }
 
         </div>
-
+        @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav123" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            jejeje
+        </button>*@
         @* VISTA DE Documentacion que se divide en varias vistas *@
-        <div id="profile2" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-3">
+        <div id="profile2" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade  p-0 navbar-expand-lg">
 
-            <div class="container">
+            <div class="container p-0">
                 <div class="row">
-                    <div class="col-sm-2 mr-2">
-                        <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-center" id="myTab" role="tablist" style="border-bottom: 0px solid;">
+
+
+                    <nav class="col-sm-2 mr-3 navbar navbar1 navbar-expand-md  navbar-light  bg-dark ml-3 pl-2" >
+                        @*<a class="navbar-brand" href="#">Navbar</a>*@
+
+                        <!-- Toggler/collapsibe Button -->
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <!-- Navbar links -->
+                        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                            <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-left" id="myTab" role="tablist" style="border-bottom: 0px solid;">
+                                <li class="nav-item flex-sm-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#DatosPersonales" role="tab" aria-controls="DatosPersonales" aria-selected="true">
+                                        Datos Personales
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false">
+                                        Domicilio
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Estudios" role="tab" aria-controls="Estudios" aria-selected="false">
+                                        Estudios
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Idiomas" role="tab" aria-controls="Idiomas" aria-selected="false">
+                                        Idiomas
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ActMilitar" role="tab" aria-controls="ActMilitar" aria-selected="false">
+                                        Actividad Militar
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#SituOcu" role="tab" aria-controls="SituOcu" aria-selected="false">
+                                        Situacion Ocupacional
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Antropometria" role="tab" aria-controls="Antropometria" aria-selected="false">
+                                        Antropometria
+                                    </a>
+                                </li>
+                                <li class="nav-item flex-md-fill bli">
+                                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Familia" role="tab" aria-controls="Familia" aria-selected="false">
+                                        Familia
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+
+                    @*<div class="col-sm-2 mr-2 " id="nav123">
+                        <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-left" id="myTab" role="tablist" style="border-bottom: 0px solid;">
                             <li class="nav-item flex-sm-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#DatosPersonales" role="tab" aria-controls="DatosPersonales" aria-selected="true">
                                     Datos Personales
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false">
                                     Domicilio
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Estudios" role="tab" aria-controls="Estudios" aria-selected="false">
                                     Estudios
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Idiomas" role="tab" aria-controls="Idiomas" aria-selected="false">
                                     Idiomas
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ActMilitar" role="tab" aria-controls="ActMilitar" aria-selected="false">
                                     Actividad Militar
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#SituOcu" role="tab" aria-controls="SituOcu" aria-selected="false">
                                     Situacion Ocupacional
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Antropometria" role="tab" aria-controls="Antropometria" aria-selected="false">
                                     Antropometria
                                 </a>
                             </li>
-                            <li class="nav-item flex-sm-fill bli">
+                            <li class="nav-item flex-md-fill bli">
                                 <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Familia" role="tab" aria-controls="Familia" aria-selected="false">
                                     Familia
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div>*@
                     <!-- /.col-md-4 -->
                     <div class="col-sm-9 borderdiv1">
                         <div class="tab-content" id="myTabContent">
                             @* VISTA DE DATOS PERSONALES *@
                             <div class="tab-pane fade show active" id="DatosPersonales" role="tabpanel" aria-labelledby="DatosPersonales-tab">
-                                @Html.Action("DatosPersonales", "Postulante")
+                                @Html.Action("DatosPersonales", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE DOMICILIO *@
                             <div class="tab-pane fade" id="Domicilio" role="tabpanel" aria-labelledby="Domicilio-tab">
-                                @Html.Action("Domicilio", "Postulante")
+                                @Html.Action("Domicilio", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE ESTUDIOS *@
                             <div class="tab-pane fade" id="Estudios" role="tabpanel" aria-labelledby="Estudios-tab">
-                                @Html.Action("Estudios", "Postulante")
+                                @Html.Action("Estudios", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE ESTUDIOS *@
                             <div class="tab-pane fade" id="Idiomas" role="tabpanel" aria-labelledby="Idioma-tab">
-                                @Html.Action("Idiomas", "Postulante")
+                                @Html.Action("Idiomas", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE ACTIVIDAD MILITAR *@
                             <div class="tab-pane fade" id="ActMilitar" role="tabpanel" aria-labelledby="ActMilitar-tab">
-                                @Html.Action("ActMilitar", "Postulante")
+                                @Html.Action("ActMilitar", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE SITUACION OCUPACIONAL*@
                             <div class="tab-pane fade" id="SituOcu" role="tabpanel" aria-labelledby="SituOcu-tab">
-                                @Html.Action("SituOcupacional", "Postulante")
+                                @Html.Action("SituOcupacional", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE ANTROPOMETRIA *@
                             <div class="tab-pane fade" id="Antropometria" role="tabpanel" aria-labelledby="Antropometria-tab">
-                                @Html.Action("Antropometria", "Postulante")
+                                @Html.Action("Antropometria", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                             @* VISTA DE FAMILIA*@
                             <div class="tab-pane fade" id="Familia" role="tabpanel" aria-labelledby="Antropometria-tab">
-                                @Html.Action("Familia", "Postulante")
+                                @Html.Action("Familia", "Postulante",new { ID_persona = Model.ID_PER } )
                             </div>
                         </div>
                     </div>
@@ -265,7 +238,7 @@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content" id="ModalEIACuerpo">
+        <div class="modal-content " id="ModalEIACuerpo">
 
             <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 

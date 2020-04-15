@@ -6,7 +6,7 @@
 }*@
 
 
-<h1>Actividad militar</h1>
+<h2>Actividad militar</h2>
 
 <div class="form-group" id="divTABLE">
 
@@ -14,28 +14,27 @@
         <thead>
             <tr>
                 <th hidden>IdActividadMilitar</th>
+                <th hidden>IDPersona</th>
                 <th>@Html.DisplayNameFor(m => m.Fuerza)</th>
                 <th>@Html.DisplayNameFor(m => m.Ingreso)</th>
                 @*<th>@Html.DisplayNameFor(m => m.Jerarquia)</th>
-                    <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
-                    <th>@Html.DisplayNameFor(m => m.FechaBaja)</th>*@
+        <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
+        <th>@Html.DisplayNameFor(m => m.FechaBaja)</th>*@
 
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
-                    <td>
-                        @Html.Label(item.Ingreso.Value ? "SI" : "NO")
-
-                    </td>
-                    @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
-                        <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
-                </tr>
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
+                <td>@Html.Label(item.Ingreso.Value ? "SI" : "NO")</td>
+                @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
+        <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
+        <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
+            </tr>
             }
         </tbody>
 

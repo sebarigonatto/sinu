@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }*@
 
-<h1>Estudios</h1>
+<h2>Estudios</h2>
 <div class="form-group" id="divTABLE">
 
     <table id="TablaEstudio" data-CUD="EstudiosCUD" data-URL="Estudios" data-ELI="EliminaEST" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
@@ -16,8 +16,8 @@
                 <th hidden>IdEstudio</th>
                 <th hidden>IdPersona</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
-                @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
+               <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
+                @* <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
                 @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>*@
             </tr>
@@ -26,15 +26,16 @@
 
             @foreach (var item in Model.vPersona_EstudioListVM)
             {
-                <tr>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
-                    <td style="max-width:5rem">@Html.DisplayFor(modelItem => item.Nivel)</td>
-                    @*<td>@Html.DisplayTextFor(modelItem => item.Completo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Titulo)</td>*@
-                    <td class="truncate">@Html.DisplayFor(modelItem => item.Nombre)</td>
-                    @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
-                </tr>
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                <td style="max-width:5rem">@Html.DisplayFor(modelItem => item.Nivel)</td>
+                <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
+
+                @*<td>@Html.DisplayFor(modelItem => item.Titulo)</td>*@
+                <td class="truncate">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
+            </tr>
             }
         </tbody>
 
