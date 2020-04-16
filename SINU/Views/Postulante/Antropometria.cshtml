@@ -1,10 +1,10 @@
 ﻿@model SINU.Models.vPersona_Antropometria
 @*@{
-    ViewBag.Title = "Antropo";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
+        ViewBag.Title = "Antropo";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
 
-<h2 class="text-center" >Antropometria</h2>
+<h2 class="text-center">Antropometria</h2>
 
 
 @using (Ajax.BeginForm("Antropometria", "Postulante", null,
@@ -20,187 +20,191 @@ new AjaxOptions
 new { id = "BeginFormAntropometria" }))
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal" id="antropo">
-    <hr />
-    <div  class="row">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal" id="antropo">
+        <hr />
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.HiddenFor(model => model.IdPersona)
-        <div class="col-6">
-            <div class="form-group">
-                @Html.LabelFor(model => model.Genero, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Genero, new { htmlAttributes = new { @class = "form-control", @id = "Sexo", @disabled = "true" } })
-                    @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IdPersona)
+            <div class="col-md-6">
+                <img src="~/Imagenes/hombremedidas.jpg" class="img-fluid" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Genero, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Genero, new { htmlAttributes = new { @class = "form-control", @id = "Sexo", @disabled = "true" } })
+                        @Html.ValidationMessageFor(model => model.Genero, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Altura, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Altura, new { htmlAttributes = new { @class = "form-control", @id = "altura" } })
-                    @Html.ValidationMessageFor(model => model.Altura, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Altura, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Altura, new { htmlAttributes = new { @class = "form-control", @id = "altura" } })
+                        @Html.ValidationMessageFor(model => model.Altura, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Peso, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Peso, new { htmlAttributes = new { @class = "form-control", @id = "peso" } })
-                    @Html.ValidationMessageFor(model => model.Peso, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Peso, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Peso, new { htmlAttributes = new { @class = "form-control", @id = "peso" } })
+                        @Html.ValidationMessageFor(model => model.Peso, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.IMC, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.IMC, new { htmlAttributes = new { @class = "form-control", @id = "imc", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.IMC, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IMC, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IMC, new { htmlAttributes = new { @class = "form-control", @id = "imc", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.IMC, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
+            <div class="col-md-6">
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PerimCabeza, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PerimCabeza, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PerimCabeza, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PerimTorax, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PerimTorax, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PerimTorax, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PerimCabeza, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PerimCabeza, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PerimCabeza, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PerimCintura, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PerimCintura, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PerimCintura, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PerimTorax, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PerimTorax, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PerimTorax, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.PerimCaderas, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.PerimCaderas, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PerimCaderas, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PerimCintura, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PerimCintura, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PerimCintura, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.LargoPantalon, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LargoPantalon, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LargoPantalon, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PerimCaderas, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PerimCaderas, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PerimCaderas, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.LargoEntrep, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LargoEntrep, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LargoEntrep, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LargoPantalon, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LargoPantalon, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LargoPantalon, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group" id="mujer">
-                @Html.LabelFor(model => model.LargoFalda, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.LargoFalda, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.LargoFalda, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LargoEntrep, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LargoEntrep, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LargoEntrep, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Cuello, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Cuello, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Cuello, "", new { @class = "text-danger" })
+                <div class="form-group" id="mujer">
+                    @Html.LabelFor(model => model.LargoFalda, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.LargoFalda, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LargoFalda, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Calzado, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Calzado, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Calzado, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Cuello, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Cuello, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cuello, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Calzado, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Calzado, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Calzado, "", new { @class = "text-danger" })
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <div class="col-md-10 ">
+                        <input type="submit" value="Guardar Datos" class="btn btn-success float-right" />
+                    </div>
                 </div>
             </div>
+            
+
         </div>
-        <div class="col-6">
-            <img src="~/Imagenes/hombremedidas.jpg" />
-        </div>
+
     </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar" class="btn btn-success" />
-            </div>
-        </div>
-    </div>
-    }
+}
 
 
-    @*@section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-            <script>
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
 
-                $(document).ready(function () {
+            $(document).ready(function () {
 
 
-                    var sex = $("#Sexo");
+                var sex = $("#Sexo");
+                sexo(sex.val());
+
+                sex.on("change", function () {
                     sexo(sex.val());
+                });
 
-                    sex.on("change", function () {
-                        sexo(sex.val());
-                    });
+                $("#antropo input").each(function () {
+                    if ($(this).val()=="") {
+                        $(this).val(0);
+                    }
+                });
 
-                    $("#antropo input").each(function () {
-                        if ($(this).val()=="") {
-                            $(this).val(0);
-                        }
-                    });
+                $("#altura,#peso").on("change", function () {
 
-                    $("#altura,#peso").on("change", function () {
-
-                        var altura = $("#altura").val()/100,
-                            peso = $("#peso").val().replace(",", ".");
-                        if (altura != 0 && peso != 0) {
-                            var imc = peso / (altura * altura);
-                            //alert(imc);
-                            $("#imc").attr("value",imc.toFixed(2).replace(".",","));
-                        }
-
-                    });
-
-                    function sexo(element) {
-                        //alert(element);
-                        if (element != "Mujer") {
-                            $("#mujer").hide();
-                            $("#mujer input").val(0);
-                        } else {
-                            $("#mujer").show();
-                        }
-                    };
+                    var altura = $("#altura").val()/100,
+                        peso = $("#peso").val().replace(",", ".");
+                    if (altura != 0 && peso != 0) {
+                        var imc = peso / (altura * altura);
+                        //alert(imc);
+                        $("#imc").attr("value",imc.toFixed(2).replace(".",","));
+                    }
 
                 });
 
-                 /////////////////////////////////////////////////////////////////////////////////
-                /*FUNCIONES DE AJAX.BeginForm */
-
-                function Exito(response,status,xhr) {
-                   alert("success: " + response.success + " - " + response.msg);
-                     //$("#MSGexito").html("success: " + response.success + " " + response.msg);
-                     //$(".modal").modal("show");
+                function sexo(element) {
+                    //alert(element);
+                    if (element != "Mujer") {
+                        $("#mujer").hide();
+                        $("#mujer input").val(0);
+                    } else {
+                        $("#mujer").show();
+                    }
                 };
 
-                function Falla(response) {
-                   alert("Error occured." );
-                };
+            });
 
-                 //////////////////////////////////////////////////////////////////////////////
-            </script>
+             /////////////////////////////////////////////////////////////////////////////////
+            /*FUNCIONES DE AJAX.BeginForm */
 
-        }*@
+            function Exito(response,status,xhr) {
+               alert("success: " + response.success + " - " + response.msg);
+                 //$("#MSGexito").html("success: " + response.success + " " + response.msg);
+                 //$(".modal").modal("show");
+            };
+
+            function Falla(response) {
+               alert("Error occured." );
+            };
+
+             //////////////////////////////////////////////////////////////////////////////
+        </script>
+
+    }*@
