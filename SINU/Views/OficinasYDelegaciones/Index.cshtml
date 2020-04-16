@@ -8,15 +8,11 @@
     @Html.Partial("_MenuPerfilAdmin")
 }
 
+<h2 class="text-center">Oficinas y Delegaciones</h2>
 
-<div class="container">
-    <h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+<div class="table-responsive-xl">
     <div class="row d-flex justify-content-center">
-
+        @*<div class="container">*@
         <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
             <thead>
                 <tr>
@@ -53,7 +49,7 @@
                     <th class="ni-o-ni-bu"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -87,10 +83,10 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Email2)
                         </td>
-                        <td>
-                            <button type="button" class="btn btn-outline-success">@Html.ActionLink("Edit", "Edit", new { id = item.IdOficinasYDelegaciones })</button><br />
-                            <button type="button" class="btn btn-outline-info"> @Html.ActionLink("Details", "Details", new { id = item.IdOficinasYDelegaciones })</button><br />
-                            @Html.ActionLink("Delete", "Delete", new { id = item.IdOficinasYDelegaciones })
+                        <td class="dt-center">
+                            @Html.ActionLink(" Editar", "Edit", new { id = item.IdOficinasYDelegaciones }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                            @Html.ActionLink(" Detalle", "Details", new { id = item.IdOficinasYDelegaciones }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                            @Html.ActionLink(" Eliminar", "Delete", new { id = item.IdOficinasYDelegaciones }, htmlAttributes: new { @class = "fas fa-trash-alt" })&ensp;|&ensp;
                         </td>
                     </tr>
                 }
@@ -98,7 +94,12 @@
 
         </table>
     </div>
+    @*</div>*@
 </div>
+<br />
+<p>
+    @Html.ActionLink(" Crear", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+</p>
 
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->

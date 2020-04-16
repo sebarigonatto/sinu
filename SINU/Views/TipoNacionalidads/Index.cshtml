@@ -9,10 +9,7 @@
 }
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table table-filters table-bordered table-light" id="le-filters"  style="width:100%">
+<table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -36,9 +33,9 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IdTipoNacionalidad }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.IdTipoNacionalidad })
-                    @*@Html.ActionLink("Delete", "Delete", new { id=item.IdTipoNacionalidad })*@
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdTipoNacionalidad }, htmlAttributes: new { @class = "fas fa-edit" }) &ensp;|&ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdTipoNacionalidad }, htmlAttributes: new { @class = "fas fa-list" }) &ensp;|&ensp;
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdTipoNacionalidad }, htmlAttributes: new { @class = "fas fa-trash-alt" }) &ensp;|&ensp;
                 </td>
             </tr>
         }
@@ -46,6 +43,10 @@
     </tbody>
 
 </table>
+<br />
+<p>
+    @Html.ActionLink(" Nuevo Nacionalidad", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+</p>
 
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->

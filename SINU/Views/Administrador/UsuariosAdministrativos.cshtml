@@ -9,9 +9,6 @@
 }
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
     <thead>
         <tr>
@@ -47,15 +44,19 @@
                         @Html.DisplayFor(modelItem => item.IdOficinasYDelegaciones)
                     </td>*@
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { Email = item.Email }) |
-                    @Html.ActionLink("Clave", "SetPassword", new { Email = item.Email }) |
-                    @Html.ActionLink("Details", "Details", new { Email = item.Email }) |
-                    @Html.ActionLink("Delete", "Delete", new { Email = item.Email })
+                    @Html.ActionLink(" ", "Edit", new { Email = item.Email }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "SetPassword", new { Email = item.Email }, htmlAttributes: new { @class = "fas fa-key" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Details", new { Email = item.Email }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Delete", new { Email = item.Email }, htmlAttributes: new { @class = "fas fa-trash-alt" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<br />
+<p>
+    @Html.ActionLink(" Nuevo Usuario", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+</p>
 
 
 <!-- ***********************************************************************-->

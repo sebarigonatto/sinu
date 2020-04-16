@@ -10,9 +10,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
     <thead>
         <tr>
@@ -31,15 +28,19 @@
                     @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.IdSexo }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.IdSexo }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.IdSexo })
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdSexo }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdSexo }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdSexo }, htmlAttributes: new { @class = "fas fa-trash-alt" })
                 </td>
             </tr>
         }
     </tbody>
 
 </table>
+<br />
+<p>
+    @Html.ActionLink(" Crear", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+</p>
 
 
 <!-- ***********************************************************************-->

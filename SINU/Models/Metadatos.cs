@@ -226,6 +226,7 @@ namespace SINU.Models
 
     public class vUsuariosAdministrativosMetadata
     {
+        [Display(Name ="Matricula de Revista")]
         public string mr { get; set; }
         public string Grado { get; set; }
         public string Destino { get; set; }
