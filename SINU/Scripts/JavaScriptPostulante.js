@@ -46,6 +46,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 $(document).ready(function () {
 
+    
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     $.ajaxSetup({
         async: false
@@ -57,7 +58,9 @@ $(document).ready(function () {
         id_persona = $("#vPersona_DatosBasicosVM_IdPersona").val();
         //alert(id_persona);
     })();
-        
+
+  
+    
 
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
@@ -502,23 +505,37 @@ $(document).ready(function () {
 
     });
 
-    //cargo todo los campos con 0 para eviarlos al POST de Antropometria
+    //cargo todo los campos con 0, para eviarlos al POST de Antropometria
     $("#antropo input").each(function () {
         if ($(this).val() == "") {
             $(this).val(0);
         }
-
     });
- /////////////////////////////////////////////////////////////////////////////
-/* FUNCION DE LA VISTA DE FAMILIA */
+
+    /////////////////////////////////////////////////////////////////////////////
+    /* FUNCION DE LA VISTA DE FAMILIA */
     $("#TablaFamilia").on('select.dt', function (e, dt, type, index) {
         var data = dt.rows(index).data();
         var id_registro = data[0][0];
         //alert(id_registro);
-        //redirijo la pagina hacia la vista FamiliaCUD enviansole comparametro el IdFamiliar del registro que se selecciono
+        //redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
         var url = "/Postulante/FamiliaCUD/" + id_registro;
         window.location.href = url;
+      
     });
+
+    //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
+    var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
+    if (paganterior > 1 ) {
+        //alert("vino de familia");
+        $("#datosbasicos,#DatosPersonales,#DatosPersonalesNAV").removeClass("show active");
+        $("#Documentacion,#Familia, #FamiliaNAV").addClass("show active");
+        $("#datosbasicos-tab").removeClass("active");
+        $("#Documentacion-tab").addClass("active");
+        $("html,body").animate({
+            scrollTop: 1000
+        }, 1500);
+    }
 
    
 

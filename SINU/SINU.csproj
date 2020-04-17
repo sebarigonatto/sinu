@@ -450,6 +450,7 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Administrador.cs" />
+    <Compile Include="ViewModels\DelegacionViewModel.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
@@ -1018,6 +1019,7 @@
     <Content Include="Views\Postulante\Familia.cshtml" />
     <Content Include="Views\Postulante\Domicio_API.cshtml" />
     <Content Include="Views\Postulante\FamiliaCUD.cshtml" />
+    <Content Include="Views\Delegacion\_ListadoPostulante.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

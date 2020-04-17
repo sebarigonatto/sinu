@@ -27,9 +27,10 @@
     .oculto {
         display: none !important
     }
-    .tab-nav{
-        display:block !important;
-        opacity:100 !important
+    .tab-nav {
+        display: block !important;
+        opacity: 100 !important;
+        border-bottom:1px solid #909090 !important
     }
    
 }

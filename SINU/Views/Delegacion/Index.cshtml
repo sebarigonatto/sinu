@@ -1,4 +1,5 @@
 ﻿<!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML
+    
     (REGLA DE NOMENCLATURA: TODAS LAS PARTIALVIEW DEBEN COMENZAR CON GUION BAJO EN EL NOMBRE)-->
 <!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
 @{
@@ -117,11 +118,16 @@
     <div class="row">
         <div class="col-md-2 mr-2  bd-sidebar ">
             <ul class="nav nav-tabs with-arrow lined  flex-md-column text-center tabb mb-1" id="myTab" role="tablist" style="border-bottom:0px solid; color:white">
+
                 <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Inscriptos</a>
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                        Inscriptos - Todos
+                    </a>
                 </li>
                 <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                         Datos Basicos
+                    </a>
                 </li>
                 <li class="nav-item flex-sm-fill bli">
                     <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
@@ -130,12 +136,12 @@
         </div>
         <div class="col-sm-9 borderdiv1">
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active pt-2" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                <div class="tab-pane fade show active pt-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    @Html.Partial("_ListadoPostulante")
+                </div> 
+                <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_Listado")
-                </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <h2>Profile</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <h2>Contact</h2>

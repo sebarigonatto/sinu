@@ -3,6 +3,7 @@ using SINU.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using SINU.ViewModels;
 
 namespace SINU.Controllers
 {
@@ -22,8 +23,13 @@ namespace SINU.Controllers
 
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
-                var cargadatosbasicos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-                return View("Index", cargadatosbasicos);
+                DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
+                {
+                    PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
+                };
+                
+                return View("Index", datos);
 
             }
             catch (System.Exception ex)
