@@ -10,5 +10,8 @@ namespace SINU.ViewModels
     {
         public List<vInscripcionEtapaEstadoUltimoEstado> cargadatosbasicosVM { get; set; }
         public List<vInscripcionEtapaEstadoUltimoEstado> PostulantesIncriptosVM { get; set; }
+        public List<vInscripcionEtapaEstadoUltimoEstado> EntrevistaVM { get; set; }
+        public List<vInscripcionEtapaEstadoUltimoEstado> DocumentacionVM { get; set; }
+        public List<vInscripcionEtapaEstadoUltimoEstado> PresentacionVM { get; set; }
     }
 }
