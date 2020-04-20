@@ -25,8 +25,12 @@ namespace SINU.Controllers
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
-                    PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
+                    PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 6 && m.IdSecuencia <= 7 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    EntrevistaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 8 && m.IdSecuencia <= 12 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    DocumentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 13 && m.IdSecuencia <= 15 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    PresentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 15 && m.IdSecuencia <= 16 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
+
                 };
                 return View("Index", datos);
 

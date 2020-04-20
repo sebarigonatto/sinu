@@ -126,7 +126,23 @@
                 </li>
                 <li class="nav-item flex-sm-fill bli">
                     <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
-                         Datos Basicos
+                        Datos Basicos
+                    </a>
+                </li>
+
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="home" aria-selected="true">
+                        Entrevista
+                    </a>
+                </li>
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="home" aria-selected="true">
+                        Documentacion
+                    </a>
+                </li>
+                <li class="nav-item flex-sm-fill bli">
+                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="home" aria-selected="true">
+                        Presentacion
                     </a>
                 </li>
                 <li class="nav-item flex-sm-fill bli">
@@ -139,9 +155,18 @@
 
                 <div class="tab-pane fade show active pt-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     @Html.Partial("_ListadoPostulante")
-                </div> 
+                </div>
                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_Listado")
+                </div>
+                <div class="tab-pane fade " id="entrevista" role="tabpanel" aria-labelledby="home-tab">
+                    @Html.Partial("_ListadoEntrevista")
+                </div>
+                <div class="tab-pane fade " id="Documentacion" role="tabpanel" aria-labelledby="home-tab">
+                    @Html.Partial("_Documentacion")
+                </div>
+                <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
+                    @Html.Partial("_Presentacion")
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <h2>Contact</h2>
