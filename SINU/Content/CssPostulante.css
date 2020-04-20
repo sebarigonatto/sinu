@@ -82,7 +82,7 @@
     }
 
 .atab {
-    color: #dee2e6 !important;
+    color: #ffffff !important;
 }
 
 .borderdiv1 {
@@ -93,11 +93,12 @@
 
 
 .bli {
-    border-bottom: 1px solid #dee2e6 !important;
+    border-bottom: 1px solid #ffffff !important;
 }
-
-.Tabdesabilitado {
+/*Para deshabilitar el uso del tab*/
+.Tabdesabilitado a{
     pointer-events: none;
+    color:#909090 !important
 }
 
 /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/

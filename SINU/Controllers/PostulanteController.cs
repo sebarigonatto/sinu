@@ -22,10 +22,10 @@ namespace SINU.Controllers
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
-           Persona_SecuenciaVM persec = new Persona_SecuenciaVM(); 
-            persec.ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-            ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == persec.ID_PER).IdSecuencia;
-            return View(persec);
+            IDPersonaVM pers = new IDPersonaVM();
+            pers.ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+            ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
+            return View(pers);
         }
 
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
@@ -759,10 +759,32 @@ namespace SINU.Controllers
 
         public ActionResult FamiliaCUD(int id)
         {
-            Persona_SecuenciaVM persec = new Persona_SecuenciaVM(); 
-            persec.ID_PER=db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona;
-            return View(persec);
+            IDPersonaVM pers = new IDPersonaVM();
+            pers.ID_PER=db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona;
+            return View(pers);
         }
 
+        public JsonResult SolicitudEntrevista(int ID_persona)
+        {
+            try
+            {
+                Inscripcion secu1 = new Inscripcion();
+                secu1 = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
+                InscripcionEtapaEstado secu2 = new InscripcionEtapaEstado() {
+                    IdInscripcionEtapaEstado = secu1.IdInscripcion,
+                    IdSecuencia = 7,
+                    Inscripcion = secu1,
+                    Secuencia_EtapaEstado = db.Secuencia_EtapaEstado.Find(7),
+                    Fecha = DateTime.Now
+                };
+                return Json(new { success = true, msg = "" });
+
+            }
+            catch (Exception ex )
+            {
+
+                return Json(new { success = false, msg = ex.InnerException.Message });
+            }
+        }
     }
 }

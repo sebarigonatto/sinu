@@ -24,9 +24,9 @@
         <div class="container">
             <div class="navbar-header">
                 @*muestro el icono como de un barco de frente delante del primer item del MENU*@
-                <p class="nav navbar-text navbar-left">
+                <p class="nav navbar-text navbar-left ">
                     <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
-                </p>
+                </p >
 
                 @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
 
@@ -50,11 +50,13 @@
                     <!-- RenderSection(“NombreSeccion”, required) SI required= false esta sección es opcional, con valor a true le decimos que es obligatorio-->
                     @RenderSection("MenuPerfil", false)
                 </ul>
+                
 
-                <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
-                <!--Coloca Link de SESION en extremo Derecho     -->
-                @Html.Partial("_LoginPartial")
-            </div>
+                    <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
+                    <!--Coloca Link de SESION en extremo Derecho     -->
+                    @Html.Partial("_LoginPartial")
+
+                </div>
         </div>
         </div>
     <!-- aqui TERMINA el menú Principal -->

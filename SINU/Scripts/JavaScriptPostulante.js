@@ -358,7 +358,7 @@ $(document).ready(function () {
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     $("#ModalEIA").on('hidden.bs.modal', function () {
         //alert(id_persona + url_Tabla );
-        $("#" + url_Tabla).load('/Postulante/' + url_Tabla, { ID_persona: id_persona}, function () {
+        $("#" + url_Tabla+"NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona}, function () {
             //alert("se recargo la vista de la tabla actual...")
             //aplico datatable a la tabla de estudio
             TablasEIA();
@@ -529,11 +529,13 @@ $(document).ready(function () {
     if (paganterior > 1 ) {
         //alert("vino de familia");
         $("#datosbasicos,#DatosPersonales,#DatosPersonalesNAV").removeClass("show active");
+        $("#BTDatosPersonalesNAV").addClass("collapsed");
         $("#Documentacion,#Familia, #FamiliaNAV").addClass("show active");
-        $("#datosbasicos-tab").removeClass("active");
-        $("#Documentacion-tab").addClass("active");
+        $("#BTFamiliaNAV").removeClass("collapsed");
+        $("#datosbasicos-tab, #TABDocumentacion a.active").removeClass("active");
+        $("#Documentacion-tab, #TABDocumentacion a[href='#Familia']").addClass("active");
         $("html,body").animate({
-            scrollTop: 1000
+            scrollTop: 250
         }, 1500);
     }
 

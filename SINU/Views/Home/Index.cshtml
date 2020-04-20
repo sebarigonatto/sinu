@@ -1,244 +1,255 @@
 ﻿@model IEnumerable<SINU.Models.vPeriodosInscrip>
+@*@section MenuPerfil{*@
+    @*@if (User.Identity.IsAuthenticated)
+    {
+        string Grupo = db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd();
+    }
+    }*@
+<style type="text/css">
+    body {
+        padding-top: 0px;
+    }
 
-    <style type="text/css">
-        body {
-            padding-top: 0px;
-        }
-        .tamaño-card{
-            max-width:40%;
-        }
-        @@media screen and (max-width: 601px) {
-            header {
-                align-content:center;
-                margin-left: -5% !important;
-                margin-right:-5% !important;
-            }
-            .tamaño-card{
-                max-width:initial !important
-            }
-        }
-        .navbar {
-            background-color: #1717178a !important
-        }
+    .tamaño-card {
+        max-width: 40%;
+    }
 
-        .carousel-item {
-            height: 40vh;
-            min-height: 200px;
-            background: no-repeat center center scroll;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+    @@media screen and (max-width: 601px) {
+        header {
+            align-content: center;
+            margin-left: -5% !important;
+            margin-right: -5% !important;
         }
 
-        .portfolio-item {
-            /*margin-bottom: 30px;*/
+        .tamaño-card {
+            max-width: initial !important
         }
+    }
 
-        @@media screen and (min-width: 601px) {
-            titulo {
-                font-size: 60px;
-            }
+    .navbar {
+        background-color: #1717178a !important
+    }
+
+    .carousel-item {
+        height: 40vh;
+        min-height: 200px;
+        background: no-repeat center center scroll;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .portfolio-item {
+        /*margin-bottom: 30px;*/
+    }
+
+    @@media screen and (min-width: 601px) {
+        titulo {
+            font-size: 60px;
         }
+    }
 
-        @@media screen and (min-width: 731px) {
-            titulo {
-                font-size: 90px;
-            }
+    @@media screen and (min-width: 731px) {
+        titulo {
+            font-size: 90px;
         }
+    }
 
 
-        @@media screen and (max-width: 600px) {
-            titulo {
-                font-size: 50px;
-                text-align: center;
-            }
-        }
-
-        @@media screen and (min-width: 601px) {
-            .tcard {
-                font-size: 30px;
-            }
-            .back-color {
-                background-color: #1717178a !important;
-            }
-        }
-
-        }
-
-        @@media screen and (min-width: 731px) {
-            .tcard {
-                font-size: 40px;
-            }
-        }
-
-
-        @@media screen and (max-width: 600px) {
-            .tcard {
-                font-size: 25px;
-            }
-            .back-color {
-                background-color: #000000d4 !important
-            }
-        }
-
-        .imgi {
-            margin: 3%;
-            width: 40%;
-            position: relative;
-            overflow: hidden;
-            margin-left: 15px;
-            margin-right: 15px;
-            margin-top: -30px;
-            border-radius: 6px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
-            background-color: white
-        }
-       
-
-
-        .content-title {
-            display: inline-block;
-            position: absolute;
-            color: white;
-            background-color: #00000082;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card1 {
-            margin-bottom: 35px !important;
-            align-items: center;
+    @@media screen and (max-width: 600px) {
+        titulo {
+            font-size: 50px;
             text-align: center;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
-            background-color: #052240;
-            color: white;
+        }
+    }
+
+    @@media screen and (min-width: 601px) {
+        .tcard {
+            font-size: 30px;
         }
 
-        .nav-link:hover {
-            color:#a7a7a7 !important
+        .back-color {
+            background-color: #1717178a !important;
+        }
+    }
+
+    }
+
+    @@media screen and (min-width: 731px) {
+        .tcard {
+            font-size: 40px;
+        }
+    }
+
+
+    @@media screen and (max-width: 600px) {
+        .tcard {
+            font-size: 25px;
         }
 
-        .centrar {
-            margin: auto;
+        .back-color {
+            background-color: #000000d4 !important
         }
-        .nav-link{
-            color:white !important;
-        }
-    </style>
-    <header class="mb-2" style="margin-top: -25px;margin-left: -45%;margin-right: -45%;">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    }
 
-            <div class="carousel-inner" role="listbox" style="display: flex;justify-content: center;align-items: center;">
-
-                <!-- Slide One - Set the background image for this slide in the line below -->
-                <div class="carousel-item active" style="        background-image: url('../../Imagenes/carrucel1.jpg');">
-                    <div class="carousel-caption d-none d-lg-block">
-                    </div>
-                </div>
-                <!-- Slide Two - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel2.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-
-                    </div>
-                </div>
-                <!-- Slide Three - Set the background image for this slide in the line below -->
-                <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel3.jpg')">
-                    <div class="carousel-caption d-none d-md-block">
-
-                    </div>
-                </div>
+    .imgi {
+        margin: 3%;
+        width: 40%;
+        position: relative;
+        overflow: hidden;
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-top: -30px;
+        border-radius: 6px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+        background-color: white
+    }
 
 
-                <div class="content-title">
-                    <titulo class=" ">Armada Argentina</titulo>
-                </div>
 
-            </div>
-        </div>
-    </header>
+    .content-title {
+        display: inline-block;
+        position: absolute;
+        color: white;
+        background-color: #00000082;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .card1 {
+        margin-bottom: 35px !important;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
+        background-color: #052240;
+        color: white;
+    }
 
-    <div class="container ">
-        <div class="card-deck mb-4 text-center">
-            <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
-                <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
-                    <h2>Modalidades de Inscripción</h2>
-                </div>
-                <div class="card-body">
-                    <p class="lead justify-content-center">
-                        <b>@ViewBag.TextoPAGINAPRINCIPAL</b>
-                    </p>
-                    <a class="btn btn-primary btn-lg" target="_blank" href="http://www.incorporacion.armada.mil.ar/" role="button">Mas Información</a>
-                </div>
-            </div>
-        </div>
-        <!-- /.row -->
-        <div class="card-deck d-flex align-items-center justify-content-center">
-            @{
-                List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
-                Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
-                var per = 0; //contador de periodo para una institucion
-                string InstAnterior; //id de la institucion que se esta armando el card
-                while (inst < Periodos.Count())
-                {
-                    InstAnterior = Periodos[inst].NombreInst;
-                    <div class="card card1 tamaño-card" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
+    .nav-link:hover {
+        color: #a7a7a7 !important
+    }
 
-                        @{string imagen = @Periodos[inst].IdInstitucion + ".png"; }
-                        <img class="card-img imgi" src="~/Imagenes/@imagen" alt="Card image cap" style="">
-                        <div class="card-header container-fluid">
-                            <h3 class="my-0 font-weight-normal ">@Periodos[inst].Titulo  @InstAnterior  </h3>
-                        </div>
+    .centrar {
+        margin: auto;
+    }
 
-                        <div class="card-body container-fluid">
+    .nav-link {
+        color: white !important;
+    }
+</style>
+<header class="mb-2" style="margin-top: -25px;margin-left: -45%;margin-right: -45%;">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 
-                            @{
-                                per = 0;
-                                while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
-                                {
-                                    per++;
-                                    // armado de la fila de un nuevo periodo
-                                    //mostrar FechaInicio y Fecha Fin con el contador de per  <h6>@per&ordm;&ensp;</h6>
-                                    <h5>Inicio @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h5>
-                                    <br />
-                                    <h5>Cierre @Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h5>
+        <div class="carousel-inner" role="listbox" style="display: flex;justify-content: center;align-items: center;">
 
-                                    <div class="row card-footer lead justify-content-center">
-                                        @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
-
-                                    </div>
-
-                                    inst++;
-                                }
-
-
-                            }
-                        </div>
-                    </div>
-                }
-            }
-
-            @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
-
-
-        </div>
-
-        <!-- /.row -->
-        <hr>
-
-        <!-- Call to Action Section -->
-        @if (Request.IsAuthenticated)
-        {
-    
-            <div class="row lead justify-content-center mb-4" >
-                <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
-                    <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+            <!-- Slide One - Set the background image for this slide in the line below -->
+            <div class="carousel-item active" style="        background-image: url('../../Imagenes/carrucel1.jpg');">
+                <div class="carousel-caption d-none d-lg-block">
                 </div>
             </div>
-        }
+            <!-- Slide Two - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel2.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+
+                </div>
+            </div>
+            <!-- Slide Three - Set the background image for this slide in the line below -->
+            <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel3.jpg')">
+                <div class="carousel-caption d-none d-md-block">
+
+                </div>
+            </div>
+
+
+            <div class="content-title">
+                <titulo class=" ">Armada Argentina</titulo>
+            </div>
+
+        </div>
     </div>
- 
+</header>
+
+
+<div class="container ">
+    <div class="card-deck mb-4 text-center">
+        <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
+            <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
+                <h2>Modalidades de Inscripción</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead justify-content-center">
+                    <b>@ViewBag.TextoPAGINAPRINCIPAL</b>
+                </p>
+                <a class="btn btn-primary btn-lg" target="_blank" href="http://www.incorporacion.armada.mil.ar/" role="button">Mas Información</a>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="card-deck d-flex align-items-center justify-content-center">
+        @{
+            List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
+            Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
+            var per = 0; //contador de periodo para una institucion
+            string InstAnterior; //id de la institucion que se esta armando el card
+            while (inst < Periodos.Count())
+            {
+                InstAnterior = Periodos[inst].NombreInst;
+                <div class="card card1 tamaño-card" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
+
+                    @{string imagen = @Periodos[inst].IdInstitucion + ".png"; }
+                    <img class="card-img imgi" src="~/Imagenes/@imagen" alt="Card image cap" style="">
+                    <div class="card-header container-fluid">
+                        <h3 class="my-0 font-weight-normal ">@Periodos[inst].Titulo  @InstAnterior  </h3>
+                    </div>
+
+                    <div class="card-body container-fluid">
+
+                        @{
+                            per = 0;
+                            while (inst < Periodos.Count() && InstAnterior == Periodos[inst].NombreInst)
+                            {
+                                per++;
+                                // armado de la fila de un nuevo periodo
+                                //mostrar FechaInicio y Fecha Fin con el contador de per  <h6>@per&ordm;&ensp;</h6>
+                                <h5>Inicio @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h5>
+                                <br />
+                                <h5>Cierre @Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h5>
+
+                                <div class="row card-footer lead justify-content-center">
+                                    @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = Periodos[inst].IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+
+                                </div>
+
+                                inst++;
+                            }
+
+
+                        }
+                    </div>
+                </div>
+            }
+        }
+
+        @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
+
+
+    </div>
+
+    <!-- /.row -->
+    <hr>
+
+    <!-- Call to Action Section -->
+    @if (Request.IsAuthenticated)
+    {
+
+        <div class="row lead justify-content-center mb-4">
+            <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
+                <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>
+            </div>
+        </div>
+    }
+</div>

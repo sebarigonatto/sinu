@@ -5,10 +5,9 @@ using System.Web.Mvc;
 
 namespace SINU.ViewModels
 {
-    public class Persona_SecuenciaVM
+    public class IDPersonaVM
     {
         public int ID_PER { get; set; }
-        public int Secuencia { get; set; }
     }
 
     public class DatosBasicosVM

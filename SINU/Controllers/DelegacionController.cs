@@ -28,7 +28,6 @@ namespace SINU.Controllers
                     PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
                     cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia == 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
                 };
-                
                 return View("Index", datos);
 
             }

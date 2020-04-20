@@ -79,6 +79,7 @@
 
                 </div>
                 <div class="col-sm-6">
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -111,7 +112,6 @@
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
@@ -119,12 +119,20 @@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
                 </div>
                 <br />
             </div>
             <div class="form-group pl-3">
                 <input type="submit" value="Guadar Datos" class="btn btn-success" />
-                <input id="jeje" type="button" value="Solicitar Entrevista" class="btn btn-danger" />
+                @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevista",new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona}, new AjaxOptions
+           {
+               HttpMethod = "POST",
+               OnSuccess = "Exito(data,status,xhr)",
+               OnFailure = "Falla",
+
+           }, new { @class = "btn btn-danger" })
+
             </div>
 
 

@@ -1,13 +1,16 @@
-﻿@model SINU.ViewModels.Persona_SecuenciaVM
+﻿@model SINU.ViewModels.IDPersonaVM
 @{
     ViewBag.Title = "FamiliaCUD";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section MenuPerfil{
+    @Html.Partial("_MenuPerfilPostu")
 }
 <link href="~/Content/CssPostulante.css" rel="stylesheet" />
 
 <div class="row ">
     <h2 class="col-7">Familiar</h2>
-    <a href="/Postulante/Index" class="btn btn-info text-center col-4" >Volver hacia atras</a>    
+    <a href="/Postulante/Index" class="btn btn-info text-center col-4">Volver hacia atras</a>
 </div>
 <br />
 <div class="p-1 bg-white rounded shadow mb-1 " style="padding:0px !important">
