@@ -49,17 +49,17 @@ TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
 
 <li class="nav-item">@Html.ActionLink("Postulantes", "Index", "Delegacion", null, htmlAttributes: new { @class = "nav-link" })</li>
 @*<li class="nav-item">@Html.DropDownList()*@
-<div class="dropdown">
-    <button class="dropbtn">
+
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Tareas
-        <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-        <a href="~/Delegacion">Asignar Fecha Entrevista</a>
-        <a href="~/Delegacion">Listado Entrevistas</a>
-        <a href="~/Delegacion">Asignar Presentacion</a>
+    </a>
+    <div class="dropdown-menu  ">
+        <a  class="dropdown-item " href="~/Delegacion">Asignar Fecha Entrevista</a>
+        <a  class="dropdown-item" href="~/Delegacion">Listado Entrevistas</a>
+        <a  class="dropdown-item"  href="~/Delegacion">Asignar Presentacion</a>
     </div>
-</div>
+</li>
 
 
 

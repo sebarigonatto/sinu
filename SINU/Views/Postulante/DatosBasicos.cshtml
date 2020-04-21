@@ -99,7 +99,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"),"Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.NombreInst)
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), null@*"Seleccione una Opcion"*@, htmlAttributes: new { @class = "form-control  selectpicker" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio)
                         </div>
                     </div>

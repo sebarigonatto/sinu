@@ -1,5 +1,7 @@
-﻿<!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML
-    
+﻿@model SINU.ViewModels.DelegacionPostulanteVM
+
+<!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML
+
     (REGLA DE NOMENCLATURA: TODAS LAS PARTIALVIEW DEBEN COMENZAR CON GUION BAJO EN EL NOMBRE)-->
 <!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
 @{
@@ -112,7 +114,7 @@
         }
     }
 </style>
-<h2 class="text-center">Delegacion @ViewBag.Delegacion</h2>
+<h2 class="text-center ">@ViewBag.Delegacion</h2>
 <br />
 <div class="container h-75">
     <div class="row">
@@ -154,19 +156,19 @@
             <div class="tab-content" id="myTabContent">
 
                 <div class="tab-pane fade show active pt-2" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    @Html.Partial("_ListadoPostulante")
+                    @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
                 </div>
                 <div class="tab-pane fade " id="home" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_Listado")
+                    @Html.Partial("_ListadoPostulante",Model.cargadatosbasicosVM)
                 </div>
                 <div class="tab-pane fade " id="entrevista" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoEntrevista")
+                    @Html.Partial("_ListadoPostulante",Model.EntrevistaVM)
                 </div>
                 <div class="tab-pane fade " id="Documentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_Documentacion")
+                    @Html.Partial("_ListadoPostulante",Model.DocumentacionVM)
                 </div>
                 <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_Presentacion")
+                    @Html.Partial("_ListadoPostulante",Model.PresentacionVM)
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <h2>Contact</h2>

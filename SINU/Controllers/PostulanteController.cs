@@ -768,16 +768,9 @@ namespace SINU.Controllers
         {
             try
             {
-                Inscripcion secu1 = new Inscripcion();
-                secu1 = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
-                InscripcionEtapaEstado secu2 = new InscripcionEtapaEstado() {
-                    IdInscripcionEtapaEstado = secu1.IdInscripcion,
-                    IdSecuencia = 7,
-                    Inscripcion = secu1,
-                    Secuencia_EtapaEstado = db.Secuencia_EtapaEstado.Find(7),
-                    Fecha = DateTime.Now
-                };
-                return Json(new { success = true, msg = "" });
+
+                db.spCambiaSecuencia(ID_persona, 7);
+                return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
 
             }
             catch (Exception ex )

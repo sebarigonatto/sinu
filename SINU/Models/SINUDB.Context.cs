@@ -724,5 +724,18 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VaciarASPNETUser", correoregistradoParameter, eliminarParameter);
         }
+    
+        public virtual int spCambiaSecuencia(Nullable<int> id_Persona, Nullable<int> num_Secuencia)
+        {
+            var id_PersonaParameter = id_Persona.HasValue ?
+                new ObjectParameter("id_Persona", id_Persona) :
+                new ObjectParameter("id_Persona", typeof(int));
+    
+            var num_SecuenciaParameter = num_Secuencia.HasValue ?
+                new ObjectParameter("Num_Secuencia", num_Secuencia) :
+                new ObjectParameter("Num_Secuencia", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCambiaSecuencia", id_PersonaParameter, num_SecuenciaParameter);
+        }
     }
 }

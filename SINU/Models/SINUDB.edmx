@@ -536,10 +536,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
         <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
             <PropertyRef Name="IdPersona" />
           </Key>
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
@@ -577,6 +581,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene defini
 advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParam_Grados">
           <Key>
+            
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" Nullable="false" />
@@ -1729,6 +1734,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="Self.vInscripcionEtapaEstadoUltimoEstado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vInscripcionEtapaEstadoUltimoEstado].[IdSecuencia] AS [IdSecuencia], 
+    [vInscripcionEtapaEstadoUltimoEstado].[Etapa] AS [Etapa], 
+    [vInscripcionEtapaEstadoUltimoEstado].[Estado] AS [Estado], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha] AS [Fecha], 
     [vInscripcionEtapaEstadoUltimoEstado].[Email] AS [Email], 
@@ -2652,6 +2659,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
             <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
@@ -2659,6 +2668,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -3687,6 +3698,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Persona" EntitySet="Persona" />
           </AssociationSet>
           <EntitySet Name="vParam_Grados" EntityType="SINUModel.vParam_Grados" />
+          <FunctionImport Name="spCambiaSecuencia">
+            <Parameter Name="id_Persona" Mode="In" Type="Int32" />
+            <Parameter Name="Num_Secuencia" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4372,6 +4387,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />

@@ -456,6 +456,7 @@
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
     <Compile Include="ViewModels\ProvLocalidades.cs" />
     <Compile Include="ViewModels\Rol.cs" />
+    <Compile Include="Controllers\EntrevistaController.cs" />
     <Compile Include="Web References\RefWebCPA\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -971,7 +972,6 @@
     <Content Include="Views\Postulante\Index.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
-    <Content Include="Views\Delegacion\_Listado.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
     <Content Include="Views\Postulante\Domicilio.cshtml" />
     <Content Include="Views\Postulante\Estudios.cshtml" />
@@ -1020,9 +1020,6 @@
     <Content Include="Views\Postulante\Domicio_API.cshtml" />
     <Content Include="Views\Postulante\FamiliaCUD.cshtml" />
     <Content Include="Views\Delegacion\_ListadoPostulante.cshtml" />
-    <Content Include="Views\Delegacion\_ListadoEntrevista.cshtml" />
-    <Content Include="Views\Delegacion\_Documentacion.cshtml" />
-    <Content Include="Views\Delegacion\_Presentacion.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -1044,6 +1041,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\Entrevista\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

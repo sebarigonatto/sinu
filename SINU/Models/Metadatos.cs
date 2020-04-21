@@ -44,6 +44,7 @@ namespace SINU.Models
         //[DataType(DataType.EmailAddress,ErrorMessage ="El email ingresado no es valido")]
         public string Email { get; set; }
         [Display(Name ="Como se entero")]
+        [MaxLength(20,ErrorMessage ="Limite de caracteres superado!")]
         public string ComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
@@ -59,6 +60,7 @@ namespace SINU.Models
         public Nullable<int> IdSecuencia { get; set; }
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
+        [Required]
         [Display(Name ="Sexo")]
         public int IdSexo { get; set; }
         [Display(Name="Oficinas y Delegaciones")]

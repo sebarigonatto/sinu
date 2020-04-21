@@ -20,5 +20,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        public string Etapa { get; set; }
+        public string Estado { get; set; }
     }
 }
