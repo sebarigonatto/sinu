@@ -24,7 +24,12 @@ namespace SINU.Controllers
         {//error cdo existe uno registrado antes de los cambios de secuencia
             IDPersonaVM pers = new IDPersonaVM();
             pers.ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-            ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
+            if (db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m=>m.IdPersona==pers.ID_PER).IdSecuencia !=6)
+            {
+                db.spProximaSecuenciaEtapaEstado(pers.ID_PER, null);
+            }
+
+                ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
             return View(pers);
         }
 

@@ -737,5 +737,18 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCambiaSecuencia", id_PersonaParameter, num_SecuenciaParameter);
         }
+    
+        public virtual int spProximaSecuenciaEtapaEstado(Nullable<int> idPostulante, Nullable<int> idInscripcion)
+        {
+            var idPostulanteParameter = idPostulante.HasValue ?
+                new ObjectParameter("IdPostulante", idPostulante) :
+                new ObjectParameter("IdPostulante", typeof(int));
+    
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstado", idPostulanteParameter, idInscripcionParameter);
+        }
     }
 }
