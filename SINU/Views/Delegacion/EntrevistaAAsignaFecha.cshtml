@@ -1,0 +1,88 @@
+﻿@model SINU.Models.vEntrevistaLugarFecha
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Asignar fecha de Entrevista</h4>
+        <hr />
+
+
+
+
+        @Html.HiddenFor(m => m.IdPersona)
+        @Html.HiddenFor(m => m.IdInscripcion)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @* Campo para asignar la fecha   *@
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaEntrevista, htmlAttributes: new { @class = "control-label col-md-2" }) a asignar
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true ,@style="background-color: white !important"})
+                @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-2">
+                <input type="submit" value="GUardar" class="btn btn-success" />
+            </div>
+            <div class= "col-sm-2">
+                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+            </div>
+        </div>
+
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(document).ready( function () {
+
+        $(".datepicker").datepicker({
+            format: "dd/mm/yyyy",
+            language: "es",
+            autoclose: true,
+            startView: "days",
+        });
+    })
+        
+
+    </script>
+}

@@ -18,22 +18,37 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
-                @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" }) &ensp;| &ensp;
-                @*@Html.ActionLink(" ", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-trash-alt", @style = "color:#0072ff", @title = "Eliminar" })*@
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td class="align-content-md-center">
+                    @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
+                    &ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })  &ensp;
+
+
+                    @switch (item.IdSecuencia)
+                    {
+                        case 8:
+                            <e>| &ensp;</e>
+                            @Html.ActionLink(" ", "EntrevistaAAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
+                            <e> &ensp;</e>
+                            break;
+                        case 9:
+                            <e>| &ensp;</e>
+                            @Html.ActionLink(" ", "EntrevistaAAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-check-circle", @style = "color:#0072ff", @title = "Confirmar fecha asignada" })
+                            <e> &ensp;</e>
+                            break;
+                    }
+                </td>
+            </tr>
         }
     </tbody>
 

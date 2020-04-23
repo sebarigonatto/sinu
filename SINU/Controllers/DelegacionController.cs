@@ -74,14 +74,14 @@ namespace SINU.Controllers
 
         }
 
-        // GET: Delegacion/Create
-        public ActionResult Create()
+
+        public ActionResult EntrevistaAAsignaFecha (int id)
         {
             try
             {
-                // TODO: Add insert logic here
+                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
 
-                return RedirectToAction("Index");
+                return View(Dato);
             }
             catch (System.Exception ex)
             {
@@ -91,12 +91,16 @@ namespace SINU.Controllers
 
         // POST: Delegacion/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult EntrevistaAAsignaFecha(vEntrevistaLugarFecha datos)
         {
             try
             {
                 // TODO: Add insert logic here
-
+                
+                var da= db.Inscripcion.Find(datos.IdInscripcion);
+                da.FechaEntrevista = datos.FechaEntrevista;
+                db.SaveChanges();
+                db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)
