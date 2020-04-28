@@ -44,6 +44,7 @@ namespace SINU.Controllers
         public ActionResult Details(int? id)
         {
             List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
             try
             {
                 //busco la delegacion que pertenece al usuario con perfil de delegacion            
@@ -57,7 +58,10 @@ namespace SINU.Controllers
                     return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
                 }
 
-                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+                ViewBag.Secuen = vInscripcionEtapas.IdSecuencia;
+
 
                 if (InscripcionElegida.Count == 0)
                 {
@@ -73,7 +77,20 @@ namespace SINU.Controllers
             return View(InscripcionElegida.ToList()[0]);
 
         }
-
+        //Terminar codigo faltante no devuelve nada la vista investigar  por que
+        [HttpPost]
+        public ActionResult Details(vInscripcionDetalle vInscripcion)
+        {
+            try
+            {
+                db.spProximaSecuenciaEtapaEstado(vInscripcion.IdPersona, vInscripcion.IdInscripcion);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
+            }
+            return RedirectToAction("Index");
+        }
 
         public ActionResult EntrevistaAAsignaFecha (int id)
         {
