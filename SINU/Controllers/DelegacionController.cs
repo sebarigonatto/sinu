@@ -26,10 +26,10 @@ namespace SINU.Controllers
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
                     PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    cargadatosbasicosVM    = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 6 && m.IdSecuencia <= 7 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    EntrevistaVM           = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 8 && m.IdSecuencia <= 11 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    DocumentacionVM        = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 12 && m.IdSecuencia <= 15 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    PresentacionVM         = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 16 && m.IdSecuencia <= 17 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
+                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 6 && m.IdSecuencia <= 7 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    EntrevistaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 8 && m.IdSecuencia <= 11 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    DocumentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 12 && m.IdSecuencia <= 15 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    PresentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 16 && m.IdSecuencia <= 17 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
                 };
                 return View("Index", datos);
 
@@ -57,7 +57,7 @@ namespace SINU.Controllers
                     return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
                 }
 
-                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
 
                 if (InscripcionElegida.Count == 0)
                 {
@@ -74,8 +74,8 @@ namespace SINU.Controllers
 
         }
 
-
-        public ActionResult EntrevistaAAsignaFecha (int id)
+        //accion oara asignarle la fecha de entrevista al postulante
+        public ActionResult EntrevistaAsignaFecha(int id)
         {
             try
             {
@@ -91,13 +91,13 @@ namespace SINU.Controllers
 
         // POST: Delegacion/Create
         [HttpPost]
-        public ActionResult EntrevistaAAsignaFecha(vEntrevistaLugarFecha datos)
+        public ActionResult EntrevistaAsignaFecha(vEntrevistaLugarFecha datos)
         {
             try
             {
                 // TODO: Add insert logic here
-                
-                var da= db.Inscripcion.Find(datos.IdInscripcion);
+
+                var da = db.Inscripcion.Find(datos.IdInscripcion);
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
                 db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
@@ -109,6 +109,36 @@ namespace SINU.Controllers
             }
         }
 
+        public ActionResult EntrevistaConfirmaFecha(int id)
+        {
+            try
+            {
+                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
+
+                return View(Dato);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
+        }
+
+        // POST: Delegacion/Create
+        [HttpPost]
+        public ActionResult EntrevistaConfirmaFecha(vEntrevistaLugarFecha datos)
+        {
+            try
+            {
+
+                db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
+
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
+        }
         // GET: Delegacion/Edit/5
         public ActionResult Edit(int? id)
         {

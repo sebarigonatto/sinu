@@ -1,10 +1,10 @@
 ﻿@model SINU.Models.vEntrevistaLugarFecha
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Asignar fecha de Entrevista</h4>
         <hr />
@@ -32,13 +32,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -49,40 +49,40 @@
         </div>
         @* Campo para asignar la fecha   *@
         <div class="form-group">
-            @Html.LabelFor(model => model.FechaEntrevista, htmlAttributes: new { @class = "control-label col-md-2" }) a asignar
+            @Html.LabelFor(model => model.FechaEntrevista, htmlAttributes: new { @class = "control-label col-md-2" })a asignar
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true ,@style="background-color: white !important"})
+                @Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder=" dd/mm/yyyy" })
                 @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group row">
+        <br />
+        <div class="ml-md-0 row ">
             <div class="col-md-2">
-                <input type="submit" value="GUardar" class="btn btn-success" />
+                <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
             </div>
-            <div class= "col-sm-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+            <div class="col-md-2">
+                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
             </div>
         </div>
 
     </div>
+
 }
 
 
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    $(document).ready( function () {
+    <script>
+        $(document).ready(function () {
 
-        $(".datepicker").datepicker({
-            format: "dd/mm/yyyy",
-            language: "es",
-            autoclose: true,
-            startView: "days",
-        });
-    })
-        
+            $(".datepicker").datepicker({
+                format: "dd/mm/yyyy",
+                language: "es",
+                autoclose: true,
+                startView: "days",
+            });
+        })
 
     </script>
 }

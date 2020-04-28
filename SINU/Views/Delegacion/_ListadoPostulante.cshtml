@@ -12,7 +12,7 @@
             <th>
                 @Html.DisplayNameFor(model => model[0].Estado)
             </th>
-            <th class="ni-o-ni-bu"></th>
+            <th class="ni-o-ni-bu">Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -38,12 +38,12 @@
                     {
                         case 8:
                             <e>| &ensp;</e>
-                            @Html.ActionLink(" ", "EntrevistaAAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
+                            @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
                             <e> &ensp;</e>
                             break;
                         case 9:
                             <e>| &ensp;</e>
-                            @Html.ActionLink(" ", "EntrevistaAAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-check-circle", @style = "color:#0072ff", @title = "Confirmar fecha asignada" })
+                            @Html.ActionLink(" ", "EntrevistaConfirmaFecha", new { id = item.IdPersona }, new { @class = "far fa-check-circle", @style = "color:#0072ff", @title = "Confirmar fecha asignada" })
                             <e> &ensp;</e>
                             break;
                     }

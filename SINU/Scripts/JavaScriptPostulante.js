@@ -5,7 +5,7 @@ $.extend(true, $.fn.dataTable.defaults, {
         details: false
     },
     "autoWidth": true,
-    
+
     //ver si es necesario este fragmento
     select: 'single',
     "columnDefs": [{
@@ -40,13 +40,13 @@ $.extend(true, $.fn.dataTable.defaults, {
             "sSortDescending": ": Activar para ordenar la columna de manera descendente"
         },
     }
-    
+
 });
 
 
 $(document).ready(function () {
 
-    
+
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     $.ajaxSetup({
         async: false
@@ -59,8 +59,8 @@ $(document).ready(function () {
         //alert(id_persona);
     })();
 
-  
-    
+
+
 
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
@@ -82,11 +82,11 @@ $(document).ready(function () {
         //alert("diahoy"+fechahoy.getDate());
         //alert("diahoy" +fechanac.getDate());
 
-            //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
+        //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
         if (fechahoy.getMonth() <= fechanac.getMonth()) {
             if (!(fechahoy.getDate() >= fechanac.getDate() && fechahoy.getMonth() == fechanac.getMonth())) {
                 edad--;
-            } ;
+            };
         };
         $("#edad").val(edad);
     });
@@ -208,7 +208,7 @@ $(document).ready(function () {
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
-   
+
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
         var Tabla = $('table').DataTable();
@@ -236,10 +236,10 @@ $(document).ready(function () {
     });
 
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
-    var url_Tabla ;
-    var url_CUD ;
+    var url_Tabla;
+    var url_CUD;
     var url_Elim;
-    
+
     //armado el modal con la vista parcial correspondiente
     //recibe 2 parametros 
     //id_registro: id del registro a modificar o NULL en caso de agregar un nuevo registro
@@ -269,7 +269,7 @@ $(document).ready(function () {
                 $('#ModalEstudioCuerpo').removeData("validator");
                 $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
                 //$.validator.unobtrusive.parse('#ModalEstudioCuerpo');
-                                        
+
                 //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
                 /* https://developer.snapappointments.com/bootstrap-select/ */
                 $(".combobox").selectpicker({
@@ -288,7 +288,7 @@ $(document).ready(function () {
                     startView: "years",
                 });
                 //se aplica el selectpicker basico
-                $(".selectpicker").selectpicker({size: 7});
+                $(".selectpicker").selectpicker({ size: 7 });
 
                 ////////////////////////////ESTUDIOS///////////////////////////////////
 
@@ -303,9 +303,9 @@ $(document).ready(function () {
                     };
                 });
 
-                  //lamo la funcion INSTEXT y mando cero por que esla primera carga
-                INST_EXT(0);  
-                
+                //lamo la funcion INSTEXT y mando cero por que esla primera carga
+                INST_EXT(0);
+
                 //sie estudio en el exterior oculto los combobox de Institutos Argentinos
                 if ($("#IdInstEST").val() != "" && id_registro != null) {
                     $("#DropdownEXT option[value='true']").attr("selected", true);
@@ -358,7 +358,7 @@ $(document).ready(function () {
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     $("#ModalEIA").on('hidden.bs.modal', function () {
         //alert(id_persona + url_Tabla );
-        $("#" + url_Tabla+"NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona}, function () {
+        $("#" + url_Tabla + "NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona }, function () {
             //alert("se recargo la vista de la tabla actual...")
             //aplico datatable a la tabla de estudio
             TablasEIA();
@@ -367,15 +367,15 @@ $(document).ready(function () {
             $(".Nuevo_REG").on("click", function () {
                 var id_Tabla = $(this).attr("data-IdTabla");
                 //alert(id_Tabla)
-                ModalEIACUD(null,id_persona, id_Tabla);
+                ModalEIACUD(null, id_persona, id_Tabla);
             });
 
         });
     });
 
-  
 
-    
+
+
 
     //muestra o ocualta los campos relacionado con los campos si el instituto pertenece al exterior o no
     function INST_EXT(pri) {
@@ -474,7 +474,7 @@ $(document).ready(function () {
         deselectAllText: 'Deseleccionar Todo',
         selectAllText: 'Seleccionar Todo',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
-    }); 
+    });
 
     /////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
@@ -494,7 +494,7 @@ $(document).ready(function () {
 
     //calculo de la IMC cuando los campos de altura y peso con cargados
     $("#altura,#peso").on("change", function () {
-        
+
         var altura = $("#altura").val() / 100,
             peso = $("#peso").val().replace(",", ".");
         if (altura != 0 && peso != 0) {
@@ -521,12 +521,12 @@ $(document).ready(function () {
         //redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
         var url = "/Postulante/FamiliaCUD/" + id_registro;
         window.location.href = url;
-      
+
     });
 
     //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
     var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
-    if (paganterior > 1 ) {
+    if (paganterior > 1) {
         //alert("vino de familia");
         $("#datosbasicos,#DatosPersonales,#DatosPersonalesNAV").removeClass("show active");
         $("#BTDatosPersonalesNAV").addClass("collapsed");
@@ -539,6 +539,6 @@ $(document).ready(function () {
         }, 1500);
     }
 
-   
+
 
 });
