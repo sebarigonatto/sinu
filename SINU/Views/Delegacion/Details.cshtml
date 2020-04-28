@@ -12,56 +12,74 @@
 
 
 <h2>Detalles Inscripción seleccionada de  @ViewBag.Delegacion</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div>
-    <h4>@Model.IdInscripcion</h4>
-    <hr />
-    <div class="list-group">
-        <div class="list-group-item list-group-item-success">
-            <b>@Html.DisplayNameFor(model => model.Apellido)</b>:    @Html.DisplayFor(model => model.Apellido)
-        </div>
-
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Nombres)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.DNI)</b>:    @Html.DisplayFor(model => model.DNI)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Genero)</b>:    @Html.DisplayFor(model => model.Genero)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.DisplayFor(model => model.Celular)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Preferencia)</b>:    @Html.DisplayFor(model => model.Preferencia)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.FechaRegistro)</b>:    @Html.DisplayFor(model => model.FechaRegistro)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Inscripto_En)</b>:    @Html.DisplayFor(model => model.Inscripto_En)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.FechaEntrevista)</b>:    @Html.DisplayFor(model => model.FechaEntrevista)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.FechaRindeExamen)</b>:    @Html.DisplayFor(model => model.FechaRindeExamen)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Rinde_En)</b>:    @Html.DisplayFor(model => model.Rinde_En)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Numero)</b>:    @Html.DisplayFor(model => model.Numero)
-        </div>
+    <div>
+        <h4>@Model.IdInscripcion</h4>
+        <hr />
 
 
+        @Html.HiddenFor(m => m.IdPersona)
+        @Html.HiddenFor(m => m.IdInscripcion)
+        <div class="list-group">
+            <div class="list-group-item list-group-item-success">
+                <b>@Html.DisplayNameFor(model => model.Apellido)</b>:    @Html.DisplayFor(model => model.Apellido)
+            </div>
+
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Nombres)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.DNI)</b>:    @Html.DisplayFor(model => model.DNI)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Genero)</b>:    @Html.DisplayFor(model => model.Genero)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.DisplayFor(model => model.Celular)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Preferencia)</b>:    @Html.DisplayFor(model => model.Preferencia)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.FechaRegistro)</b>:    @Html.DisplayFor(model => model.FechaRegistro)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Inscripto_En)</b>:    @Html.DisplayFor(model => model.Inscripto_En)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.FechaEntrevista)</b>:    @Html.DisplayFor(model => model.FechaEntrevista)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.FechaRindeExamen)</b>:    @Html.DisplayFor(model => model.FechaRindeExamen)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Rinde_En)</b>:    @Html.DisplayFor(model => model.Rinde_En)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Numero)
+            </div>
+
+
+        </div>
     </div>
-</div>
-<br />
-<p>
-    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-dark" })
-</p>
+    <br>
+    <div class="form-group row">
+        <div class="col-sm-2">
+            @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+        </div>
+        @if(ViewBag.Secuen == 7)
+        {
+
+        <div class="col-md-2">
+            <input type="submit" value="Siguiente" class="btn btn-success" />
+        </div>
+
+        }
+    </div>
+}
