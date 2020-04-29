@@ -31,20 +31,21 @@
                 <td class="align-content-md-center">
                     @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
                     &ensp;
-                    @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })  &ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
+                    &ensp;
 
 
                     @switch (item.IdSecuencia)
                     {
                         case 8:
-                            <e>| &ensp;</e>
+                            @:|&ensp;
                             @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
-                            <e> &ensp;</e>
+                            @:&ensp;
                             break;
                         case 9:
-                            <e>| &ensp;</e>
+                            @:|&ensp;
                             @Html.ActionLink(" ", "EntrevistaConfirmaFecha", new { id = item.IdPersona }, new { @class = "far fa-check-circle", @style = "color:#0072ff", @title = "Confirmar fecha asignada" })
-                            <e> &ensp;</e>
+                            @:&ensp;
                             break;
                     }
                 </td>
@@ -53,4 +54,31 @@
     </tbody>
 
 </table>
+<hr />
+
+@if (Model.Count > 0)
+{
+    <div class="form-group">
+        <h4>Filtrar por Estado:</h4>
+       
+            @{
+                List<SelectListItem> ListEstado = new List<SelectListItem>();
+                List<string> estados = new List<string>();
+                foreach (var item in Model)
+                {
+                    if (!estados.Contains(item.Estado))
+                    {
+                        estados.Add(item.Estado);
+                        var seitem = new SelectListItem { Text = item.Estado, Value = item.Etapa };
+                        ListEstado.Add(seitem);
+                    }
+                }
+
+            }
+            
+        @Html.DropDownList("Seleccione una opcion...", ListEstado, new { @class="selectpicker"})
+       
+    </div>
+}
+
 

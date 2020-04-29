@@ -20,7 +20,6 @@ namespace SINU.Controllers
                 //busco la delegacion que pertenece al usuario con perfil de delegacion            
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
@@ -92,7 +91,7 @@ namespace SINU.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EntrevistaAAsignaFecha (int id)
+        public ActionResult EntrevistaAsignaFecha(int id)
         {
             try
             {

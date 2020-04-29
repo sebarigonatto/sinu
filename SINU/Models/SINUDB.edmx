@@ -889,12 +889,14 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
         <EntityType Name="vSecuencia_EtapaEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
             <PropertyRef Name="Etapa" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Anterior" />
             <PropertyRef Name="Siguiente" />
           </Key>
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="IdEtapa" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Anterior" Type="int" Nullable="false" />
@@ -1992,6 +1994,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vSecuencia_EtapaEstado" EntityType="Self.vSecuencia_EtapaEstado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vSecuencia_EtapaEstado].[IdSecuencia] AS [IdSecuencia], 
+    [vSecuencia_EtapaEstado].[IdEtapa] AS [IdEtapa], 
     [vSecuencia_EtapaEstado].[Etapa] AS [Etapa], 
     [vSecuencia_EtapaEstado].[Estado] AS [Estado], 
     [vSecuencia_EtapaEstado].[Anterior] AS [Anterior], 
@@ -2938,12 +2941,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Anterior" />
             <PropertyRef Name="Siguiente" />
+            <PropertyRef Name="IdEtapa" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Anterior" Type="Int32" Nullable="false" />
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
+          <Property Name="IdEtapa" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="vSeguridad_Grupos">
           <Key>
@@ -4645,6 +4650,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vSecuencia_EtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstado">
               <MappingFragment StoreEntitySet="vSecuencia_EtapaEstado">
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />

@@ -474,6 +474,8 @@
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\CssPostulante.css" />
+    <Content Include="Imagenes\10.png" />
+    <Content Include="Imagenes\9.png" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
     <Content Include="Models\SINUDB.Context.tt">
@@ -694,10 +696,7 @@
     <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.msl" />
     <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.ssdl" />
     <Content Include="obj\Debug\SINU.csproj.CopyComplete" />
-    <Content Include="obj\Debug\SINU.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\SINU.csproj.GenerateResource.cache" />
-    <Content Include="obj\Debug\SINU.csprojAssemblyReference.cache" />
-    <Content Include="obj\Debug\Tsc.out" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -997,7 +996,6 @@
     <Content Include="Views\Shared\_MenuPerfilDeleg.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilNoIde.cshtml" />
     <Content Include="Views\Shared\_MenuPerfilPostu.cshtml" />
-    <Content Include="Views\Shared\_Master.cshtml" />
     <Content Include="Views\Postulante\Antropometria.cshtml" />
     <Content Include="Views\OficinasYDelegaciones\Index.cshtml" />
     <Content Include="Views\PeriodoInscripciones\Index.cshtml" />
