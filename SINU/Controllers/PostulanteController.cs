@@ -22,8 +22,10 @@ namespace SINU.Controllers
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
-            IDPersonaVM pers = new IDPersonaVM();
-            pers.ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+            IDPersonaVM pers = new IDPersonaVM
+            {
+                ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona
+            };
             int secu = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
             if (secu <6)
             {
@@ -299,8 +301,10 @@ namespace SINU.Controllers
         {
             try
             {
-                EstudiosVM estudio = new EstudiosVM();
-                estudio.vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.IdPersona == ID_persona).ToList();
+                EstudiosVM estudio = new EstudiosVM
+                {
+                    vPersona_EstudioListVM = db.VPersona_Estudio.Where(m => m.IdPersona == ID_persona).ToList()
+                };
                 foreach (var item in estudio.vPersona_EstudioListVM)
                 {
                     if (item.IdInstitutos == 0)
@@ -668,10 +672,11 @@ namespace SINU.Controllers
         {
             try
             {
-               
-                SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM();
-         
-                SituOcu.EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1",1);
+
+                SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM
+                {
+                    EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1)
+                };
 
                 List<string> InteresesSeleccionados = db.Persona.Find(ID_persona).Interes.Select(m => m.DescInteres).ToList();
                 SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) ? true : false }).ToList();
@@ -764,21 +769,27 @@ namespace SINU.Controllers
 
         public ActionResult FamiliaCUD(int id)
         {
-            IDPersonaVM pers = new IDPersonaVM();
-            pers.ID_PER=db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona;
+            IDPersonaVM pers = new IDPersonaVM
+            {
+                ID_PER = db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona
+            };
             return View(pers);
         }
 
-
+        /*--------------------------------------------------------------POSTULANTE------------------------------------------------------------------------------*/
 
         public JsonResult SolicitudEntrevista(int ID_persona)
         {
             try
             {
+                int secu = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona).IdSecuencia;
 
-                db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
-                return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
-
+                if (secu == 6)
+                {
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
+                    return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
+                }
+                return Json(new { success = false, msg = "Numero de secuencia diferente al esperado, se esperaba secuencia 6" });
             }
             catch (Exception ex )
             {

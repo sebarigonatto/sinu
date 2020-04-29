@@ -108,7 +108,7 @@ namespace SINU.Controllers
                             var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");
                             return View("Lockout", x);
                         case SignInStatus.RequiresVerification:
-                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                         case SignInStatus.Failure:
                         default:
                             ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
@@ -214,7 +214,7 @@ namespace SINU.Controllers
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
 
-                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
 
 
 
@@ -331,7 +331,7 @@ namespace SINU.Controllers
                 user.FechaToken = DateTime.Now;
                 UserManager.Update(user);
 
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Restablecer contraseña", "Para restablecer la contraseña, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
@@ -446,7 +446,7 @@ namespace SINU.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //

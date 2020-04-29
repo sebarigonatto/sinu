@@ -25,12 +25,12 @@ namespace SINU
         {
             return Task.Factory.StartNew(() =>
             {
-                sendMail(message);
+                SendMail(message);
             });
 
         }
 
-        void sendMail(IdentityMessage message)
+        void SendMail(IdentityMessage message)
         {
             //LEVANTO LOS DATOS DE LA TABLA CONFIGURACION
 
