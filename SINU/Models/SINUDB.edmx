@@ -1592,6 +1592,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
           <Parameter Name="IdInscripcion" Type="int" Mode="In" />
         </Function>
+        <Function Name="spProximaSecuenciaEtapaEstadov2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPostulante" Type="int" Mode="In" />
+          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
+          <Parameter Name="IdSecuencia" Type="int" Mode="In" />
+        </Function>
         <Function Name="spSituacionOcupacionalIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdSituacionOcupacional" Type="int" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
@@ -3715,6 +3720,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
             <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spProximaSecuenciaEtapaEstadov2">
+            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+            <Parameter Name="IdSecuencia" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4932,6 +4942,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstado" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstado" />
+          <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstadov2" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstadov2" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

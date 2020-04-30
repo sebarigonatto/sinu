@@ -25,7 +25,7 @@
         </li>
 
         @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
-        <li class="nav-item flex-sm-fill" id="9" data-placement="top" title="Opcion deshabilitada hasta que avance de secuencia">
+        <li class="nav-item flex-sm-fill" id="9" data-placement="top">
             <a id="entrevista-tab" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
                 2° Entrevista
             </a>
@@ -359,7 +359,8 @@
         //        });
         //    });
 
-        $(document).ready( function () {
+        $(document).ready(function () {
+
             (function () {
                 $("#TabGeneral li").each(function () {
                     //alert($(this).attr("id"));
@@ -368,10 +369,13 @@
                             .addClass('Tabdesabilitado')
                             .css("color", "gray")
                             .attr("data-toggle", "tooltip")
+                            .attr("title","Opcion deshabilitada hasta que avance de secuencia")
                             .tooltip('enable');
                     };
                 });
             })();
+
+            
         });
 
         

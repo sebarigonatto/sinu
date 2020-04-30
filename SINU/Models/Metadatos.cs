@@ -22,7 +22,7 @@ namespace SINU.Models
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
-        [Required]
+        [TelefonoCelular("Celular",ErrorMessage ="Este Campo debe esta completado")]
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un "-", 
         //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
@@ -30,7 +30,8 @@ namespace SINU.Models
         //[RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         [RegularExpression(@"^(\d){10}$", ErrorMessage = "El telefono ingresado NO ES VALIDO")]
         public string Telefono { get; set; }
-        [Required]
+        [TelefonoCelular("Telefono", ErrorMessage = "este cammpo debe estra completado")]
+
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un " - ", 
         //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
@@ -43,14 +44,16 @@ namespace SINU.Models
         //ver como modificar el mensaje de error al no ser validado el email
         //[DataType(DataType.EmailAddress,ErrorMessage ="El email ingresado no es valido")]
         public string Email { get; set; }
-        [Display(Name ="Como se entero")]
-        [MaxLength(20,ErrorMessage ="Limite de caracteres superado!")]
+        [Required]
+        [Display(Name = "Como se entero")]
+        [MaxLength(20, ErrorMessage = "Limite de caracteres superado!")]
         public string ComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
-        [Display(Name="Instituto a Inscribirse")]
+        [Required]
+        [Display(Name = "Instituto a Inscribirse")]
         public Nullable<int> IdPreferencia { get; set; }
         [ScaffoldColumn(false)]
         public string NombreInst { get; set; }
@@ -61,8 +64,9 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
         [Required]
-        [Display(Name ="Sexo")]
+        [Display(Name = "Sexo")]
         public int IdSexo { get; set; }
+        [Required]
         [Display(Name="Oficinas y Delegaciones")]
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]

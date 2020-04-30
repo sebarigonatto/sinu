@@ -30,6 +30,7 @@ namespace SINU.Controllers
             if (secu <6)
             {
                 db.spProximaSecuenciaEtapaEstado(pers.ID_PER, 0);
+               
             };
             ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
             return View(pers);
@@ -45,7 +46,7 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.ToList(),
+                    SexoVM = db.Sexo.Where(m=>m.IdSexo!=4).ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona)

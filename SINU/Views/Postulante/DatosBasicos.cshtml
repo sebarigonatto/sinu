@@ -52,7 +52,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.DNI, new { htmlAttributes = new { @class = "form-control"} })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.DNI, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.DNI, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -60,8 +60,8 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DatosBasicosVM.IdSexo, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdSexo, new SelectList(Model.SexoVM, "IdSexo", "Descripcion"), null,  new { @class = "form-control selectpicker" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdSexo)
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdSexo, new SelectList(Model.SexoVM, "IdSexo", "Descripcion"), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdSexo, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -69,10 +69,10 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @* VER COMO ACLARA LAS CONDIONES DE INGRESO DEL TELEFONO Y CELULAR *@
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Telefono, new { htmlAttributes = new { @class = "form-control" , @placeholder="El codigo de area sin 0"} })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0" } })
                             @*<div>
-                                @Html.Label("Igrese numero con el codigo de area sin 0", new { @style = "color:#003042f7;font-size: 14px" })
-                            </div>*@
+                                    @Html.Label("Igrese numero con el codigo de area sin 0", new { @style = "color:#003042f7;font-size: 14px" })
+                                </div>*@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Telefono, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder="El codigo de area sin 0" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Celular, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -99,20 +99,22 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"),"Seleccione una Opcion", htmlAttributes: new { @class = "form-control  selectpicker" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.NombreInst)
-                        </div>
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"), "Seleccione una Opcion...", htmlAttributes: new { @class = "form-control  selectpicker" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, "", new { @class = "text-danger" })
+                        </div> 
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), null, htmlAttributes: new { @class = "form-control  selectpicker" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio)
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, new SelectList(Model.OficinasYDelegacionesVM, "IdOficinasYDelegaciones", "Nombre"), "Seleccione una Opcion...", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdDelegacionOficinaIngresoInscribio, "", new { @class = "text-danger of" })
                         </div>
+                        
+
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group ">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control" } })
@@ -123,15 +125,15 @@
                 </div>
                 <br />
             </div>
-            <div class="form-group pl-3">
-                <input type="submit" value="Guadar Datos" class="btn btn-success" />
-                @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevista", new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona }, new AjaxOptions
-                {
-                   HttpMethod = "POST",
-                   OnSuccess = "Exito(data,status,xhr)",
-                   OnFailure = "Falla",
+            <div class="form-group row ml-3 ">
+                    <input type="submit" value="Guadar Datos" class="btn btn-success m-1" onclick="$('#BTentrevista').removeClass('disabled')" />
+                    @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevista", new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona }, new AjaxOptions
+                    {
+                       HttpMethod = "POST",
+                       OnSuccess = "Exito(data,status,xhr)",
+                       OnFailure = "Falla",
 
-                }, new {@id="BTentrevista", @class = "btn btn-danger" })
+                    }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1" })
             </div>
 
 

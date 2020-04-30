@@ -98,7 +98,8 @@
 /*Para deshabilitar el uso del tab*/
 .Tabdesabilitado a{
     pointer-events: none;
-    color:#909090 !important
+    color:#808080 !important
+
 }
 
 /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
