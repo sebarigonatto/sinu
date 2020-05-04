@@ -22,6 +22,7 @@ namespace SINU.Models
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
+
         [TelefonoCelular("Celular",ErrorMessage ="Este Campo debe esta completado")]
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un "-", 
@@ -30,8 +31,8 @@ namespace SINU.Models
         //[RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         [RegularExpression(@"^(\d){10}$", ErrorMessage = "El telefono ingresado NO ES VALIDO")]
         public string Telefono { get; set; }
-        [TelefonoCelular("Telefono", ErrorMessage = "este cammpo debe estra completado")]
 
+        [TelefonoCelular("Telefono", ErrorMessage = "este cammpo debe estra completado")]
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un " - ", 
         //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
