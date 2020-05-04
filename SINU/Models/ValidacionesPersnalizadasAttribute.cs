@@ -161,11 +161,14 @@ namespace SINU.Models
             }
             return valido;
         }
+        //agregué el método GetClientValidationRules () que devuelve las reglas de validación del cliente para esa clase.
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
             ModelClientValidationRule mvr = new ModelClientValidationRule();
             mvr.ErrorMessage = ErrorMessage;
+            //nombre de la validadcion que usara para agregar a los metodos de validacion discreta
             mvr.ValidationType = "telefonocelular";
+            //le envio el parametro 
             mvr.ValidationParameters.Add("celtel", OtherProperty);
             return new[] { mvr };
         }

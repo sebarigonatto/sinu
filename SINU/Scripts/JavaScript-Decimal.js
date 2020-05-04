@@ -11,6 +11,7 @@
 
     jQuery.validator.methods["date"] = function (value, element) { return true; };
 
+    //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
     jQuery.validator.addMethod('telefonocelular', function (value, element, params) {
       
         if (value == null || value == "") {
@@ -22,6 +23,7 @@
         return true;
     });
 
+    //Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
     jQuery.validator.unobtrusive.adapters.add('telefonocelular', ["celtel"], function (options) {
  
         options.rules['telefonocelular'] = options.params.celtel;
