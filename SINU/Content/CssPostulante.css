@@ -103,9 +103,7 @@
 }
 
 /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
-.bootstrap-select {
-    max-width: 280px !important;
-}
+
 
 .cambio {
     border-color: #de1919 !important;

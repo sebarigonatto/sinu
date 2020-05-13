@@ -70,6 +70,13 @@ textarea {
     padding-left: 1%;
 }
 
+/*ajusta ancho de los dropdown con la clase selectpicker*/
+.bootstrap-select {
+    max-width: 280px !important;
+}
+
+
+
 
 
 /*RESPONSIVE EXAMPLE */

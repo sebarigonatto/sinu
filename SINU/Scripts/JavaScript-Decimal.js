@@ -11,6 +11,9 @@
 
     jQuery.validator.methods["date"] = function (value, element) { return true; };
 
+
+
+    ///AVALIDADION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
     //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
     jQuery.validator.addMethod('telefonocelular', function (value, element, params) {
       
@@ -31,4 +34,27 @@
             options.messages['telefonocelular'] = options.message;
         }
     });
+
+
+    //VALIDACION DEL LADO DE CLIENTE DONDE SE VALIDA QUE LA FECHA DE FIN SEA MAYOR QUE LA FECHA DE INICIO
+    //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
+    jQuery.validator.addMethod('fimenorff', function (value, element, params) {
+        var fechaIni = $("#" + params).val().split('/');
+        var fechaFin = value.split('/');
+        var fechainicio =new Date(fechaIni[2],fechaIni[1],fechaIni[0]);
+        var fechafinal = new Date(fechaFin[2], fechaFin[1], fechaFin[0]);
+        if (fechafinal<=fechainicio) {
+                return false;
+        };
+        return true;
+    });
+
+    //Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
+    jQuery.validator.unobtrusive.adapters.add('fimenorff', ["fechainicio"], function (options) {
+
+        options.rules['fimenorff'] = options.params.fechainicio;
+        options.messages['fimenorff'] = options.message;
+    });
+
+
 }(jQuery));

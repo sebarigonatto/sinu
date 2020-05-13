@@ -20,5 +20,6 @@ namespace SINU.Models
         public int Anterior { get; set; }
         public int Siguiente { get; set; }
         public int IdEtapa { get; set; }
+        public int IdEstado { get; set; }
     }
 }

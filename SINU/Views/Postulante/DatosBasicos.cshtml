@@ -68,11 +68,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @* VER COMO ACLARA LAS CONDIONES DE INGRESO DEL TELEFONO Y CELULAR *@
                             @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0" ,@id="Telefono"} })
-                            @*<div>
-                                    @Html.Label("Igrese numero con el codigo de area sin 0", new { @style = "color:#003042f7;font-size: 14px" })
-                                </div>*@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Telefono, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -91,7 +87,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Email, new { htmlAttributes = new { @class = "form-control", @readonly="reaonly" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -114,10 +110,10 @@
 
                     </div>
 
-                    <div class="form-group ">
+                    <div class="form-group  ">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control text-sm" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -126,14 +122,15 @@
                 <br />
             </div>
             <div class="form-group row ml-3 ">
-                    <input type="submit" value="Guadar Datos" class="btn btn-success m-1" onclick="$('#BTentrevista').removeClass('disabled')" />
+                    <input type="submit" value="Guadar Datos" class="btn btn-success m-1" id="DatosBasicosBTGuarda"/>
+
                     @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevista", new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona }, new AjaxOptions
                     {
                        HttpMethod = "POST",
                        OnSuccess = "Exito(data,status,xhr)",
                        OnFailure = "Falla",
 
-                    }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1" })
+                    }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1"  })
             </div>
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace SINU.Models
 {
@@ -78,7 +79,7 @@ namespace SINU.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
@@ -99,11 +100,18 @@ namespace SINU.Models
 
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse no sera necesario mostra su valor en la vista Register.cshtml
         //sera requerido al momento de guardar su preferencia en el controlador AccountController.cs
+        [Required]
+        [Display(Name = "Instituto a Inscribirse")]
         public int IdInstituto { get; set; }
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse
         [Required]
         [Display(Name = "Delegacion - Oficina")]
         public int idOficinaYDelegacion { get; set; }
+
+        public SelectList ListOficinaYDelegacion { get; set; }
+
+        public SelectList ListIntitutos { get; set; }
+
     }
 
     public class ResetPasswordViewModel
@@ -121,7 +129,7 @@ namespace SINU.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
