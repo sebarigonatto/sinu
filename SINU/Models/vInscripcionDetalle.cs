@@ -31,5 +31,6 @@ namespace SINU.Models
         public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
+        public string Telefono { get; set; }
     }
 }

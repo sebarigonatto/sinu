@@ -6,4 +6,5 @@
 
         public string LinkConfirmacion { get; set; }
     }
+
 }

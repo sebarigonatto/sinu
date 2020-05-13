@@ -170,17 +170,21 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Register(int idInstitucion = 0)
         {
+            RegisterViewModel regi = new RegisterViewModel 
+            {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
+                ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre"),
+                ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(),"IdInstitucion","NombreInst"),
+                IdInstituto = idInstitucion
+            };
             idInstitucion = (idInstitucion == 0) ? 1 : idInstitucion;
-            //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones
-            ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
 
             if (idInstitucion != 0)
             {
-                ViewBag.Inst = (idInstitucion == 1) ? "--" : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+                ViewBag.Inst = (idInstitucion == 1) ? null : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
             };
 
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
-            return View(new RegisterViewModel { IdInstituto = idInstitucion });
+            return View(regi);
         }
 
         //
@@ -190,8 +194,9 @@ namespace SINU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
+            model.ListOficinaYDelegacion  = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+            model.ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst");
 
-            ViewBag.OficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
             if (ModelState.IsValid)
             {
                 try
@@ -278,8 +283,12 @@ namespace SINU.Controllers
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
+                    var Email = UserManager.FindById(userId).UserName;
+                    var idpersona = db.Persona.FirstOrDefault(m => m.Email == Email).IdPersona;
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
-                    var r = db.spIngresaASeguridad(UserManager.FindById(userId).UserName, "Postulante", "", "", "", "", "");
+                    var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
+                    //siendo exitoso el ingreso a seguridad del postulante ago que avanca a la secuencia siguiente la "DATOS BASICOS-INICIO DE CARGA"
+                    db.spProximaSecuenciaEtapaEstado(idpersona, 0);
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {

@@ -39,6 +39,14 @@ namespace SINU.Models
                         valido = new ValidationResult(ErrorMessage + ": " + periodosinstitutos[0].FechaInicio.ToShortDateString() + " - " + periodosinstitutos[0].FechaFinal.ToShortDateString());
                     }
 
+
+                    //VER LO DE SI CONTIENE ALGUIN PERIODO DENTRO DE SI
+                    //var periodos_inst = new SINUEntities().PeriodosInscripciones.Where(m => m.IdInstitucion == valueid && (fechainicial < m.FechaInicio) && (m.FechaFinal < fechadelfinal)).ToList();
+                    //if (periodos_inst.Count > 0)
+                    //{
+                    //    ErrorMessage = "El Periodo ingresado no puede contener otro Periodo dentro de si mismo.";
+                    //    valido = new ValidationResult(ErrorMessage);
+                    //}
                 }
             }
             catch (Exception ex)
@@ -53,7 +61,7 @@ namespace SINU.Models
     //validacion especial para la comparacion de fechas de periodo de inscripcion
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
-    public class VPers_FIMenorFF_Attribute : ValidationAttribute
+    public class VPers_FIMenorFF_Attribute : ValidationAttribute, IClientValidatable
     {
         //Resumen de esta validacion :
         //     compara que la fecha final de un rango sea mayor que la fecha inicial del rango. 
@@ -65,21 +73,7 @@ namespace SINU.Models
         //
         // Devuelve:
         //     La otra propiedad.
-        public string OtherProperty { get; }
-        //
-        // Resumen de propiedad:
-        //     Obtiene el nombre para mostrar de la otra propiedad.
-        //
-        // Devuelve:
-        //     El nombre para mostrar de la otra propiedad.
-        public string OtherPropertyDisplayName { get; }        //
-        // Resumen:
-        //     compra que la fecha final de un rango sea mayor que la fecha inicial del rango. 
-        //     Acepta rangos de 1 dia esto quiere decir que si ff==fI es correcto
-        //
-        // Parámetros:
-        //   otherProperty:
-        //     Propiedad que se va a comparar con la propiedad actual.
+        public string OtherProperty;
         public VPers_FIMenorFF_Attribute(string otherProperty)
         { OtherProperty = otherProperty; }
 
@@ -92,7 +86,7 @@ namespace SINU.Models
                 {
                     DateTime fechadelfinal = (DateTime)value;
                     var OtroCampo = validationContext.ObjectType.GetProperty(OtherProperty);
-                    var idvalue = double.Parse(validationContext.ObjectType.GetProperty("IdInstitucion").GetValue(validationContext.ObjectInstance, null).ToString());
+                    //var idvalue = double.Parse(validationContext.ObjectType.GetProperty("IdInstitucion").GetValue(validationContext.ObjectInstance, null).ToString());
                     DateTime fechainicial = DateTime.Parse(OtroCampo.GetValue(validationContext.ObjectInstance, null).ToString());
 
                     if (fechadelfinal <= fechainicial)
@@ -101,12 +95,6 @@ namespace SINU.Models
                         valido = new ValidationResult(ErrorMessage);
                     }
 
-                    var periodos_inst = new SINUEntities().PeriodosInscripciones.Where(m => m.IdInstitucion == idvalue && (fechainicial < m.FechaInicio) && (m.FechaFinal < fechadelfinal)).ToList();
-                    if (periodos_inst.Count > 0)
-                    {
-                        ErrorMessage = "El Periodo ingresado no puede contener otro Periodo dentro de si mismo.";
-                        valido = new ValidationResult(ErrorMessage);
-                    }
 
 
                 }
@@ -117,10 +105,21 @@ namespace SINU.Models
             }
             return valido;
         }
+        //agregué el método GetClientValidationRules () que devuelve las reglas de validación del cliente para esta clase.
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            ModelClientValidationRule fiffrule = new ModelClientValidationRule();
+            fiffrule.ErrorMessage = ErrorMessage;
+            //nombre de la validadcion que usara para agregar a los metodos de validacion discreta
+            fiffrule.ValidationType = "fimenorff";
+            //le envio el parametro 
+            fiffrule.ValidationParameters.Add("fechainicio", OtherProperty);
+            return new[] { fiffrule };
+        }
     }
 
 
-    //verificar que los campos celular o telefono contengan datos
+    //validacion que los campos celular o telefono contengan datos
     //[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class TelefonoCelularAttribute : ValidationAttribute, IClientValidatable
     {
@@ -161,7 +160,7 @@ namespace SINU.Models
             }
             return valido;
         }
-        //agregué el método GetClientValidationRules () que devuelve las reglas de validación del cliente para esa clase.
+        //agregué el método GetClientValidationRules () que devuelve las reglas de validación del cliente para esta clase.
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
         {
             ModelClientValidationRule mvr = new ModelClientValidationRule();

@@ -8,6 +8,7 @@ namespace SINU.ViewModels
     public class IDPersonaVM
     {
         public int ID_PER { get; set; }
+        public List<string> EtapaTabs { get; set; }
     }
 
     public class DatosBasicosVM

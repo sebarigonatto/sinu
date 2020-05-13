@@ -516,8 +516,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
           <Property Name="FechaRegistro" Type="datetime" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Genero" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
           <Property Name="Preferencia" Type="varchar" MaxLength="60" />
@@ -891,6 +892,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
             <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="IdEtapa" />
             <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Anterior" />
             <PropertyRef Name="Siguiente" />
@@ -898,6 +900,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="IdEtapa" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Anterior" Type="int" Nullable="false" />
           <Property Name="Siguiente" Type="int" Nullable="false" />
@@ -1728,6 +1731,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionDetalle].[Nombres] AS [Nombres], 
     [vInscripcionDetalle].[Genero] AS [Genero], 
     [vInscripcionDetalle].[DNI] AS [DNI], 
+    [vInscripcionDetalle].[Telefono] AS [Telefono], 
     [vInscripcionDetalle].[Celular] AS [Celular], 
     [vInscripcionDetalle].[ComoSeEntero] AS [ComoSeEntero], 
     [vInscripcionDetalle].[Preferencia] AS [Preferencia], 
@@ -2001,6 +2005,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vSecuencia_EtapaEstado].[IdSecuencia] AS [IdSecuencia], 
     [vSecuencia_EtapaEstado].[IdEtapa] AS [IdEtapa], 
     [vSecuencia_EtapaEstado].[Etapa] AS [Etapa], 
+    [vSecuencia_EtapaEstado].[IdEstado] AS [IdEstado], 
     [vSecuencia_EtapaEstado].[Estado] AS [Estado], 
     [vSecuencia_EtapaEstado].[Anterior] AS [Anterior], 
     [vSecuencia_EtapaEstado].[Siguiente] AS [Siguiente]
@@ -2947,6 +2952,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Anterior" />
             <PropertyRef Name="Siguiente" />
             <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="IdEstado" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -2954,6 +2960,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Anterior" Type="Int32" Nullable="false" />
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
           <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="vSeguridad_Grupos">
           <Key>
@@ -3840,7 +3847,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Genero" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Genero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -3854,6 +3861,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vUsuariosAdministrativos">
           <Key>
@@ -4660,6 +4668,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vSecuencia_EtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstado">
               <MappingFragment StoreEntitySet="vSecuencia_EtapaEstado">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
                 <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
@@ -4856,6 +4865,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionDetalle">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionDetalle">
               <MappingFragment StoreEntitySet="vInscripcionDetalle">
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
