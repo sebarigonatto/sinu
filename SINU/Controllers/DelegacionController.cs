@@ -25,10 +25,10 @@ namespace SINU.Controllers
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
                     PostulantesIncriptosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 6 && m.IdSecuencia <= 7 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    EntrevistaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 8 && m.IdSecuencia <= 11 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    DocumentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 12 && m.IdSecuencia <= 15 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    PresentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 16 && m.IdSecuencia <= 17 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
+                    cargadatosbasicosVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    EntrevistaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "ENTREVISTA"  && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    DocumentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "DOCUMENTACION"  && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    PresentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList()
                 };
                 return View("Index", datos);
 
@@ -44,6 +44,7 @@ namespace SINU.Controllers
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            vSecuencia_EtapaEstado vSecuencia_EtapaEstado;
             try
             {
                 //busco la delegacion que pertenece al usuario con perfil de delegacion            
@@ -61,6 +62,10 @@ namespace SINU.Controllers
                 vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
                 ViewBag.Secuen = vInscripcionEtapas.IdSecuencia;
 
+                //Se creo una variable para poder guardar el id secuencia y luego para saber cual es el paso anterior
+                int secu = vInscripcionEtapas.IdSecuencia; 
+                vSecuencia_EtapaEstado = db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == secu);
+                ViewBag.Ant = vSecuencia_EtapaEstado.Anterior;
 
                 if (InscripcionElegida.Count == 0)
                 {
