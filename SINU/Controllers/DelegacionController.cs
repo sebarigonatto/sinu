@@ -130,36 +130,6 @@ namespace SINU.Controllers
             }
         }
 
-        public ActionResult EntrevistaConfirmaFecha(int id)
-        {
-            try
-            {
-                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
-
-                return View(Dato);
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
-            }
-        }
-
-        // POST: Delegacion/Create
-        [HttpPost]
-        public ActionResult EntrevistaConfirmaFecha(vEntrevistaLugarFecha datos)
-        {
-            try
-            {
-
-                db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
-
-                return RedirectToAction("Index");
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
-            }
-        }
         // GET: Delegacion/Edit/5
         public ActionResult Edit(int? id)
         {

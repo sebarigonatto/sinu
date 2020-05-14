@@ -42,9 +42,9 @@
         </div>
         <div class="list-group-item">
             @{ 
-             
+
             }   
-            <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.Label(Model.Celular??  "  -- ")
+            <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.Label(Model.Celular ?? "  -- ")
         </div>
         <div class="list-group-item">
             <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
@@ -58,19 +58,6 @@
         <div class="list-group-item">
             <b>@Html.DisplayNameFor(model => model.Inscripto_En)</b>:    @Html.DisplayFor(model => model.Inscripto_En)
         </div>
-        @*<div class="list-group-item">
-           <b>@Html.DisplayNameFor(model => model.FechaEntrevista)</b>:@Html.DisplayTextFor(model => model.FechaEntrevista)
-        </div>*@
-        @*<div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.FechaRindeExamen)</b>:    @Html.DisplayFor(model => model.FechaRindeExamen)
-        </div>*@
-        @*<div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Rinde_En)</b>:    @Html.DisplayFor(model => model.Rinde_En)
-        </div>*@
-        @*<div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Numero)
-        </div>*@
-
 
     </div>
     </div>
@@ -79,13 +66,10 @@
         <div class="col-sm-2">
             @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
         </div>
-        @if(ViewBag.Secuen == 7)
-        {
 
-        <div class="col-md-2">
+        @*<div class="col-md-2">
             <input type="submit" value="Siguiente" class="btn btn-success" />
-        </div>
+        </div>*@
 
-        }
     </div>
 }
