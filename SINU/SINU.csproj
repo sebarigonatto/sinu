@@ -415,6 +415,9 @@
     <Compile Include="Models\vPersona_Familiar.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vPersona_Familiar2.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vPersona_Idioma.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -422,6 +425,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_SituacionOcupacional.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPostulanteEtapaEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vProvincia_Depto_Localidad.cs">

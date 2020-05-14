@@ -758,8 +758,8 @@ namespace SINU.Controllers
         {
             try
             {
-                List<vPersona_Familiar> FAMI ;
-                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
+                List<vPersona_Familiar2> FAMI ;
+                FAMI = db.vPersona_Familiar2.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
                 return PartialView(FAMI);
             }
             catch (Exception)
@@ -770,13 +770,22 @@ namespace SINU.Controllers
 
         public ActionResult FamiliaCUD(int id)
         {
-            IDPersonaVM pers = new IDPersonaVM
+            //viewmodel creado para la creacion de un familiar
+            PersonaFamiliaVM pers = new PersonaFamiliaVM
             {
-                ID_PER = db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona
+                ID_PER = db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona,
+                vParentecoVM = db.vParentesco.Select(m=> new SelectListItem { Value= m.idParentesco.ToString(),Text= m.Relacion}).ToList(),
+                SexoVM = db.Sexo.Select(m=> new SelectListItem {Value = m.IdSexo.ToString(), Text = m.Descripcion }).Where(m=>m.Value!="4").ToList(),
+                vEstCivilVM = db.vEstCivil.Select(m=>new SelectListItem { Value = m.Codigo_n, Text = m.Descripcion}).ToList(),
+                ReligionVM = db.vRELIGION.Select(m=> new SelectListItem {Value = m.CODIGO , Text= m.DESCRIPCION } ).ToList(),
+                TipoDeNacionalidadVm = db.TipoNacionalidad.Select(m=> new SelectListItem { Value = m.IdTipoNacionalidad.ToString(),Text= m.Descripcion}).ToList()
+                
             };
+            pers.vPersona_Familiar2VM = db.vPersona_Familiar2.FirstOrDefault(m => m.IdPersonaFamilia == pers.ID_PER);
             return View(pers);
         }
 
+  
         /*--------------------------------------------------------------POSTULANTE------------------------------------------------------------------------------*/
 
         public JsonResult SolicitudEntrevista(int ID_persona)

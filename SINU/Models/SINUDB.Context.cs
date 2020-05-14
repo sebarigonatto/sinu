@@ -93,6 +93,8 @@ namespace SINU.Models
         public virtual DbSet<VerificacionPantallas> VerificacionPantallas { get; set; }
         public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
         public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
+        public virtual DbSet<vPostulanteEtapaEstado> vPostulanteEtapaEstado { get; set; }
+        public virtual DbSet<vPersona_Familiar2> vPersona_Familiar2 { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -766,6 +768,52 @@ namespace SINU.Models
                 new ObjectParameter("IdSecuencia", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstadov2", idPostulanteParameter, idInscripcionParameter, idSecuenciaParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spCreaPersonaFamilia(string apellido, string nombre, string dNI)
+        {
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spCreaPersonaFamilia", apellidoParameter, nombreParameter, dNIParameter);
+        }
+    
+        public virtual int spRelacionFamiliarIU(Nullable<int> idFamiliar, Nullable<int> idPostulante, Nullable<int> idPersona, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
+        {
+            var idFamiliarParameter = idFamiliar.HasValue ?
+                new ObjectParameter("IdFamiliar", idFamiliar) :
+                new ObjectParameter("IdFamiliar", typeof(int));
+    
+            var idPostulanteParameter = idPostulante.HasValue ?
+                new ObjectParameter("IdPostulante", idPostulante) :
+                new ObjectParameter("IdPostulante", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            var idParentescoParameter = idParentesco.HasValue ?
+                new ObjectParameter("idParentesco", idParentesco) :
+                new ObjectParameter("idParentesco", typeof(int));
+    
+            var viveParameter = vive.HasValue ?
+                new ObjectParameter("Vive", vive) :
+                new ObjectParameter("Vive", typeof(bool));
+    
+            var conViveParameter = conVive.HasValue ?
+                new ObjectParameter("ConVive", conVive) :
+                new ObjectParameter("ConVive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarIU", idFamiliarParameter, idPostulanteParameter, idPersonaParameter, idParentescoParameter, viveParameter, conViveParameter);
         }
     }
 }
