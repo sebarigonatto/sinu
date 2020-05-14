@@ -39,7 +39,9 @@ namespace SINU.Models
         [StringLength(10, MinimumLength = 10, ErrorMessage = "El celular ingresado, tiene que tener al menos 10 digitos")]
         [RegularExpression(@"^(\d){10}$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         public string Celular { get; set; }
-        [Required]
+        //verificar esto en el caso de ser familiar o postulante si debe ser requiro o no
+        //o crear un a validacion perzonalizada donde se requiere en el caso de que se el postulante y en caso de ser un familiar no es requerido
+        //[Required]
         //valido los correos ingresados
         [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$", ErrorMessage = "El correo electronico ingresado no es valido!!!")]
         //ver como modificar el mensaje de error al no ser validado el email

@@ -103,18 +103,16 @@
         <EntityTypeShape EntityType="SINUModel.VerificacionPantallas" Width="1.5" PointX="5.375" PointY="2.625" />
         <EntityTypeShape EntityType="SINUModel.VPantalla_Problema" Width="2.625" PointX="25.75" PointY="5.625" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona" ManuallyRouted="true" >
-          <ConnectorPoint PointX="4.5" PointY="16.221234596354165" />
-          <ConnectorPoint PointX="4.947916666666667" PointY="16.221234596354165" />
-          <ConnectorPoint PointX="4.947916666666667" PointY="8.1579855168789059" />
-          <ConnectorPoint PointX="5.979166666666667" PointY="8.1579855168789059" />
-          <ConnectorPoint PointX="6.145833333333333" PointY="8.1579855168789059" />
-          <ConnectorPoint PointX="6.84375" PointY="8.1579855168789059" />
+          <ConnectorPoint PointX="4.5" PointY="15.842166282552146" />
+          <ConnectorPoint PointX="6.84375" PointY="15.842166282552146" />
           <ConnectorPoint PointX="6.84375" PointY="7.3648893229166665" />
         </AssociationConnector>
         <AssociationConnector Association="SINUModel.FK_DataProblema_VerificacionPantallas" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona1" />
         <AssociationConnector Association="SINUModel.PersonaActividadMilitar" />
         <EntityTypeShape EntityType="SINUModel.vParam_Grados" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SINUModel.vPostulanteEtapaEstado" Width="1.5" PointX="5.375" PointY="23.75" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_Familiar2" Width="1.5" PointX="23.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,6 +9,18 @@ namespace SINU.ViewModels
     {
         public int ID_PER { get; set; }
         public List<string> EtapaTabs { get; set; }
+        public vPersona_Familiar2 vPersona_Familiar2 { get; set; }
+    }
+
+    public class PersonaFamiliaVM
+    {
+        public vPersona_Familiar2 vPersona_Familiar2VM { get; set; }
+        public List<SelectListItem> SexoVM { get; set; }
+        public List<SelectListItem> vParentecoVM { get; set; }
+        public List<SelectListItem> vEstCivilVM { get; set; }
+        public List<SelectListItem> ReligionVM { get; set; }
+        public List<SelectListItem> TipoDeNacionalidadVm { get; set; }
+        public int ID_PER { get; internal set; }
     }
 
     public class DatosBasicosVM
