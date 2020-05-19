@@ -516,10 +516,12 @@ $(document).ready(function () {
     /* FUNCION DE LA VISTA DE FAMILIA */
     $("#TablaFamilia").on('select.dt', function (e, dt, type, index) {
         var data = dt.rows(index).data();
-        var id_registro = data[0][0];
-        //alert(id_registro);
+        var idPersonaFamilia = data[0][0];
+       
+
+        //alert(IdFamilia);
         //redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
-        var url = "/Postulante/FamiliaCUD/" + id_registro;
+        var url = "/Postulante/FamiliaCUD?idPersonaFamilia=" + idPersonaFamilia;
         window.location.href = url;
 
     });
@@ -534,11 +536,27 @@ $(document).ready(function () {
         $("#BTFamiliaNAV").removeClass("collapsed");
         $("#datosbasicos-tab, #TABDocumentacion a.active").removeClass("active");
         $("#Documentacion-tab, #TABDocumentacion a[href='#Familia']").addClass("active");
-        $("html,body").animate({
-            scrollTop: 250
-        }, 1500);
+           
+        //$("html,body").animate({
+        //    scrollTop: 250
+        //}, 1500);
     }
 
+
+    //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo SOLO VERSION MOBIL
+    $(".TABMovil .navbar-toggler").on("click", function (e) {
+        var idBT = $(this).attr("id");
+        var idTAB;
+        $(".TABMovil .navbar-toggler ").each(function (e,i) {
+            if ($(this).attr("id")!=idBT) {
+                $(this).addClass("collapsed");
+                idTAB = $(this).attr("data-target");
+                $(idTAB).removeClass("show");
+            }
+           
+
+        });
+    });
 
 
 });

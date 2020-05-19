@@ -17,6 +17,8 @@ namespace SINU.Models
     
     public partial class SINUEntities : DbContext
     {
+        internal object vPersona_FamiliarVM;
+
         public SINUEntities()
             : base("name=SINUEntities")
         {
@@ -94,7 +96,6 @@ namespace SINU.Models
         public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
         public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
         public virtual DbSet<vPostulanteEtapaEstado> vPostulanteEtapaEstado { get; set; }
-        public virtual DbSet<vPersona_Familiar2> vPersona_Familiar2 { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -770,23 +771,6 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstadov2", idPostulanteParameter, idInscripcionParameter, idSecuenciaParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> spCreaPersonaFamilia(string apellido, string nombre, string dNI)
-        {
-            var apellidoParameter = apellido != null ?
-                new ObjectParameter("Apellido", apellido) :
-                new ObjectParameter("Apellido", typeof(string));
-    
-            var nombreParameter = nombre != null ?
-                new ObjectParameter("Nombre", nombre) :
-                new ObjectParameter("Nombre", typeof(string));
-    
-            var dNIParameter = dNI != null ?
-                new ObjectParameter("DNI", dNI) :
-                new ObjectParameter("DNI", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spCreaPersonaFamilia", apellidoParameter, nombreParameter, dNIParameter);
-        }
-    
         public virtual int spRelacionFamiliarIU(Nullable<int> idFamiliar, Nullable<int> idPostulante, Nullable<int> idPersona, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
         {
             var idFamiliarParameter = idFamiliar.HasValue ?
@@ -814,6 +798,91 @@ namespace SINU.Models
                 new ObjectParameter("ConVive", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarIU", idFamiliarParameter, idPostulanteParameter, idPersonaParameter, idParentescoParameter, viveParameter, conViveParameter);
+        }
+    
+        public virtual int spPERSONAFamiliarIU(Nullable<int> idpersona, Nullable<int> idPostulante, string email, string apellido, string nombres, Nullable<int> idSexo, Nullable<System.DateTime> fechaNacimiento, string dNI, string cUIL, string idReligion, string idEstadoCivil, Nullable<System.DateTime> fechaCasamiento, string telefono, string celular, string mailPersona, Nullable<int> idTipoNacionalidad, Nullable<int> idLugarNacimientoLocalidad, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
+        {
+            var idpersonaParameter = idpersona.HasValue ?
+                new ObjectParameter("idpersona", idpersona) :
+                new ObjectParameter("idpersona", typeof(int));
+    
+            var idPostulanteParameter = idPostulante.HasValue ?
+                new ObjectParameter("IdPostulante", idPostulante) :
+                new ObjectParameter("IdPostulante", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("Nombres", nombres) :
+                new ObjectParameter("Nombres", typeof(string));
+    
+            var idSexoParameter = idSexo.HasValue ?
+                new ObjectParameter("IdSexo", idSexo) :
+                new ObjectParameter("IdSexo", typeof(int));
+    
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            var cUILParameter = cUIL != null ?
+                new ObjectParameter("CUIL", cUIL) :
+                new ObjectParameter("CUIL", typeof(string));
+    
+            var idReligionParameter = idReligion != null ?
+                new ObjectParameter("IdReligion", idReligion) :
+                new ObjectParameter("IdReligion", typeof(string));
+    
+            var idEstadoCivilParameter = idEstadoCivil != null ?
+                new ObjectParameter("IdEstadoCivil", idEstadoCivil) :
+                new ObjectParameter("IdEstadoCivil", typeof(string));
+    
+            var fechaCasamientoParameter = fechaCasamiento.HasValue ?
+                new ObjectParameter("FechaCasamiento", fechaCasamiento) :
+                new ObjectParameter("FechaCasamiento", typeof(System.DateTime));
+    
+            var telefonoParameter = telefono != null ?
+                new ObjectParameter("Telefono", telefono) :
+                new ObjectParameter("Telefono", typeof(string));
+    
+            var celularParameter = celular != null ?
+                new ObjectParameter("Celular", celular) :
+                new ObjectParameter("Celular", typeof(string));
+    
+            var mailPersonaParameter = mailPersona != null ?
+                new ObjectParameter("MailPersona", mailPersona) :
+                new ObjectParameter("MailPersona", typeof(string));
+    
+            var idTipoNacionalidadParameter = idTipoNacionalidad.HasValue ?
+                new ObjectParameter("idTipoNacionalidad", idTipoNacionalidad) :
+                new ObjectParameter("idTipoNacionalidad", typeof(int));
+    
+            var idLugarNacimientoLocalidadParameter = idLugarNacimientoLocalidad.HasValue ?
+                new ObjectParameter("IdLugarNacimientoLocalidad", idLugarNacimientoLocalidad) :
+                new ObjectParameter("IdLugarNacimientoLocalidad", typeof(int));
+    
+            var idParentescoParameter = idParentesco.HasValue ?
+                new ObjectParameter("idParentesco", idParentesco) :
+                new ObjectParameter("idParentesco", typeof(int));
+    
+            var viveParameter = vive.HasValue ?
+                new ObjectParameter("Vive", vive) :
+                new ObjectParameter("Vive", typeof(bool));
+    
+            var conViveParameter = conVive.HasValue ?
+                new ObjectParameter("ConVive", conVive) :
+                new ObjectParameter("ConVive", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPERSONAFamiliarIU", idpersonaParameter, idPostulanteParameter, emailParameter, apellidoParameter, nombresParameter, idSexoParameter, fechaNacimientoParameter, dNIParameter, cUILParameter, idReligionParameter, idEstadoCivilParameter, fechaCasamientoParameter, telefonoParameter, celularParameter, mailPersonaParameter, idTipoNacionalidadParameter, idLugarNacimientoLocalidadParameter, idParentescoParameter, viveParameter, conViveParameter);
         }
     }
 }

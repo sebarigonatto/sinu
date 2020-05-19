@@ -793,6 +793,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definid
           <Property Name="idParentesco" Type="int" />
           <Property Name="IdSexo" Type="int" />
           <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" />
+          <Property Name="IdReligion" Type="varchar" MaxLength="50" />
           <Property Name="Relacion" Type="varchar" MaxLength="60" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" />
@@ -802,42 +803,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definid
           <Property Name="EstCivil" Type="varchar" MaxLength="112" />
           <Property Name="Vive" Type="bit" />
           <Property Name="ConVive" Type="bit" />
-        </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar2' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vPersona_Familiar2">
-          <Key>
-            <PropertyRef Name="DNI" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="Vive" />
-            <PropertyRef Name="ConVive" />
-            <PropertyRef Name="IdPersonaPostulante" />
-            <PropertyRef Name="IdFamiliar" />
-            <PropertyRef Name="IdPersonaFamilia" />
-            <PropertyRef Name="idParentesco" />
-            <PropertyRef Name="IdSexo" />
-            <PropertyRef Name="IdEstadoCivil" />
-            <PropertyRef Name="IdReligion" />
-            <PropertyRef Name="idTipoNacionalidad" />
-          </Key>
-          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="256" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="Vive" Type="bit" Nullable="false" />
-          <Property Name="ConVive" Type="bit" Nullable="false" />
-          <Property Name="IdPersonaPostulante" Type="int" Nullable="false" />
-          <Property Name="IdFamiliar" Type="int" Nullable="false" />
-          <Property Name="IdPersonaFamilia" Type="int" Nullable="false" />
-          <Property Name="idParentesco" Type="int" Nullable="false" />
-          <Property Name="IdSexo" Type="int" Nullable="false" />
-          <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="FechaNacimiento" Type="date" />
-          <Property Name="IdReligion" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="idTipoNacionalidad" Type="int" Nullable="false" />
+          <Property Name="idTipoNacionalidad" Type="int" />
+          <Property Name="CUIL" Type="varchar" MaxLength="11" />
+          <Property Name="FechaCasamiento" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1562,11 +1534,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Cuello" Type="int" Mode="In" />
           <Parameter Name="Calzado" Type="int" Mode="In" />
         </Function>
-        <Function Name="spCreaPersonaFamilia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Apellido" Type="varchar" Mode="In" />
-          <Parameter Name="Nombre" Type="varchar" Mode="In" />
-          <Parameter Name="DNI" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -1646,6 +1613,28 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Destino" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spPERSONAFamiliarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idpersona" Type="int" Mode="In" />
+          <Parameter Name="IdPostulante" Type="int" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Nombres" Type="varchar" Mode="In" />
+          <Parameter Name="IdSexo" Type="int" Mode="In" />
+          <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="DNI" Type="varchar" Mode="In" />
+          <Parameter Name="CUIL" Type="varchar" Mode="In" />
+          <Parameter Name="IdReligion" Type="varchar" Mode="In" />
+          <Parameter Name="IdEstadoCivil" Type="varchar" Mode="In" />
+          <Parameter Name="FechaCasamiento" Type="date" Mode="In" />
+          <Parameter Name="Telefono" Type="varchar" Mode="In" />
+          <Parameter Name="Celular" Type="varchar" Mode="In" />
+          <Parameter Name="MailPersona" Type="nvarchar" Mode="In" />
+          <Parameter Name="idTipoNacionalidad" Type="int" Mode="In" />
+          <Parameter Name="IdLugarNacimientoLocalidad" Type="int" Mode="In" />
+          <Parameter Name="idParentesco" Type="int" Mode="In" />
+          <Parameter Name="Vive" Type="bit" Mode="In" />
+          <Parameter Name="ConVive" Type="bit" Mode="In" />
         </Function>
         <Function Name="spProximaSecuenciaEtapaEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
@@ -1997,6 +1986,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_Familiar].[idParentesco] AS [idParentesco], 
     [vPersona_Familiar].[IdSexo] AS [IdSexo], 
     [vPersona_Familiar].[IdEstadoCivil] AS [IdEstadoCivil], 
+    [vPersona_Familiar].[IdReligion] AS [IdReligion], 
     [vPersona_Familiar].[Relacion] AS [Relacion], 
     [vPersona_Familiar].[Apellido] AS [Apellido], 
     [vPersona_Familiar].[Nombres] AS [Nombres], 
@@ -2005,29 +1995,15 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_Familiar].[DNI] AS [DNI], 
     [vPersona_Familiar].[EstCivil] AS [EstCivil], 
     [vPersona_Familiar].[Vive] AS [Vive], 
-    [vPersona_Familiar].[ConVive] AS [ConVive]
+    [vPersona_Familiar].[ConVive] AS [ConVive], 
+    [vPersona_Familiar].[Celular] AS [Celular], 
+    [vPersona_Familiar].[Mail] AS [Mail], 
+    [vPersona_Familiar].[DESCRIPCION] AS [DESCRIPCION], 
+    [vPersona_Familiar].[Telefono] AS [Telefono], 
+    [vPersona_Familiar].[idTipoNacionalidad] AS [idTipoNacionalidad], 
+    [vPersona_Familiar].[CUIL] AS [CUIL], 
+    [vPersona_Familiar].[FechaCasamiento] AS [FechaCasamiento]
     FROM [dbo].[vPersona_Familiar] AS [vPersona_Familiar]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="vPersona_Familiar2" EntityType="Self.vPersona_Familiar2" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vPersona_Familiar2].[DNI] AS [DNI], 
-    [vPersona_Familiar2].[Apellido] AS [Apellido], 
-    [vPersona_Familiar2].[Nombres] AS [Nombres], 
-    [vPersona_Familiar2].[Celular] AS [Celular], 
-    [vPersona_Familiar2].[Telefono] AS [Telefono], 
-    [vPersona_Familiar2].[Email] AS [Email], 
-    [vPersona_Familiar2].[Vive] AS [Vive], 
-    [vPersona_Familiar2].[ConVive] AS [ConVive], 
-    [vPersona_Familiar2].[IdPersonaPostulante] AS [IdPersonaPostulante], 
-    [vPersona_Familiar2].[IdFamiliar] AS [IdFamiliar], 
-    [vPersona_Familiar2].[IdPersonaFamilia] AS [IdPersonaFamilia], 
-    [vPersona_Familiar2].[idParentesco] AS [idParentesco], 
-    [vPersona_Familiar2].[IdSexo] AS [IdSexo], 
-    [vPersona_Familiar2].[IdEstadoCivil] AS [IdEstadoCivil], 
-    [vPersona_Familiar2].[FechaNacimiento] AS [FechaNacimiento], 
-    [vPersona_Familiar2].[IdReligion] AS [IdReligion], 
-    [vPersona_Familiar2].[idTipoNacionalidad] AS [idTipoNacionalidad]
-    FROM [dbo].[vPersona_Familiar2] AS [vPersona_Familiar2]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2985,6 +2961,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
           <Property Name="Vive" Type="Boolean" />
           <Property Name="ConVive" Type="Boolean" />
+          <Property Name="IdReligion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoNacionalidad" Type="Int32" />
+          <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="vPersona_Idioma">
           <Key>
@@ -3827,11 +3811,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdSecuencia" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vPostulanteEtapaEstado" EntityType="SINUModel.vPostulanteEtapaEstado" />
-          <FunctionImport Name="spCreaPersonaFamilia" ReturnType="Collection(Int32)">
-            <Parameter Name="Apellido" Mode="In" Type="String" />
-            <Parameter Name="Nombre" Mode="In" Type="String" />
-            <Parameter Name="DNI" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="spRelacionFamiliarIU">
             <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
             <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
@@ -3840,7 +3819,28 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Vive" Mode="In" Type="Boolean" />
             <Parameter Name="ConVive" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="vPersona_Familiar2" EntityType="SINUModel.vPersona_Familiar2" />
+          <FunctionImport Name="spPERSONAFamiliarIU">
+            <Parameter Name="idpersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="IdSexo" Mode="In" Type="Int32" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="DNI" Mode="In" Type="String" />
+            <Parameter Name="CUIL" Mode="In" Type="String" />
+            <Parameter Name="IdReligion" Mode="In" Type="String" />
+            <Parameter Name="IdEstadoCivil" Mode="In" Type="String" />
+            <Parameter Name="FechaCasamiento" Mode="In" Type="DateTime" />
+            <Parameter Name="Telefono" Mode="In" Type="String" />
+            <Parameter Name="Celular" Mode="In" Type="String" />
+            <Parameter Name="MailPersona" Mode="In" Type="String" />
+            <Parameter Name="idTipoNacionalidad" Mode="In" Type="Int32" />
+            <Parameter Name="IdLugarNacimientoLocalidad" Mode="In" Type="Int32" />
+            <Parameter Name="idParentesco" Mode="In" Type="Int32" />
+            <Parameter Name="Vive" Mode="In" Type="Boolean" />
+            <Parameter Name="ConVive" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4103,40 +4103,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vPersona_Familiar2">
-          <Key>
-            <PropertyRef Name="DNI" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="Vive" />
-            <PropertyRef Name="ConVive" />
-            <PropertyRef Name="IdPersonaPostulante" />
-            <PropertyRef Name="IdFamiliar" />
-            <PropertyRef Name="IdPersonaFamilia" />
-            <PropertyRef Name="idParentesco" />
-            <PropertyRef Name="IdSexo" />
-            <PropertyRef Name="IdEstadoCivil" />
-            <PropertyRef Name="IdReligion" />
-            <PropertyRef Name="idTipoNacionalidad" />
-          </Key>
-          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Vive" Type="Boolean" Nullable="false" />
-          <Property Name="ConVive" Type="Boolean" Nullable="false" />
-          <Property Name="IdPersonaPostulante" Type="Int32" Nullable="false" />
-          <Property Name="IdFamiliar" Type="Int32" Nullable="false" />
-          <Property Name="IdPersonaFamilia" Type="Int32" Nullable="false" />
-          <Property Name="idParentesco" Type="Int32" Nullable="false" />
-          <Property Name="IdSexo" Type="Int32" Nullable="false" />
-          <Property Name="IdEstadoCivil" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
-          <Property Name="IdReligion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="idTipoNacionalidad" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4754,6 +4720,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPersona_Familiar">
             <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar">
               <MappingFragment StoreEntitySet="vPersona_Familiar">
+                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
                 <ScalarProperty Name="ConVive" ColumnName="ConVive" />
                 <ScalarProperty Name="Vive" ColumnName="Vive" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -5120,31 +5094,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spCreaPersonaFamilia" FunctionName="SINUModel.Store.spCreaPersonaFamilia" />
           <FunctionImportMapping FunctionImportName="spRelacionFamiliarIU" FunctionName="SINUModel.Store.spRelacionFamiliarIU" />
-          <EntitySetMapping Name="vPersona_Familiar2">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar2">
-              <MappingFragment StoreEntitySet="vPersona_Familiar2">
-                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
-                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
-                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
-                <ScalarProperty Name="IdPersonaFamilia" ColumnName="IdPersonaFamilia" />
-                <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
-                <ScalarProperty Name="IdPersonaPostulante" ColumnName="IdPersonaPostulante" />
-                <ScalarProperty Name="ConVive" ColumnName="ConVive" />
-                <ScalarProperty Name="Vive" ColumnName="Vive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spPERSONAFamiliarIU" FunctionName="SINUModel.Store.spPERSONAFamiliarIU" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

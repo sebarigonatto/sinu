@@ -587,7 +587,7 @@ namespace SINU.Controllers
 
                 return PartialView(LISTactividad);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -758,33 +758,71 @@ namespace SINU.Controllers
         {
             try
             {
-                List<vPersona_Familiar2> FAMI ;
-                FAMI = db.vPersona_Familiar2.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
+                List<vPersona_Familiar> FAMI ;
+                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
                 return PartialView(FAMI);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return View();
             }
         }
-
-        public ActionResult FamiliaCUD(int id)
-        {
+        //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
+        public ActionResult FamiliaCUD(int idPersonaFamilia)
+        { 
             //viewmodel creado para la creacion de un familiar
+            //cargo los datos necesarios para los combobox
             PersonaFamiliaVM pers = new PersonaFamiliaVM
             {
-                ID_PER = db.Familiares.FirstOrDefault(m => m.IdFamiliar == id).IdPersona,
-                vParentecoVM = db.vParentesco.Select(m=> new SelectListItem { Value= m.idParentesco.ToString(),Text= m.Relacion}).ToList(),
-                SexoVM = db.Sexo.Select(m=> new SelectListItem {Value = m.IdSexo.ToString(), Text = m.Descripcion }).Where(m=>m.Value!="4").ToList(),
-                vEstCivilVM = db.vEstCivil.Select(m=>new SelectListItem { Value = m.Codigo_n, Text = m.Descripcion}).ToList(),
-                ReligionVM = db.vRELIGION.Select(m=> new SelectListItem {Value = m.CODIGO , Text= m.DESCRIPCION } ).ToList(),
-                TipoDeNacionalidadVm = db.TipoNacionalidad.Select(m=> new SelectListItem { Value = m.IdTipoNacionalidad.ToString(),Text= m.Descripcion}).ToList()
-                
+                vParentecoVM = db.vParentesco.Select(m => new SelectListItem { Value = m.idParentesco.ToString(), Text = m.Relacion }).ToList(),
+                SexoVM = db.Sexo.Select(m => new SelectListItem { Value = m.IdSexo.ToString(), Text = m.Descripcion }).Where(m => m.Value != "4").ToList(),
+                vEstCivilVM = db.vEstCivil.Select(m => new SelectListItem { Value = m.Codigo_n, Text = m.Descripcion }).ToList(),
+                ReligionVM = db.vRELIGION.Select(m => new SelectListItem { Value = m.CODIGO, Text = m.DESCRIPCION }).ToList(),
+                TipoDeNacionalidadVm = db.TipoNacionalidad.Select(m => new SelectListItem { Value = m.IdTipoNacionalidad.ToString(), Text = m.Descripcion }).ToList()
+
             };
-            pers.vPersona_Familiar2VM = db.vPersona_Familiar2.FirstOrDefault(m => m.IdPersonaFamilia == pers.ID_PER);
+            if (idPersonaFamilia != 0  )
+            {
+                pers.ID_PER = idPersonaFamilia;
+                pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
+            }
+            else
+            {
+                pers.ID_PER = idPersonaFamilia;
+                var IdAspUser = db.AspNetUsers.FirstOrDefault(e => e.Email == User.Identity.Name).Id;
+                pers.vPersona_FamiliarVM = new vPersona_Familiar();
+                pers.vPersona_FamiliarVM.IdPersonaPostulante = db.Postulante.FirstOrDefault(e => e.IdAspNetUser == IdAspUser).IdPersona;
+                pers.vPersona_FamiliarVM.IdFamiliar = 0;
+                pers.vPersona_FamiliarVM.IdPersonaFamiliar = 0;
+            }
             return View(pers);
         }
 
+        [HttpPost]
+        public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
+        {
+            if (ModelState.IsValid)
+            {
+                var datos = fami.vPersona_FamiliarVM;
+                int? idpersonafamiliar = 0;
+                try
+                {
+                    db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
+                    datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
+                    if (datos.IdPersonaFamiliar==0)
+                    {
+                        idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
+                    }
+                    return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso!!!",accion= idpersonafamiliar });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new {success= false, msg = ex.InnerException.Message});
+                    
+                }
+            }
+            return Json(new {success= false, msg= "MOdelono valido" });
+        }
   
         /*--------------------------------------------------------------POSTULANTE------------------------------------------------------------------------------*/
 

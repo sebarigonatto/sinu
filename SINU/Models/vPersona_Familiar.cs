@@ -30,5 +30,13 @@ namespace SINU.Models
         public string EstCivil { get; set; }
         public Nullable<bool> Vive { get; set; }
         public Nullable<bool> ConVive { get; set; }
+        public string IdReligion { get; set; }
+        public string Celular { get; set; }
+        public string Mail { get; set; }
+        public string DESCRIPCION { get; set; }
+        public string Telefono { get; set; }
+        public Nullable<int> idTipoNacionalidad { get; set; }
+        public string CUIL { get; set; }
+        public Nullable<System.DateTime> FechaCasamiento { get; set; }
     }
 }
