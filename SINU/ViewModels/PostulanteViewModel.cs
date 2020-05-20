@@ -8,8 +8,8 @@ namespace SINU.ViewModels
     public class IDPersonaVM
     {
         public int ID_PER { get; set; }
-        public List<string> EtapaTabs { get; set; }
-        //public vPersona_Familiar vPersona_Familiar { get; set; }
+        public List<int> EtapaTabs { get; set; }
+        public string IDETAPA { get; set; }
     }
 
     public class PersonaFamiliaVM

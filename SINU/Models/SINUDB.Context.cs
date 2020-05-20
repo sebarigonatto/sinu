@@ -17,8 +17,6 @@ namespace SINU.Models
     
     public partial class SINUEntities : DbContext
     {
-        internal object vPersona_FamiliarVM;
-
         public SINUEntities()
             : base("name=SINUEntities")
         {
@@ -883,6 +881,19 @@ namespace SINU.Models
                 new ObjectParameter("ConVive", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPERSONAFamiliarIU", idpersonaParameter, idPostulanteParameter, emailParameter, apellidoParameter, nombresParameter, idSexoParameter, fechaNacimientoParameter, dNIParameter, cUILParameter, idReligionParameter, idEstadoCivilParameter, fechaCasamientoParameter, telefonoParameter, celularParameter, mailPersonaParameter, idTipoNacionalidadParameter, idLugarNacimientoLocalidadParameter, idParentescoParameter, viveParameter, conViveParameter);
+        }
+    
+        public virtual int spFamiliarEliminar(Nullable<int> idFamiliar, Nullable<int> idPersona)
+        {
+            var idFamiliarParameter = idFamiliar.HasValue ?
+                new ObjectParameter("IdFamiliar", idFamiliar) :
+                new ObjectParameter("IdFamiliar", typeof(int));
+    
+            var idPersonaParameter = idPersona.HasValue ?
+                new ObjectParameter("IdPersona", idPersona) :
+                new ObjectParameter("IdPersona", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spFamiliarEliminar", idFamiliarParameter, idPersonaParameter);
         }
     }
 }

@@ -878,13 +878,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene de
           <Key>
             <PropertyRef Name="IdInscripcion" />
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
             <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
             <PropertyRef Name="Estado" />
           </Key>
           <Property Name="IdInscripcion" Type="int" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="int" />
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="IdEtapa" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
@@ -1597,6 +1601,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="ultimoAnioCursado" Type="int" Mode="In" />
           <Parameter Name="NombreYPaisInstituto" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spFamiliarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdFamiliar" Type="int" Mode="In" />
+          <Parameter Name="IdPersona" Type="int" Mode="In" />
+        </Function>
         <Function Name="spIdiomasIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPersonaIdioma" Type="int" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
@@ -2051,7 +2059,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPostulanteEtapaEstado].[IdInscripcion] AS [IdInscripcion], 
     [vPostulanteEtapaEstado].[IdPostulantePersona] AS [IdPostulantePersona], 
     [vPostulanteEtapaEstado].[IdSecuencia] AS [IdSecuencia], 
+    [vPostulanteEtapaEstado].[IdEtapa] AS [IdEtapa], 
     [vPostulanteEtapaEstado].[Etapa] AS [Etapa], 
+    [vPostulanteEtapaEstado].[IdEstado] AS [IdEstado], 
     [vPostulanteEtapaEstado].[Estado] AS [Estado]
     FROM [dbo].[vPostulanteEtapaEstado] AS [vPostulanteEtapaEstado]</DefiningQuery>
           </EntitySet>
@@ -3841,6 +3851,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Vive" Mode="In" Type="Boolean" />
             <Parameter Name="ConVive" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="spFamiliarEliminar">
+            <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
+            <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4097,12 +4111,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="Etapa" />
             <PropertyRef Name="Estado" />
+            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="IdEstado" />
           </Key>
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="Int32" />
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5086,6 +5104,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPostulanteEtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vPostulanteEtapaEstado">
               <MappingFragment StoreEntitySet="vPostulanteEtapaEstado">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
@@ -5096,6 +5116,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spRelacionFamiliarIU" FunctionName="SINUModel.Store.spRelacionFamiliarIU" />
           <FunctionImportMapping FunctionImportName="spPERSONAFamiliarIU" FunctionName="SINUModel.Store.spPERSONAFamiliarIU" />
+          <FunctionImportMapping FunctionImportName="spFamiliarEliminar" FunctionName="SINUModel.Store.spFamiliarEliminar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

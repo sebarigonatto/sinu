@@ -24,15 +24,11 @@ namespace SINU.Controllers
         {//error cdo existe uno registrado antes de los cambios de secuencia
             IDPersonaVM pers = new IDPersonaVM
             {
-                ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona
+                ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
             };
-            int secu = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
-            if (secu <6)
-            {
-                db.spProximaSecuenciaEtapaEstado(pers.ID_PER, 0);
-               
-            };
-            ViewBag.Secuencia = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == pers.ID_PER).IdSecuencia;
+            pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+            pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+
             return View(pers);
         }
 
@@ -77,7 +73,8 @@ namespace SINU.Controllers
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
                     var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
 
-                    return Json(new { success = true, msg = "se guardoron los datos correctamente" });
+                   
+                    return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
                 {
@@ -762,11 +759,12 @@ namespace SINU.Controllers
                 FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
                 return PartialView(FAMI);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return View();
             }
         }
+
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
         public ActionResult FamiliaCUD(int idPersonaFamilia)
         { 
@@ -779,7 +777,6 @@ namespace SINU.Controllers
                 vEstCivilVM = db.vEstCivil.Select(m => new SelectListItem { Value = m.Codigo_n, Text = m.Descripcion }).ToList(),
                 ReligionVM = db.vRELIGION.Select(m => new SelectListItem { Value = m.CODIGO, Text = m.DESCRIPCION }).ToList(),
                 TipoDeNacionalidadVm = db.TipoNacionalidad.Select(m => new SelectListItem { Value = m.IdTipoNacionalidad.ToString(), Text = m.Descripcion }).ToList()
-
             };
             if (idPersonaFamilia != 0  )
             {
@@ -831,12 +828,18 @@ namespace SINU.Controllers
             try
             {
                 int secu = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona).IdSecuencia;
+                //Verificar como realizar la validadcion sobre la edad con respecto  a la institucion a inscribirse
+                //if (true)
+                //{
+                //    //asumo que cumple con el requisito con respecto a la edad y lo coloco en la secuencia 7= DATOS BASICOS/ VALIDADO
+                //    db.spProximaSecuenciaEtapaEstadov2(p.IdPostulante, 0, 7);
+                //};
+                //if (secu == 7 || secu==21)
+                //{
 
-                if (secu == 6)
-                {
-                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
-                    return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
-                }
+                //    db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
+                //    return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
+                //}
                 return Json(new { success = false, msg = "Numero de secuencia diferente al esperado, se esperaba secuencia 6" });
             }
             catch (Exception ex )
