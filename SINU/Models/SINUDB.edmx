@@ -681,7 +681,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene def
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdSexo" Type="int" Nullable="false" />
-          <Property Name="Sexo" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sexo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Telefono" Type="varchar" MaxLength="50" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
@@ -696,6 +696,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene def
           <Property Name="AspnetUser" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdSecuencia" Type="int" />
           <Property Name="Etapa_Estado" Type="varchar" MaxLength="76" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="edad" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1919,7 +1921,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_DatosBasicos].[NombreInst] AS [NombreInst], 
     [vPersona_DatosBasicos].[AspnetUser] AS [AspnetUser], 
     [vPersona_DatosBasicos].[IdSecuencia] AS [IdSecuencia], 
-    [vPersona_DatosBasicos].[Etapa_Estado] AS [Etapa_Estado]
+    [vPersona_DatosBasicos].[Etapa_Estado] AS [Etapa_Estado], 
+    [vPersona_DatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
+    [vPersona_DatosBasicos].[edad] AS [edad]
     FROM [dbo].[vPersona_DatosBasicos] AS [vPersona_DatosBasicos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPersona_DatosPer" EntityType="Self.vPersona_DatosPer" store:Type="Views" store:Schema="dbo">
@@ -2858,7 +2862,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdSexo" Type="Int32" Nullable="false" />
-          <Property Name="Sexo" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Sexo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
@@ -2873,6 +2877,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="AspnetUser" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IdSecuencia" Type="Int32" />
           <Property Name="Etapa_Estado" Type="String" MaxLength="76" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="edad" Type="Int32" />
         </EntityType>
         <EntityType Name="vPersona_DatosPer">
           <Key>
@@ -4643,6 +4649,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPersona_DatosBasicos">
             <EntityTypeMapping TypeName="SINUModel.vPersona_DatosBasicos">
               <MappingFragment StoreEntitySet="vPersona_DatosBasicos">
+                <ScalarProperty Name="edad" ColumnName="edad" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="IdPostulante" ColumnName="IdPostulante" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />

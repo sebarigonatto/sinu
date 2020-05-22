@@ -558,5 +558,8 @@ $(document).ready(function () {
         });
     });
 
-
+    //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
+    $("#DatosBasicosBTGuarda").on("click", function () {
+        $("#ModalCampos").modal("show");
+    });
 });

@@ -72,8 +72,7 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosBasicosVM;
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
                     var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
-
-                   
+                  
                     return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
@@ -84,7 +83,6 @@ namespace SINU.Controllers
                 }
             };
             return Json(new { success = false, msg = "Modelo no VALIDO" });
-
 
         }
 
@@ -834,9 +832,7 @@ namespace SINU.Controllers
                 //    //asumo que cumple con el requisito con respecto a la edad y lo coloco en la secuencia 7= DATOS BASICOS/ VALIDADO
                 //    db.spProximaSecuenciaEtapaEstadov2(p.IdPostulante, 0, 7);
                 //};
-                //if (secu == 7 || secu==21)
-                //{
-
+             
                 //    db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
                 //    return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
                 //}

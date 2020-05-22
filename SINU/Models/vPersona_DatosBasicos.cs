@@ -34,5 +34,7 @@ namespace SINU.Models
         public string AspnetUser { get; set; }
         public Nullable<int> IdSecuencia { get; set; }
         public string Etapa_Estado { get; set; }
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        public Nullable<int> edad { get; set; }
     }
 }
