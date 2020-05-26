@@ -1,10 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-//cambio de preuba sinu 26/05/2020
-//cambio de prueba dos
-
-    //CAMBIO DE PRUEBA TRES
+// borre los comentarios anteriores
 namespace SINU.ViewModels
 {
     public class vContacto
