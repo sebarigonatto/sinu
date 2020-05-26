@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+//cambio de preuba sinu 26/05/2020
+
 namespace SINU.ViewModels
 {
     public class vContacto
