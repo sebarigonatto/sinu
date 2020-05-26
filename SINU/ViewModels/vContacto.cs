@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 // borre los comentarios anteriores
+//cambio2
 namespace SINU.ViewModels
 {
     public class vContacto
