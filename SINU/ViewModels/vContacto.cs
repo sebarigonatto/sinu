@@ -2,7 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 
 //cambio de preuba sinu 26/05/2020
+//cambio de prueba dos
 
+    //CAMBIO DE PRUEBA TRES
 namespace SINU.ViewModels
 {
     public class vContacto
