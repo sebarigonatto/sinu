@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-
+//comentario para probar el stage changed
 namespace SINU.ViewModels
 {
     public class Rol
