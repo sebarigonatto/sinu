@@ -38,4 +38,5 @@ CREATE USER [User_SINU] FOR LOGIN [User_SINU]
 GO
 ALTER ROLE [db_datareader] ADD MEMBER [User_SINU]
 ALTER ROLE [db_datawriter] ADD MEMBER [User_SINU]
+ALTER ROLE [db_owner] ADD MEMBER [User_SINU]
 GO
