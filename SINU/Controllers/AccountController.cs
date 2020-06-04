@@ -288,7 +288,7 @@ namespace SINU.Controllers
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
                     //siendo exitoso el ingreso a seguridad del postulante ago que avanca a la secuencia siguiente la "DATOS BASICOS-INICIO DE CARGA"
-                    db.spProximaSecuenciaEtapaEstado(idpersona, 0);
+                    db.spProximaSecuenciaEtapaEstado(idpersona, 0,false,0, "DATOS BASICOS", "Inicio De Carga");
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {

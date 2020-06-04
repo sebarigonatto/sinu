@@ -382,7 +382,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
         }
     
-        public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)
+        public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idPreferencia, Nullable<System.DateTime> fechaNacimiento, Nullable<int> idPersona, Nullable<int> idPostulante)
         {
             var apellidoParameter = apellido != null ?
                 new ObjectParameter("Apellido", apellido) :
@@ -424,6 +424,10 @@ namespace SINU.Models
                 new ObjectParameter("IdPreferencia", idPreferencia) :
                 new ObjectParameter("IdPreferencia", typeof(int));
     
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
                 new ObjectParameter("IdPersona", typeof(int));
@@ -432,7 +436,7 @@ namespace SINU.Models
                 new ObjectParameter("IdPostulante", idPostulante) :
                 new ObjectParameter("IdPostulante", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idPreferenciaParameter, fechaNacimientoParameter, idPersonaParameter, idPostulanteParameter);
         }
     
         public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad)
@@ -739,36 +743,6 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCambiaSecuencia", id_PersonaParameter, num_SecuenciaParameter);
         }
     
-        public virtual int spProximaSecuenciaEtapaEstado(Nullable<int> idPostulante, Nullable<int> idInscripcion)
-        {
-            var idPostulanteParameter = idPostulante.HasValue ?
-                new ObjectParameter("IdPostulante", idPostulante) :
-                new ObjectParameter("IdPostulante", typeof(int));
-    
-            var idInscripcionParameter = idInscripcion.HasValue ?
-                new ObjectParameter("IdInscripcion", idInscripcion) :
-                new ObjectParameter("IdInscripcion", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstado", idPostulanteParameter, idInscripcionParameter);
-        }
-    
-        public virtual int spProximaSecuenciaEtapaEstadov2(Nullable<int> idPostulante, Nullable<int> idInscripcion, Nullable<int> idSecuencia)
-        {
-            var idPostulanteParameter = idPostulante.HasValue ?
-                new ObjectParameter("IdPostulante", idPostulante) :
-                new ObjectParameter("IdPostulante", typeof(int));
-    
-            var idInscripcionParameter = idInscripcion.HasValue ?
-                new ObjectParameter("IdInscripcion", idInscripcion) :
-                new ObjectParameter("IdInscripcion", typeof(int));
-    
-            var idSecuenciaParameter = idSecuencia.HasValue ?
-                new ObjectParameter("IdSecuencia", idSecuencia) :
-                new ObjectParameter("IdSecuencia", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstadov2", idPostulanteParameter, idInscripcionParameter, idSecuenciaParameter);
-        }
-    
         public virtual int spRelacionFamiliarIU(Nullable<int> idFamiliar, Nullable<int> idPostulante, Nullable<int> idPersona, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
         {
             var idFamiliarParameter = idFamiliar.HasValue ?
@@ -894,6 +868,35 @@ namespace SINU.Models
                 new ObjectParameter("IdPersona", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spFamiliarEliminar", idFamiliarParameter, idPersonaParameter);
+        }
+    
+        public virtual int spProximaSecuenciaEtapaEstado(Nullable<int> idPostulante, Nullable<int> idInscripcion, Nullable<bool> retroceder, Nullable<int> secuenciaSiguiente, string etapaProx, string estadoProx)
+        {
+            var idPostulanteParameter = idPostulante.HasValue ?
+                new ObjectParameter("IdPostulante", idPostulante) :
+                new ObjectParameter("IdPostulante", typeof(int));
+    
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            var retrocederParameter = retroceder.HasValue ?
+                new ObjectParameter("Retroceder", retroceder) :
+                new ObjectParameter("Retroceder", typeof(bool));
+    
+            var secuenciaSiguienteParameter = secuenciaSiguiente.HasValue ?
+                new ObjectParameter("SecuenciaSiguiente", secuenciaSiguiente) :
+                new ObjectParameter("SecuenciaSiguiente", typeof(int));
+    
+            var etapaProxParameter = etapaProx != null ?
+                new ObjectParameter("EtapaProx", etapaProx) :
+                new ObjectParameter("EtapaProx", typeof(string));
+    
+            var estadoProxParameter = estadoProx != null ?
+                new ObjectParameter("EstadoProx", estadoProx) :
+                new ObjectParameter("EstadoProx", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstado", idPostulanteParameter, idInscripcionParameter, retrocederParameter, secuenciaSiguienteParameter, etapaProxParameter, estadoProxParameter);
         }
     }
 }

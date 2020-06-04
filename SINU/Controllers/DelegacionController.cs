@@ -87,7 +87,7 @@ namespace SINU.Controllers
         {
             try
             {
-                db.spProximaSecuenciaEtapaEstado(vInscripcion.IdPersona, vInscripcion.IdInscripcion);
+                //db.spProximaSecuenciaEtapaEstado(vInscripcion.IdPersona, vInscripcion.IdInscripcion);
             }
             catch (System.Exception ex)
             {
@@ -121,7 +121,7 @@ namespace SINU.Controllers
                 var da = db.Inscripcion.Find(datos.IdInscripcion);
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
-                db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
+                //db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)

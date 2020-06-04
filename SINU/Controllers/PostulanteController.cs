@@ -71,7 +71,7 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
-                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
+                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
                   
                     return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
@@ -83,9 +83,20 @@ namespace SINU.Controllers
                 }
             };
             return Json(new { success = false, msg = "Modelo no VALIDO" });
-
         }
 
+
+        //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
+        public JsonResult EdadInstituto(int IDinst ,int edad ) {
+            if (IDinst == 9 & edad > 22)
+            {
+                return Json(new { coherencia = false },JsonRequestBehavior.AllowGet);
+            } else if (IDinst == 10 & edad > 24) {
+                return Json(new { coherencia = false }, JsonRequestBehavior.AllowGet);
+            };
+
+            return Json(new { coherencia = true }, JsonRequestBehavior.AllowGet);
+        }
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
         public ActionResult Entrevista(int ID_persona)

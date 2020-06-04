@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-// borre los comentarios anteriores
-//cambio2
-//cambio 3 desde visul studio
-// cambio X desde Merlo Buenos Aires - 01/06/2020
 namespace SINU.ViewModels
 {
     public class vContacto

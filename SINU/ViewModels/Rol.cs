@@ -2,11 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-//comentario para probar el stage changed
-
-
-//lineas superiores agregadas junto con esta linea de comentario.. 
-//para prueba de subida y bajada 01/06/2020 17:53
 
 namespace SINU.ViewModels
 {

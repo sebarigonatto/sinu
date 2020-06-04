@@ -300,21 +300,21 @@
 </div>
 
 
-<div class="modal fade" id="ModalCampos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
+                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Modal para mostrar la advertencia sobre la edad con respecto al Instituto seleccionado como preferencia(Todabia en desarrollo).</p>
+                <p id="TextModal">@* mensaje del Modal *@</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTN1Modal">@* TExto de Boton *@</button>
+                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
             </div>
         </div>
     </div>
@@ -378,19 +378,19 @@
                     };
                 });
             })();
-        });
-        $(document).ready(function () {
-            $("#DatosBasicosBTGuarda").on("click", function () {
-                $("#ModalCampos").modal("show");
-            });
-            
 
         });
+     
         /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm*/
 
-        function Exito(response,status,xhr) {
-           alert("success: " + response.success + " - " + response.msg);
+        function Exito(response, status, xhr) {
+            $("#BTNModal").hide();
+            $("#GuardarDTF").html("CERRAR");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html(response.msg);
+            $("#ModalAnuncios").modal();
+            //alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
                     $("#BTentrevista").removeClass("disabled");

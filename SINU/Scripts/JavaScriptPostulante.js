@@ -557,9 +557,44 @@ $(document).ready(function () {
 
         });
     });
+    $(document).on("submit", false);
 
-    //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
+    //submitButton.click(function (e) {
+    //    if (form.checkValidity()) {
+    //        form.submit();
+    //    }
+    //});
+
     $("#DatosBasicosBTGuarda").on("click", function () {
-        $("#ModalCampos").modal("show");
+        var valido = $("#BeginFormDatosBasicos").valid();
+        //alert(valido);
+        if (!valido) {
+            $("#BeginFormDatosBasicos").submit();
+        } else { 
+            //alert($("#InstitutoPref").val() + "   " + $("#edad").val());
+            $.getJSON('/Postulante/EdadInstituto', {
+                Idinst: $("#InstitutoPref").val(),
+                edad: $("#edad").val()
+            },
+                function (response) {
+                    //alert(response.coherencia);
+                    if (response.coherencia) {
+                        $("#BeginFormDatosBasicos").submit();
+                    } else {
+                    
+                        //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
+                        $("#BTNModal").html("Cancelar");
+                        $("#ModalCenterTitle").html("Advertencia");
+                        $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
+                        $("#ModalAnuncios").modal();
+                    };
+                });
+        };
+        $("#GuardarDTF").on("click", function (e) {
+            e.preventDefault;
+            e.stopImmediatePropagation();
+            $("#BeginFormDatosBasicos").submit();
+            $("#ModalAnuncios").modal("hide");
+        });
     });
 });

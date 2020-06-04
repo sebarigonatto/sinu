@@ -1559,6 +1559,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdDelegacionOficinaIngresoInscribio" Type="int" Mode="In" />
           <Parameter Name="ComoSeEntero" Type="varchar" Mode="In" />
           <Parameter Name="IdPreferencia" Type="int" Mode="In" />
+          <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
         </Function>
@@ -1649,11 +1650,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="spProximaSecuenciaEtapaEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
           <Parameter Name="IdInscripcion" Type="int" Mode="In" />
-        </Function>
-        <Function Name="spProximaSecuenciaEtapaEstadov2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdPostulante" Type="int" Mode="In" />
-          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
-          <Parameter Name="IdSecuencia" Type="int" Mode="In" />
+          <Parameter Name="Retroceder" Type="bit" Mode="In" />
+          <Parameter Name="SecuenciaSiguiente" Type="int" Mode="In" />
+          <Parameter Name="EtapaProx" Type="varchar" Mode="In" />
+          <Parameter Name="EstadoProx" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spRelacionFamiliarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
@@ -3692,6 +3692,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
             <Parameter Name="ComoSeEntero" Mode="In" Type="String" />
             <Parameter Name="IdPreferencia" Mode="In" Type="Int32" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
             <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -3817,15 +3818,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="id_Persona" Mode="In" Type="Int32" />
             <Parameter Name="Num_Secuencia" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spProximaSecuenciaEtapaEstado">
-            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
-            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spProximaSecuenciaEtapaEstadov2">
-            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
-            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
-            <Parameter Name="IdSecuencia" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="vPostulanteEtapaEstado" EntityType="SINUModel.vPostulanteEtapaEstado" />
           <FunctionImport Name="spRelacionFamiliarIU">
             <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
@@ -3860,6 +3852,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spFamiliarEliminar">
             <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spProximaSecuenciaEtapaEstado">
+            <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+            <Parameter Name="Retroceder" Mode="In" Type="Boolean" />
+            <Parameter Name="SecuenciaSiguiente" Mode="In" Type="Int32" />
+            <Parameter Name="EtapaProx" Mode="In" Type="String" />
+            <Parameter Name="EstadoProx" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -5107,8 +5107,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstado" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstado" />
-          <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstadov2" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstadov2" />
           <EntitySetMapping Name="vPostulanteEtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vPostulanteEtapaEstado">
               <MappingFragment StoreEntitySet="vPostulanteEtapaEstado">
@@ -5125,6 +5123,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spRelacionFamiliarIU" FunctionName="SINUModel.Store.spRelacionFamiliarIU" />
           <FunctionImportMapping FunctionImportName="spPERSONAFamiliarIU" FunctionName="SINUModel.Store.spPERSONAFamiliarIU" />
           <FunctionImportMapping FunctionImportName="spFamiliarEliminar" FunctionName="SINUModel.Store.spFamiliarEliminar" />
+          <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstado" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstado" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
