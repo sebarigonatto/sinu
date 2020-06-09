@@ -7,10 +7,10 @@
     ViewBag.CodGrupos = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
     ViewBag.Grado = new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION");
 }
-@section MenuPerfil{
+@*@section MenuPerfil{
 
     @Html.Partial("_MenuPerfilAdmin")
-}
+}*@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
 @Scripts.Render("~/bundles/jquery")
