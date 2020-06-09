@@ -70,21 +70,8 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
-                    var result1 = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
-
-                    //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
-                    JsonResult result2 = new PostulanteController().EdadInstituto(p.IdPreferencia, p.edad);
-                    dynamic data = result2.Data;
-                    if (data.coherencia)
-                    { 
-                        //Datos basicos - Validado; ID= 7
-                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado"); 
-                    }
-                    else {
-                        //Datos basicos - No Validado; ID= 21
-                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
-                    };
-
+                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+                  
                     return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
