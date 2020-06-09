@@ -22,7 +22,7 @@ namespace SINU.Models
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
-
+        [Required]
         [Display(Name = "Fecha de Nacimiento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
@@ -79,10 +79,7 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]
         public string Oficina { get; set; }
-        [Required]
-        public Nullable<System.DateTime> FechaNacimiento { get; set; }
-        [Display(Name = "Edad")]
-        public Nullable<int> edad { get; set; }
+         public Nullable<int> edad { get; set; }
     }
 
     public class vPersona_DatosPerMetadata
