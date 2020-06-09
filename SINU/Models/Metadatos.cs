@@ -23,6 +23,11 @@ namespace SINU.Models
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
 
+        [Display(Name = "Fecha de Nacimiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+
         [TelefonoCelular("Celular",ErrorMessage ="Este Campo debe esta completado")]
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un "-", 
