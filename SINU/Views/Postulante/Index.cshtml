@@ -366,10 +366,17 @@
                 var IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
                 IDETP.splice(IDETP.length - 1);
-                //alert('@Model.IDETAPA.ToString()' + "    " + IDETP.indexOf("2") + "        " + (IDETP.length -2 ));
-                if (IDETP.indexOf("2") < (IDETP.length -1)) {
+                //alert('@Model.IDETAPA.ToString()' + "    " + IDETP.indexOf("2") + "        " + (IDETP.length -1 ));
+                if (IDETP.indexOf("2") < (IDETP.length - 1)) {
                     $("#BTDatosBasicos").html("");
                     $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
+                };
+
+                if ('@Model.YAguardado'=="True") {
+                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
+                    $("#BTentrevista").removeClass("disabled");
+                    $("#DatosBasicosBTGuarda").attr("disabled", "disabled").unbind("click");
+
                 };
                 $("#TabGeneral li").each(function () {
                     idTAB = $(this).attr("id");
@@ -383,21 +390,22 @@
                             .tooltip('enable');
                     };
                 });
+                //alert(IDETP.length);
                 //Muestro el Tab de la Etapa en la que me encuentro actualmente
-                $("#" + IDETP[IDETP.length - 1] + " a").tab("show");
+                $("#" + IDETP.length + " a").tab("show");
             })();
 
         });
 
-        function TABmostrar(idtab) {
+        function HabilitarTAb(idtab) {
             $("#"+idtab)
                 .removeClass('Tabdesabilitado')
                 .css("color", "white")
                 .removeAttr("data-toggle", "tooltip")
                 .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
                 .tooltip('disable');
-
         };
+
         /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm*/
 
@@ -413,10 +421,11 @@
                     //alert(response.form);
                     //deshabilito el boton de guardado y habilito el de solicitar entrevista
                     $("#DatosBasicosBTGuarda").attr("disabled", "disabled").unbind("click");
+                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
                     $("#BTentrevista").removeClass("disabled");
                     break;
                 case "solicitudentrevista":
-                    TABmostrar(3);
+                    HabilitarTAb(3);
                     $("#3 a").tab("show");
                     $("#BTDatosBasicos").html("");
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });

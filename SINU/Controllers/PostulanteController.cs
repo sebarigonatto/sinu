@@ -28,7 +28,10 @@ namespace SINU.Controllers
             };
             pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
             pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
-
+            int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+            //cerifico si ya realizo el guardado de datos basicos.
+            //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
+            pers.YAguardado = (db.InscripcionEtapaEstado.Where(i=>i.IdInscripcionEtapaEstado==idINCRIP).Where(i=>i.IdSecuencia==7||i.IdSecuencia==21).ToList().Count() >0 ? true : false);
             return View(pers);
         }
 
@@ -48,7 +51,6 @@ namespace SINU.Controllers
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona)
                 };
-
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -69,10 +71,24 @@ namespace SINU.Controllers
                 {
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
-                    //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
+
                     var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
-                  
-                    return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
+                    //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
+                    JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.edad);
+                    dynamic data = GRUPO.Data;
+                    if (data.coherencia)
+                    {
+                        //Datos basicos - Validado; ID= 7
+                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
+                    }
+                    else
+                    {
+                        //Datos basicos - No Validado; ID= 21
+                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
+                    };
+
+                    return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
+
                 }
                 catch (Exception ex)
                 {
@@ -115,10 +131,15 @@ namespace SINU.Controllers
 
         public ActionResult Entrevista(int ID_persona)
         {
-            vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
+            
             try
             {
+                vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
+                if (entrevistafh.FechaEntrevista ==null)
+                {
+                    ViewBag.NoAsignado = true;
+                } 
                 //se carga los texto parametrizados desde la tabla configuracion
                 string[] consideraciones = {
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),

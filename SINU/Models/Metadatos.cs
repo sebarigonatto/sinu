@@ -74,12 +74,17 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]
         public string Oficina { get; set; }
+        [Required]
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        [Display(Name = "Edad")]
+        public Nullable<int> edad { get; set; }
     }
 
     public class vPersona_DatosPerMetadata
     {
         public string Email { get; set; }
         public int IdPersona { get; set; }
+        [Required]
         public string CUIL { get; set; }
         [Display(Name ="Fecha de Nacimiento")]
         [Required]
@@ -89,13 +94,14 @@ namespace SINU.Models
         //[Required]
         [Display(Name ="Edad")]
         public Nullable<int> edad { get; set; }
+        [Required]
         [Display(Name="Estado Civil")]
         public string IdEstadoCivil { get; set; }
-        public string EstadoCivil { get; set; }
+        [Required]
         [Display(Name="Religion")]
         public string IdReligion { get; set; }
-        public string Religion { get; set; }
         [Display(Name="Tipo de Nacionalidad")]
+        [Required]
         public int idTipoNacionalidad { get; set; }
         public string Nacionalidad { get; set; }
     }

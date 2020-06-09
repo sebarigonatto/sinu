@@ -328,7 +328,7 @@ $(document).ready(function () {
                 /////////////////////////////////GUARDA////////////////////////////////////
 
                 $(".Guardar_REG").on("click", function () {
-                    alert("se cerrara modal!!!");
+                   // alert("se cerrara modal!!!");
                     $("#ModalEIA").modal("hide");
                 });
 

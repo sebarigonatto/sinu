@@ -10,6 +10,8 @@ namespace SINU.ViewModels
         public int ID_PER { get; set; }
         public List<int> EtapaTabs { get; set; }
         public string IDETAPA { get; set; }
+        public bool YAguardado { get; set; }
+
     }
 
     public class PersonaFamiliaVM
