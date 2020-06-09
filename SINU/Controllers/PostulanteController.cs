@@ -73,7 +73,7 @@ namespace SINU.Controllers
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
                     var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
                   
-                    return Json(new { success = true, msg = "se guardaron los datos correctamente datos basicos", form= "datosbasicos" });
+                    return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
                 {
