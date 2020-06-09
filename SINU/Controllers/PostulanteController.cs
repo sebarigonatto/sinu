@@ -35,6 +35,7 @@ namespace SINU.Controllers
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
         //ver el tema de la fecha de casamiento
+        //mejorar la seguridad 
         public ActionResult DatosBasicos(int ID_persona)
         {
             try
@@ -62,8 +63,6 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
-
-
             if (ModelState.IsValid)
             {
                 try
@@ -71,8 +70,21 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
                     //se llama el "spDatosBasicosUpdate" para guadar los datos ingresados en la base de datos
-                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
-                  
+                    var result1 = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+
+                    //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
+                    JsonResult result2 = new PostulanteController().EdadInstituto(p.IdPreferencia, p.edad);
+                    dynamic data = result2.Data;
+                    if (data.coherencia)
+                    { 
+                        //Datos basicos - Validado; ID= 7
+                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado"); 
+                    }
+                    else {
+                        //Datos basicos - No Validado; ID= 21
+                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
+                    };
+
                     return Json(new { success = true, msg = "se guardoron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
@@ -85,9 +97,8 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
 
-
         //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
-        public JsonResult EdadInstituto(int IDinst ,int edad ) {
+        public JsonResult EdadInstituto(int? IDinst ,int? edad ) {
             if (IDinst == 9 & edad > 22)
             {
                 return Json(new { coherencia = false },JsonRequestBehavior.AllowGet);
@@ -97,6 +108,22 @@ namespace SINU.Controllers
 
             return Json(new { coherencia = true }, JsonRequestBehavior.AllowGet);
         }
+
+        /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
+
+        public JsonResult SolicitudEntrevista(int ID_persona)
+        {
+            try
+            {
+                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");
+                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message });
+            }
+        }
+
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
         public ActionResult Entrevista(int ID_persona)
@@ -153,7 +180,7 @@ namespace SINU.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {   
                     var p = Datos.vPersona_DatosPerVM;
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
                     return Json(new { success = true, msg = "se guadaron con exito los DATOS PERSONALES" });
@@ -830,30 +857,6 @@ namespace SINU.Controllers
             return Json(new {success= false, msg= "MOdelono valido" });
         }
   
-        /*--------------------------------------------------------------POSTULANTE------------------------------------------------------------------------------*/
 
-        public JsonResult SolicitudEntrevista(int ID_persona)
-        {
-            try
-            {
-                int secu = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona).IdSecuencia;
-                //Verificar como realizar la validadcion sobre la edad con respecto  a la institucion a inscribirse
-                //if (true)
-                //{
-                //    //asumo que cumple con el requisito con respecto a la edad y lo coloco en la secuencia 7= DATOS BASICOS/ VALIDADO
-                //    db.spProximaSecuenciaEtapaEstadov2(p.IdPostulante, 0, 7);
-                //};
-             
-                //    db.spProximaSecuenciaEtapaEstado(ID_persona, 0);
-                //    return Json(new { success = true, msg = "Exitoso el cambio de Secuecia" });
-                //}
-                return Json(new { success = false, msg = "Numero de secuencia diferente al esperado, se esperaba secuencia 6" });
-            }
-            catch (Exception ex )
-            {
-
-                return Json(new { success = false, msg = ex.InnerException.Message });
-            }
-        }
     }
 }

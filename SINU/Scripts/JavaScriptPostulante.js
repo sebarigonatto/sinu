@@ -530,12 +530,8 @@ $(document).ready(function () {
     var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
     if (paganterior > 1) {
         //alert("vino de familia");
-        $("#datosbasicos,#DatosPersonales,#DatosPersonalesNAV").removeClass("show active");
-        $("#BTDatosPersonalesNAV").addClass("collapsed");
-        $("#Documentacion,#Familia, #FamiliaNAV").addClass("show active");
-        $("#BTFamiliaNAV").removeClass("collapsed");
-        $("#datosbasicos-tab, #TABDocumentacion a.active").removeClass("active");
-        $("#Documentacion-tab, #TABDocumentacion a[href='#Familia']").addClass("active");
+        $("#5 a").tab("show");
+        $("#FamiTAB a").tab("show");
            
         //$("html,body").animate({
         //    scrollTop: 250
@@ -557,14 +553,7 @@ $(document).ready(function () {
 
         });
     });
-    $(document).on("submit", false);
-
-    //submitButton.click(function (e) {
-    //    if (form.checkValidity()) {
-    //        form.submit();
-    //    }
-    //});
-
+ 
     $("#DatosBasicosBTGuarda").on("click", function () {
         var valido = $("#BeginFormDatosBasicos").valid();
         //alert(valido);
@@ -585,16 +574,18 @@ $(document).ready(function () {
                         //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
                         $("#BTNModal").html("Cancelar");
                         $("#ModalCenterTitle").html("Advertencia");
+                        $("#GuardarDTF").css("display", "block")
                         $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
                         $("#ModalAnuncios").modal();
                     };
                 });
         };
-        $("#GuardarDTF").on("click", function (e) {
-            e.preventDefault;
-            e.stopImmediatePropagation();
-            $("#BeginFormDatosBasicos").submit();
-            $("#ModalAnuncios").modal("hide");
-        });
     });
+    $("#GuardarDTF").on("click", function (e) {
+        e.preventDefault;
+        e.stopImmediatePropagation();
+        $("#BeginFormDatosBasicos").submit();
+        //$("#ModalAnuncios").modal("show");
+    });
+
 });

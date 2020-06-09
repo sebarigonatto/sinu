@@ -295,7 +295,7 @@ namespace SINU.Controllers
                     //Revisar En vez de usar Session["funcion"] = "Expiro token para la confirmacio de correo!!"; se debe generar un objeto que es usado por la view como modelo.
                     var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el LINK para la confirmación de correo!! Intente la registración nuevamente. "), "Account", "Confirmacion de mail");
                     return View("Lockout", x);
-                }
+                };
 
                 return View(); //(result.Succeeded ? "ConfirmEmail" : "Error");
             }
