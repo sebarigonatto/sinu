@@ -457,6 +457,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Administrador.cs" />
     <Compile Include="ViewModels\DelegacionViewModel.cs" />
+    <Compile Include="ViewModels\PlantillaMailCuenta.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
@@ -726,6 +727,7 @@
     <Content Include="obj\Debug\edmxResourcesToEmbed\Models\SINUDB.ssdl" />
     <Content Include="obj\Debug\SINU.csproj.CopyComplete" />
     <Content Include="obj\Debug\SINU.csproj.GenerateResource.cache" />
+    <Content Include="Plantillas\PlantillaMailCuenta.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
