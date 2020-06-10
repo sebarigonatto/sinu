@@ -299,4 +299,48 @@ namespace SINU.Models
         public int IdPeriodoInscripcion { get; set; }
 
     }
+
+    public partial class vPersona_FamiliarMetadata
+    {
+        [Required]
+        [Display(Name = "Fecha de Nacimiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+
+        [Display(Name = "Fecha de Casamiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaCasamiento { get; set; }
+
+
+        [Required]
+        [Display(Name = "Parentesco")]
+        public Nullable<int> idParentesco { get; set; }
+        [Required]
+        [Display(Name = "Sexo")]
+        public Nullable<int> IdSexo { get; set; }
+        [Required]
+        [Display(Name = "Estado Civil")]
+        public string IdEstadoCivil { get; set; }
+        [Required]
+        public string Apellido { get; set; }
+        [Required]
+        public string Nombres { get; set; }
+        [Required]
+        public string DNI { get; set; }
+        [Required]
+        public Nullable<bool> Vive { get; set; }
+        [Required]
+        [Display(Name = "Convive")]
+        public Nullable<bool> ConVive { get; set; }
+        [Required]
+        [Display(Name = "Religion")]
+        public string IdReligion { get; set; }
+        [Required]
+        [Display(Name = "Tipo Nacionalidad")]
+        public Nullable<int> idTipoNacionalidad { get; set; }
+        [Required]
+        public string CUIL { get; set; }
+    }
 }

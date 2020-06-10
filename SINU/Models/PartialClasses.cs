@@ -71,4 +71,7 @@ namespace SINU.Models
     public partial class PeriodosInscripciones
     {
     }
+    [MetadataType(typeof(vPersona_FamiliarMetadata))]
+    public partial class vPersona_Familiar
+    { }
 }
