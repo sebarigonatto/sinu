@@ -122,7 +122,7 @@ namespace SINU.Controllers.Administrador
                         };
 
                         string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailCuenta.cshtml";
+                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailConfirmacion.cshtml";
 
                         Engine.Razor = RazorEngineService.Create(configuracion);
                         //compila el plantilla con un modelo  y genera un string 
