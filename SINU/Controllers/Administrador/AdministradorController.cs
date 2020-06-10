@@ -115,6 +115,7 @@ namespace SINU.Controllers.Administrador
             }
             catch (Exception ex)
             {
+                ex = new Exception("Correo Electronico existente, verifique los datos.");
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Administrador", "Create"));
             }
         }

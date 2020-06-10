@@ -243,11 +243,16 @@ namespace SINU.Models
 
     public class vUsuariosAdministrativosMetadata
     {
+        [Required]
         [Display(Name ="Matricula de Revista")]
         public string mr { get; set; }
+        [Required]
         public string Grado { get; set; }
+        [Required]
         public string Destino { get; set; }
+        [Required]
         public string Nombre { get; set; }
+        [Required]
         public string Apellido { get; set; }
         public string Comentario { get; set; }
 
@@ -255,6 +260,7 @@ namespace SINU.Models
         public System.DateTime FechUltimaAct { get; }
 
         [Required]
+        //[RegularExpression("([a-z]|[A-Z]|[0-9]|[\\W]){4}[a-zA-Z0-9\\W]{3,11}", ErrorMessage = "Invalid password format")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -265,6 +271,8 @@ namespace SINU.Models
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$", ErrorMessage = "El correo electronico ingresado no es valido!!!")]
         public string Email { get; set; }
 
 

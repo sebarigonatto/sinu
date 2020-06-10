@@ -161,11 +161,12 @@ namespace SINU
             //Ver Configure la lógica de validación de contraseñas
             manager.PasswordValidator = new PasswordValidator
             {
+                //Alvarez Ismael liberada la restriccion por fuera de la vista.
                 RequiredLength = 6,
                 RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
+                RequireDigit = false,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             //Ver Configurar valores predeterminados para bloqueo de usuario
