@@ -266,9 +266,9 @@ $(document).ready(function () {
             success: function (response) {
                 $('#ModalEIACuerpo').html(response);
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
-                $('#ModalEstudioCuerpo').removeData("validator");
-                $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
-                //$.validator.unobtrusive.parse('#ModalEstudioCuerpo');
+                $('#ModalEIACuerpo').removeData("validator");
+                $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse('#ModalEIACuerpo');
 
                 //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
                 /* https://developer.snapappointments.com/bootstrap-select/ */
@@ -317,7 +317,12 @@ $(document).ready(function () {
                 $("#DropdownEXT").on("change.bs.select", function () {
                     INST_EXT(1);
                 });
-
+                //verifico si egreso o no para mostrar/ocultar ciertos campos del formulario
+                EgresoSINO();
+                $("#TerminoEST").on("change", function () {
+                    EgresoSINO();
+                });
+                
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -394,6 +399,16 @@ $(document).ready(function () {
             $("#JuriEST,#IdInstEST").val("");
         }
     };
+
+    //funcion de si egreso o no para mostrar campos de promedio y ultimo año cursado
+    function EgresoSINO() {
+        if ($("#TerminoEST").val() == "true") {
+            $("#ULT_AÑO, #PROMEDIO").show();
+        } else {
+            $("#ULT_AÑO, #PROMEDIO").hide().val();
+        };
+    };
+
 
     //funcion que arma los combos en cascada de la vista parcial Estudios
     function ComboCascada(Combo, ValC) {

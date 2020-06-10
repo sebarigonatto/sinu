@@ -190,6 +190,8 @@ namespace SINU.Controllers
                 try
                 {   
                     var p = Datos.vPersona_DatosPerVM;
+                    //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
+                    p.IdReligion ??= "";
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
                     return Json(new { success = true, msg = "se guadaron con exito los DATOS PERSONALES" });
                 }
@@ -405,6 +407,7 @@ namespace SINU.Controllers
                                     Text = m.Nombre
                                 })
                                 .ToList();
+                            estudio.INST_EXT = false;
                             estudio.vPersona_EstudioIdVM.Nombre = "";
                     }
                     else
@@ -414,6 +417,7 @@ namespace SINU.Controllers
                             estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
                             estudio.Localidad = new List<string>();
                             estudio.InstitutoVM = new List<SelectListItem>();
+                            estudio.INST_EXT = true;
                     }
                 }
                 else
@@ -423,8 +427,11 @@ namespace SINU.Controllers
                         
                         IdInstitutos = 0,
                         IdEstudio = 0,
-                        NombreYPaisInstituto = "-"
+                        NombreYPaisInstituto = "-",
+                        Completo= true,
+                        
                     };
+                    estudio.INST_EXT = false;
                     nuevoestu.IdPersona = ID_persona;
                     estudio.vPersona_EstudioIdVM = nuevoestu;
                     estudio.Localidad = new List<string>();
@@ -457,7 +464,11 @@ namespace SINU.Controllers
                         //e.IdInstitutos = 0;
                         e.NombreYPaisInstituto = e.Jurisdiccion + "-" + e.Nombre;
                     }
-
+                    if (!e.Completo)
+                    {
+                        e.Promedio = null;
+                        e.ultimoAnioCursado = null;
+                    }
                     db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto);
 
                     return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIOS" });

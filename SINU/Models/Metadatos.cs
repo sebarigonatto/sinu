@@ -99,7 +99,6 @@ namespace SINU.Models
         [Required]
         [Display(Name="Estado Civil")]
         public string IdEstadoCivil { get; set; }
-        [Required]
         [Display(Name="Religion")]
         public string IdReligion { get; set; }
         [Display(Name="Tipo de Nacionalidad")]
@@ -189,15 +188,19 @@ namespace SINU.Models
         public int IdPersona { get; set; }
         public Nullable<int> IdNiveldEstudio { get; set; }
         public int IdEstudio { get; set; }
+        [Required]
         public string Titulo { get; set; }
         public bool Completo { get; set; }
         public int IdInstitutos { get; set; }
+        [Display(Name ="Nombre del Instituto")]
         public string Nombre { get; set; }
+        [RegularExpression("^-?[0-9]+([,][0-9]*)?$",ErrorMessage ="Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
         [Display(Name ="Cantidad de Materias Adeudadas")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         [Display(Name = "Ultimo año Cursado")]
         public Nullable<int> ultimoAnioCursado { get; set; }
+        [Required]
         public string Nivel { get; set; }
         public string NombreYPaisInstituto { get; set; }
         public string Jurisdiccion { get; set; }
