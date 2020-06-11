@@ -21,6 +21,7 @@ namespace SINU.Models
         public Nullable<int> idParentesco { get; set; }
         public Nullable<int> IdSexo { get; set; }
         public string IdEstadoCivil { get; set; }
+        public string IdReligion { get; set; }
         public string Relacion { get; set; }
         public string Apellido { get; set; }
         public string Nombres { get; set; }
@@ -30,7 +31,6 @@ namespace SINU.Models
         public string EstCivil { get; set; }
         public Nullable<bool> Vive { get; set; }
         public Nullable<bool> ConVive { get; set; }
-        public string IdReligion { get; set; }
         public string Celular { get; set; }
         public string Mail { get; set; }
         public string DESCRIPCION { get; set; }

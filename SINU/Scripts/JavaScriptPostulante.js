@@ -331,10 +331,16 @@ $(document).ready(function () {
                 });
 
                 /////////////////////////////////GUARDA////////////////////////////////////
-
+                //al guardar los registros de un formulario de una vista parcial confirmo que la validacion de los campos
+                //si es .valid() es falso, muestro los errores y no cierro el modal
                 $(".Guardar_REG").on("click", function () {
-                   // alert("se cerrara modal!!!");
-                    $("#ModalEIA").modal("hide");
+                    var form_actual ="#"+ this.getAttribute("data-form");
+                    //alert(form_actual);
+                    var valido = $(form_actual).valid();
+                    $(form_actual).submit()
+                    if (valido) {
+                        $("#ModalEIA").modal("hide");
+                    } 
                 });
 
                 ///////////////////////////////ELIMINA///////////////////////////////////
@@ -346,6 +352,7 @@ $(document).ready(function () {
                         function (response) {
                             alert(response.success + " - " + response.msg);
                         });
+                    //oculta el modal
                     $("#ModalEIA").modal("hide");
                 });
             },
@@ -405,7 +412,8 @@ $(document).ready(function () {
         if ($("#TerminoEST").val() == "true") {
             $("#ULT_AÑO, #PROMEDIO").show();
         } else {
-            $("#ULT_AÑO, #PROMEDIO").hide().val();
+            $("#ULT_AÑO, #PROMEDIO").hide();
+            $("#ULT_AÑO input ,#PROMEDIO input").val("");
         };
     };
 

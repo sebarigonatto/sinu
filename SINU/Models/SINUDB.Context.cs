@@ -74,7 +74,6 @@ namespace SINU.Models
         public virtual DbSet<vPersona_DatosPer> vPersona_DatosPer { get; set; }
         public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
         public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
-        public virtual DbSet<vPersona_Familiar> vPersona_Familiar { get; set; }
         public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
         public virtual DbSet<vPersona_Purificar> vPersona_Purificar { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
@@ -94,6 +93,7 @@ namespace SINU.Models
         public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
         public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
         public virtual DbSet<vPostulanteEtapaEstado> vPostulanteEtapaEstado { get; set; }
+        public virtual DbSet<vPersona_Familiar> vPersona_Familiar { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

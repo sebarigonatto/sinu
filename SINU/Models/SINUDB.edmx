@@ -2957,35 +2957,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="vPersona_Familiar">
-          <Key>
-            <PropertyRef Name="IdPersonaPostulante" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdFamiliar" Type="Int32" />
-          <Property Name="IdPersonaPostulante" Type="Int32" Nullable="false" />
-          <Property Name="IdPersonaFamiliar" Type="Int32" />
-          <Property Name="idParentesco" Type="Int32" />
-          <Property Name="IdSexo" Type="Int32" />
-          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
-          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="Vive" Type="Boolean" />
-          <Property Name="ConVive" Type="Boolean" />
-          <Property Name="IdReligion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Mail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="DESCRIPCION" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="idTipoNacionalidad" Type="Int32" />
-          <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
-        </EntityType>
         <EntityType Name="vPersona_Idioma">
           <Key>
             <PropertyRef Name="Habla" />
@@ -3475,7 +3446,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vPersona_DatosPer" EntityType="Self.vPersona_DatosPer" />
           <EntitySet Name="vPersona_Domicilio" EntityType="Self.vPersona_Domicilio" />
           <EntitySet Name="VPersona_Estudio" EntityType="Self.VPersona_Estudio" />
-          <EntitySet Name="vPersona_Familiar" EntityType="Self.vPersona_Familiar" />
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" />
           <EntitySet Name="vPersona_Purificar" EntityType="Self.vPersona_Purificar" />
           <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" />
@@ -3861,6 +3831,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="EtapaProx" Mode="In" Type="String" />
             <Parameter Name="EstadoProx" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vPersona_Familiar" EntityType="SINUModel.vPersona_Familiar" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4127,6 +4098,35 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="IdEtapa" Type="Int32" Nullable="false" />
           <Property Name="IdEstado" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vPersona_Familiar">
+          <Key>
+            <PropertyRef Name="IdPersonaPostulante" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdFamiliar" Type="Int32" />
+          <Property Name="IdPersonaPostulante" Type="Int32" Nullable="false" />
+          <Property Name="IdPersonaFamiliar" Type="Int32" />
+          <Property Name="idParentesco" Type="Int32" />
+          <Property Name="IdSexo" Type="Int32" />
+          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="IdReligion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Genero" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="DNI" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EstCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="Vive" Type="Boolean" />
+          <Property Name="ConVive" Type="Boolean" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idTipoNacionalidad" Type="Int32" />
+          <Property Name="CUIL" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCasamiento" Type="DateTime" Precision="0" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4743,36 +4743,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_Familiar">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar">
-              <MappingFragment StoreEntitySet="vPersona_Familiar">
-                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
-                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
-                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-                <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="Celular" ColumnName="Celular" />
-                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
-                <ScalarProperty Name="ConVive" ColumnName="ConVive" />
-                <ScalarProperty Name="Vive" ColumnName="Vive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
-                <ScalarProperty Name="IdPersonaPostulante" ColumnName="IdPersonaPostulante" />
-                <ScalarProperty Name="IdPersonaFamiliar" ColumnName="IdPersonaFamiliar" />
-                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
-                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="Relacion" ColumnName="Relacion" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Genero" ColumnName="Genero" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="DNI" ColumnName="DNI" />
-                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vPersona_Idioma">
             <EntityTypeMapping TypeName="SINUModel.vPersona_Idioma">
               <MappingFragment StoreEntitySet="vPersona_Idioma">
@@ -5124,6 +5094,36 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spPERSONAFamiliarIU" FunctionName="SINUModel.Store.spPERSONAFamiliarIU" />
           <FunctionImportMapping FunctionImportName="spFamiliarEliminar" FunctionName="SINUModel.Store.spFamiliarEliminar" />
           <FunctionImportMapping FunctionImportName="spProximaSecuenciaEtapaEstado" FunctionName="SINUModel.Store.spProximaSecuenciaEtapaEstado" />
+          <EntitySetMapping Name="vPersona_Familiar">
+            <EntityTypeMapping TypeName="SINUModel.vPersona_Familiar">
+              <MappingFragment StoreEntitySet="vPersona_Familiar">
+                <ScalarProperty Name="FechaCasamiento" ColumnName="FechaCasamiento" />
+                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+                <ScalarProperty Name="idTipoNacionalidad" ColumnName="idTipoNacionalidad" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="ConVive" ColumnName="ConVive" />
+                <ScalarProperty Name="Vive" ColumnName="Vive" />
+                <ScalarProperty Name="EstCivil" ColumnName="EstCivil" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Relacion" ColumnName="Relacion" />
+                <ScalarProperty Name="IdReligion" ColumnName="IdReligion" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
+                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+                <ScalarProperty Name="IdPersonaFamiliar" ColumnName="IdPersonaFamiliar" />
+                <ScalarProperty Name="IdPersonaPostulante" ColumnName="IdPersonaPostulante" />
+                <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

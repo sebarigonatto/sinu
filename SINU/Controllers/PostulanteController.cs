@@ -810,9 +810,25 @@ namespace SINU.Controllers
         {
             try
             {
-                List<vPersona_Familiar> FAMI ;
-                FAMI = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
-                return PartialView(FAMI);
+                //List<int> id_PER_FAMI = db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).Select(m => m.IdPersona).ToList();
+                var FAMI = db.Familiares.Where(id => id.IdPostulantePersona == ID_persona).ToList();
+                List<vPersona_Familiar> FAMILIARES = new List<vPersona_Familiar>();
+                FAMI.ForEach(f=>
+                
+                    FAMILIARES.Add(
+                            new vPersona_Familiar
+                            {
+                                IdFamiliar = f.IdFamiliar,
+                                idParentesco = f.idParentesco,
+                                IdPersonaPostulante = f.IdPostulantePersona,
+                                IdPersonaFamiliar = f.IdPersona,
+                                Apellido = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Apellido,
+                                Nombres = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Nombres,
+                                Vive= f.Vive
+                            }
+                        )
+                );
+                return PartialView(FAMILIARES);
             }
             catch (Exception )
             {

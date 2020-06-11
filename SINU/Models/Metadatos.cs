@@ -186,6 +186,8 @@ namespace SINU.Models
     public partial class VPersona_EstudioMetadata
     {
         public int IdPersona { get; set; }
+        [Required]
+        [Display(Name ="Nivel de Estudio")]
         public Nullable<int> IdNiveldEstudio { get; set; }
         public int IdEstudio { get; set; }
         [Required]
@@ -199,8 +201,8 @@ namespace SINU.Models
         [Display(Name ="Cantidad de Materias Adeudadas")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         [Display(Name = "Ultimo año Cursado")]
+        [RegularExpression("^-?[0-9]*", ErrorMessage ="Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
-        [Required]
         public string Nivel { get; set; }
         public string NombreYPaisInstituto { get; set; }
         public string Jurisdiccion { get; set; }
