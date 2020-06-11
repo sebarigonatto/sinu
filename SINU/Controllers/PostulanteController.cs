@@ -193,7 +193,7 @@ namespace SINU.Controllers
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
-                    return Json(new { success = true, msg = "se guadaron con exito los DATOS PERSONALES" });
+                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
                 }
                 catch (Exception ex)
                 {
@@ -492,7 +492,7 @@ namespace SINU.Controllers
                 if (estu != null)
                 {
                     db.spEstudiosEliminar(ID);
-                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se elimino correctamente el Estudio seleccionado" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
             }
@@ -698,7 +698,7 @@ namespace SINU.Controllers
                 }
 
                 db.spActividadMilitarIU(a.IdActividadMilitar, datos.IDPErsona, a.Ingreso, a.FechaIngreso, a.FechaBaja, a.CausaMotivoNoingreso, a.MotivoBaja, a.Jerarquia, a.Cargo, a.Destino, a.IdSituacionRevista, a.IdFuerza, a.IdBaja);
-                return Json(new { success = true  , msg = "Se inserto o actulaizo correctamente ACTMilitar" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true  , msg = "Se inserto o actualizo correctamente ACTMilitar" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -889,7 +889,7 @@ namespace SINU.Controllers
                     
                 }
             }
-            return Json(new {success= false, msg= "MOdelono valido" });
+            return Json(new {success= false, msg= "Modelo no valido" });
         }
   
 
