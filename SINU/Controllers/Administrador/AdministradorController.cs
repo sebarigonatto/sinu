@@ -109,10 +109,11 @@ namespace SINU.Controllers.Administrador
 
                         // prueba de envio de mail cuando se crea un usuario
                         //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
-                        var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
+                        var modelPlantilla = new ViewModels.PlantillaMailCuenta
                         {
                             Apellido = usuario.Apellido,
-                            //LinkConfirmacion = callbackUrl
+                            Email = usuario.Email,
+                            Password = usuario.Password,
                         };
 
                         var configuracion = new TemplateServiceConfiguration
@@ -122,7 +123,7 @@ namespace SINU.Controllers.Administrador
                         };
 
                         string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailConfirmacion.cshtml";
+                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailCuenta.cshtml";
 
                         Engine.Razor = RazorEngineService.Create(configuracion);
                         //compila el plantilla con un modelo  y genera un string 
@@ -132,7 +133,7 @@ namespace SINU.Controllers.Administrador
                         //html = html.Replace("&Nombre", model.Apellido);
                         //html = html.Replace("&link", "<a href=\"" + callbackUrl + "\">link</a>");
 
-                        string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAsunto1").ValorDato;
+                        string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAsunto3").ValorDato;
                         await UserManager.SendEmailAsync(user.Id, asunto, cuerpoMail);
 
                         //return RedirectToAction("Login");
