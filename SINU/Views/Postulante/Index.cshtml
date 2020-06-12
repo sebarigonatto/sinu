@@ -430,12 +430,19 @@
                     $("#BTDatosBasicos").html("");
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
                     break;
+                case "Elimina":
+                    $.Elimina(response.url_Tabla);
+                    break;
                 default:
             };
         };
 
         function Falla(response) {
-           alert("Error occured." );
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
+            $("#ModalAnuncios").modal();
         };
 
 

@@ -134,12 +134,6 @@ new { id = "BeginFormActMilitarCUD" }))
     <div class="modal-footer ">
         <div class="float-md-right">
                 <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
-
-                @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
-                @if (Model.ACTMilitarIDVM.IdActividadMilitar != 0)
-                {
-                    <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaACT" />
-                }
                 <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormActMilitarCUD" />
 
         </div>

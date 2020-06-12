@@ -492,7 +492,11 @@ namespace SINU.Controllers
                 if (estu != null)
                 {
                     db.spEstudiosEliminar(ID);
-                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado" }, JsonRequestBehavior.AllowGet);
+                    //success: es true cundo la operacion es exitosa
+                    //msg:mensjae que figurara en el modal
+                    //form: se ejecutar un accion en un switch del script de la vista index
+                    //url_Tabla: es el nombre de la accion y colocandole el subfijo NAV es el contenedor de la tabla actual
+                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado",form="Elimina", url_Tabla= "Estudios" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
             }
@@ -620,7 +624,7 @@ namespace SINU.Controllers
                 var regidioma = db.PersonaIdioma.FirstOrDefault(m=>m.IdPersonaIdioma==ID);
                 db.PersonaIdioma.Remove(regidioma);
                 db.SaveChanges();
-                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado" });
+                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado",form = "Elimina", url_Tabla = "Idiomas" },JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             { 
@@ -712,7 +716,7 @@ namespace SINU.Controllers
             try
             {
                 db.spActividadMilitarEliminar(ID);
-                return Json(new { success = false, msg = "se elimino correctamente el registro"}, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "se elimino correctamente el registro", form = "Elimina", url_Tabla = "ActMilitar" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -819,12 +823,11 @@ namespace SINU.Controllers
                             new vPersona_Familiar
                             {
                                 IdFamiliar = f.IdFamiliar,
-                                idParentesco = f.idParentesco,
+                                Relacion = db.vParentesco.FirstOrDefault(m=>m.idParentesco==f.idParentesco).Relacion,
                                 IdPersonaPostulante = f.IdPostulantePersona,
                                 IdPersonaFamiliar = f.IdPersona,
                                 Apellido = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Apellido,
                                 Nombres = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Nombres,
-                                Vive= f.Vive
                             }
                         )
                 );
@@ -891,7 +894,20 @@ namespace SINU.Controllers
             }
             return Json(new {success= false, msg= "MOdelono valido" });
         }
-  
+        public JsonResult EliminaFAMI(int ID_per,int ID_fami)
+        {
+            try
+            {
+                db.spFamiliarEliminar(ID_fami, ID_per);
+
+                return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
     }
 }

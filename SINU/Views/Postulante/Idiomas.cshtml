@@ -18,7 +18,10 @@
                 <th>@Html.DisplayNameFor(m => m.Idioma)</th>
                 <th>@Html.DisplayNameFor(m => m.NivelHabla)</th>
                 <th class="oculto">@Html.DisplayNameFor(m => m.NivelEscribe)</th>
-                <th class="oculto" >@Html.DisplayNameFor(m => m.NivelLee)</th >
+                <th class="oculto">@Html.DisplayNameFor(m => m.NivelLee)</th>
+                <th>
+                    @Html.Label("Opciones")
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +34,15 @@
                 <td>@Html.DisplayFor(modelItem => item.NivelHabla)</td>
                 <td class="oculto">@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
                 <td class="oculto">@Html.DisplayFor(modelItem => item.NivelLee)</td>
-
+                <td>
+                    <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdPersonaIdioma"></button>&ensp; |&ensp;
+                    @Ajax.ActionLink(" ", "EliminaIDIO", new { ID = item.IdPersonaIdioma }, new AjaxOptions
+                      {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla",
+                      }, new { @id = "EliminaIDIO", @class = "btn btn-danger fas fa-trash-alt" })
+                </td>
 
             </tr>
             }

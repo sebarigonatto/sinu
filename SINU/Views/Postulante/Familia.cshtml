@@ -19,12 +19,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nombres)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.idParentesco)
-            </th>
             <th class="oculto">
-                @Html.DisplayNameFor(model => model.Vive)
+                @Html.DisplayNameFor(model => model.Relacion)
             </th>
+            <th>
+              Opciones
+            </th>
+            @*<th class="oculto">
+                @Html.DisplayNameFor(model => model.Vive)
+            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -47,13 +50,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nombres)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.idParentesco)
-            </td>
-
             <td class="oculto">
-                @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
+                @Html.DisplayFor(modelItem => item.Relacion)
             </td>
+            <td>
+                @Html.ActionLink(" ", "FamiliaCUD", new { idPersonaFamilia = item.IdPersonaFamiliar }, new { @class = "btn btn-success fas fa-edit" ,@tooltip="Editar" }) &ensp;|&ensp;
+                @Ajax.ActionLink(" ", "EliminaFAMI", new { ID_per = item.IdPersonaFamiliar, ID_fami = item.IdFamiliar }, new AjaxOptions
+                  {
+                    HttpMethod = "POST",
+                    OnSuccess = "Exito(data,status,xhr)",
+                    OnFailure = "Falla",
+                  }, new { @id = "EliminaFAMI", @class = "btn btn-danger fas fa-trash-alt" })
+            </td>
+            @*<td class="oculto">
+                @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
+            </td>*@
         </tr>
         }
     </tbody>

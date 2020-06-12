@@ -138,11 +138,6 @@ new { id = "BeginFormEstudioCUD" }))
     <div class="modal-footer ">
         <div class="float-sm-right">
             <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
-            @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
-            @if (Model.vPersona_EstudioIdVM.IdEstudio != 0)
-            {
-                <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaEST"  />
-            }
             <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormEstudioCUD"/>
 
         </div>

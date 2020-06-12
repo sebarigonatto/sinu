@@ -78,11 +78,6 @@ new { id = "BeginFormIdiomaCUD" }))
     <div class="modal-footer ">
         <div class="float-md-right">
             <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
-            @* Se agrega este boton cuando se selecciono un estudio exitente para modificar o eliminar *@
-            @if (Model.VPersona_IdiomaIdVM.IdPersonaIdioma != 0)
-            {
-                <input type="button" value="Eliminar" class="btn btn-danger Eliminar" id="EliminaIDIO" />
-            }
             <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormIdiomaCUD"/>
 
         </div>

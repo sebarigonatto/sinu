@@ -7,7 +7,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     "autoWidth": true,
 
     //ver si es necesario este fragmento
-    select: 'single',
+    select: false,//'single',
     "columnDefs": [{
         "searchable": false,
         "orderable": false,
@@ -208,7 +208,7 @@ $(document).ready(function () {
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
-
+     
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
         var Tabla = $('table').DataTable();
@@ -216,17 +216,26 @@ $(document).ready(function () {
         //guardo el index de la fila seleccionada
         //se llama al modal y se le envia la id de estudio correspondiete
 
-        Tabla.on('select.dt', function (e, dt, type, index) {
-            var id_Tabla = $(this).attr("id");
-            //solo utilizo modal para las que no tengan el id TABLAFAMILIA
-            if (id_Tabla != "TablaFamilia") {
-                var data = dt.rows(index).data();
-                var id_registro = data[0][0];
-                //llamo a la funcion para mostrar el modal y le envio 2 paremtros
-                ModalEIACUD(id_registro, id_persona, id_Tabla);
-                $("#ModalEIA").modal("show");
-            };
+        $(".Agrega").on("click", function () {
+            id_registro = $(this).attr("data-ID");
+            id_tabla =id = $(this).closest("table").attr("ID");
+            //alert(id_registro+ "  " +id_tabla); 
+            ModalEIACUD(id_registro, id_persona, id_tabla);
+            $("#ModalEIA").modal("show");
         });
+       
+        
+        //Tabla.on('select.dt', function (e, dt, type, index) {
+        //    var id_Tabla = $(this).attr("id");
+        //    //solo utilizo modal para las que no tengan el id TABLAFAMILIA
+        //    if (id_Tabla != "TablaFamilia") {
+        //        var data = dt.rows(index).data();
+        //        var id_registro = data[0][0];
+        //        //llamo a la funcion para mostrar el modal y le envio 2 paremtros
+        //        ModalEIACUD(id_registro, id_persona, id_Tabla);
+        //        $("#ModalEIA").modal("show");
+        //    };
+        //});
     };
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
@@ -340,21 +349,11 @@ $(document).ready(function () {
                     $(form_actual).submit()
                     if (valido) {
                         $("#ModalEIA").modal("hide");
-                    } 
+                        ActualizaTabla();
+                    };
                 });
 
-                ///////////////////////////////ELIMINA///////////////////////////////////
-
-                //ELIMINA EL ESTUDIO SELECCIONADO
-                $(".Eliminar").on("click", function () {
-                    $.getJSON('/Postulante/' + url_Elim,
-                        { ID: id_registro },
-                        function (response) {
-                            alert(response.success + " - " + response.msg);
-                        });
-                    //oculta el modal
-                    $("#ModalEIA").modal("hide");
-                });
+               
             },
 
             //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
@@ -367,8 +366,17 @@ $(document).ready(function () {
         });
     };
 
+    ///////////////////////////////ELIMINA///////////////////////////////////
+   
+    //ELIMINA EL ESTUDIO SELECCIONADO
+    $.Elimina =function (tabla) {
+         url_Tabla = tabla;
+         //oculta el modal
+        ActualizaTabla();
+     };
+
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
-    $("#ModalEIA").on('hidden.bs.modal', function () {
+     function ActualizaTabla() {
         //alert(id_persona + url_Tabla );
         $("#" + url_Tabla + "NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona }, function () {
             //alert("se recargo la vista de la tabla actual...")
@@ -383,8 +391,7 @@ $(document).ready(function () {
             });
 
         });
-    });
-
+    };
 
 
 
@@ -538,14 +545,16 @@ $(document).ready(function () {
     /////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE FAMILIA */
     $("#TablaFamilia").on('select.dt', function (e, dt, type, index) {
-        var data = dt.rows(index).data();
-        var idPersonaFamilia = data[0][0];
+        e.preventDefault;
+        e.stopImmediatePropagation();
+        //var data = dt.rows(index).data();
+        //var idPersonaFamilia = data[0][0];
        
 
-        //alert(IdFamilia);
-        //redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
-        var url = "/Postulante/FamiliaCUD?idPersonaFamilia=" + idPersonaFamilia;
-        window.location.href = url;
+        ////alert(IdFamilia);
+        ////redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
+        //var url = "/Postulante/FamiliaCUD?idPersonaFamilia=" + idPersonaFamilia;
+        //window.location.href = url;
 
     });
 
@@ -562,7 +571,7 @@ $(document).ready(function () {
     }
 
 
-    //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo SOLO VERSION MOBIL
+    //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo 
     $(".TABMovil .navbar-toggler").on("click", function (e) {
         var idBT = $(this).attr("id");
         var idTAB;

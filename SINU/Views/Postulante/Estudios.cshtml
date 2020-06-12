@@ -16,10 +16,13 @@
                 <th hidden>IdEstudio</th>
                 <th hidden>IdPersona</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
-               <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
                 @* <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
                 @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>*@
+                <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
+                <th>
+                    @Html.Label("Opciones")
+                </th>
             </tr>
         </thead>
         <tbody class="position-static">
@@ -30,16 +33,26 @@
                 <td hidden>@Html.DisplayFor(modelItem => item.IdEstudio)</td>
                 <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
                 <td style="max-width:5rem">@Html.DisplayFor(modelItem => item.Nivel)</td>
-                <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
 
                 @*<td>@Html.DisplayFor(modelItem => item.Titulo)</td>*@
                 <td class="truncate">@Html.DisplayFor(modelItem => item.Nombre)</td>
                 @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
+                <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
+                <td>
+                    <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdEstudio"></button>&ensp; |&ensp;
+                    @Ajax.ActionLink(" ", "EliminaEST", new { ID = item.IdEstudio }, new AjaxOptions
+                      {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla",
+                      }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                </td>
             </tr>
-            }
-        </tbody>
 
-    </table>
+        }
+            </tbody>
+
+        </table>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" id="Nuevo_REG" data-IdTabla="TablaEstudio">
@@ -49,6 +62,8 @@
 
 </div>
 <script type="text/javascript">
-   
+   //SelectTabla(tabla, ID){
+   //     alert(this.attr("ID" + "   " + ID));
+   // };
 </script>
 
