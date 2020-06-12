@@ -96,7 +96,7 @@ $(document).ready(function () {
     $(".combobox").selectpicker({
         liveSearch: true,
         size: 7,
-        liveSearchPlaceholder: "Ingrese su busqueda",
+        liveSearchPlaceholder: "Ingrese su busqueda...",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
@@ -167,25 +167,29 @@ $(document).ready(function () {
 
     //Funcion de Provincia que actualiza los combobox de localidad
     function PROVINCIA(Combo) {
-
+         
         var ValP = $("#" + Combo).val();
-        //alert(Combo + " " + ValP);
-        var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
-        //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
-        $(ComboLocalidad).empty();
+        if (ValP!="") {
+            //alert(Combo + " " + ValP);
+            var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
+            //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
+            $(ComboLocalidad).empty();
 
-        //llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
-        $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-            Provincia: ValP,
-        },
-            function (data) {
-                //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
-                $.each(data, function () {
-                    $(ComboLocalidad).append('<option value=' + this.Value + '>' + this.Text + '</option>');
+            //llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
+            $.getJSON('/Postulante/DropEnCascadaDomicilio', {
+                Provincia: ValP,
+            },
+                function (data) {
+                    //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
+                    $(ComboLocalidad).append('<option value="">' + 'Seleccione una Localidad...' + '</option>');
+                    $.each(data, function () {
+                        $(ComboLocalidad).append('<option value=' + this.Value + '>' + this.Text + '</option>');
+                    });
+                    //para actualizar el combobox
+                    $(ComboLocalidad).selectpicker('refresh');
                 });
-                //para actualizar el combobox
-                $(ComboLocalidad).selectpicker('refresh');
-            });
+        }
+       
     };
 
     //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
@@ -193,14 +197,16 @@ $(document).ready(function () {
         var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
         //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
         var valCP = $("#" + comboid).val();
-        $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-            Localidad: valCP,
-        },
-            function (data) {
-                //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
-                $(ComboCP).val(data.Text);
-            });
-        ////para actualizar el combobox
+        if (valCP!="") {
+            $.getJSON('/Postulante/DropEnCascadaDomicilio', {
+                Localidad: valCP,
+            },
+                function (data) {
+                    //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
+                    $(ComboCP).val(data.Text);
+                });
+            ////para actualizar el combobox
+        }
     };
 
     //////////////////////////////////////////////////////////////////////////////

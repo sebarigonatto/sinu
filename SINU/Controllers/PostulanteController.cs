@@ -318,26 +318,27 @@ namespace SINU.Controllers
         //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
         public JsonResult DropEnCascadaDomicilio(string? Provincia, int? Localidad)
         {
-            if (Provincia!=null)
-            {
-                var localidades = db.vProvincia_Depto_Localidad
-                                .Where(m => m.Provincia == Provincia)
-                                .Select(m => new SelectListItem
-                                {
-                                    Value = m.IdLocalidad.ToString(),
-                                    Text = m.Localidad
-                                })
-                                .OrderBy(m => m.Text)
-                                .ToList();
-                return Json(localidades, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                string Value = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).IdLocalidad.ToString();
-                string Text = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).CODIGO_POSTAL.ToString();
+                if (Provincia != null)
+                {
+                    var localidades = db.vProvincia_Depto_Localidad
+                                    .Where(m => m.Provincia == Provincia)
+                                    .Select(m => new SelectListItem
+                                    {
+                                        Value = m.IdLocalidad.ToString(),
+                                        Text = m.Localidad
+                                    })
+                                    .OrderBy(m => m.Text)
+                                    .ToList();
+                    return Json(localidades, JsonRequestBehavior.AllowGet);
+                }
+                else if (Localidad!= null)
+                {
+                    string Value = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).IdLocalidad.ToString();
+                    string Text = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).CODIGO_POSTAL.ToString();
 
-                return Json(new { Value, Text }, JsonRequestBehavior.AllowGet);
-            }
+                    return Json(new { Value, Text }, JsonRequestBehavior.AllowGet);
+                };
+            return Json(new {}, JsonRequestBehavior.AllowGet);
         }
 
 //----------------------------------Estudios----------------------------------------------------------------------//
