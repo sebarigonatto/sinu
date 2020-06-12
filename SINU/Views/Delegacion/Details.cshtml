@@ -1,4 +1,4 @@
-﻿@model SINU.Models.vInscripcionDetalle
+﻿s@model SINU.Models.vInscripcionDetalle
 
 <!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
 @{
@@ -16,60 +16,62 @@
 {
     @Html.AntiForgeryToken()
 
-    <div>
+    <div class="container">
         <h4>@Model.IdInscripcion</h4>
         <hr />
 
 
         @Html.HiddenFor(m => m.IdPersona)
         @Html.HiddenFor(m => m.IdInscripcion)
-    <div class="list-group">
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Apellido)</b>:    @Html.DisplayFor(model => model.Apellido)
-        </div>
+        <div class="list-group">
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Apellido)</b>:    @Html.DisplayFor(model => model.Apellido)
+            </div>
 
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Nombres)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.DNI)</b>:    @Html.DisplayFor(model => model.DNI)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Genero)</b>:    @Html.DisplayFor(model => model.Genero)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Telefono)</b>:    @Html.DisplayFor(model => model.Telefono)
-        </div>
-        <div class="list-group-item">
-            @{ 
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Nombres)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.DNI)</b>:    @Html.DisplayFor(model => model.DNI)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Genero)</b>:    @Html.DisplayFor(model => model.Genero)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Telefono)</b>:    @Html.DisplayFor(model => model.Telefono)
+            </div>
+            <div class="list-group-item">
 
-            }   
-            <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.Label(Model.Celular ?? "  -- ")
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Preferencia)</b>:    @Html.DisplayFor(model => model.Preferencia)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.FechaRegistro)</b>:    @Html.DisplayFor(model => model.FechaRegistro)
-        </div>
-        <div class="list-group-item">
-            <b>@Html.DisplayNameFor(model => model.Inscripto_En)</b>:    @Html.DisplayFor(model => model.Inscripto_En)
-        </div>
+                <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.Label(Model.Celular ?? "  -- ")
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Preferencia)</b>:    @Html.DisplayFor(model => model.Preferencia)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.FechaRegistro)</b>:    @Html.DisplayFor(model => model.FechaRegistro)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(model => model.Inscripto_En)</b>:    @Html.DisplayFor(model => model.Inscripto_En)
+            </div>
+            <div class="list-group-item">
+                <b>@Html.DisplayNameFor(Model => Model.IdInscripcion)</b>:   @Html.DisplayFor(Model => Model.IdInscripcion)
+            </div>
 
+        </div>
     </div>
-    </div>
-    <br>
-    <div class="form-group row">
-        <div class="col-sm-2">
-            @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+    <div class="container-fluid">
+        <div class="form-group row">
+            <div class="col-sm-2">
+                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+            </div>
+
+            <div class="col-md-2">
+                <input type="submit" value="Asiganar Fecha" class="btn btn-success" />
+            </div>
+
         </div>
-
-        @*<div class="col-md-2">
-            <input type="submit" value="Siguiente" class="btn btn-success" />
-        </div>*@
-
     </div>
 }

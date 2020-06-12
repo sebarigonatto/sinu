@@ -18,7 +18,8 @@
     <br />
     <address style="font-size:large">
         Mail de Contacto: @Model.Configuracion.First(p => p.NombreDato == "ResponsableMail").ValorDato <br />
-        Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato -- @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato
+        Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato <br />
+        @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato<br />
         Piso: @Model.Configuracion.First(p => p.NombreDato == "ResponsablePisoOfic").ValorDato<br />
         Telefono: @Model.Configuracion.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
 
