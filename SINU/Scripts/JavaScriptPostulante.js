@@ -266,9 +266,9 @@ $(document).ready(function () {
             success: function (response) {
                 $('#ModalEIACuerpo').html(response);
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
-                $('#ModalEstudioCuerpo').removeData("validator");
-                $('#ModalEstudioCuerpo').removeData("unobtrusiveValidation");
-                //$.validator.unobtrusive.parse('#ModalEstudioCuerpo');
+                $('#ModalEIACuerpo').removeData("validator");
+                $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse('#ModalEIACuerpo');
 
                 //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
                 /* https://developer.snapappointments.com/bootstrap-select/ */
@@ -317,7 +317,12 @@ $(document).ready(function () {
                 $("#DropdownEXT").on("change.bs.select", function () {
                     INST_EXT(1);
                 });
-
+                //verifico si egreso o no para mostrar/ocultar ciertos campos del formulario
+                EgresoSINO();
+                $("#TerminoEST").on("change", function () {
+                    EgresoSINO();
+                });
+                
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -326,10 +331,16 @@ $(document).ready(function () {
                 });
 
                 /////////////////////////////////GUARDA////////////////////////////////////
-
+                //al guardar los registros de un formulario de una vista parcial confirmo que la validacion de los campos
+                //si es .valid() es falso, muestro los errores y no cierro el modal
                 $(".Guardar_REG").on("click", function () {
-                    alert("se cerrara modal!!!");
-                    $("#ModalEIA").modal("hide");
+                    var form_actual ="#"+ this.getAttribute("data-form");
+                    //alert(form_actual);
+                    var valido = $(form_actual).valid();
+                    $(form_actual).submit()
+                    if (valido) {
+                        $("#ModalEIA").modal("hide");
+                    } 
                 });
 
                 ///////////////////////////////ELIMINA///////////////////////////////////
@@ -341,6 +352,7 @@ $(document).ready(function () {
                         function (response) {
                             alert(response.success + " - " + response.msg);
                         });
+                    //oculta el modal
                     $("#ModalEIA").modal("hide");
                 });
             },
@@ -394,6 +406,17 @@ $(document).ready(function () {
             $("#JuriEST,#IdInstEST").val("");
         }
     };
+
+    //funcion de si egreso o no para mostrar campos de promedio y ultimo año cursado
+    function EgresoSINO() {
+        if ($("#TerminoEST").val() == "true") {
+            $("#ULT_AÑO, #PROMEDIO").show();
+        } else {
+            $("#ULT_AÑO, #PROMEDIO").hide();
+            $("#ULT_AÑO input ,#PROMEDIO input").val("");
+        };
+    };
+
 
     //funcion que arma los combos en cascada de la vista parcial Estudios
     function ComboCascada(Combo, ValC) {
@@ -530,12 +553,8 @@ $(document).ready(function () {
     var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
     if (paganterior > 1) {
         //alert("vino de familia");
-        $("#datosbasicos,#DatosPersonales,#DatosPersonalesNAV").removeClass("show active");
-        $("#BTDatosPersonalesNAV").addClass("collapsed");
-        $("#Documentacion,#Familia, #FamiliaNAV").addClass("show active");
-        $("#BTFamiliaNAV").removeClass("collapsed");
-        $("#datosbasicos-tab, #TABDocumentacion a.active").removeClass("active");
-        $("#Documentacion-tab, #TABDocumentacion a[href='#Familia']").addClass("active");
+        $("#5 a").tab("show");
+        $("#FamiTAB a").tab("show");
            
         //$("html,body").animate({
         //    scrollTop: 250
@@ -557,14 +576,7 @@ $(document).ready(function () {
 
         });
     });
-    $(document).on("submit", false);
-
-    //submitButton.click(function (e) {
-    //    if (form.checkValidity()) {
-    //        form.submit();
-    //    }
-    //});
-
+ 
     $("#DatosBasicosBTGuarda").on("click", function () {
         var valido = $("#BeginFormDatosBasicos").valid();
         //alert(valido);
@@ -585,16 +597,18 @@ $(document).ready(function () {
                         //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
                         $("#BTNModal").html("Cancelar");
                         $("#ModalCenterTitle").html("Advertencia");
+                        $("#GuardarDTF").css("display", "block")
                         $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
                         $("#ModalAnuncios").modal();
                     };
                 });
         };
-        $("#GuardarDTF").on("click", function (e) {
-            e.preventDefault;
-            e.stopImmediatePropagation();
-            $("#BeginFormDatosBasicos").submit();
-            $("#ModalAnuncios").modal("hide");
-        });
     });
+    $("#GuardarDTF").on("click", function (e) {
+        e.preventDefault;
+        e.stopImmediatePropagation();
+        $("#BeginFormDatosBasicos").submit();
+        //$("#ModalAnuncios").modal("show");
+    });
+
 });

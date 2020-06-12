@@ -22,6 +22,11 @@ namespace SINU.Models
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
+        [Required]
+        [Display(Name = "Fecha de Nacimiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
 
         [TelefonoCelular("Celular",ErrorMessage ="Este Campo debe esta completado")]
         [DataType(DataType.PhoneNumber)]
@@ -74,12 +79,14 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]
         public string Oficina { get; set; }
+         public Nullable<int> edad { get; set; }
     }
 
     public class vPersona_DatosPerMetadata
     {
         public string Email { get; set; }
         public int IdPersona { get; set; }
+        [Required]
         public string CUIL { get; set; }
         [Display(Name ="Fecha de Nacimiento")]
         [Required]
@@ -89,13 +96,13 @@ namespace SINU.Models
         //[Required]
         [Display(Name ="Edad")]
         public Nullable<int> edad { get; set; }
+        [Required]
         [Display(Name="Estado Civil")]
         public string IdEstadoCivil { get; set; }
-        public string EstadoCivil { get; set; }
         [Display(Name="Religion")]
         public string IdReligion { get; set; }
-        public string Religion { get; set; }
         [Display(Name="Tipo de Nacionalidad")]
+        [Required]
         public int idTipoNacionalidad { get; set; }
         public string Nacionalidad { get; set; }
     }
@@ -179,16 +186,22 @@ namespace SINU.Models
     public partial class VPersona_EstudioMetadata
     {
         public int IdPersona { get; set; }
+        [Required]
+        [Display(Name ="Nivel de Estudio")]
         public Nullable<int> IdNiveldEstudio { get; set; }
         public int IdEstudio { get; set; }
+        [Required]
         public string Titulo { get; set; }
         public bool Completo { get; set; }
         public int IdInstitutos { get; set; }
+        [Display(Name ="Nombre del Instituto")]
         public string Nombre { get; set; }
+        [RegularExpression("^-?[0-9]+([,][0-9]*)?$",ErrorMessage ="Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
         [Display(Name ="Cantidad de Materias Adeudadas")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         [Display(Name = "Ultimo año Cursado")]
+        [RegularExpression("^-?[0-9]*", ErrorMessage ="Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string Nivel { get; set; }
         public string NombreYPaisInstituto { get; set; }
@@ -235,11 +248,16 @@ namespace SINU.Models
 
     public class vUsuariosAdministrativosMetadata
     {
+        [Required]
         [Display(Name ="Matricula de Revista")]
         public string mr { get; set; }
+        [Required]
         public string Grado { get; set; }
+        [Required]
         public string Destino { get; set; }
+        [Required]
         public string Nombre { get; set; }
+        [Required]
         public string Apellido { get; set; }
         public string Comentario { get; set; }
 
@@ -247,6 +265,7 @@ namespace SINU.Models
         public System.DateTime FechUltimaAct { get; }
 
         [Required]
+        //[RegularExpression("([a-z]|[A-Z]|[0-9]|[\\W]){4}[a-zA-Z0-9\\W]{3,11}", ErrorMessage = "Invalid password format")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -257,6 +276,8 @@ namespace SINU.Models
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$", ErrorMessage = "El correo electronico ingresado no es valido!!!")]
         public string Email { get; set; }
 
 
@@ -282,5 +303,49 @@ namespace SINU.Models
         public int IdInstitucion { get; set; }
         public int IdPeriodoInscripcion { get; set; }
 
+    }
+
+    public partial class vPersona_FamiliarMetadata
+    {
+        [Required]
+        [Display(Name = "Fecha de Nacimiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+
+        [Display(Name = "Fecha de Casamiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> FechaCasamiento { get; set; }
+
+
+        [Required]
+        [Display(Name = "Parentesco")]
+        public Nullable<int> idParentesco { get; set; }
+        [Required]
+        [Display(Name = "Sexo")]
+        public Nullable<int> IdSexo { get; set; }
+        [Required]
+        [Display(Name = "Estado Civil")]
+        public string IdEstadoCivil { get; set; }
+        [Required]
+        public string Apellido { get; set; }
+        [Required]
+        public string Nombres { get; set; }
+        [Required]
+        public string DNI { get; set; }
+        [Required]
+        public Nullable<bool> Vive { get; set; }
+        [Required]
+        [Display(Name = "Convive")]
+        public Nullable<bool> ConVive { get; set; }
+        [Required]
+        [Display(Name = "Religion")]
+        public string IdReligion { get; set; }
+        [Required]
+        [Display(Name = "Tipo Nacionalidad")]
+        public Nullable<int> idTipoNacionalidad { get; set; }
+        [Required]
+        public string CUIL { get; set; }
     }
 }

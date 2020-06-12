@@ -10,6 +10,8 @@ namespace SINU.ViewModels
         public int ID_PER { get; set; }
         public List<int> EtapaTabs { get; set; }
         public string IDETAPA { get; set; }
+        public bool YAguardado { get; set; }
+
     }
 
     public class PersonaFamiliaVM
@@ -60,6 +62,7 @@ namespace SINU.ViewModels
         public List<string> Localidad { get; set; }
         [DisplayName("Instituto")]
         public List<SelectListItem> InstitutoVM { get; set; }
+        public bool INST_EXT { get; set; }
 
     }
 

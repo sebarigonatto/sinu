@@ -44,7 +44,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosPerVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @id = "fechacumpleaños" })
+                            @Html.TextBoxFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true, @id = "" })
 
                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -65,7 +65,7 @@
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdEstadoCivil)
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -73,15 +73,15 @@
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.IdReligion, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdReligion, new SelectList(Model.vRELIGIONVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdReligion)
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdReligion, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.idTipoNacionalidad, new { @class = "col-md-10 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, new SelectList(Model.TipoNacionalidadVM, "idTipoNacionalidad", "Descripcion"), null, htmlAttributes: new { @class = "form-control selectpicker" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad)
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, new SelectList(Model.TipoNacionalidadVM, "idTipoNacionalidad", "Descripcion"),  null, htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, "", new { @class = "text-danger" })
                         </div>
                     </div>
 

@@ -1,5 +1,5 @@
-﻿ @{   ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
- }
+﻿@{ ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
+}
 
 
 <!DOCTYPE html>
@@ -26,12 +26,12 @@
                 @*muestro el icono como de un barco de frente delante del primer item del MENU*@
                 <p class="nav navbar-text navbar-left ">
                     <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
-                </p >
+                </p>
 
                 @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
 
 
-            </div> 
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -48,17 +48,20 @@
 
                     <!--Armado del menu para el perfil/grupo correspondiente     -->
                     <!-- RenderSection(“NombreSeccion”, required) SI required= false esta sección es opcional, con valor a true le decimos que es obligatorio-->
-                    @RenderSection("MenuPerfil", false)
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @Html.Partial(SINU.Models.Func.CorrespondeMenu());
+                    }
                 </ul>
-                
 
-                    <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
-                    <!--Coloca Link de SESION en extremo Derecho     -->
-                    @Html.Partial("_LoginPartial")
 
-                </div>
+                <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
+                <!--Coloca Link de SESION en extremo Derecho     -->
+                @Html.Partial("_LoginPartial")
+
+            </div>
         </div>
-        </div>
+    </div>
     <!-- aqui TERMINA el menú Principal -->
 
     <div id="body" class="container body-content">
@@ -67,8 +70,8 @@
         @RenderBody()
 
         @*<footer class="" style="background-color:white;height: 4%;">
-            <p class="float-right mr-2 mb-1 ">&copy; @DateTime.Now.Year - SINU - Armada Argentina</p>
-        </footer>*@
+                <p class="float-right mr-2 mb-1 ">&copy; @DateTime.Now.Year - SINU - Armada Argentina</p>
+            </footer>*@
     </div>
 
 

@@ -2,14 +2,26 @@
  <h4>Lugar y Fecha de Entrevista</h4>
 <br />
 <div class="jumbotron" style="background-color:#969696">
-    <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-    <h5>Direccion: <b>@Model.Direccion</b></h5>
-    <h5>Telefono: <b>@Model.Telefono</b></h5>
-    @if (Model.Celular!=null)
+
+    @if (ViewBag.NoAsignado)
     {
-        <h5>Celular: <b>@Model.Celular</b></h5>
+        <h5>Se le informara via correo cuando le hayan asignado una fecha de entrevista, solicitamos este atento.</h5>
+        <h5>Por Consultas comunicarse con la Delegacion seleccionada. </h5>
+        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
+        <h5>Direccion: <b>@Model.Direccion</b></h5>
+        <h5>Telefono: <b>@Model.Telefono</b></h5>
     }
-    <h5>Fecha y Hora: <b>@Model.FechaEntrevista</b></h5>
+    else
+    {
+        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
+        <h5>Direccion: <b>@Model.Direccion</b></h5>
+        <h5>Telefono: <b>@Model.Telefono</b></h5>
+        if (Model.Celular != null)
+        {
+            <h5>Celular: <b>@Model.Celular</b></h5>
+        }
+        <h5> Fecha y Hora:@Model.FechaEntrevista </h5>
+    }
 </div>
 <div class="jumbotron"  style="background-color:#969696">
     <h5><b>@ViewBag.Considere[0]</b><h5 />
