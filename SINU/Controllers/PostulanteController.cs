@@ -136,10 +136,11 @@ namespace SINU.Controllers
             {
                 vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
-                if (entrevistafh.FechaEntrevista ==null)
+                if (entrevistafh.FechaEntrevista == null)
                 {
                     ViewBag.NoAsignado = true;
-                } 
+                }
+                else { ViewBag.NoAsignado = false; }
                 //se carga los texto parametrizados desde la tabla configuracion
                 string[] consideraciones = {
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
