@@ -43,11 +43,8 @@ namespace SINU.Controllers
         public ActionResult Details(int? id)
         {
             List<vInscripcionDetalle> InscripcionElegida;
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-            vSecuencia_EtapaEstado vSecuencia_EtapaEstado;
             try
             {
-                //busco la delegacion que pertenece al usuario con perfil de delegacion            
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
 
@@ -59,13 +56,7 @@ namespace SINU.Controllers
                 }
 
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-                ViewBag.Secuen = vInscripcionEtapas.IdSecuencia;
 
-                //Se creo una variable para poder guardar el id secuencia y luego para saber cual es el paso anterior
-                int secu = vInscripcionEtapas.IdSecuencia; 
-                vSecuencia_EtapaEstado = db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == secu);
-                ViewBag.Ant = vSecuencia_EtapaEstado.Anterior;
 
                 if (InscripcionElegida.Count == 0)
                 {
@@ -81,19 +72,19 @@ namespace SINU.Controllers
             return View(InscripcionElegida.ToList()[0]);
 
         }
-        //Terminar codigo faltante no devuelve nada la vista investigar  por que
+        //Post en donde Hace retorceder de forma natural al postulante
         [HttpPost]
         public ActionResult Details(vInscripcionDetalle vInscripcion)
         {
             try
             {
-                //db.spProximaSecuenciaEtapaEstado(vInscripcion.IdPersona, vInscripcion.IdInscripcion);
+                db.spProximaSecuenciaEtapaEstado(0,vInscripcion.IdInscripcion,true,0,"","");
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("EntrevistaAsignaFecha", new {id = vInscripcion.IdPersona });
         }
 
         public ActionResult EntrevistaAsignaFecha(int id)
@@ -121,7 +112,7 @@ namespace SINU.Controllers
                 var da = db.Inscripcion.Find(datos.IdInscripcion);
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
-                //db.spProximaSecuenciaEtapaEstado(datos.IdPersona, datos.IdInscripcion);
+                db.spProximaSecuenciaEtapaEstado(0,datos.IdInscripcion,false,0,"","");
                 return RedirectToAction("Index");
             }
             catch (System.Exception ex)
