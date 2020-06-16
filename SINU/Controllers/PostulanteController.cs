@@ -661,6 +661,10 @@ namespace SINU.Controllers
                     BajaVM = db.Baja.ToList(),
                     SituacionRevistaVM = db.SituacionRevista.ToList()
                  };
+                if (db.Postulante.First(m => m.IdPersona == ID_persona).AspNetUsers != null)
+                {
+                    actividad.SituacionRevistaVM.Remove(db.SituacionRevista.First(m => m.SituacionRevista1 == "Retirado"));  
+                };
                 if (ID!= null)
                 {
                     actividad.ACTMilitarIDVM = db.ActividadMilitar.FirstOrDefault(m => m.IdActividadMilitar == ID);
@@ -734,7 +738,7 @@ namespace SINU.Controllers
 
                 SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM
                 {
-                    EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1)
+                    EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.Where(m=>m.Descripcion != "Jubilado" & m.Descripcion != "Retirado").ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1)
                 };
 
                 List<string> InteresesSeleccionados = db.Persona.Find(ID_persona).Interes.Select(m => m.DescInteres).ToList();

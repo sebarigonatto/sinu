@@ -108,7 +108,7 @@ new { id = "BeginFormEstudioCUD" }))
                             <div class="form-group">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, htmlAttributes: new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { htmlAttributes = new { @class = "form-control  " } })
+                                    @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { @class = "form-control  " } )
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, "", new { @class = "text-danger" })
                                 </div>
                             </div>

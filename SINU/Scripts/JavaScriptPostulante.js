@@ -536,7 +536,7 @@ $(document).ready(function () {
         if (altura != 0 && peso != 0) {
             var imc = peso / (altura * altura);
             //alert(imc);
-            $("#imc").attr("value", imc.toFixed(2).replace(".", ","));
+            $("#imc").val(imc.toFixed(2).replace(".", ","));
         }
 
     });
@@ -546,6 +546,17 @@ $(document).ready(function () {
         if ($(this).val() == "") {
             $(this).val(0);
         }
+    });
+
+    $("#EstadoCivil").on("change", function () {
+        var estci = $(this).val();
+        if (estci.indexOf("C") > -1) {
+            $("#FechaCasamiento").removeClass("d-none");
+        } else {
+            $("#FechaCasamiento").addClass("d-none");
+            $("#FechaCasamiento input").val("");
+
+        };
     });
 
     /////////////////////////////////////////////////////////////////////////////
