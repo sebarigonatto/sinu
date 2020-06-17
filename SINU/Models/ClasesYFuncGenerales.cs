@@ -1,16 +1,44 @@
-﻿using System;
+﻿using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity.Owin;
+using System.Threading.Tasks;
 
 namespace SINU.Models
 {
-   
+
     /// <summary>Listado de Funciones prácticas que pueden ser usadas desde cualquier parte del sistema
     /// </summary>
-    public class Func
+    public class Func        
     {
+        private static ApplicationUserManager _userManager;
+        private static SINUEntities db = new SINUEntities();
+
+        private static ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            set
+            {
+                _userManager = value;
+            }
+        }
+        public Func()
+        {
+        }
+
+        public Func(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+
+        }
         /// <summary>Nombre de la Identidad que corresponde al usuario del contexto actual
         /// 
         /// </summary>
@@ -40,11 +68,11 @@ namespace SINU.Models
         /// OJO: Cada nombre de Grupo debe tener su archivo _MenuPerfilGrupo
         /// </summary>
         /// <returns></returns>
-        private static string f_BuscaGrupo()
+        private static  string f_BuscaGrupo()
         {
+
             String Respuesta = "";
-            SINUEntities db = new SINUEntities();
-            List<vSeguridad_Grupos_Usuarios> grupo = (db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario== HttpContext.Current.User.Identity.Name).ToList());
+            List<vSeguridad_Grupos_Usuarios> grupo = db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario== HttpContext.Current.User.Identity.Name).ToList();
             Respuesta = (grupo.Count > 0) ? ("_MenuPerfil"+(grupo[0].codGrupo.Trim()).Substring(0,5)) : "_MenuPerfilNoIde";
 
             return Respuesta;
@@ -69,7 +97,7 @@ namespace SINU.Models
         /// <param name="cntrlr">Nombre del controlador donde ocurrio el Problema</param>
         /// <param name="actn">Nombre de la Acción donde ocurrió el problema</param>
         /// <returns></returns>
-        public static System.Web.Mvc.HandleErrorInfo ConstruyeError(String mnsg, string cntrlr, string actn)
+        public static HandleErrorInfo ConstruyeError(String mnsg, string cntrlr, string actn)
         {
             Exception x = new Exception(mnsg);
             System.Web.Mvc.HandleErrorInfo UnError = new System.Web.Mvc.HandleErrorInfo(x, cntrlr, actn);
@@ -77,6 +105,43 @@ namespace SINU.Models
             return UnError;
         }
 
+        /// <summary>Construyo el cuerpo de Email segun los Paramtros que recibo</summary>
+        /// <param name="ModeloPlantilla">Modelo con los datos que apareceran en el email</param>
+        /// <param name="Plantilla">Nombre de la plantilla que se utilizara para el armado del Email</param>
+        /// <param name="ID_persona">Id de la persona con al que se obtiene el email de Destino</param>
+        /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
+        /// <returns></returns>
+        public static async Task<bool> EnvioDeMail(ViewModels.PLantillaMail ModeloPlantilla,string Plantilla, string ID_persona, string Asunto)
+        {
+            try
+            {
+                //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
+                var configuracion = new TemplateServiceConfiguration
+                {
+                    TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
+                    DisableTempFileLocking = true
+                };
+
+                //establescoi l a ubicacion de la Plantilla
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string ubicacionPlantilla = $"{ubicacion}Plantillas\\"+Plantilla;
+
+                Engine.Razor = RazorEngineService.Create(configuracion);
+
+                //compila el plantilla con un modelo  y genera un string 
+                string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, ModeloPlantilla);
+                //busco el asunto en la tabla Configuraciones.
+                string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
+                await UserManager.SendEmailAsync(ID_persona, asunto, cuerpoMail);
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+        }
 
         /// <summary>Modelo de funcion o rutina para armar
         /// </summary>
@@ -88,6 +153,8 @@ namespace SINU.Models
             //obvio puede no tener parametros
             return;
         }
+
+
     }
 
 }

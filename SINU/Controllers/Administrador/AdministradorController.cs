@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace SINU.Controllers.Administrador
 {
@@ -107,38 +107,20 @@ namespace SINU.Controllers.Administrador
                             db.SaveChanges();
                         }
 
-                        // prueba de envio de mail cuando se crea un usuario
-                        //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
+                        //armo el modelo con los datos que quiero que aparescan en el  mail
                         var modelPlantilla = new ViewModels.PlantillaMailCuenta
                         {
                             Apellido = usuario.Apellido,
                             Email = usuario.Email,
                             Password = usuario.Password,
                         };
-
-                        var configuracion = new TemplateServiceConfiguration
-                        {
-                            TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
-                            DisableTempFileLocking = true
-                        };
-
-                        string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailCuenta.cshtml";
-
-                        Engine.Razor = RazorEngineService.Create(configuracion);
-                        //compila el plantilla con un modelo  y genera un string 
-                        string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, modelPlantilla);
-
-                        //string html = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailCuerpo1").ValorDato;
-                        //html = html.Replace("&Nombre", model.Apellido);
-                        //html = html.Replace("&link", "<a href=\"" + callbackUrl + "\">link</a>");
-
-                        string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAsunto3").ValorDato;
-                        await UserManager.SendEmailAsync(user.Id, asunto, cuerpoMail);
-
-                        //return RedirectToAction("Login");
-
-
+                        //la funcio para enviar devuelve un booleano, 
+                        //necesita 4 paramtros:
+                        //ViewModel, con la que se cargaran los datos en la Plantilla del mail
+                        //Nombre de la Plantilla a Utilizar
+                        //Id de la Persona para obtener el correo de destino
+                        //Asusnto de Mail.
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailCuenta.cshtml", user.Id, "MailAsunto3");
                         //si llego aqui es que ya grabe en aspnetuser y en Usuario_OficyDeleg, así que vuelvo al listado 
 
                         return RedirectToAction("Index");
