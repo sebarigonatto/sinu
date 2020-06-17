@@ -229,27 +229,15 @@ namespace SINU.Controllers
                             Apellido = model.Apellido,
                             LinkConfirmacion = callbackUrl
                         };
-
-                        var configuracion = new TemplateServiceConfiguration
-                        {
-                            TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
-                            DisableTempFileLocking = true
-                        };
-
-                        string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                        string ubicacionPlantilla = $"{ubicacion}Plantillas\\PlantillaMailConfirmacion.cshtml";
-
-                        Engine.Razor = RazorEngineService.Create(configuracion);
-                        //compila el plantilla con un modelo  y genera un string 
-                        string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, modelPlantilla);
-
-                        //string html = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailCuerpo1").ValorDato;
-                        //html = html.Replace("&Nombre", model.Apellido);
-                        //html = html.Replace("&link", "<a href=\"" + callbackUrl + "\">link</a>");
-
-                        string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAsunto1").ValorDato;
-                        await UserManager.SendEmailAsync(user.Id, asunto, cuerpoMail);
-
+                        
+                        //la funcio para enviar devuelve un booleano, 
+                        //necesita 4 paramtros:
+                        //ViewModel, con la que se cargaran los datos en la Plantilla del mail
+                        //Nombre de la Plantilla a Utilizar
+                        //Id de la Persona para obtener el correo de destino
+                        //Asusnto de Mail.
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion.cshtml", user.Id, "MailAsunto1");
+                    
                         return RedirectToAction("Login");
                     }
                     AddErrors(result);
