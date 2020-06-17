@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @id = "fechacumpleaños" })
+                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new {@placeholder="dd/MM/yyyy", @class = "form-control datepicker", @readonly = true })
 
                                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -187,14 +187,14 @@
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker",@id="EstadoCivil"})
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group d-none" id="FechaCasamiento">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaCasamiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @id = "fechacumpleaños" })
+                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new {@placeholder="dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
 
                                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "", new { @class = "text-danger" })
@@ -219,7 +219,7 @@
                                 </div>
                                 <br />
                             </div>
-                            <div class="form-group row ml-3 ">
+                            <div class="form-group row ml-3  ">
                                 <input type="submit" value="Guadar Datos" class="btn btn-success m-1" />
                             </div>
 

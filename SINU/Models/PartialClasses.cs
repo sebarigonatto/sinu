@@ -28,6 +28,11 @@ namespace SINU.Models
     public partial class VPersona_Estudio
     {
     }
+    [MetadataType(typeof(vPersona_IdiomaMetadadata))]
+    public partial class vPersona_Idioma
+    {
+    }
+    
 
     [MetadataType(typeof(vPersona_AntropometriaMetadata))]
     public partial class vPersona_Antropometria
@@ -43,6 +48,12 @@ namespace SINU.Models
     public partial class vPersona_ActividadMilitar
     {
     }
+    [MetadataType(typeof(vPersona_SituacionOcupacionalMetadata))]
+    public partial class vPersona_SituacionOcupacional
+    {
+    }
+
+  
 
     [MetadataType(typeof(vUsuariosAdministrativosMetadata))]
     public partial class vUsuariosAdministrativos

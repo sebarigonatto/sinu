@@ -15,11 +15,11 @@
                 @* SE COMENTAN LAS COLUMNAS PARA MOSTRAR LA INFOMRACION MAS SOBRESALIENTE DE CADA REGISTRO *@
                 <th hidden>IdEstudio</th>
                 <th hidden>IdPersona</th>
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nivel)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Nivel)</th>
                 @* <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Nombre)</th>
+                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Nombre)</th>
                 @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>*@
-                <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Completo)</th>
+                <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Completo)</th>
                 <th>
                     @Html.Label("Opciones")
                 </th>

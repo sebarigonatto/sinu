@@ -121,17 +121,24 @@ namespace SINU.Models
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         [Required]
+        [Display(Name ="1° Perimetro de Cabeza")]
         public Nullable<int> PerimCabeza { get; set; }
+        [Display(Name = "2° Perimetro de Torax")]
         [Required]
         public Nullable<int> PerimTorax { get; set; }
+        [Display(Name = "3° Perimetro de Cintura")]
         [Required]
         public Nullable<int> PerimCintura { get; set; }
         [Required]
+        [Display(Name = "6° Perimetro de Cadera")]
         public Nullable<int> PerimCaderas { get; set; }
         [Required]
+        [Display(Name = "4° Largo de Pantalon")]
         public Nullable<int> LargoPantalon { get; set; }
         [Required]
+        [Display(Name = "5° Largo de Entrepierna")]
         public Nullable<int> LargoEntrep { get; set; }
+        [Display(Name = "2° Largo de Falda")]
         public Nullable<int> LargoFalda { get; set; }
         [Required]
         public Nullable<int> Cuello { get; set; }
@@ -208,6 +215,30 @@ namespace SINU.Models
         public string Jurisdiccion { get; set; }
         public string Localidad { get; set; }
     }
+
+    public partial class vPersona_IdiomaMetadadata
+    {
+        public string Email { get; set; }
+        public Nullable<int> IdPersona { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar Nivel de Habla.")]
+        [Display(Name ="Nivel de Habla")]
+        public int Habla { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar Nivel de Lectura.")]
+        [Display(Name = "Nivel de Lectura")]
+        public int Lee { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar Nivel de Escritura.")]
+        [Display(Name = "Nivel de Escritura")]
+        public int Escribe { get; set; }
+        public string Idioma { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar una Idioma.")]
+        [Display(Name = "Idioma")]
+        public string CodIdioma { get; set; }
+        public string NivelHabla { get; set; }
+        public string NivelEscribe { get; set; }
+        public string NivelLee { get; set; }
+        public int IdPersonaIdioma { get; set; }
+    }
+
     public partial class ActividadMilitarMetadadata
     {
 
@@ -224,11 +255,11 @@ namespace SINU.Models
         public string Destino { get; set; }
         [Display(Name = "Situacion de Revista")]
         public int IdSituacionRevista { get; set; }
+        [Required(ErrorMessage = "Debe Seleccionar un Fuerza")]
         public int IdFuerza { get; set; }
         [Display(Name = "Motivo de Baja")]
         public int IdBaja { get; set; }
         public int IdActividadMilitar { get; set; }
-
         public virtual Fuerza Fuerza { get; set; }
     }
 
@@ -244,6 +275,27 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         public Nullable<System.DateTime> FechaBaja { get; set; }
         public Nullable<bool> Ingreso { get; set; }
+    }
+
+    public partial class vPersona_SituacionOcupacionalMetadata
+    {
+        public int IdPersona { get; set; }
+        [Display(Name = "Estado Ocupacional")]
+        public int IdEstadoOcupacional { get; set; }
+        public int IdSituacionOcupacional { get; set; }
+        public string EstadoOcupacional { get; set; }
+        public string Descripcion { get; set; }
+        [Display(Name = "Ocupacion Actual")]
+        public string OcupacionActual { get; set; }
+        [Display(Name = "Domiciolio Laboral")]
+        public string DomicilioLaboral { get; set; }
+        [Display(Name = "Años Trabajados")]
+        public Nullable<int> AniosTrabajados { get; set; }
+        public string Oficio { get; set; }
+        public bool CargaOcupacionActual { get; set; }
+        public string Explicacion { get; set; }
+        public string DescInteres { get; set; }
+
     }
 
     public class vUsuariosAdministrativosMetadata
