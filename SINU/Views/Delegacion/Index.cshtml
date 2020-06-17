@@ -9,8 +9,8 @@
 }
 @*@section MenuPerfil{
 
-    @Html.Partial("_MenuPerfilDeleg")
-}*@
+        @Html.Partial("_MenuPerfilDeleg")
+    }*@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 <!-- INCORRECTO COLOCAR LOS STYLES AQUI-->
 <style>
@@ -195,6 +195,33 @@
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
+               dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf',//'colvis',
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+                    //    extend: 'columnVisibility',
+                    //    text: 'Show secondary',
+                    //    visibility: true,
+                    //    columns: '.secondary'
+                    //},
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+                    //    extend: 'columnVisibility',
+                    //    text: 'Hide secondary',
+                    //    visibility: false,
+                    //    columns: '.secondary'
+                    //},
+                        {
+                            extend: 'print',
+                            text: 'Imprimir',
+                            messageTop: 'Armada Argentina'
+                        },
+                         {
+                            extend: 'copy',
+                            text: 'copiar',                          
+                        }
+         
+         
+                ],
                 responsive: true,
                 "language":
                 {
@@ -221,7 +248,6 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-
                 "columnDefs": [{
                     "targets": 'no-sort',
                     "orderable": false
@@ -230,17 +256,12 @@
                     "targets": 'ni-o-ni-bu',
                     "searchable": false,
                     "orderable": false
-
                 }]
-
-
             });
-
-            $()
-
-
+           
         });
     </script>
+
 
 }
 

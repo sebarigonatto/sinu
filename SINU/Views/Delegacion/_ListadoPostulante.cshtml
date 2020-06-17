@@ -3,23 +3,23 @@
 <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
     <thead>
         <tr>
-            <th>
+            <th class="secondary">
                 @Html.DisplayNameFor(model => model[0].Fecha)
             </th>
-            <th>
+            <th class="secondary">
                 @Html.DisplayNameFor(model => model[0].Email)
             </th>
-            <th>
+            <th class="secondary">
                 @Html.DisplayNameFor(model => model[0].Estado)
             </th>
-            <th class="ni-o-ni-bu">Acciones</th>
+               <th class="ni-o-ni-bu">Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 <td>
