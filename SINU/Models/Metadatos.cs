@@ -54,7 +54,7 @@ namespace SINU.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Como se entero")]
-        [MaxLength(20, ErrorMessage = "Limite de caracteres superado!")]
+        [MaxLength(40, ErrorMessage = "Limite de caracteres superado!")]
         public string ComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }

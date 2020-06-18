@@ -598,11 +598,11 @@ $(document).ready(function () {
                 idTAB = $(this).attr("data-target");
                 $(idTAB).removeClass("show");
             }
-           
 
         });
     });
- 
+
+
     $("#DatosBasicosBTGuarda").on("click", function () {
         var valido = $("#BeginFormDatosBasicos").valid();
         //alert(valido);
@@ -630,6 +630,13 @@ $(document).ready(function () {
                 });
         };
     });
+
+    //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
+    //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
+    if ($("#BeginFormDatosBasicos .fechacumple").val() != "" ) {
+        $("#BTentrevista").removeClass("disabled");
+    };
+
     $("#GuardarDTF").on("click", function (e) {
         e.preventDefault;
         e.stopImmediatePropagation();

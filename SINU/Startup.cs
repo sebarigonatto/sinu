@@ -16,6 +16,8 @@ namespace SINU
             ConfigureAuth(app);
             createRoles();
         }
+
+     
         private void createRoles()
         {
             ApplicationDbContext context = new ApplicationDbContext();
@@ -55,6 +57,8 @@ namespace SINU
             }
 
         }
+
+
     }
     
 }
