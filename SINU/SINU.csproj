@@ -222,7 +222,13 @@
     <Compile Include="Models\Baja.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarreraOficio.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClasesYFuncGenerales.cs" />
+    <Compile Include="Models\ComoSeEntero.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Configuracion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -272,6 +278,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Interes.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Modalidad.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NiveldEstudio.cs">

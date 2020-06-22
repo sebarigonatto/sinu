@@ -54,7 +54,7 @@ namespace SINU.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Como se entero")]
-        [MaxLength(20, ErrorMessage = "Limite de caracteres superado!")]
+        [MaxLength(40, ErrorMessage = "Limite de caracteres superado!")]
         public string ComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
@@ -79,7 +79,7 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]
         public string Oficina { get; set; }
-         public Nullable<int> edad { get; set; }
+         public Nullable<int> Edad { get; set; }
     }
 
     public class vPersona_DatosPerMetadata
@@ -385,6 +385,11 @@ namespace SINU.Models
         [Required]
         public string Nombres { get; set; }
         [Required]
+        //el dni ingresado debe poseer 8 digitos para ser validado
+        [StringLength(8, MinimumLength = 8, ErrorMessage = "El DNI ingresado no es valido")]
+        //[RegularExpression(@"^([0-9]{2})([.])?([0-9]{3})([.])?([0-9]{3})$", ErrorMessage = "Caracteres ingresados NO validos")]
+        //limito al dni que solo acepte numeros
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")] 
         public string DNI { get; set; }
         [Required]
         public Nullable<bool> Vive { get; set; }

@@ -598,11 +598,11 @@ $(document).ready(function () {
                 idTAB = $(this).attr("data-target");
                 $(idTAB).removeClass("show");
             }
-           
 
         });
     });
- 
+
+
     $("#DatosBasicosBTGuarda").on("click", function () {
         var valido = $("#BeginFormDatosBasicos").valid();
         //alert(valido);
@@ -623,13 +623,23 @@ $(document).ready(function () {
                         //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
                         $("#BTNModal").html("Cancelar");
                         $("#ModalCenterTitle").html("Advertencia");
-                        $("#GuardarDTF").css("display", "block")
+                        $("#GuardarDTF").css("display", "block");
                         $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
                         $("#ModalAnuncios").modal();
                     };
                 });
         };
     });
+
+    //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
+    //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
+    if ($("#BeginFormDatosBasicos .fechacumple").val() != "" ) {
+        $("#BTentrevista").removeClass("disabled");
+    };
+
+
+
+
     $("#GuardarDTF").on("click", function (e) {
         e.preventDefault;
         e.stopImmediatePropagation();

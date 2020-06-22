@@ -22,17 +22,26 @@ namespace SINU.Controllers
 
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
-            IDPersonaVM pers = new IDPersonaVM
+            try
             {
-                ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
-            };
-            pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
-            pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
-            int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
-            //cerifico si ya realizo el guardado de datos basicos.
-            //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
-            pers.YAguardado = (db.InscripcionEtapaEstado.Where(i=>i.IdInscripcionEtapaEstado==idINCRIP).Where(i=>i.IdSecuencia==7||i.IdSecuencia==21).ToList().Count() >0 ? true : false);
-            return View(pers);
+                IDPersonaVM pers = new IDPersonaVM
+                {
+                    ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
+                };
+                pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+                //´verifico si ya realizo el guardado de datos basicos.
+                //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
+                //pers.YAguardado = (db.InscripcionEtapaEstado.Where(i=>i.IdInscripcionEtapaEstado==idINCRIP).Where(i=>i.IdSecuencia==7||i.IdSecuencia==21).ToList().Count() >0 ? true : false);
+                return View(pers);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "Index"));
+            }
+           
         }
 
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
@@ -49,8 +58,19 @@ namespace SINU.Controllers
                     SexoVM = db.Sexo.Where(m=>m.IdSexo!=4).ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
-                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona)
+                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
+                    ComoSeEnteroVM = db.ComoSeEntero.Select(m=> new SelectListItem {Value= m.IdComoSeEntero.ToString(), Text=m.Opcion }).ToList()
                 };
+                //var Com = new[] { new SelectListItem { Value = "1", Text="Familiar en la Institucion" },
+                //                 new SelectListItem { Value = "2", Text="En tu escuela, por parte de personal de la Armada" },
+                //                 new SelectListItem { Value = "3", Text="TV, ¿Cual?" },
+                //                 new SelectListItem { Value = "4", Text="Radio, ¿Cual?" },
+                //                 new SelectListItem { Value = "5", Text="Periodicos / Revistas, ¿Cual?" },
+                //                 new SelectListItem { Value = "6", Text="Redes Sociales, ¿Cual?" },
+                //                 new SelectListItem { Value = "7", Text="Otros" },
+                //};
+                // Com.ForEach(m => datosba.ComoSeEntero.Add(m));
+
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -72,21 +92,8 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
 
-                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
-                    //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
-                    JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.edad);
-                    dynamic data = GRUPO.Data;
-                    if (data.coherencia)
-                    {
-                        //Datos basicos - Validado; ID= 7
-                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
-                    }
-                    else
-                    {
-                        //Datos basicos - No Validado; ID= 21
-                        db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
-                    };
-
+                    //var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+                    
                     return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
 
                 }
@@ -102,6 +109,7 @@ namespace SINU.Controllers
 
         //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
         public JsonResult EdadInstituto(int? IDinst ,int? edad ) {
+
             if (IDinst == 9 & edad > 22)
             {
                 return Json(new { coherencia = false },JsonRequestBehavior.AllowGet);
@@ -118,12 +126,28 @@ namespace SINU.Controllers
         {
             try
             {
+                var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
+                //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
+                JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.Edad);
+                dynamic data = GRUPO.Data;
+                if (data.coherencia)
+                {
+                    //Datos basicos - Validado; ID= 7
+                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
+                }
+                else
+                {
+                    //Datos basicos - No Validado; ID= 21
+                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
+                };
+                
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");
-                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" });
+
+                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -806,7 +830,7 @@ namespace SINU.Controllers
             try
             {
                 db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
-                return Json(new { success = true, msg = "exito en guardar la situacion ocupacional" });
+                return Json(new { success = true, msg = "Se guardaron los DATOS exitosamente." });
             }
             catch (Exception ex )
             {
@@ -884,6 +908,7 @@ namespace SINU.Controllers
                 int? idpersonafamiliar = 0;
                 try
                 {
+                    
                     db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
                     datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
                     if (datos.IdPersonaFamiliar==0)
@@ -899,6 +924,24 @@ namespace SINU.Controllers
                 }
             }
             return Json(new {success= false, msg= "Modelo no valido" });
+        }
+
+        public JsonResult VerificarDNI(int DNI)
+        {
+            try
+            {
+                var per = db.Persona.First(m => m.DNI == DNI.ToString());
+                if (per != null)
+                {
+                    return Json(new { existe = true, msg = "La persona que desea agregar como familiar ya esxite" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { existe = false }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = true, msg=  ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
+            }
         }
         public JsonResult EliminaFAMI(int ID_per,int ID_fami)
         {

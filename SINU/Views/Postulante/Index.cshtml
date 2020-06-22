@@ -322,7 +322,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/JavaScriptPostulante.js"></script>
+    <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
 
         //VER COMO ANEJAR LO DELOS CAMBIOS DE UN CAMPO Y NO SE LO ALLAS GUARDADO
@@ -372,12 +372,6 @@
                     $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
                 };
 
-                if ('@Model.YAguardado'=="True") {
-                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
-                    $("#BTentrevista").removeClass("disabled");
-                    $("#DatosBasicosBTGuarda").attr("disabled", "disabled").unbind("click");
-
-                };
                 $("#TabGeneral li").each(function () {
                     idTAB = $(this).attr("id");
                     //alert(IDETP.indexOf(idTAB));
@@ -418,10 +412,6 @@
             //alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
-                    //alert(response.form);
-                    //deshabilito el boton de guardado y habilito el de solicitar entrevista
-                    $("#DatosBasicosBTGuarda").attr("disabled", "disabled").unbind("click");
-                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
                     $("#BTentrevista").removeClass("disabled");
                     break;
                 case "solicitudentrevista":
@@ -444,8 +434,7 @@
             $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
             $("#ModalAnuncios").modal();
         };
-
-
+        
         //$(function () {
         //    $('#frmEnvio').unbind().submit(function (e) {
         //        e.preventDefault();

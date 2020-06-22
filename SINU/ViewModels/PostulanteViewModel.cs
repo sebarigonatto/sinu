@@ -31,6 +31,8 @@ namespace SINU.ViewModels
         public List<Sexo> SexoVM { get; set; }
         public List<vPeriodosInscrip> vPeriodosInscripsVM { get; set; }
         public List<OficinasYDelegaciones> OficinasYDelegacionesVM { get; set; }
+        public List<SelectListItem> ComoSeEnteroVM { get; set; }
+        
     }
 
     public class DatosPersonalesVM
