@@ -236,7 +236,7 @@ namespace SINU.Controllers
                         //Nombre de la Plantilla a Utilizar
                         //Id de la Persona para obtener el correo de destino
                         //Asusnto de Mail.
-                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion.cshtml", user.Id, "MailAsunto1");
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id,null, "MailAsunto1");
                     
                         return RedirectToAction("Login");
                     }

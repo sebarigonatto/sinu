@@ -53,9 +53,12 @@ namespace SINU.Models
         //[DataType(DataType.EmailAddress,ErrorMessage ="El email ingresado no es valido")]
         public string Email { get; set; }
         [Required]
-        [Display(Name = "Como se entero")]
+        [Display(Name = "Comentario")]
         [MaxLength(40, ErrorMessage = "Limite de caracteres superado!")]
         public string ComoSeEntero { get; set; }
+        [Required]
+        [Display(Name = "Como se entero")]
+        public Nullable<int> IdComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
         [ScaffoldColumn(false)]

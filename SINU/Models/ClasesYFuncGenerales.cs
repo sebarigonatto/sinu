@@ -105,16 +105,21 @@ namespace SINU.Models
             return UnError;
         }
 
-        /// <summary>Construyo el cuerpo de Email segun los Paramtros que recibo</summary>
+        /// <summary>Construyo el cuerpo de Email y lo ENVIO,como primera Opcion enviar ID_AspNetUser en el caso de no tenerlo enviar ID_Persona.</summary>
         /// <param name="ModeloPlantilla">Modelo con los datos que apareceran en el email</param>
         /// <param name="Plantilla">Nombre de la plantilla que se utilizara para el armado del Email</param>
-        /// <param name="ID_persona">Id de la persona con al que se obtiene el email de Destino</param>
+        /// <param name="ID_AspNetUser">ID_AspNetUser de la persona segun la tabla AspNetUsers, acepta null</param>
+        /// <param name="ID_Persona">IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
-        public static async Task<bool> EnvioDeMail(ViewModels.PLantillaMail ModeloPlantilla,string Plantilla, string ID_persona, string Asunto)
+        public static async Task<bool> EnvioDeMail(ViewModels.PLantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
         {
             try
             {
+                if (ID_AspNetUser==null || ID_AspNetUser=="")
+                {
+                    ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
+                }
                 //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
                 var configuracion = new TemplateServiceConfiguration
                 {
@@ -124,7 +129,7 @@ namespace SINU.Models
 
                 //establescoi l a ubicacion de la Plantilla
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string ubicacionPlantilla = $"{ubicacion}Plantillas\\"+Plantilla;
+                string ubicacionPlantilla = $"{ubicacion}Plantillas\\"+Plantilla + ".cshtml";
 
                 Engine.Razor = RazorEngineService.Create(configuracion);
 
@@ -132,7 +137,7 @@ namespace SINU.Models
                 string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, ModeloPlantilla);
                 //busco el asunto en la tabla Configuraciones.
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
-                await UserManager.SendEmailAsync(ID_persona, asunto, cuerpoMail);
+                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, cuerpoMail);
                 return true;
             }
             catch (Exception)

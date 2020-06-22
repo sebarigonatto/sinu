@@ -120,7 +120,7 @@ namespace SINU.Controllers.Administrador
                         //Nombre de la Plantilla a Utilizar
                         //Id de la Persona para obtener el correo de destino
                         //Asusnto de Mail.
-                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailCuenta.cshtml", user.Id, "MailAsunto3");
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailCuenta", user.Id,null, "MailAsunto3");
                         //si llego aqui es que ya grabe en aspnetuser y en Usuario_OficyDeleg, así que vuelvo al listado 
 
                         return RedirectToAction("Index");

@@ -59,8 +59,9 @@ namespace SINU.Controllers
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
-                    ComoSeEnteroVM = db.ComoSeEntero.Select(m=> new SelectListItem {Value= m.IdComoSeEntero.ToString(), Text=m.Opcion }).ToList()
+                    ComoSeEnteroVM = db.ComoSeEntero.ToList()
                 };
+                datosba.vPersona_DatosBasicosVM.IdComoSeEntero = 0;
                 //var Com = new[] { new SelectListItem { Value = "1", Text="Familiar en la Institucion" },
                 //                 new SelectListItem { Value = "2", Text="En tu escuela, por parte de personal de la Armada" },
                 //                 new SelectListItem { Value = "3", Text="TV, ¿Cual?" },
@@ -92,7 +93,7 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
 
-                    //var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+                   // var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero,p.IdComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
                     
                     return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
 
