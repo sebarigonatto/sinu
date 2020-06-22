@@ -289,9 +289,8 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                var x = new System.Web.Mvc.HandleErrorInfo(new Exception(ex.InnerException.Message), "Account", "Confirmacion de mail");
 
-                return View("Lockout", x);
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Account", "Confirmacion de mail"));
             }
         }
 

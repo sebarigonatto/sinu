@@ -58,7 +58,8 @@ namespace SINU.Controllers
                     SexoVM = db.Sexo.Where(m=>m.IdSexo!=4).ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
-                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona)
+                    vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
+                    ComoSeEnteroVM = db.ComoSeEntero.Select(m=> new SelectListItem {Value= m.IdComoSeEntero.ToString(), Text=m.Opcion }).ToList()
                 };
                 //var Com = new[] { new SelectListItem { Value = "1", Text="Familiar en la Institucion" },
                 //                 new SelectListItem { Value = "2", Text="En tu escuela, por parte de personal de la Armada" },
@@ -91,7 +92,7 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
 
-                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+                    //var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
                     
                     return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
 
@@ -127,7 +128,7 @@ namespace SINU.Controllers
             {
                 var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
                 //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
-                JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.edad);
+                JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.Edad);
                 dynamic data = GRUPO.Data;
                 if (data.coherencia)
                 {
@@ -142,11 +143,11 @@ namespace SINU.Controllers
                 
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");
 
-                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" });
+                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -907,6 +908,7 @@ namespace SINU.Controllers
                 int? idpersonafamiliar = 0;
                 try
                 {
+                    
                     db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
                     datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
                     if (datos.IdPersonaFamiliar==0)
@@ -922,6 +924,24 @@ namespace SINU.Controllers
                 }
             }
             return Json(new {success= false, msg= "Modelo no valido" });
+        }
+
+        public JsonResult VerificarDNI(int DNI)
+        {
+            try
+            {
+                var per = db.Persona.First(m => m.DNI == DNI.ToString());
+                if (per != null)
+                {
+                    return Json(new { existe = true, msg = "La persona que desea agregar como familiar ya esxite" }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { existe = false }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = true, msg=  ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
+            }
         }
         public JsonResult EliminaFAMI(int ID_per,int ID_fami)
         {

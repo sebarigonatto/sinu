@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id="DNI_FAMI" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.DNI, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -382,8 +382,19 @@
             if (@Model.vPersona_FamiliarVM.IdPersonaFamiliar!= 0) {
                 $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");
                 $(".TABCondicional .navbar-toggler").removeAttr("hidden");
-            }
+            };
 
+            $("#DNI_FAMI").on("change", function () {
+                if ($(this).valid()) {
+                    var dni = $(this).val();
+                    $.get("VerificarDNI", { DNI: dni }, function (response) {
+                        if (response.existe) {
+                            alert("asda");
+                        }
+                    })
+                    //alert($(this).val());
+                }
+            });
 
         });
 

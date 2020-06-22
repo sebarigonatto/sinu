@@ -27,6 +27,8 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         public string Oficina { get; set; }
         public string ComoSeEntero { get; set; }
+        public Nullable<int> IdComoSeEntero { get; set; }
+        public string Opcion { get; set; }
         public Nullable<System.DateTime> EmpezoACargarDatos { get; set; }
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         public Nullable<int> IdPreferencia { get; set; }
@@ -35,6 +37,6 @@ namespace SINU.Models
         public Nullable<int> IdSecuencia { get; set; }
         public string Etapa_Estado { get; set; }
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
-        public Nullable<int> edad { get; set; }
+        public Nullable<int> Edad { get; set; }
     }
 }

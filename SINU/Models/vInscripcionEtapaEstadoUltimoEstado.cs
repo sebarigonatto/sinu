@@ -22,6 +22,7 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         public string Etapa { get; set; }
         public string Estado { get; set; }
-       
+        public string Apellido { get; set; }
+        public string Nombres { get; set; }
     }
 }

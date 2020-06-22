@@ -623,7 +623,7 @@ $(document).ready(function () {
                         //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
                         $("#BTNModal").html("Cancelar");
                         $("#ModalCenterTitle").html("Advertencia");
-                        $("#GuardarDTF").css("display", "block")
+                        $("#GuardarDTF").css("display", "block");
                         $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
                         $("#ModalAnuncios").modal();
                     };
@@ -636,6 +636,9 @@ $(document).ready(function () {
     if ($("#BeginFormDatosBasicos .fechacumple").val() != "" ) {
         $("#BTentrevista").removeClass("disabled");
     };
+
+
+
 
     $("#GuardarDTF").on("click", function (e) {
         e.preventDefault;
