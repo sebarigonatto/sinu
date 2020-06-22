@@ -6,8 +6,8 @@
 }
 @*@section MenuPerfil{
 
-    @Html.Partial("_MenuPerfilDeleg")
-}*@
+        @Html.Partial("_MenuPerfilDeleg")
+    }*@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 
 
@@ -59,6 +59,9 @@
             <div class="list-group-item">
                 <b>@Html.DisplayNameFor(Model => Model.IdInscripcion)</b>:   @Html.DisplayFor(Model => Model.IdInscripcion)
             </div>
+            <div class="list-group-item" id="Ocul">
+                <b>@Html.DisplayNameFor(Model => Model.FechaEntrevista)</b>:  @Html.DisplayFor(Model => Model.FechaEntrevista)
+            </div>
 
         </div>
     </div>
@@ -67,11 +70,30 @@
             <div class="col-sm-2">
                 @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
             </div>
-
-            <div class="col-md-2">
-                <input type="submit" value="Asiganar Fecha" class="btn btn-success" />
-            </div>
-
+            @*<div id="Ocul2">*@
+        <div class="col-sm-2" id="Ocul2">
+            <input type="submit" value="Send" name="botonPostular" class="btn btn-success w-100" />
+        </div>
+        <div class="col-sm-2" id="Ocul3">
+            <input type="submit" value="Cancel" name="botonPostular" class="btn btn-success w-100" />
+        </div>
+            @*</div>*@
         </div>
     </div>
+}
+@section Scripts {
+    <script type="text/javascript">
+       $(document).ready(function () {
+           var a = '@Model.FechaEntrevista'
+           var e = '@ViewBag.Estado'
+           if (a == "") {
+            $("#Ocul").hide();
+           }
+           if (e != "Pendiente") {
+               $("#Ocul2").hide();
+               $("#Ocul3").hide();
+
+           }
+       });
+    </script>
 }

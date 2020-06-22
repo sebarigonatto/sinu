@@ -10,35 +10,41 @@
                 @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th class="secondary">
+                @Html.DisplayNameFor(model => model[0].Etapa)
+            </th>
+            <th class="secondary">
                 @Html.DisplayNameFor(model => model[0].Estado)
             </th>
-               <th class="ni-o-ni-bu">Acciones</th>
+            <th class="ni-o-ni-bu">Acciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td >
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td class="align-content-md-center">
-                    @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
-                    &ensp;
-                    @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td class="align-content-md-center">
+                @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
+                &ensp;
+                @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
 
-                    &ensp;
+                &ensp;
 
-                    @* Cambiar codigo que no muestre con el Idsecuencia -- Sino que busque por etapa y estado *@
-                    @{
-                        if(item.Etapa=="ENTREVISTA")
-                        {
+                @* Cambiar codigo que no muestre con el Idsecuencia -- Sino que busque por etapa y estado *@
+                @{
+                    if (item.Etapa == "ENTREVISTA")
+                    {
                         switch (item.Estado)
                         {
                             case "A Asignar":
@@ -48,43 +54,16 @@
                                 break;
                             case "Pendiente":
                                 @:|&ensp;
-                                @Html.ActionLink("", "", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
+                                @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
                                 @:|&ensp;
                                 break;
                         }
 
-                        }
                     }
-                </td>
-            </tr>
+                }
+            </td>
+        </tr>
         }
     </tbody>
 
 </table>
-
-@*@if (Model.Count > 0)
-                        {
-    <div class="form-group">
-        <h4>Filtrar por Estado:</h4>
-       
-            @{
-                List<SelectListItem> ListEstado = new List<SelectListItem>();
-                List<string> estados = new List<string>();
-                foreach (var item in Model)
-                {
-                    if (!estados.Contains(item.Estado))
-                    {
-                        estados.Add(item.Estado);
-                        var seitem = new SelectListItem { Text = item.Estado, Value = item.Etapa };
-                        ListEstado.Add(seitem);
-                    }
-                }
-
-            }
-            
-        @Html.DropDownList("Seleccione una opcion...", ListEstado, new { @class="selectpicker"})
-       
-    </div>
-}*@
-
-

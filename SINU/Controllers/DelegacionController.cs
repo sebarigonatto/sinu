@@ -44,6 +44,7 @@ namespace SINU.Controllers
         public ActionResult Details(int? id)
         {
             List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
             try
             {
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
@@ -57,7 +58,8 @@ namespace SINU.Controllers
                 }
 
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+                ViewBag.Estado = vInscripcionEtapas.Estado;
 
                 if (InscripcionElegida.Count == 0)
                 {
@@ -75,17 +77,36 @@ namespace SINU.Controllers
         }
         //Post en donde Hace retorceder de forma natural al postulante
         [HttpPost]
-        public ActionResult Details(vInscripcionDetalle vInscripcion)
+        public ActionResult Details(string botonPostular,int id)
         {
+            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
             try
             {
-                db.spProximaSecuenciaEtapaEstado(0,vInscripcion.IdInscripcion,true,0,"","");
+                switch (botonPostular)
+                {
+                    case "Send":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
+                        break;
+                    case "Cancel":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
+                        break;
+
+                }
+
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+
+                if (vInscripcionEtapas.Estado=="Postulado")
+                {
+                    db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                }
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
-            return RedirectToAction("EntrevistaAsignaFecha", new {id = vInscripcion.IdPersona });
+            return RedirectToAction("Index");
         }
 
         public ActionResult EntrevistaAsignaFecha(int id)
@@ -121,7 +142,13 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
+        [HttpPost]
+        public ActionResult Postular(int? IdInscripcion)
+        {
+            db.spProximaSecuenciaEtapaEstado(0,IdInscripcion, false, 0, "", "");
 
+            return RedirectToAction("Index");
+        }
         // GET: Delegacion/Edit/5
         public ActionResult Edit(int? id)
         {
