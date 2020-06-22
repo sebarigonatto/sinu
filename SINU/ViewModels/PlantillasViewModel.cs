@@ -1,14 +1,16 @@
-﻿namespace SINU.ViewModels
+﻿using System;
+
+namespace SINU.ViewModels
 {
-    public class PLantillaMail
+    public class PlantillaMail
     { }
-    public class PlantillaMailConfirmacion : PLantillaMail
+    public class PlantillaMailConfirmacion : PlantillaMail
     {
         public string Apellido { get; set; }
 
         public string LinkConfirmacion { get; set; }
     }
-    public class PlantillaMailCuenta : PLantillaMail
+    public class PlantillaMailCuenta : PlantillaMail
     {
         public string Apellido { get; set; }
         public string Email { get; set; }
@@ -16,5 +18,10 @@
 
         public string LinkConfirmacion { get; set; }
     }
+    public class MailConfirmacionEntrevista : PlantillaMail
+    {
+        public string Apellido { get; set; }
+        public Nullable<System.DateTime> FechaEntrevista { get; set; }
 
+    }
 }

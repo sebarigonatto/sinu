@@ -135,8 +135,16 @@ namespace SINU.Controllers
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
                 db.spProximaSecuenciaEtapaEstado(0,datos.IdInscripcion,false,0,"","");
+                MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista{
+                    Apellido = datos.Apellido,
+                    FechaEntrevista = datos.FechaEntrevista
+                };
+                //verificar el llamado de una funcion asyncronica desde un metodo sincronico
+                var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4");
                 return RedirectToAction("Index");
             }
+
+
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));

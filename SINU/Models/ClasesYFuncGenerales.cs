@@ -105,14 +105,14 @@ namespace SINU.Models
             return UnError;
         }
 
-        /// <summary>Construyo el cuerpo de Email y lo ENVIO,como primera Opcion enviar ID_AspNetUser en el caso de no tenerlo enviar ID_Persona.</summary>
+        /// <summary>Construyo el cuerpo de Email y lo ENVIO,como primera Opcion enviar ID_AspNetUser en el caso de no tenerlo enviar ID_Persona. Ej: var xx = Func.EnvioDeMail(x, "MailPrueba", null, datos.IdPersona, "MailAsunto4")</summary>
         /// <param name="ModeloPlantilla">Modelo con los datos que apareceran en el email</param>
         /// <param name="Plantilla">Nombre de la plantilla que se utilizara para el armado del Email</param>
         /// <param name="ID_AspNetUser">ID_AspNetUser de la persona segun la tabla AspNetUsers, acepta null</param>
         /// <param name="ID_Persona">IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
-        public static async Task<bool> EnvioDeMail(ViewModels.PLantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
+        public static async Task<bool> EnvioDeMail(ViewModels.PlantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
         {
             try
             {

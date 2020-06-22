@@ -1599,6 +1599,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="DNI" Type="varchar" Mode="In" />
           <Parameter Name="Telefono" Type="varchar" Mode="In" />
           <Parameter Name="Celular" Type="varchar" Mode="In" />
+          <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
           <Parameter Name="Email" Type="nvarchar" Mode="In" />
           <Parameter Name="IdDelegacionOficinaIngresoInscribio" Type="int" Mode="In" />
           <Parameter Name="ComoSeEntero" Type="varchar" Mode="In" />
@@ -3685,6 +3686,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="DNI" Mode="In" Type="String" />
             <Parameter Name="Telefono" Mode="In" Type="String" />
             <Parameter Name="Celular" Mode="In" Type="String" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="IdDelegacionOficinaIngresoInscribio" Mode="In" Type="Int32" />
             <Parameter Name="ComoSeEntero" Mode="In" Type="String" />
