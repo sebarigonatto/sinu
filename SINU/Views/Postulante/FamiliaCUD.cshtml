@@ -71,7 +71,7 @@
                             //LoadingElementDuration=1000,
                             //UpdateTargetId = "resultTarget"
                         },
-                    new { id = "BeginFormDatosBasicos" }))
+                    new { id = "BeginFormFamiliar" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -220,7 +220,7 @@
                                 <br />
                             </div>
                             <div class="form-group row ml-3  ">
-                                <input type="submit" value="Guadar Datos" class="btn btn-success m-1" />
+                                <input type="submit" value="Guadar Datos" class="btn btn-success m-1" id="GuarFami" />
                             </div>
 
 
@@ -362,7 +362,7 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
+                <button type="button" class="btn btn-primary" id="OK">Guardar de todas formas</button>
             </div>
         </div>
     </div>
@@ -383,18 +383,39 @@
                 $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");
                 $(".TABCondicional .navbar-toggler").removeAttr("hidden");
             };
+            var ID;
 
-            $("#DNI_FAMI").on("change", function () {
-                if ($(this).valid()) {
-                    var dni = $(this).val();
+            $("#GuarFami").on("click", function () {
+                e.preventDefault;
+                e.stopImmediatePropagation();
+                var valido = $("#BeginFormFamiliar").valid();
+                 if (!valido) {
+                     $("#BeginFormFamiliar").submit();
+                 } else { 
+                    alert("asd");
+                    var dni = $("#DNI_FAMI").val();
                     $.get("VerificarDNI", { DNI: dni }, function (response) {
                         if (response.existe) {
-                            alert("asda");
+                            ID = response.ID_PER;
+                            //alert(response.msg + "  " + response.ID_PER);
+                            $("#ModalCenterTitle").html("Persona Existente");
+                            $("#TextModal").html(response.msg);
+                            $("#BTNModal").text("Cancelar");
+                            $("#OK").html("Si es mi familiar");
+                            $("#ModalAnuncios").modal("show");
+                        } else {
+                           $("#BeginFormFamiliar").submit();
                         }
+
                     })
-                    //alert($(this).val());
-                }
+                    
+                 }
+
             });
+
+            $("#OK").on("click", function () {
+               $("#BeginFormFamiliar").submit();
+            })
 
         });
 

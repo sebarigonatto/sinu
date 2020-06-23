@@ -909,14 +909,22 @@ namespace SINU.Controllers
                 int? idpersonafamiliar = 0;
                 try
                 {
-                    
-                    db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
-                    datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
-                    if (datos.IdPersonaFamiliar==0)
+                    var per = db.Persona.First(d => d.DNI == datos.DNI);
+                    if (per!=null)
                     {
-                        idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
+
+                        db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
+                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente!!!", accion = idpersonafamiliar });
                     }
-                    return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso!!!",accion= idpersonafamiliar });
+                    else { 
+                        db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
+                        datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
+                        if (datos.IdPersonaFamiliar==0)
+                        {
+                            idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
+                        }
+                        return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso!!!",accion= idpersonafamiliar });
+                    };
                 }
                 catch (Exception ex)
                 {
@@ -934,14 +942,15 @@ namespace SINU.Controllers
                 var per = db.Persona.First(m => m.DNI == DNI.ToString());
                 if (per != null)
                 {
-                    return Json(new { existe = true, msg = "La persona que desea agregar como familiar ya esxite" }, JsonRequestBehavior.AllowGet);
+                    int Id_Persona = per.IdPersona;
+                    return Json(new { existe = true, msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya esxite",DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { existe = false }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
             {
-                return Json(new { error = true, msg=  ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
+                return Json(new { error = false, msg=  ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
             }
         }
         public JsonResult EliminaFAMI(int ID_per,int ID_fami)
