@@ -1539,6 +1539,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_JobLimpiAspnetUserDiasAntig" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TopeAntiguedadEnDias" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -3912,6 +3915,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
             <Parameter Name="Comentario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_JobLimpiAspnetUserDiasAntig">
+            <Parameter Name="TopeAntiguedadEnDias" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5313,6 +5319,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosELIMINAR" FunctionName="SINUModel.Store.spUsuariosAdministrativosELIMINAR" />
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosU" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
           <FunctionImportMapping FunctionImportName="spAdministradorEditar" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
+          <FunctionImportMapping FunctionImportName="sp_JobLimpiAspnetUserDiasAntig" FunctionName="SINUModel.Store.sp_JobLimpiAspnetUserDiasAntig" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1004,5 +1004,14 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAdministradorEditar", emailParameter, destinoParameter, mrParameter, gradoParameter, nombreParameter, apellidoParameter, codGrupoParameter, idOficinasYDelegacionesParameter, comentarioParameter);
         }
+    
+        public virtual int sp_JobLimpiAspnetUserDiasAntig(Nullable<int> topeAntiguedadEnDias)
+        {
+            var topeAntiguedadEnDiasParameter = topeAntiguedadEnDias.HasValue ?
+                new ObjectParameter("TopeAntiguedadEnDias", topeAntiguedadEnDias) :
+                new ObjectParameter("TopeAntiguedadEnDias", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_JobLimpiAspnetUserDiasAntig", topeAntiguedadEnDiasParameter);
+        }
     }
 }

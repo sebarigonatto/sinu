@@ -27,7 +27,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <!-- escondo con hiddenfor los campos que no voy a cargar pero que hacen a la validacion del modelo
-        cuando pregunto ModelState.IsValid en el action del controller-->
+    cuando pregunto ModelState.IsValid en el action del controller-->
         @Html.HiddenFor(model => model.Delegacion)
         @Html.HiddenFor(model => model.Email)
         @Html.HiddenFor(model => model.FechUltimaAct)
@@ -54,7 +54,7 @@
 
             @Html.LabelFor(m => m.codGrupo, new { @class = "col-md-2 control-label" })
             <div class="col-md-4">
-                @Html.DropDownListFor(m => m.codGrupo, (SelectList)ViewBag.CodGrupos, "---Seleccione Perfil ---", htmlAttributes: new { @class = "form-control selectpicker" , @id="inaoact"})
+                @Html.DropDownListFor(m => m.codGrupo, (SelectList)ViewBag.CodGrupos, "---Seleccione Perfil ---", htmlAttributes: new { @class = "form-control selectpicker", @id = "inaoact" })
             </div>
         </div>
 
@@ -81,11 +81,22 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Grado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Grado, (SelectList)ViewBag.Grado, "------Seleccione Grado--------", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Grado, (SelectList)ViewBag.Grado, htmlAttributes: new { @class = "form-control" })
                 @*@Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Grado, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Grado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mr, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Destino, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -104,17 +115,17 @@
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                </div>
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-                </div>
-            </div>*@
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>*@
 
 
         <div class="form-group">
