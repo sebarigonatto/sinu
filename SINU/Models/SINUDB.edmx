@@ -3901,6 +3901,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
             <Parameter Name="Comentario" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spAdministradorEditar">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Destino" Mode="In" Type="String" />
+            <Parameter Name="mr" Mode="In" Type="String" />
+            <Parameter Name="Grado" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="codGrupo" Mode="In" Type="String" />
+            <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5301,6 +5312,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosELIMINAR" FunctionName="SINUModel.Store.spUsuariosAdministrativosELIMINAR" />
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosU" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
+          <FunctionImportMapping FunctionImportName="spAdministradorEditar" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

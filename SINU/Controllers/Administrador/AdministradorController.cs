@@ -173,8 +173,8 @@ namespace SINU.Controllers.Administrador
             {
                 if (ModelState.IsValid)
                 {
-
-                    //se debe crear el bloque de  grabacion
+                    //240620 hasta este momento graba el cambio pero da un error al terminar de ejcutar el sp
+                    db.spAdministradorEditar(usuario.Email, usuario.Destino, usuario.mr, usuario.Grado, usuario.Nombre, usuario.Apellido, usuario.codGrupo, usuario.IdOficinasYDelegaciones, usuario.Comentario);
                     return RedirectToAction("Index");
                 }
                 return View(usuario);
