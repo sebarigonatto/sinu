@@ -151,8 +151,8 @@ namespace SINU.Controllers.Administrador
                     //return RedirectToAction("Index");
                 }
                 ////se coloca cualquier password que cumpla la regla solicitada y si el Usuario desea cambiar la password los borra y recarga               
-                //usuario.Password = "123456A_";
-                //usuario.ConfirmPassword = "123456A_"; 
+                usuario.Password = "123456A_";
+                usuario.ConfirmPassword = "123456A_"; 
 
                 
                 return View(usuario);

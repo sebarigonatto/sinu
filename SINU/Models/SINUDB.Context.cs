@@ -905,5 +905,63 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstado", idPostulanteParameter, idInscripcionParameter, retrocederParameter, secuenciaSiguienteParameter, etapaProxParameter, estadoProxParameter);
         }
+    
+        public virtual int spUsuariosAdministrativosELIMINAR(string email, string codGrupo, Nullable<int> idOficinasYDelegaciones)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var codGrupoParameter = codGrupo != null ?
+                new ObjectParameter("codGrupo", codGrupo) :
+                new ObjectParameter("codGrupo", typeof(string));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUsuariosAdministrativosELIMINAR", emailParameter, codGrupoParameter, idOficinasYDelegacionesParameter);
+        }
+    
+        public virtual int spUsuariosAdministrativosU(string email, string destino, string mr, string grado, string nombre, string apellido, string codGrupo, Nullable<int> idOficinasYDelegaciones, string comentario)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var destinoParameter = destino != null ?
+                new ObjectParameter("Destino", destino) :
+                new ObjectParameter("Destino", typeof(string));
+    
+            var mrParameter = mr != null ?
+                new ObjectParameter("mr", mr) :
+                new ObjectParameter("mr", typeof(string));
+    
+            var gradoParameter = grado != null ?
+                new ObjectParameter("Grado", grado) :
+                new ObjectParameter("Grado", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var codGrupoParameter = codGrupo != null ?
+                new ObjectParameter("codGrupo", codGrupo) :
+                new ObjectParameter("codGrupo", typeof(string));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUsuariosAdministrativosU", emailParameter, destinoParameter, mrParameter, gradoParameter, nombreParameter, apellidoParameter, codGrupoParameter, idOficinasYDelegacionesParameter, comentarioParameter);
+        }
     }
 }

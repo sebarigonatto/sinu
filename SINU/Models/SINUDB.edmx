@@ -1718,6 +1718,22 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="DomicilioLaboral" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="spUsuariosAdministrativosELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="codGrupo" Type="char" Mode="In" />
+          <Parameter Name="IdOficinasYDelegaciones" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spUsuariosAdministrativosU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Destino" Type="varchar" Mode="In" />
+          <Parameter Name="mr" Type="varchar" Mode="In" />
+          <Parameter Name="Grado" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="codGrupo" Type="char" Mode="In" />
+          <Parameter Name="IdOficinasYDelegaciones" Type="int" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="USUARIO" Type="varchar" Mode="In" />
           <Parameter Name="Funcion" Type="varchar" Mode="In" />
@@ -3869,6 +3885,22 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Postulante" EntitySet="Postulante" />
           </AssociationSet>
           <EntitySet Name="vPersona_DatosBasicos" EntityType="SINUModel.vPersona_DatosBasicos" />
+          <FunctionImport Name="spUsuariosAdministrativosELIMINAR">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="codGrupo" Mode="In" Type="String" />
+            <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spUsuariosAdministrativosU">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Destino" Mode="In" Type="String" />
+            <Parameter Name="mr" Mode="In" Type="String" />
+            <Parameter Name="Grado" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="codGrupo" Mode="In" Type="String" />
+            <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5267,6 +5299,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosELIMINAR" FunctionName="SINUModel.Store.spUsuariosAdministrativosELIMINAR" />
+          <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosU" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
