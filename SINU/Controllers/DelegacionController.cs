@@ -85,10 +85,10 @@ namespace SINU.Controllers
             {
                 switch (botonPostular)
                 {
-                    case "Send":
+                    case "Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
                         break;
-                    case "Cancel":
+                    case "No Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
                         break;
 
@@ -126,7 +126,10 @@ namespace SINU.Controllers
         // POST: Delegacion/Create
         [HttpPost]
         public ActionResult EntrevistaAsignaFecha(vEntrevistaLugarFecha datos)
-        {
+            {
+            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+
             try
             {
                 // TODO: Add insert logic here
@@ -141,6 +144,15 @@ namespace SINU.Controllers
                 };
                 //verificar el llamado de una funcion asyncronica desde un metodo sincronico
                 var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4");
+
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
+
+                if (vInscripcionEtapas.Estado == "Asignada")
+                {
+                    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -151,12 +163,6 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Postular(int? IdInscripcion)
-        {
-            db.spProximaSecuenciaEtapaEstado(0,IdInscripcion, false, 0, "", "");
-
-            return RedirectToAction("Index");
-        }
         // GET: Delegacion/Edit/5
         public ActionResult Edit(int? id)
         {
