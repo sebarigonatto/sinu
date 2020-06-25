@@ -12,19 +12,10 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Modalidad
+    public partial class VPersonaProblema
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Modalidad()
-        {
-            this.Convocatoria = new HashSet<Convocatoria>();
-        }
-    
-        public string IdModalidad { get; set; }
+        public string Email { get; set; }
+        public int IdPostulantePersona { get; set; }
         public string Descripcion { get; set; }
-        public string Personal { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Convocatoria> Convocatoria { get; set; }
     }
 }
