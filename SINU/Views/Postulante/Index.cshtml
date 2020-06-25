@@ -11,7 +11,6 @@
 <link href="~/Content/CssPostulante.css" rel="stylesheet" />
 <h3>Etapas de la Inscripcion</h3>
 <br />
-
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
 <div class="p-1 bg-white rounded shadow mb-1" style="padding:0px !important">
 
@@ -362,6 +361,7 @@
         $(document).ready(function () {
             //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
             (function () {
+               
                 //ID de las Etpas por las que paso el Postulante
                 var IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
@@ -390,7 +390,7 @@
             })();
 
         });
-
+              
         function HabilitarTAb(idtab) {
             $("#"+idtab)
                 .removeClass('Tabdesabilitado')

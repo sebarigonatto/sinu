@@ -873,6 +873,7 @@ namespace SINU.Controllers
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
         public ActionResult FamiliaCUD(int idPersonaFamilia)
         { 
+            //verificar que al crear un postulante llenar con los datos completos, si no es asi el familiar no se mostrara en vPersona_Familiar
             //viewmodel creado para la creacion de un familiar
             //cargo los datos necesarios para los combobox
             PersonaFamiliaVM pers = new PersonaFamiliaVM
@@ -909,15 +910,21 @@ namespace SINU.Controllers
                 int? idpersonafamiliar = 0;
                 try
                 {
-                    var per = db.Persona.First(d => d.DNI == datos.DNI);
-                    if (per!=null)
+                    var per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
+                    var IDPOSTULANTE = db.Postulante.FirstOrDefault(m => m.AspNetUsers.UserName == HttpContext.User.Identity.Name).IdPersona;
+                    Familiares rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
+                    if (per!=null && rela ==null)
                     {
 
                         db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
-                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente!!!", accion = idpersonafamiliar });
+
+                        datos.IdPersonaFamiliar = per.IdPersona;
+                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente!!!", accion = datos.IdPersonaFamiliar });
                     }
-                    else { 
-                        db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Email, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
+                    else
+                    {
+                        datos.IdReligion ??= "";
+                        db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Mail, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
                         datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
                         if (datos.IdPersonaFamiliar==0)
                         {
@@ -935,15 +942,17 @@ namespace SINU.Controllers
             return Json(new {success= false, msg= "Modelo no valido" });
         }
 
-        public JsonResult VerificarDNI(int DNI)
+        public JsonResult VerificarDNI(int DNI , int ID)
         {
             try
             {
-                var per = db.Persona.First(m => m.DNI == DNI.ToString());
-                if (per != null)
+                Persona per = db.Persona.FirstOrDefault(m => m.DNI == DNI.ToString());
+                
+                Familiares rela = db.Persona.Find(ID).Postulante.Familiares.FirstOrDefault(m=>m.IdPersona== per.IdPersona);
+                if (per != null && rela == null)
                 {
                     int Id_Persona = per.IdPersona;
-                    return Json(new { existe = true, msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya esxite",DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
+                    return Json(new { existe = true, msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?",DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { existe = false }, JsonRequestBehavior.AllowGet);
 
