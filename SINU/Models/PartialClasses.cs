@@ -85,4 +85,8 @@ namespace SINU.Models
     [MetadataType(typeof(vPersona_FamiliarMetadata))]
     public partial class vPersona_Familiar
     { }
+    [MetadataType(typeof(vInscripcionEtapaEstadoUltimoEstadoMetadata))]
+    public partial class vInscripcionEtapaEstadoUltimoEstado
+    {
+    }
 }

@@ -10,6 +10,12 @@
                 @Html.DisplayNameFor(model => model[0].Email)
             </th>
             <th class="secondary">
+                @Html.DisplayNameFor(model => model[0].Nombres)
+            </th>
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model[0].Apellido)
+            </th>
+            <th class="secondary">
                 @Html.DisplayNameFor(model => model[0].Etapa)
             </th>
             <th class="secondary">
@@ -23,10 +29,16 @@
         {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
+                @Html.DisplayFor(modelItem => item.Fecha) @*terminar trabajo para hoy*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Etapa)
@@ -55,7 +67,6 @@
                             case "Pendiente":
                                 @:|&ensp;
                                 @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
-                                @:|&ensp;
                                 break;
                         }
 

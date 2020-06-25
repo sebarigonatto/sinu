@@ -408,4 +408,11 @@ namespace SINU.Models
         [Required]
         public string CUIL { get; set; }
     }
+    public partial class vInscripcionEtapaEstadoUltimoEstadoMetadata
+    {
+        [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> Fecha { get; set; }
+    }
 }

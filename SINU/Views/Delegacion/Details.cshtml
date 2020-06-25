@@ -17,7 +17,7 @@
     @Html.AntiForgeryToken()
 
     <div class="container">
-        <h4>@Model.IdInscripcion</h4>
+        @*<h4>@Model.IdInscripcion</h4>*@
         <hr />
 
 
@@ -59,23 +59,24 @@
             <div class="list-group-item">
                 <b>@Html.DisplayNameFor(Model => Model.IdInscripcion)</b>:   @Html.DisplayFor(Model => Model.IdInscripcion)
             </div>
-            <div class="list-group-item" id="Ocul">
+            <div class="list-group-item" id="Ocul" hidden>
                 <b>@Html.DisplayNameFor(Model => Model.FechaEntrevista)</b>:  @Html.DisplayFor(Model => Model.FechaEntrevista)
             </div>
 
         </div>
     </div>
+    <br />
     <div class="container-fluid">
         <div class="form-group row">
             <div class="col-sm-2">
                 @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
             </div>
             @*<div id="Ocul2">*@
-        <div class="col-sm-2" id="Ocul2">
-            <input type="submit" value="Send" name="botonPostular" class="btn btn-success w-100" />
+        <div class="col-sm-2" id="Ocul2" hidden>
+            <input type="submit" value="Postular" name="botonPostular" class="btn btn-success w-100" />
         </div>
-        <div class="col-sm-2" id="Ocul3">
-            <input type="submit" value="Cancel" name="botonPostular" class="btn btn-success w-100" />
+        <div class="col-sm-2" id="Ocul3" hidden>
+            <input type="submit" value="No Postular" name="botonPostular" class="btn btn-success w-100" />
         </div>
             @*</div>*@
         </div>
@@ -86,12 +87,12 @@
        $(document).ready(function () {
            var a = '@Model.FechaEntrevista'
            var e = '@ViewBag.Estado'
-           if (a == "") {
-            $("#Ocul").hide();
+           if (a != "") {
+            $("#Ocul").removeAttr("hidden");
            }
-           if (e != "Pendiente") {
-               $("#Ocul2").hide();
-               $("#Ocul3").hide();
+           if (e == "Pendiente") {
+               $("#Ocul2").removeAttr("hidden");
+               $("#Ocul3").removeAttr("hidden");
 
            }
        });
