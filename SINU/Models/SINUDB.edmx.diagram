@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="SINUModel.Antropometria" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.AspNetUsers" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.Baja" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SINUModel.Configuracion" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SINUModel.Configuracion" Width="1.5" PointX="2.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.DocPresentado" Width="1.5" PointX="12.75" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.Domicilio" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.EstablecimientoRindeExamen" Width="1.5" PointX="8.25" PointY="3" IsExpanded="true" />

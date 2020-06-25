@@ -97,6 +97,16 @@ namespace SINU.Models
         public virtual DbSet<ComoSeEntero> ComoSeEntero { get; set; }
         public virtual DbSet<Modalidad> Modalidad { get; set; }
         public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<Convocatoria> Convocatoria { get; set; }
+        public virtual DbSet<DataProblemaEncontrado> DataProblemaEncontrado { get; set; }
+        public virtual DbSet<DataVerificacion> DataVerificacion { get; set; }
+        public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
+        public virtual DbSet<ResGrupo> ResGrupo { get; set; }
+        public virtual DbSet<VPersonaProblema> VPersonaProblema { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -904,6 +914,114 @@ namespace SINU.Models
                 new ObjectParameter("EstadoProx", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spProximaSecuenciaEtapaEstado", idPostulanteParameter, idInscripcionParameter, retrocederParameter, secuenciaSiguienteParameter, etapaProxParameter, estadoProxParameter);
+        }
+    
+        public virtual int spUsuariosAdministrativosELIMINAR(string email, string codGrupo, Nullable<int> idOficinasYDelegaciones)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var codGrupoParameter = codGrupo != null ?
+                new ObjectParameter("codGrupo", codGrupo) :
+                new ObjectParameter("codGrupo", typeof(string));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUsuariosAdministrativosELIMINAR", emailParameter, codGrupoParameter, idOficinasYDelegacionesParameter);
+        }
+    
+        public virtual int spUsuariosAdministrativosU(string email, string destino, string mr, string grado, string nombre, string apellido, string codGrupo, Nullable<int> idOficinasYDelegaciones, string comentario)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var destinoParameter = destino != null ?
+                new ObjectParameter("Destino", destino) :
+                new ObjectParameter("Destino", typeof(string));
+    
+            var mrParameter = mr != null ?
+                new ObjectParameter("mr", mr) :
+                new ObjectParameter("mr", typeof(string));
+    
+            var gradoParameter = grado != null ?
+                new ObjectParameter("Grado", grado) :
+                new ObjectParameter("Grado", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var codGrupoParameter = codGrupo != null ?
+                new ObjectParameter("codGrupo", codGrupo) :
+                new ObjectParameter("codGrupo", typeof(string));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spUsuariosAdministrativosU", emailParameter, destinoParameter, mrParameter, gradoParameter, nombreParameter, apellidoParameter, codGrupoParameter, idOficinasYDelegacionesParameter, comentarioParameter);
+        }
+    
+        public virtual int spAdministradorEditar(string email, string destino, string mr, string grado, string nombre, string apellido, string codGrupo, Nullable<int> idOficinasYDelegaciones, string comentario)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var destinoParameter = destino != null ?
+                new ObjectParameter("Destino", destino) :
+                new ObjectParameter("Destino", typeof(string));
+    
+            var mrParameter = mr != null ?
+                new ObjectParameter("mr", mr) :
+                new ObjectParameter("mr", typeof(string));
+    
+            var gradoParameter = grado != null ?
+                new ObjectParameter("Grado", grado) :
+                new ObjectParameter("Grado", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("Nombre", nombre) :
+                new ObjectParameter("Nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            var codGrupoParameter = codGrupo != null ?
+                new ObjectParameter("codGrupo", codGrupo) :
+                new ObjectParameter("codGrupo", typeof(string));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAdministradorEditar", emailParameter, destinoParameter, mrParameter, gradoParameter, nombreParameter, apellidoParameter, codGrupoParameter, idOficinasYDelegacionesParameter, comentarioParameter);
+        }
+    
+        public virtual int sp_JobLimpiAspnetUserDiasAntig(Nullable<int> topeAntiguedadEnDias)
+        {
+            var topeAntiguedadEnDiasParameter = topeAntiguedadEnDias.HasValue ?
+                new ObjectParameter("TopeAntiguedadEnDias", topeAntiguedadEnDias) :
+                new ObjectParameter("TopeAntiguedadEnDias", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_JobLimpiAspnetUserDiasAntig", topeAntiguedadEnDiasParameter);
         }
     }
 }

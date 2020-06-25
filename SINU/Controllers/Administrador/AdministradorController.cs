@@ -131,7 +131,7 @@ namespace SINU.Controllers.Administrador
             }
             catch (Exception ex)
             {
-                //ex = new Exception("Correo Electronico existente, verifique los datos.");
+                ex = new Exception("Correo Electronico existente, verifique los datos.");
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Administrador", "Create"));
             }
         }
@@ -151,8 +151,8 @@ namespace SINU.Controllers.Administrador
                     //return RedirectToAction("Index");
                 }
                 ////se coloca cualquier password que cumpla la regla solicitada y si el Usuario desea cambiar la password los borra y recarga               
-                //usuario.Password = "123456A_";
-                //usuario.ConfirmPassword = "123456A_"; 
+                usuario.Password = "123456A_";
+                usuario.ConfirmPassword = "123456A_"; 
 
                 
                 return View(usuario);
@@ -173,8 +173,8 @@ namespace SINU.Controllers.Administrador
             {
                 if (ModelState.IsValid)
                 {
-
-                    //se debe crear el bloque de  grabacion
+                    //240620 hasta este momento graba el cambio pero da un error al terminar de ejcutar el sp
+                    db.spAdministradorEditar(usuario.Email, usuario.Destino, usuario.mr, usuario.Grado, usuario.Nombre, usuario.Apellido, usuario.codGrupo, usuario.IdOficinasYDelegaciones, usuario.Comentario);
                     return RedirectToAction("Index");
                 }
                 return View(usuario);
