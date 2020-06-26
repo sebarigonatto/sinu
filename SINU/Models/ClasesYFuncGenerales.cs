@@ -140,7 +140,7 @@ namespace SINU.Models
                 await UserManager.SendEmailAsync(ID_AspNetUser, asunto, cuerpoMail);
                 return true;
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
                 throw;

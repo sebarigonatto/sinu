@@ -767,6 +767,7 @@
     <Content Include="obj\Debug\SINU.csproj.GenerateResource.cache" />
     <Content Include="Plantillas\PlantillaMailCuenta.cshtml" />
     <Content Include="Plantillas\MailConfirmacionEntrevista.cshtml" />
+    <Content Include="Plantillas\MailConfirmacioPostulado.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

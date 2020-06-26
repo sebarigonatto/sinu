@@ -24,4 +24,9 @@ namespace SINU.ViewModels
         public Nullable<System.DateTime> FechaEntrevista { get; set; }
 
     }
+    public class MailPostular : PlantillaMail
+    {
+        public string Estado { get; set; }
+        public string Apellido { get; set; }
+    }
 }

@@ -97,6 +97,14 @@ namespace SINU.Controllers
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                 vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
 
+                var modeloPlanti = new ViewModels.MailPostular
+                {
+                    Apellido = vInscripcionEtapas.Apellido,
+                    Estado=vInscripcionEtapas.Estado
+                };
+
+                var envio = Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+
                 if (vInscripcionEtapas.Estado=="Postulado")
                 {
                     db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
@@ -138,6 +146,8 @@ namespace SINU.Controllers
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
                 db.spProximaSecuenciaEtapaEstado(0,datos.IdInscripcion,false,0,"","");
+
+
                 MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista{
                     Apellido = datos.Apellido,
                     FechaEntrevista = datos.FechaEntrevista
