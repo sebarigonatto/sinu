@@ -56,8 +56,11 @@
 
 @section Scripts {
     <script>
+        var date = new Date();
+        date.setDate(date.getDate()-1);
         $('#datepicker1,#datepicker2').datepicker({
             autoclose: true,
+            startDate: date,
         });
     </script>
 

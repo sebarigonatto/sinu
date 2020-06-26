@@ -126,14 +126,26 @@ namespace SINU.Controllers.Administrador
         {
             try
             {
+                
                 var reg = db.PeriodosInscripciones.Find(id);
-                db.PeriodosInscripciones.Remove(reg);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                DateTime hoy = DateTime.Today;
+                if (reg.FechaInicio > DateTime.Today && reg.FechaFinal > DateTime.Today)
+                {
+                    db.PeriodosInscripciones.Remove(reg);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException();
+                    //Exception ex = new Exception("Correo Electronico existente, verifique los datos.");
+                }
+                //return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex )
             {
-                return View();
+                ex = new Exception("No puede eliminar un Periodo cuyo rango sea Anterior a la fecha Actual.");
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "PeriodoInscripciones", "Index"));
             }
         }
     }
