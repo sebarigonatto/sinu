@@ -64,8 +64,11 @@
     <script type="text/javascript">
         //alterala validacion de la fechas 
         //jQuery.validator.methods["date"] = function (value, element) { return true; };
+        var date = new Date();
+        date.setDate(date.getDate()-1);
         $('.datepicker').datepicker({
             autoclose: true,
+            startDate: date,
         });
     </script>
 
