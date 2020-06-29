@@ -1090,6 +1090,7 @@
     <Content Include="Views\Postulante\FamiliaCUD.cshtml" />
     <Content Include="Views\Delegacion\_ListadoPostulante.cshtml" />
     <Content Include="Views\Delegacion\EntrevistaAsignaFecha.cshtml" />
+    <Content Include="Views\Delegacion\Postular.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

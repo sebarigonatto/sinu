@@ -71,6 +71,12 @@
             <div class="col-sm-2">
                 @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
             </div>
+            <div class="col-sm-2" id="Ocul2">
+                <input type="submit" value="Postular" name="botonPostular" class="btn btn-success w-100" />
+            </div>
+            <div class="col-sm-2" id="Ocul3">
+                <input type="submit" value="No Postular" name="botonPostular" class="btn btn-success w-100" />
+            </div>
         </div>
     </div>
 }
@@ -80,6 +86,7 @@
            var a = '@Model.FechaEntrevista'
            if (a != "") {
             $("#Ocul").removeAttr("hidden");
-           }       });
+           }
+       });
     </script>
 }

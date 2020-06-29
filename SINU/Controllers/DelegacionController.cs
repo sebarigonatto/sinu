@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using SINU.ViewModels;
+using System.Threading.Tasks;
+
 
 namespace SINU.Controllers
 {
@@ -75,48 +77,6 @@ namespace SINU.Controllers
             return View(InscripcionElegida.ToList()[0]);
 
         }
-        //Post en donde Hace retorceder de forma natural al postulante
-        [HttpPost]
-        public ActionResult Details(string botonPostular,int id)
-        {
-            List<vInscripcionDetalle> InscripcionElegida;
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-            try
-            {
-                switch (botonPostular)
-                {
-                    case "Postular":
-                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
-                        break;
-                    case "No Postular":
-                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
-                        break;
-
-                }
-
-                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
-                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-
-                var modeloPlanti = new ViewModels.MailPostular
-                {
-                    Apellido = vInscripcionEtapas.Apellido,
-                    Estado=vInscripcionEtapas.Estado
-                };
-
-                var envio = Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
-
-                if (vInscripcionEtapas.Estado=="Postulado")
-                {
-                    db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
-                }
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
-            }
-            return RedirectToAction("Index");
-        }
-
         public ActionResult EntrevistaAsignaFecha(int id)
         {
             try
@@ -130,7 +90,6 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
-
         // POST: Delegacion/Create
         [HttpPost]
         public ActionResult EntrevistaAsignaFecha(vEntrevistaLugarFecha datos)
@@ -174,13 +133,17 @@ namespace SINU.Controllers
         }
         [HttpPost]
         // GET: Delegacion/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
             try
             {
-                // TODO: Add update logic here
+                vInscripcionDetalle elegido = db.vInscripcionDetalle.First(m=>m.IdPersona==id);
+                if (elegido == null)
+                {
+                    return View("Error", Func.ConstruyeError("Ese usuario no se encontro", "Delegacion", "Edit"));
+                }
 
-                return RedirectToAction("Index");
+                return View(elegido);
             }
             catch (System.Exception ex)
             {
@@ -233,6 +196,76 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
+        }
+        [HttpGet]
+        public ActionResult Postular(int? id)
+        {
+            List<vInscripcionDetalle> InscripcionElegida;
+            try
+            {
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+                if (id == null)
+                {
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
+                }
+
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+
+                if (InscripcionElegida.Count == 0)
+                {
+                    //return HttpNotFound("ese numero de ID no se encontro ");
+                    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
+            }
+            return View(InscripcionElegida.ToList()[0]);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Postular(string botonPostular, int id)
+        {
+            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            try
+            {
+                switch (botonPostular)
+                {
+                    case "Postular":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
+                        break;
+                    case "No Postular":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
+                        break;
+
+                }
+
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+
+                var modeloPlanti = new ViewModels.MailPostular
+                {
+                    Apellido = vInscripcionEtapas.Apellido,
+                    Estado = vInscripcionEtapas.Estado
+                };
+
+                bool envio = await Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+
+                if (vInscripcionEtapas.Estado == "Postulado")
+                {
+                    db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
+            }
+            return RedirectToAction("Index");
         }
     }
 }
