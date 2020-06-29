@@ -14,17 +14,8 @@ namespace SINU.Models
     
     public partial class CarreraOficio
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CarreraOficio()
-        {
-            this.GrupoCarrOficio = new HashSet<GrupoCarrOficio>();
-        }
-    
         public int IdCarreraOficio { get; set; }
         public string CarreraUoficio { get; set; }
         public string Personal { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GrupoCarrOficio> GrupoCarrOficio { get; set; }
     }
 }

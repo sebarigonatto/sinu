@@ -97,16 +97,6 @@ namespace SINU.Models
         public virtual DbSet<ComoSeEntero> ComoSeEntero { get; set; }
         public virtual DbSet<Modalidad> Modalidad { get; set; }
         public virtual DbSet<vPersona_DatosBasicos> vPersona_DatosBasicos { get; set; }
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
-        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
-        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
-        public virtual DbSet<Convocatoria> Convocatoria { get; set; }
-        public virtual DbSet<DataProblemaEncontrado> DataProblemaEncontrado { get; set; }
-        public virtual DbSet<DataVerificacion> DataVerificacion { get; set; }
-        public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
-        public virtual DbSet<ResGrupo> ResGrupo { get; set; }
-        public virtual DbSet<VPersonaProblema> VPersonaProblema { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1022,6 +1012,15 @@ namespace SINU.Models
                 new ObjectParameter("TopeAntiguedadEnDias", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_JobLimpiAspnetUserDiasAntig", topeAntiguedadEnDiasParameter);
+        }
+    
+        public virtual int spRelacionFamiliarEliminar(Nullable<int> idFamiliar)
+        {
+            var idFamiliarParameter = idFamiliar.HasValue ?
+                new ObjectParameter("IdFamiliar", idFamiliar) :
+                new ObjectParameter("IdFamiliar", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarEliminar", idFamiliarParameter);
         }
     }
 }

@@ -4,7 +4,10 @@ using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace SINU.Controllers
 {
@@ -93,7 +96,7 @@ namespace SINU.Controllers
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
 
-                   // var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero,p.IdComoSeEntero, p.IdPreferencia,p.FechaNacimiento, p.IdPersona, p.IdPostulante);
+                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular,p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero,p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
                     
                     return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
 
@@ -123,7 +126,7 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
 
-        public JsonResult SolicitudEntrevista(int ID_persona)
+        public async Task<JsonResult> SolicitudEntrevistaAsync(int ID_persona)
         {
             try
             {
@@ -141,7 +144,8 @@ namespace SINU.Controllers
                     //Datos basicos - No Validado; ID= 21
                     db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
                 };
-                
+                await Task.Delay(1000);
+
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");
 
                 return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
@@ -970,9 +974,18 @@ namespace SINU.Controllers
         {
             try
             {
-                db.spFamiliarEliminar(ID_fami, ID_per);
+               
+                int filas = db.Familiares.Where(p => p.IdPersona == ID_per).Count();
+                bool postulante = db.Postulante.Find(ID_per) != null;
+                if (postulante || filas > 1)
+                {
+                    db.spRelacionFamiliarEliminar(ID_fami);
+                    return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia" }, JsonRequestBehavior.AllowGet);
+                }
 
+                db.spFamiliarEliminar(ID_fami, ID_per);
                 return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia" }, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {

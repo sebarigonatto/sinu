@@ -14,19 +14,11 @@ namespace SINU.Models
     
     public partial class PeriodosInscripciones
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PeriodosInscripciones()
-        {
-            this.Convocatoria = new HashSet<Convocatoria>();
-        }
-    
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFinal { get; set; }
         public int IdInstitucion { get; set; }
         public int IdPeriodoInscripcion { get; set; }
     
         public virtual Institucion Institucion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Convocatoria> Convocatoria { get; set; }
     }
 }

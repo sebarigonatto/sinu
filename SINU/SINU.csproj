@@ -216,15 +216,6 @@
     <Compile Include="Models\Aprender01_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AspNetRoles.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserClaims.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogins.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -244,19 +235,7 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Convocatoria.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataProblemaEncontrado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataProblemaPantalla.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DataVerificacion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocPresentado.cs">
@@ -284,9 +263,6 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Fuerza.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GrupoCarrOficio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Inscripcion.cs">
@@ -332,9 +308,6 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Preferencia.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ResGrupo.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RESPONSE.cs" />
@@ -428,9 +401,6 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPeriodosInscrip.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\VPersonaProblema.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_ActividadMilitar.cs">
