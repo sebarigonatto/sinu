@@ -18,7 +18,7 @@
                 <th>@Html.DisplayNameFor(m => m.Fuerza)</th>
                 <th>@Html.DisplayNameFor(m => m.Ingreso)</th>
                 <th>
-                    @Html.Label("Opciones")
+                    Opciones
                 </th>
                 @*<th>@Html.DisplayNameFor(m => m.Jerarquia)</th>
                 <th>@Html.DisplayNameFor(m => m.FechaIngreso)</th>
@@ -34,7 +34,7 @@
                     <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
                     <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
                     <td>@Html.Label(item.Ingreso.Value ? "SI" : "NO")</td>
-                    <td>
+                    <td class="BTAcciones">
                         <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdActividadMilitar"></button>&ensp; |&ensp;
                         @Ajax.ActionLink(" ", "EliminaACT", new { ID = item.IdActividadMilitar }, new AjaxOptions
                           {
@@ -53,9 +53,10 @@
     </table>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaActMilitar">
-        Agregar Actividad militar
-    </button>
-
+    <div class="BTAcciones">
+        <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaActMilitar" >
+            Agregar Actividad militar
+        </button>
+    </div>
 
 </div>

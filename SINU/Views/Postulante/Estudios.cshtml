@@ -17,11 +17,11 @@
                 <th hidden>IdPersona</th>
                 <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Nivel)</th>
                 @* <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Titulo)</th>*@
-                <th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Nombre)</th>
+                <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Nombre)</th>
                 @*<th>@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[-1].Promedio)</th>*@
                 <th class="oculto">@Html.DisplayNameFor(m => m.vPersona_EstudioListVM[0].Completo)</th>
                 <th>
-                    @Html.Label("Opciones")
+                    Opciones
                 </th>
             </tr>
         </thead>
@@ -35,10 +35,10 @@
                 <td style="max-width:5rem">@Html.DisplayFor(modelItem => item.Nivel)</td>
 
                 @*<td>@Html.DisplayFor(modelItem => item.Titulo)</td>*@
-                <td class="truncate">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td class="truncate oculto">@Html.DisplayFor(modelItem => item.Nombre)</td>
                 @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
                 <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
-                <td>
+                <td class="BTAcciones">
                     <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdEstudio"></button>&ensp; |&ensp;
                     @Ajax.ActionLink(" ", "EliminaEST", new { ID = item.IdEstudio }, new AjaxOptions
                       {
@@ -53,14 +53,14 @@
             </tbody>
 
         </table>
+    <div class="BTAcciones">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaEstudio">
+            Agregar Estudio
+        </button>
+    </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" id="Nuevo_REG" data-IdTabla="TablaEstudio">
-        Agregar Estudio
-    </button>
-
-
-</div>
+    </div>
 <script type="text/javascript">
    //SelectTabla(tabla, ID){
    //     alert(this.attr("ID" + "   " + ID));

@@ -888,6 +888,8 @@ namespace SINU.Controllers
             {
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
+                pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER)!=null) ?true: false;
+
             }
             else
             {
@@ -900,7 +902,7 @@ namespace SINU.Controllers
             }
             return View(pers);
         }
-
+            
         [HttpPost]
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
         {
@@ -949,6 +951,8 @@ namespace SINU.Controllers
                 Persona per = db.Persona.FirstOrDefault(m => m.DNI == DNI.ToString());
                 
                 Familiares rela = db.Persona.Find(ID).Postulante.Familiares.FirstOrDefault(m=>m.IdPersona== per.IdPersona);
+
+              
                 if (per != null && rela == null)
                 {
                     int Id_Persona = per.IdPersona;

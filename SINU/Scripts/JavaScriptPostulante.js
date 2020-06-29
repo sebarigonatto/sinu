@@ -375,7 +375,7 @@ $(document).ready(function () {
     ///////////////////////////////ELIMINA///////////////////////////////////
    
     //ELIMINA EL ESTUDIO SELECCIONADO
-    $.Elimina =function (tabla) {
+    $.ActualizaTabla =function (tabla) {
          url_Tabla = tabla;
          //oculta el modal
         ActualizaTabla();
@@ -575,17 +575,7 @@ $(document).ready(function () {
 
     });
 
-    //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
-    var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
-    if (paganterior > 1) {
-        //alert("vino de familia");
-        $("#5 a").tab("show");
-        $("#FamiTAB a").tab("show");
-           
-        //$("html,body").animate({
-        //    scrollTop: 250
-        //}, 1500);
-    }
+
 
 
     //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo 
@@ -631,6 +621,17 @@ $(document).ready(function () {
         };
     });
 
+    //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
+    var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
+    if (paganterior > 1) {
+        //alert("vino de familia");
+        $("#5 a").tab("show");
+        $("#FamiTAB a").tab("show");
+        $("#BTFamiliaNAV").trigger("click");
+        //$("html,body").animate({
+        //    scrollTop: 250
+        //}, 1500);
+    }
     //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
     if ($("#BeginFormDatosBasicos .fechacumple").val() != "" ) {

@@ -219,7 +219,7 @@
                                 </div>
                                 <br />
                             </div>
-                            <div class="form-group row ml-3  ">
+                            <div class="form-group row ml-3  BTAcciones" >
                                 <input type="button" value="Guadar Datos" class="btn btn-success m-1" id="GuarFami" />
                             </div>
 
@@ -383,6 +383,24 @@
                 $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");
                 $(".TABCondicional .navbar-toggler").removeAttr("hidden");
             };
+
+
+            //en caso de ser postulante solo muestro la informacion y deshabilito la edicion de los datos
+            if ('@Model.postulante' == "True") {
+                $("#ModalCenterTitle").html("Anuncio");
+                $("#TextModal").html("Esta persona  es un POSTULANTE, por que lo que no podra editar sus datos.!!!");
+                $("#BTNModal").text("Cerrar");
+                $("#OK").hide();
+                $("#ModalAnuncios").modal("show");
+                //alert("es un postulante");
+                //Deshabilito los input de los formularios
+                $("form :input,form input").attr("disabled", "true");
+               //elimino los boton de edicion
+                $(".BTAcciones").html("");
+          
+            };
+
+
             var ID;
 
             $("#GuarFami").on("click", function (e, dt, type, index)  {
@@ -430,7 +448,7 @@
             $("#TextModal").html(response.msg);
             $("#ModalAnuncios").modal();
             if (response.accion != 0 & response.accion != null) {
-                alert("se actualizara la pagina");
+                //alert("se actualizara la pagina");
                 var url = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.accion;
                 window.location.href = url;
             }

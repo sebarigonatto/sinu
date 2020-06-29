@@ -1,6 +1,7 @@
 ﻿using SINU.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Security.Permissions;
 using System.Web.Mvc;
 
 namespace SINU.ViewModels
@@ -23,6 +24,7 @@ namespace SINU.ViewModels
         public List<SelectListItem> vEstCivilVM { get; set; }
         public List<SelectListItem> ReligionVM { get; set; }
         public List<SelectListItem> TipoDeNacionalidadVm { get; set; }
+        public bool postulante { get; set; }
     }
 
     public class DatosBasicosVM
