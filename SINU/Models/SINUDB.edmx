@@ -1703,6 +1703,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="EtapaProx" Type="varchar" Mode="In" />
           <Parameter Name="EstadoProx" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spRelacionFamiliarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdFamiliar" Type="int" Mode="In" />
+        </Function>
         <Function Name="spRelacionFamiliarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
@@ -3916,7 +3919,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Comentario" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_JobLimpiAspnetUserDiasAntig">
-            <Parameter Name="TopeAntiguedadEnDias" Mode="In" Type="Int32" />
+          <Parameter Name="TopeAntiguedadEnDias" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spRelacionFamiliarEliminar">
+            <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -5320,6 +5326,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosU" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
           <FunctionImportMapping FunctionImportName="spAdministradorEditar" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
           <FunctionImportMapping FunctionImportName="sp_JobLimpiAspnetUserDiasAntig" FunctionName="SINUModel.Store.sp_JobLimpiAspnetUserDiasAntig" />
+          <FunctionImportMapping FunctionImportName="spRelacionFamiliarEliminar" FunctionName="SINUModel.Store.spRelacionFamiliarEliminar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

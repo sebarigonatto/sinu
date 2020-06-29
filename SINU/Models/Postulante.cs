@@ -21,7 +21,6 @@ namespace SINU.Models
             this.Inscripcion = new HashSet<Inscripcion>();
             this.PostulanteViaje = new HashSet<PostulanteViaje>();
             this.DataProblemaPantalla = new HashSet<DataProblemaPantalla>();
-            this.DataProblemaEncontrado = new HashSet<DataProblemaEncontrado>();
         }
     
         public string IdAspNetUser { get; set; }
@@ -42,7 +41,5 @@ namespace SINU.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataProblemaPantalla> DataProblemaPantalla { get; set; }
         public virtual ComoSeEntero ComoSeEntero1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DataProblemaEncontrado> DataProblemaEncontrado { get; set; }
     }
 }
