@@ -53,6 +53,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.3.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\QRCoder.1.3.9\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
       <HintPath>packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
     </Reference>
@@ -123,6 +128,7 @@
       <Private>True</Private>
       <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -514,6 +520,7 @@
     <Content Include="Documentacion\SCRIPTS\RECREACION DE LOGIN Y USUARIOS.sql" />
     <Content Include="Imagenes\10.png" />
     <Content Include="Imagenes\9.png" />
+    <Content Include="Imagenes\AnclaQR.png" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
     <Content Include="Models\SINUDB.Context.tt">
@@ -1061,6 +1068,7 @@
     <Content Include="Views\Delegacion\_ListadoPostulante.cshtml" />
     <Content Include="Views\Delegacion\EntrevistaAsignaFecha.cshtml" />
     <Content Include="Views\Delegacion\Postular.cshtml" />
+    <Content Include="Views\Postulante\Presentacion.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

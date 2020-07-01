@@ -56,6 +56,7 @@ $(document).ready(function () {
     var id_persona
     (function () {
         id_persona = $("#vPersona_DatosBasicosVM_IdPersona").val();
+        $("#fechacumpleaños").attr("data-date-end-date", "0d");
         //alert(id_persona);
     })();
 
@@ -69,6 +70,7 @@ $(document).ready(function () {
         language: "es",
         autoclose: true,
         startView: "years",
+        
     });
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
@@ -105,6 +107,20 @@ $(document).ready(function () {
         size: 7,
         noneSelectedText: 'Ninguna Opcion Seleccionada'
 
+    });
+
+
+    ////////////////////////////DATOS BASICOS///////////////////////////////////
+
+
+    $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        
+        //alert($(this).val())
+        if ($(this).val() > 2 && $(this).val()!=8 ) {
+            $("#IdComentario").show()
+        } else {
+            $("#IdComentario").hide()
+        }
     });
     /////////////////////////////////////////////////////////////////////////////////
     /*FUNCION DE LA VISTA DE DOMICILIOS */
@@ -304,6 +320,8 @@ $(document).ready(function () {
                 });
                 //se aplica el selectpicker basico
                 $(".selectpicker").selectpicker({ size: 7 });
+
+              
 
                 ////////////////////////////ESTUDIOS///////////////////////////////////
 

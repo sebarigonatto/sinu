@@ -1,4 +1,6 @@
-﻿using SINU.Models;
+﻿using Microsoft.SqlServer.Server;
+using SINU.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Permissions;
@@ -103,5 +105,13 @@ namespace SINU.ViewModels
         public List<SelectListItem> Localidad_API { get; set; }
 
     }
+
+    public class Presentacion {
+        public int IdPersona { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public DateTime FechaPresentacion { get; set; }
+    }
+
 
 }

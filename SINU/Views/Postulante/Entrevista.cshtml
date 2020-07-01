@@ -1,7 +1,7 @@
 ﻿@model SINU.Models.vEntrevistaLugarFecha
- <h4>Lugar y Fecha de Entrevista</h4>
+ <h4>Lugar y Fecha:</h4>
 <br />
-<div class="jumbotron" style="background-color:#969696">
+<div class="jumbotron" style="background-color: #08495f; color:white">
 
     @if (ViewBag.NoAsignado)
     {
@@ -23,8 +23,8 @@
         <h5> Fecha y Hora:@Model.FechaEntrevista </h5>
     }
 </div>
-<div class="jumbotron"  style="background-color:#969696">
-    <h5><b>@ViewBag.Considere[0]</b><h5 />
-    <hr />
-    </h5>@ViewBag.Considere[1]</h5>
+<div class="jumbotron" style="background-color: #08495f; color:white">
+    <h5><b>@ViewBag.Considere[0]</b></h5>
+    <hr/>
+    <h5>@ViewBag.Considere[1]</h5>
 </div>

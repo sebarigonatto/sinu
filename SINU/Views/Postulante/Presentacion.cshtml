@@ -1,0 +1,24 @@
+﻿@model SINU.ViewModels.Presentacion
+<h3>Fecha y lugar:</h3>
+<br/>
+
+<div class="jumbotron" style="background-color: #08495f; color:white">
+
+    <h6>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h6>
+    <h6>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h6>
+    @if (!ViewBag.Asignado)
+    {
+        <h5>Se le informara via correo cuando le hayan asignado una fecha para la presentacion, solicitamos este atento.</h5>
+        <h5>Por Consultas comunicarse con la Delegacion seleccionada. </h5>
+        @* <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
+            <h5>Direccion: <b>@Model.Direccion</b></h5>
+             <h5>Telefono: <b>@Model.Telefono</b></h5>*@
+    }
+    else
+    {
+        <h6>@Html.DisplayNameFor(m => m.FechaPresentacion): <b>@Html.DisplayFor(m => m.FechaPresentacion).ToString().ToUpper()</b></h6>
+        <br /> <h6> @ViewBag.QRCodeImageLink</h6>
+
+        <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCodeImage))" width="130" height="130" />
+    }
+</div>

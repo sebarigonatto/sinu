@@ -1,11 +1,15 @@
 ﻿using Microsoft.Ajax.Utilities;
+using QRCoder;
 using SINU.Models;
 using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
@@ -62,7 +66,7 @@ namespace SINU.Controllers
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
-                    ComoSeEnteroVM = db.ComoSeEntero.ToList()
+                    ComoSeEnteroVM = db.ComoSeEntero.Where(n=>n.IdComoSeEntero!=1).ToList()
                 };
                 datosba.vPersona_DatosBasicosVM.IdComoSeEntero = 0;
                 //var Com = new[] { new SelectListItem { Value = "1", Text="Familiar en la Institucion" },
@@ -89,12 +93,17 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
+            if (Datos.vPersona_DatosBasicosVM.ComoSeEntero== null)
+            {
+                    ModelState["vPersona_DatosBasicosVM.ComoSeEntero"].Errors.Clear();
+            }
             if (ModelState.IsValid)
             {
                 try
                 {
                     //se guarda los datos de las persona devueltos
                     var p = Datos.vPersona_DatosBasicosVM;
+                   
 
                     var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular,p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero,p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
                     
@@ -915,7 +924,7 @@ namespace SINU.Controllers
                 var datos = fami.vPersona_FamiliarVM;
                 int? idpersonafamiliar = 0;
                 try
-                {
+                {   
                     var per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
                     var IDPOSTULANTE = db.Postulante.FirstOrDefault(m => m.AspNetUsers.UserName == HttpContext.User.Identity.Name).IdPersona;
                     Familiares rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
@@ -992,7 +1001,46 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult Presentacion(int ID_persona)
+        {
+            var per = db.Persona.Find(ID_persona);
+            Presentacion prese = new Presentacion {
+                IdPersona = per.IdPersona,
+                Apellido = per.Apellido,
+                Nombre = per.Nombres
 
+            }; 
+            ViewBag.Asignado = true;
+            var FechaPrese = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).FechaRindeExamen;
+            if (FechaPrese == null)
+            {
+                ViewBag.Asignado = false;
+            }
+            else {
+                prese.FechaPresentacion = (DateTime)FechaPrese;
+                string url = "Link donde estaran los datos del postulante.";
+                ViewBag.QRCodeImage = generarQR(url);
+                ViewBag.QRCodeImageLink = url;
+            };
+            return PartialView(prese);
+        }
+        private byte[] generarQR(string texto)
+        {   //https://github.com/codebude/QRCoder ver documentacion ejemplo de usos ej logo en el qr entre muchas otras cosas
+            //establesco la ubicacion del logo que aparecera em el codigo QR
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string ubicacionImagen = $"{ubicacion}Imagenes\\AnclaQR.png";
+
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(texto, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20, ColorTranslator.FromHtml("#212429"), Color.White, (Bitmap)Bitmap.FromFile(ubicacionImagen),25,10);
+            using (MemoryStream stream = new MemoryStream())
+            {
+                qrCodeImage.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+
+        }
 
     }
 }

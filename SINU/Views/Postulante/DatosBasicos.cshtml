@@ -64,9 +64,18 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
 
-                            @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
+                            @*<div class="input-group">
+
+                                 @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker col-md-7", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
+                                <div class="input-group-append">
+                                    <span class="input-group-text  ">
+                                        <text class="fa fa-calendar"  />
+                                    </span>
+                                </div>
+                            </div>*@
+
+                            @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker ", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -123,14 +132,15 @@
                     <div class="form-group  ">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @*@Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",  new { @class = "form-control selectpicker", @id="DROPComoEntero"  })*@
+                            @Html.DropDownListFor(model=>model.vPersona_DatosBasicosVM.IdComoSeEntero,new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",new { @class= "form-control selectpicker", @id= "DROPComoEntero" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="IdComentario" style="display:none" >
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control"  } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
