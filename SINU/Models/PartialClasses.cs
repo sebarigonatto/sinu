@@ -89,4 +89,14 @@ namespace SINU.Models
     public partial class vInscripcionEtapaEstadoUltimoEstado
     {
     }
+    [MetadataType(typeof(SexoMetadata))]
+    public partial class Sexo
+    { }
+    [MetadataType(typeof(FuerzaMetadata))]
+    public partial class Fuerza
+    { }
+    [MetadataType(typeof(TipoNacionalidadMetadata))]
+    public partial class TipoNacionalidad
+    { }
+
 }
