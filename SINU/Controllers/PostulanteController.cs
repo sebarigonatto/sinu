@@ -178,7 +178,9 @@ namespace SINU.Controllers
                 {
                     ViewBag.NoAsignado = true;
                 }
-                else { ViewBag.NoAsignado = false; }
+                else {
+                    entrevistafh.FechaEntrevista = entrevistafh.FechaEntrevista;
+                    ViewBag.NoAsignado = false; }
                 //se carga los texto parametrizados desde la tabla configuracion
                 string[] consideraciones = {
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
@@ -926,15 +928,16 @@ namespace SINU.Controllers
                 try
                 {   
                     var per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
-                    var IDPOSTULANTE = db.Postulante.FirstOrDefault(m => m.AspNetUsers.UserName == HttpContext.User.Identity.Name).IdPersona;
-                    Familiares rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
-                    if (per!=null && rela ==null)
+                    var IDPOSTULANTE = datos.IdPersonaPostulante;
+
+                    
+                    if (per!=null)
                     {
+                        ///Familiares rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
 
                         db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
-
                         datos.IdPersonaFamiliar = per.IdPersona;
-                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente!!!", accion = datos.IdPersonaFamiliar });
+                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente. Rediriginedo...", accion = datos.IdPersonaFamiliar }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -945,16 +948,16 @@ namespace SINU.Controllers
                         {
                             idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
                         }
-                        return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso!!!",accion= idpersonafamiliar });
+                        return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso. Redirigiendo...",accion= idpersonafamiliar }, JsonRequestBehavior.AllowGet);
                     };
                 }
                 catch (Exception ex)
                 {
-                    return Json(new {success= false, msg = ex.InnerException.Message});
+                    return Json(new {success= false, msg = ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
                     
                 }
             }
-            return Json(new {success= false, msg= "Modelo no valido" });
+            return Json(new {success= false, msg= "Modelo no valido" }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult VerificarDNI(int DNI , int ID)
@@ -962,16 +965,21 @@ namespace SINU.Controllers
             try
             {
                 Persona per = db.Persona.FirstOrDefault(m => m.DNI == DNI.ToString());
-                
-                Familiares rela = db.Persona.Find(ID).Postulante.Familiares.FirstOrDefault(m=>m.IdPersona== per.IdPersona);
-
               
-                if (per != null && rela == null)
+                if (per != null)
                 {
                     int Id_Persona = per.IdPersona;
-                    return Json(new { existe = true, msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?",DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
+                    Familiares rela = db.Persona.Find(ID).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == Id_Persona);
+                    //si ya tiene una relacion conel postulante la persona a agragr como familiar lo notifico
+                    if (rela != null )
+                    {
+                        return Json(new { resp = "son_familiares", msg = string.Format("La persona con Dni: {0}, ya esta cargado como familiar. Redirigiendo...", DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
+                    }
+                   
+                    return Json(new { resp = "existe", msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?", DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
                 }
-                return Json(new { existe = false }, JsonRequestBehavior.AllowGet);
+
+                return Json(new { resp = "no_existe" }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
