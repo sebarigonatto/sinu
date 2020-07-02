@@ -98,5 +98,10 @@ namespace SINU.Models
     [MetadataType(typeof(TipoNacionalidadMetadata))]
     public partial class TipoNacionalidad
     { }
-
-}
+    [MetadataType(typeof(InstitucionMetadata))]
+    public partial class Institucion
+    { }
+    [MetadataType(typeof(vConvocatoriaDetallesMetadata))]
+    public partial class vConvocatoriaDetalles
+    { }
+} 

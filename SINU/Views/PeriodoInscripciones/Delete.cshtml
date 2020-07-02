@@ -5,9 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar Período de Inscripción.</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<div class="alert alert-warning" role="alert">
+    Esta a punto de eliminar un período de inscripción, si existen registros asociados aparecerán en una tabla debajo! Verifique antes de dar Eliminar
+</div>
 <div>
     <h4>PeriodosInscripciones</h4>
     <hr />
@@ -45,67 +47,107 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Eliminiar" class="btn btn-default" /> |
             @Html.ActionLink("Volver a la lista", "Index")
         </div>
     }
 </div>
+<h4>Detalle de Convocatorias Relacionadas</h4>
+<table class="table table-filters" id="le-filters">
+    <thead>
+    <th>
+        @Html.DisplayNameFor(model => model.ConvocatorVm[1].FechaInicio)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.ConvocatorVm[1].FechaFinal)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.ConvocatorVm[1].NombreInst)
+    </th>
+    <th>
+        @Html.DisplayNameFor(model => model.ConvocatorVm[1].Modalidad)
+    </th>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model.ConvocatorVm)
+            {
 
-<!-- ***********************************************************************-->
-<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
-<!-- ***********************************************************************-->
-<!--Para establecer Formato de Tabla-->
-<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
-<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
-<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
-<!-- Rodear la tr de las th con <thead> </thead>-->
-<!-- Rodear el contenido de la tabla con <tbody>-->
-@section Scripts {
-    <script type="text/javascript">
-        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-        $(document).ready(function () {
-            $(".table-filters").DataTable({
-                responsive: true,
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
+                <th>
+                    @Html.DisplayFor(model => item.FechaInicio)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.FechaFinal)
+                </th>
+
+
+                <th>
+                    @Html.DisplayFor(model => item.NombreInst)
+                </th>
+
+                <th>
+                    @Html.DisplayFor(model => item.Modalidad)
+                </th>
+            }
+
+        </tr>
+    </tbody>
+</table>
+    <!-- ***********************************************************************-->
+    <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+    <!-- ***********************************************************************-->
+    <!--Para establecer Formato de Tabla-->
+    <!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+    <!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+    <!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+    <!-- Rodear la tr de las th con <thead> </thead>-->
+    <!-- Rodear el contenido de la tabla con <tbody>-->
+    @section Scripts {
+        <script type="text/javascript">
+            //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+            $(document).ready(function () {
+                $(".table-filters").DataTable({
+                    responsive: true,
+                    "language":
+                    {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
                     },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
 
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                },
-                {
-                    "targets": 'ni-o-ni-bu',
-                    "searchable": false,
-                    "orderable": false
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false
+                    },
+                    {
+                        "targets": 'ni-o-ni-bu',
+                        "searchable": false,
+                        "orderable": false
 
-                }]
+                    }]
 
+
+                });
 
             });
-
-        });
-    </script>
+        </script>
     }

@@ -456,4 +456,22 @@ namespace SINU.Models
         [Required]
         public string Tipo { get; set; }
     }
+    public partial class vConvocatoriaDetallesMetadata
+    {
+        [Display(Name = "Inicio")]
+        public System.DateTime FechaInicio { get; set; }
+        [Display(Name = "Finalización")]
+        public System.DateTime FechaFinal { get; set; }
+        [Display(Name = "Modalidad")]
+        public string Modalidad { get; set; }
+        [Display(Name = "Grupo")]
+        public string Desc_Grupo { get; set; }
+        [Display(Name = "Instituto")]
+        public string NombreInst { get; set; }
+     }
+    public partial class InstitucionMetadata
+    {
+        [Display(Name = "Instituto")]
+        public string NombreInst { get; set; }
+    }
 }
