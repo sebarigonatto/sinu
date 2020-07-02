@@ -112,11 +112,22 @@ namespace SINU.Controllers.Administrador
                 return View("Error", Func.ConstruyeError("Falta el NRO de ID que desea buscar en la tabla de Periodo de Inscripciones", "PeriodoInscripciones", "Edit"));
             }
             PeriodosInscripciones periodosInscripciones = db.PeriodosInscripciones.Find(id);
+
             if (periodosInscripciones == null)
             {
                 return View("Error", Func.ConstruyeError("Ese numero de ID no se encontro en la tabla de Periodo de Inscripciones", "PeriodoInscripciones", "Edit"));
             }
-            return View(periodosInscripciones);
+
+            //aca es una prueba casi funcional del eliminar, creando viewmodel y poniendo los datos en cada parte segun la condicion de existencia de los datos
+            EliminarPeriodo PeriodoEliar = new EliminarPeriodo(); ;
+            PeriodoEliar.PeriodosInscripcionesVm = periodosInscripciones;
+            List<vConvocatoriaDetalles> x = db.vConvocatoriaDetalles.Where(i => i.IdPeriodoInscripcion == id).ToList();
+            if (x != null)
+            {
+                PeriodoEliar.ConvocatorVm = x;
+
+            };
+            return View(PeriodoEliar);
         }
 
         //Falta agregar el codigo para que se confirme la baja de una fila

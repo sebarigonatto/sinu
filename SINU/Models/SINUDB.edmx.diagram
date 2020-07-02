@@ -116,6 +116,8 @@
         <EntityTypeShape EntityType="SINUModel.Modalidad" Width="1.5" PointX="17.375" PointY="23.75" />
         <AssociationConnector Association="SINUModel.FK_Postulante_ComoSeEntero" />
         <EntityTypeShape EntityType="SINUModel.vPersona_DatosBasicos" Width="1.5" PointX="23.375" PointY="23.75" />
+        <EntityTypeShape EntityType="SINUModel.vConvocatoriaDetalles" Width="1.5" PointX="25.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SINUModel.VPersonaProblema" Width="1.5" PointX="25.75" PointY="7.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

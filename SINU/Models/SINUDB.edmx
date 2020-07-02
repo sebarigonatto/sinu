@@ -490,6 +490,50 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene defin
           <Property Name="IdConfiguracion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vConvocatoriaDetalles">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="Modalidad" />
+            <PropertyRef Name="Desc_Grupo" />
+            <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="IdInstitucion" />
+            <PropertyRef Name="IdPeriodoInscripcion" />
+            <PropertyRef Name="IdModalidad" />
+            <PropertyRef Name="IdGrupoCarrOficio" />
+          </Key>
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="Modalidad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Desc_Grupo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdConvocatoria" Type="int" Nullable="false" />
+          <Property Name="IdInstitucion" Type="int" Nullable="false" />
+          <Property Name="IdPeriodoInscripcion" Type="int" Nullable="false" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDelegaciones' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDelegaciones">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDestVigRelacDerog' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDestVigRelacDerog">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
@@ -516,6 +560,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscolaridad' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscolaridad">
+          <Property Name="CLAVE1" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPC" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscuelasInstitutos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscuelasInstitutos">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEstCivil">
           <Key>
@@ -525,6 +584,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Codigo_n" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vIdiomas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vIdiomas">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionDetalle">
@@ -593,6 +658,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ningu
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="30" />
           <Property Name="IdLocalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vPaises' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vPaises">
+          <Property Name="id" Type="int" />
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VPantalla_Problema">
@@ -907,6 +979,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no t
           <Property Name="DescInteres" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.VPersonaProblema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="VPersonaProblema">
+          <Key>
+            <PropertyRef Name="IdPostulantePersona" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPostulanteEtapaEstado">
           <Key>
@@ -925,6 +1008,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene de
           <Property Name="IdEstado" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vProv' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vProv">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="CODIGO_VAR" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vProvincia_Depto_Localidad">
@@ -1009,6 +1099,24 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Comentario" Type="varchar" MaxLength="150" />
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT019_GRUPO_SANGUINEO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT019_GRUPO_SANGUINEO">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="GRUPO" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT156_DIRECCION_DEST' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT156_DIRECCION_DEST">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vTipoDocIdentif' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vTipoDocIdentif">
+          <Property Name="CODIGO" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="40" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vUsuariosAdministrativos">
@@ -1833,6 +1941,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConfiguracionAdmin].[IdConfiguracion] AS [IdConfiguracion]
     FROM [dbo].[vConfiguracionAdmin] AS [vConfiguracionAdmin]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vConvocatoriaDetalles" EntityType="Self.vConvocatoriaDetalles" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vConvocatoriaDetalles].[FechaInicio] AS [FechaInicio], 
+    [vConvocatoriaDetalles].[FechaFinal] AS [FechaFinal], 
+    [vConvocatoriaDetalles].[NombreInst] AS [NombreInst], 
+    [vConvocatoriaDetalles].[Modalidad] AS [Modalidad], 
+    [vConvocatoriaDetalles].[Desc_Grupo] AS [Desc_Grupo], 
+    [vConvocatoriaDetalles].[IdConvocatoria] AS [IdConvocatoria], 
+    [vConvocatoriaDetalles].[IdInstitucion] AS [IdInstitucion], 
+    [vConvocatoriaDetalles].[IdPeriodoInscripcion] AS [IdPeriodoInscripcion], 
+    [vConvocatoriaDetalles].[IdModalidad] AS [IdModalidad], 
+    [vConvocatoriaDetalles].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio]
+    FROM [dbo].[vConvocatoriaDetalles] AS [vConvocatoriaDetalles]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vEntrevistaLugarFecha].[Apellido] AS [Apellido], 
@@ -2131,6 +2253,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_SituacionOcupacional].[Explicacion] AS [Explicacion], 
     [vPersona_SituacionOcupacional].[DescInteres] AS [DescInteres]
     FROM [dbo].[vPersona_SituacionOcupacional] AS [vPersona_SituacionOcupacional]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VPersonaProblema" EntityType="Self.VPersonaProblema" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VPersonaProblema].[Email] AS [Email], 
+    [VPersonaProblema].[IdPostulantePersona] AS [IdPostulantePersona], 
+    [VPersonaProblema].[Descripcion] AS [Descripcion]
+    FROM [dbo].[VPersonaProblema] AS [VPersonaProblema]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPostulanteEtapaEstado" EntityType="Self.vPostulanteEtapaEstado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -3922,8 +4051,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="TopeAntiguedadEnDias" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spRelacionFamiliarEliminar">
-            <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
+          <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vConvocatoriaDetalles" EntityType="SINUModel.vConvocatoriaDetalles" />
+          <EntitySet Name="VPersonaProblema" EntityType="SINUModel.VPersonaProblema" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4292,6 +4423,38 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Etapa_Estado" Type="String" MaxLength="76" FixedLength="false" Unicode="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
           <Property Name="Edad" Type="Int32" />
+        </EntityType>
+        <EntityType Name="vConvocatoriaDetalles">
+          <Key>
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="Modalidad" />
+            <PropertyRef Name="Desc_Grupo" />
+            <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="IdInstitucion" />
+            <PropertyRef Name="IdPeriodoInscripcion" />
+            <PropertyRef Name="IdModalidad" />
+            <PropertyRef Name="IdGrupoCarrOficio" />
+          </Key>
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Modalidad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Desc_Grupo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
+          <Property Name="IdPeriodoInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdGrupoCarrOficio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VPersonaProblema">
+          <Key>
+            <PropertyRef Name="IdPostulantePersona" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5327,6 +5490,31 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spAdministradorEditar" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
           <FunctionImportMapping FunctionImportName="sp_JobLimpiAspnetUserDiasAntig" FunctionName="SINUModel.Store.sp_JobLimpiAspnetUserDiasAntig" />
           <FunctionImportMapping FunctionImportName="spRelacionFamiliarEliminar" FunctionName="SINUModel.Store.spRelacionFamiliarEliminar" />
+          <EntitySetMapping Name="vConvocatoriaDetalles">
+            <EntityTypeMapping TypeName="SINUModel.vConvocatoriaDetalles">
+              <MappingFragment StoreEntitySet="vConvocatoriaDetalles">
+                <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
+                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="Desc_Grupo" ColumnName="Desc_Grupo" />
+                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VPersonaProblema">
+            <EntityTypeMapping TypeName="SINUModel.VPersonaProblema">
+              <MappingFragment StoreEntitySet="VPersonaProblema">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

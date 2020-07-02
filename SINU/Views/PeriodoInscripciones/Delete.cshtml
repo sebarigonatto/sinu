@@ -1,5 +1,5 @@
-﻿@model SINU.Models.PeriodosInscripciones
-
+﻿@*@model SINU.Models.PeriodosInscripciones*@
+@model SINU.ViewModels.EliminarPeriodo
 @{
     ViewBag.Title = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -13,32 +13,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FechaInicio)
+            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaInicio)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FechaInicio)
+            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaInicio)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FechaFinal)
+            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaFinal)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FechaFinal)
+            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaFinal)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Institucion.NombreInst)
+            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Institucion.NombreInst)
+            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
         </dd>
 
     </dl>
+   
 
-    @using (Html.BeginForm()) {
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -47,3 +50,62 @@
         </div>
     }
 </div>
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+
+            });
+
+        });
+    </script>
+    }

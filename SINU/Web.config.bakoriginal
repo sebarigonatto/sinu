@@ -12,8 +12,8 @@
     </sectionGroup>
   </configSections>
   <connectionStrings>
-    <add name="DefaultConnection" connectionString="Data Source=LAPTOP-39K3QFUT\SQLEXPRESS;Initial Catalog=SINU; user=User_SINU; password=SINU_User;" providerName="System.Data.SqlClient" />
-  <add name="SINUEntities" connectionString="metadata=res://*/Models.SINUDB.csdl|res://*/Models.SINUDB.ssdl|res://*/Models.SINUDB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=LAPTOP-39K3QFUT\SQLEXPRESS;initial catalog=SINU;persist security info=True;user id=User_SINU;password=SINU_User;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" /></connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=siecsi14d;Initial Catalog=SINU; user=User_SINU; password=SINU_User;" providerName="System.Data.SqlClient" />
+  <add name="SINUEntities" connectionString="metadata=res://*/Models.SINUDB.csdl|res://*/Models.SINUDB.ssdl|res://*/Models.SINUDB.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=siecsi14d;initial catalog=SINU;persist security info=True;user id=User_SINU;password=SINU_User;MultipleActiveResultSets=True;App=EntityFramework&quot;" providerName="System.Data.EntityClient" /></connectionStrings>
   <appSettings>
     <add key="webpages:Version" value="3.0.0.0" />
     <add key="webpages:Enabled" value="false" />
@@ -30,12 +30,7 @@
     <modules>
       <remove name="FormsAuthentication" />
     </modules>
-  <handlers>
-      <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
-      <remove name="OPTIONSVerbHandler" />
-      <remove name="TRACEVerbHandler" />
-      <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="*" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
-    </handlers></system.webServer>
+  </system.webServer>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
       <dependentAssembly>
@@ -94,6 +89,12 @@
       <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
     </providers>
   </entityFramework>
+  <system.codedom>
+    <compilers>
+      <compiler language="c#;cs;csharp" extension=".cs" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:1659;1699;1701" />
+      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
+    </compilers>
+  </system.codedom>
   <system.serviceModel>
     <bindings />
     <client />
@@ -105,10 +106,4 @@
       </setting>
     </SINU.Properties.Settings>
   </applicationSettings>
-  <system.codedom>
-    <compilers>
-      <compiler language="c#;cs;csharp" extension=".cs" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:1659;1699;1701" />
-      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb" type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" warningLevel="4" compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+" />
-    </compilers>
-  </system.codedom>
 </configuration>
