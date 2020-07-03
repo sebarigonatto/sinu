@@ -4,7 +4,7 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }*@
 
-<h2 class="text-center">Antropometria</h2>
+<h2>Antropometria</h2>
 
 
 @using (Ajax.BeginForm("Antropometria", "Postulante", null,
@@ -58,10 +58,6 @@ new { id = "BeginFormAntropometria" }))
                         @Html.ValidationMessageFor(model => model.IMC, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.PerimCabeza, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
@@ -70,6 +66,11 @@ new { id = "BeginFormAntropometria" }))
                     </div>
                 </div>
 
+            </div>
+            <div class="col-md-6">
+
+
+               
                 <div class="form-group">
                     @Html.LabelFor(model => model.PerimTorax, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
@@ -137,7 +138,7 @@ new { id = "BeginFormAntropometria" }))
             </div>
 
         </div>
-        <div class="form-group pl-3">
+        <div class="form-group pl-3 BTAcciones">
 
             <input type="submit" value="Guardar Datos" class="btn btn-success" />
 

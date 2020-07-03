@@ -388,7 +388,7 @@
             //en caso de ser postulante solo muestro la informacion y deshabilito la edicion de los datos
             if ('@Model.postulante' == "True") {
                 $("#ModalCenterTitle").html("Anuncio");
-                $("#TextModal").html("Esta persona  es un POSTULANTE, por que lo que no podra editar sus datos.!!!");
+                $("#TextModal").html("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!");
                 $("#BTNModal").text("Cerrar");
                 $("#OK").hide();
                 $("#ModalAnuncios").modal("show");
@@ -424,15 +424,20 @@
                                      $("#ModalAnuncios").modal("show");
                                      break;
                                  case "son_familiares":
-                                     
-                                     ID = response.ID_PER;
-                                     //alert(response.msg + "  " + response.ID_PER);
-                                     $("#ModalCenterTitle").html("Persona Existente");
-                                     $("#TextModal").html(response.msg);
-                                     $("#BTNModal").hide();
-                                     $("#OK").hide();
-                                     $("#ModalAnuncios").modal("show");
-                                     window.setTimeout(redirige, 3000);
+                                     var url = window.location.href.toString().search("Familia=0")
+                                     if (url != -1) {
+                                         ID = response.ID_PER;
+                                         //alert(response.msg + "  " + response.ID_PER);
+                                         $("#ModalCenterTitle").html("Persona Existente");
+                                         $("#TextModal").html(response.msg);
+                                         $("#BTNModal").hide();
+                                         $("#OK").hide();
+                                         $("#ModalAnuncios").modal("show");
+                                         window.setTimeout(redirige, 2000);
+                                     } else {
+                                         $("#BeginFormFamiliar").submit();
+                                     }
+                                    
                                      function redirige () {
                                          window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.ID_PER;
                                      }
@@ -461,16 +466,19 @@
 
         function Exito(response, status, xhr) {
             //response.sucess esta pero pero ver si me sirve mas adelante
-            $("#BTNModal").hide();
+            if (response.accion == 0) {
+                $("#BTNModal").html("Cerrar").show();
+            } else { $("#BTNModal").hide();}
             $("#OK").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
             $("#ModalAnuncios").modal();
-            window.setTimeout(redirige,3000);
-            function redirige() {
-                window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.accion;
+            if (response.accion > 0) {
+                window.setTimeout(redirige, 2000);
+                function redirige() {
+                    window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.accion;
+                }
             }
-                window.location.href = url;
             switch (response.form) {
                  case "Elimina":
                     $.Elimina(response.url_Tabla);

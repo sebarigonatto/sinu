@@ -6,10 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
@@ -929,27 +931,35 @@ namespace SINU.Controllers
                 {   
                     var per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
                     var IDPOSTULANTE = datos.IdPersonaPostulante;
+                    Familiares rela=null;
+                    string msgs;
 
-                    
                     if (per!=null)
                     {
-                        ///Familiares rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
-
-                        db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
-                        datos.IdPersonaFamiliar = per.IdPersona;
-                        return Json(new { success = true, msg = "Se agrego un familiar exitoxamente. Rediriginedo...", accion = datos.IdPersonaFamiliar }, JsonRequestBehavior.AllowGet);
+                        rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
+                        msgs = (rela!=null)?"Modificacion del Familiar Exitoso.": "Se agrego un familiar exitoxamente. Rediriginedo...";
                     }
                     else
                     {
-                        datos.IdReligion ??= "";
-                        db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Mail, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
-                        datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
-                        if (datos.IdPersonaFamiliar==0)
-                        {
-                            idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
-                        }
-                        return Json(new { success = true, msg = "Creacion/Modificacion del Familiar Exitoso. Redirigiendo...",accion= idpersonafamiliar }, JsonRequestBehavior.AllowGet);
+                        msgs = "Creacion del Familiar Exitoso. Redirigiendo...";
                     };
+
+                    if ((per != null && rela != null) || per == null)
+                    {
+                            datos.IdReligion ??= "";
+                            db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Mail, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
+                            datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
+                            idpersonafamiliar = (per == null) ? db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar : 0;
+
+                    }
+                    else if(rela==null) { 
+                        db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
+                        datos.IdPersonaFamiliar = per.IdPersona;
+                        idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
+
+                    }
+                    return Json(new { success = true, msg = msgs,accion= idpersonafamiliar }, JsonRequestBehavior.AllowGet);
+
                 }
                 catch (Exception ex)
                 {
@@ -971,12 +981,12 @@ namespace SINU.Controllers
                     int Id_Persona = per.IdPersona;
                     Familiares rela = db.Persona.Find(ID).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == Id_Persona);
                     //si ya tiene una relacion conel postulante la persona a agragr como familiar lo notifico
-                    if (rela != null )
-                    {
-                        return Json(new { resp = "son_familiares", msg = string.Format("La persona con Dni: {0}, ya esta cargado como familiar. Redirigiendo...", DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
-                    }
-                   
-                    return Json(new { resp = "existe", msg = string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?", DNI), ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
+                    string msgs, resps;
+
+                    msgs = (rela != null) ? string.Format("La persona con Dni: {0}, ya esta cargado como familiar. Redirigiendo...", DNI) : string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?", DNI);
+                    resps = (rela != null) ?"son_familiares": "existe";
+                  
+                    return Json(new { resp =resps, msg =msgs, ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { resp = "no_existe" }, JsonRequestBehavior.AllowGet);
@@ -1009,7 +1019,28 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult Presentacion(int ID_persona)
+
+        /*--------------------------------------------------------------VALIDAR DATOS------------------------------------------------------------------------------*/
+
+        //paso al postulante a la secuencia "Documentacion - A Validar"
+        public JsonResult ValidarDatos(int ID_persona)
+        {
+            try
+            {
+                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 14, "", "");
+                return Json(new { success = true, msg = "Operacion Exitosa" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
+
+
+        public ActionResult Presentacion(int ID_persona)            
         {
             var per = db.Persona.Find(ID_persona);
             Presentacion prese = new Presentacion {
@@ -1049,6 +1080,8 @@ namespace SINU.Controllers
             }
 
         }
+
+
 
     }
 }

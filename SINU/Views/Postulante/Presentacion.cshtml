@@ -1,7 +1,5 @@
 ﻿@model SINU.ViewModels.Presentacion
-<h3>Fecha y lugar:</h3>
-<br/>
-
+<h2>Fecha y lugar:</h2>
 <div class="jumbotron" style="background-color: #08495f; color:white">
 
     <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h5>
@@ -16,9 +14,8 @@
     }
     else
     {
-        <h5>@Html.DisplayNameFor(m => m.FechaPresentacion): <b>@Model.FechaPresentacion.ToString("dd/MM/yyyy")</b></h5>
-        <br /> <h6> @ViewBag.QRCodeImageLink</h6>
-
-        <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCodeImage))" width="130" height="130" style="border-radius:3 px" />
+                <h5>@Html.DisplayNameFor(m => m.FechaPresentacion): <b>@Model.FechaPresentacion.ToString("dd/MM/yyyy")</b></h5>
+                <br /> <h5> @ViewBag.QRCodeImageLink</h5>
+                <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCodeImage))" width="140" height="140" style="border-radius:3px" class="align-items-center" />
     }
 </div>
