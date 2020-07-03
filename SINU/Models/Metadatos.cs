@@ -468,10 +468,25 @@ namespace SINU.Models
         public string Desc_Grupo { get; set; }
         [Display(Name = "Instituto")]
         public string NombreInst { get; set; }
-     }
+        [Display(Name = "Código Modalidad")]
+        public string IdModalidad { get; set; }
+        [Display(Name = "Código Grupo")]
+        public string IdGrupoCarrOficio { get; set; }
+    }
     public partial class InstitucionMetadata
     {
         [Display(Name = "Instituto")]
         public string NombreInst { get; set; }
     }
+
+    //public partial class GrupoCarrOficioMetadata
+    //{
+    //    [Display(Name = "Código Grupo")]
+    //    public string IdGrupoCarrOficio { get; set; }
+    //}
+    //public partial class ModalidadMetadata
+    //{
+    //    [Display(Name = "Código Modalidad")]
+    //    public string IdModalidad { get; set; }
+    //}
 }

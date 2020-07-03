@@ -1,156 +1,168 @@
 ﻿@*@model SINU.Models.PeriodosInscripciones*@
 @model SINU.ViewModels.EliminarPeriodo
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Período de Inscripción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Eliminar Período de Inscripción.</h2>
+@if (Model.ConvocatorVm.Count() > 0)
+{
+    <div class="alert alert-warning" role="alert">
+        Esta a punto de eliminar un período de inscripción con Convocatoria/as asociadas! Verifique antes de dar Eliminar.
+    </div>
 
-<div class="alert alert-warning" role="alert">
-    Esta a punto de eliminar un período de inscripción, si existen registros asociados aparecerán debajo! Verifique antes de dar Eliminar
-</div>
+}
 <div>
     <h4>Periodos de Inscripciones</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaInicio)
-        </dt>
+    <table class="table table-filters">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaInicio)
+                </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaInicio)
-        </dd>
+                <th>
+                    @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaFinal)
+                </th>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.FechaFinal)
-        </dt>
+                <th>
+                    @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
+                </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaFinal)
-        </dd>
+            </tr>
+        </thead>
+        <body>
+            <td>
+                @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PeriodosInscripcionesVm.FechaFinal)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
+            </td>
+        </body>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PeriodosInscripcionesVm.Institucion.NombreInst)
-        </dd>
-
-    </dl>
-   
-
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Eliminiar" class="btn btn-default" /> |
-            @Html.ActionLink("Volver a la lista", "Index")
-        </div>
-    }
+    </table>
 </div>
 <span>
+
+    @*3.- Ahora que lo vemos realmente programado, nos damos cuenta de la repetición de datos que al momento de pensarlo no se definió qué ver y qué no en la grilla, la cuestión era tenerla. En la grilla no deben estar los datos que corresponden al período de inscripción que estás viendo en detalle  en la parte superior. Es decir:
+        no se debiera estar repitiendo las columnas Inicio, Finalización ni Instituto
+        Debe aparecer Modalidad y Descripción de la Modalidad, junto a Grupo y Descripción del Grupo
+        (Vemos como queda y cualquier cosa decidiremos qué dejamos/sacamos o que lo decida el usuario más adelante.)*@
+
 
 </span>
 <h4>Detalle de Convocatorias Relacionadas</h4>
 <table class="table table-filters" id="le-filters">
     <thead>
-    <th>
-        @Html.DisplayNameFor(model => model.ConvocatorVm[1].FechaInicio)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.ConvocatorVm[1].FechaFinal)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.ConvocatorVm[1].NombreInst)
-    </th>
-    <th>
-        @Html.DisplayNameFor(model => model.ConvocatorVm[1].Modalidad)
-    </th>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ConvocatorVm[1].IdModalidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConvocatorVm[1].Modalidad)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.ConvocatorVm[1].IdGrupoCarrOficio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ConvocatorVm[1].Desc_Grupo)
+                </th>
+        </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var item in Model.ConvocatorVm)
-            {
 
-                <th>
-                    @Html.DisplayFor(model => item.FechaInicio)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.FechaFinal)
-                </th>
-
-
-                <th>
-                    @Html.DisplayFor(model => item.NombreInst)
-                </th>
-
-                <th>
+        @foreach (var item in Model.ConvocatorVm)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.IdModalidad)
+                </td>
+                <td>
                     @Html.DisplayFor(model => item.Modalidad)
-                </th>
-            }
+                </td>
 
-        </tr>
+                <td>
+                        @Html.DisplayFor(model => item.IdGrupoCarrOficio)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => item.Desc_Grupo)
+                    </td>
+            </tr>
+        }
+
     </tbody>
 </table>
-    <!-- ***********************************************************************-->
-    <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
-    <!-- ***********************************************************************-->
-    <!--Para establecer Formato de Tabla-->
-    <!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
-    <!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
-    <!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
-    <!-- Rodear la tr de las th con <thead> </thead>-->
-    <!-- Rodear el contenido de la tabla con <tbody>-->
-    @section Scripts {
-        <script type="text/javascript">
-            //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-            $(document).ready(function () {
-                $(".table-filters").DataTable({
-                    responsive: true,
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Eliminiar" class="btn btn-default" /> |
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+}
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
                     },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
 
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false
-                    },
-                    {
-                        "targets": 'ni-o-ni-bu',
-                        "searchable": false,
-                        "orderable": false
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
 
-                    }]
+                }]
 
-
-                });
 
             });
-        </script>
-    }
+
+        });
+    </script>
+}
