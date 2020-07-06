@@ -101,9 +101,10 @@
         <EntityTypeShape EntityType="SINUModel.VerificacionPantallas" Width="1.5" PointX="5.375" PointY="2.625" />
         <EntityTypeShape EntityType="SINUModel.VPantalla_Problema" Width="2.625" PointX="23.375" PointY="4.625" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona" ManuallyRouted="true" >
-          <ConnectorPoint PointX="4.5" PointY="17.470520833333335" />
-          <ConnectorPoint PointX="6.84375" PointY="272.96338959362862" />
-          <ConnectorPoint PointX="6.84375" PointY="7.3648893229166665" />
+          <ConnectorPoint PointX="4.5" PointY="14.177761060003775" />
+          <ConnectorPoint PointX="5.2721284862592457" PointY="7.1660495218007325" />
+          <ConnectorPoint PointX="5.2903715137407543" PointY="7.000384287891845" />
+          <ConnectorPoint PointX="5.375" PointY="6.23187160622739" />
         </AssociationConnector>
         <AssociationConnector Association="SINUModel.FK_DataProblema_VerificacionPantallas" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona1" />
@@ -118,6 +119,25 @@
         <EntityTypeShape EntityType="SINUModel.vPersona_DatosBasicos" Width="1.5" PointX="23.375" PointY="23.75" />
         <EntityTypeShape EntityType="SINUModel.vConvocatoriaDetalles" Width="1.5" PointX="25.75" PointY="0.75" />
         <EntityTypeShape EntityType="SINUModel.VPersonaProblema" Width="1.5" PointX="25.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SINUModel.C__MigrationHistory" Width="1.5" PointX="25.375" PointY="13.25" />
+        <EntityTypeShape EntityType="SINUModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="19.875" />
+        <EntityTypeShape EntityType="SINUModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="29.5" />
+        <EntityTypeShape EntityType="SINUModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="32.25" />
+        <EntityTypeShape EntityType="SINUModel.Convocatoria" Width="1.5" PointX="19.625" PointY="29.375" />
+        <EntityTypeShape EntityType="SINUModel.DataProblemaEncontrado" Width="1.5" PointX="9.5" PointY="0.75" />
+        <EntityTypeShape EntityType="SINUModel.DataVerificacion" Width="1.5" PointX="7.25" PointY="35.875" />
+        <EntityTypeShape EntityType="SINUModel.GrupoCarrOficio" Width="1.5" PointX="13.125" PointY="28" />
+        <EntityTypeShape EntityType="SINUModel.ResGrupo" Width="1.5" PointX="15.375" PointY="30.75" />
+        <AssociationConnector Association="SINUModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SINUModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SINUModel.FK_Convocatoria_GrupoCarrOficio" />
+        <AssociationConnector Association="SINUModel.FK_Convocatoria_Modalidad" />
+        <AssociationConnector Association="SINUModel.FK_Convocatoria_PeriodosInscripciones" />
+        <AssociationConnector Association="SINUModel.FK_DataProblemaEncontrado_DataVerificacion" />
+        <AssociationConnector Association="SINUModel.FK_DataProblemaEncontrado_Postulante" />
+        <AssociationConnector Association="SINUModel.AspNetUserRoles" />
+        <AssociationConnector Association="SINUModel.AgrupacionCarreraOficio" />
+        <AssociationConnector Association="SINUModel.GrupoCarrOficioResGrupo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

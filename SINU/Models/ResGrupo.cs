@@ -12,19 +12,25 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Modalidad
+    public partial class ResGrupo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Modalidad()
+        public ResGrupo()
         {
-            this.Convocatoria = new HashSet<Convocatoria>();
+            this.GrupoCarrOficio = new HashSet<GrupoCarrOficio>();
         }
     
-        public string IdModalidad { get; set; }
-        public string Descripcion { get; set; }
-        public string Personal { get; set; }
+        public int Edad_Al_AnioSig { get; set; }
+        public int Edad_Al_Dia { get; set; }
+        public int Edad_Al_Mes { get; set; }
+        public int EdadMinCAutoriz { get; set; }
+        public int EdadMin { get; set; }
+        public int EdadMax { get; set; }
+        public string IdEstadoCivil { get; set; }
+        public Nullable<System.DateTime> Edad_a_fecha { get; set; }
+        public int IdResGrupo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Convocatoria> Convocatoria { get; set; }
+        public virtual ICollection<GrupoCarrOficio> GrupoCarrOficio { get; set; }
     }
 }

@@ -30,6 +30,8 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaEntrevista { get; set; }
         public Nullable<System.DateTime> FechaRindeExamen { get; set; }
         public int IdInscripcion { get; set; }
+        public string IdModalidad { get; set; }
+        public Nullable<int> IdCarreraOficio { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocPresentado> DocPresentado { get; set; }
