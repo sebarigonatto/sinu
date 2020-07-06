@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System;
 
 namespace SINU.Controllers.Administrador
 {
@@ -46,13 +47,20 @@ namespace SINU.Controllers.Administrador
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdSexo,Descripcion")] Sexo sexo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Sexo.Add(sexo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+ if (ModelState.IsValid)
+                {
+                    db.Sexo.Add(sexo);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
 
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Sexoes", "Create"));
+            }
             return View(sexo);
         }
 
@@ -107,10 +115,19 @@ namespace SINU.Controllers.Administrador
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Sexo sexo = db.Sexo.Find(id);
-            db.Sexo.Remove(sexo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Sexo sexo = db.Sexo.Find(id);
+                db.Sexo.Remove(sexo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Sexoes", "Edit"));
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

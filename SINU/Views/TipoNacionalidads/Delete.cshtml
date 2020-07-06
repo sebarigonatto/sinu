@@ -1,15 +1,17 @@
 ﻿@model SINU.Models.TipoNacionalidad
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Nacionalidad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Eliminar Registro.</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<div class="alert alert-warning" role="alert">
+    Esta a punto de eliminar un Registro.
+</div>
 <div>
-    <h4>TipoNacionalidad</h4>
+    <h4>Tipo de Nacionalidad</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -30,11 +32,12 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
             @Html.ActionLink("Volver a la lista", "Index")
         </div>
     }

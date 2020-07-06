@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System;
 
 namespace SINU.Controllers.Administrador
 {
@@ -107,11 +108,21 @@ namespace SINU.Controllers.Administrador
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TipoNacionalidad tipoNacionalidad = db.TipoNacionalidad.Find(id);
-            db.TipoNacionalidad.Remove(tipoNacionalidad);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                TipoNacionalidad tipoNacionalidad = db.TipoNacionalidad.Find(id);
+                db.TipoNacionalidad.Remove(tipoNacionalidad);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "TipoNacionalidad", "Delete"));
+            }
         }
+
 
         protected override void Dispose(bool disposing)
         {
