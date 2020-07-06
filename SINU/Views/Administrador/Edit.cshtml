@@ -5,7 +5,8 @@
     //creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
     ViewBag.OficinaYDelegacion = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
     ViewBag.CodGrupos = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
-    ViewBag.Grado = new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION");
+    //Esto lo cambie de lugar y lo hago directamente en DownDropListFor, para que en el edit me cargue el combo, pasandole como atributo el valor del selectValue
+    //ViewBag.Grado = new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION", Model.Grado);
 }
 @*@section MenuPerfil{
 
@@ -78,10 +79,12 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="drprojecttype">
             @Html.LabelFor(model => model.Grado, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.Grado, (SelectList)ViewBag.Grado,"", htmlAttributes: new { @class = "form-control" })
+
+                @*@Html.DropDownListFor(m => m.Grado, (SelectList)ViewBag.Grado, htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownListFor(m => m.Grado, new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION", Model.Grado), htmlAttributes: new { @class = "form-control" })
                 @*@Html.EditorFor(model => model.Grado, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Grado, "", new { @class = "text-danger" })
             </div>
@@ -160,6 +163,8 @@
             $("#inaoact").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                 PerfilUsu();
             });
+
+   
     </script>
 }
 
