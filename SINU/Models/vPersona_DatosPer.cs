@@ -27,5 +27,6 @@ namespace SINU.Models
         public string Nacionalidad { get; set; }
         public string IdModalidad { get; set; }
         public Nullable<int> IdCarreraOficio { get; set; }
+        public Nullable<int> IdInscripcion { get; set; }
     }
 }

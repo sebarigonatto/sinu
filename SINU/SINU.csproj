@@ -384,6 +384,12 @@
     <Compile Include="Models\SituacionRevista.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spCarrerasParaEsteInscripto_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spModalidadParaEsteInscripto_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

@@ -1033,5 +1033,23 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarEliminar", idFamiliarParameter);
         }
+    
+        public virtual ObjectResult<spCarrerasParaEsteInscripto_Result> spCarrerasParaEsteInscripto(Nullable<int> idInscripcion)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCarrerasParaEsteInscripto_Result>("spCarrerasParaEsteInscripto", idInscripcionParameter);
+        }
+    
+        public virtual ObjectResult<spModalidadParaEsteInscripto_Result> spModalidadParaEsteInscripto(Nullable<int> idInscripcion)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spModalidadParaEsteInscripto_Result>("spModalidadParaEsteInscripto", idInscripcionParameter);
+        }
     }
 }

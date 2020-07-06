@@ -628,6 +628,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene def
           <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDelegaciones' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDelegaciones">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+          <Property Name="Direccion" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vDestVigRelacDerog' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vDestVigRelacDerog">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
@@ -654,6 +673,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscolaridad' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscolaridad">
+          <Property Name="CLAVE1" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPC" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vEscuelasInstitutos' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vEscuelasInstitutos">
+          <Property Name="DESTINO_ALFANUMERICO" Type="varchar" MaxLength="8" />
+          <Property Name="DESTINO_NUMERICO" Type="varchar" MaxLength="50" />
+          <Property Name="ZONA" Type="varchar" MaxLength="50" />
+          <Property Name="VIGENTE" Type="varchar" MaxLength="1" />
+          <Property Name="DESCRIPCIONES" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEstCivil">
           <Key>
@@ -664,6 +698,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vIdiomas' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vIdiomas">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionDetalle">
           <Key>
@@ -672,6 +712,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
             <PropertyRef Name="Nombres" />
             <PropertyRef Name="Genero" />
             <PropertyRef Name="DNI" />
+            <PropertyRef Name="OpcionSeEnteroPOR" />
             <PropertyRef Name="Rinde_En" />
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdInscripcion" />
@@ -682,10 +723,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
-          <Property Name="Telefono" Type="varchar" MaxLength="50" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
+          <Property Name="OpcionSeEnteroPOR" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
           <Property Name="Preferencia" Type="varchar" MaxLength="60" />
+          <Property Name="Modalidad" Type="varchar" MaxLength="10" />
+          <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="CarreraRelacionada" Type="varchar" MaxLength="100" />
           <Property Name="Rinde_En" Type="varchar" MaxLength="201" Nullable="false" />
           <Property Name="Inscripto_En" Type="varchar" MaxLength="100" />
           <Property Name="Inscripto_En_descrip" Type="varchar" MaxLength="50" />
@@ -731,6 +775,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ningu
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="30" />
           <Property Name="IdLocalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vPaises' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vPaises">
+          <Property Name="id" Type="int" />
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VPantalla_Problema">
@@ -881,6 +932,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definid
           </Key>
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="IdInscripcion" Type="int" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
           <Property Name="IdCarreraOficio" Type="int" />
           <Property Name="CUIL" Type="varchar" MaxLength="11" Nullable="false" />
@@ -1077,6 +1129,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene de
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vProv' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vProv">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="CODIGO_VAR" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vProvincia_Depto_Localidad">
           <Key>
@@ -1160,6 +1219,24 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="Comentario" Type="varchar" MaxLength="150" />
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT019_GRUPO_SANGUINEO' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT019_GRUPO_SANGUINEO">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="GRUPO" Type="varchar" MaxLength="112" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vT156_DIRECCION_DEST' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vT156_DIRECCION_DEST">
+          <Property Name="CODIGO" Type="varchar" MaxLength="8" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="255" />
+        </EntityType>-->
+        <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'SINU.dbo.vTipoDocIdentif' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="vTipoDocIdentif">
+          <Property Name="CODIGO" Type="varchar" MaxLength="50" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="40" />
+        </EntityType>-->
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vUsuariosAdministrativos">
@@ -1914,6 +1991,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Cuello" Type="int" Mode="In" />
           <Parameter Name="Calzado" Type="int" Mode="In" />
         </Function>
+        <Function Name="spCarrerasParaEsteInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
+        </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -1999,6 +2079,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Destino" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spModalidadParaEsteInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
         </Function>
         <Function Name="spPERSONAFamiliarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idpersona" Type="int" Mode="In" />
@@ -2227,10 +2310,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionDetalle].[Nombres] AS [Nombres], 
     [vInscripcionDetalle].[Genero] AS [Genero], 
     [vInscripcionDetalle].[DNI] AS [DNI], 
-    [vInscripcionDetalle].[Telefono] AS [Telefono], 
     [vInscripcionDetalle].[Celular] AS [Celular], 
+    [vInscripcionDetalle].[OpcionSeEnteroPOR] AS [OpcionSeEnteroPOR], 
     [vInscripcionDetalle].[ComoSeEntero] AS [ComoSeEntero], 
     [vInscripcionDetalle].[Preferencia] AS [Preferencia], 
+    [vInscripcionDetalle].[Modalidad] AS [Modalidad], 
+    [vInscripcionDetalle].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vInscripcionDetalle].[CarreraRelacionada] AS [CarreraRelacionada], 
     [vInscripcionDetalle].[Rinde_En] AS [Rinde_En], 
     [vInscripcionDetalle].[Inscripto_En] AS [Inscripto_En], 
     [vInscripcionDetalle].[Inscripto_En_descrip] AS [Inscripto_En_descrip], 
@@ -2367,6 +2453,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <DefiningQuery>SELECT 
     [vPersona_DatosPer].[Email] AS [Email], 
     [vPersona_DatosPer].[IdPersona] AS [IdPersona], 
+    [vPersona_DatosPer].[IdInscripcion] AS [IdInscripcion], 
     [vPersona_DatosPer].[IdModalidad] AS [IdModalidad], 
     [vPersona_DatosPer].[IdCarreraOficio] AS [IdCarreraOficio], 
     [vPersona_DatosPer].[CUIL] AS [CUIL], 
@@ -3383,6 +3470,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdCarreraOficio" Type="Int32" />
+          <Property Name="IdInscripcion" Type="Int32" />
         </EntityType>
         <EntityType Name="vPersona_Domicilio">
           <Key>
@@ -4408,6 +4496,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="GrupoCarrOficio" EntitySet="GrupoCarrOficio" />
             <End Role="ResGrupo" EntitySet="ResGrupo" />
           </AssociationSet>
+          <FunctionImport Name="spCarrerasParaEsteInscripto" ReturnType="Collection(SINUModel.spCarrerasParaEsteInscripto_Result)">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spModalidadParaEsteInscripto" ReturnType="Collection(SINUModel.spModalidadParaEsteInscripto_Result)">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -4519,6 +4613,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdInscripcion" />
             <PropertyRef Name="IdOficinasYDelegaciones" />
+            <PropertyRef Name="OpcionSeEnteroPOR" />
           </Key>
           <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -4538,6 +4633,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OpcionSeEnteroPOR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Modalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCarreraOficio" Type="Int32" />
+          <Property Name="CarreraRelacionada" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vUsuariosAdministrativos">
           <Key>
@@ -5015,6 +5114,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <End Type="SINUModel.GrupoCarrOficio" Role="GrupoCarrOficio" Multiplicity="*" />
           <End Type="SINUModel.ResGrupo" Role="ResGrupo" Multiplicity="*" />
         </Association>
+        <ComplexType Name="spCarrerasParaEsteInscripto_Result">
+          <Property Type="String" Name="CarreraUoficio" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="IdCarreraOficio" Nullable="false" />
+          <Property Type="Int32" Name="IdPeriodoInscripcion" Nullable="true" />
+          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInscripcion" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spModalidadParaEsteInscripto_Result">
+          <Property Type="String" Name="IdModalidad" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="IdPeriodoInscripcion" Nullable="true" />
+          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
+          <Property Type="DateTime" Name="FechaInscripcion" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5541,6 +5653,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPersona_DatosPer">
             <EntityTypeMapping TypeName="SINUModel.vPersona_DatosPer">
               <MappingFragment StoreEntitySet="vPersona_DatosPer">
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -5857,7 +5970,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionDetalle">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionDetalle">
               <MappingFragment StoreEntitySet="vInscripcionDetalle">
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="CarreraRelacionada" ColumnName="CarreraRelacionada" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
+                <ScalarProperty Name="OpcionSeEnteroPOR" ColumnName="OpcionSeEnteroPOR" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
@@ -6191,6 +6307,27 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="spCarrerasParaEsteInscripto" FunctionName="SINUModel.Store.spCarrerasParaEsteInscripto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spCarrerasParaEsteInscripto_Result">
+                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spModalidadParaEsteInscripto" FunctionName="SINUModel.Store.spModalidadParaEsteInscripto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spModalidadParaEsteInscripto_Result">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
