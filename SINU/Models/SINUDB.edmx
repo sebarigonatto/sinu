@@ -684,6 +684,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
           <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
           <Property Name="OpcionSeEnteroPOR" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ComoSeEntero" Type="varchar" MaxLength="100" />
           <Property Name="Preferencia" Type="varchar" MaxLength="60" />
@@ -2242,6 +2243,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionDetalle].[Genero] AS [Genero], 
     [vInscripcionDetalle].[DNI] AS [DNI], 
     [vInscripcionDetalle].[Celular] AS [Celular], 
+    [vInscripcionDetalle].[Telefono] AS [Telefono], 
     [vInscripcionDetalle].[OpcionSeEnteroPOR] AS [OpcionSeEnteroPOR], 
     [vInscripcionDetalle].[ComoSeEntero] AS [ComoSeEntero], 
     [vInscripcionDetalle].[Preferencia] AS [Preferencia], 
@@ -5044,6 +5046,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Genero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="OpcionSeEnteroPOR" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ComoSeEntero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Preferencia" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
@@ -6252,6 +6255,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Preferencia" ColumnName="Preferencia" />
                 <ScalarProperty Name="ComoSeEntero" ColumnName="ComoSeEntero" />
                 <ScalarProperty Name="OpcionSeEnteroPOR" ColumnName="OpcionSeEnteroPOR" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Celular" ColumnName="Celular" />
                 <ScalarProperty Name="DNI" ColumnName="DNI" />
                 <ScalarProperty Name="Genero" ColumnName="Genero" />

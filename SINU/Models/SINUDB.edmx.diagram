@@ -94,7 +94,7 @@
         <AssociationConnector Association="SINUModel.PersonaInteres" />
         <EntityTypeShape EntityType="SINUModel.vPersona_SituacionOcupacional" Width="1.5" PointX="19.375" PointY="18.75" />
         <EntityTypeShape EntityType="SINUModel.Usuario_OficyDeleg" Width="1.5" PointX="10.5" PointY="24.5" />
-        <EntityTypeShape EntityType="SINUModel.vUsuariosAdministrativos" Width="1.5" PointX="21.125" PointY="23.375" />
+        <EntityTypeShape EntityType="SINUModel.vUsuariosAdministrativos" Width="1.5" PointX="21.375" PointY="22.75" />
         <AssociationConnector Association="SINUModel.FK_Usuario_OficyDeleg_OficinasYDelegaciones" />
         <EntityTypeShape EntityType="SINUModel.DataProblemaPantalla" Width="1.5" PointX="5.375" PointY="5" />
         <EntityTypeShape EntityType="SINUModel.VerificacionPantallas" Width="1.5" PointX="5.375" PointY="2.625" />
@@ -137,7 +137,7 @@
         <AssociationConnector Association="SINUModel.AspNetUserRoles" />
         <AssociationConnector Association="SINUModel.AgrupacionCarreraOficio" />
         <AssociationConnector Association="SINUModel.GrupoCarrOficioResGrupo" />
-        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="23.375" PointY="17.75" />
+        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="23.75" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

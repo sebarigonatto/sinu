@@ -20,6 +20,7 @@ namespace SINU.Models
         public string Genero { get; set; }
         public string DNI { get; set; }
         public string Celular { get; set; }
+        public string Telefono { get; set; }
         public string OpcionSeEnteroPOR { get; set; }
         public string ComoSeEntero { get; set; }
         public string Preferencia { get; set; }
