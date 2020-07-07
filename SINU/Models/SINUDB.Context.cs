@@ -85,7 +85,6 @@ namespace SINU.Models
         public virtual DbSet<Interes> Interes { get; set; }
         public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
         public virtual DbSet<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
-        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<vUsuariosAdministrativos> vUsuariosAdministrativos { get; set; }
         public virtual DbSet<DataProblemaPantalla> DataProblemaPantalla { get; set; }
         public virtual DbSet<VerificacionPantallas> VerificacionPantallas { get; set; }
@@ -108,6 +107,7 @@ namespace SINU.Models
         public virtual DbSet<DataVerificacion> DataVerificacion { get; set; }
         public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
+        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -457,11 +457,15 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, fechaNacimientoParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idComoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
         }
     
-        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad)
+        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, Nullable<int> idInscripcion, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad, string idModalidad, Nullable<int> idCarreraOficio)
         {
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
                 new ObjectParameter("IdPersona", typeof(int));
+    
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
     
             var cUILParameter = cUIL != null ?
                 new ObjectParameter("CUIL", cUIL) :
@@ -483,7 +487,15 @@ namespace SINU.Models
                 new ObjectParameter("idTipoNacionalidad", idTipoNacionalidad) :
                 new ObjectParameter("idTipoNacionalidad", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter);
+            var idModalidadParameter = idModalidad != null ?
+                new ObjectParameter("IdModalidad", idModalidad) :
+                new ObjectParameter("IdModalidad", typeof(string));
+    
+            var idCarreraOficioParameter = idCarreraOficio.HasValue ?
+                new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
+                new ObjectParameter("IdCarreraOficio", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, idInscripcionParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter, idModalidadParameter, idCarreraOficioParameter);
         }
     
         public virtual int spDomiciliosU(Nullable<int> idDomicilioDNI, string calle, string numero, string piso, string unidad, Nullable<int> idLocalidad, string prov_Loc_CP, string idPais, Nullable<int> idDomicilioActual, string eventualCalle, string eventualNumero, string eventualPiso, string eventualUnidad, Nullable<int> eventualIdLocalidad, string eventualProv_Loc_CP, string eventualIdPais)

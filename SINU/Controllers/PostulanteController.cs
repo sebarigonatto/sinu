@@ -235,7 +235,7 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
+                   // var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
                     return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
                 }
                 catch (Exception ex)
