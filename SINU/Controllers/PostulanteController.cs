@@ -37,7 +37,7 @@ namespace SINU.Controllers
                 {
                     ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
-                pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m=>m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
@@ -206,12 +206,16 @@ namespace SINU.Controllers
         {
             try
             {
+                int idInscripcion = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+
                 DatosPersonalesVM datosba = new DatosPersonalesVM()
                 {
                     vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona),
                     TipoNacionalidadVM = db.TipoNacionalidad.ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
-                    vRELIGIONVM = db.vRELIGION.ToList()
+                    vRELIGIONVM = db.vRELIGION.ToList(),
+                    CarreraOficioVm = db.spCarrerasParaEsteInscripto(idInscripcion).Select(m=>new  SelectListItem() { Text = m.CarreraUoficio, Value= m.IdCarreraOficio.ToString()}).ToList(),
+                    ModalidadVm = db.spModalidadParaEsteInscripto(idInscripcion).DistinctBy(m=>m.IdModalidad).Select(m => new SelectListItem() { Text = m.IdModalidad, Value = m.IdModalidad.ToString() }).ToList()
                 };
                 return PartialView(datosba);
             }
@@ -235,7 +239,7 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
+                    //var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
                     return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
                 }
                 catch (Exception ex)

@@ -45,8 +45,10 @@ namespace SINU.ViewModels
         public List<vEstCivil> vEstCivilVM { get; set; }
         public List<vRELIGION> vRELIGIONVM { get; set; }
         public List<TipoNacionalidad> TipoNacionalidadVM { get; set; }
+        public List<SelectListItem> ModalidadVm { get; set; }
+        public List<SelectListItem> CarreraOficioVm { get; set; }
     }
-
+    
     public class DomicilioVM
     {
         public vPersona_Domicilio vPersona_DomicilioVM { get; set; }

@@ -20,8 +20,12 @@ namespace SINU.Models
         public string Genero { get; set; }
         public string DNI { get; set; }
         public string Celular { get; set; }
+        public string OpcionSeEnteroPOR { get; set; }
         public string ComoSeEntero { get; set; }
         public string Preferencia { get; set; }
+        public string Modalidad { get; set; }
+        public Nullable<int> IdCarreraOficio { get; set; }
+        public string CarreraRelacionada { get; set; }
         public string Rinde_En { get; set; }
         public string Inscripto_En { get; set; }
         public string Inscripto_En_descrip { get; set; }
@@ -31,10 +35,5 @@ namespace SINU.Models
         public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
-        public string Telefono { get; set; }
-        public string OpcionSeEnteroPOR { get; set; }
-        public string Modalidad { get; set; }
-        public Nullable<int> IdCarreraOficio { get; set; }
-        public string CarreraRelacionada { get; set; }
     }
 }

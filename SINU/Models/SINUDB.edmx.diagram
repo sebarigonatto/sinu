@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="db99460e529a4ec39037f43320756a9f" Name="Diagram1">
+      <Diagram DiagramId="db99460e529a4ec39037f43320756a9f" Name="Diagram1" ZoomLevel="111">
         <EntityTypeShape EntityType="SINUModel.Antropometria" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.AspNetUsers" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.Baja" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
@@ -94,17 +94,16 @@
         <AssociationConnector Association="SINUModel.PersonaInteres" />
         <EntityTypeShape EntityType="SINUModel.vPersona_SituacionOcupacional" Width="1.5" PointX="19.375" PointY="18.75" />
         <EntityTypeShape EntityType="SINUModel.Usuario_OficyDeleg" Width="1.5" PointX="10.5" PointY="24.5" />
-        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="3.375" PointX="21.375" PointY="17.75" />
-        <EntityTypeShape EntityType="SINUModel.vUsuariosAdministrativos" Width="1.5" PointX="21.375" PointY="22.75" />
+        <EntityTypeShape EntityType="SINUModel.vUsuariosAdministrativos" Width="1.5" PointX="21.125" PointY="23.375" />
         <AssociationConnector Association="SINUModel.FK_Usuario_OficyDeleg_OficinasYDelegaciones" />
         <EntityTypeShape EntityType="SINUModel.DataProblemaPantalla" Width="1.5" PointX="5.375" PointY="5" />
         <EntityTypeShape EntityType="SINUModel.VerificacionPantallas" Width="1.5" PointX="5.375" PointY="2.625" />
         <EntityTypeShape EntityType="SINUModel.VPantalla_Problema" Width="2.625" PointX="23.375" PointY="4.625" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona" ManuallyRouted="true" >
-          <ConnectorPoint PointX="4.5" PointY="14.177761060003775" />
-          <ConnectorPoint PointX="5.2721284862592457" PointY="7.1660495218007325" />
-          <ConnectorPoint PointX="5.2903715137407543" PointY="7.000384287891845" />
-          <ConnectorPoint PointX="5.375" PointY="6.23187160622739" />
+          <ConnectorPoint PointX="4.5" PointY="14.176428450501248" />
+          <ConnectorPoint PointX="5.2721303560917985" PointY="7.16324486149811" />
+          <ConnectorPoint PointX="5.2903696439082024" PointY="6.9975792158206547" />
+          <ConnectorPoint PointX="5.375" PointY="6.228890069238358" />
         </AssociationConnector>
         <AssociationConnector Association="SINUModel.FK_DataProblema_VerificacionPantallas" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona1" />
@@ -138,6 +137,7 @@
         <AssociationConnector Association="SINUModel.AspNetUserRoles" />
         <AssociationConnector Association="SINUModel.AgrupacionCarreraOficio" />
         <AssociationConnector Association="SINUModel.GrupoCarrOficioResGrupo" />
+        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="23.375" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
