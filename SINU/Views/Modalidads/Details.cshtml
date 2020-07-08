@@ -1,0 +1,41 @@
+﻿@model SINU.Models.Modalidad
+
+@{
+    ViewBag.Title = "Modalidad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Modalidad</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Personal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Personal)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdModalidad }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

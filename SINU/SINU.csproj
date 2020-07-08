@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Administrador\AdministradorController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
+    <Compile Include="Controllers\Administrador\ModalidadsController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
     <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
@@ -1130,6 +1131,11 @@
     <Content Include="Views\Delegacion\EntrevistaAsignaFecha.cshtml" />
     <Content Include="Views\Delegacion\Postular.cshtml" />
     <Content Include="Views\Postulante\Presentacion.cshtml" />
+    <Content Include="Views\Modalidads\Create.cshtml" />
+    <Content Include="Views\Modalidads\Delete.cshtml" />
+    <Content Include="Views\Modalidads\Details.cshtml" />
+    <Content Include="Views\Modalidads\Edit.cshtml" />
+    <Content Include="Views\Modalidads\Index.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

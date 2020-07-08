@@ -4,54 +4,52 @@
 }
 @*@section MenuPerfil{
 
-    @Html.Partial("_MenuPerfilAdmin")
-}*@
+        @Html.Partial("_MenuPerfilAdmin")
+    }*@
 
-<h2>Create</h2>
-
-
+<h4>Periodos de Inscripciones</h4>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>PeriodosInscripciones</h4>
-    <div class="alert alert-warning" role="alert">
-        SI EXISTE SOLAPAMIENTO DE RANGOS DEBE MODIFICAR EL ACTUAL O CORREGIR/ELIMINAR LOS EXISTENTES QUE PROVOQUEN ERROR!
-    </div>
-    <hr />
-    @* cambiamos el true por un false para mostrar arriba todos los mensajes *@
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
-            @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaInicio, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
+    <div class="form-horizontal">
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFinal", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
-            @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaFinal,"", new { @class = "text-danger" })*@
+        <div class="alert alert-warning" role="alert">
+            SI EXISTE SOLAPAMIENTO DE RANGOS DEBE MODIFICAR EL ACTUAL O CORREGIR/ELIMINAR LOS EXISTENTES QUE PROVOQUEN ERROR!
         </div>
-    </div>
+        <hr />
+        @* cambiamos el true por un false para mostrar arriba todos los mensajes *@
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
+                @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaInicio, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
 
-    <div class="form-group ">
-        @Html.LabelFor(model => model.PeriodosInscripcionesVm.IdInstitucion, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.PeriodosInscripcionesVm.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant" })
-            @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.IdInstitucion, "", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFinal", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
+                @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaFinal,"", new { @class = "text-danger" })*@
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Guardar" class="btn btn-default" />
+        <div class="form-group ">
+            @Html.LabelFor(model => model.PeriodosInscripcionesVm.IdInstitucion, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.PeriodosInscripcionesVm.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant" })
+                @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.IdInstitucion, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
 }
 
 <div>
@@ -62,10 +60,10 @@
 
 
     <script type="text/javascript">
-        //alterala validacion de la fechas 
+        //alterala validacion de la fechas
         //jQuery.validator.methods["date"] = function (value, element) { return true; };
         var date = new Date();
-        date.setDate(date.getDate()-1);
+        date.setDate(date.getDate() - 1);
         $('.datepicker').datepicker({
             autoclose: true,
             startDate: date,
