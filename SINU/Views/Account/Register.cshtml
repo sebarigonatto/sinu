@@ -51,7 +51,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id="Contraseña" })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
         </div>
@@ -106,6 +106,12 @@
         $(".selectpicker").selectpicker({
             size: 7,
             noneSelectedText: 'Ninguna Opcion Seleccionada'
+
+        });
+        $(document).ready( function () {
+            $("#Contraseña").attr("data-toggle", "tooltip")
+                            .attr("data-placement", "top")
+                .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder").tooltip({ 'trigger': 'focus' })
 
         });
     </script>

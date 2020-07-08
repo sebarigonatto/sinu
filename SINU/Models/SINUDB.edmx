@@ -4431,13 +4431,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="GrupoCarrOficio" EntitySet="GrupoCarrOficio" />
             <End Role="ResGrupo" EntitySet="ResGrupo" />
           </AssociationSet>
-          <FunctionImport Name="spCarrerasParaEsteInscripto" ReturnType="Collection(SINUModel.spCarrerasParaEsteInscripto_Result)">
-          <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="spModalidadParaEsteInscripto" ReturnType="Collection(SINUModel.spModalidadParaEsteInscripto_Result)">
-          <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="vInscripcionDetalle" EntityType="SINUModel.vInscripcionDetalle" />
+          <FunctionImport Name="spCarrerasParaEsteInscripto" ReturnType="Collection(SINUModel.spCarrerasParaEsteInscripto_Result1)">
+          <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spModalidadParaEsteInscripto" ReturnType="Collection(SINUModel.spModalidadParaEsteInscripto_Result1)">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5063,6 +5063,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="spCarrerasParaEsteInscripto_Result1">
+          <Property Type="String" Name="CarreraUoficio" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="IdCarreraOficio" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spModalidadParaEsteInscripto_Result1">
+          <Property Type="String" Name="IdModalidad" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6216,27 +6224,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="spCarrerasParaEsteInscripto" FunctionName="SINUModel.Store.spCarrerasParaEsteInscripto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spCarrerasParaEsteInscripto_Result">
-                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
-                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
-                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
-                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spModalidadParaEsteInscripto" FunctionName="SINUModel.Store.spModalidadParaEsteInscripto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spModalidadParaEsteInscripto_Result">
-                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
-                <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
-                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="vInscripcionDetalle">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionDetalle">
               <MappingFragment StoreEntitySet="vInscripcionDetalle">
@@ -6265,6 +6252,22 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spCarrerasParaEsteInscripto" FunctionName="SINUModel.Store.spCarrerasParaEsteInscripto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spCarrerasParaEsteInscripto_Result1">
+                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spModalidadParaEsteInscripto" FunctionName="SINUModel.Store.spModalidadParaEsteInscripto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spModalidadParaEsteInscripto_Result1">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

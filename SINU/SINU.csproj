@@ -387,7 +387,13 @@
     <Compile Include="Models\spCarrerasParaEsteInscripto_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spCarrerasParaEsteInscripto_Result1.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spModalidadParaEsteInscripto_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spModalidadParaEsteInscripto_Result1.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
@@ -655,8 +661,12 @@
     <Content Include="Scripts\i18n\defaults-sk_SK.min.js" />
     <Content Include="Scripts\i18n\defaults-sl_SI.js" />
     <Content Include="Scripts\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.js" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.min.js" />
     <Content Include="Scripts\i18n\defaults-sv_SE.js" />
     <Content Include="Scripts\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Scripts\i18n\defaults-th_TH.js" />
+    <Content Include="Scripts\i18n\defaults-th_TH.min.js" />
     <Content Include="Scripts\i18n\defaults-tr_TR.js" />
     <Content Include="Scripts\i18n\defaults-tr_TR.min.js" />
     <Content Include="Scripts\i18n\defaults-ua_UA.js" />
@@ -777,7 +787,6 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
     <Content Include="Documentacion\SINUentrevista1y2.pdf" />
-    <Content Include="Content\bootstrap-select.css.map" />
     <EntityDeploy Include="Models\SINUDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SINUDB.Designer.cs</LastGenOutput>
@@ -794,6 +803,7 @@
     <Content Include="Plantillas\PlantillaMailCuenta.cshtml" />
     <Content Include="Plantillas\MailConfirmacionEntrevista.cshtml" />
     <Content Include="Plantillas\MailConfirmacioPostulado.cshtml" />
+    <Content Include="Content\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -956,12 +966,19 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js.map" />
     <Content Include="Scripts\i18n\defaults-zh_CN.js.map" />
     <Content Include="Scripts\i18n\defaults-vi_VN.js.map" />
     <Content Include="Scripts\i18n\defaults-ua_UA.js.map" />
     <Content Include="Scripts\i18n\defaults-tr_TR.js.map" />
+    <Content Include="Scripts\i18n\defaults-th_TH.js.map" />
     <Content Include="Scripts\i18n\defaults-sv_SE.js.map" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.js.map" />
     <Content Include="Scripts\i18n\defaults-sl_SI.js.map" />
     <Content Include="Scripts\i18n\defaults-sk_SK.js.map" />
     <Content Include="Scripts\i18n\defaults-ru_RU.js.map" />
@@ -996,11 +1013,6 @@
     <Content Include="Scripts\i18n\defaults-am_ET.js.map" />
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
-    <Content Include="Scripts\index.js.flow" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

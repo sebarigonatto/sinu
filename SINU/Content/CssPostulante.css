@@ -95,6 +95,7 @@
 .bli {
     border-bottom: 1px solid #ffffff !important;
 }
+        
 /*Para deshabilitar el uso del tab*/
 .Tabdesabilitado a{
     pointer-events: none;

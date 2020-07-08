@@ -92,6 +92,9 @@ $(document).ready(function () {
         };
         $("#edad").val(edad);
     });
+    //$.fn.selectpicker.Constructor.BootstrapVersion = '4';
+    //$.fn.selectpicker.Constructor.DEFAULTS.style = 'btn-white';
+    //$.fn.selectpicker.Constructor.DEFAULTS.styleBase = 'btn';
 
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     //https://developer.snapappointments.com/bootstrap-select/
@@ -101,11 +104,15 @@ $(document).ready(function () {
         liveSearchPlaceholder: "Ingrese su busqueda...",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
-        noneSelectedText: 'Ninguna Opcion Seleccionada'
+        noneSelectedText: 'Ninguna Opcion Seleccionada',
+        //styleBase: 'form-control',
+        //style: 'btn btn-white'
     });
     $(".selectpicker").selectpicker({
         size: 7,
-        noneSelectedText: 'Ninguna Opcion Seleccionada'
+        noneSelectedText: 'Ninguna Opcion Seleccionada',
+        //styleBase:'btn',
+        //style: 'btn-white'
 
     });
 

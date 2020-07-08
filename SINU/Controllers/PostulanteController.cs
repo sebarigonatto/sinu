@@ -203,7 +203,7 @@ namespace SINU.Controllers
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
         public ActionResult DatosPersonales(int ID_persona)
-        {
+            {
             try
             {
                 int idInscripcion = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
@@ -211,11 +211,11 @@ namespace SINU.Controllers
                 DatosPersonalesVM datosba = new DatosPersonalesVM()
                 {
                     vPersona_DatosPerVM = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona),
-                    TipoNacionalidadVM = db.TipoNacionalidad.ToList(),
+                    TipoNacionalidadVM = db.TipoNacionalidad.Where(m=>m.IdTipoNacionalidad !=4 ).ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList(),
                     CarreraOficioVm = db.spCarrerasParaEsteInscripto(idInscripcion).Select(m=>new  SelectListItem() { Text = m.CarreraUoficio, Value= m.IdCarreraOficio.ToString()}).ToList(),
-                    ModalidadVm = db.spModalidadParaEsteInscripto(idInscripcion).DistinctBy(m=>m.IdModalidad).Select(m => new SelectListItem() { Text = m.IdModalidad, Value = m.IdModalidad.ToString() }).ToList()
+                    ModalidadVm = db.spModalidadParaEsteInscripto(idInscripcion).Select(m => new SelectListItem() { Text = m.Descripcion, Value = m.IdModalidad }).ToList()
                 };
                 return PartialView(datosba);
             }
@@ -239,7 +239,7 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
-                    //var result = db.spDatosPersonalesUpdate(p.IdPersona, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad);
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona,p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad,p.IdModalidad,p.IdCarreraOficio);
                     return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
                 }
                 catch (Exception ex)
@@ -268,7 +268,7 @@ namespace SINU.Controllers
             };
             return View(domi);
         }
-               
+
 
 
 

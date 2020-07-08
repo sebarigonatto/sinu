@@ -14,13 +14,13 @@
 <br />
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
 
-<div class="p-1 bg-white rounded shadow mb-1 h-75" style="padding:0px !important">
+<div class="p-1 bg-white rounded shadow mb-1" style="padding:0px !important">
 
     <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
 
         @* PERSONA DATOS BASICOS ID=2 *@
         <li class="nav-item flex-sm-fill" id="2">
-            <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">
+            <a id="datosbasicos-tab" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab" >
                 1° Datos Basicos
             </a>
         </li>
@@ -47,7 +47,7 @@
         </li>
     </ul>
 
-    <div id="myTab2Content" class="tab-content " >
+    <div id="myTab2Content" class="tab-content" >
 
         @* VISTA VPERSONA DATOS BASICOS CON ID = 2 *@
         <div id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab" class="tab-pane fade px-4 py-3 show active">
@@ -148,7 +148,7 @@
                                             <span class="icon-bar"></span>
                                         </button>
                                     </nav>
-                                    <div class="collapse tab-pane fade show active nav-tab pt-4" id="DatosPersonalesNAV">
+                                    <div class="collapse tab-pane fade show active nav-tab pt-4 "  id="DatosPersonalesNAV">
                                         @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
 
@@ -167,6 +167,7 @@
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
                                         @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
+                                       
                                     </div>
 
                                 </div>
@@ -183,6 +184,7 @@
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
                                         @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
+
                                     </div>
 
                                 </div>
@@ -276,6 +278,7 @@
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
 
                                         <h2>Validar Datos</h2>
+                                        <br />
                                         <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                             <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no ntorpecer el Proceso de Inscripcion.</p>
                                             <br />
@@ -288,6 +291,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <br />
                             </div>
                         </div>
                         <!-- /.col-md-8 -->
@@ -311,7 +315,6 @@
     </div>
     <!-- End lined tabs -->
 </div>
-
 
 
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
@@ -388,6 +391,7 @@
         //    });
 
         $(document).ready(function () {
+            $('body').css('overflow-y', 'scroll');
             //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
             (function () {
 

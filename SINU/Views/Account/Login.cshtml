@@ -59,9 +59,33 @@
         </section>
     </div>*@
 </div>
+<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-body" style="height:40%;padding:3rem">
 
+                <h5 id="TextModal">
+                    Ya se encuentra un usuario logueado!!! 
+                    Debera cerrar sesion para loquearse con otro usuario. 
+                    Redirigiendo...
+                </h5>
+
+            </div>
+            
+        </div>
+    </div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    if ('@ViewBag.logueado' == "True") {
+        $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
+        $("#ModalAnuncios").modal("show").delay(8000).queue(function () {
+            window.location.href = "../Home/Index";
+        });
+    }
+</script>
 }
 @*<div class="container h-100">
     <div class="row justify-content-center h-100">

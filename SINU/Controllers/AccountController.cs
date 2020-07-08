@@ -59,6 +59,10 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.logueado = true;
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

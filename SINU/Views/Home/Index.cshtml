@@ -7,7 +7,7 @@
     }
 
     .tamaño-card {
-        max-width: 40%;
+        max-width: 40% !important;
     }
 
     @@media screen and (max-width: 601px) {
@@ -41,6 +41,13 @@
     }
 
     @@media screen and (min-width: 601px) {
+        .tcard {
+            font-size: 30px;
+        }
+
+        .back-color {
+            background-color: #1717178a !important;
+        }
         titulo {
             font-size: 60px;
         }
@@ -49,47 +56,30 @@
             flex: none !important;
         }
     }
-
+ 
     @@media screen and (min-width: 731px) {
+        .tcard {
+            font-size: 40px;
+        }
         titulo {
             font-size: 90px;
         }
     }
-
 
     @@media screen and (max-width: 600px) {
         titulo {
             font-size: 50px;
             text-align: center;
         }
-    }
-
-    @@media screen and (min-width: 601px) {
-        .tcard {
-            font-size: 30px;
-        }
-
-        .back-color {
-            background-color: #1717178a !important;
-        }
-    }
-
-    }
-
-    @@media screen and (min-width: 731px) {
-        .tcard {
-            font-size: 40px;
-        }
-    }
-
-
-    @@media screen and (max-width: 600px) {
         .tcard {
             font-size: 25px;
         }
 
         .back-color {
             background-color: #000000d4 !important
+        }
+        .card1 {
+            width: 100% !important
         }
     }
 
@@ -127,6 +117,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.45);
         background-color: #052240;
         color: white;
+        width: 40%
     }
 
     .nav-link:hover {
@@ -189,7 +180,7 @@
         </div>
     </div>
     <!-- /.row -->
-    <div class="card-deck d-flex align-items-center justify-content-center">
+    <div class="card-deck justify-content-center">
         @{
             List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
             Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
@@ -198,7 +189,7 @@
             while (inst < Periodos.Count())
             {
                 InstAnterior = Periodos[inst].NombreInst;
-                <div class="card card1 tamaño-card" style="align-items:center;text-align:center; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
+                <div class="card card1" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17)">
 
                     @{string imagen = @Periodos[inst].IdInstitucion + ".png"; }
                     <img class="card-img imgi" src="~/Imagenes/@imagen" alt="Card image cap" style="">
@@ -216,7 +207,6 @@
                                 // armado de la fila de un nuevo periodo
                                 //mostrar FechaInicio y Fecha Fin con el contador de per  <h6>@per&ordm;&ensp;</h6>
                                 <h5>Inicio @Periodos[inst].FechaInicio.ToString("dd/MM/yyyy")</h5>
-                                <br />
                                 <h5>Cierre @Periodos[inst].FechaFinal.ToString("dd/MM/yyyy")</h5>
                                 //muestro el boto de inscribirme solamente cuando no esta logueado un usuario
                                 if (!User.Identity.IsAuthenticated)
@@ -226,6 +216,8 @@
 
                                     </div>
                                 }
+                                <br />
+
 
                                 inst++;
                             }
