@@ -494,4 +494,12 @@ namespace SINU.Models
     //    [Display(Name = "Código Modalidad")]
     //    public string IdModalidad { get; set; }
     //}
+
+    public partial class ModalidadMetadata
+    {
+        [Required]
+        public string Personal { get; set; }
+        [Required]
+        public string Descripcion { get; set; }
+    }
 }

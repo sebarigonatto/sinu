@@ -110,4 +110,7 @@ namespace SINU.Models
     //[MetadataType(typeof(ModalidadMetadata))]
     //public partial class Modalidad
     //{ }
+    [MetadataType(typeof(ModalidadMetadata))]
+    public partial class Modalidad
+    { }
 } 
