@@ -87,6 +87,11 @@
                                             Datos Personales
                                         </a>
                                     </li>
+                                    <li class="nav-item flex-sm-fill bli">
+                                        <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" data-toggle="tab" href="#DocuPenal" role="tab" aria-controls="DocuPenal" aria-selected="false">
+                                            Antedecentes Penales
+                                        </a>
+                                    </li>
                                     <li class="nav-item flex-md-fill bli">
                                         <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false">
                                             Domicilio
@@ -148,12 +153,26 @@
                                             <span class="icon-bar"></span>
                                         </button>
                                     </nav>
-                                    <div class="collapse tab-pane fade show active nav-tab pt-4 "  id="DatosPersonalesNAV">
+                                    <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
                                         @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
 
                                 </div>
+                                @* VISTA DE Antecedentes Penales *@
+                                <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
+                                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                                        <a class="navbar-brand" href="#">Antecedentes Penales</a>
+                                        <button id="BTDocuPenalNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                    </nav>
+                                    <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
+                                        @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
+                                    </div>
 
+                                </div>
 
                                 @* VISTA DE DOMICILIO *@
                                 <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
@@ -167,7 +186,7 @@
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
                                         @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
-                                       
+
                                     </div>
 
                                 </div>
@@ -264,7 +283,7 @@
                                         @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>
-                                
+
                                 @* Validar Datos*@
                                 <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
                                     <nav class="navbar navbar-dark bg-dark ocultnav">

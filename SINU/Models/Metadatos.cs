@@ -108,8 +108,10 @@ namespace SINU.Models
         [Required]
         public int idTipoNacionalidad { get; set; }
         public string Nacionalidad { get; set; }
+        [Required]
         [Display(Name = "Modalidad")]
         public string IdModalidad { get; set; }
+        [Required]
         [Display(Name = "Carrera")]
         public Nullable<int> IdCarreraOficio { get; set; }
         public Nullable<int> IdInscripcion { get; set; }

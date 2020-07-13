@@ -61,8 +61,10 @@ $(document).ready(function () {
     })();
 
 
-
-
+    $(document).on('change', '.custom-file-input', function (event) {
+        $(this).next('.custom-file-label').html(event.target.files[0].name);
+    })
+    
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
     $(".datepicker").datepicker({

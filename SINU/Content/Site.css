@@ -112,3 +112,8 @@ textarea {
         max-width: 1300px !important;
     }
 }
+
+
+.custom-file-input ~ .custom-file-label::after {
+    content: "Elegir";
+}

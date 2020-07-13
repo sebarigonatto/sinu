@@ -4,6 +4,7 @@ using SINU.Models;
 using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.IO.Packaging;
@@ -251,10 +252,96 @@ namespace SINU.Controllers
             }
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
+        //----------------------------------Antecedentes Penales----------------------------------------------------------------------//
+        public class MemoryPostedFile : HttpPostedFileBase
+        {
+            private readonly byte[] fileBytes;
+
+            public MemoryPostedFile(byte[] fileBytes, string fileName = null)
+            {
+                this.fileBytes = fileBytes;
+                this.FileName = fileName;
+                this.InputStream = new MemoryStream(fileBytes);
+            }
+
+            public override int ContentLength => fileBytes.Length;
+
+            public override string FileName { get; }
+
+            public override Stream InputStream { get; }
+        }
+        public ActionResult DocuPenal(int ID_persona)
+        {
+            try
+            {
+                DocuPenalVM d = new DocuPenalVM() {
+                    IdPersona=ID_persona
+
+                };
+           
+                return PartialView(d);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+        }
+        [HttpPost]
+        public JsonResult DocuPenal(DocuPenalVM data)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {  
+                    string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                    string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                    //guardio certificado
+                    string NombreArchivo = data.IdPersona + "_Certificado"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
+                    string ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
+                    string guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo; 
+                    data.ConstanciaAntcPenales.SaveAs(guarda);
+
+                    //guardio anexo2
+                    NombreArchivo = data.IdPersona + "_Anexo2"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
+                    ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
+                    guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo;
+                    data.ConstanciaAntcPenales.SaveAs(guarda);
+
+                    
+              
+
+
+                    return Json(new { });
+                }
+                return Json(new { });
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { });
+            }
+
+        }
+        public FileResult GetAnexo2()
+        {
+
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
+            return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
+
+            //return File(FileBytes, "text/plain", "Prueba.txt");
+
+
+        }
+
+
 
         //----------------------------------Domicilio----------------------------------------------------------------------//
 
-       
+
         public ActionResult Domicio_API(int ID_persona)
         {
 
