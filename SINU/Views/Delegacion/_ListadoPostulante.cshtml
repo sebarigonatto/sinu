@@ -71,6 +71,18 @@
                         }
 
                     }
+                    if (item.Etapa == "DOCUMENTACION")
+                    {
+                        switch (item.Estado)
+                        {
+                            case "A Validar":
+                                @:|&ensp;
+                                @Html.ActionLink(" ", "Documentacion", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
+                                @:|&ensp;
+                                break;
+                        }
+
+                    }
                 }
             </td>
         </tr>

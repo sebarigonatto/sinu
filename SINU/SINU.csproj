@@ -1141,6 +1141,7 @@
     <Content Include="Views\Modalidads\Edit.cshtml" />
     <Content Include="Views\Modalidads\Index.cshtml" />
     <Content Include="Views\Postulante\DocuPenal.cshtml" />
+    <Content Include="Views\Delegacion\Documentacion.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

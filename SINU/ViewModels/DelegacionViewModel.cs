@@ -15,8 +15,4 @@ namespace SINU.ViewModels
         public List<vInscripcionEtapaEstadoUltimoEstado> PresentacionVM { get; set; }
        
     }
-    public class DelegacionEntrevistaVm
-    {
-
-    }
 }
