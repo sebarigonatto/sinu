@@ -3,7 +3,9 @@ using SINU.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Permissions;
+using System.Web;
 using System.Web.Mvc;
 
 namespace SINU.ViewModels
@@ -115,5 +117,13 @@ namespace SINU.ViewModels
         public DateTime FechaPresentacion { get; set; }
     }
 
+    public class DocuPenalVM
+    {
+        public int IdPersona { get; set; }
+        [Required(ErrorMessage ="La Constancia de Antecedentes Penales es OBLIGATORIO")]
+        public HttpPostedFileBase ConstanciaAntcPenales { get; set; }
+        [Required(ErrorMessage = "El Formulario 'ANEXO 2' es OBLIGATORIO")]
+        public HttpPostedFileBase FormularioAanexo2  { get; set; }
 
+    }
 }

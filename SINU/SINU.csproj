@@ -805,6 +805,7 @@
     <Content Include="Plantillas\MailConfirmacionEntrevista.cshtml" />
     <Content Include="Plantillas\MailConfirmacioPostulado.cshtml" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Documentacion\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1136,6 +1137,7 @@
     <Content Include="Views\Modalidads\Details.cshtml" />
     <Content Include="Views\Modalidads\Edit.cshtml" />
     <Content Include="Views\Modalidads\Index.cshtml" />
+    <Content Include="Views\Postulante\DocuPenal.cshtml" />
     <Content Include="Views\Delegacion\Documentacion.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
@@ -1157,6 +1159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documentacion\ArchivosDocuPenal\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
