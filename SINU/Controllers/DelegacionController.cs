@@ -267,5 +267,12 @@ namespace SINU.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult Documentacion(int id)
+        {
+            IDPersonaVM personaVM = new IDPersonaVM();
+            personaVM.ID_PER = id;
+            return View(personaVM);
+        }
     }
 }
