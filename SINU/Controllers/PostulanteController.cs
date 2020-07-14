@@ -297,6 +297,7 @@ namespace SINU.Controllers
                 {  
                     string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                     string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+
                     //guardio certificado
                     string NombreArchivo = data.IdPersona + "_Certificado"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
                     string ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
@@ -330,10 +331,8 @@ namespace SINU.Controllers
             string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
             string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
+            //el tercer para obligar la descarga del archivo
             return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
-
-            //return File(FileBytes, "text/plain", "Prueba.txt");
-
 
         }
 

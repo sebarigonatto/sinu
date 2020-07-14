@@ -1,4 +1,4 @@
-﻿
+﻿<!--  EL TEXTO DEL SALUDO DEPENDERA DEL HORARIO ACTUAL  -->
 <h3 style="color:#000;font-family:HelveticaNeue-Light,'Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size:22px;font-weight:500;line-height:1.1;margin:0;margin-bottom:15px;padding:0">
     @{int hora = DateTime.Now.Hour;
         string saludo = "Buenas Noches ";
@@ -14,17 +14,19 @@
     @saludo@Model.Apellido.ToUpper():
 </h3>
 
+<!--  TEXTO QUE APARECERA EN EL CORREO -->
+<!--  EJEMPLOS  -->
 <p class="lead" style="text-align:justify;font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0">
     Esto es el cuerpo del mail del paso 1. Ha pasado a la etapa de Entrega de documentacion.
     Esto es el cuerpo del mail del paso 1. Ha pasado a la etapa de Entrega de documentacion.
     Esto es el cuerpo del mail del paso 1. Ha pasado a la etapa de Entrega de documentacion.Esto es el cuerpo del mail del paso 1. Ha pasado a la etapa de Entrega de documentacion.
 
 </p>
-<br />
-
+<BR />
 <p style="text-align:center;font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:13px;font-weight:400;line-height:1.6;margin:0;margin-bottom:5px;padding:0">
-    Para validar su correo, presione el siguiente boton:
-
+    TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO
+    TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO TEXTO
+    @Model.dato_enviado
 
 </p>
 <p style="text-align:center;">

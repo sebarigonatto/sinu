@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace SINU.Models
 {
@@ -112,6 +113,7 @@ namespace SINU.Models
         /// <param name="ID_Persona">IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
+        
         public static async Task<bool> EnvioDeMail(ViewModels.PlantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
         {
             try
@@ -120,6 +122,7 @@ namespace SINU.Models
                 {
                     ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
                 }
+
                 //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
                 var configuracion = new TemplateServiceConfiguration
                 {
@@ -127,17 +130,21 @@ namespace SINU.Models
                     DisableTempFileLocking = true
                 };
 
-                //establescoi l a ubicacion de la Plantilla
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string ubicacionPlantilla = $"{ubicacion}Plantillas\\"+Plantilla + ".cshtml";
-
                 Engine.Razor = RazorEngineService.Create(configuracion);
+                
+                //establescoi l a ubicacion de la Plantilla
+                var CarpetaPlantillas = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Plantillas");
+                var UbicacionPlantilla = Path.Combine(CarpetaPlantillas, Plantilla + ".cshtml");
+                var LayoutPlantillaMail = File.ReadAllText(Path.Combine(CarpetaPlantillas, "LayoutPlantillaMail.cshtml")).Replace("AÑO_ACTUAL", DateTime.Now.Year.ToString()); 
+               
+                string cuerpoMail = Engine.Razor.RunCompile(UbicacionPlantilla, null, ModeloPlantilla);
+                //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
+                var finalHtml = LayoutPlantillaMail.Replace(@"@RenderBody()", cuerpoMail);
 
-                //compila el plantilla con un modelo  y genera un string 
-                string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, ModeloPlantilla);
-                //busco el asunto en la tabla Configuraciones.
+
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
-                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, cuerpoMail);
+                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, finalHtml);
+
                 return true;
             }
             catch (Exception x)

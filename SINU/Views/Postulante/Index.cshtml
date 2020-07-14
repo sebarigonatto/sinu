@@ -410,10 +410,10 @@
         //    });
 
         $(document).ready(function () {
-            $('body').css('overflow-y', 'scroll');
+           
             //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
             (function () {
-
+                $('body').css('overflow-y', 'scroll');
                 //ID de las Etpas por las que paso el Postulante
                 var IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
