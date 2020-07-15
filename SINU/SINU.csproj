@@ -592,7 +592,7 @@
     <Content Include="obj\Debug\SINU.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\SINU.dll" />
     <Content Include="obj\Debug\SINU.pdb" />
-    <Content Include="Plantillas\MODELO_PLANTILLA.html" />
+    <Content Include="Plantillas\MODELO_PLANTILLA_EN_HTML.html" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap-select.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />

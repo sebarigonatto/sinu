@@ -2,6 +2,7 @@
 
 namespace SINU.ViewModels
 {
+   
     public class PlantillaMail {
         public string Apellido { get; set; }
 
@@ -23,5 +24,16 @@ namespace SINU.ViewModels
     public class MailPostular : PlantillaMail
     {
         public string Estado { get; set; }
+    }
+    public class DatosResponsable
+    {
+        public string ResponsablePisoOfic { get; set; }
+        public string ResponsableTelefonoEinterno { get; set; }
+        public string ResponsableMail { get; set; }
+        public string Apellido { get; set; }
+
+        //ver agregar direccion
+        //string ResponsableNombreEdificio { get; set; }
+        //string ResponsableCalleYnro { get; set; }
     }
 }

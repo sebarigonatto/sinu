@@ -76,8 +76,24 @@
                             <tbody>
                                 <tr style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;margin:0;padding:0">
                                     <td style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;margin:0;padding:0">
-                                 
-                                        @RenderBody()
+                                        <!--  EL TEXTO DEL SALUDO DEPENDERA DEL HORARIO ACTUAL  -->
+                                        <h3 style="color:#000;font-family:HelveticaNeue-Light,'Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size:22px;font-weight:500;line-height:1.1;margin:0;margin-bottom:15px;padding:0">
+                                            @{int hora = DateTime.Now.Hour;
+                                                string saludo = "Buenas Noches ";
+                                                if (hora < 12)
+                                                {
+                                                    saludo = "Buenos Dias ";
+                                                }
+                                                else if (hora > 11 && hora < 19)
+                                                {
+                                                    saludo = "Buenas Tardes ";
+                                                }
+                                            }
+                                            @saludo@Model.Apellido.ToUpper():
+                                        </h3>
+
+                                        Mail_CUERPO
+
 
                                     </td>
                                 </tr>
@@ -113,19 +129,19 @@
                                             CONTACTOS
                                         </h5>
                                         <p style="color:#FFF; font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:2;margin:0;margin-bottom:10px;padding:0">
-                                            <strong style="color:#FFF">Estado Mayor General de la Armada - Dpto. Incorporación</strong>
+                                            <strong style="color:#FFF">@Model.ResponsablePisoOfic</strong>
 
 
                                             <br style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;margin:0;padding:0" />
                                             <strong style="color:#FFF">TELEFONO:</strong>
 
-                                            <strong style="color:#FFF">4317-2000  int 3085</strong>
+                                            <strong style="color:#FFF">@Model.ResponsableTelefonoEinterno</strong>
 
                                             <br style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;margin:0;padding:0" />
                                             <!--Email:-->
                                             <strong style="color:#FFF">EMAIL:</strong>
                                             <strong style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;margin:0;padding:0">
-                                                <a href="mailto:incorpor@armada.mil.ar" style="color:#FFF">incorpor@armada.mil.ar</a>
+                                                <a href="mailto:@Model.ResponsableMail" style="color:#FFF">@Model.ResponsableMail</a>
                                             </strong>
                                         </p>
                                     </td>
@@ -142,7 +158,7 @@
                             <tr>
                                 <td>
                                     <p align="center" style="color:#68BBE4">
-                                        AÑO_ACTUAL - Servicio de Informatica de la Armada
+                                        @DateTime.Now.Year.ToString() - Servicio de Informatica de la Armada
                                     </p>
                                 </td>
                             </tr>

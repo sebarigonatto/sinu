@@ -1,20 +1,4 @@
-﻿
-<h3 style="color:#000;font-family:HelveticaNeue-Light,'Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size:22px;font-weight:500;line-height:1.1;margin:0;margin-bottom:15px;padding:0">
-    @{int hora = DateTime.Now.Hour;
-        string saludo = "Buenas Noches ";
-        if (hora<12)
-        {
-            saludo = "Buenos Dias ";
-        }
-        else if (hora > 11 && hora < 19)
-        {
-            saludo = "Buenas Tardes ";
-        }
-       
-
-    }
-    @saludo@Model.Apellido.ToUpper():
-</h3>
+﻿<!--    CUERPO DEL CORREO    -->
 <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0">
     Se le ha asignado la siguiente fecha @Model.FechaEntrevista.ToString("dd/MM/yyyy")
 </p>
