@@ -117,3 +117,14 @@ textarea {
 .custom-file-input ~ .custom-file-label::after {
     content: "Elegir";
 }
+
+button[role="combobox"] {
+    border: 1px solid #ced4da !important;
+}
+
+
+div.bs-actionsbox button {
+border: 1px solid #d9d9d9;
+padding-left: 0.3em !important;
+background-color: lightblue;
+}

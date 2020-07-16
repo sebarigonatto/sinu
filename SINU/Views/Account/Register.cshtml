@@ -67,7 +67,8 @@
     <div class="form-group">
         @Html.LabelFor(m => m.IdInstituto, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "--Seleccione Instituto a Incribirse--", htmlAttributes: new { @class = "form-control selectpicker" })
+            @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "--Seleccione Instituto a Incribirse--", htmlAttributes: new { @class = "form-control selectpicker " })
+            <div class="h-100"></div>
             @Html.ValidationMessageFor(model => model.IdInstituto, "", new { @class = "text-danger" })
 
         </div>
@@ -76,6 +77,8 @@
         @Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "---Seleccione la mas cercana ---", htmlAttributes: new { @class = "form-control selectpicker" })
+            <div class="h-100"></div>
+
             @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
 
         </div>
@@ -111,7 +114,8 @@
         $(document).ready( function () {
             $("#Contraseña").attr("data-toggle", "tooltip")
                             .attr("data-placement", "top")
-                .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder").tooltip({ 'trigger': 'focus' })
+                            .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder")
+                            .tooltip({ 'trigger': 'focus' })
 
         });
     </script>
