@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
+using System.IO;
+using SINU.ViewModels;
 
 namespace SINU.Models
 {
@@ -112,6 +114,7 @@ namespace SINU.Models
         /// <param name="ID_Persona">IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
+        
         public static async Task<bool> EnvioDeMail(ViewModels.PlantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
         {
             try
@@ -120,24 +123,36 @@ namespace SINU.Models
                 {
                     ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
                 }
-                //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
+
+                ////ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
                 var configuracion = new TemplateServiceConfiguration
                 {
                     TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
                     DisableTempFileLocking = true
                 };
 
-                //establescoi l a ubicacion de la Plantilla
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string ubicacionPlantilla = $"{ubicacion}Plantillas\\"+Plantilla + ".cshtml";
-
                 Engine.Razor = RazorEngineService.Create(configuracion);
 
-                //compila el plantilla con un modelo  y genera un string 
-                string cuerpoMail = Engine.Razor.RunCompile(ubicacionPlantilla, null, ModeloPlantilla);
-                //busco el asunto en la tabla Configuraciones.
+                string Carpeta = AppDomain.CurrentDomain.BaseDirectory;
+                string LayautCarpeta = $"{Carpeta}Plantillas\\LayoutPlantillaMail.cshtml";
+
+                DatosResponsable datos = new DatosResponsable()
+                {
+                    Apellido= ModeloPlantilla.Apellido,
+                    ResponsableMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableMail").ValorDato,
+                    ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
+                    ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+                };
+                string HtmlLayout = Engine.Razor.RunCompile(LayautCarpeta, null, datos);
+              
+                string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\"+Plantilla+".cshtml", null, ModeloPlantilla);
+                //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
+                var finalHtml = HtmlLayout.Replace("Mail_CUERPO", cuerpoMail);
+
+
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
-                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, cuerpoMail);
+                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, finalHtml);
+
                 return true;
             }
             catch (Exception x)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Ajax.Utilities;
 using QRCoder;
+using SINU.Authorize;
 using SINU.Models;
 using SINU.ViewModels;
 using System;
@@ -18,18 +19,16 @@ using System.Web.UI.WebControls;
 
 namespace SINU.Controllers
 {
+
     [Authorize]
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
 
-        //ESTABLESCO LA VARIABLE MAIL DEL USUARIO QUE ESTA ACTUALMENTE LOGUEADO
-        //ESTA CARIABLE ES UTILIZADA PARA BUSCAR EN LAS DISTINTAS VISTAS, UTILIZADAS EN EL CONTROLADOR, PARA  BUSCAR LOS REGISTROS DEL USUARIO LOGUEADO
-        //private int ID_persona;
-        //=> db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-        //private int ID_fami;
+        //ver atributo [ChildActionOnly] 
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
-
+        //ver este atributo de autorizacion si corresponde o no
+        [AuthorizacionGrupo("Postulante")]
         public ActionResult Index()
         {//error cdo existe uno registrado antes de los cambios de secuencia
             try
@@ -56,8 +55,11 @@ namespace SINU.Controllers
 
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
+
         //ver el tema de la fecha de casamiento
         //mejorar la seguridad 
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosBasicos(int ID_persona)
         {
             try
@@ -87,13 +89,15 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
                 //revisar como mostrar error en la vista
-                return PartialView(ex);
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "DatosBasicos"));
             }
 
         }
 
+
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS BASICOS"
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
             if (Datos.vPersona_DatosBasicosVM.ComoSeEntero== null)
@@ -123,6 +127,7 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
 
+
         //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
         public JsonResult EdadInstituto(int? IDinst ,int? edad ) {
 
@@ -138,6 +143,7 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
 
+        [AuthorizacionPermiso("ModificarSecuenciaP")]
         public async Task<JsonResult> SolicitudEntrevistaAsync(int ID_persona)
         {
             try
@@ -170,6 +176,7 @@ namespace SINU.Controllers
 
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
+        //[ChildActionOnly]
         public ActionResult Entrevista(int ID_persona)
         {
             
@@ -203,6 +210,8 @@ namespace SINU.Controllers
 
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosPersonales(int ID_persona)
             {
             try
@@ -230,6 +239,7 @@ namespace SINU.Controllers
 
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult DatosPersonales(DatosPersonalesVM Datos)
         {
             var fe = DateTime.Now;
@@ -253,23 +263,9 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
         //----------------------------------Antecedentes Penales----------------------------------------------------------------------//
-        public class MemoryPostedFile : HttpPostedFileBase
-        {
-            private readonly byte[] fileBytes;
 
-            public MemoryPostedFile(byte[] fileBytes, string fileName = null)
-            {
-                this.fileBytes = fileBytes;
-                this.FileName = fileName;
-                this.InputStream = new MemoryStream(fileBytes);
-            }
-
-            public override int ContentLength => fileBytes.Length;
-
-            public override string FileName { get; }
-
-            public override Stream InputStream { get; }
-        }
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult DocuPenal(int ID_persona)
         {
             try
@@ -280,7 +276,7 @@ namespace SINU.Controllers
                 };
            
                 return PartialView(d);
-            }
+            }   
             catch (Exception ex)
             {
 
@@ -288,7 +284,10 @@ namespace SINU.Controllers
             }
            
         }
+
+
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult DocuPenal(DocuPenalVM data)
         {
             try
@@ -297,6 +296,7 @@ namespace SINU.Controllers
                 {  
                     string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                     string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+
                     //guardio certificado
                     string NombreArchivo = data.IdPersona + "_Certificado"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
                     string ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
@@ -308,32 +308,27 @@ namespace SINU.Controllers
                     ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo;
                     data.ConstanciaAntcPenales.SaveAs(guarda);
-
-                    
-              
-
-
-                    return Json(new { });
+                    return Json(new { success = true, msg = "Se Guardaron correctamnete los archivos seleccionados." });
                 }
-                return Json(new { });
+                return Json(new { success = false, msg = "Modelo no VALIDO" });
             }
             catch (Exception ex)
             {
 
-                return Json(new { });
+                return Json(new { success = false, msg = ex.InnerException.Message });
             }
 
         }
+
+
         public FileResult GetAnexo2()
         {
 
             string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
             string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
             byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
+            //el tercer para obligar la descarga del archivo
             return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
-
-            //return File(FileBytes, "text/plain", "Prueba.txt");
-
 
         }
 
@@ -358,7 +353,8 @@ namespace SINU.Controllers
 
 
 
-
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Domicilio(int ID_persona)
         {
             try
@@ -402,6 +398,8 @@ namespace SINU.Controllers
                 return PartialView(ex);
             }
         }
+
+
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
         public JsonResult Domicilio(DomicilioVM Datos)
@@ -475,7 +473,9 @@ namespace SINU.Controllers
             return Json(new {}, JsonRequestBehavior.AllowGet);
         }
 
-//----------------------------------Estudios----------------------------------------------------------------------//
+        //----------------------------------Estudios----------------------------------------------------------------------//
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Estudios(int ID_persona)
         {
             try
@@ -502,6 +502,7 @@ namespace SINU.Controllers
             }
         }
 
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult EstudiosCUD(int? ID,int ID_persona )
         {
             try
@@ -583,6 +584,7 @@ namespace SINU.Controllers
         }
 
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
             if (ModelState.IsValid)
@@ -618,7 +620,7 @@ namespace SINU.Controllers
 
         }
 
-
+        [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaEST(int ID)
         {
             try
@@ -682,7 +684,9 @@ namespace SINU.Controllers
 
         }
 
-/*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
+        /*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Idiomas(int ID_persona)
         {
             try
@@ -699,6 +703,7 @@ namespace SINU.Controllers
             }
         }
 
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult IdiomaCUD(int? ID,int? ID_persona)
         {
             try
@@ -732,7 +737,9 @@ namespace SINU.Controllers
             }
         }
 
+
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult IdiomaCUD(IdiomasVM datos)
         {
             if (ModelState.IsValid)
@@ -752,6 +759,7 @@ namespace SINU.Controllers
             return Json(new { success = true, msg = "El modelo recibido NO ES VALIDO"}, JsonRequestBehavior.AllowGet);
         }
 
+        [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaIDIO(int ID)
         {
             try
@@ -768,7 +776,9 @@ namespace SINU.Controllers
             }
         }
 
-/*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
+        /*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult ActMilitar(int ID_persona)
         {
             try
@@ -784,6 +794,8 @@ namespace SINU.Controllers
             }
         }
 
+
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult ActMilitarCUD(int? ID,int ID_persona)
         {
             try
@@ -817,7 +829,10 @@ namespace SINU.Controllers
                 throw;
             }
         }
+
+
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult ActMilitarCUD(ActividadMIlitarVM datos)
         {
 
@@ -850,6 +865,7 @@ namespace SINU.Controllers
             
         }
 
+        [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaACT(int ID)
         {
             try
@@ -863,7 +879,10 @@ namespace SINU.Controllers
             }
         }
 
- /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
+        /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
+
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult SituOcupacional(int ID_persona)
         {
             try
@@ -899,7 +918,9 @@ namespace SINU.Controllers
             }
         }
 
+
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult SituOcupacional(SituacionOcupacionalVM situ)
         {
             try
@@ -928,12 +949,17 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Antropometria(int ID_persona)
         {
             vPersona_Antropometria antropo = db.vPersona_Antropometria.FirstOrDefault(m=>m.IdPersona == ID_persona);
             return PartialView(antropo);
         }
+
+
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult Antropometria(vPersona_Antropometria a)
         {
             try
@@ -949,6 +975,9 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
+
+        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Familia(int ID_persona)
         {
             try
@@ -978,6 +1007,7 @@ namespace SINU.Controllers
             }
         }
 
+        [AuthorizacionPermiso("ListarRP")]
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
         public ActionResult FamiliaCUD(int idPersonaFamilia)
         { 
@@ -1010,8 +1040,10 @@ namespace SINU.Controllers
             }
             return View(pers);
         }
+
             
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
         {
             if (ModelState.IsValid)
@@ -1061,6 +1093,7 @@ namespace SINU.Controllers
             return Json(new {success= false, msg= "Modelo no valido" }, JsonRequestBehavior.AllowGet);
         }
 
+
         public JsonResult VerificarDNI(int DNI , int ID)
         {
             try
@@ -1088,6 +1121,8 @@ namespace SINU.Controllers
                 return Json(new { error = false, msg=  ex.InnerException.Message}, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaFAMI(int ID_per,int ID_fami)
         {
             try
@@ -1111,9 +1146,10 @@ namespace SINU.Controllers
             }
         }
 
-        /*--------------------------------------------------------------VALIDAR DATOS------------------------------------------------------------------------------*/
 
-        //paso al postulante a la secuencia "Documentacion - A Validar"
+        /*--------------------------------------------------------------VALIDAR DATOS------------------------------------------------------------------------------*/
+        [HttpPost]
+        [AuthorizacionPermiso("ModificarSecuenciaP")]        //paso al postulante a la secuencia "Documentacion - A Validar"
         public JsonResult ValidarDatos(int ID_persona)
         {
             try
@@ -1129,9 +1165,8 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
-
-
-        public ActionResult Presentacion(int ID_persona)            
+        //[ChildActionOnly]
+        public ActionResult Presentacion(int ID_persona)
         {
             var per = db.Persona.Find(ID_persona);
             Presentacion prese = new Presentacion {
@@ -1154,6 +1189,8 @@ namespace SINU.Controllers
             };
             return PartialView(prese);
         }
+
+
         private byte[] generarQR(string texto)
         {   //https://github.com/codebude/QRCoder ver documentacion ejemplo de usos ej logo en el qr entre muchas otras cosas
             //establesco la ubicacion del logo que aparecera em el codigo QR
