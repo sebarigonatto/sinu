@@ -201,6 +201,7 @@ namespace SINU.Controllers
         public ActionResult Postular(int? id)
         {
             List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcion;
             try
             {
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
@@ -224,6 +225,8 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
             }
+            vInscripcion = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+            ViewBag.Estado = vInscripcion.Estado;
             return View(InscripcionElegida.ToList()[0]);
         }
         [HttpPost]
@@ -232,33 +235,41 @@ namespace SINU.Controllers
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            bool i = false ;
             try
             {
                 switch (botonPostular)
                 {
                     case "Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
+                        i = true;
                         break;
                     case "No Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
+                        i = true;
                         break;
-
+                    case "Volver":
+                        db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
+                        i = false;
+                        break;
                 }
-
-                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
-                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-
-                var modeloPlanti = new ViewModels.MailPostular
+                if (i==true)
                 {
-                    Apellido = vInscripcionEtapas.Apellido,
-                    Estado = vInscripcionEtapas.Estado
-                };
+                    InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
+                    vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
 
-                bool envio = await Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+                    var modeloPlanti = new ViewModels.MailPostular
+                    {
+                        Apellido = vInscripcionEtapas.Apellido,
+                        Estado = vInscripcionEtapas.Estado
+                    };
 
-                if (vInscripcionEtapas.Estado == "Postulado")
-                {
-                    db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                    bool envio = await Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+                    if (vInscripcionEtapas.Estado == "Postulado")
+                    {
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                    }
+
                 }
             }
             catch (System.Exception ex)

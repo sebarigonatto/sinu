@@ -68,8 +68,11 @@
                                 @:|&ensp;
                                 @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
                                 break;
+                            case "No Postulado":
+                                @:|&ensp;
+                                @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Retroceder al la etapa anterior" })
+                                break;
                         }
-
                     }
                     if (item.Etapa == "DOCUMENTACION")
                     {
@@ -77,8 +80,7 @@
                         {
                             case "A Validar":
                                 @:|&ensp;
-                                @Html.ActionLink(" ", "Documentacion", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Agignar fecha" })
-                                @:|&ensp;
+                                @Html.ActionLink(" ", "Documentacion", new { id = item.IdPersona }, new { @class = "fa fa-check-circle", @style = "color:#0072ff", @title = "Agignar fecha" })
                                 break;
                         }
 
