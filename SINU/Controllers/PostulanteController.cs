@@ -466,7 +466,7 @@ namespace SINU.Controllers
                 else if (Localidad!= null)
                 {
                     string Value = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).IdLocalidad.ToString();
-                    string Text = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).CODIGO_POSTAL.ToString();
+                    string Text = db.vProvincia_Depto_Localidad.FirstOrDefault(m => m.IdLocalidad == Localidad).CODIGO_POSTAL;
 
                     return Json(new { Value, Text }, JsonRequestBehavior.AllowGet);
                 };
@@ -1060,11 +1060,11 @@ namespace SINU.Controllers
                     if (per!=null)
                     {
                         rela = db.Persona.Find(IDPOSTULANTE).Postulante.Familiares.FirstOrDefault(m => m.IdPersona == per.IdPersona);
-                        msgs = (rela!=null)?"Modificacion del Familiar Exitoso.": "Se agrego un familiar exitoxamente. Rediriginedo...";
+                        msgs = (rela!=null)?"Modificacion del Familiar Exitoso.": "Se agrego un familiar exitosamente. Refrescando Vista...";
                     }
                     else
                     {
-                        msgs = "Creacion del Familiar Exitoso. Redirigiendo...";
+                        msgs = "Creacion del Familiar Exitoso. Refrescando Vista...";
                     };
 
                     if ((per != null && rela != null) || per == null)
@@ -1090,7 +1090,7 @@ namespace SINU.Controllers
                     
                 }
             }
-            return Json(new {success= false, msg= "Modelo no valido" }, JsonRequestBehavior.AllowGet);
+            return Json(new {success= false, msg= "Modelo no valido!!!" }, JsonRequestBehavior.AllowGet);
         }
 
 

@@ -536,7 +536,9 @@ $(document).ready(function () {
         actionsBox: true,
         deselectAllText: 'Deseleccionar Todo',
         selectAllText: 'Seleccionar Todo',
-        noneSelectedText: 'Ninguna Opcion Seleccionada'
+        noneSelectedText: 'Ninguna Opcion Seleccionada',
+        header: 'Cerrrar'
+
     });
 
     /////////////////////////////////////////////////////////////////////////////

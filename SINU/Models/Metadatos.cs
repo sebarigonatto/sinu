@@ -395,6 +395,7 @@ namespace SINU.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        [Required]
 
         [Display(Name = "Fecha de Casamiento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]

@@ -57,6 +57,7 @@
                         @Html.LabelFor(m => m.vPersona_DatosBasicosVM.IdSexo, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdSexo, new SelectList(Model.SexoVM, "IdSexo", "Descripcion"), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                            <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdSexo, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -83,7 +84,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Edad, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Edad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "edad" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Edad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "edad",@placeholder="..." } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Edad, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -134,6 +135,7 @@
                         <div class="col-md-10">
                             @*@Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",  new { @class = "form-control selectpicker", @id="DROPComoEntero"  })*@
                             @Html.DropDownListFor(model=>model.vPersona_DatosBasicosVM.IdComoSeEntero,new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",new { @class= "form-control selectpicker", @id= "DROPComoEntero" })
+                            <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
