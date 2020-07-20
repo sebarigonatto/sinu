@@ -68,35 +68,73 @@
     <br />
     <div class="container-fluid">
         <div class="form-group row">
-            <div class="col-sm-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+            <div class="col-sm-4 col-lg-2">
+                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg w-100 float-right" })
             </div>
-            <div class="col-sm-2" id="Ocul1" hidden>
-                <input type="submit" value="Postular" name="botonPostular" class="btn btn-success w-100" />
+            <div class="col-sm-3 col-lg-2" id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
+             <button type="button" class="btn btn-success btn-lg w-100 float-right">Postular</button>
             </div>
-            <div class="col-sm-2" id="Ocul2" hidden data-toggle="modal" data-target="#exampleModal">
-                <input value="No Postular 1" name="botonPostular" class="btn btn-success w-100" />
+            <div class="col-sm-3 col-lg-2" id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
+                <button type="button" class="btn btn-success btn-lg w-100 float-right">No Postular</button>
             </div>
-            <div class="col-sm-2" id="Ocul3" hidden>
-                <input type="submit" value="Volver" name="botonPostular" class="btn btn-success w-100" />
+            <div class="col-sm-3 col-lg-2" id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
+             <button type="button" class="btn btn-success btn-lg w-100 float-right">Volver</button>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    Esta Seguro que desea realizar esta accion sobre el postulante @Model.Apellido @Model.Nombres
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                    <button type="submit" class="btn btn-primary" value="Postular" name="botonPostular">confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Esta Seguro que desea realizar esta accion sobre el postulante @Model.Apellido @Model.Nombres
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                    <button type="submit" class="btn btn-primary" value="No Postular" name="botonPostular">confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Esta Seguro que desea realizar esta accion sobre el postulante @Model.Apellido @Model.Nombres
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cerrar</button>
+                    <button type="submit" class="btn btn-primary" value="Volver" name="botonPostular">confirmar</button>
                 </div>
             </div>
         </div>
