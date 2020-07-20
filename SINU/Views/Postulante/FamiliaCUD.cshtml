@@ -132,6 +132,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.idParentesco, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idParentesco, Model.vParentecoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idParentesco, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -139,6 +140,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.Vive, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.Vive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Vive, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -146,6 +148,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.ConVive, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.ConVive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.ConVive, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -158,6 +161,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.IdSexo, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdSexo, Model.SexoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdSexo, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -187,15 +191,15 @@
                                     <div class="form-group">
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker",@id="EstadoCivil"})
+                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "EstadoCivil" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group d-none" id="FechaCasamiento">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaCasamiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new {@placeholder="dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
-
+                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
                                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "", new { @class = "text-danger" })
                                         </div>
@@ -204,6 +208,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.IdReligion, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdReligion, Model.ReligionVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdReligion, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -212,6 +217,7 @@
                                         @Html.LabelFor(m => m.vPersona_FamiliarVM.idTipoNacionalidad, new { @class = "col-md-6 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, Model.TipoDeNacionalidadVm, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                            <div class="h-100"></div>
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
