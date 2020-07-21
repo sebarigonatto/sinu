@@ -19,13 +19,12 @@ using System.Web.UI.WebControls;
 
 namespace SINU.Controllers
 {
-
+    
     [Authorize]
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
 
-        //ver atributo [ChildActionOnly] 
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         [AuthorizacionGrupo("Postulante")]
@@ -39,6 +38,9 @@ namespace SINU.Controllers
                 };
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m=>m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+
+                pers.NoPostulado = (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).FirstOrDefault(m=> m.IdSecuencia == 11 || m.IdSecuencia == 12).IdSecuencia == 12) ? true:false;
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
                 //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
@@ -58,7 +60,7 @@ namespace SINU.Controllers
 
         //ver el tema de la fecha de casamiento
         //mejorar la seguridad 
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosBasicos(int ID_persona)
         {
@@ -176,7 +178,7 @@ namespace SINU.Controllers
 
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
 
-        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Entrevista(int ID_persona)
         {
             
@@ -210,7 +212,7 @@ namespace SINU.Controllers
 
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosPersonales(int ID_persona)
             {
@@ -264,7 +266,7 @@ namespace SINU.Controllers
         }
         //----------------------------------Antecedentes Penales----------------------------------------------------------------------//
 
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DocuPenal(int ID_persona)
         {
@@ -352,8 +354,6 @@ namespace SINU.Controllers
         }
 
 
-
-        //[ChildActionOnly]
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Domicilio(int ID_persona)
         {
@@ -402,6 +402,7 @@ namespace SINU.Controllers
 
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult Domicilio(DomicilioVM Datos)
         {
             if (ModelState.IsValid)
@@ -474,7 +475,7 @@ namespace SINU.Controllers
         }
 
         //----------------------------------Estudios----------------------------------------------------------------------//
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Estudios(int ID_persona)
         {
@@ -685,7 +686,7 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Idiomas(int ID_persona)
         {
@@ -777,7 +778,7 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ActMilitar(int ID_persona)
         {
@@ -881,7 +882,7 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
 
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult SituOcupacional(int ID_persona)
         {
@@ -949,7 +950,7 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Antropometria(int ID_persona)
         {
@@ -976,7 +977,7 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
 
-        //[ChildActionOnly]
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Familia(int ID_persona)
         {
@@ -1026,7 +1027,12 @@ namespace SINU.Controllers
             {
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
-                pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER)!=null) ?true: false;
+                var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
+                if (p != null)
+                {
+                    //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
+                    pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER).FechaRegistro.Date.Year == DateTime.Now.Year) ? true : false; 
+                }
 
             }
             else
@@ -1149,7 +1155,7 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------VALIDAR DATOS------------------------------------------------------------------------------*/
         [HttpPost]
-        [AuthorizacionPermiso("ModificarSecuenciaP")]        //paso al postulante a la secuencia "Documentacion - A Validar"
+        [AuthorizacionPermiso("ModificarSecuenciaP")]        //ver paso al postulante a la secuencia "Documentacion - A Validar"
         public JsonResult ValidarDatos(int ID_persona)
         {
             try
@@ -1165,7 +1171,7 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
-        //[ChildActionOnly]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult Presentacion(int ID_persona)
         {
             var per = db.Persona.Find(ID_persona);
@@ -1208,7 +1214,6 @@ namespace SINU.Controllers
             }
 
         }
-
 
 
     }

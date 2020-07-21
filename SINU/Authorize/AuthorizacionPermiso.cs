@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SINU.Authorize
 {
-    public class AuthorizacionPermiso : AuthorizeAttribute
 
+    public class AuthorizacionPermiso : AuthorizeAttribute
     {
         private const string Url = "~/Error/AccionNoAutorizada";
         SINUEntities db = new SINUEntities();
@@ -27,29 +28,19 @@ namespace SINU.Authorize
             //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }
-        protected override void HandleUnauthorizedRequest(AuthorizationContext context)
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            ////RUTA DE LA VIEW A MOSTRAR EN CASO DE NO TENER PERMISO----
-
-            //respuesta $.ayax
-            //if (context.HttpContext.Request.IsAjaxRequest())
-            //{
-            //    var urlHelper = new UrlHelper(context.RequestContext);
-            //    context.HttpContext.Response.StatusCode = 403;
-            //    context.Result = new JsonResult
-            //    {
-            //        Data = new
-            //        {
-            //            Error = "NotAuthorized",
-            //            NoAuth = urlHelper.Action("NoAutorizado", "Error")
-            //        },
-            //        JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            //    };
-            //}
-            //else
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                //respuesta para view
-                context.Result = new RedirectResult(Url);
+                filterContext.Result = new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { success = false, msg = "No tenes autorizacion para realizar esta accion!!!" }
+                };
+            }
+            else
+            {
+                base.HandleUnauthorizedRequest(filterContext);
             }
         }
     }
@@ -79,30 +70,24 @@ namespace SINU.Authorize
             //si devuelve 1 registro o mas pertenece al grupo indicado
             return (pertenece);
         }
-        protected override void HandleUnauthorizedRequest(AuthorizationContext context)
+  
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            ////RUTA DE LA VIEW A MOSTRAR EN CASO DE NO TENER PERMISO----
-
-            //respuesta $.ayax
-            //if (context.HttpContext.Request.IsAjaxRequest())
-            //{
-            //    var urlHelper = new UrlHelper(context.RequestContext);
-            //    context.HttpContext.Response.StatusCode = 403;
-            //    context.Result = new JsonResult
-            //    {
-            //        Data = new
-            //        {
-            //            Error = "NotAuthorized",
-            //            NoAuth = urlHelper.Action("NoAutorizado", "Error")
-            //        },
-            //        JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            //    };
-            //}
-            //else
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                //respuesta para view
-                context.Result = new RedirectResult(Url);
+                filterContext.Result = new JsonResult
+                {
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                    Data = new { redirectTo = FormsAuthentication.LoginUrl }
+                };
+            }
+            else
+            {
+                base.HandleUnauthorizedRequest(filterContext);
             }
         }
     }
-}
+  
+}  
+
+  
