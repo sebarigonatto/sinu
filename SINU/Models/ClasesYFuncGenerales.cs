@@ -110,8 +110,8 @@ namespace SINU.Models
         /// <summary>Construyo el cuerpo de Email y lo ENVIO,como primera Opcion enviar ID_AspNetUser en el caso de no tenerlo enviar ID_Persona. Ej: var xx = Func.EnvioDeMail(x, "MailPrueba", null, datos.IdPersona, "MailAsunto4")</summary>
         /// <param name="ModeloPlantilla">Modelo con los datos que apareceran en el email</param>
         /// <param name="Plantilla">Nombre de la plantilla que se utilizara para el armado del Email</param>
-        /// <param name="ID_AspNetUser">ID_AspNetUser de la persona segun la tabla AspNetUsers, acepta null</param>
-        /// <param name="ID_Persona">IdPersona, acepta null</param>
+        /// <param name="ID_AspNetUser">ID_AspNetUser de la persona a enviar el mail, segun la tabla AspNetUsers, acepta null</param>
+        /// <param name="ID_Persona">O el IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
         
@@ -161,6 +161,17 @@ namespace SINU.Models
                 throw;
             }
            
+        }
+
+        /// <summary>Modelo de funcion o rutina para armar
+        /// </summary>
+        /// <param name="ID">Recibe el IdPostulante par Verificar que sea el mismo del usurio que esta logueado y </param>
+        public static bool VerificoUsuario(int ID)
+        {
+            //proceso de la funcion o rutina que se quiera crear..
+            //si es una funcion deben cambiar el void por la clase que devuelve
+            //obvio puede no tener parametros
+            return true;
         }
 
         /// <summary>Modelo de funcion o rutina para armar

@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = "Secuencias";
+    ViewBag.Title = "Inscripcion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*@section MenuPerfil{
@@ -61,16 +61,31 @@
             </div>
 
             @* VISTA DIA Y HORA DE ENTREVISTA EN LA DELEGACION // ID = 3 *@
-            <div id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab" class="tab-pane fade px-4 py-3">
-                @if (Model.EtapaTabs.Contains(3))
+        <div id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab" class="tab-pane fade px-4 py-3">
+            @if (Model.NoPostulado)
+            {
+                <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
+
+                  
+                    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                        <h3>No estas POSTULADO.</h3>
+                    </div>
+                </div>
+            }
+            else
+            {
+                if (Model.EtapaTabs.Contains(3))
                 {
                     @Html.Action("Entrevista", "Postulante", new { ID_persona = Model.ID_PER })
                 }
+            }
 
-            </div>
+
+        </div>
 
             @* VISTA DE Documentacion CON ID = 4, que se divide en varias vistas PARCIALES *@
             <div id="Documentacion" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade  p-0 navbar-expand-lg h-75">
+                
 
                 @if (Model.EtapaTabs.Contains(4))
                 {
@@ -321,6 +336,7 @@
                     </div>
 
                 }
+
             </div>
 
             @* VISTA DE PRESENTACION CON ID = 5 *@
@@ -379,6 +395,9 @@ catch (Exception ex)
         </div>
     </div>
 </div>
+
+
+
 
 
 @section Scripts {
@@ -467,12 +486,14 @@ catch (Exception ex)
         /*FUNCIONES DE AJAX.BeginForm*/
 
         function Exito(response, status, xhr) {
+          
+
             $("#BTNModal").html("Cerrar");
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
             $("#ModalAnuncios").modal();
-            //alert("success: " + response.success + " - " + response.msg);
+           // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
                     $("#BTentrevista").removeClass("disabled");

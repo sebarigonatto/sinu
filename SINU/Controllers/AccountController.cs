@@ -63,7 +63,7 @@ namespace SINU.Controllers
             {
                 ViewBag.logueado = true;
             }
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl; 
             return View();
         }
 
@@ -102,9 +102,18 @@ namespace SINU.Controllers
                     {
                         case SignInStatus.Success:
                             //VER  redigir al controlador segun el tipo de usuario o CodGrupo ej /Postulante/index /Delegacion/index.. /Administracion/index ../Consultor/index
-                            //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion
-                            string Grupo = db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd();
-                            return RedirectToAction("Index", Grupo);
+                            //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion 
+                            
+                            if (returnUrl != null && (returnUrl.Contains("/Home/Index") || returnUrl != "/"))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            else
+                            {
+                                 string Grupo = db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd();
+                                return RedirectToAction("Index", Grupo);
+                          
+                            }
                         //el codigo anterior reemplaza al comentado                       
                         // return RedirectToAction("Index","Postulante");
                         case SignInStatus.LockedOut:
@@ -276,11 +285,31 @@ namespace SINU.Controllers
                 if (result.Succeeded)
                 {
                     var Email = UserManager.FindById(userId).UserName;
-                    var idpersona = db.Persona.FirstOrDefault(m => m.Email == Email).IdPersona;
+                    var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
                     //siendo exitoso el ingreso a seguridad del postulante hago que avance a la secuencia siguiente : "DATOS BASICOS-Inicio De Carga"
-                    db.spProximaSecuenciaEtapaEstado(idpersona, 0,false,0, "DATOS BASICOS", "Inicio De Carga");
+                    db.spProximaSecuenciaEtapaEstado(persona.IdPersona, 0,false,0, "DATOS BASICOS", "Inicio De Carga");
+
+                    //envio mail a todos los usuarios de la delegaacion coorespondiete al postulante ye valido el correo
+                    int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona==persona.IdPersona).IdDelegacionOficinaIngresoInscribio;
+                    var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
+                    ViewModels.ValidoCorreoPostulante datosMail= new ViewModels.ValidoCorreoPostulante();
+                    foreach (var dele in mailDelegacion)
+                    {
+                        var idAsp_delegacion = db.AspNetUsers.FirstOrDefault(m => m.Email == dele.Email).Id;
+                        //armo modelo para armar el correo
+                        datosMail.Apellido = dele.Apellido;
+                        datosMail.Delegacion = dele.Delegacion;
+                        datosMail.Apellido_P = persona.Apellido;
+                        datosMail.Dni_P = persona.DNI;
+                        datosMail.IdInscripcion_P = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion;
+                        datosMail.Nombre_P = persona.Nombres;
+                        datosMail.url = Url.Action("Details", "Delegacion", new { id= db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme);
+
+                        Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", idAsp_delegacion, null, "MailAsunto6");
+                    }
+
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {

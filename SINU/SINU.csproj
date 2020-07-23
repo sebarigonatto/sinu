@@ -809,6 +809,7 @@
     <Content Include="Documentacion\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf" />
     <Content Include="Plantillas\LayoutPlantillaMail.cshtml" />
     <Content Include="Plantillas\MODELO_CUERPO_MAIL.cshtml" />
+    <Content Include="Plantillas\PlantillaConfirmoCorreoPostulante.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

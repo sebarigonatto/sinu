@@ -32,6 +32,11 @@
         opacity: 100 !important;
         border-bottom:1px solid #909090 !important
     }
+
+    #TabDocumentacion div.nav-tab {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
    
 }
 @media (min-width: 768px) {
