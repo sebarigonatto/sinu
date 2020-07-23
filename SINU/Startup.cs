@@ -27,15 +27,15 @@ namespace SINU
             
                 SINUEntities db = new SINUEntities();
 
-                List<vSeguridad_Grupos> perfiles = db.vSeguridad_Grupos.Where(m => m.codAplicacion == "SINU").ToList();
+                List<string> perfiles = db.vSeguridad_Grupos.Where(m => m.codAplicacion == "SINU").Select(m=>m.codGrupo.TrimEnd()).ToList();
 
-                foreach (vSeguridad_Grupos item in perfiles)
-                {
+                foreach(string item in perfiles)
+                 {
                     //Crea el Rol
-                    if (!roleManager.RoleExists(item.codGrupo))
+                    if (!roleManager.RoleExists(item))
                     {
                         var role = new IdentityRole();
-                        role.Name = item.codGrupo;
+                        role.Name = item;
                         roleManager.Create(role);
 
                     }

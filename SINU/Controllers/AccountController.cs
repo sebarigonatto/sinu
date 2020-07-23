@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using RazorEngine;
-using RazorEngine.Configuration;
-using RazorEngine.Templating;
 using SINU.Models;
 using System;
 using System.Linq;
@@ -183,6 +180,10 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Register(int idInstitucion = 0)
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             RegisterViewModel regi = new RegisterViewModel 
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
                 ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre"),

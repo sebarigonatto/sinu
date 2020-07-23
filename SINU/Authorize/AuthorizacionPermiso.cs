@@ -11,20 +11,23 @@ namespace SINU.Authorize
     public class AuthorizacionPermiso : AuthorizeAttribute
     {
         private const string Url = "~/Error/AccionNoAutorizada";
-        SINUEntities db = new SINUEntities();
-        private readonly string[] funciones;
+        SINUEntities db = new SINUEntities();   
+ 
+        public string Funcion { get; set; }
+        //private readonly [] funciones;
 
-
-        public AuthorizacionPermiso(params string[] funcion)
+        // public AuthorizacionPermiso(params string[] funcion)
+        public AuthorizacionPermiso( string funcion)
         {
-            this.funciones = funcion;
-
+            this.Funcion = funcion;
+            //this.funciones = funcion;
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            //LOGICA DE VALIDACION segun funcion -------------------------------------
-            List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, funciones[0]).ToList();
+            
+            //LOGICA DE VALIDACION segun funcion 
+            List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, Funcion).ToList();
             //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }
@@ -40,37 +43,16 @@ namespace SINU.Authorize
             }
             else
             {
-                base.HandleUnauthorizedRequest(filterContext);
+                filterContext.Result = new RedirectResult(Url);
             }
         }
     }
 
-
-
-    public class AuthorizacionGrupo : AuthorizeAttribute
-
+   
+    public class AuthorizacionRol : AuthorizeAttribute
     {
         private const string Url = "~/Error/AccionNoAutorizada";
-        SINUEntities db = new SINUEntities();
-        private readonly string[] grupos;
 
-
-        public AuthorizacionGrupo(params string[] grupo)
-        {
-            this.grupos = grupo;
-
-        }
-
-        protected override bool AuthorizeCore(HttpContextBase httpContext)
-        {
-            //verifico en la vSeguridad_Grupos_Usuarios, si el usuario actual pertenece al grupo pasado como parametro
-            var codUsuario = httpContext.User.Identity.Name;
-            var Listgrupo = db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario == codUsuario).Select(m=>m.codGrupo.Trim()).ToList();
-            bool pertenece = Listgrupo.Contains("Postulante");
-            //si devuelve 1 registro o mas pertenece al grupo indicado
-            return (pertenece);
-        }
-  
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             if (filterContext.HttpContext.Request.IsAjaxRequest())
@@ -83,7 +65,7 @@ namespace SINU.Authorize
             }
             else
             {
-                base.HandleUnauthorizedRequest(filterContext);
+                filterContext.Result = new RedirectResult(Url);
             }
         }
     }

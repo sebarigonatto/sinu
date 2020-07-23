@@ -24,12 +24,13 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-
+        
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
-        [AuthorizacionGrupo("Postulante")]
+        [AuthorizacionRol(Roles ="Postulante")]
         public ActionResult Index()
-        {//error cdo existe uno registrado antes de los cambios de secuencia
+        {
+            //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
                 IDPersonaVM pers = new IDPersonaVM
@@ -41,7 +42,7 @@ namespace SINU.Controllers
                 int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
 
                 var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
-                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false;
+                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false; //ver como mostrar esta pantalla de si fue postulado o no
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
                 //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
@@ -101,12 +102,13 @@ namespace SINU.Controllers
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS BASICOS"
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
             if (Datos.vPersona_DatosBasicosVM.ComoSeEntero== null)
             {
                     ModelState["vPersona_DatosBasicosVM.ComoSeEntero"].Errors.Clear();
-            }
+            };
             if (ModelState.IsValid)
             {
                 try

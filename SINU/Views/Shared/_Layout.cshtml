@@ -161,8 +161,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <div class="collapse navbar-collapse" id="">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="navMenu">
 
                     <!--Armado de los link standard para todos los perfiles/grupos     -->
                     @*<li class="nav-item">@Html.ActionLink("texto a mostrar", "accion", "controlador", null, htmlAttributes: new { @class = "nav-link" })</li>*@
@@ -225,16 +225,15 @@
 
 
     $(window).on('load', function () {
+        $("#navMenu li a").each(function (a) {
+            if (window.location.href.indexOf($(this).attr("href"))>-1) {
+                $(this).css("color", "white");
+            }
+        
+        });
         $('#loader').delay(300).fadeOut('fast');
         //$("#exampleModalCenter").modal("show")
+
     });
-    // pones el SCROLL que se vea
-    //$('body').css('overflow', 'scroll');
-    //$(window).scroll(function () {
-    //    alert("asda");
-    //    // cuando intentas hacer scroll lo deshabitas, esto lo oculta
-    //    $('body').css('overflow', 'hidden');
-    //    // esperas 2 segundos y lo vuelves a mostrar
-    //    setTimeOut("$('body').css('overflow', 'scroll')", 2000)
-    //});
+
 </script>
