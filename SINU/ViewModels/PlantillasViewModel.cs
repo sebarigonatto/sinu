@@ -24,6 +24,8 @@ namespace SINU.ViewModels
     public class MailPostular : PlantillaMail
     {
         public string Estado { get; set; }
+        public string LinkConfirmacion { get; set; }
+
     }
 
     public class ValidoCorreoPostulante : PlantillaMail

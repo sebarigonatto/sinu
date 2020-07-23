@@ -47,7 +47,7 @@
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-        @* Campo para asignar la fecha   *@
+        @* Campo para asignar la fecha*@
         <div class="form-group">
             @Html.LabelFor(model => model.FechaEntrevista, htmlAttributes: new { @class = "control-label col-md-2" })a asignar
             <div class="col-md-10">
@@ -79,6 +79,7 @@
                 language: "es",
                 autoclose: true,
                 startView: "days",
+                startDate: "Today"
             });
         })
 

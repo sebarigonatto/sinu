@@ -235,42 +235,44 @@ namespace SINU.Controllers
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-            bool i = false ;
             try
             {
                 switch (botonPostular)
                 {
                     case "Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
-                        i = true;
                         break;
                     case "No Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
-                        i = true;
                         break;
                     case "Volver":
                         db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
-                        i = false;
                         break;
                 }
-                if (i==true)
-                {
+                
                     InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+
+                    var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
 
                     var modeloPlanti = new ViewModels.MailPostular
                     {
                         Apellido = vInscripcionEtapas.Apellido,
-                        Estado = vInscripcionEtapas.Estado
+                        Estado = vInscripcionEtapas.Estado,
+                        LinkConfirmacion = callbackUrl
                     };
-
-                    bool envio = await Func.EnvioDeMail(modeloPlanti, "MailConfirmacioPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
-                    if (vInscripcionEtapas.Estado == "Postulado")
-                    {
+                switch ((vInscripcionEtapas.Estado).ToString())
+                {
+                    case "Postulado":
+                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
-                    }
-
+                        break;
+                    case "No Postulado":
+                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailNoPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+                        break;
                 }
+
+                
             }
             catch (System.Exception ex)
             {

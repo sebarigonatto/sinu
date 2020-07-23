@@ -804,12 +804,13 @@
     <Content Include="obj\Debug\SINU.csproj.GenerateResource.cache" />
     <Content Include="Plantillas\PlantillaMailCuenta.cshtml" />
     <Content Include="Plantillas\MailConfirmacionEntrevista.cshtml" />
-    <Content Include="Plantillas\MailConfirmacioPostulado.cshtml" />
+    <Content Include="Plantillas\MailPostulado.cshtml" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Documentacion\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf" />
     <Content Include="Plantillas\LayoutPlantillaMail.cshtml" />
     <Content Include="Plantillas\MODELO_CUERPO_MAIL.cshtml" />
     <Content Include="Plantillas\PlantillaConfirmoCorreoPostulante.cshtml" />
+    <Content Include="Plantillas\MailNoPostulado.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
