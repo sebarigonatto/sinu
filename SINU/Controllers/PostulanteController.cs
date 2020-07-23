@@ -40,7 +40,8 @@ namespace SINU.Controllers
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
 
-                pers.NoPostulado = (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).FirstOrDefault(m=> m.IdSecuencia == 11 || m.IdSecuencia == 12).IdSecuencia == 12) ? true:false;
+                var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
+                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false;
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
                 //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos

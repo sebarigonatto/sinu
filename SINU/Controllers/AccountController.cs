@@ -103,7 +103,8 @@ namespace SINU.Controllers
                         case SignInStatus.Success:
                             //VER  redigir al controlador segun el tipo de usuario o CodGrupo ej /Postulante/index /Delegacion/index.. /Administracion/index ../Consultor/index
                             //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion 
-                            if (!returnUrl.Contains("/Home/Index"))
+                            
+                            if (returnUrl != null && (returnUrl.Contains("/Home/Index") || returnUrl != "/"))
                             {
                                 return Redirect(returnUrl);
                             }
