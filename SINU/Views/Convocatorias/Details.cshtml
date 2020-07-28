@@ -1,0 +1,43 @@
+﻿@model SINU.Models.Convocatoria
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Convocatoria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GrupoCarrOficio.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modalidad.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modalidad.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdConvocatoria }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

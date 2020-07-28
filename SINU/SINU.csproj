@@ -198,6 +198,10 @@
     <Compile Include="Authorize\AuthorizacionPermiso.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Administrador\AdministradorController.cs" />
+    <Compile Include="Controllers\Administrador\Convocatorias\CarreraOficiosController.cs" />
+    <Compile Include="Controllers\Administrador\Convocatorias\ConvocatoriasController.cs" />
+    <Compile Include="Controllers\Administrador\Convocatorias\GrupoCarrOficiosController.cs" />
+    <Compile Include="Controllers\Administrador\Convocatorias\ResGrupoesController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
     <Compile Include="Controllers\Administrador\ModalidadsController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
@@ -1144,6 +1148,26 @@
     <Content Include="Views\Modalidads\Index.cshtml" />
     <Content Include="Views\Postulante\DocuPenal.cshtml" />
     <Content Include="Views\Delegacion\Documentacion.cshtml" />
+    <Content Include="Views\CarreraOficios\Create.cshtml" />
+    <Content Include="Views\CarreraOficios\Delete.cshtml" />
+    <Content Include="Views\CarreraOficios\Details.cshtml" />
+    <Content Include="Views\CarreraOficios\Edit.cshtml" />
+    <Content Include="Views\CarreraOficios\Index.cshtml" />
+    <Content Include="Views\ResGrupoes\Create.cshtml" />
+    <Content Include="Views\ResGrupoes\Delete.cshtml" />
+    <Content Include="Views\ResGrupoes\Details.cshtml" />
+    <Content Include="Views\ResGrupoes\Edit.cshtml" />
+    <Content Include="Views\ResGrupoes\Index.cshtml" />
+    <Content Include="Views\GrupoCarrOficios\Create.cshtml" />
+    <Content Include="Views\GrupoCarrOficios\Delete.cshtml" />
+    <Content Include="Views\GrupoCarrOficios\Details.cshtml" />
+    <Content Include="Views\GrupoCarrOficios\Edit.cshtml" />
+    <Content Include="Views\GrupoCarrOficios\Index.cshtml" />
+    <Content Include="Views\Convocatorias\Create.cshtml" />
+    <Content Include="Views\Convocatorias\Delete.cshtml" />
+    <Content Include="Views\Convocatorias\Details.cshtml" />
+    <Content Include="Views\Convocatorias\Edit.cshtml" />
+    <Content Include="Views\Convocatorias\Index.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

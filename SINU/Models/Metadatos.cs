@@ -505,4 +505,22 @@ namespace SINU.Models
         [Required]
         public string Descripcion { get; set; }
     }
-}
+    public partial class ConvocatoriaMetadata
+    {
+        [Required]
+        [Display(Name = "Período Inscripción")]
+        public string IdPeriodoInscripcion { get; set; }
+        [Required]
+        [Display(Name = "Modalidad")]
+        public string IdModalidad { get; set; }
+        [Required]
+        [Display(Name = "Grupo de Carreras y Oficios")]
+        public string IdGrupoCarrOficio { get; set; }
+        [Required]
+        [Display(Name = "Convocatoria")]
+        public string IdConvocatoria { get; set; }
+
+        
+
+    }
+  }

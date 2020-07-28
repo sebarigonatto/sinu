@@ -1,0 +1,89 @@
+﻿@model SINU.Models.ResGrupo
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ResGrupo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edad_Al_AnioSig)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Edad_Al_Dia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edad_Al_Dia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Edad_Al_Mes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edad_Al_Mes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EdadMinCAutoriz)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EdadMin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EdadMin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EdadMax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EdadMax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstadoCivil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdEstadoCivil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Edad_a_fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Edad_a_fecha)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

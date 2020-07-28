@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SINU.Models.ResGrupo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad_Al_Dia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad_Al_Mes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadMax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdEstadoCivil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad_a_fecha)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad_Al_AnioSig)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad_Al_Dia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad_Al_Mes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EdadMinCAutoriz)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EdadMin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EdadMax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdEstadoCivil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Edad_a_fecha)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdResGrupo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdResGrupo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdResGrupo })
+        </td>
+    </tr>
+}
+
+</table>
