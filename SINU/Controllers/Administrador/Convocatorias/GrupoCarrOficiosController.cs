@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
+using SINU.ViewModels;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
@@ -19,23 +20,52 @@ namespace SINU.Controllers.Administrador.Convocatorias
         {
             return View(db.GrupoCarrOficio.ToList());
         }
-
+        // este es el ORIGINAL
         // GET: GrupoCarrOficios/Details/5
+        //public ActionResult Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+        //    List < CarreraOficio > listado = spCarrerasDelGrupo_Result(id);
+
+        //    if (grupoCarrOficio == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(grupoCarrOficio);
+        //}
+
+        // GET: GrupoCarrOficios/Create
         public ActionResult Details(string id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                return View("Error", Func.ConstruyeError("Falta el ID que desea buscar entre los Grupos de Carreras", "GrupoCarrOficios", "Details"));
+                //o puedo mandarlo al index devuelta e ignorar el error
+                //return RedirectToAction("Index");
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+            //ViewBag.Carreras = db.spCarrerasDelGrupo(id).ToList();
+            GrupoCarrOficiosvm datosgrupocarroficio = new GrupoCarrOficiosvm()
+            {
+
+                IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
+                Descripcion = grupoCarrOficio.Descripcion,
+                Personal = grupoCarrOficio.Personal,
+                Carreras = db.spCarrerasDelGrupo(id).ToList()
+
+            };
             if (grupoCarrOficio == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Error", Func.ConstruyeError("Ese ID de Grupo no se encontro en la tabla de GrupoCarrOficio", "GrupoCarrOficios", "Details"));
             }
-            return View(grupoCarrOficio);
+            return View(datosgrupocarroficio);
         }
-
-        // GET: GrupoCarrOficios/Create
         public ActionResult Create()
         {
             return View();

@@ -1920,6 +1920,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Cuello" Type="int" Mode="In" />
           <Parameter Name="Calzado" Type="int" Mode="In" />
         </Function>
+        <Function Name="spCarrerasDelGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdGrupoCarrOficio" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="spCarrerasParaEsteInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdInscripcion" Type="int" Mode="In" />
         </Function>
@@ -4438,6 +4441,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spModalidadParaEsteInscripto" ReturnType="Collection(SINUModel.spModalidadParaEsteInscripto_Result1)">
           <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spCarrerasDelGrupo" ReturnType="Collection(SINUModel.spCarrerasDelGrupo_Result)">
+            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CarrerasDelGrupo" EntitySet="CarreraOficio" ReturnType="Collection(SINUModel.CarreraOficio)">
+            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5070,6 +5079,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <ComplexType Name="spModalidadParaEsteInscripto_Result1">
           <Property Type="String" Name="IdModalidad" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="spCarrerasDelGrupo_Result">
+          <Property Type="String" Name="CarreraUoficio" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Personal" Nullable="false" MaxLength="2" />
+          <Property Type="Int32" Name="IdCarreraOficio" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6267,6 +6281,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </ComplexTypeMapping>
             </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCarrerasDelGrupo" FunctionName="SINUModel.Store.spCarrerasDelGrupo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spCarrerasDelGrupo_Result">
+                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CarrerasDelGrupo" FunctionName="SINUModel.Store.spCarrerasDelGrupo">
           </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>

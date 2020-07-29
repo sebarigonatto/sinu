@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SINU.Models.GrupoCarrOficio>
 
+
 @{
     ViewBag.Title = "Grupo Carrera/Oficio";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,14 +11,14 @@
     <thead>
         <tr>
             <th class="text-center">
-            @Html.DisplayNameFor(model => model.Descripcion)
+                @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.Personal)
+                @*@Html.DisplayNameFor(model => model.Personal)*@
             </th>
             <th></th>
         </tr>
-</thead>
+    </thead>
     <tbody>
         @foreach (var item in Model)
         {

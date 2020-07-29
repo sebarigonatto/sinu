@@ -1063,5 +1063,32 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spModalidadParaEsteInscripto_Result1>("spModalidadParaEsteInscripto", idInscripcionParameter);
         }
+    
+        public virtual ObjectResult<spCarrerasDelGrupo_Result> spCarrerasDelGrupo(string idGrupoCarrOficio)
+        {
+            var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
+                new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
+                new ObjectParameter("IdGrupoCarrOficio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCarrerasDelGrupo_Result>("spCarrerasDelGrupo", idGrupoCarrOficioParameter);
+        }
+    
+        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio)
+        {
+            var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
+                new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
+                new ObjectParameter("IdGrupoCarrOficio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", idGrupoCarrOficioParameter);
+        }
+    
+        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio, MergeOption mergeOption)
+        {
+            var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
+                new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
+                new ObjectParameter("IdGrupoCarrOficio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", mergeOption, idGrupoCarrOficioParameter);
+        }
     }
 }
