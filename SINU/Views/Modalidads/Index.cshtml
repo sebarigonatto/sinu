@@ -8,40 +8,40 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title></title>
+    <title>Modalidad</title>
 </head>
+<h2>Modalidad</h2>
 <body>
-    @*<p>
-        @Html.ActionLink("Nuevo Registro", "Create")
-    </p>*@
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Personal)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Personal)
-                </td>
-                <td>
-                    @Html.ActionLink("  ", "Edit", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Details", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Delete", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-trash-alt" })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Personal)
+                </th>
+                <th></th>
             </tr>
-        }
-
+</thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Personal)
+                    </td>
+                    <td>
+                        @Html.ActionLink("  ", "Edit", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                        @Html.ActionLink("  ", "Details", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                        @Html.ActionLink("  ", "Delete", new { id = item.IdModalidad }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
     <p>
         @Html.ActionLink("Nuevo Registro", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })

@@ -1,52 +1,54 @@
 ﻿@model IEnumerable<SINU.Models.Convocatoria>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Convocatorias";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Convocatorias</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Modalidad.Descripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PeriodosInscripciones.IdPeriodoInscripcion)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IdConvocatoria }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IdConvocatoria }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdConvocatoria })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modalidad.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
+            </th>
+            <th></th>
         </tr>
-    }
-
+</thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeriodosInscripciones.IdPeriodoInscripcion)
+                </td>
+                <td class="justify-content-center align-items-center d-md-flex">
+                    @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
-
+<p>
+    @Html.ActionLink(" Nuevo Registro", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+</p>
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
 <!-- ***********************************************************************-->

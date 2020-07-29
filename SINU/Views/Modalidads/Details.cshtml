@@ -8,11 +8,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
+    <title>Detalle</title>
 </head>
+<h2>Detalle</h2>
 <body>
     <div>
-        <h4>Modalidad</h4>
+        @*<h4>Modalidad</h4>*@
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -35,7 +36,7 @@
     </div>
     <p>
         @Html.ActionLink("Editar", "Edit", new { id = Model.IdModalidad }) |
-        @Html.ActionLink("Volver a la lista", "Index")
+        @Html.ActionLink("Volver", "Index")
     </p>
 </body>
 </html>
