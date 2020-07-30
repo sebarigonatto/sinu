@@ -235,15 +235,23 @@ namespace SINU.Controllers
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            Configuracion configuracion;
+            bool x = false;
+            string cuerpo="";
             try
             {
                 switch (botonPostular)
                 {
                     case "Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
+                        x = true;
+                        configuracion = db.Configuracion.FirstOrDefault(m => m.IdConfiguracion == 1044);
+                        cuerpo = configuracion.ValorDato.ToString();
                         break;
                     case "No Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
+                        configuracion = db.Configuracion.FirstOrDefault(m => m.IdConfiguracion == 1046);
+                        cuerpo = configuracion.ValorDato.ToString();
                         break;
                     case "Volver":
                         db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
@@ -252,23 +260,24 @@ namespace SINU.Controllers
                 
                     InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-
+                    
                     var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
 
                     var modeloPlanti = new ViewModels.MailPostular
                     {
                         Apellido = vInscripcionEtapas.Apellido,
-                        Estado = vInscripcionEtapas.Estado,
-                        LinkConfirmacion = callbackUrl
+                        MailCuerpo = cuerpo,
+                        LinkConfirmacion = callbackUrl,
+                        Postulado=x
                     };
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
-                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2");
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
                         break;
                     case "No Postulado":
-                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailNoPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto5");
+                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2");
                         break;
                 }
 
