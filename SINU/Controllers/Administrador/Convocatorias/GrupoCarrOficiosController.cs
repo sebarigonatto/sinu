@@ -68,7 +68,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
         }
         public ActionResult Create()
         {
-            return View();
+            GrupoCarrOficiosvm prueba = new GrupoCarrOficiosvm { Carreras2 = db.CarreraOficio.ToList() };
+                       return View(prueba);
         }
 
         // POST: GrupoCarrOficios/Create
@@ -76,8 +77,9 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal")] GrupoCarrOficio grupoCarrOficio)
+        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal")]  GrupoCarrOficio grupoCarrOficio)
         {
+           
             if (ModelState.IsValid)
             {
                 db.GrupoCarrOficio.Add(grupoCarrOficio);

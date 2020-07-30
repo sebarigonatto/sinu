@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using SINU.ViewModels;
 using SINU.Models;
+using System.Web.Mvc;
 
 namespace SINU.ViewModels
 {
@@ -14,6 +15,7 @@ namespace SINU.ViewModels
        public List<spCarrerasDelGrupo_Result> Carreras { set; get; }
         public string Personal { set; get; }
         public string Descripcion { set; get; }
+        public List<CarreraOficio> Carreras2 { set; get; }
 
     }
     //public class CarrOficiosvm
