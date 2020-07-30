@@ -1,76 +1,141 @@
 ﻿@model IEnumerable<SINU.Models.ResGrupo>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Restricciones de Grupo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Restricciones de Grupo</h2>
 
+
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_Dia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_Mes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdEstadoCivil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_a_fecha)
+                </th>
+                <th></th>
+            </tr>
+</thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad_Al_AnioSig)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad_Al_Dia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad_Al_Mes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadMinCAutoriz)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdEstadoCivil)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad_a_fecha)
+                </td>
+                <td class="justify-content-center align-items-center d-md-flex">
+                    @Html.ActionLink("  ", "Edit", new { id = item.IdResGrupo }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink("  ", "Details", new { id = item.IdResGrupo }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink("  ", "Delete", new { id = item.IdResGrupo }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(" Nuevo Registro", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Edad_Al_Dia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Edad_Al_Mes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadMin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadMax)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IdEstadoCivil)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Edad_a_fecha)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad_Al_AnioSig)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad_Al_Dia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad_Al_Mes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EdadMinCAutoriz)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EdadMin)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EdadMax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdEstadoCivil)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Edad_a_fecha)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdResGrupo }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdResGrupo }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdResGrupo })
-        </td>
-    </tr>
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+
+            });
+
+        });
+    </script>
+
 }
 
-</table>

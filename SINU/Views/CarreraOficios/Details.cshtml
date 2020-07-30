@@ -1,14 +1,14 @@
 ﻿@model SINU.Models.CarreraOficio
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Carrera/Oficio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>CarreraOficio</h4>
+    @*<h4>CarreraOficio</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -30,6 +30,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCarreraOficio }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdCarreraOficio }) |
+    @Html.ActionLink("Volver", "Index")
 </p>

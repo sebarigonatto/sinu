@@ -7,12 +7,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Eliminar Registro</title>
 </head>
+<h2>Eliminar Registro</h2>
 <body>
-    <h3>Are you sure you want to delete this?</h3>
+    <div class="alert alert-warning" role="alert">
+        Esta a punto de eliminar un Registro. ¿Está seguro?
+    </div>
     <div>
-        <h4>Modalidad</h4>
+        @*<h4>Modalidad</h4>*@
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -38,8 +41,8 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Volver a la lista", "Index")
+                <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                @Html.ActionLink("Volver", "Index")
             </div>
         }
     </div>

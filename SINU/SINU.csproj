@@ -389,6 +389,9 @@
     <Compile Include="Models\SituacionRevista.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spCarrerasDelGrupo_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spCarrerasParaEsteInscripto_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -533,6 +536,7 @@
     <Compile Include="ViewModels\DelegacionViewModel.cs" />
     <Compile Include="ViewModels\DeletePeriodoInscripcion.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
+    <Compile Include="ViewModels\GrupoCarrOficiosViewModel.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
     <Compile Include="ViewModels\ProvLocalidades.cs" />

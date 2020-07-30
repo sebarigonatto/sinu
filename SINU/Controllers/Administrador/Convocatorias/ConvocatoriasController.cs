@@ -18,7 +18,7 @@ using System.Net;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
-    [AuthorizacionPermiso("AdminMenu")]
+    //[AuthorizacionPermiso("AdminMenu")]
     public class ConvocatoriasController : Controller
     {
       

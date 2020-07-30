@@ -1,14 +1,14 @@
-﻿@model SINU.Models.GrupoCarrOficio
+﻿@model SINU.ViewModels.GrupoCarrOficiosvm
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Grupo Carrera/Oficio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
 
 <div>
-    <h4>GrupoCarrOficio</h4>
+    @*<h4>GrupoCarrOficio</h4>*@
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -26,10 +26,97 @@
         <dd>
             @Html.DisplayFor(model => model.Personal)
         </dd>
-
     </dl>
+
+    @*aca tiene que ir una tabla*@
+
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Carreras)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.Personal)
+                </th>                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Carreras)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarreraUoficio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Personal)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdGrupoCarrOficio }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdGrupoCarrOficio }) |
+    @Html.ActionLink("Volver", "Index")
 </p>
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+
+            });
+
+        });
+    </script>
+
+}
