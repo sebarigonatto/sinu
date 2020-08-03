@@ -77,11 +77,24 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal")]  GrupoCarrOficio grupoCarrOficio)
+        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs")]  GrupoCarrOficiosvm
+ grupoCarrOficiovm )
         {
+            //creo una variable del tipo grupocarroficio para poder guardarla en la bd utilizando el viewmodel
+            GrupoCarrOficio grupoCarrOficio = new GrupoCarrOficio
+            
+            {
+                IdGrupoCarrOficio = grupoCarrOficiovm.IdGrupoCarrOficio,
+                Personal = grupoCarrOficiovm.Personal,
+                Descripcion = grupoCarrOficiovm.Descripcion               
+    };
            
+            // aca iria un sp donde le paso todo el listado de carreras y 
+            //el id del grupo carrera oficio para asignarle a las mismas.
+
             if (ModelState.IsValid)
             {
+                //03 agosto, graba en grupo carrera oficio
                 db.GrupoCarrOficio.Add(grupoCarrOficio);
                 db.SaveChanges();
                 return RedirectToAction("Index");
