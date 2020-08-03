@@ -108,6 +108,7 @@ namespace SINU.Models
         public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
+        public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1064,31 +1065,85 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spModalidadParaEsteInscripto_Result1>("spModalidadParaEsteInscripto", idInscripcionParameter);
         }
     
-        public virtual ObjectResult<spCarrerasDelGrupo_Result> spCarrerasDelGrupo(string idGrupoCarrOficio)
+        public virtual ObjectResult<spCarrerasDelGrupo_Result> spCarrerasDelGrupo(string idGrupoCarrOficio, string personal)
         {
             var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
                 new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
                 new ObjectParameter("IdGrupoCarrOficio", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCarrerasDelGrupo_Result>("spCarrerasDelGrupo", idGrupoCarrOficioParameter);
+            var personalParameter = personal != null ?
+                new ObjectParameter("Personal", personal) :
+                new ObjectParameter("Personal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCarrerasDelGrupo_Result>("spCarrerasDelGrupo", idGrupoCarrOficioParameter, personalParameter);
         }
     
-        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio)
+        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio, string personal)
         {
             var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
                 new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
                 new ObjectParameter("IdGrupoCarrOficio", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", idGrupoCarrOficioParameter);
+            var personalParameter = personal != null ?
+                new ObjectParameter("Personal", personal) :
+                new ObjectParameter("Personal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", idGrupoCarrOficioParameter, personalParameter);
         }
     
-        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio, MergeOption mergeOption)
+        public virtual ObjectResult<CarreraOficio> CarrerasDelGrupo(string idGrupoCarrOficio, string personal, MergeOption mergeOption)
         {
             var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
                 new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
                 new ObjectParameter("IdGrupoCarrOficio", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", mergeOption, idGrupoCarrOficioParameter);
+            var personalParameter = personal != null ?
+                new ObjectParameter("Personal", personal) :
+                new ObjectParameter("Personal", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", mergeOption, idGrupoCarrOficioParameter, personalParameter);
+        }
+    
+        public virtual int spGrupoYAgrupacionCarreras(string idGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio)
+        {
+            var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
+                new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
+                new ObjectParameter("IdGrupoCarrOficio", typeof(string));
+    
+            var personalParameter = personal != null ?
+                new ObjectParameter("Personal", personal) :
+                new ObjectParameter("Personal", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var idCarreraOficioParameter = idCarreraOficio != null ?
+                new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
+                new ObjectParameter("IdCarreraOficio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spGrupoYAgrupacionCarreras", idGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter);
+        }
+    
+        public virtual int spPGrupoYAgrupacionCrreras(string idGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio)
+        {
+            var idGrupoCarrOficioParameter = idGrupoCarrOficio != null ?
+                new ObjectParameter("IdGrupoCarrOficio", idGrupoCarrOficio) :
+                new ObjectParameter("IdGrupoCarrOficio", typeof(string));
+    
+            var personalParameter = personal != null ?
+                new ObjectParameter("Personal", personal) :
+                new ObjectParameter("Personal", typeof(string));
+    
+            var descripcionParameter = descripcion != null ?
+                new ObjectParameter("Descripcion", descripcion) :
+                new ObjectParameter("Descripcion", typeof(string));
+    
+            var idCarreraOficioParameter = idCarreraOficio != null ?
+                new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
+                new ObjectParameter("IdCarreraOficio", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPGrupoYAgrupacionCrreras", idGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter);
         }
     }
 }

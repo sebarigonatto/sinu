@@ -428,6 +428,9 @@
     <Compile Include="Models\TipoNacionalidad.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TipoPersonal.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Usuario_OficyDeleg.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

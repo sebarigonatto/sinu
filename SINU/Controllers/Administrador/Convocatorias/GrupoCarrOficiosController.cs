@@ -56,7 +56,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Personal = grupoCarrOficio.Personal,
-                Carreras = db.spCarrerasDelGrupo(id).ToList()
+                Carreras = db.spCarrerasDelGrupo(id,"").ToList()
 
             };
             if (grupoCarrOficio == null)
@@ -80,27 +80,19 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs")]  GrupoCarrOficiosvm
  grupoCarrOficiovm )
         {
-            //creo una variable del tipo grupocarroficio para poder guardarla en la bd utilizando el viewmodel
-            GrupoCarrOficio grupoCarrOficio = new GrupoCarrOficio
-            
-            {
-                IdGrupoCarrOficio = grupoCarrOficiovm.IdGrupoCarrOficio,
-                Personal = grupoCarrOficiovm.Personal,
-                Descripcion = grupoCarrOficiovm.Descripcion               
-    };
-           
-            // aca iria un sp donde le paso todo el listado de carreras y 
-            //el id del grupo carrera oficio para asignarle a las mismas.
-
+            string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
             if (ModelState.IsValid)
             {
                 //03 agosto, graba en grupo carrera oficio
-                db.GrupoCarrOficio.Add(grupoCarrOficio);
-                db.SaveChanges();
+                // aca iria un sp donde le paso todo el listado de carreras y 
+                //el id del grupo carrera oficio para asignarle a las mismas.
+                //db.GrupoCarrOficio.Add(grupoCarrOficio);
+                //db.SaveChanges();
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras);                
                 return RedirectToAction("Index");
             }
 
-            return View(grupoCarrOficio);
+            return View(grupoCarrOficiovm);
         }
 
         // GET: GrupoCarrOficios/Edit/5

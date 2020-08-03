@@ -574,6 +574,12 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
           <Property Name="IdTipoNacionalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="TipoPersonal">
+          <Key>
+            <PropertyRef Name="Personal" />
+          </Key>
+          <Property Name="Personal" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario_OficyDeleg">
           <Key>
             <PropertyRef Name="Email" />
@@ -1922,6 +1928,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         </Function>
         <Function Name="spCarrerasDelGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdGrupoCarrOficio" Type="varchar" Mode="In" />
+          <Parameter Name="Personal" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spCarrerasParaEsteInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdInscripcion" Type="int" Mode="In" />
@@ -1997,6 +2004,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="spFamiliarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
+        </Function>
+        <Function Name="spGrupoYAgrupacionCarreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdGrupoCarrOficio" Type="varchar" Mode="In" />
+          <Parameter Name="Personal" Type="varchar" Mode="In" />
+          <Parameter Name="Descripcion" Type="varchar" Mode="In" />
+          <Parameter Name="IdCarreraOficio" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spIdiomasIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPersonaIdioma" Type="int" Mode="In" />
@@ -2147,6 +2160,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocPresentado" EntityType="Self.TipoDocPresentado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoNacionalidad" EntityType="Self.TipoNacionalidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoPersonal" EntityType="Self.TipoPersonal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario_OficyDeleg" EntityType="Self.Usuario_OficyDeleg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VerificacionPantallas" EntityType="Self.VerificacionPantallas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AgrupacionCarreraOficio" EntityType="Self.AgrupacionCarreraOficio" store:Type="Tables" store:Schema="dbo">
@@ -4442,10 +4456,25 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spCarrerasDelGrupo" ReturnType="Collection(SINUModel.spCarrerasDelGrupo_Result)">
-            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+          <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="Personal" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="CarrerasDelGrupo" EntitySet="CarreraOficio" ReturnType="Collection(SINUModel.CarreraOficio)">
+          <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="Personal" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="TipoPersonal" EntityType="SINUModel.TipoPersonal" />
+          <FunctionImport Name="spGrupoYAgrupacionCarreras">
             <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="Personal" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spPGrupoYAgrupacionCrreras">
+            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="Personal" Mode="In" Type="String" />
+            <Parameter Name="Descripcion" Mode="In" Type="String" />
+            <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -5085,6 +5114,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="String" Name="Personal" Nullable="false" MaxLength="2" />
           <Property Type="Int32" Name="IdCarreraOficio" Nullable="false" />
         </ComplexType>
+        <EntityType Name="TipoPersonal">
+          <Key>
+            <PropertyRef Name="Personal" />
+          </Key>
+          <Property Name="Personal" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6293,6 +6328,15 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CarrerasDelGrupo" FunctionName="SINUModel.Store.spCarrerasDelGrupo">
           </FunctionImportMapping>
+          <EntitySetMapping Name="TipoPersonal">
+            <EntityTypeMapping TypeName="SINUModel.TipoPersonal">
+              <MappingFragment StoreEntitySet="TipoPersonal">
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spGrupoYAgrupacionCarreras" FunctionName="SINUModel.Store.spGrupoYAgrupacionCarreras" />
+          <FunctionImportMapping FunctionImportName="spPGrupoYAgrupacionCrreras" FunctionName="SINUModel.Store.spGrupoYAgrupacionCarreras" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
