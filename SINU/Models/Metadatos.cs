@@ -90,6 +90,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         [Required]
+        [RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
         public string CUIL { get; set; }
         [Display(Name = "Fecha de Nacimiento")]
         [Required]
@@ -435,6 +436,7 @@ namespace SINU.Models
         [Display(Name = "Tipo Nacionalidad")]
         public Nullable<int> idTipoNacionalidad { get; set; }
         [Required]
+        [RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]",ErrorMessage ="Debe ingresar un Cuil valido.")]
         public string CUIL { get; set; }
     }
     public partial class vInscripcionEtapaEstadoUltimoEstadoMetadata

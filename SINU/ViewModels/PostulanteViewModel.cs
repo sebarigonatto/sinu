@@ -49,7 +49,7 @@ namespace SINU.ViewModels
         public List<vRELIGION> vRELIGIONVM { get; set; }
         public List<TipoNacionalidad> TipoNacionalidadVM { get; set; }
         public List<SelectListItem> ModalidadVm { get; set; }
-        public List<SelectListItem> CarreraOficioVm { get; set; }
+        public List<spCarrerasParaEsteInscripto_Result2> CarreraOficioVm { get; set; }
     }
     
     public class DomicilioVM
