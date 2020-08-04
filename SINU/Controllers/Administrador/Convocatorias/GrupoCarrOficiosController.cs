@@ -160,5 +160,20 @@ namespace SINU.Controllers.Administrador.Convocatorias
             }
             base.Dispose(disposing);
         }
+
+        //esto es para usar Json y cargar la lista filtrada
+
+        //	DevolverCarrerasFiltradas TPersonal
+        public JsonResult DevolverCArrerasFiltradas(string RegionId)
+        {
+            using (db = new SINUEntities())
+            {
+                //	carreras					Tpersonal
+                var carreras = db.GrupoCarrOficio.Where(x => x.Personal == RegionId).ToList();
+                return Json(carreras, JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
+
     }
 }

@@ -8,6 +8,7 @@
     lst.Add(new SelectListItem() { Text = "Oficiales", Value = "O" });
     lst.Add(new SelectListItem() { Text = "Suboficiales", Value = "S" });
     lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });
+    //ViewBag.lst = new SelectList(new SINU.Models.SINUEntities().TipoPersonal.ToList());
 }
 
 <h2>Nuevo Registro</h2>
@@ -38,94 +39,128 @@
 
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Personal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Personal, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Personal,new SelectList(lst.ToList(),"Value","Text"), new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownListFor(model => model.Personal, new SelectList(lst.ToList(), "Value", "Text"),  new { @class = "form-control", @id = "ddlRegions" })
             @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
         </div>
     </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Carreras2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{ var variable = new SelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", 0);}
-                @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), htmlAttributes: new { @class = "multiselect form-control", @multiple = "multiple" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Carreras2, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @*@{ var variable = new SelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", 0);}*@
+            @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), htmlAttributes: new { @class = "multiselect form-control", @multiple = "multiple",@id = "ddlTerritories" })
         </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Guardar" class="btn btn-default" />
-                    </div>
-                </div>
-            }
-            <div>
-                @Html.ActionLink("Volver", "Index")
-            </div>
+        <div class="alert alert-info">
+            Presione la tecla "Ctrl" + click para seleccionar más de una carrera.
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" class="btn btn-default" />
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Volver", "Index")
+</div>
+<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+    Tooltip on top
+</button>
 
-            <!-- ***********************************************************************-->
-            <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
-            <!-- ***********************************************************************-->
-            <!--Para establecer Formato de Tabla-->
-            <!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
-            <!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
-            <!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
-            <!-- Rodear la tr de las th con <thead> </thead>-->
-            <!-- Rodear el contenido de la tabla con <tbody>-->
-            @section Scripts {
-                <script type="text/javascript">
-                    //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-                    $(document).ready(function () {
-                        $(".table-filters").DataTable({
-                            responsive: true,
-                            "language":
-                            {
-                                "sProcessing": "Procesando...",
-                                "sLengthMenu": "Mostrar _MENU_ registros",
-                                "sZeroRecords": "No se encontraron resultados",
-                                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                                "sInfoPostFix": "",
-                                "sSearch": "Buscar:",
-                                "sUrl": "",
-                                "sInfoThousands": ",",
-                                "sLoadingRecords": "Cargando...",
-                                "oPaginate": {
-                                    "sFirst": "Primero",
-                                    "sLast": "Último",
-                                    "sNext": "Siguiente",
-                                    "sPrevious": "Anterior"
-                                },
-                                "oAria": {
-                                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                                }
-                            },
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
 
-                            "columnDefs": [{
-                                "targets": 'no-sort',
-                                "orderable": false
-                            },
-                            {
-                                "targets": 'ni-o-ni-bu',
-                                "searchable": false,
-                                "orderable": false
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
 
-                            }]
+                }]
 
 
+            });
+
+        });
+        //tooltips popper algo
+        $(function () { $('[data-toggle="tooltip"]').tooltip() })
+    </script>
+    
+        <script>
+            //aun no me funciona el codigo 04/08/2020
+
+            $(document).ready(function () {
+                //ddlRegions es igual al ID del listado de Personal.
+                $("#ddlRegions").change(function () {
+                    alert($("#ddlRegions").val());
+                    // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+
+                    $.get("/grupoCarrOficios/DevolverCArrerasFiltradas", { RegionId: $("#ddlRegions").val() }, function (data) {
+                        // VACIAMOS EL DropDownList aca hay que poner
+                        //ddlterritories es ID de la lista carreras
+                        $("#ddlTerritories").empty();
+
+                        // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                        $("#ddlTerritories").append("<option value> -- Seleccionar Carreras Para " + $("#ddlRegions option:selected").text() + " --</option>")
+
+                        // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                        $.each(data, function (index, row) {
+                            $("#ddlTerritories").append("<option value='" + row.TerritoryId + "'>" + row.TerritoryDescription + "</option>")
                         });
-
                     });
-                </script>
-
-            }
+                });
+            });
+        </script>
+       
+    }
