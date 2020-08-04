@@ -106,13 +106,13 @@ $(document).ready(function () {
         liveSearchPlaceholder: "Ingrese su busqueda...",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
-        noneSelectedText: 'Ninguna Opcion Seleccionada',
+        noneSelectedText: 'Seleccione una Opcion',
         //styleBase: 'form-control',
         //style: 'btn btn-white'
     });
     $(".selectpicker").selectpicker({
         size: 7,
-        noneSelectedText: 'Ninguna Opcion Seleccionada',
+        noneSelectedText: 'Seleccione una Opcion',
         //styleBase:'btn',
         //style: 'btn-white'
 
@@ -131,6 +131,32 @@ $(document).ready(function () {
             $("#IdComentario").hide()
         }
     });
+    ////////////////////////////DATOS PERSONALES///////////////////////////////////
+    $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
+
+    ActualizaCarreras($("#vPersona_DatosPerVM_IdModalidad").val());
+    $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
+        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
+        var modalidad = $(this).val();
+        //alert(modalidad); 
+        $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
+        ActualizaCarreras(modalidad)
+      
+    });
+
+    function ActualizaCarreras(modalidad) {
+        $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
+            if ($(element).attr("modali")==modalidad && $(element).val()!="") {
+                $(element).removeAttr("hidden");
+            } else if ($(element).val() != "") {
+                $(element).attr("hidden", true);
+            }
+            
+        })
+        $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
+    }
+
+
     /////////////////////////////////////////////////////////////////////////////////
     /*FUNCION DE LA VISTA DE DOMICILIOS */
 

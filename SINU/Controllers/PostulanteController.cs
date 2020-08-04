@@ -229,8 +229,8 @@ namespace SINU.Controllers
                     TipoNacionalidadVM = db.TipoNacionalidad.Where(m=>m.IdTipoNacionalidad !=4 ).ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList(),
-                    CarreraOficioVm = db.spCarrerasParaEsteInscripto(idInscripcion).Select(m=>new  SelectListItem() { Text = m.CarreraUoficio, Value= m.IdCarreraOficio.ToString()}).ToList(),
-                    ModalidadVm = db.spModalidadParaEsteInscripto(idInscripcion).Select(m => new SelectListItem() { Text = m.Descripcion, Value = m.IdModalidad }).ToList()
+                    CarreraOficioVm = db.spCarrerasParaEsteInscripto(idInscripcion,"").ToList(),
+                    ModalidadVm = db.vConvocatoriaDetalles.DistinctBy(m=>m.Modalidad).Select(m => new SelectListItem() { Text = m.Modalidad, Value = m.IdModalidad }).ToList()
                 };
                 return PartialView(datosba);
             }
@@ -240,7 +240,6 @@ namespace SINU.Controllers
                 return PartialView(ex);
             }
         }
-
 
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]

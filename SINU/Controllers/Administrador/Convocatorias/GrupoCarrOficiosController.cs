@@ -88,7 +88,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //el id del grupo carrera oficio para asignarle a las mismas.
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
                 //db.SaveChanges();
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras);                
+                //db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras);                
                 return RedirectToAction("Index");
             }
 

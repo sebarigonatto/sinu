@@ -143,6 +143,7 @@ namespace SINU.Models
                     ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
                     ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
                 };
+
                 string HtmlLayout = Engine.Razor.RunCompile(LayautCarpeta, null, datos);
               
                 string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\"+Plantilla+".cshtml", null, ModeloPlantilla);
