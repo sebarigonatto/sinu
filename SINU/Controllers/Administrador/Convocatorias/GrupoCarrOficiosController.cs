@@ -17,8 +17,9 @@ namespace SINU.Controllers.Administrador.Convocatorias
         private SINUEntities db = new SINUEntities();
 
         // GET: GrupoCarrOficios
-        public ActionResult Index()
+        public ActionResult Index(string Mensaje)
         {
+            ViewBag.Mensaje = Mensaje;
             return View(db.GrupoCarrOficio.ToList());
         }
         // este es el ORIGINAL
@@ -93,20 +94,22 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 
                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
-                
-                switch (ObjMensaje.Value.ToString())
+                String mens = ObjMensaje.Value.ToString();
+                switch (mens)
                 {
-                    case "Exito / Inserciones realizadas correctamente.":
-                        return RedirectToAction("Index",ObjMensaje); //write "<div>Custom Value 1</div>"
+                    case string a when a.Contains("Exito"):
+                        return RedirectToAction("Index",new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"
                         
-                    case "s":
-                        return View(grupoCarrOficiovm); //write "<span>Custom Value 2</span>"
-                     
+                    //case string a when a.Contains("Error"):
+                    //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
+
                 }
                  //aca haria un case of segun lo recibido en el mensaje (supongo)
                  //lo mando al index si hay exito o queda en la pantalla de create con el error
                 
             }
+            grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+            ViewBag.Mensaje = ObjMensaje.Value.ToString();
 
             return View(grupoCarrOficiovm);
         }
@@ -185,7 +188,11 @@ namespace SINU.Controllers.Administrador.Convocatorias
             using (db = new SINUEntities())
             {
                 //	carreras					Tpersonal
-                var carreras = db.CarreraOficio.Where(x => x.Personal == RegionId).ToList();
+                var carreras = db.CarreraOficio.Where(x => x.Personal == RegionId).Select(m => new SelectListItem
+                {
+                    Value = m.IdCarreraOficio.ToString(),
+                    Text = m.CarreraUoficio
+                }).ToList();
                 return Json(carreras, JsonRequestBehavior.AllowGet);
                 //carrerasFiltradas
             }
