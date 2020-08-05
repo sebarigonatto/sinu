@@ -93,10 +93,19 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 
                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
-
-                //aca haria un case of segun lo recibido en el mensaje (supongo)
-                //lo mando al index si hay exito o queda en la pantalla de create con el error
-                return RedirectToAction("Index");
+                
+                switch (ObjMensaje.Value.ToString())
+                {
+                    case "Exito / Inserciones realizadas correctamente.":
+                        return RedirectToAction("Index",ObjMensaje); //write "<div>Custom Value 1</div>"
+                        
+                    case "s":
+                        return View(grupoCarrOficiovm); //write "<span>Custom Value 2</span>"
+                     
+                }
+                 //aca haria un case of segun lo recibido en el mensaje (supongo)
+                 //lo mando al index si hay exito o queda en la pantalla de create con el error
+                
             }
 
             return View(grupoCarrOficiovm);

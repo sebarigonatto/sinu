@@ -11,7 +11,8 @@ namespace SINU.ViewModels
     public class GrupoCarrOficiosvm
     {
         [Required]
-        [Display(Name = "Grupo Carrera/Oficio (ID)")]
+        [Display(Name = "Grupo(ID)")]
+        [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar máximo 10 digitos")]
         public string IdGrupoCarrOficio { set; get; }
 
         
