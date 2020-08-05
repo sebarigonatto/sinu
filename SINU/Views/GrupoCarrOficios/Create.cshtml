@@ -58,7 +58,7 @@
         @Html.LabelFor(model => model.Carreras2, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @*@{ var variable = new SelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", 0);}*@
-            @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), htmlAttributes: new { @class = "multiselect form-control", @multiple = "multiple",@id = "ddlTerritories" })
+            @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple",@id = "ddlTerritories"})
         </div>
         <div class="alert alert-info">
             Presione la tecla "Ctrl" + click para seleccionar más de una carrera.
@@ -143,21 +143,22 @@
             $(document).ready(function () {
                 //ddlRegions es igual al ID del listado de Personal.
                 $("#ddlRegions").change(function () {
-                    alert($("#ddlRegions").val());
+                   // alert($("#ddlRegions").val());
                     // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-                    $.get("/grupoCarrOficios/DevolverCArrerasFiltradas", { RegionId: $("#ddlRegions").val() }, function (data) {
+                    //$.get("/grupoCarrOficios/DevolverCArrerasFiltradas", { RegionId: $("#ddlRegions").val() }, function (data) {
                         // VACIAMOS EL DropDownList aca hay que poner
                         //ddlterritories es ID de la lista carreras
-                        $("#ddlTerritories").empty();
 
+                        $("#ddlTerritories").remove();
+                
                         // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                        $("#ddlTerritories").append("<option value> -- Seleccionar Carreras Para " + $("#ddlRegions option:selected").text() + " --</option>")
-
+                        //$("#ddlTerritories").append("<option value> -- Seleccionar Carreras Para " + $("#ddlRegions option:selected").text() + " --</option>")
+                        
                         // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-                        $.each(data, function (index, row) {
-                            $("#ddlTerritories").append("<option value='" + row.TerritoryId + "'>" + row.TerritoryDescription + "</option>")
-                        });
+                       $.each(data, function (index, row) {
+                        $("#ddlTerritories").append("<option value='" + row.IdCarreraOficio + "'>" + row.CarreraUoficio + "</option>")
+                    });
                     });
                 });
             });

@@ -4485,7 +4485,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdModalidad" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_vGruposYCarreras" ReturnType="Collection(SINUModel.sp_vGruposYCarreras_Result)">
-            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+          <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">

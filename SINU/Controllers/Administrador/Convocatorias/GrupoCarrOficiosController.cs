@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
 using SINU.ViewModels;
+using System.Data.Entity.Core.Objects;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
@@ -49,6 +50,11 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //return RedirectToAction("Index");
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+            if (grupoCarrOficio == null)
+            {
+                //return HttpNotFound();
+                return View("Error", Func.ConstruyeError("Ese ID de Grupo no se encontro en la tabla de GrupoCarrOficio", "GrupoCarrOficios", "Details"));
+            }
             //ViewBag.Carreras = db.spCarrerasDelGrupo(id).ToList();
             GrupoCarrOficiosvm datosgrupocarroficio = new GrupoCarrOficiosvm()
             {
@@ -58,12 +64,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 Personal = grupoCarrOficio.Personal,
                 Carreras = db.spCarrerasDelGrupo(id,"").ToList()
 
-            };
-            if (grupoCarrOficio == null)
-            {
-                //return HttpNotFound();
-                return View("Error", Func.ConstruyeError("Ese ID de Grupo no se encontro en la tabla de GrupoCarrOficio", "GrupoCarrOficios", "Details"));
-            }
+            };            
             return View(datosgrupocarroficio);
         }
         public ActionResult Create()
@@ -81,14 +82,20 @@ namespace SINU.Controllers.Administrador.Convocatorias
  grupoCarrOficiovm )
         {
             string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
+            ObjectParameter ObjMensaje = new ObjectParameter("Mensaje","");
             if (ModelState.IsValid)
             {
                 //03 agosto, graba en grupo carrera oficio
                 // aca iria un sp donde le paso todo el listado de carreras y 
                 //el id del grupo carrera oficio para asignarle a las mismas.
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
-                //db.SaveChanges();
-                //db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras);                
+                //db.SaveChanges(); 
+                
+               db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, ObjMensaje);
+                //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
+
+                //aca haria un case of segun lo recibido en el mensaje (supongo)
+                //lo mando al index si hay exito o queda en la pantalla de create con el error
                 return RedirectToAction("Index");
             }
 
@@ -169,7 +176,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             using (db = new SINUEntities())
             {
                 //	carreras					Tpersonal
-                var carreras = db.GrupoCarrOficio.Where(x => x.Personal == RegionId).ToList();
+                var carreras = db.CarreraOficio.Where(x => x.Personal == RegionId).ToList();
                 return Json(carreras, JsonRequestBehavior.AllowGet);
                 //carrerasFiltradas
             }
