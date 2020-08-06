@@ -2010,10 +2010,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdPersona" Type="int" Mode="In" />
         </Function>
         <Function Name="spGrupoYAgrupacionCarreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdGrupoCarrOficio" Type="varchar" Mode="In" />
+          <Parameter Name="NuevoIdGrupoCarrOficio" Type="varchar" Mode="In" />
           <Parameter Name="Personal" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="IdCarreraOficio" Type="varchar" Mode="In" />
+          <Parameter Name="EsInsert" Type="bit" Mode="In" />
+          <Parameter Name="OriginalIdGrupoCarrOficio" Type="varchar" Mode="In" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="spIdiomasIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -4467,17 +4469,21 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </FunctionImport>
           <EntitySet Name="TipoPersonal" EntityType="SINUModel.TipoPersonal" />
           <FunctionImport Name="spGrupoYAgrupacionCarreras">
-            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="NuevoIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
+            <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spPGrupoYAgrupacionCrreras">
-            <Parameter Name="IdGrupoCarrOficio" Mode="In" Type="String" />
+            <Parameter Name="NuevoIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
+            <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spCarrerasParaEsteInscripto" ReturnType="Collection(SINUModel.spCarrerasParaEsteInscripto_Result2)">

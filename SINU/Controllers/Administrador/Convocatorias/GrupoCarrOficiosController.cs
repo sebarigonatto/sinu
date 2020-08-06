@@ -126,7 +126,15 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 return HttpNotFound();
             }
-            return View(grupoCarrOficio);
+            GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm{
+                IdGrupoCarrOficio=grupoCarrOficio.IdGrupoCarrOficio,
+                Personal=grupoCarrOficio.Personal,
+                Descripcion=grupoCarrOficio.Descripcion,
+                Carreras= db.spCarrerasDelGrupo(id, "").ToList(),
+                Carreras2= db.CarreraOficio.ToList()
+
+        };
+            return View(NuevogrupocarroficioVM);
         }
 
         // POST: GrupoCarrOficios/Edit/5
