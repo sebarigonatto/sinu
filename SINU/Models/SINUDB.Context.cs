@@ -109,6 +109,7 @@ namespace SINU.Models
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
+        public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1173,6 +1174,15 @@ namespace SINU.Models
                 new ObjectParameter("IdGrupoCarrOficio", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vGruposYCarreras_Result>("sp_vGruposYCarreras", idGrupoCarrOficioParameter);
+        }
+    
+        public virtual ObjectResult<spRestriccionesParaEstePostulante_Result> spRestriccionesParaEstePostulante(Nullable<int> idPostulantePersona)
+        {
+            var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
+                new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
+                new ObjectParameter("IdPostulantePersona", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter);
         }
     }
 }

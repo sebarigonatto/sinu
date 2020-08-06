@@ -64,6 +64,18 @@
                 </tr>
             </tbody>
         </table>
+
+
+        <div>
+            @for (int i = 0; i < Model.Carreras2.Count() ; i++)
+            {
+                @Html.CheckBoxFor(m => m.Carreras3[i].Checked, new { id = "employmentType_" + i })
+                @Html.HiddenFor(m => m.Carreras3[i].Text)
+                @Html.DisplayFor(m => m.Carreras3[i].Text)
+            }
+        </div>
+
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Guardar" class="btn btn-default" />
