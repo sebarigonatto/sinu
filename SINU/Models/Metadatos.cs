@@ -489,11 +489,11 @@ namespace SINU.Models
         public string NombreInst { get; set; }
     }
 
-    //public partial class GrupoCarrOficioMetadata
-    //{
-    //    [Display(Name = "Código Grupo")]
-    //    public string IdGrupoCarrOficio { get; set; }
-    //}
+    public partial class GrupoCarrOficioMetadata
+    {
+        [Display(Name = "Grupo")]
+        public string IdGrupoCarrOficio { get; set; }
+    }
     //public partial class ModalidadMetadata
     //{
     //    [Display(Name = "Código Modalidad")]

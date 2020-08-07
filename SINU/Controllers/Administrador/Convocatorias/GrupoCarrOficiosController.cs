@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SINU.Models;
 using SINU.ViewModels;
 using System.Data.Entity.Core.Objects;
+using static SINU.ViewModels.GrupoCarrOficiosvm;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
@@ -92,7 +93,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
                 //db.SaveChanges(); 
                 
-               db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, ObjMensaje);
+               db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.nuevoIdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio,grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
                 switch (mens)
@@ -126,7 +127,24 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 return HttpNotFound();
             }
-            return View(grupoCarrOficio);
+            GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm {
+                IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
+                Personal = grupoCarrOficio.Personal,
+                Descripcion = grupoCarrOficio.Descripcion,
+                Carreras = db.spCarrerasDelGrupo(id, "").ToList(),               
+                Carreras2 = db.CarreraOficio.ToList(),
+               
+
+        };
+            //C/*areerForm model = new CareerForm();*/
+
+            NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>
+    {
+        new CheckBoxes { Text = "Fulltime" },
+        new CheckBoxes { Text = "Partly" },
+        new CheckBoxes { Text = "Contract" }
+    };
+            return View(NuevogrupocarroficioVM);
         }
 
         // POST: GrupoCarrOficios/Edit/5
@@ -134,15 +152,30 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal")] GrupoCarrOficio grupoCarrOficio)
+        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs")] GrupoCarrOficiosvm grupoCarrOficiovm)
         {
+            string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
+            ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
             if (ModelState.IsValid)
             {
-                db.Entry(grupoCarrOficio).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.nuevoIdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+                //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
+                String mens = ObjMensaje.Value.ToString();
+                switch (mens)
+                {
+                    case string a when a.Contains("Exito"):
+                        return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() } ); //write "<div>Custom Value 1</div>"
+
+                        //case string a when a.Contains("Error"):
+                        //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
+
+                }
+                //aca haria un case of segun lo recibido en el mensaje (supongo)
+                //lo mando al index si hay exito o queda en la pantalla de creat
+                
             }
-            return View(grupoCarrOficio);
+            return View(grupoCarrOficiovm);
         }
 
         // GET: GrupoCarrOficios/Delete/5

@@ -33,8 +33,18 @@ namespace SINU.ViewModels
         public List<CarreraOficio> Carreras2 { set; get; }
         //genera el listado id de las carreras cuando se crea un nuevo grupo
         public List<int> SelectedIDs { get; set; }
+        public bool Esinsert { get; set; }
+        public string nuevoIdGrupoCarrOficio { get; set; }
 
-
+        //para usar checkbox
+            //....
+            public List<CheckBoxes> Carreras3 { get; set; }
     }
 
- }
+    public class CheckBoxes
+    {
+        public string Text { get; set; }
+        public bool Checked { get; set; }
+    }
+
+}

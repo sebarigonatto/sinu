@@ -104,9 +104,9 @@ namespace SINU.Models
     [MetadataType(typeof(vConvocatoriaDetallesMetadata))]
     public partial class vConvocatoriaDetalles
     { }
-    //[MetadataType(typeof(GrupoCarrOficioMetadata))]
-    //public partial class GrupoCarrOficio
-    //{ }
+    [MetadataType(typeof(GrupoCarrOficioMetadata))]
+    public partial class GrupoCarrOficio
+    { }
     //[MetadataType(typeof(ModalidadMetadata))]
     //public partial class Modalidad
     //{ }
