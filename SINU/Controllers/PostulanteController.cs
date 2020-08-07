@@ -27,7 +27,7 @@ namespace SINU.Controllers
         
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
-        [AuthorizacionRol(Roles ="Postulante")]
+        [AuthorizacionRol(Roles =  "Postulante")]
         public ActionResult Index()
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
@@ -77,17 +77,7 @@ namespace SINU.Controllers
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
                     ComoSeEnteroVM = db.ComoSeEntero.Where(n=>n.IdComoSeEntero!=1).ToList()
                 };
-                datosba.vPersona_DatosBasicosVM.IdComoSeEntero = 0;
-                //var Com = new[] { new SelectListItem { Value = "1", Text="Familiar en la Institucion" },
-                //                 new SelectListItem { Value = "2", Text="En tu escuela, por parte de personal de la Armada" },
-                //                 new SelectListItem { Value = "3", Text="TV, ¿Cual?" },
-                //                 new SelectListItem { Value = "4", Text="Radio, ¿Cual?" },
-                //                 new SelectListItem { Value = "5", Text="Periodicos / Revistas, ¿Cual?" },
-                //                 new SelectListItem { Value = "6", Text="Redes Sociales, ¿Cual?" },
-                //                 new SelectListItem { Value = "7", Text="Otros" },
-                //};
-                // Com.ForEach(m => datosba.ComoSeEntero.Add(m));
-
+    
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -134,16 +124,21 @@ namespace SINU.Controllers
 
 
         //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
-        public JsonResult EdadInstituto(int? IDinst ,int? edad ) {
-
-            if (IDinst == 9 & edad > 22)
+        public JsonResult EdadInstituto(int? IdPOS, int? edad , string? Fecha)
+        {
+            try
             {
-                return Json(new { coherencia = false },JsonRequestBehavior.AllowGet);
-            } else if (IDinst == 10 & edad > 24) {
-                return Json(new { coherencia = false }, JsonRequestBehavior.AllowGet);
-            };
+                //DateTime fechaNAC = DateTime.Parse(Fecha);
+                //var retricciones = db.sp
 
-            return Json(new { coherencia = true }, JsonRequestBehavior.AllowGet);
+                return Json(new { coherencia = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+                 
         }
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
@@ -155,18 +150,18 @@ namespace SINU.Controllers
             {
                 var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
                 //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
-                JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.Edad);
-                dynamic data = GRUPO.Data;
-                if (data.coherencia)
-                {
-                    //Datos basicos - Validado; ID= 7
-                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
-                }
-                else
-                {
-                    //Datos basicos - No Validado; ID= 21
-                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
-                };
+                ////JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.Edad);
+                //dynamic data = GRUPO.Data;
+                //if (data.coherencia)
+                //{
+                //    //Datos basicos - Validado; ID= 7
+                //    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
+                //}
+                //else
+                //{
+                //    //Datos basicos - No Validado; ID= 21
+                //    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
+                //};
                 await Task.Delay(1000);
 
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");

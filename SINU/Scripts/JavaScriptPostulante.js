@@ -64,7 +64,7 @@ $(document).ready(function () {
     $(document).on('change', '.custom-file-input', function (event) {
         $(this).next('.custom-file-label').html(event.target.files[0].name);
     })
-    
+
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
     $(".datepicker").datepicker({
@@ -72,14 +72,14 @@ $(document).ready(function () {
         language: "es",
         autoclose: true,
         startView: "years",
-        
+
     });
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
         var fechanac = $('#fechacumpleaños').datepicker('getDate');
         var fechahoy = new Date();
-        var edad = fechahoy.getFullYear() - fechanac.getFullYear();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+        var edad = fechahoy.getFullYear() - fechanac.getFullYear();
         //alert(edad);
         //alert("meshoy"+fechahoy.getMonth());
         //alert("mescumple" +fechanac.getMonth());
@@ -120,17 +120,20 @@ $(document).ready(function () {
 
 
     ////////////////////////////DATOS BASICOS///////////////////////////////////
-
-
+    ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-        
-        //alert($(this).val())
-        if ($(this).val() > 2 && $(this).val()!=8 ) {
+        ComoSeEntero();
+
+    });
+    function ComoSeEntero() {
+        if ($("#DROPComoEntero").val() > 2 && $("#DROPComoEntero").val() != 8) {
             $("#IdComentario").show()
         } else {
-            $("#IdComentario").hide()
+            $("#IdComentario").hide();
+            $("#IdComentario input").val("");
         }
-    });
+    }
+
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
 
@@ -141,17 +144,17 @@ $(document).ready(function () {
         //alert(modalidad); 
         $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
         ActualizaCarreras(modalidad)
-      
+
     });
 
     function ActualizaCarreras(modalidad) {
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
-            if ($(element).attr("modali")==modalidad && $(element).val()!="") {
+            if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
-            
+
         })
         $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
     }
@@ -218,9 +221,9 @@ $(document).ready(function () {
 
     //Funcion de Provincia que actualiza los combobox de localidad
     function PROVINCIA(Combo) {
-         
+
         var ValP = $("#" + Combo).val();
-        if (ValP!="") {
+        if (ValP != "") {
             //alert(Combo + " " + ValP);
             var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
             //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
@@ -240,7 +243,7 @@ $(document).ready(function () {
                     $(ComboLocalidad).selectpicker('refresh');
                 });
         }
-       
+
     };
 
     //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
@@ -248,7 +251,7 @@ $(document).ready(function () {
         var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
         //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
         var valCP = $("#" + comboid).val();
-        if (valCP!="") {
+        if (valCP != "") {
             $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                 Localidad: valCP,
             },
@@ -265,7 +268,7 @@ $(document).ready(function () {
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
-     
+
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
         var Tabla = $('table').DataTable();
@@ -275,13 +278,13 @@ $(document).ready(function () {
 
         $(".Agrega").on("click", function () {
             id_registro = $(this).attr("data-ID");
-            id_tabla =id = $(this).closest("table").attr("ID");
+            id_tabla = id = $(this).closest("table").attr("ID");
             //alert(id_registro+ "  " +id_tabla); 
             ModalEIACUD(id_registro, id_persona, id_tabla);
             $("#ModalEIA").modal("show");
         });
-       
-        
+
+
         //Tabla.on('select.dt', function (e, dt, type, index) {
         //    var id_Tabla = $(this).attr("id");
         //    //solo utilizo modal para las que no tengan el id TABLAFAMILIA
@@ -356,7 +359,7 @@ $(document).ready(function () {
                 //se aplica el selectpicker basico
                 $(".selectpicker").selectpicker({ size: 7 });
 
-              
+
 
                 ////////////////////////////ESTUDIOS///////////////////////////////////
 
@@ -390,7 +393,7 @@ $(document).ready(function () {
                 $("#TerminoEST").on("change", function () {
                     EgresoSINO();
                 });
-                
+
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -402,7 +405,7 @@ $(document).ready(function () {
                 //al guardar los registros de un formulario de una vista parcial confirmo que la validacion de los campos
                 //si es .valid() es falso, muestro los errores y no cierro el modal
                 $(".Guardar_REG").on("click", function () {
-                    var form_actual ="#"+ this.getAttribute("data-form");
+                    var form_actual = "#" + this.getAttribute("data-form");
                     //alert(form_actual);
                     var valido = $(form_actual).valid();
                     $(form_actual).submit()
@@ -412,7 +415,7 @@ $(document).ready(function () {
                     };
                 });
 
-               
+
             },
 
             //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
@@ -426,16 +429,16 @@ $(document).ready(function () {
     };
 
     ///////////////////////////////ELIMINA///////////////////////////////////
-   
+
     //ELIMINA EL ESTUDIO SELECCIONADO
-    $.ActualizaTabla =function (tabla) {
-         url_Tabla = tabla;
-         //oculta el modal
+    $.ActualizaTabla = function (tabla) {
+        url_Tabla = tabla;
+        //oculta el modal
         ActualizaTabla();
-     };
+    };
 
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
-     function ActualizaTabla() {
+    function ActualizaTabla() {
         //alert(id_persona + url_Tabla );
         $("#" + url_Tabla + "NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona }, function () {
             //alert("se recargo la vista de la tabla actual...")
@@ -621,7 +624,7 @@ $(document).ready(function () {
         e.stopImmediatePropagation();
         //var data = dt.rows(index).data();
         //var idPersonaFamilia = data[0][0];
-       
+
 
         ////alert(IdFamilia);
         ////redirijo la pagina hacia la vista FamiliaCUD enviandole como parametro el IdPersona correspondiente al familiar Seleccionado
@@ -637,8 +640,8 @@ $(document).ready(function () {
     $(".TABMovil .navbar-toggler").on("click", function (e) {
         var idBT = $(this).attr("id");
         var idTAB;
-        $(".TABMovil .navbar-toggler ").each(function (e,i) {
-            if ($(this).attr("id")!=idBT) {
+        $(".TABMovil .navbar-toggler ").each(function (e, i) {
+            if ($(this).attr("id") != idBT) {
                 $(this).addClass("collapsed");
                 idTAB = $(this).attr("data-target");
                 $(idTAB).removeClass("show");
@@ -647,24 +650,25 @@ $(document).ready(function () {
         });
     });
 
-
+    //////////////////////////////////////////////  DATOS BASICOS CONTROL DE EDAD //////////////////////////////////////////////////////////////////////////
     $("#DatosBasicosBTGuarda").on("click", function () {
         var valido = $("#BeginFormDatosBasicos").valid();
-        //alert(valido);
+        alert(valido);
         if (!valido) {
             $("#BeginFormDatosBasicos").submit();
-        } else { 
-            //alert($("#InstitutoPref").val() + "   " + $("#edad").val());
+        } else {
+            alert($("#vPersona_DatosBasicosVM_IdPostulante").val() + "   " + $("#edad").val());
             $.getJSON('/Postulante/EdadInstituto', {
-                Idinst: $("#InstitutoPref").val(),
-                edad: $("#edad").val()
+                IdPOS: $("#vPersona_DatosBasicosVM_IdPostulante").val(),
+                edad: $("#edad").val(),
+                Fecha: $("#fechacumpleaños").val()
             },
                 function (response) {
                     //alert(response.coherencia);
                     if (response.coherencia) {
                         $("#BeginFormDatosBasicos").submit();
                     } else {
-                    
+
                         //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
                         $("#BTNModal").html("Cancelar");
                         $("#ModalCenterTitle").html("Advertencia");
@@ -687,9 +691,11 @@ $(document).ready(function () {
         //    scrollTop: 250
         //}, 1500);
     }
+
+
     //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
-    if ($("#BeginFormDatosBasicos .fechacumple").val() != "" ) {
+    if ($("#BeginFormDatosBasicos .fechacumple").val() != "") {
         $("#BTentrevista").removeClass("disabled");
     };
 

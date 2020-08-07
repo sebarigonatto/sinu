@@ -66,16 +66,6 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                         <div class="col-md-10">
 
-                            @*<div class="input-group">
-
-                                 @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker col-md-7", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
-                                <div class="input-group-append">
-                                    <span class="input-group-text  ">
-                                        <text class="fa fa-calendar"  />
-                                    </span>
-                                </div>
-                            </div>*@
-
                             @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker ", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "", new { @class = "text-danger" })
                         </div>

@@ -13,8 +13,8 @@
 <h3>Etapas de la Inscripcion</h3>
 <br />
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
-@try
-{
+@*@try
+{*@
 
     <div class="p-1 bg-white rounded shadow mb-1" style="padding:0px !important">
 
@@ -354,7 +354,7 @@
         <!-- End lined tabs -->
     </div>
 
-}
+@*}
 catch (Exception ex)
 {
 
@@ -362,7 +362,7 @@ catch (Exception ex)
         //alert('@ex.InnerException.Message')
             location.href = '@Url.Action("AccionNoAutorizada","Error")'
     </script>
-}
+}*@
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
