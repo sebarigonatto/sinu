@@ -45,37 +45,29 @@ namespace SINU.Controllers
         // GET: Delegacion/Details/5
         public ActionResult Details(int? id)
         {
-            List<vInscripcionDetalle> InscripcionElegida;
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            vInscripcionDetalle vInscripcionDetalle;
+            List<vPersona_DatosBasicos> vPersona_Datos;
             try
             {
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-
-
                 if (id == null)
                 {
-                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
                     return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
                 }
-
-                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-                ViewBag.Estado = vInscripcionEtapas.Estado;
-
-                if (InscripcionElegida.Count == 0)
+                vInscripcionDetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == id);
+                int x = vInscripcionDetalle.IdPersona;
+                vPersona_Datos=db.vPersona_DatosBasicos.Where(m=>m.IdPersona==x && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                if (vPersona_Datos.Count == 0)
                 {
-                    //return HttpNotFound("ese numero de ID no se encontro ");
                     return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
                 }
-
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
             }
-            return View(InscripcionElegida.ToList()[0]);
-
+            return View(vPersona_Datos.ToList()[0]);
         }
         public ActionResult EntrevistaAsignaFecha(int id)
         {

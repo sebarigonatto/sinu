@@ -10,6 +10,7 @@ using SINU.Models;
 using SINU.ViewModels;
 using System.Data.Entity.Core.Objects;
 using static SINU.ViewModels.GrupoCarrOficiosvm;
+using System.Web.UI.WebControls;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
@@ -80,11 +81,13 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs")]  GrupoCarrOficiosvm
+        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs,IdGCOOriginal,SelIDsEdit")]  GrupoCarrOficiosvm
  grupoCarrOficiovm )
         {
             string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
             ObjectParameter ObjMensaje = new ObjectParameter("Mensaje","");
+            grupoCarrOficiovm.Esinsert = true;
+            //grupoCarrOficiovm.IdGCOOriginal = grupoCarrOficiovm.IdGrupoCarrOficio;
             if (ModelState.IsValid)
             {
                 //03 agosto, graba en grupo carrera oficio
@@ -93,7 +96,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
                 //db.SaveChanges(); 
                 
-               db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.nuevoIdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio,grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+               db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
                 switch (mens)
@@ -129,21 +132,44 @@ namespace SINU.Controllers.Administrador.Convocatorias
             }
             GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm {
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
+                IdGCOOriginal=grupoCarrOficio.IdGrupoCarrOficio,
                 Personal = grupoCarrOficio.Personal,
                 Descripcion = grupoCarrOficio.Descripcion,
-                Carreras = db.spCarrerasDelGrupo(id, "").ToList(),               
-                Carreras2 = db.CarreraOficio.ToList(),
-               
+                Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
+                Carreras2 = db.CarreraOficio.ToList()
+        };          
+            //creo lista para compara y marcar como checkeada
+            NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
+                    //cargo la lista que se va a mostrar checkeada
+            for (int i = 0; i < NuevogrupocarroficioVM.Carreras2.Count(); i++)
+            {
+                //ListItem li = new ListItem(value, value);
+                CheckBoxes li = new CheckBoxes { Text = NuevogrupocarroficioVM.Carreras2[i].CarreraUoficio, Value = NuevogrupocarroficioVM.Carreras2[i].IdCarreraOficio };
+                NuevogrupocarroficioVM.Carreras3.Add(li);
+                    
+            };           
+            for (int i = 0; i < NuevogrupocarroficioVM.Carreras.Count(); i++)
+            {
+                for (int z = 0; z < NuevogrupocarroficioVM.Carreras2.Count(); z++)
+                {
+                    if (NuevogrupocarroficioVM.Carreras[i].CarreraUoficio == NuevogrupocarroficioVM.Carreras2[z].CarreraUoficio)
+                    {
+                        NuevogrupocarroficioVM.Carreras3[z].Checked = true;
+                        NuevogrupocarroficioVM.Carreras3[z].Text = NuevogrupocarroficioVM.Carreras2[z].CarreraUoficio;
+                        NuevogrupocarroficioVM.Carreras3[z].Value = NuevogrupocarroficioVM.Carreras2[z].IdCarreraOficio;
+                    }
+                }
 
-        };
-            //C/*areerForm model = new CareerForm();*/
+            }
+            NuevogrupocarroficioVM.SelectedIDs = new List<int>();
+            for (int i = 0; i < NuevogrupocarroficioVM.Carreras.Count(); i++)
+            {
+                 //int li = new int () {Value = Convert.ToInt32(NuevogrupocarroficioVM.Carreras[i].IdCarreraOficio) }
+                NuevogrupocarroficioVM.SelectedIDs.Add(NuevogrupocarroficioVM.Carreras[i].IdCarreraOficio);
 
-            NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>
-    {
-        new CheckBoxes { Text = "Fulltime" },
-        new CheckBoxes { Text = "Partly" },
-        new CheckBoxes { Text = "Contract" }
-    };
+            }
+            NuevogrupocarroficioVM.SelIDsEdit = NuevogrupocarroficioVM.SelectedIDs;
+    
             return View(NuevogrupocarroficioVM);
         }
 
@@ -152,14 +178,36 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs")] GrupoCarrOficiosvm grupoCarrOficiovm)
-        {
-            string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
+        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal,SelIDsEdit,Carreras,Carreras2,Carreras3")] GrupoCarrOficiosvm grupoCarrOficiovm)
+        {            
+            grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+            //if (grupoCarrOficiovm.IdCarreraOficio!=null)
+            //{
+            //    grupoCarrOficiovm.Carreras = db.spCarrerasDelGrupo(grupoCarrOficiovm.IdGCOOriginal, "").ToList();
+            //}
+            //else
+            //{
+            //    grupoCarrOficiovm.Carreras = db.spCarrerasDelGrupo(grupoCarrOficiovm.IdCarreraOficio, "").ToList();
+            //}
+
+            //grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+            string stgCarreras = "";
+            if (grupoCarrOficiovm.SelectedIDs==null)
+            {
+                 stgCarreras = String.Join(",", grupoCarrOficiovm.SelIDsEdit);    
+            }
+            else
+            {
+                stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
+            }
+           
             ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
+            grupoCarrOficiovm.Esinsert = false;
+
             if (ModelState.IsValid)
             {
-
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.nuevoIdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+                
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
                 switch (mens)
@@ -173,7 +221,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 }
                 //aca haria un case of segun lo recibido en el mensaje (supongo)
                 //lo mando al index si hay exito o queda en la pantalla de creat
-                
+                grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
             }
             return View(grupoCarrOficiovm);
         }

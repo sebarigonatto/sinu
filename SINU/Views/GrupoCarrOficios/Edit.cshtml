@@ -6,7 +6,7 @@
     List<SelectListItem> lst = new List<SelectListItem>();
     lst.Add(new SelectListItem() { Text = "Oficiales", Value = "O" });
     lst.Add(new SelectListItem() { Text = "Suboficiales", Value = "S" });
-    lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });
+    lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });    
 }
 
 <h2>Editar Registro</h2>
@@ -20,6 +20,11 @@
         <hr />
         <div class="form-group">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(Model => Model.IdGCOOriginal)
+            @Html.HiddenFor(Model => Model.SelIDsEdit)
+            @Html.HiddenFor(model => model.Carreras, new SelectList (Model.Carreras, "IdCarreraOficio", "CarreraUoficio"))
+            @*@Html.HiddenFor(model => model.Carreras2,new SelectList (Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))*@
+            @Html.HiddenFor(model=>model.Carreras3, new SelectList (Model.Carreras3, "IdCarreraOficio", "CarreraUoficio"))
             @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IdGrupoCarrOficio, new { htmlAttributes = new { @class = "form-control" } })
@@ -64,17 +69,6 @@
                 </tr>
             </tbody>
         </table>
-
-
-        <div>
-            @for (int i = 0; i < Model.Carreras2.Count() ; i++)
-            {
-                @Html.CheckBoxFor(m => m.Carreras3[i].Checked, new { id = "employmentType_" + i })
-                @Html.HiddenFor(m => m.Carreras3[i].Text)
-                @Html.DisplayFor(m => m.Carreras3[i].Text)
-            }
-        </div>
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
