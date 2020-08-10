@@ -27,12 +27,13 @@ namespace SINU.Controllers
         
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
-        [AuthorizacionRol(Roles =  "Postulante")]
+        [Authorize(Roles =  "Postulante")]
         public ActionResult Index()
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
+                
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
@@ -61,7 +62,7 @@ namespace SINU.Controllers
 
 
         //ver el tema de la fecha de casamiento
-        //mejorar la seguridad 
+        //ver mejorar la seguridad 
 
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosBasicos(int ID_persona)
@@ -71,13 +72,13 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.Where(m=>m.IdSexo!=4).ToList(),
+                    SexoVM = db.Sexo.Where(m => m.IdSexo != 4).ToList(),
                     vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
-                    ComoSeEnteroVM = db.ComoSeEntero.Where(n=>n.IdComoSeEntero!=1).ToList()
+                    ComoSeEnteroVM = db.ComoSeEntero.Where(n => n.IdComoSeEntero != 1).ToList()
                 };
-    
+              
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -99,6 +100,7 @@ namespace SINU.Controllers
             {
                     ModelState["vPersona_DatosBasicosVM.ComoSeEntero"].Errors.Clear();
             };
+
             if (ModelState.IsValid)
             {
                 try
@@ -122,23 +124,28 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
 
-
-        //DEVUELVE TRUE SI LA EDAD ES COHERENTE Y FALSE SI NO.
-        public JsonResult EdadInstituto(int? IdPOS, int? edad , string? Fecha)
+        /// <summary>
+        /// Devuelve true si la edad esta dentro del rango permitido para la inscriopcion en cada instituto
+        /// </summary>
+        /// <param name="IdPOS"></param>
+        /// <param name="edad"></param>
+        /// <param name="Fecha"></param>
+        /// <returns></returns>
+        public JsonResult EdadInstituto(int? IdPOS, string? Fecha)
         {
             try
             {
-                //DateTime fechaNAC = DateTime.Parse(Fecha);
-                //var retricciones = db.sp
-
-                return Json(new { coherencia = true }, JsonRequestBehavior.AllowGet);
+                DateTime fechaNAC = DateTime.Parse(Fecha);
+                var institutos = db.spRestriccionesParaEstePostulante(IdPOS,fechaNAC).DistinctBy(m=>m.IdInstitucion).Select(m=> new SelectListItem { Value = m.IdInstitucion.ToString(),Text= m.NombreInst}).ToList();
+              
+                return Json(new { institucion=  institutos }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
             {
 
                 throw;
             }
-                 
+
         }
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
@@ -149,19 +156,19 @@ namespace SINU.Controllers
             try
             {
                 var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
-                //llamo a la JsonResult para ferificar la restriccion de edad de acuerdo con el instituto
-                ////JsonResult GRUPO = new PostulanteController().EdadInstituto(p.IdPreferencia, p.Edad);
-                //dynamic data = GRUPO.Data;
+             
                 //if (data.coherencia)
                 //{
                 //    //Datos basicos - Validado; ID= 7
-                //    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
+                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
                 //}
                 //else
                 //{
                 //    //Datos basicos - No Validado; ID= 21
                 //    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
                 //};
+
+                //colo el delay para que las secuencias sean insertadas en distintos tiempos
                 await Task.Delay(1000);
 
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");

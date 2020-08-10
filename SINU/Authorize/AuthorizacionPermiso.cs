@@ -33,39 +33,24 @@ namespace SINU.Authorize
         }
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            if (!filterContext.HttpContext.Request.IsAuthenticated)
             {
-                filterContext.Result = new JsonResult
-                {
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { success = false, msg = "No tenes autorizacion para realizar esta accion!!!" }
-                };
+                filterContext.Result = new RedirectResult("~/Account/Login");
             }
             else
             {
-                filterContext.Result = new RedirectResult(Url);
-            }
-        }
-    }
-
-   
-    public class AuthorizacionRol : AuthorizeAttribute
-    {
-        private const string Url = "~/Error/AccionNoAutorizada";
-
-        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
-        {
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
-            {
-                filterContext.Result = new JsonResult
+                if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new { redirectTo = FormsAuthentication.LoginUrl }
-                };
-            }
-            else
-            {
-                filterContext.Result = new RedirectResult(Url);
+                    filterContext.Result = new JsonResult
+                    {
+                        JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                        Data = new { success = false, msg = "No tenes autorizacion para realizar esta accion!!!" }
+                    };
+                }
+                else
+                {
+                    filterContext.Result = new RedirectResult(Url);
+                }
             }
         }
     }

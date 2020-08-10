@@ -10,21 +10,23 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vRestriccionesPorConvYFechaPeriodosInscrip
+    public partial class spRestriccionesParaEstePostulante_Result1
     {
         public System.DateTime FInicioPeriodo { get; set; }
         public System.DateTime FFinalPeriodo { get; set; }
         public int IdInstitucion { get; set; }
+        public string NombreInst { get; set; }
         public string IdGrupoCarrOficio { get; set; }
         public string Mensaje { get; set; }
+        public int PresentarMensaje { get; set; }
+        public Nullable<int> EdadActual { get; set; }
+        public Nullable<int> EdadEnFechaLimite { get; set; }
         public int EdadMinCAutoriz { get; set; }
         public int EdadMin { get; set; }
         public int EdadMax { get; set; }
         public Nullable<System.DateTime> Edad_a_fecha { get; set; }
         public string IdEstadoCivil { get; set; }
         public int IdConvocatoria { get; set; }
-        public string NombreInst { get; set; }
     }
 }

@@ -39,8 +39,8 @@ namespace SINU.ViewModels
         public List<vPeriodosInscrip> vPeriodosInscripsVM { get; set; }
         public List<OficinasYDelegaciones> OficinasYDelegacionesVM { get; set; }
         public List<ComoSeEntero> ComoSeEnteroVM { get; set; }
-        
-    }
+        public List<vInstitucionesConvocadasYCarrerasAsociadas> GrupoCarrearOficio { get; set; }
+}
 
     public class DatosPersonalesVM
     {

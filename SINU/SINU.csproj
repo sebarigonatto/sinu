@@ -410,6 +410,9 @@
     <Compile Include="Models\spRestriccionesParaEstePostulante_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spRestriccionesParaEstePostulante_Result1.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -463,6 +466,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vInstitucionesConvocadasYCarrerasAsociadas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
@@ -597,6 +603,8 @@
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Seguridad_Usuarios.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Seguridad_Validar.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\RECREACION DE LOGIN Y USUARIOS.sql" />
+    <Content Include="Imagenes\4.png" />
+    <Content Include="Imagenes\loader.png" />
     <Content Include="Imagenes\10.png" />
     <Content Include="Imagenes\9.png" />
     <Content Include="Imagenes\AnclaQR.png" />
@@ -789,7 +797,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Imagenes\favicon.ico" />
-    <Content Include="Imagenes\4.png" />
     <Content Include="Imagenes\ara.png" />
     <Content Include="Imagenes\carrucel1.jpg" />
     <Content Include="Imagenes\carrucel2.jpg" />

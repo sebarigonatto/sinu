@@ -80,12 +80,6 @@ $(document).ready(function () {
         var fechanac = $('#fechacumpleaños').datepicker('getDate');
         var fechahoy = new Date();
         var edad = fechahoy.getFullYear() - fechanac.getFullYear();
-        //alert(edad);
-        //alert("meshoy"+fechahoy.getMonth());
-        //alert("mescumple" +fechanac.getMonth());
-        //alert("diahoy"+fechahoy.getDate());
-        //alert("diahoy" +fechanac.getDate());
-
         //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
         if (fechahoy.getMonth() <= fechanac.getMonth()) {
             if (!(fechahoy.getDate() >= fechanac.getDate() && fechahoy.getMonth() == fechanac.getMonth())) {
@@ -93,10 +87,29 @@ $(document).ready(function () {
             };
         };
         $("#edad").val(edad);
+
+        /////////////////////////////////////////////////////// CARGO EL COMBO DE INSTITUCIONES SEGUN LA FECHA DE CUMPLEAÑOS ////////////////////////////////////////////////////////////////////////////
+        $.get("/Postulante/EdadInstituto",
+            {
+                IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
+                Fecha: $("#fechacumpleaños").val().toString()
+
+            },
+            function (data) {
+                $("#InstitutoPref").empty();
+                $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
+                $.each(data.institucion, function (index, row) {
+                    //alert(row.Value)
+                    $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                });
+                $("#InstitutoPref").selectpicker('refresh');
+            })
+
     });
-    //$.fn.selectpicker.Constructor.BootstrapVersion = '4';
-    //$.fn.selectpicker.Constructor.DEFAULTS.style = 'btn-white';
-    //$.fn.selectpicker.Constructor.DEFAULTS.styleBase = 'btn';
+
+
+
+
 
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     //https://developer.snapappointments.com/bootstrap-select/
@@ -120,6 +133,10 @@ $(document).ready(function () {
 
 
     ////////////////////////////DATOS BASICOS///////////////////////////////////
+
+
+
+
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         ComoSeEntero();
@@ -132,6 +149,28 @@ $(document).ready(function () {
             $("#IdComentario").hide();
             $("#IdComentario input").val("");
         }
+    }
+
+    ActualizaCarrerasDatosBasicos($("#InstitutoPref").val());
+    $("#InstitutoPref").on('changed.bs.select', function () {
+        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
+        var modalidad = $(this).val();
+        //alert(modalidad); 
+        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").val("");
+        ActualizaCarrerasDatosBasicos(modalidad)
+
+    });
+
+    function ActualizaCarrerasDatosBasicos(modalidad) {
+        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio option").each(function (index, element) {
+            if ($(element).attr("inst") == modalidad && $(element).val() != "") {
+                $(element).removeAttr("hidden");
+            } else if ($(element).val() != "") {
+                $(element).attr("hidden", true);
+            }
+
+        })
+        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").selectpicker('refresh');
     }
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
@@ -651,34 +690,54 @@ $(document).ready(function () {
     });
 
     //////////////////////////////////////////////  DATOS BASICOS CONTROL DE EDAD //////////////////////////////////////////////////////////////////////////
-    $("#DatosBasicosBTGuarda").on("click", function () {
-        var valido = $("#BeginFormDatosBasicos").valid();
-        alert(valido);
-        if (!valido) {
-            $("#BeginFormDatosBasicos").submit();
-        } else {
-            alert($("#vPersona_DatosBasicosVM_IdPostulante").val() + "   " + $("#edad").val());
-            $.getJSON('/Postulante/EdadInstituto', {
-                IdPOS: $("#vPersona_DatosBasicosVM_IdPostulante").val(),
-                edad: $("#edad").val(),
-                Fecha: $("#fechacumpleaños").val()
-            },
-                function (response) {
-                    //alert(response.coherencia);
-                    if (response.coherencia) {
-                        $("#BeginFormDatosBasicos").submit();
-                    } else {
+    //$("#DatosBasicosBTGuarda").on("click", function () {
+    //    var valido = $("#BeginFormDatosBasicos").valid();
+    //    //alert(valido);
+    //    if (!valido) {
+    //        $("#BeginFormDatosBasicos").submit();
+    //    } else {
+    //        alert($("#vPersona_DatosBasicosVM_IdPostulante").val() + "   " + $("#edad").val());
+    //        $.getJSON('/Postulante/EdadInstituto', {
+    //            IdPOS: $("#vPersona_DatosBasicosVM_IdPostulante").val(),
+    //            edad: $("#edad").val(),
+    //            Fecha: $("#fechacumpleaños").val(),
+    //            grupoCarreraOficio: $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").val()
+    //        },
+    //            function (response) {
+    //                //alert(response.coherencia);
+    //                if (response.coherencia) {
+    //                    $("#BeginFormDatosBasicos").submit();
+    //                } else {
 
-                        //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
-                        $("#BTNModal").html("Cancelar");
-                        $("#ModalCenterTitle").html("Advertencia");
-                        $("#GuardarDTF").css("display", "block");
-                        $("#TextModal").html("La edad ingresado supera la permitida para el instituto Seleccionado.");
-                        $("#ModalAnuncios").modal();
-                    };
-                });
-        };
-    });
+    //                    //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
+    //                    $("#BTNModal").html("Cancelar");
+    //                    $("#ModalCenterTitle").html("Advertencia");
+    //                    $("#GuardarDTF").css("display", "block");
+    //                    $("#TextModal").html("La EDAD ingresado supera la permitida para el Instituto a Inscribirse Seleccionado.");
+    //                    $("#ModalAnuncios").modal();
+    //                };
+    //            });
+    //    };
+    //});
+
+
+    //$("#GuardarDTF").on("click", function (e) {
+    //    e.preventDefault;
+    //    e.stopImmediatePropagation();
+    //    $("#BeginFormDatosBasicos").submit();
+    //});
+
+
+
+    //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
 
     //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
     var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
@@ -702,11 +761,7 @@ $(document).ready(function () {
 
 
 
-    $("#GuardarDTF").on("click", function (e) {
-        e.preventDefault;
-        e.stopImmediatePropagation();
-        $("#BeginFormDatosBasicos").submit();
-        //$("#ModalAnuncios").modal("show");
-    });
+
+    
 
 });

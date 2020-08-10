@@ -100,10 +100,10 @@
         <EntityTypeShape EntityType="SINUModel.VerificacionPantallas" Width="1.5" PointX="5.375" PointY="2.625" />
         <EntityTypeShape EntityType="SINUModel.VPantalla_Problema" Width="2.625" PointX="23.375" PointY="4.625" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona" ManuallyRouted="true" >
-          <ConnectorPoint PointX="4.5" PointY="14.176428450501248" />
-          <ConnectorPoint PointX="5.2721303560917985" PointY="7.16324486149811" />
-          <ConnectorPoint PointX="5.2903696439082024" PointY="6.9975792158206547" />
-          <ConnectorPoint PointX="5.375" PointY="6.228890069238358" />
+          <ConnectorPoint PointX="4.5" PointY="14.176429831475275" />
+          <ConnectorPoint PointX="5.2721301465868811" PointY="7.1634112078848524" />
+          <ConnectorPoint PointX="5.2903698534131189" PointY="6.9977456083396525" />
+          <ConnectorPoint PointX="5.375" PointY="6.2290762373086856" />
         </AssociationConnector>
         <AssociationConnector Association="SINUModel.FK_DataProblema_VerificacionPantallas" />
         <AssociationConnector Association="SINUModel.FK_DataProblema_Persona1" />
@@ -140,6 +140,7 @@
         <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="23.75" PointY="17.75" />
         <EntityTypeShape EntityType="SINUModel.TipoPersonal" Width="1.5" PointX="25.75" PointY="10.75" />
         <EntityTypeShape EntityType="SINUModel.vRestriccionesPorConvYFechaPeriodosInscrip" Width="1.5" PointX="25.375" PointY="23.75" />
+        <EntityTypeShape EntityType="SINUModel.vInstitucionesConvocadasYCarrerasAsociadas" Width="1.5" PointX="15.75" PointY="26.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

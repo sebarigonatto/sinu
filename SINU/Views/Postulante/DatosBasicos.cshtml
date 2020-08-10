@@ -78,6 +78,9 @@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Edad, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                  
+                </div>
+                <div class="col-sm-6">
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -85,8 +88,6 @@
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6">
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -102,7 +103,7 @@
                         </div>
                     </div>
 
-                   
+
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new { @class = "col-md-6 control-label" })
@@ -124,15 +125,15 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
                             @*@Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",  new { @class = "form-control selectpicker", @id="DROPComoEntero"  })*@
-                            @Html.DropDownListFor(model=>model.vPersona_DatosBasicosVM.IdComoSeEntero,new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...",new { @class= "form-control selectpicker", @id= "DROPComoEntero" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, new SelectList(Model.ComoSeEnteroVM, "IdComoSeEntero", "Opcion"), "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "DROPComoEntero" })
                             <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.IdComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group" id="IdComentario" style="display:none" >
+                    <div class="form-group" id="IdComentario" style="display:none">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control"  } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.ComoSeEntero, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -141,14 +142,15 @@
             </div>
             <div class="form-group row ml-3 BTAcciones" id="BTDatosBasicos">
 
-                <input type="button" value="Guadar Datos" class="btn btn-success m-1" id="DatosBasicosBTGuarda" />
+                <input type="submit" value="Guadar Datos" class="btn btn-success m-1" id="DatosBasicosBTGuarda" />
 
+                @*<button id="BTentrevista" class="btn btn-danger disabled m-1">Solicitar Entrevista</button>*@
                 @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevistaAsync", new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona }, new AjaxOptions
-                {
-                  HttpMethod = "POST",
-                  OnSuccess = "Exito(data,status,xhr)",
-                  OnFailure = "Falla"
-                }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1" })
+                 {
+                   HttpMethod = "POST",
+                   OnSuccess = "Exito(data,status,xhr)",
+                   OnFailure = "Falla"
+                 }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1" })
 
             </div>
         </div>

@@ -11,6 +11,9 @@ namespace SINU.Models
     [MetadataType(typeof(vPersona_DatosBasicosMetadata))]
     public partial class vPersona_DatosBasicos
     {
+        //[Required]
+        //[Display(Name ="Carrera u Oficio")]
+        //public string IdGrupoCarreraOficio { get; set; }
     }
 
     [MetadataType(typeof(vPersona_DatosPerMetadata))]

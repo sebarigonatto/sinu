@@ -12,19 +12,13 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vRestriccionesPorConvYFechaPeriodosInscrip
+    public partial class vInstitucionesConvocadasYCarrerasAsociadas
     {
-        public System.DateTime FInicioPeriodo { get; set; }
-        public System.DateTime FFinalPeriodo { get; set; }
         public int IdInstitucion { get; set; }
         public string IdGrupoCarrOficio { get; set; }
-        public string Mensaje { get; set; }
-        public int EdadMinCAutoriz { get; set; }
-        public int EdadMin { get; set; }
-        public int EdadMax { get; set; }
-        public Nullable<System.DateTime> Edad_a_fecha { get; set; }
-        public string IdEstadoCivil { get; set; }
+        public string CarreraUoficio { get; set; }
+        public string Personal { get; set; }
+        public int IdCarreraOficio { get; set; }
         public int IdConvocatoria { get; set; }
-        public string NombreInst { get; set; }
     }
 }
