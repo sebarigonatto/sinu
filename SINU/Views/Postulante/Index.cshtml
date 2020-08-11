@@ -20,7 +20,7 @@
 
         <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
 
-            @Html.HiddenFor(m=>m.IDETAPA,new { @id="idetapaactual"})
+            @Html.HiddenFor(m=>m.EtapaTabs[Model.EtapaTabs.Count -1 ], new { @id="idetapaactual"})
 
             @* PERSONA DATOS BASICOS ID=2 *@
             <li class="nav-item flex-sm-fill" id="2">

@@ -73,13 +73,14 @@ namespace SINU.Controllers
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
                     SexoVM = db.Sexo.Where(m => m.IdSexo != 4).ToList(),
-                    vPeriodosInscripsVM = db.vPeriodosInscrip.ToList(),
+                    vPeriodosInscripsVM = new List<vPeriodosInscrip>(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
                     ComoSeEnteroVM = db.ComoSeEntero.Where(n => n.IdComoSeEntero != 1).ToList()
                 };
+                datosba.vPersona_DatosBasicosVM.Edad = 0;
                 //agrego la opcion de "Necesito Orientacion" en el combo Inctitucion 
-                datosba.vPeriodosInscripsVM.Add(new vPeriodosInscrip() { IdInstitucion= 1,NombreInst="Necesito Orientacion"});
+                //datosba.vPeriodosInscripsVM.Add(new vPeriodosInscrip() { IdInstitucion= 1,NombreInst="Necesito Orientacion"});
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -231,9 +232,29 @@ namespace SINU.Controllers
                     TipoNacionalidadVM = db.TipoNacionalidad.Where(m=>m.IdTipoNacionalidad !=4 ).ToList(),
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList(),
-                    CarreraOficioVm = db.spCarrerasParaEsteInscripto(idInscripcion,"").ToList(),
-                    ModalidadVm = db.vConvocatoriaDetalles.DistinctBy(m=>m.Modalidad).Select(m => new SelectListItem() { Text = m.Modalidad, Value = m.IdModalidad }).ToList()
+                    CarreraOficioVm = new List<spCarrerasParaEsteInscripto_Result2>(),
+                    ModalidadVm= new List<SelectListItem>()
+
                 };
+                var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento).ToList();
+                foreach (var item in validosInscrip)
+                {
+                    
+                    //cargo modalidades
+                    var modalidad = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdConvocatoria == item.IdConvocatoria);
+                    if (datosba.ModalidadVm.FirstOrDefault(m=>m.Value==modalidad.IdModalidad)==null)
+                    {
+                        datosba.ModalidadVm.Add(new SelectListItem() { Value = modalidad.IdModalidad, Text = modalidad.Modalidad });
+
+                    }
+                    //cargo carreras
+                    var carrera = db.spCarrerasDelGrupo(modalidad.IdGrupoCarrOficio, "").ToList();
+                    foreach (var item2 in carrera)
+                    {
+                        datosba.CarreraOficioVm.Add(new spCarrerasParaEsteInscripto_Result2 { IdCarreraOficio = item2.IdCarreraOficio, CarreraUoficio = item2.CarreraUoficio, IdModalidad = modalidad.IdModalidad });
+                    }
+                    //datosba.CarreraOficioVm.Add(carrera);
+                } 
                 return PartialView(datosba);
             }
             catch (Exception ex)
