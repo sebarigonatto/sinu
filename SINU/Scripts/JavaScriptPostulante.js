@@ -75,6 +75,13 @@ $(document).ready(function () {
 
     });
 
+
+    if ($("#edad").val()>35) {
+        edadMAX($("#edad").val(), $("#idetapaactual").val());
+    };
+
+
+    ActualizarCarrerasDatosBasicos();
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
         var fechanac = $('#fechacumpleaños').datepicker('getDate');
@@ -87,8 +94,23 @@ $(document).ready(function () {
             };
         };
         $("#edad").val(edad);
-
+        //si la edad supera los 35 muestro el modal advirtiendole
+        edadMAX(edad, $("#idetapaactual").val());
         /////////////////////////////////////////////////////// CARGO EL COMBO DE INSTITUCIONES SEGUN LA FECHA DE CUMPLEAÑOS ////////////////////////////////////////////////////////////////////////////
+        ActualizarCarrerasDatosBasicos();
+
+    });
+
+    function edadMAX(edad,IdETAPA) {
+        if (edad > 35 && IdETAPA== 2) {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Su edad supera las edades maximas permitidas de los distintos Institutos.");
+            $("#ModalAnuncios").modal();
+        }
+    }
+    function ActualizarCarrerasDatosBasicos() {
         $.get("/Postulante/EdadInstituto",
             {
                 IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
@@ -96,18 +118,21 @@ $(document).ready(function () {
 
             },
             function (data) {
+                var idselect = $("#InstitutoPref").val();
                 $("#InstitutoPref").empty();
                 $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
                 $.each(data.institucion, function (index, row) {
                     //alert(row.Value)
-                    $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    if (row.Value == idselect) {
+                        $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
+                    } else {
+                         $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    }
+                 
                 });
                 $("#InstitutoPref").selectpicker('refresh');
             })
-
-    });
-
-
+    }
 
 
 
@@ -151,27 +176,6 @@ $(document).ready(function () {
         }
     }
 
-    ActualizaCarrerasDatosBasicos($("#InstitutoPref").val());
-    $("#InstitutoPref").on('changed.bs.select', function () {
-        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
-        var modalidad = $(this).val();
-        //alert(modalidad); 
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").val("");
-        ActualizaCarrerasDatosBasicos(modalidad)
-
-    });
-
-    function ActualizaCarrerasDatosBasicos(modalidad) {
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio option").each(function (index, element) {
-            if ($(element).attr("inst") == modalidad && $(element).val() != "") {
-                $(element).removeAttr("hidden");
-            } else if ($(element).val() != "") {
-                $(element).attr("hidden", true);
-            }
-
-        })
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").selectpicker('refresh');
-    }
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();

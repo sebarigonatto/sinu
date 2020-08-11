@@ -27,7 +27,7 @@ namespace SINU.Controllers
         
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
-        [Authorize(Roles =  "Postulante")]
+        [Authorize(Roles = "Postulante")]
         public ActionResult Index()
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
@@ -78,7 +78,8 @@ namespace SINU.Controllers
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
                     ComoSeEnteroVM = db.ComoSeEntero.Where(n => n.IdComoSeEntero != 1).ToList()
                 };
-              
+                //agrego la opcion de "Necesito Orientacion" en el combo Inctitucion 
+                datosba.vPeriodosInscripsVM.Add(new vPeriodosInscrip() { IdInstitucion= 1,NombreInst="Necesito Orientacion"});
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -137,7 +138,7 @@ namespace SINU.Controllers
             {
                 DateTime fechaNAC = DateTime.Parse(Fecha);
                 var institutos = db.spRestriccionesParaEstePostulante(IdPOS,fechaNAC).DistinctBy(m=>m.IdInstitucion).Select(m=> new SelectListItem { Value = m.IdInstitucion.ToString(),Text= m.NombreInst}).ToList();
-              
+                institutos.Add(new SelectListItem() {  Value= "1", Text = "Necesito Orientacion" });
                 return Json(new { institucion=  institutos }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -156,19 +157,18 @@ namespace SINU.Controllers
             try
             {
                 var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
-             
-                //if (data.coherencia)
-                //{
-                //    //Datos basicos - Validado; ID= 7
-                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
-                //}
-                //else
-                //{
-                //    //Datos basicos - No Validado; ID= 21
-                //    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
-                //};
 
-                //colo el delay para que las secuencias sean insertadas en distintos tiempos
+                if (p.Edad<=35)
+                {
+                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
+                }
+                else
+                {
+                    //Datos basicos - No Validado; ID= 21
+                    db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "No Validado");
+                };
+
+                //coloco el delay para que las secuencias sean insertadas en distintos tiempos
                 await Task.Delay(1000);
 
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "ENTREVISTA", "A Asignar");
@@ -188,7 +188,7 @@ namespace SINU.Controllers
         {
             
             try
-            {
+            {  
                 vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (entrevistafh.FechaEntrevista == null)

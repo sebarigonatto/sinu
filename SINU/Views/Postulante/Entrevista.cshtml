@@ -1,7 +1,7 @@
 ﻿@model SINU.Models.vEntrevistaLugarFecha
  <h2>Lugar y Fecha:</h2>
 <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-
+    @*<h5>Estado </h5>*@
     @if (ViewBag.NoAsignado)
     {
         <h5>Se le informara via correo cuando le hayan asignado una fecha de entrevista, solicitamos este atento.</h5>
@@ -21,6 +21,7 @@
         }
         <h5> Fecha y Hora: @Model.FechaEntrevista.Value.ToString("dd/MM/yyyy") </h5>
     }
+
 </div>
 <hr />
 <div class="jumbotron" style="background-color: #08495f; color:white">
