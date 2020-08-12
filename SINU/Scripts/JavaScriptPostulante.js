@@ -75,6 +75,16 @@ $(document).ready(function () {
 
     });
 
+
+    if ($("#edad").val() > 35 || $("#edad").val() < 17 && $("#edad").val() != 0 ) {
+        alert($("#edad").val());
+        edadMAXMIN($("#edad").val());
+    } 
+
+    if ($("#edad").val() > 0) {
+        ActualizarINStDatosBasicos();
+    }
+
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
         var fechanac = $('#fechacumpleaños').datepicker('getDate');
@@ -86,9 +96,30 @@ $(document).ready(function () {
                 edad--;
             };
         };
-        $("#edad").val(edad);
-
+        $("#edad").val(edad);   
+        //si la edad supera los 35 muestro el modal advirtiendole
+        edadMAXMIN(edad);
         /////////////////////////////////////////////////////// CARGO EL COMBO DE INSTITUCIONES SEGUN LA FECHA DE CUMPLEAÑOS ////////////////////////////////////////////////////////////////////////////
+        ActualizarINStDatosBasicos();
+
+    });
+
+    function edadMAXMIN(edad) {
+        if (edad > 35 && $("#idetapaactual").val() == 2) {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Su edad supera las edades maximas permitidas de los distintos Institutos.");
+            $("#ModalAnuncios").modal();
+        } else if (edad != 0 && edad < 17 && $("#idetapaactual").val() == 2) {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
+            $("#ModalAnuncios").modal();
+        }
+    }
+    function ActualizarINStDatosBasicos() {
         $.get("/Postulante/EdadInstituto",
             {
                 IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
@@ -96,18 +127,28 @@ $(document).ready(function () {
 
             },
             function (data) {
-                $("#InstitutoPref").empty();
-                $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
-                $.each(data.institucion, function (index, row) {
-                    //alert(row.Value)
-                    $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-                });
-                $("#InstitutoPref").selectpicker('refresh');
+              
+                    var idselect = $("#InstitutoPref").val();
+                    $("#InstitutoPref").empty();
+                    $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
+              
+                    $.each(data.institucion, function (index, row) {
+                        if (row.Value == idselect) {
+                            $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
+                        } else {
+                            $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                        }
+
+
+                    });
+
+                $("#InstitutoPref").removeAttr("disabled");
+                    $("#InstitutoPref").selectpicker('refresh');
+           
+
+
             })
-
-    });
-
-
+    }
 
 
 
@@ -135,8 +176,6 @@ $(document).ready(function () {
     ////////////////////////////DATOS BASICOS///////////////////////////////////
 
 
-
-
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         ComoSeEntero();
@@ -151,27 +190,6 @@ $(document).ready(function () {
         }
     }
 
-    ActualizaCarrerasDatosBasicos($("#InstitutoPref").val());
-    $("#InstitutoPref").on('changed.bs.select', function () {
-        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
-        var modalidad = $(this).val();
-        //alert(modalidad); 
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").val("");
-        ActualizaCarrerasDatosBasicos(modalidad)
-
-    });
-
-    function ActualizaCarrerasDatosBasicos(modalidad) {
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio option").each(function (index, element) {
-            if ($(element).attr("inst") == modalidad && $(element).val() != "") {
-                $(element).removeAttr("hidden");
-            } else if ($(element).val() != "") {
-                $(element).attr("hidden", true);
-            }
-
-        })
-        $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").selectpicker('refresh');
-    }
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
@@ -193,7 +211,9 @@ $(document).ready(function () {
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
+            if ($("#vPersona_DatosPerVM_edad").val() > 30) {
 
+            }
         })
         $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
     }
@@ -762,6 +782,6 @@ $(document).ready(function () {
 
 
 
-    
+
 
 });

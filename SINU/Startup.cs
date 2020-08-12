@@ -50,10 +50,10 @@ namespace SINU
                 foreach (var item in UsuarioYPerfiles)
                 {
                          user = UserManager.FindByName(item.codUsuario);
-                   if (!UserManager.IsInRole(user.Id,item.codGrupo))
+                   if (!UserManager.IsInRole(user.Id,item.codGrupo.Trim()))
                     {
                         //role = roleManager.FindByName(item.codGrupo);
-                        var result1 = UserManager.AddToRole(user.Id, item.codGrupo);
+                        var result1 = UserManager.AddToRole(user.Id, item.codGrupo.Trim());
 
                     }
                 }

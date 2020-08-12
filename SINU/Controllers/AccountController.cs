@@ -289,6 +289,9 @@ namespace SINU.Controllers
                     var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
+
+                    Task<IdentityResult> resultado = UserManager.AddToRoleAsync(userId, "Postulante");
+                    
                     //siendo exitoso el ingreso a seguridad del postulante hago que avance a la secuencia siguiente : "DATOS BASICOS-Inicio De Carga"
                     db.spProximaSecuenciaEtapaEstado(persona.IdPersona, 0,false,0, "DATOS BASICOS", "Inicio De Carga");
 
