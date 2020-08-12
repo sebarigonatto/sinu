@@ -211,7 +211,6 @@ namespace SINU.Controllers
                     //return HttpNotFound("ese numero de ID no se encontro ");
                     return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
                 }
-
             }
             catch (System.Exception ex)
             {
@@ -249,7 +248,6 @@ namespace SINU.Controllers
                         db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
                         break;
                 }
-                
                     InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
                     
@@ -272,8 +270,6 @@ namespace SINU.Controllers
                         bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2");
                         break;
                 }
-
-                
             }
             catch (System.Exception ex)
             {
@@ -287,6 +283,19 @@ namespace SINU.Controllers
             IDPersonaVM personaVM = new IDPersonaVM();
             personaVM.ID_PER = id;
             return View(personaVM);
+        }
+        [HttpPost]
+        public ActionResult Documentacion(int? id)
+        {
+            try
+            {
+                db.spProximaSecuenciaEtapaEstado(id,0, false, 0, "", "");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+            }
+            return RedirectToAction("Index");
         }
     }
 }
