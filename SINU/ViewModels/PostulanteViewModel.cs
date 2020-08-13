@@ -48,10 +48,19 @@ namespace SINU.ViewModels
         public List<vEstCivil> vEstCivilVM { get; set; }
         public List<vRELIGION> vRELIGIONVM { get; set; }
         public List<TipoNacionalidad> TipoNacionalidadVM { get; set; }
-        public List<SelectListItem> ModalidadVm { get; set; }
+        public List<ComboModalidad> ModalidadVm { get; set; }
         public List<spCarrerasParaEsteInscripto_Result2> CarreraOficioVm { get; set; }
     }
-    
+
+    //para crear el combo de modalidad y poder aplicar la restriccion de esta civil que corresponda
+    public class ComboModalidad
+    {
+        public string IdModalidad { get; set; }
+        public string Modalidad { get; set; }
+        public string EstCivil { get; set; }
+
+    }
+
     public class DomicilioVM
     {
         public vPersona_Domicilio vPersona_DomicilioVM { get; set; }

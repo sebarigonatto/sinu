@@ -40,6 +40,7 @@ new { id = "BeginFormIdiomaCUD" }))
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.CodIdioma, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.CodIdioma, new SelectList(Model.Sp_VIdiomas_VM, "CODIGO", "DESCRIPCION"), "Seleccione un Idioma", htmlAttributes: new { @class = "form-control combobox", @id = "ComboIdioma" })
+                                <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.CodIdioma, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -49,6 +50,7 @@ new { id = "BeginFormIdiomaCUD" }))
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.Habla, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Habla, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione un Nivel", htmlAttributes: new { @class = "form-control selectpicker" })
+                                <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Habla, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -56,6 +58,7 @@ new { id = "BeginFormIdiomaCUD" }))
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.Escribe, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Escribe, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione un Nivel", htmlAttributes: new { @class = "form-control selectpicker" })
+                                <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Escribe, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -63,6 +66,7 @@ new { id = "BeginFormIdiomaCUD" }))
                             @Html.LabelFor(model => model.VPersona_IdiomaIdVM.Lee, htmlAttributes: new { @class = "control-label col-md-6" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.VPersona_IdiomaIdVM.Lee, new SelectList(Model.NivelIdiomaVM, "IdNivelIdioma", "Nivel"), "Seleccione un Nivel", htmlAttributes: new { @class = "form-control selectpicker " })
+                                <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.VPersona_IdiomaIdVM.Lee, "", new { @class = "text-danger" })
                             </div>
                         </div>

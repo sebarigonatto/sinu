@@ -243,14 +243,19 @@ namespace SINU.Controllers
                             Apellido = model.Apellido,
                             LinkConfirmacion = callbackUrl
                         };
-                        
+
                         //la funcio para enviar devuelve un booleano, 
                         //necesita 4 paramtros:
                         //ViewModel, con la que se cargaran los datos en la Plantilla del mail
                         //Nombre de la Plantilla a Utilizar
                         //Id de la Persona para obtener el correo de destino
                         //Asusnto de Mail.
-                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id,null, "MailAsunto1");
+                        string MODALIDAD = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdInstitucion == model.IdInstituto).IdModalidad;
+                        if (MODALIDAD=="CPESNM" || MODALIDAD == "CPESSA" || MODALIDAD== "CUIM")
+                        {
+                            MODALIDAD = "CPESNM-CPESSA";
+                        }
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id,null, "MailAsunto"+MODALIDAD);
                     
                         return RedirectToAction("Login");
                     }

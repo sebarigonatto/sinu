@@ -75,11 +75,33 @@ $(document).ready(function () {
 
     });
 
+    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
+    //https://developer.snapappointments.com/bootstrap-select/
+    $(".combobox").selectpicker({
+        liveSearch: true,
+        size: 7,
+        liveSearchPlaceholder: "Ingrese su busqueda...",
+        liveSearchStyle: 'contains',//'startsWith'
+        noneResultsText: 'No se Encuantran Resultados',
+        noneSelectedText: 'Seleccione una Opcion',
+        //styleBase: 'form-control',
+        //style: 'btn btn-white'
+    });
+    $(".selectpicker").selectpicker({
+        size: 7,
+        noneSelectedText: 'Seleccione una Opcion',
+        //styleBase:'btn',
+        //style: 'btn-white'
 
-    if ($("#edad").val() > 35 || $("#edad").val() < 17 && $("#edad").val() != 0 ) {
+    });
+
+
+    ///////////////////////////////////////////////////////////////////////////////  DATOS BASICOS  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    if ($("#edad").val() > 35 || $("#edad").val() < 17 && $("#edad").val() != 0) {
         alert($("#edad").val());
         edadMAXMIN($("#edad").val());
-    } 
+    }
 
     if ($("#edad").val() > 0) {
         ActualizarINStDatosBasicos();
@@ -96,10 +118,10 @@ $(document).ready(function () {
                 edad--;
             };
         };
-        $("#edad").val(edad);   
+        $("#edad").val(edad);
         //si la edad supera los 35 muestro el modal advirtiendole
         edadMAXMIN(edad);
-        /////////////////////////////////////////////////////// CARGO EL COMBO DE INSTITUCIONES SEGUN LA FECHA DE CUMPLEAÑOS ////////////////////////////////////////////////////////////////////////////
+        // CARGO EL COMBO DE INSTITUCIONES SEGUN LA FECHA DE CUMPLEAÑOS 
         ActualizarINStDatosBasicos();
 
     });
@@ -127,54 +149,28 @@ $(document).ready(function () {
 
             },
             function (data) {
-              
-                    var idselect = $("#InstitutoPref").val();
-                    $("#InstitutoPref").empty();
-                    $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
-              
-                    $.each(data.institucion, function (index, row) {
-                        if (row.Value == idselect) {
-                            $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
-                        } else {
-                            $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-                        }
+
+                var idselect = $("#InstitutoPref").val();
+                $("#InstitutoPref").empty();
+                $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
+
+                $.each(data.institucion, function (index, row) {
+                    if (row.Value == idselect) {
+                        $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
+                    } else {
+                        $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    }
 
 
-                    });
+                });
 
                 $("#InstitutoPref").removeAttr("disabled");
-                    $("#InstitutoPref").selectpicker('refresh');
-           
+                $("#InstitutoPref").selectpicker('refresh');
+
 
 
             })
     }
-
-
-
-    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
-    //https://developer.snapappointments.com/bootstrap-select/
-    $(".combobox").selectpicker({
-        liveSearch: true,
-        size: 7,
-        liveSearchPlaceholder: "Ingrese su busqueda...",
-        liveSearchStyle: 'contains',//'startsWith'
-        noneResultsText: 'No se Encuantran Resultados',
-        noneSelectedText: 'Seleccione una Opcion',
-        //styleBase: 'form-control',
-        //style: 'btn btn-white'
-    });
-    $(".selectpicker").selectpicker({
-        size: 7,
-        noneSelectedText: 'Seleccione una Opcion',
-        //styleBase:'btn',
-        //style: 'btn-white'
-
-    });
-
-
-    ////////////////////////////DATOS BASICOS///////////////////////////////////
-
 
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
@@ -190,21 +186,21 @@ $(document).ready(function () {
         }
     }
 
-
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
+
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
 
-    ActualizaCarreras($("#vPersona_DatosPerVM_IdModalidad").val());
+    ActualizaCarrerasCivil($("#vPersona_DatosPerVM_IdModalidad").val());
     $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
         //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
         var modalidad = $(this).val();
         //alert(modalidad); 
         $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
-        ActualizaCarreras(modalidad)
+        ActualizaCarrerasCivil(modalidad)
 
     });
 
-    function ActualizaCarreras(modalidad) {
+    function ActualizaCarrerasCivil(modalidad) {
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
             if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
@@ -215,8 +211,41 @@ $(document).ready(function () {
 
             }
         })
+
         $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
+
+        var estCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
+        //alert(estCivil);
+        $("#vPersona_DatosPerVM_IdEstadoCivil option").each(function (index, element) {
+            if (estCivil!="") {
+                if ($(element).val() == estCivil && $(element).val() != "") {
+                    $(element).removeAttr("hidden");
+                } else if ($(element).val() != "") {
+                    $(element).attr("hidden", true);
+                }
+            } else {
+                $(element).removeAttr("hidden");
+            }
+
+
+        })
+        $("#vPersona_DatosPerVM_IdEstadoCivil").selectpicker('refresh');
     }
+
+    $("#vPersona_DatosPerVM_idTipoNacionalidad").on("changed.bs.select", function () {
+
+        var modali = $("#vPersona_DatosPerVM_IdModalidad").val();
+        if (modali != "SMV" && $(this).val() == 3) {
+
+            $("#BTNModal").html("Aceptar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
+            $("#ModalAnuncios").modal();
+
+        };
+
+    });
 
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -382,7 +411,7 @@ $(document).ready(function () {
         url_Tabla = $("#" + id_Tabla).attr("data-URL");
         url_CUD = $("#" + id_Tabla).attr("data-CUD");
         url_Elim = $("#" + id_Tabla).attr("data-ELI");
-
+        
 
         $.ajax({
             cache: false,
@@ -393,6 +422,7 @@ $(document).ready(function () {
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
                 $('#ModalEIACuerpo').html(response);
+
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
                 $('#ModalEIACuerpo').removeData("validator");
                 $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
@@ -748,17 +778,6 @@ $(document).ready(function () {
     //});
 
 
-
-    //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
     //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
     var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
     if (paganterior > 1) {
@@ -770,14 +789,13 @@ $(document).ready(function () {
         //    scrollTop: 250
         //}, 1500);
     }
-
+    //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
 
     //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
     if ($("#BeginFormDatosBasicos .fechacumple").val() != "") {
         $("#BTentrevista").removeClass("disabled");
     };
-
 
 
 

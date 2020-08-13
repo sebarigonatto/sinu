@@ -43,7 +43,9 @@ namespace SINU.Controllers
                 int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
 
                 var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
-                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false; //ver como mostrar esta pantalla de si fue postulado o no
+                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false;//ver como mostrar esta pantalla de si fue postulado o no
+                ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m=>m.NombreDato=="MailCuerpo4NoPostulado").ValorDato;
+
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
                 //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
@@ -159,7 +161,7 @@ namespace SINU.Controllers
             {
                 var p = db.vPersona_DatosBasicos.First(m=>m.IdPersona == ID_persona);
 
-                if (p.Edad<=35)
+                if (p.Edad<=35 || p.Edad>16)
                 {
                     db.spProximaSecuenciaEtapaEstado(p.IdPersona, 0, false, 0, "DATOS BASICOS", "Validado");
                 }
@@ -192,9 +194,13 @@ namespace SINU.Controllers
             {  
                 vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
+                var estado = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion).Where(m=>m.IdSecuencia==8 || m.IdSecuencia==10 ||m.IdSecuencia==11).OrderBy(m=>m.Fecha).ToList();
+                int IDsecu = estado[estado.Count - 1].IdSecuencia;
+                ViewBag.EstadoEntre = (IDsecu == 11) ? "Concretada" : db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == IDsecu).Estado;
                 if (entrevistafh.FechaEntrevista == null)
                 {
                     ViewBag.NoAsignado = true;
+
                 }
                 else {
                     entrevistafh.FechaEntrevista = entrevistafh.FechaEntrevista;
@@ -233,7 +239,7 @@ namespace SINU.Controllers
                     vEstCivilVM = db.vEstCivil.ToList(),
                     vRELIGIONVM = db.vRELIGION.ToList(),
                     CarreraOficioVm = new List<spCarrerasParaEsteInscripto_Result2>(),
-                    ModalidadVm= new List<SelectListItem>()
+                    ModalidadVm= new List<ComboModalidad>()
 
                 };
                 var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento).ToList();
@@ -242,9 +248,9 @@ namespace SINU.Controllers
                     
                     //cargo modalidades
                     var modalidad = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdConvocatoria == item.IdConvocatoria);
-                    if (datosba.ModalidadVm.FirstOrDefault(m=>m.Value==modalidad.IdModalidad)==null)
+                    if (datosba.ModalidadVm.FirstOrDefault(m=>m.IdModalidad==modalidad.IdModalidad)==null)
                     {
-                        datosba.ModalidadVm.Add(new SelectListItem() { Value = modalidad.IdModalidad, Text = modalidad.Modalidad });
+                        datosba.ModalidadVm.Add(new ComboModalidad(){ IdModalidad = modalidad.IdModalidad, Modalidad = modalidad.Modalidad,EstCivil= item.IdEstadoCivil });
 
                     }
                     //cargo carreras
@@ -774,7 +780,7 @@ namespace SINU.Controllers
                 {
                     vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
                     db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
-                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o s emodifico IDIOMA" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o se modifico IDIOMA" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {

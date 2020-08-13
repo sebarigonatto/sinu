@@ -840,6 +840,9 @@
     <Content Include="Plantillas\LayoutPlantillaMail.cshtml" />
     <Content Include="Plantillas\MODELO_CUERPO_MAIL.cshtml" />
     <Content Include="Plantillas\PlantillaConfirmoCorreoPostulante.cshtml" />
+    <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-CPESNM-CPESSA.pdf" />
+    <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-CUINA.pdf" />
+    <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-SMV.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

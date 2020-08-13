@@ -38,7 +38,25 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.IdModalidad, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdModalidad, Model.ModalidadVm, "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker dropdown-fast" })                           
+                            <select class="form-control selectpicker dropdown-fast" data-val="true" data-val-required="El campo Modalidad es obligatorio." id="vPersona_DatosPerVM_IdModalidad" name="vPersona_DatosPerVM.IdModalidad" tabindex="null">
+                                <option value="">Seleccione una Opcion</option>
+                                @foreach (var item in Model.ModalidadVm)
+                                {
+                                    if (item.IdModalidad == Model.vPersona_DatosPerVM.IdModalidad)
+                                    {
+
+                                        <option value="@item.IdModalidad" selected="selected" civil="@item.EstCivil">@item.Modalidad</option>
+
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.IdModalidad" civil="@item.EstCivil">@item.Modalidad</option>
+                                    }
+                                }
+                            
+                            </select>
+
+                            @*@Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdModalidad, Model.ModalidadVm, "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker dropdown-fast" })*@
                             <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdModalidad, "", new { @class = "text-danger" })
                         </div>
