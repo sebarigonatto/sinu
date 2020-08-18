@@ -453,7 +453,7 @@ $(document).ready(function () {
                 //ver remuevo el boton de guardado
                 
                 if ($.arrayEtapas) {
-                    alert("estapa 5 321")
+                    //alert("estapa 5 321")
                     $(".BTAcciones").html("");
                     $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
                     $(".BTMuestraTable :input").removeAttr("disabled");

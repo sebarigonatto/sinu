@@ -1056,12 +1056,19 @@ namespace SINU.Controllers
             };
             if (idPersonaFamilia != 0  )
             {
-                bool EsPostulante = db.Postulante.FirstOrDefault(m => m.IdPersona == idPostulante)!= null;
+                string mailLogin = HttpContext.User.Identity.Name.ToString();
+                bool EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id)!=null; 
                 if (EsPostulante)
                 {
                    var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                    EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 }
+                else
+                {
+                    pers.IDETAPA = "5,0";
+                };
+              
+              
                 
 
 
