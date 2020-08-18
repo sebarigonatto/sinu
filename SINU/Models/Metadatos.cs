@@ -258,7 +258,7 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         [Display(Name = "Fecha de Baja")]
         public Nullable<System.DateTime> FechaBaja { get; set; }
-        [Display(Name ="Causa/MOtivo de no ingreso")]
+        [Display(Name ="Causa/Motivo de no ingreso")]
         public string CausaMotivoNoingreso { get; set; }
         [Display(Name = "Descripcion de la Baja")]
         public string MotivoBaja { get; set; }

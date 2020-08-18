@@ -440,12 +440,12 @@ catch (Exception ex)
         //    });
 
         $(document).ready(function () {
-
+            var IDETP
             //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
             (function () {
                 $('body').css('overflow-y', 'scroll');
                 //ID de las Etpas por las que paso el Postulante
-                var IDETP = '@Model.IDETAPA.ToString()'.split(',');
+                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
                 IDETP.splice(IDETP.length - 1);
                 //alert('@Model.IDETAPA.ToString()' + "    " + IDETP.indexOf("2") + "        " + (IDETP.length -1 ));
@@ -470,7 +470,16 @@ catch (Exception ex)
                 //Muestro el Tab de la Etapa en la que me encuentro actualmente
                 $("#" + IDETP.length + " a").tab("show");
             })();
-
+            var bloqueo_vistas = IDETP.indexOf("5") != -1; 
+            $.arrayEtapas = bloqueo_vistas;
+           
+            if (bloqueo_vistas) {
+                $(".BTAcciones").html("");
+                $("#TabDocumentacion :input,#TabDocumentacion input").attr("disabled", "true");
+                $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            }
+               
+            
         });
 
         function HabilitarTAb(idtab) {

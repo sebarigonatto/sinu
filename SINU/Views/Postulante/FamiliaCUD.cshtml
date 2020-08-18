@@ -13,7 +13,7 @@
     <a href="/Postulante" class="btn btn-info text-center col-4 ">Volver atras</a>
 </div>
 <br />
-<div class="p-1 bg-white rounded shadow mb-1 " style="padding:0px !important">
+<div class="p-1 bg-white rounded shadow mb-1 " style="padding:0px !important" id="TabFamilia">
 
     <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center oculto" style="padding-bottom:0.2rem">
 
@@ -385,6 +385,19 @@
         }());
 
         $(document).ready(function () {
+                //array de la etapa del postulante
+                IDETP = '@Model.IDETAPA.ToString()'.split(',');
+                //elimino el ultimo elemnto de array, por que es un string vacio
+            IDETP.splice(IDETP.length - 1);
+            var bloqueo_vistas = IDETP.indexOf("5") != -1; 
+            $.arrayEtapas = bloqueo_vistas;
+            if (bloqueo_vistas) {
+                alert("etapa 5 321")
+                $(".BTAcciones").html("");
+                $("#TabFamilia :input,#TabFamilia input").attr("disabled", "true");
+                $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            }
+
             if (@Model.vPersona_FamiliarVM.IdPersonaFamiliar!= 0) {
                 $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");
                 $(".TABCondicional .navbar-toggler").removeAttr("hidden");
@@ -398,12 +411,12 @@
                 $("#BTNModal").text("Cerrar");
                 $("#OK").hide();
                 $("#ModalAnuncios").modal("show");
-                //alert("es un postulante");    
+                //alert("es un postulante");
                 //Deshabilito los input de los formularios
                 $("form :input,form input").attr("disabled", "true");
                //elimino los boton de edicion
                 $(".BTAcciones").html("");
-          
+
             };
 
 
@@ -414,7 +427,7 @@
                 var valido = $("#BeginFormFamiliar").valid();
                  if (!valido) {
                      $("#BeginFormFamiliar").submit();
-                 } else { 
+                 } else {
                     //alert("asd");
                     var dni = $("#DNI_FAMI").val();
                      $.get("VerificarDNI", { DNI: dni , ID: '@Model.vPersona_FamiliarVM.IdPersonaPostulante' },
@@ -443,7 +456,7 @@
                                      } else {
                                          $("#BeginFormFamiliar").submit();
                                      }
-                                    
+
                                      function redirige () {
                                          window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.ID_PER;
                                      }
@@ -451,11 +464,11 @@
                                  case "no_existe":
                                      $("#BeginFormFamiliar").submit();
                                      break;
-                                 
+
                              }
-                          
+
                          })
-                    
+
                  }
 
             });
@@ -466,7 +479,7 @@
                 $("#BeginFormFamiliar").submit();
                 //$("#ModalAnuncios").modal("show");
             });
-          
+
 
         });
 
@@ -490,7 +503,7 @@
                     $.Elimina(response.url_Tabla);
                     break;
                 default:
-                
+
             }
         };
 

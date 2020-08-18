@@ -30,6 +30,7 @@ namespace SINU.ViewModels
         public List<SelectListItem> ReligionVM { get; set; }
         public List<SelectListItem> TipoDeNacionalidadVm { get; set; }
         public bool postulante { get; set; }
+        public string IDETAPA { get; set; }
     }
 
     public class DatosBasicosVM

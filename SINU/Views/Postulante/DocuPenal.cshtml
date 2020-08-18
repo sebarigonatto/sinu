@@ -43,8 +43,9 @@
                     Debera descargar el formulario e imprimirlo, rellenar con los datos que se solicitan en el mismo, firmar y aclarar.
                     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
                 </p>
-
-                @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary " })
+                <div class="BTAcciones">
+                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary " })
+                </div>
                 <div class="w-100"></div>
                 <br />
                 <div class="custom-file col-md-6" id="customFile2">
@@ -54,7 +55,7 @@
                     </label>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
                 </div>
-                <div class=" mt-4">
+                <div class=" mt-4 BTAcciones">
                     <input type="submit" class="btn btn-success " value="Subir Archivos" />
                 </div>
             </div>

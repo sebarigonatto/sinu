@@ -53,18 +53,23 @@
             <td class="oculto">
                 @Html.DisplayFor(modelItem => item.Relacion)
             </td>
-            <td>
-                @Html.ActionLink(" ", "FamiliaCUD", new { idPersonaFamilia = item.IdPersonaFamiliar }, new { @class = "btn btn-success fas fa-edit" ,@tooltip="Editar" }) &ensp;|&ensp;
-                @Ajax.ActionLink(" ", "EliminaFAMI", new { ID_per = item.IdPersonaFamiliar, ID_fami = item.IdFamiliar }, new AjaxOptions
-                  {
-                    HttpMethod = "POST",
-                    OnSuccess = "Exito(data,status,xhr)",
-                    OnFailure = "Falla",
-                  }, new { @id = "EliminaFAMI", @class = "btn btn-danger fas fa-trash-alt" })
+            <td class="row justify-content-center align-items-center">
+                <div class="BTMuestraTable">
+                    @Html.ActionLink(" ", "FamiliaCUD", new { idPersonaFamilia = item.IdPersonaFamiliar, idPostulante = item.IdPersonaPostulante }, new { @class = "btn btn-success fas fa-edit", @tooltip = "Editar" })
+                </div>
+                <div class="BTAcciones d-inline">
+                    &ensp;|&ensp;
+                    @Ajax.ActionLink(" ", "EliminaFAMI", new { ID_per = item.IdPersonaFamiliar, ID_fami = item.IdFamiliar }, new AjaxOptions
+                      {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla",
+                      }, new { @id = "EliminaFAMI", @class = "btn btn-danger fas fa-trash-alt" })
+                </div>
             </td>
             @*<td class="oculto">
-                @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
-            </td>*@
+            @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
+        </td>*@
         </tr>
         }
     </tbody>
