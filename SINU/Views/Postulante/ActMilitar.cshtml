@@ -29,24 +29,29 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
-                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
-                    <td>@Html.Label(item.Ingreso.Value ? "SI" : "NO")</td>
-                    <td class="BTAcciones">
-                        <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdActividadMilitar"></button>&ensp; |&ensp;
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdActividadMilitar)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                <td>@Html.DisplayFor(modelItem => item.Fuerza)</td>
+                <td>@Html.Label(item.Ingreso.Value ? "SI" : "NO")</td>
+                <td class="row justify-content-center align-items-center">
+                    <div class="BTMuestraTable">
+                        <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdActividadMilitar"></button>
+                    </div>
+                    <div class="BTAcciones d-inline">
+                        &ensp; |&ensp;
                         @Ajax.ActionLink(" ", "EliminaACT", new { ID = item.IdActividadMilitar }, new AjaxOptions
                           {
                             HttpMethod = "POST",
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla",
                           }, new { @id = "EliminaACT", @class = "btn btn-danger fas fa-trash-alt" })
-                    </td>
-                    @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
-                </tr>
+                    </div>
+                </td>
+                @*<td >@Html.DisplayFor(modelItem => item.Jerarquia)</td>
+        <td>@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
+        <td>@Html.DisplayFor(modelItem => item.FechaBaja)</td>*@
+            </tr>
             }
         </tbody>
 

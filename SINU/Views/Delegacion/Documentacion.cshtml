@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/CssPostulante.css" rel="stylesheet" />
-@using (Html.BeginForm())
+@using (Html.BeginForm("Documentacion", "Delegacion", FormMethod.Post, new { @id = "formularioid" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ID_PER, new { @id = "vPersona_DatosBasicosVM_IdPersona" })
@@ -84,7 +84,7 @@
                         </ul>
                     </div>
                 </nav>
-                <div class="col-md-9 borderdiv1">
+                <div class="col-md-9 borderdiv1" id="TABBloqueo">
                     @*<div class="mt-4  position-absolute col-md-11">
                             <button class="btn btn-success float-md-left" >Envia a Validar</button>
                         </div>*@
@@ -247,8 +247,8 @@
                                 <br />
                                 <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                     <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
-                                    <br />
-                                    <button type="submit" class="btn btn-primary" value="Postular" name="BTNvalidado">Confirmar</button>
+                                    @*<br />
+                                        <button type="submit" class="btn btn-primary" value="Postular">Confirmar</button>*@
                                 </div>
                             </div>
                         </div>
@@ -269,5 +269,27 @@
     </div>
 }
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.arrayEtapas = true;
+            $(".BTAcciones").html("");
+            $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
+            $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            var bloqueoSUBMIT=false;
+            $(".Agrega").on("click", function () {
+                bloqueoSUBMIT = true;
+            })
+
+            $("#formularioid").on('submit', function (evt) {
+                if (bloqueoSUBMIT) {
+                     evt.preventDefault();
+                }
+                bloqueoSUBMIT = false;  
+                // tu codigo aqui
+            });
+        })
+
+    </script>
 }

@@ -24,7 +24,7 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-        
+      
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         [Authorize(Roles = "Postulante")]
@@ -707,7 +707,7 @@ namespace SINU.Controllers
                                  .Select(m => new SelectListItem
                                  {
                                      Value = m.Id.ToString(),
-                                     Text = m.Nombre
+                                     Text = m.Nombre.Substring(0,45)//ver para truncar esto aqui o en el cliente
                                  })
                                  .OrderBy(m => m.Text)
                                  .ToList();
@@ -838,7 +838,7 @@ namespace SINU.Controllers
                     BajaVM = db.Baja.ToList(),
                     SituacionRevistaVM = db.SituacionRevista.ToList()
                  };
-                if (db.Postulante.First(m => m.IdPersona == ID_persona).AspNetUsers != null)
+                if (db.Postulante.FirstOrDefault(m => m.IdPersona == ID_persona) != null)
                 {
                     actividad.SituacionRevistaVM.Remove(db.SituacionRevista.First(m => m.SituacionRevista1 == "Retirado"));  
                 };
@@ -1041,7 +1041,7 @@ namespace SINU.Controllers
 
         [AuthorizacionPermiso("ListarRP")]
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
-        public ActionResult FamiliaCUD(int idPersonaFamilia)
+        public ActionResult FamiliaCUD(int idPersonaFamilia, int idPostulante)
         { 
             //verificar que al crear un postulante llenar con los datos completos, si no es asi el familiar no se mostrara en vPersona_Familiar
             //viewmodel creado para la creacion de un familiar
@@ -1056,6 +1056,19 @@ namespace SINU.Controllers
             };
             if (idPersonaFamilia != 0  )
             {
+                string mailLogin = HttpContext.User.Identity.Name.ToString();
+                bool EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id)!=null; 
+                if (EsPostulante)
+                {
+                   var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                   EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                }
+                else
+                {
+                    pers.IDETAPA = "5,0";
+                };
+              
+
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
@@ -1068,6 +1081,7 @@ namespace SINU.Controllers
             }
             else
             {
+                pers.IDETAPA = "0";
                 pers.ID_PER = idPersonaFamilia;
                 var IdAspUser = db.AspNetUsers.FirstOrDefault(e => e.Email == User.Identity.Name).Id;
                 pers.vPersona_FamiliarVM = new vPersona_Familiar();
@@ -1075,6 +1089,9 @@ namespace SINU.Controllers
                 pers.vPersona_FamiliarVM.IdFamiliar = 0;
                 pers.vPersona_FamiliarVM.IdPersonaFamiliar = 0;
             }
+
+
+
             return View(pers);
         }
 

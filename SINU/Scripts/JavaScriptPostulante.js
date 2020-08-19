@@ -46,7 +46,8 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 $(document).ready(function () {
 
-
+    $.arrayEtapas ;
+    
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     $.ajaxSetup({
         async: false
@@ -84,6 +85,7 @@ $(document).ready(function () {
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
         noneSelectedText: 'Seleccione una Opcion',
+        mobile:true
         //styleBase: 'form-control',
         //style: 'btn btn-white'
     });
@@ -448,8 +450,14 @@ $(document).ready(function () {
                 //se aplica el selectpicker basico
                 $(".selectpicker").selectpicker({ size: 7 });
 
-
-
+                //ver remuevo el boton de guardado
+                
+                if ($.arrayEtapas) {
+                    //alert("estapa 5 321")
+                    $(".BTAcciones").html("");
+                    $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
+                    $(".BTMuestraTable :input").removeAttr("disabled");
+                }
                 ////////////////////////////ESTUDIOS///////////////////////////////////
 
                 //evento que se desata cuando se selecciona un opcion de los combobox
@@ -568,10 +576,14 @@ $(document).ready(function () {
     //funcion de si egreso o no para mostrar campos de promedio y ultimo año cursado
     function EgresoSINO() {
         if ($("#TerminoEST").val() == "true") {
-            $("#ULT_AÑO, #PROMEDIO").show();
+            $("#PROMEDIO").show();
+            $("#CANTMATERIA, #ULT_AÑO").hide();
+            $("#ULT_AÑO input,#CANTMATERIA input").val("");
+        
         } else {
-            $("#ULT_AÑO, #PROMEDIO").hide();
-            $("#ULT_AÑO input ,#PROMEDIO input").val("");
+            $("#CANTMATERIA, #ULT_AÑO").show();
+            $("#PROMEDIO").hide();
+            $("#PROMEDIO input").val("");
         };
     };
 

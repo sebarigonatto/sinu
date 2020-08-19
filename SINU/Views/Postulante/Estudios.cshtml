@@ -38,14 +38,20 @@
                 <td class="truncate oculto">@Html.DisplayFor(modelItem => item.Nombre)</td>
                 @*<td>@Html.DisplayFor(modelItem => item.Promedio)</td>*@
                 <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
-                <td class="BTAcciones">
-                    <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdEstudio"></button>&ensp; |&ensp;
-                    @Ajax.ActionLink(" ", "EliminaEST", new { ID = item.IdEstudio }, new AjaxOptions
-                      {
-                        HttpMethod = "POST",
-                        OnSuccess = "Exito(data,status,xhr)",
-                        OnFailure = "Falla",
-                      }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                <td class="row justify-content-center align-items-center">
+                    <div class="BTMuestraTable">
+                        <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdEstudio"></button>
+                    </div>
+                    <div class="BTAcciones d-inline">
+                        &ensp; |&ensp;
+
+                        @Ajax.ActionLink(" ", "EliminaEST", new { ID = item.IdEstudio }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla",
+                          }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                    </div>
                 </td>
             </tr>
 

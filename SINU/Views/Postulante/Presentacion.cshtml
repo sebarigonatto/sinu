@@ -4,6 +4,7 @@
 
     <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h5>
     <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h5>
+    @Html.Hidden("presentacion",ViewBag.Asignado?true:false)
     @if (!ViewBag.Asignado)
     {
         <h5>Se le informara via correo cuando le hayan asignado una fecha para la presentacion, solicitamos este atento.</h5>
@@ -15,7 +16,7 @@
     else
     {
                 <h5>@Html.DisplayNameFor(m => m.FechaPresentacion): <b>@Model.FechaPresentacion.ToString("dd/MM/yyyy")</b></h5>
-                <br /> <h5> @ViewBag.QRCodeImageLink</h5>
+                <br/> <h5> @ViewBag.QRCodeImageLink</h5>
                 <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCodeImage))" width="140" height="140" style="border-radius:3px" class="align-items-center" />
     }
 </div>

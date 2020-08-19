@@ -25,9 +25,7 @@ new { id = "BeginFormEstudioCUD" }))
         <h5 class="modal-title" id="exampleModalCenterTitle">
             ESTUDIO
         </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    
     </div>
     <div class="modal-body  ui-front" style="overflow:auto;height:30rem;">
         <div class="form-horizontal">
@@ -105,7 +103,7 @@ new { id = "BeginFormEstudioCUD" }))
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="CANTMATERIA">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, htmlAttributes: new { @class = "control-label col-md-10" })
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { @class = "form-control  " } )
@@ -135,11 +133,15 @@ new { id = "BeginFormEstudioCUD" }))
         </div>
 
     </div>
-    <div class="modal-footer  class="BTAcciones""  id="BTEstudios">
-        <div class="float-sm-right">
-            <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
-            <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormEstudioCUD"/>
+    <div class="modal-footer  class=" id="BTEstudios">
+        <div class="float-md-right">
+            <div class="BTMuestraTable d-inline">
+                <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
+            </div>
 
+            <div class="BTAcciones d-inline">
+                <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormEstudioCUD" />
+            </div>
         </div>
     </div>
 }
