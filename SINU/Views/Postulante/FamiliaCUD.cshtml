@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id="DNI_FAMI" } })
+                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id = "DNI_FAMI" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.DNI, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new {@placeholder="dd/MM/yyyy", @class = "form-control datepicker", @readonly = true, @id= "fechacumpleaños" })
+                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker", @readonly = true, @id = "fechacumpleaños" })
 
                                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -225,7 +225,7 @@
                                 </div>
                                 <br />
                             </div>
-                            <div class="form-group row ml-3  BTAcciones" >
+                            <div class="form-group row ml-3  BTAcciones">
                                 <input type="button" value="Guadar Datos" class="btn btn-success m-1" id="GuarFami" />
                             </div>
 
@@ -386,24 +386,28 @@
 
         $(document).ready(function () {
             var URLanterior = document.referrer.toString();
-            
+
             if (URLanterior.indexOf("Delegacion") > 0) {
                 var index = URLanterior.indexOf("Documentacion");
                 var href = URLanterior.substring(index);
                 $("#BTvolver").attr("href","/Delegacion/"+href);
 
             }
-                //array de la etapa del postulante
+            //array de la etapa del postulante
+
+            if ('@Model.IDETAPA.ToString()'!="") {
                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
-            IDETP.splice(IDETP.length - 1);
-            var bloqueo_vistas = IDETP.indexOf("5") != -1; 
-            $.arrayEtapas = bloqueo_vistas;
-            if (bloqueo_vistas) {
-                $(".BTAcciones").html("");
-                $("#TabFamilia :input,#TabFamilia input").attr("disabled", "true");
-                $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+                IDETP.splice(IDETP.length - 1);
+                var bloqueo_vistas = IDETP.indexOf("5") != -1;
+                $.arrayEtapas = bloqueo_vistas;
+                if (bloqueo_vistas) {
+                    $(".BTAcciones").html("");
+                    $("#TabFamilia :input,#TabFamilia input").attr("disabled", "true");
+                    $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+                }
             }
+
 
             if (@Model.vPersona_FamiliarVM.IdPersonaFamiliar!= 0) {
                 $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");

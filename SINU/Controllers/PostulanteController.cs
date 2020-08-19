@@ -24,7 +24,7 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-        
+      
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         [Authorize(Roles = "Postulante")]
@@ -1068,9 +1068,6 @@ namespace SINU.Controllers
                     pers.IDETAPA = "5,0";
                 };
               
-              
-                
-
 
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
@@ -1084,6 +1081,7 @@ namespace SINU.Controllers
             }
             else
             {
+                pers.IDETAPA = "0";
                 pers.ID_PER = idPersonaFamilia;
                 var IdAspUser = db.AspNetUsers.FirstOrDefault(e => e.Email == User.Identity.Name).Id;
                 pers.vPersona_FamiliarVM = new vPersona_Familiar();
