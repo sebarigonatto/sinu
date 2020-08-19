@@ -1249,7 +1249,9 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Agrupacion_GrupoCarreraOficio">
-          <End Role="GrupoCarrOficio" Type="Self.GrupoCarrOficio" Multiplicity="1" />
+          <End Role="GrupoCarrOficio" Type="Self.GrupoCarrOficio" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AgrupacionCarreraOficio" Type="Self.AgrupacionCarreraOficio" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="GrupoCarrOficio">

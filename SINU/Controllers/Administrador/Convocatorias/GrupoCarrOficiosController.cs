@@ -198,8 +198,10 @@ namespace SINU.Controllers.Administrador.Convocatorias
 
             if (ModelState.IsValid)
             {
-
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
+                try
+                {
+                    db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
+               
 
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
@@ -218,12 +220,20 @@ namespace SINU.Controllers.Administrador.Convocatorias
                     //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
 
             }
-            //aca haria un case of segun lo recibido en el mensaje (supongo)
-            //lo mando al index si hay exito o queda en la pantalla de creat
-            //grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
-        }
+                    //aca haria un case of segun lo recibido en el mensaje (supongo)
+                    //lo mando al index si hay exito o queda en la pantalla de creat
+                    //grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
+                }
+                catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
+                {
+                    //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
+
+                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "GrupoCarreraOficio", "Edit"));
+                }
+            }
             return View(grupoCarrOficiovm);
         }
+
 
         // GET: GrupoCarrOficios/Delete/5
         public ActionResult Delete(string id)

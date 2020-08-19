@@ -24,7 +24,7 @@
             @Html.HiddenFor(Model => Model.IdGCOOriginal)
             @Html.HiddenFor(Model => Model.SelIDsEdit)
             @*@Html.HiddenFor(Model=>Model.SelectedIDs)*@
-            @Html.HiddenFor(model => model.Carreras, new SelectList(Model.Carreras, "IdCarreraOficio", "CarreraUoficio").ToList())
+            @Html.HiddenFor(model => model.Carreras, new SelectList(Model.Carreras, "IdCarreraOficio", "CarreraUoficio"))
             @Html.HiddenFor(model => model.Carreras2,new SelectList (Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))
             @Html.HiddenFor(model => model.Carreras3, new SelectList(Model.Carreras3, "IdCarreraOficio", "CarreraUoficio"))
             @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
