@@ -6,7 +6,7 @@
     List<SelectListItem> lst = new List<SelectListItem>();
     lst.Add(new SelectListItem() { Text = "Oficiales", Value = "O" });
     lst.Add(new SelectListItem() { Text = "Suboficiales", Value = "S" });
-    lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });    
+    lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });
 }
 
 <h2>Editar Registro</h2>
@@ -20,11 +20,13 @@
         <hr />
         <div class="form-group">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(Model=>Model.IdCarreraOficio)
             @Html.HiddenFor(Model => Model.IdGCOOriginal)
             @Html.HiddenFor(Model => Model.SelIDsEdit)
-            @Html.HiddenFor(model => model.Carreras, new SelectList (Model.Carreras, "IdCarreraOficio", "CarreraUoficio"))
-            @*@Html.HiddenFor(model => model.Carreras2,new SelectList (Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))*@
-            @Html.HiddenFor(model=>model.Carreras3, new SelectList (Model.Carreras3, "IdCarreraOficio", "CarreraUoficio"))
+            @*@Html.HiddenFor(Model=>Model.SelectedIDs)*@
+            @Html.HiddenFor(model => model.Carreras, new SelectList(Model.Carreras, "IdCarreraOficio", "CarreraUoficio").ToList())
+            @Html.HiddenFor(model => model.Carreras2,new SelectList (Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))
+            @Html.HiddenFor(model => model.Carreras3, new SelectList(Model.Carreras3, "IdCarreraOficio", "CarreraUoficio"))
             @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IdGrupoCarrOficio, new { htmlAttributes = new { @class = "form-control" } })
@@ -67,6 +69,17 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    @{ if (Model.ErrorDevuelto != null)
+                        {
+                            <td class="col-6">
+                                <div class="alert alert-danger">
+                                    Error en la insercion de los datos!
+                                </div>
+                            </td>
+                        }
+                    }
+                </tr>
             </tbody>
         </table>
 
@@ -84,6 +97,8 @@
 @section Scripts {
     <script>
         //aun no me funciona el codigo 04/08/2020
+
+
 
         $(document).ready(function () {
             //ddlRegions es igual al ID del listado de Personal.
@@ -108,5 +123,16 @@
                 });
             });
         });
+
+    </script>   
+    <script type="text/javascript">
+        //i'm using jquery ready event which will call the javascript chunk after the page has completed loading
+        $(document).ready(function () {
+            //assuming that your variable name from the code behind is bInsertSuccess
+            //var bSuccess = "<%= bInsertSuccess %>";
+            if (@Model.ErrorDevuelto !== null) {
+                alert("Successfully Inserted");
+            }
+        });
     </script>
-    }
+}

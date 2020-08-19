@@ -136,7 +136,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 Personal = grupoCarrOficio.Personal,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
-                Carreras2 = db.CarreraOficio.ToList()
+                Carreras2 = db.CarreraOficio.ToList(),                
         };          
             //creo lista para compara y marcar como checkeada
             NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
@@ -178,19 +178,10 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal,SelIDsEdit,Carreras,Carreras2,Carreras3")] GrupoCarrOficiosvm grupoCarrOficiovm)
+        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal")] GrupoCarrOficiosvm grupoCarrOficiovm)
         {            
-            grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
-            //if (grupoCarrOficiovm.IdCarreraOficio!=null)
-            //{
-            //    grupoCarrOficiovm.Carreras = db.spCarrerasDelGrupo(grupoCarrOficiovm.IdGCOOriginal, "").ToList();
-            //}
-            //else
-            //{
-            //    grupoCarrOficiovm.Carreras = db.spCarrerasDelGrupo(grupoCarrOficiovm.IdCarreraOficio, "").ToList();
-            //}
-
             //grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+        
             string stgCarreras = "";
             if (grupoCarrOficiovm.SelectedIDs==null)
             {
@@ -202,27 +193,35 @@ namespace SINU.Controllers.Administrador.Convocatorias
             }
            
             ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
+            grupoCarrOficiovm.IdCarreraOficio = "";
             grupoCarrOficiovm.Esinsert = false;
 
             if (ModelState.IsValid)
             {
-                
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
+
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
                 switch (mens)
                 {
                     case string a when a.Contains("Exito"):
-                        return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() } ); //write "<div>Custom Value 1</div>"
+                        return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() } );
+                    //write "<div>Custom Value 1</div>"
+                case string a when a.Contains("Error"):
+                    {
+                        grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+                        grupoCarrOficiovm.ErrorDevuelto = ObjMensaje.Value.ToString();
+                        return View(grupoCarrOficiovm);
+                   };
+                    //case string a when a.Contains("Error"):
+                    //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
 
-                        //case string a when a.Contains("Error"):
-                        //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
-
-                }
-                //aca haria un case of segun lo recibido en el mensaje (supongo)
-                //lo mando al index si hay exito o queda en la pantalla de creat
-                grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
             }
+            //aca haria un case of segun lo recibido en el mensaje (supongo)
+            //lo mando al index si hay exito o queda en la pantalla de creat
+            //grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
+        }
             return View(grupoCarrOficiovm);
         }
 
