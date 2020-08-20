@@ -491,6 +491,17 @@ $(document).ready(function () {
                     EgresoSINO();
                 });
 
+                ////consulto si esta cursando el ultimo año
+                //UltimoAñoSINO();
+                //$("#UltimoAño").on("changed.bs.select", function () {
+                //    UltimoAñoSINO();
+                //});
+
+                //function UltimoAñoSINO() {
+                //    if ($("#UltimoAño").val() == "true") {
+
+                //    }
+                //}
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -577,15 +588,19 @@ $(document).ready(function () {
     function EgresoSINO() {
         if ($("#TerminoEST").val() == "true") {
             $("#PROMEDIO").show();
-            $("#CANTMATERIA, #ULT_AÑO").hide();
+            $("#CANTMATERIA, #ULT_AÑO, #CurUltAño").hide();
             $("#ULT_AÑO input,#CANTMATERIA input").val("");
-        
+            $("#CurUltAño option:selected").removeAttr("selected");
+            $("#vPersona_EstudioIdVM_CursandoUltimoAnio").selectpicker("refresh");
         } else {
-            $("#CANTMATERIA, #ULT_AÑO").show();
+            $("#CANTMATERIA, #ULT_AÑO,#CurUltAño").show();
             $("#PROMEDIO").hide();
             $("#PROMEDIO input").val("");
         };
     };
+
+
+
 
 
     //funcion que arma los combos en cascada de la vista parcial Estudios

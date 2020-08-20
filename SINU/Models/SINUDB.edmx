@@ -253,6 +253,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Promedio" Type="float" />
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
+          <Property Name="CursandoUltimoAnio" Type="bit" Nullable="false" />
           <Property Name="NombreYPaisInstituto" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="Etapa">
@@ -968,6 +969,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
             <PropertyRef Name="IdEstudio" />
             <PropertyRef Name="Completo" />
             <PropertyRef Name="IdInstitutos" />
+            <PropertyRef Name="CursandoUltimoAnio" />
           </Key>
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="IdNiveldEstudio" Type="int" />
@@ -979,6 +981,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
           <Property Name="Promedio" Type="float" />
           <Property Name="CantidadMateriaAdeudadas" Type="int" />
           <Property Name="ultimoAnioCursado" Type="int" />
+          <Property Name="CursandoUltimoAnio" Type="bit" Nullable="false" />
           <Property Name="Nivel" Type="varchar" MaxLength="50" />
           <Property Name="NombreYPaisInstituto" Type="varchar" MaxLength="500" />
           <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" />
@@ -2050,6 +2053,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="CantidadMateriaAdeudadas" Type="int" Mode="In" />
           <Parameter Name="ultimoAnioCursado" Type="int" Mode="In" />
           <Parameter Name="NombreYPaisInstituto" Type="varchar" Mode="In" />
+          <Parameter Name="CursandoUltimoAnio" Type="bit" Mode="In" />
         </Function>
         <Function Name="spFamiliarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
@@ -2526,6 +2530,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [VPersona_Estudio].[Promedio] AS [Promedio], 
     [VPersona_Estudio].[CantidadMateriaAdeudadas] AS [CantidadMateriaAdeudadas], 
     [VPersona_Estudio].[ultimoAnioCursado] AS [ultimoAnioCursado], 
+    [VPersona_Estudio].[CursandoUltimoAnio] AS [CursandoUltimoAnio], 
     [VPersona_Estudio].[Nivel] AS [Nivel], 
     [VPersona_Estudio].[NombreYPaisInstituto] AS [NombreYPaisInstituto], 
     [VPersona_Estudio].[Jurisdiccion] AS [Jurisdiccion], 
@@ -3047,6 +3052,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="NiveldEstudio" Relationship="Self.FK_Estudio_NiveldEstudio" FromRole="Estudio" ToRole="NiveldEstudio" />
           <NavigationProperty Name="Persona" Relationship="Self.PersonaEstudio" FromRole="Estudio" ToRole="Persona" />
+          <Property Name="CursandoUltimoAnio" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Etapa">
           <Key>
@@ -3546,6 +3552,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdEstudio" />
             <PropertyRef Name="Completo" />
             <PropertyRef Name="IdInstitutos" />
+            <PropertyRef Name="CursandoUltimoAnio" />
           </Key>
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdNiveldEstudio" Type="Int32" />
@@ -3561,6 +3568,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="NombreYPaisInstituto" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Jurisdiccion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="CursandoUltimoAnio" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="vPersona_Idioma">
           <Key>
@@ -4314,6 +4322,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="CantidadMateriaAdeudadas" Mode="In" Type="Int32" />
             <Parameter Name="ultimoAnioCursado" Mode="In" Type="Int32" />
             <Parameter Name="NombreYPaisInstituto" Mode="In" Type="String" />
+            <Parameter Name="CursandoUltimoAnio" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="spIdiomasIU">
             <Parameter Name="IdPersonaIdioma" Mode="In" Type="Int32" />
@@ -5426,6 +5435,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="Estudio">
             <EntityTypeMapping TypeName="SINUModel.Estudio">
               <MappingFragment StoreEntitySet="Estudio">
+                <ScalarProperty Name="CursandoUltimoAnio" ColumnName="CursandoUltimoAnio" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />
                 <ScalarProperty Name="Completo" ColumnName="Completo" />
@@ -5880,6 +5890,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="VPersona_Estudio">
             <EntityTypeMapping TypeName="SINUModel.VPersona_Estudio">
               <MappingFragment StoreEntitySet="VPersona_Estudio">
+                <ScalarProperty Name="CursandoUltimoAnio" ColumnName="CursandoUltimoAnio" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
                 <ScalarProperty Name="IdNiveldEstudio" ColumnName="IdNiveldEstudio" />
                 <ScalarProperty Name="IdEstudio" ColumnName="IdEstudio" />

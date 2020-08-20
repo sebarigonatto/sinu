@@ -579,7 +579,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosEliminar", idEstudioParameter);
         }
     
-        public virtual int spEstudiosIU(Nullable<int> idEstudio, Nullable<int> idPersona, string titulo, Nullable<bool> completo, Nullable<int> idNiveldEstudio, Nullable<int> idInstitutos, Nullable<double> promedio, Nullable<int> cantidadMateriaAdeudadas, Nullable<int> ultimoAnioCursado, string nombreYPaisInstituto)
+        public virtual int spEstudiosIU(Nullable<int> idEstudio, Nullable<int> idPersona, string titulo, Nullable<bool> completo, Nullable<int> idNiveldEstudio, Nullable<int> idInstitutos, Nullable<double> promedio, Nullable<int> cantidadMateriaAdeudadas, Nullable<int> ultimoAnioCursado, string nombreYPaisInstituto, Nullable<bool> cursandoUltimoAnio)
         {
             var idEstudioParameter = idEstudio.HasValue ?
                 new ObjectParameter("IdEstudio", idEstudio) :
@@ -621,7 +621,11 @@ namespace SINU.Models
                 new ObjectParameter("NombreYPaisInstituto", nombreYPaisInstituto) :
                 new ObjectParameter("NombreYPaisInstituto", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosIU", idEstudioParameter, idPersonaParameter, tituloParameter, completoParameter, idNiveldEstudioParameter, idInstitutosParameter, promedioParameter, cantidadMateriaAdeudadasParameter, ultimoAnioCursadoParameter, nombreYPaisInstitutoParameter);
+            var cursandoUltimoAnioParameter = cursandoUltimoAnio.HasValue ?
+                new ObjectParameter("CursandoUltimoAnio", cursandoUltimoAnio) :
+                new ObjectParameter("CursandoUltimoAnio", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spEstudiosIU", idEstudioParameter, idPersonaParameter, tituloParameter, completoParameter, idNiveldEstudioParameter, idInstitutosParameter, promedioParameter, cantidadMateriaAdeudadasParameter, ultimoAnioCursadoParameter, nombreYPaisInstitutoParameter, cursandoUltimoAnioParameter);
         }
     
         public virtual int spIdiomasIU(Nullable<int> idPersonaIdioma, Nullable<int> idPersona, string codIdioma, Nullable<int> habla, Nullable<int> lee, Nullable<int> escribe)

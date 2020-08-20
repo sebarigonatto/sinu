@@ -29,6 +29,7 @@ namespace SINU.Models
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string NombreYPaisInstituto { get; set; }
+        public bool CursandoUltimoAnio { get; set; }
     
         public virtual NiveldEstudio NiveldEstudio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

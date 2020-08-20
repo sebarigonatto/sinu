@@ -212,19 +212,21 @@ namespace SINU.Models
         public string Titulo { get; set; }
         public bool Completo { get; set; }
         public int IdInstitutos { get; set; }
-        [Display(Name = "Nombre del Instituto")]
+        [Display(Name = "Nombre del Instituto:")]
         public string Nombre { get; set; }
         [RegularExpression("^-?[0-9]+([,][0-9]*)?$", ErrorMessage = "Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
-        [Display(Name = "Cantidad de Materias Adeudadas")]
+        [Display(Name = "Cantidad de Materias Adeudadas:")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
-        [Display(Name = "Ultimo año Cursado")]
+        [Display(Name = "Ultimo año Cursado:")]
         [RegularExpression("^-?[0-9]*", ErrorMessage = "Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string Nivel { get; set; }
         public string NombreYPaisInstituto { get; set; }
         public string Jurisdiccion { get; set; }
         public string Localidad { get; set; }
+        [Display(Name ="¿Cursando el Ultimo año?")]
+        public bool CursandoUltimoAnio { get; set; }
     }
 
     public partial class vPersona_IdiomaMetadadata

@@ -597,10 +597,10 @@ namespace SINU.Controllers
                         IdEstudio = 0,
                         NombreYPaisInstituto = "-",
                         Completo= true,
-                        
+                        IdPersona = ID_persona
+                     
                     };
                     estudio.INST_EXT = false;
-                    nuevoestu.IdPersona = ID_persona;
                     estudio.vPersona_EstudioIdVM = nuevoestu;
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();
@@ -619,6 +619,12 @@ namespace SINU.Controllers
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
+
+            if (Datos.vPersona_EstudioIdVM.Completo)
+            {
+                Datos.vPersona_EstudioIdVM.CursandoUltimoAnio = false;
+                ModelState["vPersona_EstudioIdVM.CursandoUltimoAnio"].Errors.Clear();
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -638,7 +644,7 @@ namespace SINU.Controllers
                         e.Promedio = null;
                         e.ultimoAnioCursado = null;
                     }
-                    db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto);
+                    db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto,e.CursandoUltimoAnio);
 
                     return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIOS" });
                 }

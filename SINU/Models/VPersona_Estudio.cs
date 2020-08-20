@@ -28,5 +28,6 @@ namespace SINU.Models
         public string NombreYPaisInstituto { get; set; }
         public string Jurisdiccion { get; set; }
         public string Localidad { get; set; }
+        public bool CursandoUltimoAnio { get; set; }
     }
 }
