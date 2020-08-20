@@ -126,6 +126,28 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+
+            string idCArreras2 = grupoCarrOficio.Personal;
+            //List<spCarrerasDelGrupo_Result> lst = new List<spCarrerasDelGrupo_Result>();
+            //lst = db.spCarrerasDelGrupo(id, idCArreras2).ToList();
+            List<CarreraOficio> lst = new List<CarreraOficio>();
+            List<CarreraOficio> lstCarreras2 = new List<CarreraOficio>();
+            lst = db.CarreraOficio.ToList();
+
+            for (int i = 0; i < lst.Count; i++)
+            {
+                if (lst[i].Personal == idCArreras2)
+                {
+                    CarreraOficio itemlst = new CarreraOficio { CarreraUoficio = lst[i].CarreraUoficio, IdCarreraOficio = lst[i].IdCarreraOficio };
+                    lstCarreras2.Add(itemlst);
+                    
+                }
+            }
+
+            //CheckBoxes li = new CheckBoxes { Text = NuevogrupocarroficioVM.Carreras2[i].CarreraUoficio, Value = NuevogrupocarroficioVM.Carreras2[i].IdCarreraOficio };
+            //NuevogrupocarroficioVM.Carreras3.Add(li);
+
+
             if (grupoCarrOficio == null)
             {
                 return HttpNotFound();
@@ -136,7 +158,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 Personal = grupoCarrOficio.Personal,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
-                Carreras2 = db.CarreraOficio.ToList(),                
+                Carreras2 = lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
         };          
             //creo lista para compara y marcar como checkeada
             NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
