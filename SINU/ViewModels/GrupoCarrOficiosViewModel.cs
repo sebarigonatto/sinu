@@ -10,17 +10,20 @@ namespace SINU.ViewModels
 {
     public class GrupoCarrOficiosvm
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter student name.")]
         [Display(Name = "Grupo(ID)")]
         [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar máximo 10 digitos")]
         public string IdGrupoCarrOficio { set; get; }     
         [Display(Name = "Carrera/Oficio (ID)")]
         public string IdCarreraOficio { set; get; }
         //este listado de carreras es el que uso cuando me dan un ID 
+        [Required(ErrorMessage = "Please enter student name.")]
         [Display(Name = "Carreras")]
-        public List<spCarrerasDelGrupo_Result> Carreras { set; get; }        
+        public List<spCarrerasDelGrupo_Result> Carreras { set; get; }
+        [Required(ErrorMessage = "Please enter student name.")]
         [Display(Name = "Personal")]
-        public string Personal { set; get; }       
+        public string Personal { set; get; }
+        [Required(ErrorMessage = "Please enter student name.")]
         [Display(Name = "Descripción")]
         public string Descripcion { set; get; }        
         [Display(Name = "Listado de Carreras disponibles")]
