@@ -285,17 +285,84 @@ namespace SINU.Controllers
             return View(personaVM);
         }
         [HttpPost]
-        public ActionResult Documentacion(int? id)
+        public ActionResult Documentacion(int? id, string btn)
         {
             try
             {
-                db.spProximaSecuenciaEtapaEstado(id,0, false, 0, "", "");
+                switch (btn)
+                {
+                    case "Validado":
+                        db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+                        break;
+                }
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("index");
+
+        }
+        public ActionResult DocPenal()
+        {
+            string cadena = HttpContext.Server.MapPath("/Documentacion/ArchivosDocuPenal/1263_certificado.pdf");
+            //string path = HttpContext.Server.MapPath("/pdf/service_reports/SR26175.pdf");
+            return Json(new { path = cadena });
+        }
+        public ActionResult PresentacionAsignaFecha(int id)
+        {
+            try
+            {
+                vInscripcionDetalle Dato = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+
+                return View(Dato);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
+        }
+        // POST: Delegacion/Create
+        [HttpPost]
+        public ActionResult PresentacionAsignaFecha(vInscripcionDetalle datos)
+        {
+            //List<vInscripcionDetalle> InscripcionElegida;
+            //vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+
+            try
+            {
+                // TODO: Add insert logic here
+
+                var da = db.Inscripcion.Find(datos.IdInscripcion);
+                da.FechaRindeExamen = datos.FechaRindeExamen;
+                db.SaveChanges();
+                db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+
+
+                //MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
+                //{
+                //    Apellido = datos.Apellido,
+                //    FechaEntrevista = datos.FechaEntrevista
+                //};
+                ////verificar el llamado de una funcion asyncronica desde un metodo sincronico
+                //var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4");
+
+                //InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
+                //vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
+
+                //if (vInscripcionEtapas.Estado == "Asignada")
+                //{
+                //    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                //}
+
+                return RedirectToAction("Index");
+            }
+
+
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
         }
     }
 }

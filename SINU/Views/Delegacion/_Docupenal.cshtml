@@ -1,0 +1,23 @@
+﻿
+<object id="myPdf" type="application/pdf" data="path/file.pdf"></object>
+<h1>asdadgaghsdgasd</h1>
+@section Scripts {
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        function openfile() {
+            alert("asasdasd")
+        $.ajax({
+            url: '@Url.Action("DocPenal", "Delegacion")',
+            type: "POST",
+            dataType: "application/json",
+            success: function (data) {
+                $('#showpdf').html('<object id="myPdf" type="application/pdf" data="' + data.path +'"></object>');
+            },
+            error: function (err) {
+                alert(err)
+            }
+        });
+        }
+    </script>
+
+}

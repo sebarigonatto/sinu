@@ -85,6 +85,18 @@
                         }
 
                     }
+                    if (item.Etapa == "PRESENTACION")
+                    {
+                        switch (item.Estado)
+                        {
+                            case "A Asignar":
+                                @:|&ensp;
+                                @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })
+                                break;
+                        }
+
+                    }
+
                 }
             </td>
         </tr>

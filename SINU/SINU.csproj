@@ -1196,6 +1196,8 @@
     <Content Include="Views\Convocatorias\Details.cshtml" />
     <Content Include="Views\Convocatorias\Edit.cshtml" />
     <Content Include="Views\Convocatorias\Index.cshtml" />
+    <Content Include="Views\Delegacion\_Docupenal.cshtml" />
+    <Content Include="Views\Delegacion\PresentacionAsignaFecha.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
