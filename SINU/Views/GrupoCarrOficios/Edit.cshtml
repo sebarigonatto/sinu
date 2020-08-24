@@ -45,8 +45,7 @@
             @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Personal, new SelectList(lst.ToList(), "Value", "Text", Model.Personal), new { @class = "form-control", @id = "ddlRegions" })
-                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
-                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })                
             </div>
         </div>
         <table class="col-6">
