@@ -1,0 +1,684 @@
+﻿@model SINU.ViewModels.IDPersonaVM
+@{
+    ViewBag.Title = "Proceso de Inscripcion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
+<br />
+<h3>Etapas de la Inscripcion</h3>
+<br />
+@* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
+@*@try
+    {*@
+<style>
+
+    .tab-pane {
+        padding: 1px 0px 0px 0px;
+    }
+
+    #ContieneTabs {
+        box-shadow: 0px 4px 4px 1px #00000036;
+    }
+    #TABPrincipal .nav-tabs a.bloqueado:hover {
+        background-color: #08495f !important;
+    }
+
+    #TABPrincipal .nav-tabs a.active,
+    #TABPrincipal .nav-tabs a.active:hover {
+        padding-top: 0.6rem !important;
+        margin-top: -5px !important;
+        color: #08495f !important;
+        border-top: 0.4rem solid #08495f;
+        font-size: large;
+        background-color: #fff;
+        border-left: 2px solid #08495f;
+        border-right: 2px solid #08495f;
+    }
+
+        #TABPrincipal .nav-tabs a.active p {
+            font-size: 1.3rem !important
+        }
+
+    #TABPrincipal .nav-tabs a:hover {
+        background-color: #2b82ad
+    }
+
+    #TABPrincipal .nav-fill .nav-item {
+        background-color: #08495f;
+        padding: 0.7rem 1.2rem;
+        color: #ffffff;
+        border: 1px solid #fff;
+    }
+
+    #TABPrincipal .tab-content {
+        padding: 10px 5px 10px 5px;
+    }
+
+    #TabSecundarioContent nav {
+        background-color: #08495f !important;
+        border-radius:3px
+    }
+    /*------------------------------------*/
+    .nav .nav-tabs .left-tabs {
+        border-right: 2px solid #08495f
+    }
+
+
+    .left-tabs.nav-tabs, .right-tabs.nav-tabs {
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .left-tabs.nav-tabs {
+        border-right: 2px solid #08495f;
+        border-bottom: none;
+    }
+
+    .left-tabs .nav-link {
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        margin-right: -2px;
+        text-align: left;
+        border-right: 2px solid #08495f;
+        background-color: #08495f;
+        color: #fff !important;
+        border-bottom: 1px solid #fff;
+        border-top: 1px solid #fff
+    }
+
+        .left-tabs .nav-link:hover {
+            border-color: #fff;
+            border-right: #fff;
+            background-color: #2b82ad
+        }
+
+        .left-tabs .nav-link.active {
+            border-top: 2px solid #08495f;
+            border-right: 2px solid transparent;
+            border-bottom: 2px solid #08495f;
+            border-left: 8px solid #08495f;
+            background-color: #fff;
+            margin-left: -8px;
+            font-size: 1.3rem;
+            color: #08495f !important;
+        }
+
+    #TABPrincipal p {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        display: inline !important;
+    }
+
+    /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
+    @@media screen and (max-width: 576px) {
+
+        #TABPrincipal p {
+            display: none !important
+        }
+
+        #TABPrincipal .nav-tabs a.active p,
+        #TABPrincipal .nav-tabs a.active:hover p {
+            display: inline-block !important;
+            margin-bottom: 1px
+        }
+        #TABPrincipal .nav-tabs a.active p {
+            font-size: 1rem !important
+        }
+        #TabSecundario {
+            display:none !important
+        }
+        .tab-nav {
+            display: block !important;
+            opacity: 100 !important
+        }
+        .navbar-brand {
+            font-size:1rem !important
+        }
+      
+    }
+
+    @@media screen and (min-width: 576px) {
+        #TabSecundarioContent nav.navbar {
+            display:none !important;
+        }
+
+        .nav-tab {
+            display: block !important;
+            opacity: 100 !important
+        }
+    }
+     
+    /* nav version mobil*/
+    .navbar-toggler {
+        background: none;
+        border: none;
+    }
+
+        .navbar-toggler:active,
+        .navbar-toggler:focus {
+            outline: 0;
+        }
+
+        .navbar-toggler .icon-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 1px;
+            margin: 4px 0 4px 0;
+            transition: all 0.3s;
+        }
+
+    .navbar-dark .navbar-toggler .icon-bar {
+        background: #ffffff;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(1) {
+        transform: translate3d(1px,0,0) rotate(-45deg);
+        transform-origin: center center;
+        width: 11px;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(2) {
+        transform: rotate(-90deg);
+        transform-origin: center center;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(3) {
+        transform: translate3d(0px,-14px,0) rotate(-135deg);
+        transform-origin: right top;
+        width: 11px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(1) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(2) {
+        transform: translate3d(0,0,0) rotate(0deg);
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(3) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+    .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important
+    }
+
+</style>
+
+<h1>@Model.ID_PER IDpostulante</h1>
+
+<section id="ContieneTabs">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 ">
+                <nav id="TABPrincipal">
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p> Datos Basicos</p> </a>
+                        <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p> Entrevista</p></a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p> Documentacion</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p> Presentacion</p> </a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="TABPrincipalContent">
+                    <div class="tab-pane fade show active" id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab">
+                        aaaaaaaaaaaaaaaaEt et consectetur ipsum labore excepteur est proident a ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                        <div style="height: 500px !important "></div>
+                    </div>
+                    <div class="tab-pane fade" id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab">
+                        bbbbbbbbbbbbEt et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                        <div style="height: 500px !important "></div>
+                    </div>
+                    <div class="tab-pane fade p-2" id="Documentacion" role="tabpanel" aria-labelledby="Documentacion-tab">
+
+                        <div class="row">
+                            <div class="col-md-2"id="TabSecundario">
+                                <div class="nav nav-tabs left-tabs" >
+                                    <br />
+                                        <a class="nav-item nav-link active show" href="#DatosPersonales" data-toggle="tab">Datos Personales</a>
+                                        <a class="nav-item nav-link" href="#DocuPenal" data-toggle="tab">Antecedentes Penales</a>
+                                        <a class="nav-item nav-link" href="#Domicilio" data-toggle="tab">Domicilio</a>
+                                        <a class="nav-item nav-link" href="#Estudios" data-toggle="tab">Estudios</a>
+                                        <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab">Idiomas</a>
+                                        <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab">Actividad Militar</a>
+                                        <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab">Situacion Militar</a>
+                                        <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab">Antropometria</a>
+                                        <a class="nav-item nav-link" href="#Familia" data-toggle="tab">Familia</a>
+                                        <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab">Validacion</a>
+                                        <br />
+                                </div>
+                            </div>
+
+                            <div class="col-md-10 p-2 pl-4 pr-4" id="TabSecundarioContent">
+                                <div> 
+                                    <div class="tab-content">
+
+
+                                        <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="DatosPersonales">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Datos Personales</a>
+                                                <button id="BTDatosPersonalesNAV" ancla="#DatosPersonales" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DatosPersonalesNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
+                                                @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+
+                                        </div>
+                                        @* VISTA DE Antecedentes Penales *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Antecedentes Penales</a>
+                                                <button id="BTDocuPenalNAV"  ancla="#DocuPenal" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
+                                                @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+
+                                        </div>
+
+                                        @* VISTA DE DOMICILIO *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Domicilio</a>
+                                                <button id="BTDomicilioNAV" ancla="#Domicilio" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
+                                                @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
+
+                                            </div>
+
+                                        </div>
+
+                                        @* VISTA DE ESTUDIOS *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="Estudios">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Estudios</a>
+                                                <button id="BTEstudiosNAV" ancla="#Estudios" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
+                                                @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
+
+                                            </div>
+
+                                        </div>
+
+
+                                        @* VISTA DE IDIOMAS *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="Idiomas">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Idiomas</a>
+                                                <button id="BTIdiomasNAV" ancla="#Idiomas" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
+                                                @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+                                        </div>
+
+                                        @* VISTA DE ACTIVIDAD MILITAR *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="ActMilitar">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Activiadad Militar</a>
+                                                <button id="BTActMilitarNAV" ancla="#ActMilitar" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
+                                                @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+                                        </div>
+
+                                        @* VISTA DE SITUACION OCUPACIONAL*@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Situcion Ocipacional</a>
+                                                <button id="BTSituOcuNAV" ancla="#SituOcu" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
+                                                @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+                                        </div>
+
+                                        @* VISTA DE ANTROPOMETRIA *@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="Antropometria">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Antropometria</a>
+                                                <button id="BTAntropometriaNAV" ancla="#Antropometria" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
+                                                @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+                                        </div>
+
+                                        @* VISTA DE FAMILIA*@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Familia</a>
+                                                <button id="BTFamiliaNAV" ancla="#Familia" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
+                                                @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
+                                            </div>
+                                        </div>
+
+                                        @* Validar Datos*@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
+                                            <nav class="navbar navbar-dark bg-dark">
+                                                <a class="navbar-brand" href="#">Validar Datos</a>
+                                                <button id="BTValidarDatosNAV" ancla="#ValidarDatos" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+                                            </nav>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
+
+                                                <h2>Validar Datos</h2>
+                                                <br />
+                                                <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                                    <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
+                                                    <br />
+                                                    @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                              {
+                                                                HttpMethod = "POST",
+                                                                OnSuccess = "Exito(data,status,xhr)",
+                                                                OnFailure = "Falla"
+                                                              }, new { @id = "BTValidar", @class = "btn btn-success" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="Presentacion" role="tabpanel" aria-labelledby="Presentacion-tab">
+                        ddddddddddddEt et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
+                        <div style="height: 500px !important "></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+
+
+
+
+
+@*}
+    catch (Exception ex)
+    {
+
+        <script>
+            //alert('@ex.InnerException.Message')
+                location.href = '@Url.Action("AccionNoAutorizada","Error")'
+        </script>
+    }*@
+@*////////////////////////////////////////////////////////////////////////////////////////////*@
+@*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
+<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content " id="ModalEIACuerpo">
+
+            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
+
+            </div>
+            <div class="modal-body">
+                <p id="TextModal">@* mensaje del Modal *@</p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
+                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
+    <script type="text/javascript">
+
+        //VER COMO ANEJAR LO DELOS CAMBIOS DE UN CAMPO Y NO SE LO ALLAS GUARDADO
+
+        //var select = [];
+        //$(document).ready( function () {
+        //    $("input, select").change(function () {
+        //        //alert("se modifico un campo de carga de datos!!!" + $(this).attr("id") + select.length);
+        //        var id_form_elemento = [$(this).closest("form").attr("id"),$(this).attr("id")];
+        //        select.push(id_form_elemento)
+        //    });
+        //});
+
+
+        //    $(window).unbind().bind('beforeunload', (e) => {
+        //        if (select.length>0) {
+        //            MarcaCambios();
+        //        return true;
+        //        }
+        //        return;
+        //    });
+
+
+        //    function MarcaCambios() {
+        //        $.each(select, function (e,i) {
+        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
+        //            $("#" + i[1]).addClass("cambio").focus();
+        //        });
+        //    };
+
+        //    $("#jeje").click(function () {
+        //        $.each(select, function (e,i) {
+        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
+        //        });
+        //    });
+
+        $(document).ready(function () {
+            var IDETP
+            //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
+            (function () {
+                $('body').css('overflow-y', 'scroll');
+                //ID de las Etpas por las que paso el Postulante
+                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
+                //elimino el ultimo elemnto de array, por que es un string vacio
+                IDETP.splice(IDETP.length - 1);
+                //alert('@Model.IDETAPA.ToString()' + "    " + IDETP.indexOf("2") + "        " + (IDETP.length -1 ));
+                if (IDETP.indexOf("2") < (IDETP.length - 1)) {
+                    $("#BTDatosBasicos").html("");
+                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
+                };
+
+
+                //inhabilito los tab de etapas en las que los postulantes no estan o no pasaron
+                $("#TABPrincipal a").each(function () {
+                    idTAB = $(this).attr("id");
+                    //alert(IDETP.indexOf(idTAB));
+                    if (IDETP.indexOf(idTAB)<0) {
+                        $(this)
+                            .addClass("bloqueado")
+                            .css("color", "gray")
+                            .attr("data-toggle", "tooltip")
+                            .attr("title","Opcion deshabilitada hasta que avance de secuencia")
+                            .tooltip('enable');
+                    };
+                });
+                //alert(IDETP.length);
+                //Muestro el Tab de la Etapa en la que me encuentro actualmente
+                $("#" + IDETP.length).tab("show");
+            })();
+       
+            var bloqueo_vistas = IDETP.indexOf("5") != -1;
+            $.arrayEtapas = bloqueo_vistas;
+
+            if (bloqueo_vistas) {
+                $(".BTAcciones").html("");
+                $("#TabDocumentacion :input,#TabDocumentacion input").attr("disabled", "true");
+                $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            }
+         
+            //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo 
+            $("#TabSecundarioContent .navbar-toggler").on("click", function (e) {
+                var idBT = $(this).attr("id");
+                var idTAB;
+                $("#TabSecundarioContent .navbar-toggler ").each(function (e, i) {
+                    if ($(this).attr("id") != idBT) {
+                        $(this).addClass("collapsed");
+                        idTAB = $(this).attr("data-target");
+                        $(idTAB).removeClass("show");
+                    }
+
+                });
+                //var ancla = $(this).attr("ancla");
+                //var dest = $(ancla).offset().top;
+                //$("html, body").animate({ scrollTop: dest }, 1000);
+            });
+
+       
+
+
+         
+
+        });
+
+        function HabilitarTAb(idtab) {
+            $("#"+idtab)
+                .removeClass('Tabdesabilitado')
+                .css("color", "white")
+                .removeAttr("data-toggle", "tooltip")
+                .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
+                .tooltip('disable');
+        };
+
+        /////////////////////////////////////////////////////////////////////////////////
+        /*FUNCIONES DE AJAX.BeginForm*/
+
+        function Exito(response, status, xhr) {
+
+
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html(response.msg);
+            $("#ModalAnuncios").modal();
+           //alert("success: " + response.success + " - " + response.form);
+            switch (response.form) {
+                case "datosbasicos":
+                    $("#BTentrevista").removeClass("disabled");
+                    break;
+                case "solicitudentrevista":
+                    HabilitarTAb(3);
+                    $("#3").tab("show");
+                    $("#BTDatosBasicos").html("");
+                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
+                    $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
+                    break;
+                case "Elimina":
+                    $.ActualizaTabla(response.url_Tabla);
+                    break;
+                //case "BTValidar":
+                //    $("#" + response.form).text("Validacion en curso").addClass("disabled");
+                //    break;
+                default:
+            };
+        };
+
+        function Falla(response) {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
+            $("#ModalAnuncios").modal();
+        };
+
+        //$(function () {
+        //    $('#frmEnvio').unbind().submit(function (e) {
+        //        e.preventDefault();
+        //        Enviar(data);
+        //    });
+        //});
+
+        //function Enviar(data) {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: url,
+        //        data: data,
+        //        success: function (data) {
+        //            $('#objeto').html(data);
+        //        }
+        //    });
+        //}
+
+
+    </script>
+
+}
+

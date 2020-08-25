@@ -45,7 +45,15 @@ namespace SINU.Controllers
                 var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
                 pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true:false;//ver como mostrar esta pantalla de si fue postulado o no
                 ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m=>m.NombreDato=="MailCuerpo4NoPostulado").ValorDato;
-
+                //if (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m=>m.IdInscripcionEtapaEstado==idInscri).ToList()[0].IdSecuencia==14)
+                //{
+                //     ViewBag.TextValidacionenCurso = "True";
+                //}
+                //else
+                //{
+                //    ViewBag.TextValidacionenCurso = "False";
+                //}
+              
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
                 //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
@@ -60,6 +68,44 @@ namespace SINU.Controllers
            
         }
 
+        public ActionResult Index2() {
+            //error cdo existe uno registrado antes de los cambios de secuencia
+            try
+            {
+               
+                IDPersonaVM pers = new IDPersonaVM
+                {
+                    ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
+                };
+                pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+
+                var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
+                pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true : false;//ver como mostrar esta pantalla de si fue postulado o no
+                ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;
+                //if (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m=>m.IdInscripcionEtapaEstado==idInscri).ToList()[0].IdSecuencia==14)
+                //{
+                //     ViewBag.TextValidacionenCurso = "True";
+                //}
+                //else
+                //{
+                //    ViewBag.TextValidacionenCurso = "False";
+                //}
+
+                //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+                //´verifico si ya realizo el guardado de datos basicos.
+                //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
+                //pers.YAguardado = (db.InscripcionEtapaEstado.Where(i=>i.IdInscripcionEtapaEstado==idINCRIP).Where(i=>i.IdSecuencia==7||i.IdSecuencia==21).ToList().Count() >0 ? true : false);
+                return View(pers);
+            }
+            catch (Exception ex)
+            {
+
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "Index"));
+            }
+
+        }
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
 
@@ -307,7 +353,7 @@ namespace SINU.Controllers
                     IdPersona=ID_persona
 
                 };
-           
+                //d.Anexo2 = (System.IO.File.Exists("~/Documentacion/ArchivoDocuPenal/" + ID_persona + "_Anexo2*"))?"":
                 return PartialView(d);
             }   
             catch (Exception ex)
@@ -1105,7 +1151,12 @@ namespace SINU.Controllers
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
-        {
+            {
+           
+            {
+
+            }
+
             if (ModelState.IsValid)
             {
                 var datos = fami.vPersona_FamiliarVM;
@@ -1141,7 +1192,7 @@ namespace SINU.Controllers
                         idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
 
                     }
-                    return Json(new { success = true, msg = msgs,accion= idpersonafamiliar }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = msgs,IDperFAMI= idpersonafamiliar,IDperPOST = IDPOSTULANTE}, JsonRequestBehavior.AllowGet);
 
                 }
                 catch (Exception ex)
@@ -1170,7 +1221,7 @@ namespace SINU.Controllers
                     msgs = (rela != null) ? string.Format("La persona con Dni: {0}, ya esta cargado como familiar. Redirigiendo...", DNI) : string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?", DNI);
                     resps = (rela != null) ?"son_familiares": "existe";
                   
-                    return Json(new { resp =resps, msg =msgs, ID_PER = Id_Persona }, JsonRequestBehavior.AllowGet);
+                    return Json(new { resp =resps, msg =msgs, ID_PER = Id_Persona, ID_perPOST= ID }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { resp = "no_existe" }, JsonRequestBehavior.AllowGet);
@@ -1215,7 +1266,7 @@ namespace SINU.Controllers
             try
             {
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 14, "", "");
-                return Json(new { success = true, msg = "Operacion Exitosa" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Operacion Exitosa",form = "BTValidar" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

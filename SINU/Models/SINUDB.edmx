@@ -157,6 +157,19 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           </Key>
           <Property Name="IdConfiguracion" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ConsultaProgramada">
+          <Key>
+            <PropertyRef Name="IdConsulta" />
+          </Key>
+          <Property Name="IdConsulta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreMenu" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DescripcionConsulta" Type="varchar" MaxLength="500" />
+          <Property Name="OrdenConsulta" Type="int" Nullable="false" />
+          <Property Name="Link" Type="varchar" MaxLength="500" />
+          <Property Name="Controller" Type="varchar" MaxLength="100" />
+          <Property Name="Action" Type="varchar" MaxLength="100" />
+          <Property Name="Parametros" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="Convocatoria">
           <Key>
             <PropertyRef Name="IdConvocatoria" />
@@ -2184,6 +2197,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="CarreraOficio" EntityType="Self.CarreraOficio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ComoSeEntero" EntityType="Self.ComoSeEntero" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configuracion" EntityType="Self.Configuracion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConsultaProgramada" EntityType="Self.ConsultaProgramada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Convocatoria" EntityType="Self.Convocatoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataProblemaEncontrado" EntityType="Self.DataProblemaEncontrado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataProblemaPantalla" EntityType="Self.DataProblemaPantalla" Schema="dbo" store:Type="Tables" />
@@ -4584,6 +4598,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdPostulantePersona" Mode="In" Type="Int32" />
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <EntitySet Name="ConsultaProgramada" EntityType="SINUModel.ConsultaProgramada" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5311,6 +5326,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
           <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
         </ComplexType>
+        <EntityType Name="ConsultaProgramada">
+          <Key>
+            <PropertyRef Name="IdConsulta" />
+          </Key>
+          <Property Name="IdConsulta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreMenu" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescripcionConsulta" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="OrdenConsulta" Type="Int32" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Controller" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Parametros" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6594,6 +6622,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="ConsultaProgramada">
+            <EntityTypeMapping TypeName="SINUModel.ConsultaProgramada">
+              <MappingFragment StoreEntitySet="ConsultaProgramada">
+                <ScalarProperty Name="Parametros" ColumnName="Parametros" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="OrdenConsulta" ColumnName="OrdenConsulta" />
+                <ScalarProperty Name="DescripcionConsulta" ColumnName="DescripcionConsulta" />
+                <ScalarProperty Name="NombreMenu" ColumnName="NombreMenu" />
+                <ScalarProperty Name="IdConsulta" ColumnName="IdConsulta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -264,6 +264,9 @@
     <Compile Include="Models\ConfiguracionAdmin.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConsultaProgramada.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Convocatoria.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -1198,6 +1201,7 @@
     <Content Include="Views\Convocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\_Docupenal.cshtml" />
     <Content Include="Views\Delegacion\PresentacionAsignaFecha.cshtml" />
+    <Content Include="Views\Postulante\Index2.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

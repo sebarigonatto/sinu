@@ -111,6 +111,7 @@ namespace SINU.Models
         public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
         public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
+        public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
