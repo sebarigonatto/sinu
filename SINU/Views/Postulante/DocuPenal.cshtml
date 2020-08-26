@@ -18,27 +18,10 @@
     <div class="form-group">
         <div class="jumbotron mb-0 p-3 pt-4" style="background-color: #08495f; color:white">
             @Html.HiddenFor(m => m.IdPersona)
-            <h5>1°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
-            <p>
-                Otorgado por el Registro Nacional de Reincidencia, dependiente del Ministerio de
-                Justicia y Derechos Humanos. (NO Constancia Policial). Tener presente que este
-                documento tiene una validez de SEIS (6) meses y es un <b>“requisito condicionante”</b>,
-                conforme a lo dispuesto en el Anexo A, Artículo 5 de la Ley Marco de Regulación del
-                Empleo Público Nacional Nº 25.164.
 
-            </p>
-            <div class="custom-file col-md-6" id="customFile">
-
-                @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile" })
-                @*<input type="button" name="name" value="" />*@
-                <label class="custom-file-label" for="exampleInputFile">
-                    Seleccione archivo...
-                </label>
-                @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
-            </div>
 
             <div class="form-group mt-4">
-                <h5>2°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
+                <h5>1°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
                 <p>
                     Debera descargar el formulario e imprimirlo, rellenar con los datos que se solicitan en el mismo, firmar y aclarar.
                     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
@@ -58,6 +41,24 @@
                 <div class=" mt-4 BTAcciones">
                     <input type="submit" class="btn btn-success " value="Subir Archivos" />
                 </div>
+            </div>
+            <h5>2°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
+            <p>
+                Otorgado por el Registro Nacional de Reincidencia, dependiente del Ministerio de
+                Justicia y Derechos Humanos. (NO Constancia Policial). Tener presente que este
+                documento tiene una validez de SEIS (6) meses y es un <b>“requisito condicionante”</b>,
+                conforme a lo dispuesto en el Anexo A, Artículo 5 de la Ley Marco de Regulación del
+                Empleo Público Nacional Nº 25.164.
+
+            </p>
+            <div class="custom-file col-md-6" id="customFile">
+
+                @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile" })
+                @*<input type="button" name="name" value="" />*@
+                <label class="custom-file-label" for="exampleInputFile">
+                    Seleccione archivo...
+                </label>
+                @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
             </div>
         </div>
         <br />
