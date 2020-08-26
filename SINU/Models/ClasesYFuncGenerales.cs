@@ -119,9 +119,16 @@ namespace SINU.Models
         {
             try
             {
+                int idInscrip=0;
+               
                 if (ID_AspNetUser==null || ID_AspNetUser=="")
                 {
                     ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
+                    idInscrip=db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_Persona).IdInscripcion;
+                }
+                else if(db.Postulante.FirstOrDefault(m=>m.IdAspNetUser==ID_AspNetUser)!=null)
+                {
+                    idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser).IdPersona).IdInscripcion;
                 }
 
                 ////ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
@@ -135,15 +142,30 @@ namespace SINU.Models
 
                 string Carpeta = AppDomain.CurrentDomain.BaseDirectory;
                 string LayautCarpeta = $"{Carpeta}Plantillas\\LayoutPlantillaMail.cshtml";
-
-                DatosResponsable datos = new DatosResponsable()
+                DatosResponsable datos;
+                if (idInscrip > 0)
                 {
-                    Apellido= ModeloPlantilla.Apellido,
-                    ResponsableMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableMail").ValorDato,
-                    ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
-                    ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
-                };
-
+                    var id_OfiDeleg = db.Inscripcion.Find(idInscrip).IdDelegacionOficinaIngresoInscribio;
+                    var OfiDeleg = db.OficinasYDelegaciones.Find(id_OfiDeleg);
+                    datos = new DatosResponsable()
+                    {
+                        Apellido = ModeloPlantilla.Apellido,
+                        ResponsableMail = OfiDeleg.Email1,
+                        ResponsablePisoOfic = OfiDeleg.Provincia + ", " + OfiDeleg.Localidad + ", " + OfiDeleg.Direccion,
+                        ResponsableTelefonoEinterno = OfiDeleg.Telefono,
+                        ResponsableCelular = OfiDeleg.Celular
+                    };
+                }
+                else
+                {
+                    datos = new DatosResponsable()
+                    {
+                        Apellido = ModeloPlantilla.Apellido,
+                        ResponsableMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableMail").ValorDato,
+                        ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
+                        ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+                    };
+                }
                 string HtmlLayout = Engine.Razor.RunCompile(LayautCarpeta, null, datos);
               
                 string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\"+Plantilla+".cshtml", null, ModeloPlantilla);
