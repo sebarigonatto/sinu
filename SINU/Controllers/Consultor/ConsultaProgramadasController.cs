@@ -7,12 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
+using SINU.Authorize;
 
 namespace Consulta.Controllers
 {
+    //[AuthorizacionPermiso("ListarRP")]
     public class ConsultaProgramadasController : Controller
     {
-        //private Model1 db = new Model1();
         private SINUEntities db = new SINUEntities();
 
         // GET: ConsultaProgramadas

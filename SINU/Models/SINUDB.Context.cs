@@ -1200,5 +1200,7 @@ namespace SINU.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaInscriptosModalidadGenero_Result>("sp_ConsultaInscriptosModalidadGenero");
         }
+
+        public System.Data.Entity.DbSet<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result> sp_ConsultaInscriptosModalidadGenero_Result { get; set; }
     }
 }

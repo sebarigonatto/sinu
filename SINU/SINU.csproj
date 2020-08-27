@@ -208,8 +208,9 @@
     <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
     <Compile Include="Controllers\Administrador\TipoNacionalidadsController.cs" />
-    <Compile Include="Controllers\ConsultaProgramadasController.cs" />
-    <Compile Include="Controllers\ConsultorController.cs" />
+    <Compile Include="Controllers\Consultor\CallConsultaController.cs" />
+    <Compile Include="Controllers\Consultor\ConsultaProgramadasController.cs" />
+    <Compile Include="Controllers\Consultor\ConsultorController.cs" />
     <Compile Include="Controllers\DelegacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -1216,6 +1217,7 @@
     <Content Include="Views\ConsultaProgramadas\Index.cshtml" />
     <Content Include="Views\Delegacion\ListaProblema.cshtml" />
     <Content Include="Views\Delegacion\DataProblema.cshtml" />
+    <Content Include="Views\CallConsulta\TotalesPorModalidadyGenero.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
