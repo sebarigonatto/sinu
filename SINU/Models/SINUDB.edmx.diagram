@@ -142,6 +142,7 @@
         <EntityTypeShape EntityType="SINUModel.vRestriccionesPorConvYFechaPeriodosInscrip" Width="1.5" PointX="25.375" PointY="23.75" />
         <EntityTypeShape EntityType="SINUModel.vInstitucionesConvocadasYCarrerasAsociadas" Width="1.5" PointX="15.75" PointY="26.75" />
         <EntityTypeShape EntityType="SINUModel.ConsultaProgramada" Width="1.5" PointX="26.75" PointY="16.75" />
+        <EntityTypeShape EntityType="SINUModel.vConsultaInscripciones" Width="1.5" PointX="27.375" PointY="20.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

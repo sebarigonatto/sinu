@@ -491,17 +491,21 @@ $(document).ready(function () {
                     EgresoSINO();
                 });
 
-                ////consulto si esta cursando el ultimo año
-                //UltimoAñoSINO();
-                //$("#UltimoAño").on("changed.bs.select", function () {
-                //    UltimoAñoSINO();
-                //});
+                //consulto si esta cursando el ultimo año
+                UltimoAñoSINO();
+                $("#UltimoAño").on("changed.bs.select", function () {
+                    UltimoAñoSINO();
+                });
 
-                //function UltimoAñoSINO() {
-                //    if ($("#UltimoAño").val() == "true") {
-
-                //    }
-                //}
+                function UltimoAñoSINO() {
+                    //alert("asda");
+                    if ($("#UltimoAño").val() == "true") {
+                        $("#CANTMATERIA, #ULT_AÑO").hide()
+                        $("#CANTMATERIA input, #ULT_AÑO input").val("");
+                    } else {
+                        $("#CANTMATERIA, #ULT_AÑO").show();
+                    }
+                }
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -588,12 +592,9 @@ $(document).ready(function () {
     function EgresoSINO() {
         if ($("#TerminoEST").val() == "true") {
             $("#PROMEDIO").show();
-            $("#CANTMATERIA, #ULT_AÑO, #CurUltAño").hide();
-            $("#ULT_AÑO input,#CANTMATERIA input").val("");
-            $("#CurUltAño option:selected").removeAttr("selected");
-            $("#vPersona_EstudioIdVM_CursandoUltimoAnio").selectpicker("refresh");
+            $("#CurUltAño").hide();
         } else {
-            $("#CANTMATERIA, #ULT_AÑO,#CurUltAño").show();
+            $("#CurUltAño").show();
             $("#PROMEDIO").hide();
             $("#PROMEDIO input").val("");
         };
@@ -624,6 +625,7 @@ $(document).ready(function () {
                 //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                 var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
                 //alert(combocas);
+                $(combocas).append("<option>Seleccione una Opcion</option>");
                 $.each(data, function () {
                     $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                 });

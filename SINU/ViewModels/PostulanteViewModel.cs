@@ -83,7 +83,7 @@ namespace SINU.ViewModels
         public List<string> Localidad { get; set; }
         [DisplayName("Instituto")]
         public List<SelectListItem> InstitutoVM { get; set; }
-        public bool INST_EXT { get; set; }
+        //public bool INST_EXT { get; set; }
 
     }
 

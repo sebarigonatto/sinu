@@ -19,6 +19,12 @@
     #ContieneTabs {
         box-shadow: 0px 4px 4px 1px #00000036;
     }
+
+        #ContieneTabs .container {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+
     #TABPrincipal .nav-tabs a.bloqueado:hover {
         background-color: #08495f !important;
     }
@@ -56,7 +62,7 @@
 
     #TabSecundarioContent nav {
         background-color: #08495f !important;
-        border-radius:3px
+        border-radius: 3px
     }
     /*------------------------------------*/
     .nav .nav-tabs .left-tabs {
@@ -124,25 +130,32 @@
             display: inline-block !important;
             margin-bottom: 1px
         }
+
         #TABPrincipal .nav-tabs a.active p {
             font-size: 1rem !important
         }
+
         #TabSecundario {
-            display:none !important
+            display: none !important
         }
+
         .tab-nav {
             display: block !important;
             opacity: 100 !important
         }
+
         .navbar-brand {
-            font-size:1rem !important
+            font-size: 1rem !important
         }
-      
+
+        #TabSecundarioContent, .nav-tab {
+            padding: 0rem 1rem 0rem 1rem !important;
+        }
     }
 
     @@media screen and (min-width: 576px) {
         #TabSecundarioContent nav.navbar {
-            display:none !important;
+            display: none !important;
         }
 
         .nav-tab {
@@ -150,7 +163,7 @@
             opacity: 100 !important
         }
     }
-     
+
     /* nav version mobil*/
     .navbar-toggler {
         background: none;
@@ -205,11 +218,11 @@
         transform: translate3d(0,0,0) rotate(0deg);
         width: 22px;
     }
+
     .container {
         padding-left: 5px !important;
         padding-right: 5px !important
     }
-
 </style>
 
 <h1>@Model.ID_PER IDpostulante</h1>
@@ -221,10 +234,10 @@
             <div class="col-md-12 ">
                 <nav id="TABPrincipal">
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p> Datos Basicos</p> </a>
-                        <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p> Entrevista</p></a>
-                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p> Documentacion</p>  </a>
-                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p> Presentacion</p> </a>
+                        <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;Datos Basicos</p> </a>
+                        <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;Entrevista</p></a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;Documentacion</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;Presentacion</p> </a>
                     </div>
                 </nav>
                 <div class="tab-content" id="TABPrincipalContent">
@@ -239,25 +252,25 @@
                     <div class="tab-pane fade p-2" id="Documentacion" role="tabpanel" aria-labelledby="Documentacion-tab">
 
                         <div class="row">
-                            <div class="col-md-2"id="TabSecundario">
-                                <div class="nav nav-tabs left-tabs" >
+                            <div class="col-md-2" id="TabSecundario">
+                                <div class="nav nav-tabs left-tabs">
                                     <br />
-                                        <a class="nav-item nav-link active show" href="#DatosPersonales" data-toggle="tab">Datos Personales</a>
-                                        <a class="nav-item nav-link" href="#DocuPenal" data-toggle="tab">Antecedentes Penales</a>
-                                        <a class="nav-item nav-link" href="#Domicilio" data-toggle="tab">Domicilio</a>
-                                        <a class="nav-item nav-link" href="#Estudios" data-toggle="tab">Estudios</a>
-                                        <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab">Idiomas</a>
-                                        <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab">Actividad Militar</a>
-                                        <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab">Situacion Militar</a>
-                                        <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab">Antropometria</a>
-                                        <a class="nav-item nav-link" href="#Familia" data-toggle="tab">Familia</a>
-                                        <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab">Validacion</a>
-                                        <br />
+                                    <a class="nav-item nav-link active show" href="#DatosPersonales" data-toggle="tab">Datos Personales</a>
+                                    <a class="nav-item nav-link" href="#DocuPenal" data-toggle="tab">Antecedentes Penales</a>
+                                    <a class="nav-item nav-link" href="#Domicilio" data-toggle="tab">Domicilio</a>
+                                    <a class="nav-item nav-link" href="#Estudios" data-toggle="tab">Estudios</a>
+                                    <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab">Idiomas</a>
+                                    <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab">Actividad Militar</a>
+                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab">Situacion Militar</a>
+                                    <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab">Antropometria</a>
+                                    <a class="nav-item nav-link" href="#Familia" data-toggle="tab">Familia</a>
+                                    <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab">Validacion</a>
+                                    <br />
                                 </div>
                             </div>
 
-                            <div class="col-md-10 p-2 pl-4 pr-4" id="TabSecundarioContent">
-                                <div> 
+                            <div class="col-md-10 p-2 pl-sm-4 pr-sm-4" id="TabSecundarioContent">
+                                <div>
                                     <div class="tab-content">
 
 
@@ -279,7 +292,7 @@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
                                             <nav class="navbar navbar-dark bg-dark">
                                                 <a class="navbar-brand" href="#">Antecedentes Penales</a>
-                                                <button id="BTDocuPenalNAV"  ancla="#DocuPenal" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTDocuPenalNAV" ancla="#DocuPenal" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -575,7 +588,7 @@
                 //Muestro el Tab de la Etapa en la que me encuentro actualmente
                 $("#" + IDETP.length).tab("show");
             })();
-       
+
             var bloqueo_vistas = IDETP.indexOf("5") != -1;
             $.arrayEtapas = bloqueo_vistas;
 
@@ -584,8 +597,8 @@
                 $("#TabDocumentacion :input,#TabDocumentacion input").attr("disabled", "true");
                 $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
             }
-         
-            //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo 
+
+            //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo
             $("#TabSecundarioContent .navbar-toggler").on("click", function (e) {
                 var idBT = $(this).attr("id");
                 var idTAB;
@@ -602,10 +615,10 @@
                 //$("html, body").animate({ scrollTop: dest }, 1000);
             });
 
-       
 
 
-         
+
+
 
         });
 
