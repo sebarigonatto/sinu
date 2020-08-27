@@ -292,7 +292,16 @@ namespace SINU.Controllers
                 {
                     var Email = UserManager.FindById(userId).UserName;
                     var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
-                    //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(  REGISTRO Validado siguiente  6).
+
+                    //verifico que el usuario ya alla confirmado
+                    ViewBag.YAconfirmo = false;
+                    bool YAconfirmo = db.vSeguridad_Usuarios.FirstOrDefault(m => m.codUsuario == Email) != null;
+                    if (YAconfirmo)
+                    {
+                        ViewBag.YAconfirmo = YAconfirmo;
+                        return View();
+                    }
+                    //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
 
                     Task<IdentityResult> resultado = UserManager.AddToRoleAsync(userId, "Postulante");

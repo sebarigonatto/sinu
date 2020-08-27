@@ -208,6 +208,7 @@
     <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
     <Compile Include="Controllers\Administrador\TipoNacionalidadsController.cs" />
+    <Compile Include="Controllers\ConsultaProgramadasController.cs" />
     <Compile Include="Controllers\ConsultorController.cs" />
     <Compile Include="Controllers\DelegacionController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -262,6 +263,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfiguracionAdmin.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ConsultaProgramada.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Convocatoria.cs">
@@ -1198,6 +1202,12 @@
     <Content Include="Views\Convocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\_Docupenal.cshtml" />
     <Content Include="Views\Delegacion\PresentacionAsignaFecha.cshtml" />
+    <Content Include="Views\Postulante\Index2.cshtml" />
+    <Content Include="Views\ConsultaProgramadas\Create.cshtml" />
+    <Content Include="Views\ConsultaProgramadas\Delete.cshtml" />
+    <Content Include="Views\ConsultaProgramadas\Details.cshtml" />
+    <Content Include="Views\ConsultaProgramadas\Edit.cshtml" />
+    <Content Include="Views\ConsultaProgramadas\Index.cshtml" />
     <Content Include="Views\Delegacion\ListaProblema.cshtml" />
     <Content Include="Views\Delegacion\DataProblema.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />

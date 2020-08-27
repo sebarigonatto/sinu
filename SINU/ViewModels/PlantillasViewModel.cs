@@ -49,6 +49,7 @@ namespace SINU.ViewModels
     {
         public string ResponsablePisoOfic { get; set; }
         public string ResponsableTelefonoEinterno { get; set; }
+        public string ResponsableCelular { get; set; }
         public string ResponsableMail { get; set; }
         public string Apellido { get; set; }
 

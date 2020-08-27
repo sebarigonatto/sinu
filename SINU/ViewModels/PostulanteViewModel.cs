@@ -135,6 +135,7 @@ namespace SINU.ViewModels
         public HttpPostedFileBase ConstanciaAntcPenales { get; set; }
         [Required(ErrorMessage = "El Formulario 'ANEXO 2' es OBLIGATORIO")]
         public HttpPostedFileBase FormularioAanexo2  { get; set; }
-
+        public string Anexo2 { get; set; }
+        public string Constancia { get; set; }
     }
 }
