@@ -5,7 +5,8 @@ using System.Linq;
 using System.Web.Mvc;
 using SINU.ViewModels;
 using System.Threading.Tasks;
-
+using System;
+using System.IO;
 
 namespace SINU.Controllers
 {
@@ -277,6 +278,8 @@ namespace SINU.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        //terminar codigo faltante
         [HttpGet]
         public ActionResult Documentacion(int id)
         {
@@ -285,29 +288,44 @@ namespace SINU.Controllers
             return View(personaVM);
         }
         [HttpPost]
-        public ActionResult Documentacion(int? id, string btn)
+        public ActionResult Documentacion(int? id)
         {
             try
             {
-                switch (btn)
-                {
-                    case "Validado":
-                        db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
-                        break;
-                }
+             db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-            return RedirectToAction("index");
+            return Json(new{View="Index"});
+        }
+
+        //fin del codigo
+        public ActionResult DocPenal(int id)
+        {
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+            string NombreArchivo = id + "_Certificado.pdf";
+            string Descargar = CarpetaDeGuardado + NombreArchivo;
+            //string UbicacionPDF = $"{ubicacion}Documentacion\\"+id+".pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
+            //el tercer para obligar la descarga del archivo
+            return File(FileBytes, "application/pdf", NombreArchivo);
 
         }
-        public ActionResult DocPenal()
+
+
+        public ActionResult GetAnexo2Pdf(int id)
         {
-            string cadena = HttpContext.Server.MapPath("/Documentacion/ArchivosDocuPenal/1263_certificado.pdf");
-            //string path = HttpContext.Server.MapPath("/pdf/service_reports/SR26175.pdf");
-            return Json(new { path = cadena });
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+            string NombreArchivo = id + "_Anexo2.pdf";
+            string Descargar = CarpetaDeGuardado + NombreArchivo;
+            //string UbicacionPDF = $"{ubicacion}Documentacion\\"+id+".pdf";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
+            //el tercer para obligar la descarga del archivo
+            return File(FileBytes, "application/pdf", NombreArchivo);
         }
         public ActionResult PresentacionAsignaFecha(int id)
         {
@@ -364,5 +382,37 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
+        [HttpGet]
+        public ActionResult ListaProblema(int ID_persona)
+        {
+            //List<DataVerificacion> dataVerificacions;
+            //dataVerificacions = db.DataVerificacion.ToList();
+            IDPersonaVM personaVM = new IDPersonaVM();
+
+            List<DataVerificacion> data = new List<DataVerificacion>();
+            data = db.DataVerificacion.ToList();
+
+            personaVM.DataVerificacionVM = data;
+            personaVM.ID_PER = ID_persona;
+            return View(personaVM);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult DataProblema(int? id,int id_per)
+        {
+            vInscripcionDetalle vdetalle;
+            DataVerificacion data;
+            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona==id_per);
+            data = db.DataVerificacion.FirstOrDefault(m => m.IdDataVerificacion == id);
+            ViewBag.Nombre = vdetalle.Nombres;
+            ViewBag.Apellido = vdetalle.Apellido;
+            ViewBag.IdInscripcion = vdetalle.IdInscripcion;
+            ViewBag.Texto = data.Descripcion;
+
+            return View();
+        }
+      
     }
 }

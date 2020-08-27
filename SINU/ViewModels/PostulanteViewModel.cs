@@ -17,7 +17,7 @@ namespace SINU.ViewModels
         public string IDETAPA { get; set; }
         //public bool YAguardado { get; set; }
         public bool NoPostulado { get; set; }
-
+        public List<DataVerificacion> DataVerificacionVM { get;set; }
     }
 
     public class PersonaFamiliaVM
