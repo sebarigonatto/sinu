@@ -1,23 +1,25 @@
-﻿
-<object id="myPdf" type="application/pdf" data="path/file.pdf"></object>
-<h1>asdadgaghsdgasd</h1>
-@section Scripts {
-    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
-    <script type="text/javascript">
-        function openfile() {
-            alert("asasdasd")
-        $.ajax({
-            url: '@Url.Action("DocPenal", "Delegacion")',
-            type: "POST",
-            dataType: "application/json",
-            success: function (data) {
-                $('#showpdf').html('<object id="myPdf" type="application/pdf" data="' + data.path +'"></object>');
-            },
-            error: function (err) {
-                alert(err)
-            }
-        });
-        }
-    </script>
+﻿@model SINU.ViewModels.IDPersonaVM
+<h5>1°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
+<p>
+    Otorgado por el Registro Nacional de Reincidencia, dependiente del Ministerio de
+    Justicia y Derechos Humanos. (NO Constancia Policial). Tener presente que este
+    documento tiene una validez de SEIS (6) meses y es un <b>“requisito condicionante”</b>,
+    conforme a lo dispuesto en el Anexo A, Artículo 5 de la Ley Marco de Regulación del
+    Empleo Público Nacional Nº 25.164.
+</p>
 
-}
+<div class="container text-center">
+    @Html.ActionLink("Descargar Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-primary w-100 " })
+</div>
+
+<h5>2°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
+<p>
+    Debera descargar el formulario e imprimirlo, rellenar con los datos que se solicitan en el mismo, firmar y aclarar.
+    Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
+</p>
+<div class="container text-center">
+    @Html.ActionLink("Descargar Formulario", "GetAnexo2Pdf", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-primary w-100 " })
+</div>
+<br />
+<br />
+

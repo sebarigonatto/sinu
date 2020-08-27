@@ -1,0 +1,52 @@
+﻿@model SINU.ViewModels.IDPersonaVM
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>ListaProblema</title>
+        <table>
+            <thead>
+                @*<th class="secondary">
+                        @Html.DisplayNameFor(model => model.DataVerificacionVM[0].IdDataVerificacion)
+                    </th>*@
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model.DataVerificacionVM[0].Descripcion)
+            </th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.DataVerificacionVM)
+                {
+                    <tr>
+                        @*<td>
+                                @Html.DisplayFor(modelitem => item.IdDataVerificacion)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelitem => item.Descripcion)
+                        </td>
+                        <td class="align-content-md-center">
+                            &ensp;
+                            @Html.ActionLink("Problema Encontrado", "DataProblema", new {id=item.IdDataVerificacion, id_per=Model.ID_PER }, new { @class = "btn btn-dark w-100" })
+                            &ensp;
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    </head>
+    <body>
+        <div>
+        </div>
+    </body>
+</html>
+
+}
