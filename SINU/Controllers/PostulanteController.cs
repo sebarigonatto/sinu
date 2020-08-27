@@ -621,7 +621,7 @@ namespace SINU.Controllers
                                     Text = m.Nombre
                                 })
                                 .ToList();
-                            estudio.INST_EXT = false;
+                            estudio.vPersona_EstudioIdVM.INST_EXT = false;
                             estudio.vPersona_EstudioIdVM.Nombre = "";
                     }
                     else
@@ -631,22 +631,21 @@ namespace SINU.Controllers
                             estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
                             estudio.Localidad = new List<string>();
                             estudio.InstitutoVM = new List<SelectListItem>();
-                            estudio.INST_EXT = true;
+                            estudio.vPersona_EstudioIdVM.INST_EXT = true;
                     }
                 }
                 else
                 {
                     VPersona_Estudio nuevoestu = new VPersona_Estudio()
                     {
-                        
-                        IdInstitutos = 0,
-                        IdEstudio = 0,
-                        NombreYPaisInstituto = "-",
+                        IdPersona = ID_persona,
+                        NombreYPaisInstituto = "-", 
+                        INST_EXT = false,
                         Completo= true,
-                        IdPersona = ID_persona
-                     
+                        CursandoUltimoAnio=true
+                       
                     };
-                    estudio.INST_EXT = false;
+              
                     estudio.vPersona_EstudioIdVM = nuevoestu;
                     estudio.Localidad = new List<string>();
                     estudio.InstitutoVM = new List<SelectListItem>();

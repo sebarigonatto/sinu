@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.ModelBinding;
 
 namespace SINU.Models
 {
@@ -90,7 +91,7 @@ namespace SINU.Models
         public string Email { get; set; }
         public int IdPersona { get; set; }
         [Required]
-        [RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
+        [RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")] 
         public string CUIL { get; set; }
         [Display(Name = "Fecha de Nacimiento")]
         [Required]
@@ -203,6 +204,7 @@ namespace SINU.Models
 
     public partial class VPersona_EstudioMetadata
     {
+        [Required]
         public int IdPersona { get; set; }
         [Required]
         [Display(Name = "Nivel de Estudio")]
@@ -210,23 +212,34 @@ namespace SINU.Models
         public int IdEstudio { get; set; }
         [Required]
         public string Titulo { get; set; }
+        [Required]
         public bool Completo { get; set; }
+        [Required]
         public int IdInstitutos { get; set; }
-        [Display(Name = "Nombre del Instituto:")]
-        public string Nombre { get; set; }
+        [Required]
         [RegularExpression("^-?[0-9]+([,][0-9]*)?$", ErrorMessage = "Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
+        [Required]
         [Display(Name = "Cantidad de Materias Adeudadas:")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
+        [Required]
         [Display(Name = "Ultimo año Cursado:")]
         [RegularExpression("^-?[0-9]*", ErrorMessage = "Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
         public string Nivel { get; set; }
+        //[Required]
         public string NombreYPaisInstituto { get; set; }
+        [Required]
         public string Jurisdiccion { get; set; }
+        [Required]
+        [Display(Name = "Nombre del Instituto:")]
+        public string Nombre { get; set; }
+        [Required]
         public string Localidad { get; set; }
         [Display(Name ="¿Cursando el Ultimo año?")]
+        [Required]
         public bool CursandoUltimoAnio { get; set; }
+     
     }
 
     public partial class vPersona_IdiomaMetadadata

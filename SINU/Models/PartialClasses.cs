@@ -30,6 +30,9 @@ namespace SINU.Models
     [MetadataType(typeof(VPersona_EstudioMetadata))]
     public partial class VPersona_Estudio
     {
+        [Required]
+        [Display(Name = "Instituto en el Exterior?")]
+        public bool INST_EXT { get; set; }
     }
     [MetadataType(typeof(vPersona_IdiomaMetadadata))]
     public partial class vPersona_Idioma

@@ -49,10 +49,12 @@ new { id = "BeginFormEstudioCUD" }))
                                 </div>
                             </div>
                             <div class="form-group">
-                                @Html.Label("Instituto en el Exterior?", htmlAttributes: new { @class = "control-label col-md-auto" })
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.INST_EXT, htmlAttributes: new { @class = "control-label col-md-12" })
 
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.INST_EXT, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker", @id = "DropdownEXT" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.INST_EXT, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker", @id = "DropdownEXT" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.INST_EXT, "", new { @class = "text-danger" })
+
                                 </div>
                             </div>
 
@@ -63,25 +65,27 @@ new { id = "BeginFormEstudioCUD" }))
                                     <div class="INSAR">
                                         @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, new SelectList(Model.Provincia, "", ""), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboJuriEST" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.Provincia, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Jurisdiccion, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group INSAR">
                                 @Html.LabelFor(model => model.Localidad, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
                                     @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Localidad, new SelectList(Model.Localidad, "", ""), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboLocaliEST" })
-                                    @Html.ValidationMessageFor(model => model.Localidad, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Localidad, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.Nombre, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.Nombre, new { @class = "form-control", @id = "IdInstEST" })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
+
                                     <div class="INSAR">
 
                                         @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboIdInstEST" })
+                                        @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.IdInstitutos, "", new { @class = "text-danger" })
                                     </div>
-                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -89,9 +93,9 @@ new { id = "BeginFormEstudioCUD" }))
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Completo, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Completo, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker", @id = "TerminoEST" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.Completo, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form -control selectpicker", @id = "TerminoEST" })
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Completo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -105,8 +109,17 @@ new { id = "BeginFormEstudioCUD" }))
                             <div class="form-group" id="CurUltAño">
                                 @Html.LabelFor(model => model.vPersona_EstudioIdVM.CursandoUltimoAnio, htmlAttributes: new { @class = "control-label col-md-12" })
                                 <div class="col-md-10">
-                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.CursandoUltimoAnio, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model),"Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker",@id="UltimoAño" })
+                                    @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.CursandoUltimoAnio, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), htmlAttributes: new { @class = "form-control selectpicker", @id = "UltimoAño" })
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.CursandoUltimoAnio, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" id="PROMEDIO">
+                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Promedio, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.Promedio, new { htmlAttributes = new { @class = "form-control  " } })
+                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Promedio, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group" id="CANTMATERIA">
@@ -114,14 +127,6 @@ new { id = "BeginFormEstudioCUD" }))
                                 <div class="col-md-10">
                                     @Html.TextBoxFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, new { @class = "form-control  " })
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.CantidadMateriaAdeudadas, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group" id="PROMEDIO">
-                                @Html.LabelFor(model => model.vPersona_EstudioIdVM.Promedio, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.vPersona_EstudioIdVM.Promedio, new { htmlAttributes = new { @class = "form-control  " } })
-                                    @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Promedio, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group" id="ULT_AÑO">
