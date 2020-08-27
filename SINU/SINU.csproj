@@ -420,6 +420,9 @@
     <Compile Include="Models\spValidarUsuario_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_ConsultaInscriptosModalidadGenero_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -452,6 +455,9 @@
     </Compile>
     <Compile Include="Models\ValidacionesPersnalizadasAttribute.cs" />
     <Compile Include="Models\vConfiguracionAdmin.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vConsultaInscripciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vConvocatoriaDetalles.cs">

@@ -651,7 +651,7 @@ namespace SINU.Controllers
                     estudio.InstitutoVM = new List<SelectListItem>();
                 };
                 return PartialView(estudio);
-
+                
             }
             catch (Exception ex)
             {

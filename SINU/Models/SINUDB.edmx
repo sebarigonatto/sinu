@@ -623,6 +623,36 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene defin
           <Property Name="IdConfiguracion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vConsultaInscripciones">
+          <Key>
+            <PropertyRef Name="Modalidad_Siglas" />
+            <PropertyRef Name="Modalidad" />
+            <PropertyRef Name="Genero" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdInscripcionEtapaEstado" />
+            <PropertyRef Name="IdSecuencia" />
+          </Key>
+          <Property Name="Delegacion" Type="varchar" MaxLength="100" />
+          <Property Name="Modalidad_Siglas" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Modalidad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
+          <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vConvocatoriaDetalles">
           <Key>
@@ -1922,6 +1952,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_ConsultaInscriptosModalidadGenero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -2288,6 +2319,24 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConfiguracionAdmin].[UsoDato] AS [UsoDato], 
     [vConfiguracionAdmin].[IdConfiguracion] AS [IdConfiguracion]
     FROM [dbo].[vConfiguracionAdmin] AS [vConfiguracionAdmin]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vConsultaInscripciones" EntityType="Self.vConsultaInscripciones" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vConsultaInscripciones].[Delegacion] AS [Delegacion], 
+    [vConsultaInscripciones].[Modalidad_Siglas] AS [Modalidad_Siglas], 
+    [vConsultaInscripciones].[Modalidad] AS [Modalidad], 
+    [vConsultaInscripciones].[Genero] AS [Genero], 
+    [vConsultaInscripciones].[Apellido] AS [Apellido], 
+    [vConsultaInscripciones].[Nombres] AS [Nombres], 
+    [vConsultaInscripciones].[Email] AS [Email], 
+    [vConsultaInscripciones].[Etapa] AS [Etapa], 
+    [vConsultaInscripciones].[Estado] AS [Estado], 
+    [vConsultaInscripciones].[IdPersona] AS [IdPersona], 
+    [vConsultaInscripciones].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
+    [vConsultaInscripciones].[IdSecuencia] AS [IdSecuencia], 
+    [vConsultaInscripciones].[Fecha] AS [Fecha], 
+    [vConsultaInscripciones].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio]
+    FROM [dbo].[vConsultaInscripciones] AS [vConsultaInscripciones]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vConvocatoriaDetalles" EntityType="Self.vConvocatoriaDetalles" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -4599,6 +4648,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
           </FunctionImport>
           <EntitySet Name="ConsultaProgramada" EntityType="SINUModel.ConsultaProgramada" />
+          <EntitySet Name="vConsultaInscripciones" EntityType="SINUModel.vConsultaInscripciones" />
+          <FunctionImport Name="sp_ConsultaInscriptosModalidadGenero" ReturnType="Collection(SINUModel.sp_ConsultaInscriptosModalidadGenero_Result)" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5339,6 +5390,42 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Action" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Parametros" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="vConsultaInscripciones">
+          <Key>
+            <PropertyRef Name="Modalidad_Siglas" />
+            <PropertyRef Name="Modalidad" />
+            <PropertyRef Name="Genero" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdInscripcionEtapaEstado" />
+            <PropertyRef Name="IdSecuencia" />
+          </Key>
+          <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Modalidad_Siglas" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Modalidad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Genero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="sp_ConsultaInscriptosModalidadGenero_Result">
+          <Property Type="Int64" Name="ID" Nullable="true" />
+          <Property Type="String" Name="Modalidad_Siglas" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Genero" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="Int32" Name="SubTotal" Nullable="true" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6636,6 +6723,38 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vConsultaInscripciones">
+            <EntityTypeMapping TypeName="SINUModel.vConsultaInscripciones">
+              <MappingFragment StoreEntitySet="vConsultaInscripciones">
+                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
+                <ScalarProperty Name="Modalidad_Siglas" ColumnName="Modalidad_Siglas" />
+                <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultaInscriptosModalidadGenero" FunctionName="SINUModel.Store.sp_ConsultaInscriptosModalidadGenero">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.sp_ConsultaInscriptosModalidadGenero_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Modalidad_Siglas" ColumnName="Modalidad_Siglas" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

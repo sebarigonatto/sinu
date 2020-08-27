@@ -112,6 +112,7 @@ namespace SINU.Models
         public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
+        public virtual DbSet<vConsultaInscripciones> vConsultaInscripciones { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1193,6 +1194,11 @@ namespace SINU.Models
                 new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result1>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter);
+        }
+    
+        public virtual ObjectResult<sp_ConsultaInscriptosModalidadGenero_Result> sp_ConsultaInscriptosModalidadGenero()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaInscriptosModalidadGenero_Result>("sp_ConsultaInscriptosModalidadGenero");
         }
     }
 }
