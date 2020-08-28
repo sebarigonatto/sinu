@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<Consulta.ConsultaProgramada>*@
-@model IEnumerable<SINU.Models.ConsultaProgramada>
+﻿@model IEnumerable<SINU.Models.ConsultaProgramada>
 
 @{
     ViewBag.Title = "Index";
@@ -60,11 +59,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Parametros)
                 </td>*@
-            <td>
-                @*  @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |*@
-                @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
-                @*  @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })*@
-            </td>
+        <td>
+            @*  @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |*@
+            @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
+            @*  @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })*@
+            @* @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })*@
+            @Html.ActionLink("ABRIR", item.Action, item.Controller)
+
+        </td>
+
         </tr>
     }
 
