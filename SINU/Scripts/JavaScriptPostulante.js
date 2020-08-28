@@ -577,7 +577,7 @@ $(document).ready(function () {
             $("label[for='Provincia']").text("Pais");
             $(".INSAR").hide();
             $("#ComboIdInstEST").val(0);
-            $(".COM_ESTUAR").selectpicker("val", "");
+            //$(".COM_ESTUAR").selectpicker("val", "");
         } else {
             $("#JuriEST,#IdInstEST").hide().val("");
             $("label[for='Provincia']").text("Provincia/Juridiccion");
@@ -625,10 +625,10 @@ $(document).ready(function () {
                 //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
                 var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
                 //alert(combocas);
-                $(combocas).append("<option>Seleccione una Opcion</option>");
                 $.each(data, function () {
                     $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                 });
+                $(combocas).val("");
                 //refresco los combobox con los datos nuevos
                 $(combocas).selectpicker('refresh');
 
