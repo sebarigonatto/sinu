@@ -18,10 +18,13 @@
     <thead>
         <tr>
             <th class="text-center">
+                @Html.DisplayNameFor(model => model.IdGrupoCarrOficio)
+            </th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th class="text-center">
-                @*@Html.DisplayNameFor(model => model.Personal)*@
+                @Html.DisplayNameFor(model => model.Personal)
             </th>
             <th></th>
         </tr>
@@ -29,19 +32,22 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Personal)
-                </td>
-                <td class="justify-content-center align-items-center d-md-flex">
-                    @Html.ActionLink("  ", "Edit", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Details", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Delete", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-trash-alt" })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdGrupoCarrOficio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Personal)
+            </td>
+            <td class="justify-content-center align-items-center d-md-flex">
+                @Html.ActionLink("  ", "Edit", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                @Html.ActionLink("  ", "Details", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                @Html.ActionLink("  ", "Delete", new { id = item.IdGrupoCarrOficio }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -140,7 +140,6 @@ namespace SINU.Controllers.Administrador.Convocatorias
             //CheckBoxes li = new CheckBoxes { Text = NuevogrupocarroficioVM.Carreras2[i].CarreraUoficio, Value = NuevogrupocarroficioVM.Carreras2[i].IdCarreraOficio };
             //NuevogrupocarroficioVM.Carreras3.Add(li);
 
-
             if (grupoCarrOficio == null)
             {
                 return HttpNotFound();
@@ -225,35 +224,60 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 try
                 {
-                    db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
-               
+                    db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio,
+                        grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion,
+                        stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal,
+                        ObjMensaje);
 
-                //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
-                String mens = ObjMensaje.Value.ToString();
-                switch (mens)
-                {
-                    case string a when a.Contains("Exito"):
-                        return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() } );
-                    //write "<div>Custom Value 1</div>"
-                case string a when a.Contains("Error"):
+
+                    //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
+                    String mens = ObjMensaje.Value.ToString();
+                    switch (mens)
                     {
-                        grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
-                        grupoCarrOficiovm.ErrorDevuelto = ObjMensaje.Value.ToString();
-                        return View(grupoCarrOficiovm);
-                   };
-                    //case string a when a.Contains("Error"):
-                    //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
-
-            }
-                    //aca haria un case of segun lo recibido en el mensaje (supongo)
-                    //lo mando al index si hay exito o queda en la pantalla de creat
-                    //grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
+                        case string a when a.Contains("Exito"):
+                            return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() });
+                        //write "<div>Custom Value 1</div>"
+                        case string a when a.Contains("Error"):
+                            {
+                                grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+                                grupoCarrOficiovm.ErrorDevuelto = ObjMensaje.Value.ToString();
+                                return View(grupoCarrOficiovm);
+                            };
+                            
+                    }                   
                 }
                 catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
                 {
                     //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
+                    //return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "GrupoCarreraOficio", "Create"));
+                    grupoCarrOficiovm.Carreras = db.spCarrerasDelGrupo(grupoCarrOficiovm.IdGCOOriginal, "").ToList();
+                    GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(grupoCarrOficiovm.IdGCOOriginal);
+                    string idCArreras2 = grupoCarrOficio.Personal;
+                    //List<spCarrerasDelGrupo_Result> lst = new List<spCarrerasDelGrupo_Result>();                    
+                    List<CarreraOficio> lst = new List<CarreraOficio>();
+                    List<CarreraOficio> lstCarreras2 = new List<CarreraOficio>();
+                    lst = db.CarreraOficio.ToList();
+                    for (int i = 0; i < lst.Count; i++)
+                    {
+                        if (lst[i].Personal == idCArreras2)
+                        {
+                            CarreraOficio itemlst = new CarreraOficio { CarreraUoficio = lst[i].CarreraUoficio, IdCarreraOficio = lst[i].IdCarreraOficio };
+                            lstCarreras2.Add(itemlst);
+                        }
+                    }                 
+                    grupoCarrOficiovm.Carreras2 = lstCarreras2.ToList();
+                    //prueba de carrera 3
+                    grupoCarrOficiovm.Carreras3 = new List<CheckBoxes>();
+                    //cargo la lista que se va a mostrar checkeada
+                    for (int i = 0; i < grupoCarrOficiovm.Carreras2.Count(); i++)
+                    {
+                        //ListItem li = new ListItem(value, value);
+                        CheckBoxes li = new CheckBoxes { Text = grupoCarrOficiovm.Carreras2[i].CarreraUoficio, Value = grupoCarrOficiovm.Carreras2[i].IdCarreraOficio };
+                        grupoCarrOficiovm.Carreras3.Add(li);
 
-                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "GrupoCarreraOficio", "Create"));
+                    };
+                    grupoCarrOficiovm.ErrorDevuelto = ObjMensaje.Value.ToString();
+                    return View(grupoCarrOficiovm);
                 }
             }
             return View(grupoCarrOficiovm);

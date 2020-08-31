@@ -57,4 +57,29 @@
     });
 
 
+
+    ///VALIDACION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
+    //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
+   
+    //jQuery.validator.addMethod('RequiredIf', function (value, element, params) {
+
+    //    if (value == null || value == "") {
+    //        var value2 = $("#" + params).val();
+    //        if (value2 == null || value2 == "") {
+    //            return false;
+    //        }
+    //    };
+    //    return true;
+    //});
+
+    ////Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
+    //jQuery.validator.unobtrusive.adapters.add('RequiredIf', ["NombreCampo","ValueCampo"], function (options) {
+
+    //    options.rules['RequiredIf'] = options.params.celtel;
+    //    if (options.message) {
+    //        options.messages['RequiredIf'] = options.message;
+    //    }
+    //});
+
+
 }(jQuery));

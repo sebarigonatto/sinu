@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace SINU.Models
 {
@@ -175,6 +176,67 @@ namespace SINU.Models
 
     }
 
+
+    //validacion que los campos celular o telefono contengan datos
+    //[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+
+    public class RequiredIfAttribute : ValidationAttribute//, IClientValidatable
+    {
+        public string CampoComparar;
+        public bool ValueComparar;
+        public RequiredIfAttribute(string campoComparar,bool valueComparar)
+        {
+            CampoComparar = campoComparar;
+            ValueComparar = valueComparar;
+        }
+
+
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+
+            ValidationResult valido = ValidationResult.Success;
+            try
+            {   var otrocampo = validationContext.ObjectType.GetProperty(CampoComparar);
+                var valueCampoComparar = otrocampo.GetValue(validationContext.ObjectInstance, null);
+
+                // 2 formas de verificar la condicion 
+                //if (!((bool)valueCampoComparar ^ ValueComparar))
+                if (((bool)valueCampoComparar && ValueComparar) || (!(bool)valueCampoComparar && !ValueComparar) )           
+                {
+                   
+                    //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
+                    //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
+
+                    if (value == null || value == "")
+                    {
+                       valido = new ValidationResult(ErrorMessage);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                valido = new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
+            }
+            return valido;
+        }
+        //agregué el método GetClientValidationRules() que devuelve las reglas de validación del cliente para esta clase.
+        //public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        //{
+        //    ModelClientValidationRule mvr = new ModelClientValidationRule();
+        //    mvr.ErrorMessage = ErrorMessage;
+        //    //nombre de la validadcion que usara para agregar a los metodos de validacion discreta
+        //    mvr.ValidationType = "RequiredIf";
+        //    //le envio el parametro 
+        //    mvr.ValidationParameters.Add("NombreCampo", CampoComparar);
+        //    mvr.ValidationParameters.Add("ValueCampo", ValueComparar);
+
+        //    return new[] { mvr };
+        //}
+
+
+    }
 
 
 }

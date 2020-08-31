@@ -9,6 +9,7 @@
     lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });
 }
 
+
 <h2>Editar Registro</h2>
 
 @using (Html.BeginForm())
@@ -20,12 +21,12 @@
         <hr />
         <div class="form-group">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(Model=>Model.IdCarreraOficio)
+            @Html.HiddenFor(Model => Model.IdCarreraOficio)
             @Html.HiddenFor(Model => Model.IdGCOOriginal)
             @Html.HiddenFor(Model => Model.SelIDsEdit)
             @*@Html.HiddenFor(Model=>Model.SelectedIDs)*@
             @Html.HiddenFor(model => model.Carreras, new SelectList(Model.Carreras, "IdCarreraOficio", "CarreraUoficio"))
-            @Html.HiddenFor(model => model.Carreras2,new SelectList (Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))
+            @Html.HiddenFor(model => model.Carreras2, new SelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio"))
             @Html.HiddenFor(model => model.Carreras3, new SelectList(Model.Carreras3, "IdCarreraOficio", "CarreraUoficio"))
             @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -45,7 +46,7 @@
             @Html.LabelFor(model => model.Personal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Personal, new SelectList(lst.ToList(), "Value", "Text", Model.Personal), new { @class = "form-control", @id = "ddlRegions" })
-                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })                
+                @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
             </div>
         </div>
         <table class="col-6">
@@ -123,7 +124,7 @@
             });
         });
 
-    </script>   
+    </script>
     <script type="text/javascript">
         //i'm using jquery ready event which will call the javascript chunk after the page has completed loading
         $(document).ready(function () {

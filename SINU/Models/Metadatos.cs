@@ -216,13 +216,16 @@ namespace SINU.Models
         public bool Completo { get; set; }
         [Required]
         public int IdInstitutos { get; set; }
-        [Required]
+        //[Required]
+        [RequiredIf("Completo", true)]
         [RegularExpression("^-?[0-9]+([,][0-9]*)?$", ErrorMessage = "Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
-        [Required]
+        //[Required]
+        [RequiredIf("CursandoUltimoAnio", false)]
         [Display(Name = "Cantidad de Materias Adeudadas:")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
-        [Required]
+        //[Required]
+        [RequiredIf("CursandoUltimoAnio", false)]
         [Display(Name = "Ultimo año Cursado:")]
         [RegularExpression("^-?[0-9]*", ErrorMessage = "Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
@@ -231,7 +234,9 @@ namespace SINU.Models
         public string NombreYPaisInstituto { get; set; }
         [Required]
         public string Jurisdiccion { get; set; }
-        [Required]
+        //[Required]
+        [RequiredIf("INST_EXT", true)]
+
         [Display(Name = "Nombre del Instituto:")]
         public string Nombre { get; set; }
         [Required]

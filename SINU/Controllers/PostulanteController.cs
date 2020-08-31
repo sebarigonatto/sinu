@@ -642,7 +642,9 @@ namespace SINU.Controllers
                         NombreYPaisInstituto = "-", 
                         INST_EXT = false,
                         Completo= true,
-                        CursandoUltimoAnio=true
+                        CursandoUltimoAnio=true,
+                        Localidad="",
+                        Jurisdiccion=""
                        
                     };
               
@@ -664,12 +666,14 @@ namespace SINU.Controllers
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
-
-            if (Datos.vPersona_EstudioIdVM.Completo)
+            if (Datos.vPersona_EstudioIdVM.IdInstitutos > 0)
             {
-                Datos.vPersona_EstudioIdVM.CursandoUltimoAnio = false;
-                ModelState["vPersona_EstudioIdVM.CursandoUltimoAnio"].Errors.Clear();
+                ModelState["vPersona_EstudioIdVM.Jurisdiccion"].Errors.Clear();
             }
+            else {
+                ModelState["vPersona_EstudioIdVM.Localidad"].Errors.Clear();
+            }
+           
             if (ModelState.IsValid)
             {
                 try
@@ -691,7 +695,7 @@ namespace SINU.Controllers
                     }
                     db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto,e.CursandoUltimoAnio);
 
-                    return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIOS" });
+                    return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIO" });
                 }
                 catch (Exception ex)
                 {
