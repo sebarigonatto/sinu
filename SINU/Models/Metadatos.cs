@@ -217,15 +217,15 @@ namespace SINU.Models
         [Required]
         public int IdInstitutos { get; set; }
         //[Required]
-        [RequiredIf("Completo", true)]
+        [RequiredIf("Completo", true,ErrorMessage ="El campo promedio es requerido.")]
         [RegularExpression("^-?[0-9]+([,][0-9]*)?$", ErrorMessage = "Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
         //[Required]
-        [RequiredIf("CursandoUltimoAnio", false)]
+        [RequiredIf("CursandoUltimoAnio", false, ErrorMessage = "El campo Cantidad de Materias Adeudadas es requerido.")]
         [Display(Name = "Cantidad de Materias Adeudadas:")]
         public Nullable<int> CantidadMateriaAdeudadas { get; set; }
         //[Required]
-        [RequiredIf("CursandoUltimoAnio", false)]
+        [RequiredIf("CursandoUltimoAnio", false, ErrorMessage = "El campo ultimo Año Cursado es requerido.")]
         [Display(Name = "Ultimo año Cursado:")]
         [RegularExpression("^-?[0-9]*", ErrorMessage = "Solo se aceptan numeros enteros")]
         public Nullable<int> ultimoAnioCursado { get; set; }
@@ -235,14 +235,13 @@ namespace SINU.Models
         [Required]
         public string Jurisdiccion { get; set; }
         //[Required]
-        [RequiredIf("INST_EXT", true)]
-
+        [RequiredIf("INST_EXT", true, ErrorMessage = "El campo Nombre de Instituto es requerido.")]
         [Display(Name = "Nombre del Instituto:")]
         public string Nombre { get; set; }
         [Required]
         public string Localidad { get; set; }
-        [Display(Name ="¿Cursando el Ultimo año?")]
         [Required]
+        [Display(Name ="¿Cursando el Ultimo año?")]
         public bool CursandoUltimoAnio { get; set; }
      
     }

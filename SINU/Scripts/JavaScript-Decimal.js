@@ -16,10 +16,10 @@
     ///AVALIDADION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
     //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
     jQuery.validator.addMethod('telefonocelular', function (value, element, params) {
-      
+
         if (value == null || value == "") {
             var value2 = $("#" + params).val();
-            if (value2 == null || value2=="") {
+            if (value2 == null || value2 == "") {
                 return false;
             }
         };
@@ -28,7 +28,7 @@
 
     //Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
     jQuery.validator.unobtrusive.adapters.add('telefonocelular', ["celtel"], function (options) {
- 
+
         options.rules['telefonocelular'] = options.params.celtel;
         if (options.message) {
             options.messages['telefonocelular'] = options.message;
@@ -41,10 +41,10 @@
     jQuery.validator.addMethod('fimenorff', function (value, element, params) {
         var fechaIni = $("#" + params).val().split('/');
         var fechaFin = value.split('/');
-        var fechainicio =new Date(fechaIni[2],fechaIni[1],fechaIni[0]);
+        var fechainicio = new Date(fechaIni[2], fechaIni[1], fechaIni[0]);
         var fechafinal = new Date(fechaFin[2], fechaFin[1], fechaFin[0]);
-        if (fechafinal<=fechainicio) {
-                return false;
+        if (fechafinal <= fechainicio) {
+            return false;
         };
         return true;
     });
@@ -58,28 +58,32 @@
 
 
 
-    ///VALIDACION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
+    //VALIDACION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
     //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
-   
-    //jQuery.validator.addMethod('RequiredIf', function (value, element, params) {
 
-    //    if (value == null || value == "") {
-    //        var value2 = $("#" + params).val();
-    //        if (value2 == null || value2 == "") {
-    //            return false;
-    //        }
-    //    };
-    //    return true;
-    //});
+    jQuery.validator.addMethod('requiredif', function (value, element, params) {
+    //    alert($("select[name$='" + params.nombrecampo + "']").val());
+        var valueCampoComparar = $("select[name$='" + params.nombrecampo + "']").val();
+        if ((valueCampoComparar && params.valuecampo) || (!valueCampoComparar && !params.valuecampo) )
+        {
+            if (value == null || value == "")
+            {
+                return false;
+            };
 
-    ////Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
-    //jQuery.validator.unobtrusive.adapters.add('RequiredIf', ["NombreCampo","ValueCampo"], function (options) {
+        };
+        return true;
+    });
 
-    //    options.rules['RequiredIf'] = options.params.celtel;
-    //    if (options.message) {
-    //        options.messages['RequiredIf'] = options.message;
-    //    }
-    //});
+    //Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
+    jQuery.validator.unobtrusive.adapters.add('requiredif', ["nombrecampo", "valuecampo"], function (options) {
+
+        options.rules['requiredif'] = {
+            nombrecampo: options.params.nombrecampo,
+            valuecampo: options.params.valuecampo
+        };
+        options.messages['requiredif'] = options.message;
+    });
 
 
 }(jQuery));

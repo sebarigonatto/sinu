@@ -180,7 +180,7 @@ namespace SINU.Models
     //validacion que los campos celular o telefono contengan datos
     //[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 
-    public class RequiredIfAttribute : ValidationAttribute//, IClientValidatable
+    public class RequiredIfAttribute : ValidationAttribute, IClientValidatable
     {
         public string CampoComparar;
         public bool ValueComparar;
@@ -208,7 +208,7 @@ namespace SINU.Models
                     //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
                     //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
 
-                    if (value == null || value == "")
+                    if (value == null || (string)value == "")
                     {
                        valido = new ValidationResult(ErrorMessage);
                     }
@@ -222,18 +222,18 @@ namespace SINU.Models
             return valido;
         }
         //agregué el método GetClientValidationRules() que devuelve las reglas de validación del cliente para esta clase.
-        //public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
-        //{
-        //    ModelClientValidationRule mvr = new ModelClientValidationRule();
-        //    mvr.ErrorMessage = ErrorMessage;
-        //    //nombre de la validadcion que usara para agregar a los metodos de validacion discreta
-        //    mvr.ValidationType = "RequiredIf";
-        //    //le envio el parametro 
-        //    mvr.ValidationParameters.Add("NombreCampo", CampoComparar);
-        //    mvr.ValidationParameters.Add("ValueCampo", ValueComparar);
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            ModelClientValidationRule mvr = new ModelClientValidationRule();
+            mvr.ErrorMessage = ErrorMessage;
+            //nombre de la validadcion que usara para agregar a los metodos de validacion discreta
+            mvr.ValidationType = "requiredif";
+            //le envio el parametro 
+            mvr.ValidationParameters.Add("nombrecampo", CampoComparar);
+            mvr.ValidationParameters.Add("valuecampo", ValueComparar);
 
-        //    return new[] { mvr };
-        //}
+            return new[] { mvr };
+        }
 
 
     }
