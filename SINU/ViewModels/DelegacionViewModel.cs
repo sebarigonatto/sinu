@@ -15,4 +15,10 @@ namespace SINU.ViewModels
         public List<vInscripcionEtapaEstadoUltimoEstado> PresentacionVM { get; set; }
        
     }
+    public class ProblemaEcontradoVM
+    {
+        public int ID_PER { get; set; }
+        public int IdDataverificacion { get; set; }
+        public string Comentario { get; set; }
+    }
 }
