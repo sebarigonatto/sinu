@@ -161,5 +161,26 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //carrerasFiltradas
             }
         }
+
+        public JsonResult DevolverCArrerasFiltradas(string ModalidadId)
+        {
+            using (db = new SINUEntities())
+            {
+                if (ModalidadId!="")
+                {
+
+                var ModTipoPersonal = db.Modalidad.Where(x => x.IdModalidad == ModalidadId).Select(m => m.Personal).ToList();
+                string y = ModTipoPersonal[0].ToString();
+                var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == y).Select(m => new SelectListItem
+                {Value = m.IdGrupoCarrOficio,
+                Text=m.Descripcion
+                }).ToList();
+                
+                return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
+                }
+                return Json("", JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
     }
 }
