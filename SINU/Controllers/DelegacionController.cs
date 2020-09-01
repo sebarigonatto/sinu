@@ -283,8 +283,17 @@ namespace SINU.Controllers
         [HttpGet]
         public ActionResult Documentacion(int id)
         {
+            vInscripcionDetalle vdetalle;
+            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+            var NyA = vdetalle.Nombres +" "+ vdetalle.Apellido;
+
+
             IDPersonaVM personaVM = new IDPersonaVM();
             personaVM.ID_PER = id;
+            personaVM.NomyApe = NyA;
+
+
+
             return View(personaVM);
         }
         [HttpPost]
@@ -400,19 +409,38 @@ namespace SINU.Controllers
 
 
         [HttpGet]
-        public ActionResult DataProblema(int? id,int id_per)
+        public ActionResult DataProblema(int id, int id_per)
         {
+
+            ProblemaEcontradoVM problema = new ProblemaEcontradoVM();
+            problema.ID_PER = id_per;
+            problema.IdDataverificacion = id;
+            problema.Comentario = "";
+
             vInscripcionDetalle vdetalle;
+            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id_per);
             DataVerificacion data;
-            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona==id_per);
             data = db.DataVerificacion.FirstOrDefault(m => m.IdDataVerificacion == id);
             ViewBag.Nombre = vdetalle.Nombres;
             ViewBag.Apellido = vdetalle.Apellido;
             ViewBag.IdInscripcion = vdetalle.IdInscripcion;
             ViewBag.Texto = data.Descripcion;
 
+            return View(problema);
+        }
+        [HttpPost]
+        public ActionResult DataProblema(ProblemaEcontradoVM dato)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                
+                
+            }
             return View();
         }
-      
+
+
+
     }
 }

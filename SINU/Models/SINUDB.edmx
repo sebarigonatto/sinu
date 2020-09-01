@@ -678,6 +678,25 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene def
           <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vDataProblemaEncontrado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vDataProblemaEncontrado">
+          <Key>
+            <PropertyRef Name="Apellido_Y_Nombres" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="DataVerificacion" />
+            <PropertyRef Name="IdPostulantePersona" />
+            <PropertyRef Name="IdDataVerificacion" />
+            <PropertyRef Name="IdDataProblemaEncontrado" />
+          </Key>
+          <Property Name="Apellido_Y_Nombres" Type="varchar" MaxLength="102" Nullable="false" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="DataVerificacion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Comentario" Type="varchar" MaxLength="500" />
+          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
+          <Property Name="IdDataVerificacion" Type="int" Nullable="false" />
+          <Property Name="IdDataProblemaEncontrado" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
@@ -2351,6 +2370,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConvocatoriaDetalles].[IdModalidad] AS [IdModalidad], 
     [vConvocatoriaDetalles].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio]
     FROM [dbo].[vConvocatoriaDetalles] AS [vConvocatoriaDetalles]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vDataProblemaEncontrado" EntityType="Self.vDataProblemaEncontrado" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vDataProblemaEncontrado].[Apellido_Y_Nombres] AS [Apellido_Y_Nombres], 
+    [vDataProblemaEncontrado].[DNI] AS [DNI], 
+    [vDataProblemaEncontrado].[DataVerificacion] AS [DataVerificacion], 
+    [vDataProblemaEncontrado].[Comentario] AS [Comentario], 
+    [vDataProblemaEncontrado].[IdPostulantePersona] AS [IdPostulantePersona], 
+    [vDataProblemaEncontrado].[IdDataVerificacion] AS [IdDataVerificacion], 
+    [vDataProblemaEncontrado].[IdDataProblemaEncontrado] AS [IdDataProblemaEncontrado]
+    FROM [dbo].[vDataProblemaEncontrado] AS [vDataProblemaEncontrado]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -4650,6 +4680,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="ConsultaProgramada" EntityType="SINUModel.ConsultaProgramada" />
           <EntitySet Name="vConsultaInscripciones" EntityType="SINUModel.vConsultaInscripciones" />
           <FunctionImport Name="sp_ConsultaInscriptosModalidadGenero" ReturnType="Collection(SINUModel.sp_ConsultaInscriptosModalidadGenero_Result)" />
+          <EntitySet Name="vDataProblemaEncontrado" EntityType="SINUModel.vDataProblemaEncontrado" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5426,6 +5457,23 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="Int32" Name="SubTotal" Nullable="true" />
           <Property Type="Int32" Name="Total" Nullable="true" />
         </ComplexType>
+        <EntityType Name="vDataProblemaEncontrado">
+          <Key>
+            <PropertyRef Name="Apellido_Y_Nombres" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="DataVerificacion" />
+            <PropertyRef Name="IdDataVerificacion" />
+            <PropertyRef Name="IdDataProblemaEncontrado" />
+            <PropertyRef Name="IdPostulantePersona" />
+          </Key>
+          <Property Name="Apellido_Y_Nombres" Type="String" Nullable="false" MaxLength="102" FixedLength="false" Unicode="false" />
+          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DataVerificacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Comentario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdDataVerificacion" Type="Int32" Nullable="false" />
+          <Property Name="IdDataProblemaEncontrado" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6755,6 +6803,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vDataProblemaEncontrado">
+            <EntityTypeMapping TypeName="SINUModel.vDataProblemaEncontrado">
+              <MappingFragment StoreEntitySet="vDataProblemaEncontrado">
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
+                <ScalarProperty Name="IdDataProblemaEncontrado" ColumnName="IdDataProblemaEncontrado" />
+                <ScalarProperty Name="IdDataVerificacion" ColumnName="IdDataVerificacion" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="DataVerificacion" ColumnName="DataVerificacion" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Apellido_Y_Nombres" ColumnName="Apellido_Y_Nombres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

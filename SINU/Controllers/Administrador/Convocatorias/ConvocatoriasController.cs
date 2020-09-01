@@ -146,5 +146,20 @@ namespace SINU.Controllers.Administrador.Convocatorias
             }
             base.Dispose(disposing);
         }
+
+        public JsonResult DevolverFechas(int RegionId)
+        {
+            using (db = new SINUEntities())
+            {
+                //	carreras					Tpersonal
+                var FechasIF = db.PeriodosInscripciones.Where(x=> x.IdPeriodoInscripcion == RegionId).Select(m => new SelectListItem
+                {
+                    //Value = m.FechaFinal.ToString(),
+                    Text = m.FechaInicio.ToString() + " / " + m.FechaFinal.ToString()
+                }).ToList();
+                return Json(FechasIF, JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
     }
 }

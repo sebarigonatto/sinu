@@ -12,7 +12,7 @@
         <ul role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
             <li class="nav-item flex-sm-fill" data-placement="top">
                 <a class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                    3° Documentacion
+                    Documentacion de @Model.NomyApe N°Inscripcion:@Model.ID_PER
                 </a>
             </li>
         </ul>
@@ -287,10 +287,11 @@
                             </nav>
                             <div class="collapse tab-pane fade nav-tab pt-4" id="VerificacionNAV">
                                 @Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER })
-                                <br />
-                                <div class="container text-center">
+                                @*@Html.Partial("ListaProblema")*@
+                                @*<br />*@
+                                @*<div class="container text-center">
                                     <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP8">Validar</button>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
 
@@ -397,12 +398,55 @@
             });
 
 
-            //$(document).ready(function () {
-            //});
+            var tabla = $("#TListadoProblema").DataTable({
+                retrieve: true,
+            });
+            tabla.destroy();
+            $("#TListadoProblema").DataTable({
+                retrieve: true,
+                paging: true,
+                "autoWidth": true,
+
+                //ver si es necesario este fragmento
+                select: false,//'single',
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": [0]
+                }],
+                "ordering": false,
+                //"dom": 'frtp',
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                },
+            });
+            $("#TListadoProblema").DataTable()
         })
         function Exito(response) {
-            if (response.View=="Index") {
-                window.location.href="/Delegacion/Index"
+            if (response.View == "Index") {
+                window.location.href = "/Delegacion/Index"
             }
         }
     </script>

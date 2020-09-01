@@ -464,6 +464,9 @@
     <Compile Include="Models\vConvocatoriaDetalles.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vDataProblemaEncontrado.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

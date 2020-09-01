@@ -113,6 +113,7 @@ namespace SINU.Models
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
         public virtual DbSet<vConsultaInscripciones> vConsultaInscripciones { get; set; }
+        public virtual DbSet<vDataProblemaEncontrado> vDataProblemaEncontrado { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1200,7 +1201,5 @@ namespace SINU.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaInscriptosModalidadGenero_Result>("sp_ConsultaInscriptosModalidadGenero");
         }
-
-        public System.Data.Entity.DbSet<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result> sp_ConsultaInscriptosModalidadGenero_Result { get; set; }
     }
 }

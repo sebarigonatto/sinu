@@ -15,6 +15,7 @@ namespace SINU.ViewModels
         public int ID_PER { get; set; }
         public List<int> EtapaTabs { get; set; }
         public string IDETAPA { get; set; }
+        public string NomyApe { get; set; }
         //public bool YAguardado { get; set; }
         public bool NoPostulado { get; set; }
         public List<DataVerificacion> DataVerificacionVM { get;set; }
