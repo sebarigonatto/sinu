@@ -18,7 +18,6 @@ namespace SINU.Models
         public string DNI { get; set; }
         public string DataVerificacion { get; set; }
         public string Comentario { get; set; }
-        public int IdPersona { get; set; }
         public int IdDataVerificacion { get; set; }
         public int IdDataProblemaEncontrado { get; set; }
         public int IdPostulantePersona { get; set; }

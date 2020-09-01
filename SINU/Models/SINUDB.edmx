@@ -5462,7 +5462,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Apellido_Y_Nombres" />
             <PropertyRef Name="DNI" />
             <PropertyRef Name="DataVerificacion" />
-            <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdDataVerificacion" />
             <PropertyRef Name="IdDataProblemaEncontrado" />
             <PropertyRef Name="IdPostulantePersona" />
@@ -5471,7 +5470,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="DataVerificacion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Comentario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdDataVerificacion" Type="Int32" Nullable="false" />
           <Property Name="IdDataProblemaEncontrado" Type="Int32" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
