@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using System.Web.UI;
+using Microsoft.Ajax.Utilities;
 
 namespace SINU.Models
 {
@@ -180,46 +181,69 @@ namespace SINU.Models
     //validacion que los campos celular o telefono contengan datos
     //[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 
+    /// <summary>Atributo de Validacion donde indica que el campo es requerido o no, segun otro campo con valor boleano o si se indica segun un string indicando con un boleano si deben ser iguales o no al comparar
+    /// </summary>
     public class RequiredIfAttribute : ValidationAttribute, IClientValidatable
     {
         public string CampoComparar;
         public bool ValueComparar;
-        public RequiredIfAttribute(string campoComparar,bool valueComparar)
+        public string TextComparar;
+
+        /// <param name="campoComparar">Campo de donde se recuperar el valor boleano a comparar</param>
+        /// <param name="valueComparar">Condicion que se necesita para que sea requerido este campo</param>
+        public RequiredIfAttribute(string campoComparar, bool valueComparar)
         {
             CampoComparar = campoComparar;
             ValueComparar = valueComparar;
         }
+        /// <param name="campoComparar">Campo de donde se recuperar el valor boleano a comparar</param>
+        /// <param name="valueComparar">Condicion que se necesita para que sea requerido este campo</param>
+        /// <param name="textComparar">Si la condiccion a cumplir implica un variable string, se compara si son iguales o no segun indique el boleano enviado</param>
 
+        public RequiredIfAttribute(string campoComparar, bool valueComparar, string textComparar)
+        {
+            CampoComparar = campoComparar;
+            ValueComparar = valueComparar;
+            TextComparar = textComparar;
+        }
 
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-
-            ValidationResult valido = ValidationResult.Success;
             try
-            {   var otrocampo = validationContext.ObjectType.GetProperty(CampoComparar);
+            {
+                var otrocampo = validationContext.ObjectType.GetProperty(CampoComparar);
                 var valueCampoComparar = otrocampo.GetValue(validationContext.ObjectInstance, null);
 
-                // 2 formas de verificar la condicion 
-                //if (!((bool)valueCampoComparar ^ ValueComparar))
-                if (((bool)valueCampoComparar && ValueComparar) || (!(bool)valueCampoComparar && !ValueComparar) )           
+                if (!TextComparar.IsNullOrWhiteSpace())
                 {
-                   
-                    //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
-                    //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
-
-                    if (value == null || (string)value == "")
+                    if ((ValueComparar && ((string)valueCampoComparar == TextComparar) ) || (!ValueComparar && ((string)valueCampoComparar != TextComparar))) 
                     {
-                       valido = new ValidationResult(ErrorMessage);
-                    }
+                        if (value == null)
+                        {
+                            return new ValidationResult(ErrorMessage);
+                        }
 
+                    }
                 }
+                else
+                {
+                    if (((bool)valueCampoComparar && ValueComparar) || (!(bool)valueCampoComparar && !ValueComparar))
+                    {
+                        if (value == null)
+                        {
+                            return new ValidationResult(ErrorMessage);
+                        }
+
+                    }
+                }
+                return null;
             }
             catch (Exception ex)
             {
-                valido = new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
+                return new ValidationResult(ErrorMessage + " " + ex.InnerException.Message);
             }
-            return valido;
+
         }
         //agregué el método GetClientValidationRules() que devuelve las reglas de validación del cliente para esta clase.
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
@@ -231,7 +255,7 @@ namespace SINU.Models
             //le envio el parametro 
             mvr.ValidationParameters.Add("nombrecampo", CampoComparar);
             mvr.ValidationParameters.Add("valuecampo", ValueComparar);
-
+            mvr.ValidationParameters.Add("textocompara", TextComparar);
             return new[] { mvr };
         }
 

@@ -163,42 +163,63 @@ namespace SINU.Models
     public partial class vPersona_DomicilioMetadata
     {
         public string Email { get; set; }
+        [Required]
         public int IdPersona { get; set; }
+        [Required]
         public string Calle { get; set; }
+        [Required]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
         public string Numero { get; set; }
+        [Required]
         public string Piso { get; set; }
+        [Required]
         public string Unidad { get; set; }
         public string Pais { get; set; }
+        [RequiredIf("IdPais",true,"AR",ErrorMessage ="Debe seleccionar un Provincia")]
         public string Provincia { get; set; }
+        [RequiredIf("IdPais", false, "AR", ErrorMessage = "Debe Ingresar una Localidad")]
         public string Localidad { get; set; }
+        [Required]
         [Display(Name = "Codigo Postal")]
         public string CODIGO_POSTAL { get; set; }
         public string Prov_Loc_CP { get; set; }
         [Display(Name = "Pais")]
         public string IdPais { get; set; }
+        [RequiredIf("IdPais", true, "AR", ErrorMessage = "Debe seleccionar una Localidad")]
         public Nullable<int> IdLocalidad { get; set; }
+        [Required]
         [Display(Name = "Calle")]
         public string EventualCalle { get; set; }
+        [Required]
         [Display(Name = "Numero")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
         public string EventualNumero { get; set; }
+        [Required]
         [Display(Name = "Piso")]
         public string EventualPiso { get; set; }
+        [Required]
         [Display(Name = "Unidad")]
         public string EventualUnidad { get; set; }
         [Display(Name = "Pais")]
         public string EventualPais { get; set; }
+        [RequiredIf("EventualIdPais", true, "AR", ErrorMessage = "Debe Seleccionar una Provincia")]
         [Display(Name = "Provincia")]
         public string EventualProvincia { get; set; }
+        [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "Debe Ingresar una Localidad")]
         [Display(Name = "Localidad")]
         public string EventualLocalidad { get; set; }
+        [Required]
         [Display(Name = "Codigo Postal")]
         public string EventualCodigo_Postal { get; set; }
         public string EventualProv_Loc { get; set; }
+        [RequiredIf("EventualIdPais", true, "AR", ErrorMessage = "Debe seleccionar una Localidad")]
+        [Display(Name ="Localidad")]
         public Nullable<int> EventualIdLocalidad { get; set; }
+        [Required]
         public string EventualIdPais { get; set; }
+        [Required]
         public int IdDomicilioDNI { get; set; }
+        [Required]
         public int IdDomicilioActual { get; set; }
     }
 
@@ -216,7 +237,6 @@ namespace SINU.Models
         public bool Completo { get; set; }
         [Required]
         public int IdInstitutos { get; set; }
-        //[Required]
         [RequiredIf("Completo", true,ErrorMessage ="El campo promedio es requerido.")]
         [RegularExpression("^-?[0-9]+([,][0-9]*)?$", ErrorMessage = "Solo se aceptan numeros enteros o decimales")]
         public Nullable<double> Promedio { get; set; }
@@ -248,6 +268,7 @@ namespace SINU.Models
 
     public partial class vPersona_IdiomaMetadadata
     {
+        
         public string Email { get; set; }
         public Nullable<int> IdPersona { get; set; }
         [Required(ErrorMessage = "Debe seleccionar Nivel de Habla.")]

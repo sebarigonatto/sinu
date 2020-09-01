@@ -58,29 +58,58 @@
 
 
 
-    //VALIDACION DE LADO DEL CLIENTE PARA LA VALIDACION DE LOS CAMPOR TELEFONO Y CELULAR
-    //se agrega este metodo para la validacion discreta, recibe el valor del control y el parametro(id del control a comparar)
+    //VALIDACION DE LADO DEL CLIENTE PARA "REQUIREDIF"
+    //se agrega este metodo para la validacion discreta, recibe el valor del control y el ATRIBUTO name del select a recuperar valor
 
     jQuery.validator.addMethod('requiredif', function (value, element, params) {
-    //    alert($("select[name$='" + params.nombrecampo + "']").val());
+        //    alert($("select[name$='" + params.nombrecampo + "']").val());
         var valueCampoComparar = $("select[name$='" + params.nombrecampo + "']").val();
-        if ((valueCampoComparar && params.valuecampo) || (!valueCampoComparar && !params.valuecampo) )
-        {
-            if (value == null || value == "")
-            {
-                return false;
-            };
+        var textComparar = params.textocompara.toString();
+        valueCampo = (params.valuecampo == "True") ? true : false;
+        //if ((valueCampoComparar && params.valuecampo) || (!valueCampoComparar && !params.valuecampo)) {
+        //    if (value == null || value == "") {
+        //        return false;
+        //    };
 
-        };
+        //};
+        //return true;
+
+
+
+
+
+
+        if (params.textocompara != "") {
+            if ((valueCampo && (valueCampoComparar == textComparar)) || (!valueCampo && (valueCampoComparar != textComparar))) {
+                if ((value == null) || (value == "")) {
+                    return false;
+                }
+            } 
+        }
+        else {
+            if ((valueCampoComparar && valueCampo) || (!valueCampoComparar && !valueCampo)) {
+                if (value == null || value == "") {
+                    return false;
+                };
+
+            };
+        }
         return true;
+
+
+
+
+
+
     });
 
     //Este método vincula el complemento de validación discreta jQuery con el método "telefonocelular", y muestra el mensaje de error del lado del cliente
-    jQuery.validator.unobtrusive.adapters.add('requiredif', ["nombrecampo", "valuecampo"], function (options) {
+    jQuery.validator.unobtrusive.adapters.add('requiredif', ["nombrecampo", "valuecampo", "textocompara"], function (options) {
 
         options.rules['requiredif'] = {
             nombrecampo: options.params.nombrecampo,
-            valuecampo: options.params.valuecampo
+            valuecampo: options.params.valuecampo,
+            textocompara: options.params.textocompara
         };
         options.messages['requiredif'] = options.message;
     });

@@ -440,13 +440,13 @@ namespace SINU.Controllers
                 {
                     vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
-                    provincias = db.vProvincia_Depto_Localidad.Select(m => m.Provincia).Distinct().ToList()
+                    provincias = db.vProvincia_Depto_Localidad.Select(m => new SelectListItem { Value = m.Provincia, Text=m.Provincia }).DistinctBy(m=>m.Text).ToList()
                 };
 
                 if (datosdomilio.vPersona_DomicilioVM.IdPais != "AR")
                 {
                     string[] domiextR = datosdomilio.vPersona_DomicilioVM.Prov_Loc_CP.Split('-');
-                    datosdomilio.vPersona_DomicilioVM.Provincia = domiextR[0];
+                    datosdomilio.vPersona_DomicilioVM.TBoxProvincia = domiextR[0];
                     datosdomilio.vPersona_DomicilioVM.Localidad = domiextR[1];
                     datosdomilio.vPersona_DomicilioVM.CODIGO_POSTAL = domiextR[2];
                 };
@@ -454,7 +454,7 @@ namespace SINU.Controllers
                 if (datosdomilio.vPersona_DomicilioVM.EventualIdPais != "AR")
                 {
                     string[] domiextE = datosdomilio.vPersona_DomicilioVM.EventualProv_Loc.Split('-');
-                    datosdomilio.vPersona_DomicilioVM.EventualProvincia = domiextE[0];
+                    datosdomilio.vPersona_DomicilioVM.TBoxEventualProvincia = domiextE[0];
                     datosdomilio.vPersona_DomicilioVM.EventualLocalidad = domiextE[1];
                     datosdomilio.vPersona_DomicilioVM.EventualCodigo_Postal = domiextE[2];
                 };
