@@ -24,6 +24,10 @@ namespace SINU.Models
     [MetadataType(typeof(vPersona_DomicilioMetadata))]
     public partial class vPersona_Domicilio
     {
+        [RequiredIf("IdPais", false,"AR",ErrorMessage ="requerido 12345")]
+        public string TBoxProvincia { get; set; }
+        [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "requerido 12345")]
+        public string TBoxEventualProvincia { get; set; }
     }
 
     

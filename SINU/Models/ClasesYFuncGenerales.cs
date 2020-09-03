@@ -114,7 +114,6 @@ namespace SINU.Models
         /// <param name="ID_Persona">O el IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
-        
         public static async Task<bool> EnvioDeMail(ViewModels.PlantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
         {
             try

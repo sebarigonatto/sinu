@@ -11,11 +11,14 @@ using SINU.ViewModels;
 using System.Data.Entity.Core.Objects;
 using static SINU.ViewModels.GrupoCarrOficiosvm;
 using System.Web.UI.WebControls;
+using SINU.Authorize;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
+    [AuthorizacionPermiso("AdminMenu")]
     public class GrupoCarrOficiosController : Controller
     {
+       
         private SINUEntities db = new SINUEntities();
 
         // GET: GrupoCarrOficios

@@ -66,7 +66,7 @@ namespace SINU.ViewModels
     {
         public vPersona_Domicilio vPersona_DomicilioVM { get; set; }
         public List<sp_vPaises_Result> sp_vPaises_ResultVM { get; set; }
-        public List<string> provincias { get; set; }
+        public List<SelectListItem> provincias { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadREALVM { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadEVENTUALVM { get; set; }
     }

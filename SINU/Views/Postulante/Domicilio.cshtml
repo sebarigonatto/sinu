@@ -76,17 +76,21 @@
                         <div class="col-md-10">
 
                             @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), "Seleccione un Pais", htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisR" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.IdPais)
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.IdPais, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.Provincia, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.Provincia, new { @class = "form-control Real", @id = "ProvinciaR" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.TBoxProvincia, new { @class = "form-control Real", @id = "ProvinciaR" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.TBoxProvincia, "", new { @class = "text-danger Real" })
+
+
                             @* el "DropdownlistFor" se reemplaza por un "TextBoxFor" en el caso de que se eliga un pais distinto a "ARGENTINA" *@
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboProvinciaR" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Provincia)
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Provincia, Model.provincias, "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboProvinciaR" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Provincia, "", new { @class = "text-danger RealAR" })
                         </div>
                     </div>
 
@@ -95,9 +99,12 @@
                         <div class="col-md-10">
 
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.Localidad, new { @class = "form-control Real", @id = "LocalidadR" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Localidad, "", new { @class = "text-danger Real" })
+
                             @* el "DropdownlistFor" se reemplaza por un "TextBoxFor" en el caso de que se eliga un pais distinto a "ARGENTINA" *@
                             @Html.DropDownListFor(model => model.vPersona_DomicilioVM.IdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadREALVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboLocalidadR" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Localidad)
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.IdLocalidad, "", new { @class = "text-danger RealAR" })
                         </div>
                     </div>
 
@@ -155,16 +162,19 @@
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualPais, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisE" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualPais)
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualPais, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualProvincia, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualProvincia, new { @class = "form-control Eventual", @id = "ProvinciaE" })
-                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualProvincia, new SelectList(Model.provincias, "", ""), "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox EventualAR", @id = "ComboProvinciaE" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualProvincia)
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.TBoxEventualProvincia, new { @class = "form-control Eventual", @id = "ProvinciaE" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.TBoxEventualProvincia, "", new { @class = "text-danger Eventual" })
+
+                            @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualProvincia, Model.provincias, "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox EventualAR", @id = "ComboProvinciaE" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualProvincia, "", new { @class = "text-danger EventualAR" })
                         </div>
                     </div>
 
@@ -172,8 +182,11 @@
                         @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualLocalidad, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualLocalidad, new { @class = "form-control Eventual", @id = "LocalidadE" })
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualLocalidad, "", new { @class = "text-danger Eventual" })
+
                             @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdLocalidad, new SelectList(Model.vProvincia_Depto_LocalidadEVENTUALVM, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox EventualAR", @id = "ComboLocalidadE" })
-                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualLocalidad)
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualIdLocalidad, "", new { @class = "text-danger EventualAR" })
                         </div>
                     </div>
 
@@ -181,6 +194,7 @@
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-6" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE" })
+                            <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, "", new { @class = "text-danger" })
                         </div>
                     </div>

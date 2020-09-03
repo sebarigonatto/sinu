@@ -18,7 +18,7 @@ using System.Net;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
-    //[AuthorizacionPermiso("AdminMenu")]
+    [AuthorizacionPermiso("AdminMenu")]
     public class ConvocatoriasController : Controller
     {
       
@@ -151,13 +151,35 @@ namespace SINU.Controllers.Administrador.Convocatorias
         {
             using (db = new SINUEntities())
             {
-                //	carreras					Tpersonal
+                              
                 var FechasIF = db.PeriodosInscripciones.Where(x=> x.IdPeriodoInscripcion == RegionId).Select(m => new SelectListItem
                 {
-                    //Value = m.FechaFinal.ToString(),
+                    
+                    //Value = m.FechaFinal.ToString(),                    
                     Text = m.FechaInicio.ToString() + " / " + m.FechaFinal.ToString()
                 }).ToList();
                 return Json(FechasIF, JsonRequestBehavior.AllowGet);
+                
+            }
+        }
+
+        public JsonResult DevolverCArrerasFiltradas(string ModalidadId)
+        {
+            using (db = new SINUEntities())
+            {
+                if (ModalidadId!="")
+                {
+
+                var ModTipoPersonal = db.Modalidad.Where(x => x.IdModalidad == ModalidadId).Select(m => m.Personal).ToList();
+                string y = ModTipoPersonal[0].ToString();
+                var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == y).Select(m => new SelectListItem
+                {Value = m.IdGrupoCarrOficio,
+                Text=m.Descripcion
+                }).ToList();
+                
+                return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
+                }
+                return Json("", JsonRequestBehavior.AllowGet);
                 //carrerasFiltradas
             }
         }
