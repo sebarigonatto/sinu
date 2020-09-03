@@ -1,57 +1,62 @@
-﻿@model SINU.ViewModels.IDPersonaVM
+﻿@model IEnumerable<SINU.Models.vDataProblemaEncontrado>
 @{
     Layout = null;
 }
 
-<!DOCTYPE html>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="form-group" id="divTABLE">
 
-  
-       
-    <body>
-        <div class="container-sm">
-            <div class="col-md-6">
-                <title>ListaProblema</title>
-                <table id="TListadoProblema" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
-                    <thead>
-                        <tr>
-                            <th class="secondary" hidden>
-                                @Html.DisplayNameFor(model => model.DataVerificacionVM[0].IdDataVerificacion)
-                            </th>
-                            <th class="secondary">
-                                @Html.DisplayNameFor(model => model.DataVerificacionVM[0].Descripcion)
-                            </th>
-                            <th>
-                                Opciones
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="position-static">
-                        @foreach (var item in Model.DataVerificacionVM)
-                        {
-                            <tr>
-                                <td hidden>
-                                    @Html.HiddenFor(modelitem => item.IdDataVerificacion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelitem => item.Descripcion)
-                                </td>
-                                <td class="align-content-md-center">
-                                    &ensp;
-                                    @Html.ActionLink("Problema", "DataProblema", new { id = item.IdDataVerificacion, id_per = Model.ID_PER }, new { @class = "btn btn-dark w-100" })
-                                    &ensp;
-                                </td>
-                            </tr>
-                        }
+    <table id="TablaProblema" data-CUD="DataProblema" data-URL="ListaProblema" data-ELI="EliminaIDIO" data-Controller="Delegacion" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th hidden>IdDataVerificacion</th>
+                <th hidden>IdPostulantePersona</th>
+                <th hidden>IdDataProblemaEncontrado</th>
+                <th>@Html.DisplayNameFor(m => m.DataVerificacion)</th>
+                <th>@Html.DisplayNameFor(m => m.Comentario)</th>
+                <th hidden>@Html.DisplayNameFor(m => m.Apellido_Y_Nombres)</th>
+                <th hidden>@Html.DisplayNameFor(m => m.DNI)</th>
+                <th>
+                    @Html.Label("Opciones")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdDataVerificacion)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdPostulantePersona)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.IdDataProblemaEncontrado)</td>
 
-                    </tbody>
+                <td>@Html.DisplayFor(modelItem => item.DataVerificacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Comentario)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.Apellido_Y_Nombres)</td>
+                <td hidden>@Html.DisplayFor(modelItem => item.DNI)</td>
+                <td class="row justify-content-center align-items-center">
+                    <div class="BTMuestraTable">
+                        <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdDataProblemaEncontrado"></button>
+                    </div>
+                    <div class="d-inline">
+                        |
 
-                </table>
-            </div>
-        </div>
-        
-    </body>
+                        @Ajax.ActionLink(" ", "DelDataProblema", new { ID = item.IdDataProblemaEncontrado }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla",
+                          }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                    </div>
+                </td>   
 
-}
+            </tr>
+            }
+        </tbody>
+
+    </table>
+    <div class="btn btn-outline-danger BTMuestraTable">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" id="Nuevo_REG" data-IdTabla="TablaProblema">
+            Agregar
+        </button>
+    </div>
+</div>

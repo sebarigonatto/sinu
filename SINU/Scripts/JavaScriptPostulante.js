@@ -47,7 +47,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 $(document).ready(function () {
 
     $.arrayEtapas ;
-    
+
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     $.ajaxSetup({
         async: false
@@ -397,7 +397,7 @@ $(document).ready(function () {
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla;
     var url_CUD;
-    var url_Elim;
+    var url_Controller;
 
     //armado el modal con la vista parcial correspondiente
     //recibe 2 parametros 
@@ -412,14 +412,14 @@ $(document).ready(function () {
         //estos datos esta como atributos de las distintas tablas
         url_Tabla = $("#" + id_Tabla).attr("data-URL");
         url_CUD = $("#" + id_Tabla).attr("data-CUD");
-        url_Elim = $("#" + id_Tabla).attr("data-ELI");
+        url_Controller = $("#" + id_Tabla).attr("data-Controller");
         
 
         $.ajax({
             cache: false,
             asyn: false,
             type: "GET",
-            url: '/Postulante/' + url_CUD,
+            url: "/"+ url_Controller +"/"+ url_CUD,
             data: { ID: id_registro, ID_persona: id_persona },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
@@ -453,11 +453,12 @@ $(document).ready(function () {
                 //ver remuevo el boton de guardado
                 
                 if ($.arrayEtapas) {
-                    //alert("estapa 5 321")
                     $(".BTAcciones").html("");
                     $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
                     $(".BTMuestraTable :input").removeAttr("disabled");
                 }
+
+                $(".Habilitar :input, .Habilitar input").removeAttr("disabled");
                 ////////////////////////////ESTUDIOS///////////////////////////////////
 
                 //evento que se desata cuando se selecciona un opcion de los combobox
@@ -543,8 +544,9 @@ $(document).ready(function () {
     ///////////////////////////////ELIMINA///////////////////////////////////
 
     //ELIMINA EL ESTUDIO SELECCIONADO
-    $.ActualizaTabla = function (tabla) {
+    $.ActualizaTabla = function (tabla,controller) {
         url_Tabla = tabla;
+        url_Controller = controller;
         //oculta el modal
         ActualizaTabla();
     };
@@ -552,7 +554,7 @@ $(document).ready(function () {
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     function ActualizaTabla() {
         //alert(id_persona + url_Tabla );
-        $("#" + url_Tabla + "NAV").load('/Postulante/' + url_Tabla, { ID_persona: id_persona }, function () {
+        $("#" + url_Tabla + "NAV").load( "/"+ url_Controller +"/"+url_Tabla, { ID_persona: id_persona }, function () {
             //alert("se recargo la vista de la tabla actual...")
             //aplico datatable a la tabla de estudio
             TablasEIA();

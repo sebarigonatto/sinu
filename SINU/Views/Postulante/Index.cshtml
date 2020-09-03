@@ -510,7 +510,7 @@
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
                     break;
                 case "Elimina":
-                    $.ActualizaTabla(response.url_Tabla);
+                    $.ActualizaTabla(response.url_Tabla,response.url_Controller);
                     break;
                 default:
             };

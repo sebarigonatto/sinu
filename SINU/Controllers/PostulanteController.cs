@@ -725,7 +725,7 @@ namespace SINU.Controllers
                     //msg:mensjae que figurara en el modal
                     //form: se ejecutar un accion en un switch del script de la vista index
                     //url_Tabla: es el nombre de la accion y colocandole el subfijo NAV es el contenedor de la tabla actual
-                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado", form = "Elimina", url_Tabla = "Estudios" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado",form="Elimina", url_Tabla= "Estudios", url_Controller="Postulante" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
             }
@@ -859,7 +859,7 @@ namespace SINU.Controllers
                 var regidioma = db.PersonaIdioma.FirstOrDefault(m => m.IdPersonaIdioma == ID);
                 db.PersonaIdioma.Remove(regidioma);
                 db.SaveChanges();
-                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado", form = "Elimina", url_Tabla = "Idiomas" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado",form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" },JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -964,7 +964,7 @@ namespace SINU.Controllers
             try
             {
                 db.spActividadMilitarEliminar(ID);
-                return Json(new { success = false, msg = "se elimino correctamente el registro", form = "Elimina", url_Tabla = "ActMilitar" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "se elimino correctamente el registro", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -1259,11 +1259,11 @@ namespace SINU.Controllers
                 if (postulante || filas > 1)
                 {
                     db.spRelacionFamiliarEliminar(ID_fami);
-                    return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
                 }
 
                 db.spFamiliarEliminar(ID_fami, ID_per);
-                return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
