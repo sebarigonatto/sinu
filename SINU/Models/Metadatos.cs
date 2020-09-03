@@ -292,23 +292,32 @@ namespace SINU.Models
 
     public partial class ActividadMilitarMetadadata
     {
-
+        [Required]
         public Nullable<bool> Ingreso { get; set; }
+        [RequiredIf("Ingreso",true,ErrorMessage ="Seleccione una Fecha")]
         [Display(Name = "Fecha de Ingreso")]
         public Nullable<System.DateTime> FechaIngreso { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
         [Display(Name = "Fecha de Baja")]
         public Nullable<System.DateTime> FechaBaja { get; set; }
         [Display(Name ="Causa/Motivo de no ingreso")]
+        [RequiredIf("Ingreso", false, ErrorMessage = "Debe completar este campo")]
         public string CausaMotivoNoingreso { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Descripcion de la Baja")]
         public string MotivoBaja { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         public string Jerarquia { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         public string Cargo { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         public string Destino { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Selecciones una Opcion")]
         [Display(Name = "Situacion de Revista")]
         public int IdSituacionRevista { get; set; }
         [Required(ErrorMessage = "Debe Seleccionar un Fuerza")]
         public int IdFuerza { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Opcion")]
         [Display(Name = "Motivo de Baja")]
         public int IdBaja { get; set; }
         public int IdActividadMilitar { get; set; }
@@ -330,19 +339,23 @@ namespace SINU.Models
     }
 
     public partial class vPersona_SituacionOcupacionalMetadata
-    {
+    {   
         public int IdPersona { get; set; }
         [Display(Name = "Estado Ocupacional")]
         public int IdEstadoOcupacional { get; set; }
         public int IdSituacionOcupacional { get; set; }
         public string EstadoOcupacional { get; set; }
         public string Descripcion { get; set; }
+        [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Ocupacion Actual")]
         public string OcupacionActual { get; set; }
+        [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Domiciolio Laboral")]
         public string DomicilioLaboral { get; set; }
+        [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Años Trabajados")]
         public Nullable<int> AniosTrabajados { get; set; }
+        [Required]
         public string Oficio { get; set; }
         public bool CargaOcupacionActual { get; set; }
         public string Explicacion { get; set; }

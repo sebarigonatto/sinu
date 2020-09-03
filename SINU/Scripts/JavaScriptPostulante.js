@@ -78,17 +78,6 @@ $(document).ready(function () {
 
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     //https://developer.snapappointments.com/bootstrap-select/
-    $(".combobox").selectpicker({
-        liveSearch: true,
-        size: 7,
-        liveSearchPlaceholder: "Ingrese su busqueda...",
-        liveSearchStyle: 'contains',//'startsWith'
-        noneResultsText: 'No se Encuantran Resultados',
-        noneSelectedText: 'Seleccione una Opcion',
-        mobile:true
-        //styleBase: 'form-control',
-        //style: 'btn btn-white'
-    });
     $(".selectpicker").selectpicker({
         size: 7,
         noneSelectedText: 'Seleccione una Opcion',
@@ -96,6 +85,17 @@ $(document).ready(function () {
         //style: 'btn-white'
 
     });
+    $(".combobox").selectpicker({
+        liveSearch: true,
+        size: 7,
+        liveSearchPlaceholder: "Ingrese su busqueda",
+        liveSearchStyle: 'contains',//'startsWith'
+        noneResultsText: 'No se Encuantran Resultados',
+        noneSelectedText: 'Ninguna Opcion Seleccionada'
+        
+    });
+    //verificar luego anchura para disposititvos mobiles
+    $(".combobox button[role='combobox'] .filter-option-inner-inner").css("text-overflow", "ellipsis")
 
 
     ///////////////////////////////////////////////////////////////////////////////  DATOS BASICOS  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -668,10 +668,10 @@ $(document).ready(function () {
         var group = $("#inaoact option:selected").closest('optgroup').attr('label');
         var text = $("#inaoact option:selected").html();
         if (group == "Inactivo" || text == "Desocupado") {
-            $("#SI").hide();
-            $("#SI input").val("");
+            $(".SI").hide();
+            $(".SI input").val("");
         } else {
-            $("#SI").show();
+            $(".SI").show();
 
         }
     };

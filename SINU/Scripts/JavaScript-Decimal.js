@@ -62,44 +62,46 @@
     //se agrega este metodo para la validacion discreta, recibe el valor del control y el ATRIBUTO name del select a recuperar valor
 
     jQuery.validator.addMethod('requiredif', function (value, element, params) {
-        //    alert($("select[name$='" + params.nombrecampo + "']").val());
+        //alert($("select[name$='" + params.nombrecampo + "']").val());
+        var result = true;
+        
+
+
+        //valor booleano enviado en el RequiredIfAttribute
+        var valueCampo = (params.valuecampo == "True") ? true : false;
+
+        //recupero valor del campo que debo comparar para la validacion
         var valueCampoComparar = $("select[name$='" + params.nombrecampo + "']").val();
-        var textComparar = params.textocompara.toString();
-        valueCampo = (params.valuecampo == "True") ? true : false;
-        //if ((valueCampoComparar && params.valuecampo) || (!valueCampoComparar && !params.valuecampo)) {
-        //    if (value == null || value == "") {
-        //        return false;
-        //    };
-
-        //};
-        //return true;
+        //en caso de ser BOOL 
+        if (valueCampoComparar == "true" || valueCampoComparar == "false") {
+            valueCampoComparar = (valueCampoComparar == "true") ? true : false;
+        }
 
 
 
-
-
-
+        //verifico si la condicion compara strings o booleano
         if (params.textocompara != "") {
-            if ((valueCampo && (valueCampoComparar == textComparar)) || (!valueCampo && (valueCampoComparar != textComparar))) {
+             //guardo parametro en caso de requerir la comparacion de string
+            var textComparar = [];
+            textComparar.push(params.textocompara.toString());
+            //verifico si el parametro string contiene mas de un string como codicion
+            textComparar = (textComparar[0].indexOf('|') != -1) ? textComparar[0].split('|') : textComparar;
+            if ((valueCampo && (textComparar.indexOf(valueCampoComparar) != -1)) || (!valueCampo && (textComparar.indexOf(valueCampoComparar) == -1))) {
                 if ((value == null) || (value == "")) {
-                    return false;
+                    result = false;
+
                 }
-            } 
+            }
         }
         else {
             if ((valueCampoComparar && valueCampo) || (!valueCampoComparar && !valueCampo)) {
                 if (value == null || value == "") {
-                    return false;
+                    result= false;
                 };
 
             };
         }
-        return true;
-
-
-
-
-
+        return result;
 
     });
 
