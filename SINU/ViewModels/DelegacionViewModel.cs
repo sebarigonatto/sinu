@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using SINU.Models;
 
 namespace SINU.ViewModels
@@ -17,8 +18,10 @@ namespace SINU.ViewModels
     }
     public class ProblemaEcontradoVM
     {
+        public vDataProblemaEncontrado vListDataProblemasVM { get; set; }
+        public SelectList ListDataVerificacionVM { get; set; }
         public int ID_PER { get; set; }
-        public int IdDataverificacion { get; set; }
-        public string Comentario { get; set; }
+       
     }
+
 }

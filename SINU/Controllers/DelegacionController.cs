@@ -391,54 +391,115 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
-        [HttpGet]
         public ActionResult ListaProblema(int ID_persona)
         {
-            //List<DataVerificacion> dataVerificacions;
-            //dataVerificacions = db.DataVerificacion.ToList();
-            IDPersonaVM personaVM = new IDPersonaVM();
+            List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
 
-            List<DataVerificacion> data = new List<DataVerificacion>();
-            data = db.DataVerificacion.ToList();
-
-            personaVM.DataVerificacionVM = data;
-            personaVM.ID_PER = ID_persona;
-            return View(personaVM);
-        }
-
-
-
-        [HttpGet]
-        public ActionResult DataProblema(int id, int id_per)
-        {
-
-            ProblemaEcontradoVM problema = new ProblemaEcontradoVM();
-            problema.ID_PER = id_per;
-            problema.IdDataverificacion = id;
-            problema.Comentario = "";
-
-            vInscripcionDetalle vdetalle;
-            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id_per);
-            DataVerificacion data;
-            data = db.DataVerificacion.FirstOrDefault(m => m.IdDataVerificacion == id);
-            ViewBag.Nombre = vdetalle.Nombres;
-            ViewBag.Apellido = vdetalle.Apellido;
-            ViewBag.IdInscripcion = vdetalle.IdInscripcion;
-            ViewBag.Texto = data.Descripcion;
-
+            
             return View(problema);
+
+        }
+        [HttpGet]
+        public ActionResult DataProblema(int? ID,int ID_persona)
+        {
+            try
+            {
+                ProblemaEcontradoVM problema = new ProblemaEcontradoVM
+                {
+                    ListDataVerificacionVM = new SelectList(db.DataVerificacion.ToList(), "IdDataVerificacion", "Descripcion")
+                };
+                var postu = db.Persona.FirstOrDefault(m => m.IdPersona == ID_persona);
+                if (ID == null)
+                {
+                    problema.vListDataProblemasVM = new vDataProblemaEncontrado() {
+                        IdPostulantePersona= ID_persona,
+                        Apellido_Y_Nombres= postu.Apellido +", "+postu.Nombres,
+                        DNI= postu.DNI
+                    };
+                     
+                }
+                else
+                {
+                    problema.vListDataProblemasVM = db.vDataProblemaEncontrado.FirstOrDefault(m => m.IdDataProblemaEncontrado==ID);
+                }
+                 return PartialView(problema);
+            }
+            catch (System.Exception ex)
+            {
+                return PartialView("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
+            }
         }
         [HttpPost]
         public ActionResult DataProblema(ProblemaEcontradoVM dato)
         {
-            
-            if (ModelState.IsValid)
+            try
             {
-                
-                
+                if (ModelState.IsValid)
+                {
+                    if (dato.vListDataProblemasVM.IdDataProblemaEncontrado == 0)
+                    {
+                        DataProblemaEncontrado dataProblemaEncontrado = new DataProblemaEncontrado
+                        {
+                            Comentario = dato.vListDataProblemasVM.Comentario,
+                            IdDataVerificacion = dato.vListDataProblemasVM.IdDataVerificacion,
+                            IdPostulantePersona = dato.vListDataProblemasVM.IdPostulantePersona
+                        };
+                        db.DataProblemaEncontrado.Add(dataProblemaEncontrado);
+                        db.SaveChanges();
+                        return Json(new { success = true, msg = "Se Inserto correctamente el Problema" });
+
+                    }
+                    else
+                    {
+                        DataProblemaEncontrado dataProblemaEncontrado = new DataProblemaEncontrado
+                        {
+                            Comentario = dato.vListDataProblemasVM.Comentario,
+                            IdDataVerificacion = dato.vListDataProblemasVM.IdDataVerificacion,
+                            IdPostulantePersona = dato.vListDataProblemasVM.IdPostulantePersona,
+                            IdDataProblemaEncontrado=dato.vListDataProblemasVM.IdDataProblemaEncontrado
+                        };
+                        db.Entry(dataProblemaEncontrado).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                        return Json(new { success = true, msg = "Se Inserto correctamente el Problema" });
+                    }
+                }
             }
-            return View();
+            catch(Exception ex)
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message });
+            }
+
+            return Json(new { success = false, msg = "Error en el Modelo Recibido" });
         }
+        [HttpPost]
+        public ActionResult DelDataProblema(int? ID)
+        {
+            DataProblemaEncontrado dataProblemaEncontrado = db.DataProblemaEncontrado.Find(ID);
+            db.DataProblemaEncontrado.Remove(dataProblemaEncontrado);
+            db.SaveChanges();
+            return Json(new { success = true, msg = "Se Borro correctamente el Problema", form = "Elimina", url_Tabla = "ListaProblema", url_Controller = "Delegacion" }, JsonRequestBehavior.AllowGet);
+
+        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DataProblema([Bind(Include = "Comentario,IdPostulantePersona,IdDataVerificacion")] ProblemaEcontradoVM problemaEcontradoVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        DataProblemaEncontrado DataProblemaEncontrado = new DataProblemaEncontrado
+        //        {
+        //            Comentario = ProblemaEcontradoVM.,
+        //            IdPostulantePersona = ProblemaEcontradoVM.IdPostulantePersona,
+        //            IdDataVerificacion = ProblemaEcontradoVM.IdDataVerificacion
+        //        };
+        //        db.DataProblemaEncontrado.Add(DataProblemaEncontrado);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(ProblemaEcontradoVM);
+        //}
+
 
 
 
