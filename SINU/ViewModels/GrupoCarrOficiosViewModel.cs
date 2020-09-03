@@ -20,20 +20,22 @@ namespace SINU.ViewModels
         //[Required(ErrorMessage = "Please enter student name.")]
         [Display(Name = "Carreras")]
         public List<spCarrerasDelGrupo_Result> Carreras { set; get; }
-        //[Required(ErrorMessage = "Please enter student name.")]
+        [Required(ErrorMessage = "Seleccione tipo de Personal.")]
         [Display(Name = "Personal")]
         public string Personal { set; get; }
-        //[Required(ErrorMessage = "Please enter student name.")]
+        [Required(ErrorMessage = "Ingrese una descripción.")]
         [Display(Name = "Descripción")]
         public string Descripcion { set; get; }        
         [Display(Name = "Listado de Carreras disponibles")]
         //este es el listado de carreras para mostrar (todas)
         public List<CarreraOficio> Carreras2 { set; get; }
         //genera el listado id de las carreras cuando se crea un nuevo grupo
+        [Required(ErrorMessage = "Seleccione una o mas carreras.")]
         public List<int> SelectedIDs { get; set; }
         //public List<CheckBoxes> SelectedBoxes { get; set; }
         public bool Esinsert { get; set; }
         public string IdGCOOriginal { get; set; }
+        
         public List<int> SelIDsEdit { get; set; }
         //para usar checkbox
         public List<CheckBoxes> Carreras3 { get; set; }

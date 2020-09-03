@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using SINU.Models;
 using SINU.ViewModels;
 using System.Data.Entity.Core.Objects;
+using System.ComponentModel.DataAnnotations;
 using static SINU.ViewModels.GrupoCarrOficiosvm;
 using System.Web.UI.WebControls;
 using SINU.Authorize;
@@ -67,55 +68,49 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs,IdGCOOriginal,SelIDsEdit")]  GrupoCarrOficiosvm
+        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs")]  GrupoCarrOficiosvm
  grupoCarrOficiovm )
         {
-            try
-            {
-
-                string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
-                ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
-                grupoCarrOficiovm.Esinsert = true;
-                //grupoCarrOficiovm.IdGCOOriginal = grupoCarrOficiovm.IdGrupoCarrOficio;
-                if (ModelState.IsValid)
+            //try
+            //{
+            ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
+            //grupoCarrOficiovm.IdGCOOriginal = grupoCarrOficiovm.IdGrupoCarrOficio;
+            if (ModelState.IsValid)
                 {
-                    //03 agosto, graba en grupo carrera oficio
-                    // aca iria un sp donde le paso todo el listado de carreras y 
-                    //el id del grupo carrera oficio para asignarle a las mismas.
-                    //db.GrupoCarrOficio.Add(grupoCarrOficio);
-                    //db.SaveChanges(); 
+                string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
+                grupoCarrOficiovm.Esinsert = true;
+                //03 agosto, graba en grupo carrera oficio
+                // aca iria un sp donde le paso todo el listado de carreras y 
+                //el id del grupo carrera oficio para asignarle a las mismas.
+                //db.GrupoCarrOficio.Add(grupoCarrOficio);
+                //db.SaveChanges(); 
 
-                    db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
                     //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                     String mens = ObjMensaje.Value.ToString();
                     switch (mens)
                     {
                         case string a when a.Contains("Exito"):
-                            return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"
-
-                            //case string a when a.Contains("Error"):
-                            //    return RedirectToAction("Create", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>" //write "<span>Custom Value 2</span>"
-
+                            return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"                            
                     }
                     //aca haria un case of segun lo recibido en el mensaje (supongo)
                     //lo mando al index si hay exito o queda en la pantalla de create con el error
 
                 }
-                grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
-                ViewBag.Mensaje = ObjMensaje.Value.ToString();
-            }
-            catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
-            {
-                //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
-
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "GrupoCarreraOficio", "Edit"));
-            }
-
+            //}
+            //catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
+            //{
+            //    //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
+            //    ViewBag.Mensaje = ex;
+            //    return RedirectToAction("Create");
+            //}
+            grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
+            ViewBag.Mensaje = "No se creó registro";
             return View(grupoCarrOficiovm);
-        }
+}
 
-        // GET: GrupoCarrOficios/Edit/5
-        public ActionResult Edit(string id)
+// GET: GrupoCarrOficios/Edit/5
+public ActionResult Edit(string id)
         {
             if (id == null)
             {
