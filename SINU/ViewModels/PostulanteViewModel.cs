@@ -18,7 +18,6 @@ namespace SINU.ViewModels
         public string NomyApe { get; set; }
         //public bool YAguardado { get; set; }
         public bool NoPostulado { get; set; }
-        public List<DataVerificacion> DataVerificacionVM { get;set; }
     }
 
     public class PersonaFamiliaVM
@@ -108,6 +107,7 @@ namespace SINU.ViewModels
         public vPersona_SituacionOcupacional VPersona_SituacionOcupacionalVM { get; set; }
         public SelectList EstadoDescripcionVM { get; set; }
         public List<SelectListItem> InteresesVM { get; set; }
+        [Required]
         public List<string> IdInteres { get; set; }
 
     }

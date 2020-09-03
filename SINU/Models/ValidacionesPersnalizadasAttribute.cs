@@ -178,11 +178,8 @@ namespace SINU.Models
     }
 
 
-    //validacion que los campos celular o telefono contengan datos
-    //[AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 
-    /// <summary>Atributo de Validacion donde indica que el campo es requerido o no, segun otro campo con valor boleano o si se indica segun un string indicando con un boleano si deben ser iguales o no al comparar
-    /// </summary>
     public class RequiredIfAttribute : ValidationAttribute, IClientValidatable
     {
         public string CampoComparar;
@@ -212,16 +209,22 @@ namespace SINU.Models
         {
             try
             {
+                object result = null;
                 var otrocampo = validationContext.ObjectType.GetProperty(CampoComparar);
                 var valueCampoComparar = otrocampo.GetValue(validationContext.ObjectInstance, null);
+               
+
 
                 if (!TextComparar.IsNullOrWhiteSpace())
-                {
-                    if ((ValueComparar && ((string)valueCampoComparar == TextComparar) ) || (!ValueComparar && ((string)valueCampoComparar != TextComparar))) 
+                { 
+                    string[] textComparar = new[] { TextComparar };
+
+                    textComparar = (TextComparar.IndexOf('|') != -1) ? TextComparar.Split('|') : textComparar;
+                    if ((ValueComparar && (textComparar.Contains(valueCampoComparar.ToString()))) || (!ValueComparar && (!(textComparar.Contains(valueCampoComparar.ToString())))))
                     {
                         if (value == null)
                         {
-                            return new ValidationResult(ErrorMessage);
+                            result = new ValidationResult(ErrorMessage);
                         }
 
                     }
@@ -232,12 +235,12 @@ namespace SINU.Models
                     {
                         if (value == null)
                         {
-                            return new ValidationResult(ErrorMessage);
+                            result = new ValidationResult(ErrorMessage);
                         }
 
                     }
                 }
-                return null;
+                return (ValidationResult)result;
             }
             catch (Exception ex)
             {

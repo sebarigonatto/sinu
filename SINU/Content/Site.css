@@ -129,3 +129,6 @@ padding-left: 0.3em !important;
 background-color: lightblue;
 }
 
+.bootstrap-select .dropdown-menu li {
+    border-bottom: 1px solid #ced4da8f
+}
