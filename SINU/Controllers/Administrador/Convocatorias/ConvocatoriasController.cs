@@ -18,7 +18,7 @@ using System.Net;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
-    //[AuthorizacionPermiso("AdminMenu")]
+    [AuthorizacionPermiso("AdminMenu")]
     public class ConvocatoriasController : Controller
     {
       
@@ -151,14 +151,15 @@ namespace SINU.Controllers.Administrador.Convocatorias
         {
             using (db = new SINUEntities())
             {
-                //	carreras					Tpersonal
+                              
                 var FechasIF = db.PeriodosInscripciones.Where(x=> x.IdPeriodoInscripcion == RegionId).Select(m => new SelectListItem
                 {
-                    //Value = m.FechaFinal.ToString(),
+                    
+                    //Value = m.FechaFinal.ToString(),                    
                     Text = m.FechaInicio.ToString() + " / " + m.FechaFinal.ToString()
                 }).ToList();
                 return Json(FechasIF, JsonRequestBehavior.AllowGet);
-                //carrerasFiltradas
+                
             }
         }
 

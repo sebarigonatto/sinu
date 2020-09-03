@@ -35,8 +35,12 @@
                 <td>
                     @*@Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple", @id = "ddlTerritories" })*@
                     @Html.ListBoxFor(model => model.PeriodosInscripciones, new MultiSelectList(ViewBag.lst, "Value", "Text"), new { @class = "multiselect form-control", @multiple = "multiple", @id = "FechasIniFin"})
+                    
+                    
                 </td>
-                <td>@Html.ActionLink("Nuevo Periodo", "Create", "PeriodoInscripciones", htmlAttributes: new { @class = "form-control" })</td>
+                <td>
+                    <input type="button" value="Nueva Período" onclick="location.href='@Url.Action("Create", "PeriodoInscripciones")'" class="btn btn-default"/>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -59,7 +63,7 @@
                     @Html.DropDownList("IdModalidad",null,"Seleccione Modalidad",htmlAttributes:new { @class = "form-control", @id = "Modalidades" })
                     @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
                 </td>
-                <td>@Html.ActionLink("Nuevo Modalidad", "Create", "Modalidads", htmlAttributes: new { @class = "form-control" })</td>
+                <td><input type="button" value="Nueva Modalidad" onclick="location.href='@Url.Action("Create", "Modalidads")'" class="btn btn-default"/> 
             </tr>
         </tbody>
     </table>
@@ -81,7 +85,9 @@
                     @Html.DropDownList("IdGrupoCarrOficio",null,"Seleccione Grupo", htmlAttributes: new { @class = "form-control",@id="GruposyCarreras",@disabled="disable"})
                     @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
                 </td>
-                <td>@Html.ActionLink("Nuevo GrupoCarrOficio", "Create", "GrupoCarrOficios", htmlAttributes: new { @class = "form-control" })</td>
+                <td>
+    <input type="button" value="Nueva Grupo" onclick="location.href='@Url.Action("Create", "GrupoCarrOficios")' " class="btn btn-default" />    
+</td>
             </tr>
         </tbody>
     </table>

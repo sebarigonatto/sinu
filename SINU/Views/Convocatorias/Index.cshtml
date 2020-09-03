@@ -12,10 +12,12 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)
+                @*@Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)*@
+                <label>ID Grupo</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Modalidad.Descripcion)
+                @*@Html.DisplayNameFor(model => model.Modalidad.Descripcion)*@
+                <label>Modalidad</label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
@@ -28,7 +30,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
+                    @Html.DisplayFor(modelItem => item.GrupoCarrOficio.IdGrupoCarrOficio)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
