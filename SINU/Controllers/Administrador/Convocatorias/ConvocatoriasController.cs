@@ -151,7 +151,9 @@ namespace SINU.Controllers.Administrador.Convocatorias
         {
             using (db = new SINUEntities())
             {
-                              
+
+                //ViewBag.FechasInicio = db.PeriodosInscripciones.Where(x => x.IdPeriodoInscripcion == RegionId).Select(x => x.FechaInicio);
+                //ViewBag.FechasFinal = db.PeriodosInscripciones.Where(x => x.IdPeriodoInscripcion == RegionId).Select(x => x.FechaFinal);
                 var FechasIF = db.PeriodosInscripciones.Where(x=> x.IdPeriodoInscripcion == RegionId).Select(m => new SelectListItem
                 {
                     

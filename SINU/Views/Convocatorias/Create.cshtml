@@ -35,7 +35,7 @@
                 <td>
                     @*@Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple", @id = "ddlTerritories" })*@
                     @Html.ListBoxFor(model => model.PeriodosInscripciones, new MultiSelectList(ViewBag.lst, "Value", "Text"), new { @class = "multiselect form-control", @multiple = "multiple", @id = "FechasIniFin"})
-                    
+                                      
                     
                 </td>
                 <td>
@@ -203,7 +203,7 @@
 
                     // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
                     $.each(data, function (index, row) {
-                        //alert(row.Value)
+                       
                         $("#GruposyCarreras").prop("disabled", false);
                         $("#GruposyCarreras").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
                     });

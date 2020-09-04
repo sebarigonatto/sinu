@@ -117,14 +117,18 @@ namespace SINU.Models
     [MetadataType(typeof(GrupoCarrOficioMetadata))]
     public partial class GrupoCarrOficio
     { }
-    //[MetadataType(typeof(ModalidadMetadata))]
-    //public partial class Modalidad
-    //{ }
+    [MetadataType(typeof(ResGrupoMetadata))]
+    public partial class ResGrupo
+    { }
     [MetadataType(typeof(ModalidadMetadata))]
     public partial class Modalidad
     { }
     [MetadataType(typeof(ConvocatoriaMetadata))]
     public partial class Convocatoria
+    { }
+    
+[MetadataType(typeof(CarrerauOficioMetadata))]
+    public partial class CarreraOficio
     { }
 } 
 
