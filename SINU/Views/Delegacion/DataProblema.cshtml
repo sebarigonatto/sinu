@@ -49,7 +49,7 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.vListDataProblemasVM.IdDataVerificacion, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
-                                @Html.DropDownListFor(m => m.vListDataProblemasVM.IdDataVerificacion, (SelectList)Model.ListDataVerificacionVM, "--Seleccione Instituto a Incribirse--", htmlAttributes: new { @class = "form-control selectpicker " })
+                                @Html.DropDownListFor(m => m.vListDataProblemasVM.IdDataVerificacion, (SelectList)Model.ListDataVerificacionVM, "--Seleccione Instituto a Incribirse--", htmlAttributes: new { @class = "form-control combobox " })
                                 <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.vListDataProblemasVM.IdDataVerificacion, "", new { @class = "text-danger" })
 
@@ -68,12 +68,8 @@
                                 @Html.ValidationMessageFor(model => model.vListDataProblemasVM.Comentario, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default Guardar_REG" data-form="BeginFormDataProblema" / >
-                            </div>
-                        </div>
+                        <br />
+                       
                     </div>
 
 
@@ -83,19 +79,13 @@
                                 <button type="button" class="btn btn-info " data-dismiss="modal">Cerrar</button>
                             </div>
 
-                            @*<div class="BTAcciones d-inline">
+                            <div class="d-inline">
                                 <input type="button" value="Guardar" class="btn btn-primary Guardar_REG" data-form="BeginFormDataProblema" />
-                            </div>*@
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-
-                    </div>
-
-                    @*<button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaEstudio">
-                            Agregar
-                        </button>*@
+                   
 
                 </div>
             </div>
@@ -104,6 +94,4 @@
 
         </div>
     </div>
-    @*</div>*@
-    @*</div>*@
 }

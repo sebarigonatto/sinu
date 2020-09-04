@@ -719,12 +719,12 @@ $(document).ready(function () {
 
     });
 
-    //cargo todo los campos con 0, para eviarlos al POST de Antropometria
-    $("#antropo input").each(function () {
-        if ($(this).val() == "") {
-            $(this).val(0);
-        }
-    });
+    ////cargo todo los campos con 0, para eviarlos al POST de Antropometria
+    //$("#antropo input").each(function () {
+    //    if ($(this).val() == "") {
+    //        $(this).val(0);
+    //    }
+    //});
 
     $("#EstadoCivil").on("change", function () {
         var estci = $(this).val();
