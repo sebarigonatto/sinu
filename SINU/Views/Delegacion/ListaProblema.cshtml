@@ -34,11 +34,10 @@
                 <td hidden>@Html.DisplayFor(modelItem => item.DNI)</td>
                 <td class="row justify-content-center align-items-center">
                     <div class="BTMuestraTable">
-                        <button class="Agrega btn btn-success fas fa-edit" data-ID="@item.IdDataProblemaEncontrado"></button>
+                        <button class="Agrega btn btn-success fas fa-pencil-alt" data-ID="@item.IdDataProblemaEncontrado"></button>
                     </div>
                     <div class="d-inline">
-                        |
-
+                                | 
                         @Ajax.ActionLink(" ", "DelDataProblema", new { ID = item.IdDataProblemaEncontrado }, new AjaxOptions
                           {
                             HttpMethod = "POST",
@@ -53,9 +52,9 @@
         </tbody>
 
     </table>
-    <div class="btn btn-outline-danger BTMuestraTable">
+    <div class="BTMuestraTable">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" id="Nuevo_REG" data-IdTabla="TablaProblema">
+        <button type="button" class="btn btn-success btn-lg fas fa-plus Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" id="Nuevo_REG" data-IdTabla="TablaProblema">
             Agregar
         </button>
     </div>
