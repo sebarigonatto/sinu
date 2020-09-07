@@ -29,5 +29,11 @@ namespace SINU.Controllers.Consultor
             }
             return View(Datos);
         }
+        public ActionResult InscriptosPorModalidad(string ModalidadElegida)
+        {
+            List<vConsultaInscripciones> Listado;
+            Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida).ToList();
+            return View(Listado);
+        }
     }
 }
