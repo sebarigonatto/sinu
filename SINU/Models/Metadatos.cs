@@ -546,11 +546,30 @@ namespace SINU.Models
         [Display(Name = "Grupo")]
         public string IdGrupoCarrOficio { get; set; }
     }
-    //public partial class ModalidadMetadata
-    //{
-    //    [Display(Name = "Código Modalidad")]
-    //    public string IdModalidad { get; set; }
-    //}
+    public partial class ResGrupoMetadata
+    {
+        
+        [Display(Name = "Edad al Año Siguiente")]
+        public int Edad_Al_AnioSig { get; set; }
+
+        [Display(Name = "Edad al Día Siguiente")]
+        public int Edad_Al_Dia { get; set; }
+        [Display(Name = "Edad al Mes")]
+        public int Edad_Al_Mes { get; set; }
+
+        [Display(Name = "Edad Minima con Autorización")]
+        public int EdadMinCAutoriz { get; set; }
+        [Display(Name = "Edad Mínima")]
+        public int EdadMin { get; set; }
+
+        [Display(Name = "Edad Máxima")]
+        public int EdadMax { get; set; }
+        [Display(Name = "Estado Civil")]
+        public string IdEstadoCivil { get; set; }
+
+        [Display(Name = "Edad a la Fecha")]
+        public int Edad_a_fecha { get; set; }
+    }
 
     public partial class ModalidadMetadata
     {
@@ -573,8 +592,16 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convocatoria")]
         public string IdConvocatoria { get; set; }
-
-        
-
     }
-  }
+    public partial class CarrerauOficioMetadata
+    {
+        [Required(ErrorMessage = "Campo Obligatorio.")]
+        [Display(Name = "Carrera/Oficio")]
+        public string CarreraUoficio { get; set; }
+        [Required(ErrorMessage = "Campo Obligatorio.")]
+        [Display(Name = "Personal")]
+        public string Personal { get; set; }
+        
+    }
+
+}
