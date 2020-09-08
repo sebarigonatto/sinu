@@ -46,12 +46,12 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 $(document).ready(function () {
 
-    $.arrayEtapas ;
+    $.arrayEtapas;
 
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
-    $.ajaxSetup({
-        async: false
-    });
+    //$.ajaxSetup({
+    //    async: false
+    //});
 
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
     var id_persona
@@ -92,7 +92,7 @@ $(document).ready(function () {
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
         noneSelectedText: 'Ninguna Opcion Seleccionada'
-        
+
     });
     //verificar luego anchura para disposititvos mobiles
     $(".combobox button[role='combobox'] .filter-option-inner-inner").css("text-overflow", "ellipsis")
@@ -219,7 +219,7 @@ $(document).ready(function () {
         var estCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
         //alert(estCivil);
         $("#vPersona_DatosPerVM_IdEstadoCivil option").each(function (index, element) {
-            if (estCivil!="") {
+            if (estCivil != "") {
                 if ($(element).val() == estCivil && $(element).val() != "") {
                     $(element).removeAttr("hidden");
                 } else if ($(element).val() != "") {
@@ -413,13 +413,12 @@ $(document).ready(function () {
         url_Tabla = $("#" + id_Tabla).attr("data-URL");
         url_CUD = $("#" + id_Tabla).attr("data-CUD");
         url_Controller = $("#" + id_Tabla).attr("data-Controller");
-        
+
 
         $.ajax({
             cache: false,
-            asyn: false,
             type: "GET",
-            url: "/"+ url_Controller +"/"+ url_CUD,
+            url: "/" + url_Controller + "/" + url_CUD,
             data: { ID: id_registro, ID_persona: id_persona },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
@@ -451,7 +450,7 @@ $(document).ready(function () {
                 $(".selectpicker").selectpicker({ size: 7 });
 
                 //ver remuevo el boton de guardado
-                
+
                 if ($.arrayEtapas) {
                     $(".BTAcciones").html("");
                     $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
@@ -521,11 +520,22 @@ $(document).ready(function () {
                     var form_actual = "#" + this.getAttribute("data-form");
                     //alert(form_actual);
                     var valido = $(form_actual).valid();
-                    $(form_actual).submit()
-                    if (valido) {
-                        $("#ModalEIA").modal("hide");
-                        ActualizaTabla();
-                    };
+
+                    $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
+                        //alert(response);
+
+                        if (valido) {
+                            $("#ModalEIA").modal("hide");
+                            ActualizaTabla();
+                        };
+                        $("#BTNModal").html("Cerrar");
+                        $("#GuardarDTF").css("display", "none");
+                        $("#ModalCenterTitle").html("SINU:");
+                        $("#TextModal").html(response.msg);
+                        $("#ModalAnuncios").modal();
+
+                    });
+
                 });
 
 
@@ -544,7 +554,7 @@ $(document).ready(function () {
     ///////////////////////////////ELIMINA///////////////////////////////////
 
     //ELIMINA EL ESTUDIO SELECCIONADO
-    $.ActualizaTabla = function (tabla,controller) {
+    $.ActualizaTabla = function (tabla, controller) {
         url_Tabla = tabla;
         url_Controller = controller;
         //oculta el modal
@@ -554,7 +564,7 @@ $(document).ready(function () {
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     function ActualizaTabla() {
         //alert(id_persona + url_Tabla );
-        $("#" + url_Tabla + "NAV").load( "/"+ url_Controller +"/"+url_Tabla, { ID_persona: id_persona }, function () {
+        $("#" + url_Tabla + "NAV").load("/" + url_Controller + "/" + url_Tabla, { ID_persona: id_persona }, function () {
             //alert("se recargo la vista de la tabla actual...")
             //aplico datatable a la tabla de estudio
             TablasEIA();
@@ -700,7 +710,7 @@ $(document).ready(function () {
         //alert(element);
         if (sexo != "Mujer") {
             $("#mujer").hide();
-            $("#mujer input").val(0);
+            $("#mujer input").val("");
         } else {
             $("#mujer").show();
         }
