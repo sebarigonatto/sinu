@@ -31,8 +31,19 @@ namespace SINU.Controllers.Consultor
         }
         public ActionResult InscriptosPorModalidad(string ModalidadElegida)
         {
+          //si la modalidad elegida es string, el signo ?? Verifica si esta nula dicha var, asignandole lo q sigue a ella, en este caso "" , de lo contrario queda con su valor original
+            ModalidadElegida = ModalidadElegida ?? "";
             List<vConsultaInscripciones> Listado;
-            Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida).ToList();
+            if (ModalidadElegida == "TODOS")
+            {
+                Listado = db.vConsultaInscripciones.ToList();
+                ViewBag.ModalidadElegida = "Todas las Modalidades";
+            }
+            else
+            {
+                Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida).ToList();
+                ViewBag.modalidadElegida = ModalidadElegida;
+            }
             return View(Listado);
         }
     }
