@@ -24,6 +24,7 @@ namespace SINU.Models
             this.Interes = new HashSet<Interes>();
             this.DataProblemaPantalla = new HashSet<DataProblemaPantalla>();
             this.ActividadMilitar = new HashSet<ActividadMilitar>();
+            this.VerificacionPantallasCerradas = new HashSet<VerificacionPantallasCerradas>();
         }
     
         public string Apellido { get; set; }
@@ -63,5 +64,7 @@ namespace SINU.Models
         public virtual ICollection<DataProblemaPantalla> DataProblemaPantalla { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ActividadMilitar> ActividadMilitar { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VerificacionPantallasCerradas> VerificacionPantallasCerradas { get; set; }
     }
 }

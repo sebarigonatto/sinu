@@ -114,6 +114,7 @@ namespace SINU.Models
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
         public virtual DbSet<vConsultaInscripciones> vConsultaInscripciones { get; set; }
         public virtual DbSet<vDataProblemaEncontrado> vDataProblemaEncontrado { get; set; }
+        public virtual DbSet<VerificacionPantallasCerradas> VerificacionPantallasCerradas { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1200,6 +1201,16 @@ namespace SINU.Models
         public virtual ObjectResult<sp_ConsultaInscriptosModalidadGenero_Result> sp_ConsultaInscriptosModalidadGenero()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaInscriptosModalidadGenero_Result>("sp_ConsultaInscriptosModalidadGenero");
+        }
+    
+        [DbFunction("SINUEntities", "PantallasYComentariosDelPostulante")]
+        public virtual IQueryable<PantallasYComentariosDelPostulante_Result> PantallasYComentariosDelPostulante(Nullable<int> idpostulantePersona)
+        {
+            var idpostulantePersonaParameter = idpostulantePersona.HasValue ?
+                new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
+                new ObjectParameter("IdpostulantePersona", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PantallasYComentariosDelPostulante_Result>("[SINUEntities].[PantallasYComentariosDelPostulante](@IdpostulantePersona)", idpostulantePersonaParameter);
         }
     }
 }

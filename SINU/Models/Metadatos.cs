@@ -452,11 +452,11 @@ namespace SINU.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        [RequiredIf("IdEstadoCivil",true, "CA", ErrorMessage ="Debe Seleccionar una Fecha")]
         [Display(Name = "Fecha de Casamiento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaCasamiento { get; set; }
-
 
         [Required]
         [Display(Name = "Parentesco")]
@@ -483,7 +483,7 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convive")]
         public Nullable<bool> ConVive { get; set; }
-        // [Required]
+         [Required]
         [Display(Name = "Religion")]
         public string IdReligion { get; set; }
         [Required]

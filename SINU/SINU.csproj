@@ -341,6 +341,9 @@
     <Compile Include="Models\OficinasYDelegaciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PantallasYComentariosDelPostulante_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PeriodosInscripciones.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -471,6 +474,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VerificacionPantallas.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VerificacionPantallasCerradas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vEstCivil.cs">

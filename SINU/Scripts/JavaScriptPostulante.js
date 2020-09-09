@@ -45,6 +45,10 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 
 $(document).ready(function () {
+    //cada vez que se modifique un input verificar su validez
+
+
+
 
     $.arrayEtapas;
 
@@ -520,25 +524,25 @@ $(document).ready(function () {
                     var form_actual = "#" + this.getAttribute("data-form");
                     //alert(form_actual);
                     var valido = $(form_actual).valid();
-
-                    $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
-                        //alert(response);
-
-                        if (valido) {
+                    if (valido) {
+                        $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
                             ActualizaTabla();
-                        };
-                        $("#BTNModal").html("Cerrar");
-                        $("#GuardarDTF").css("display", "none");
-                        $("#ModalCenterTitle").html("SINU:");
-                        $("#TextModal").html(response.msg);
-                        $("#ModalAnuncios").modal();
-
-                    });
+                            $("#BTNModal").html("Cerrar");
+                            $("#GuardarDTF").css("display", "none");
+                            $("#ModalCenterTitle").html("SINU:");
+                            $("#TextModal").html(response.msg);
+                            $("#ModalAnuncios").modal();
+                        });
+                    } else {
+                        $(form_actual).submit();
+                    };
 
                 });
 
-
+                $("select").on("changed.bs.select", function () {
+                    $(this).valid();
+                });
             },
 
             //si ocurre un error de no aurtorizacion redirige ala pagina de error del mismo
@@ -839,8 +843,10 @@ $(document).ready(function () {
     };
 
 
-
-
+    //ver esto y unificar con las del MOdal
+    $("select").on("changed.bs.select", function () {
+        $(this).valid();
+    })
 
 
 });
