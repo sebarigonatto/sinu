@@ -24,5 +24,6 @@ namespace SINU.Models
         public string Estado { get; set; }
         public string Apellido { get; set; }
         public string Nombres { get; set; }
+        public string IdModalidad { get; set; }
     }
 }
