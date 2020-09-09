@@ -41,17 +41,18 @@
                 @*<td>
                     @Html.DisplayFor(modelItem => item.Total)
                 </td>*@
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
-                @*@Html.ActionLink("Detalle", "Details", new { id = item.ID }) |*@
-                @*Nombre,Action, Controlador*@
-                @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
-                @*No se puede tener dos ActionLink con el mismo nombre*@
-                @Html.ActionLink("Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas })
-            </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+                    @*@Html.ActionLink("Detalle", "Details", new { id = item.ID }) |*@
+                    @*Nombre,Action, Controlador*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                    @*No se puede tener dos ActionLink con el mismo nombre*@
+                    @Html.ActionLink("Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas })
+                </td>
             </tr>
-            
-           
-        }
 
+
+        }
+        @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
+      
     </table>
