@@ -23,5 +23,11 @@ namespace SINU.ViewModels
         public int ID_PER { get; set; }
        
     }
+    public class ProblemaPantallaVM
+    {
+        public List<DataProblemaPantalla> ListDataProblemaPantallaVM { get; set; }
+        public DataProblemaPantalla DataProblemaPantallaVM { get; set; }
+
+    }
 
 }
