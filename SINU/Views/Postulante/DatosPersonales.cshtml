@@ -43,7 +43,7 @@
                                 <option value="">Seleccione una Opcion</option>
                                 @foreach (var item in Model.ModalidadVm)
                                 {
-                                    <option value="@item.IdModalidad" @(item.IdModalidad == Model.vPersona_DatosPerVM.IdModalidad ? "selected" : "") modali="@item.EstCivil">@item.Modalidad</option>
+                                    <option value="@item.IdModalidad" @(item.IdModalidad == Model.vPersona_DatosPerVM.IdModalidad ? "selected" : "") civil="@item.EstCivil">@item.Modalidad</option>
                                 
                                 }
 

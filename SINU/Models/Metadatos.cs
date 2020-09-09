@@ -142,15 +142,16 @@ namespace SINU.Models
         [Required]
         public Nullable<int> PerimCintura { get; set; }
         [Required]
-        [Display(Name = "6° Perimetro de Cadera")]
-        public Nullable<int> PerimCaderas { get; set; }
-        [Required]
         [Display(Name = "4° Largo de Pantalon")]
-        public Nullable<int> LargoPantalon { get; set; }
+        public Nullable<int> LargoPantalon { get; set; } 
         [Required]
         [Display(Name = "5° Largo de Entrepierna")]
         public Nullable<int> LargoEntrep { get; set; }
-        [Display(Name = "2° Largo de Falda")]
+        [Required]  
+        [Display(Name = "6° Perimetro de Cadera")]
+        public Nullable<int> PerimCaderas { get; set; }
+        [RequiredIf("Genero",true, "Mujer",ErrorMessage ="Debe Completar este campo")]
+        [Display(Name = "7° Largo de Falda")]
         public Nullable<int> LargoFalda { get; set; }
         [Required]
         public Nullable<int> Cuello { get; set; }
@@ -294,13 +295,13 @@ namespace SINU.Models
     {
         [Required]
         public Nullable<bool> Ingreso { get; set; }
-        [RequiredIf("Ingreso",true,ErrorMessage ="Seleccione una Fecha")]
+        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
         [Display(Name = "Fecha de Ingreso")]
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
         [Display(Name = "Fecha de Baja")]
         public Nullable<System.DateTime> FechaBaja { get; set; }
-        [Display(Name ="Causa/Motivo de no ingreso")]
+        [Display(Name = "Causa/Motivo de no ingreso")]
         [RequiredIf("Ingreso", false, ErrorMessage = "Debe completar este campo")]
         public string CausaMotivoNoingreso { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
@@ -321,6 +322,7 @@ namespace SINU.Models
         [Display(Name = "Motivo de Baja")]
         public int IdBaja { get; set; }
         public int IdActividadMilitar { get; set; }
+        [Required]
         public virtual Fuerza Fuerza { get; set; }
     }
 

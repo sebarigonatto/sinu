@@ -139,3 +139,9 @@ table.dataTable.nowrap th, table.dataTable.nowrap td,.dropdown-item {
   
 }
 
+/*.boto {
+    border-top: 1px none #fff !important;
+    border-left: 1px none #fff !important;
+    border-right: 1px none #fff !important;
+    border-bottom: 1px solid #ced4da8f !important;
+}*/

@@ -314,14 +314,27 @@
                                         <h2>Validar Datos</h2>
                                         <br />
                                         <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                                            <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
-                                            <br />
-                                            @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                      {
-                                                        HttpMethod = "POST",
-                                                        OnSuccess = "Exito(data,status,xhr)",
-                                                        OnFailure = "Falla"
-                                                      }, new { @id = "BTValidar", @class = "btn btn-success" })
+                                            @if (!(bool)ViewBag.ValidacionEnCurso)
+                                             {
+                                                <div id="NoValida">
+                                                    <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
+                                                    <br />
+                                                    @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                              {
+                                                                HttpMethod = "POST",
+                                                                OnSuccess = "Exito(data,status,xhr)",
+                                                                OnFailure = "Falla"
+                                                              }, new { @id = "BTValidar", @class = "btn btn-success"})
+                                                </div>
+                                            }
+                                            else
+                                            { 
+                                                <div id="ValidaEnCurso">
+                                                    <p>La validacion se encuentra en Proceso.</p>
+                                                    <p>Via <b>Mail</b> se le informara las novedades de la validacion.</p>
+                                                </div>
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
@@ -488,9 +501,10 @@
 
         /////////////////////////////////////////////////////////////////////////////////
         /*FUNCIONES DE AJAX.BeginForm*/
+        //ver esto
+       
 
         function Exito(response, status, xhr) {
-
 
             $("#BTNModal").html("Cerrar");
             $("#GuardarDTF").css("display", "none");
@@ -541,7 +555,9 @@
         //        }
         //    });
         //}
-
+        $("#BTValidar").on("click", function () {
+            $("#NoValida").html("").html("<p>La validacion se encuentra en Proceso.</p><p>Via <b>Mail</b> se le informara las novedades de la validacion</p>");
+        });
 
     </script>
 

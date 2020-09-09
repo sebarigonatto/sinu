@@ -71,10 +71,10 @@
         var valueCampo = (params.valuecampo == "True") ? true : false;
 
         //recupero valor del campo que debo comparar para la validacion
-        var valueCampoComparar = $("select[name$='" + params.nombrecampo + "']").val();
+        var valueCampoComparar = $("[name$='" + params.nombrecampo + "']").val();
         //en caso de ser BOOL 
         if (valueCampoComparar == "true" || valueCampoComparar == "false") {
-            valueCampoComparar = (valueCampoComparar == "true") ? true : false;
+            valueCampoComparar = (valueCampoComparar == "true") ? true : false;//ver
         }
 
 
@@ -116,5 +116,5 @@
         options.messages['requiredif'] = options.message;
     });
 
-
+    
 }(jQuery));
