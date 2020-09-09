@@ -11,7 +11,7 @@ using SINU.Authorize;
 
 namespace Consulta.Controllers
 {
-    //[AuthorizacionPermiso("ListarRP")]
+    [AuthorizacionPermiso("ListarRP")]
     public class ConsultaProgramadasController : Controller
     {
         private SINUEntities db = new SINUEntities();

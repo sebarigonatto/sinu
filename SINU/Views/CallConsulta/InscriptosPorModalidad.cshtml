@@ -48,8 +48,12 @@
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
-        @Html.ActionLink("InscriptosTodos", "InscriptosPorModalidad", new { ModalidadElegida = "Todos" })
         @*@Html.ActionLink("Inscriptos", "InscriptosPorModalidad", new { modalidadElegida = item.Modalidad_Siglas })*@
     }
+    <div>
+        @Html.ActionLink("Volver al Listado de consultas", "Index","ConsultaProgramadas" );
+    </div>
+
+    @Html.ActionLink("Inscriptos Todos", "InscriptosPorModalidad", new { ModalidadElegida = "Todos" })
 
 </table>
