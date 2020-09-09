@@ -480,6 +480,45 @@ namespace SINU.Controllers
             return Json(new { success = true, msg = "Se Borro correctamente el Problema", form = "Elimina", url_Tabla = "ListaProblema", url_Controller = "Delegacion" }, JsonRequestBehavior.AllowGet);
 
         }
+        public ActionResult ProblemaPantalla(int IdPostulante, int IdPantalla)
+        {
+            try
+            {
+                ProblemaPantallaVM datos = new ProblemaPantallaVM()
+                {
+                    ListDataProblemaPantallaVM= db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == IdPostulante).Where(m => m.IdPantalla == IdPantalla).ToList(),
+                    DataProblemaPantallaVM= new DataProblemaPantalla() {
+                        IdPantalla= IdPantalla,
+                        IdPostulantePersona= IdPostulante
+                    }
+                };
+               
+                return PartialView(datos);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+        [HttpPost]
+        public JsonResult ProblemaPantalla(ProblemaPantallaVM datos)
+        {
+            try
+            {
+              DataProblemaPantalla data = datos.DataProblemaPantallaVM;
+                        db.DataProblemaPantalla.Add(data);
+                        db.SaveChanges();
+                        return Json(new { success = true, msg = "Comentario Agregado" });
+            }
+            catch (Exception x)
+            {
+
+                return Json(new { msg = x.InnerException.Message });
+            }
+          
+        }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult DataProblema([Bind(Include = "Comentario,IdPostulantePersona,IdDataVerificacion")] ProblemaEcontradoVM problemaEcontradoVM)
@@ -499,9 +538,22 @@ namespace SINU.Controllers
 
         //    return View(ProblemaEcontradoVM);
         //}
+        //public FileResult GetHTMLPageAsPDF(long empID)
+        //{
+        //    string htmlPagePath = "anypath...";
+        //    // convert html page to pdf
+        //    PageToPDF obj_PageToPDF = new PageToPDF();
+        //    byte[] databytes = obj_PageToPDF.ConvertURLToPDF(htmlPagePath);
+
+        //    //return resulted pdf document        
+        //    var contentLength = databytes.Length;
+        //    Response.AppendHeader("Content-Length", contentLength.ToString());
+        //    Response.AppendHeader("Content-Disposition", "inline; filename=" + empID + ".pdf");
+
+        //    return File(databytes, "application/pdf;");
+        //}
 
 
 
-
-    }
+        }
 }
