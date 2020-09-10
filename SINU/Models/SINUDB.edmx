@@ -788,6 +788,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
             <PropertyRef Name="Estado" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
             <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="IdModalidad" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
           </Key>
@@ -799,6 +800,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -2497,6 +2499,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[Email] AS [Email], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio], 
+    [vInscripcionEtapaEstadoUltimoEstado].[IdModalidad] AS [IdModalidad], 
     [vInscripcionEtapaEstadoUltimoEstado].[Apellido] AS [Apellido], 
     [vInscripcionEtapaEstadoUltimoEstado].[Nombres] AS [Nombres]
     FROM [dbo].[vInscripcionEtapaEstadoUltimoEstado] AS [vInscripcionEtapaEstadoUltimoEstado]</DefiningQuery>
@@ -3558,6 +3561,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Estado" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdModalidad" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
@@ -3569,6 +3573,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -4755,7 +4760,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="VerificacionPantallasCerradas" EntitySet="VerificacionPantallasCerradas" />
           </AssociationSet>
           <FunctionImport Name="PantallasYComentariosDelPostulante" IsComposable="true" ReturnType="Collection(SINUModel.PantallasYComentariosDelPostulante_Result)">
-            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+          <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -6040,6 +6045,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />

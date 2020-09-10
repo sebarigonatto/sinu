@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="db99460e529a4ec39037f43320756a9f" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="db99460e529a4ec39037f43320756a9f" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="SINUModel.Antropometria" Width="1.5" PointX="7.5" PointY="6.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.AspNetUsers" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="SINUModel.Baja" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
