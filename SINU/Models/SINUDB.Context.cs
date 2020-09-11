@@ -86,7 +86,6 @@ namespace SINU.Models
         public virtual DbSet<vPersona_SituacionOcupacional> vPersona_SituacionOcupacional { get; set; }
         public virtual DbSet<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
         public virtual DbSet<vUsuariosAdministrativos> vUsuariosAdministrativos { get; set; }
-        public virtual DbSet<DataProblemaPantalla> DataProblemaPantalla { get; set; }
         public virtual DbSet<VerificacionPantallas> VerificacionPantallas { get; set; }
         public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
         public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
@@ -1211,6 +1210,15 @@ namespace SINU.Models
                 new ObjectParameter("IdpostulantePersona", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PantallasYComentariosDelPostulante_Result>("[SINUEntities].[PantallasYComentariosDelPostulante](@IdpostulantePersona)", idpostulantePersonaParameter);
+        }
+    
+        public virtual ObjectResult<spTildarPantallaParaPostulate_Result> spTildarPantallaParaPostulate(Nullable<int> idpostulantePersona)
+        {
+            var idpostulantePersonaParameter = idpostulantePersona.HasValue ?
+                new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
+                new ObjectParameter("IdpostulantePersona", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTildarPantallaParaPostulate_Result>("spTildarPantallaParaPostulate", idpostulantePersonaParameter);
         }
     }
 }

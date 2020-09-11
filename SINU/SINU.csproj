@@ -278,9 +278,6 @@
     <Compile Include="Models\DataProblemaEncontrado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataProblemaPantalla.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\DataVerificacion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -419,6 +416,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spRestriccionesParaEstePostulante_Result1.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\spTildarPantallaParaPostulate_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\spValidarUsuario_Result.cs">

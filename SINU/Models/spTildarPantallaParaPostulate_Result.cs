@@ -10,17 +10,11 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class DataProblemaPantalla
+    public partial class spTildarPantallaParaPostulate_Result
     {
-        public int IdPostulantePersona { get; set; }
+        public string Pantalla { get; set; }
+        public Nullable<bool> Abierta { get; set; }
         public int IdPantalla { get; set; }
-        public int IdDataProblema { get; set; }
-        public string Comentario { get; set; }
-    
-        public virtual Persona Persona { get; set; }
-        public virtual VerificacionPantallas VerificacionPantallas { get; set; }
-        public virtual Postulante Postulante { get; set; }
     }
 }

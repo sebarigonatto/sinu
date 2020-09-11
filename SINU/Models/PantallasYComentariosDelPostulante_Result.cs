@@ -18,8 +18,10 @@ namespace SINU.Models
         public Nullable<bool> Abierta { get; set; }
         public Nullable<System.DateTime> fechaCierre { get; set; }
         public string Comentario { get; set; }
+        public string Realizar_Verificacion { get; set; }
         public int IdPantalla { get; set; }
         public Nullable<int> IdPostulantePersona { get; set; }
-        public Nullable<int> IdDataProblema { get; set; }
+        public Nullable<int> IdDataProblemaEncontrado { get; set; }
+        public Nullable<int> IdDataVerificacion { get; set; }
     }
 }
