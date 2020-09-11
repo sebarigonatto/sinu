@@ -3,7 +3,7 @@
 @*<p>
     @Html.ActionLink("Create New", "Create")
 </p>*@
-    <table class="table">
+    <table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Modalidad_Siglas)
@@ -50,9 +50,10 @@
                     @Html.ActionLink("Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas })
                 </td>
             </tr>
-
-
         }
-        @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
-      
+        <div>
+            @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
+        </div>
+        @Html.ActionLink("Atras", "TotalesPorModalidadYGenero", "CallConsulta");
+
     </table>

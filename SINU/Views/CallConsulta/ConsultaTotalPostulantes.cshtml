@@ -1,0 +1,83 @@
+﻿@model IEnumerable<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
+
+@{
+    ViewBag.Title = "ConsultaTotalPostulantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CONSULTA TOTAL POSTULANTES</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdModalidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+            </td>
+            <td>
+                @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            </td>
+        </tr>
+    }
+    <div>
+        @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
+    </div>
+
+   
+    @*probar esto*@
+    @*<input type="button" value="Search" onclick="Search()" />
+    @Ajax.ActionLink("Search", "ActionName", null, new AjaxOptions { }, new { id = "SearchLink", style = "display:none;" })
+
+    function Search(){
+    $("#SearchLink").click();
+    }*@
+
+</table>

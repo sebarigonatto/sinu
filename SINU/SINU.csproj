@@ -1230,6 +1230,7 @@
     <Content Include="Views\CallConsulta\TotalesPorModalidadyGenero.cshtml" />
     <Content Include="Views\CallConsulta\InscriptosPorModalidad.cshtml" />
     <Content Include="Views\Delegacion\ProblemaPantalla.cshtml" />
+    <Content Include="Views\CallConsulta\ConsultaTotalPostulantes.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
