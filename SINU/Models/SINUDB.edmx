@@ -188,21 +188,13 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Comentario" Type="varchar" MaxLength="500" />
           <Property Name="IdDataProblemaEncontrado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <EntityType Name="DataProblemaPantalla">
-          <Key>
-            <PropertyRef Name="IdDataProblema" />
-          </Key>
-          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
-          <Property Name="IdPantalla" Type="int" Nullable="false" />
-          <Property Name="IdDataProblema" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Comentario" Type="varchar" MaxLength="500" Nullable="false" />
-        </EntityType>
         <EntityType Name="DataVerificacion">
           <Key>
             <PropertyRef Name="IdDataVerificacion" />
           </Key>
           <Property Name="IdDataVerificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdPantalla" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DocPresentado">
           <Key>
@@ -1404,34 +1396,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DataProblema_Persona">
-          <End Role="Postulante" Type="Self.Postulante" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="DataProblemaPantalla" Type="Self.DataProblemaPantalla" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Postulante">
-              <PropertyRef Name="IdPersona" />
-            </Principal>
-            <Dependent Role="DataProblemaPantalla">
-              <PropertyRef Name="IdPostulantePersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DataProblema_VerificacionPantallas">
-          <End Role="VerificacionPantallas" Type="Self.VerificacionPantallas" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="DataProblemaPantalla" Type="Self.DataProblemaPantalla" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VerificacionPantallas">
-              <PropertyRef Name="IdPantalla" />
-            </Principal>
-            <Dependent Role="DataProblemaPantalla">
-              <PropertyRef Name="IdPantalla" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DataProblemaEncontrado_DataVerificacion">
           <End Role="DataVerificacion" Type="Self.DataVerificacion" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1457,6 +1421,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene 
             </Principal>
             <Dependent Role="DataProblemaEncontrado">
               <PropertyRef Name="IdPostulantePersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataVerificacion_VerificacionPantallas">
+          <End Role="VerificacionPantallas" Type="Self.VerificacionPantallas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DataVerificacion" Type="Self.DataVerificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VerificacionPantallas">
+              <PropertyRef Name="IdPantalla" />
+            </Principal>
+            <Dependent Role="DataVerificacion">
+              <PropertyRef Name="IdPantalla" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1967,13 +1945,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VerificacionPantallasCerradas_Persona">
-          <End Role="Persona" Type="Self.Persona" Multiplicity="1">
+        <Association Name="FK_VerificacionPantallasCerradas_Postulante">
+          <End Role="Postulante" Type="Self.Postulante" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="VerificacionPantallasCerradas" Type="Self.VerificacionPantallasCerradas" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Persona">
+            <Principal Role="Postulante">
               <PropertyRef Name="IdPersona" />
             </Principal>
             <Dependent Role="VerificacionPantallasCerradas">
@@ -2014,9 +1992,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <Property Name="Abierta" Type="bit" />
                 <Property Name="fechaCierre" Type="datetime" />
                 <Property Name="Comentario" Type="varchar" MaxLength="500" />
+                <Property Name="Realizar Verificacion" Type="varchar" MaxLength="500" />
                 <Property Name="IdPantalla" Type="int" Nullable="false" />
                 <Property Name="IdPostulantePersona" Type="int" />
-                <Property Name="IdDataProblema" Type="int" />
+                <Property Name="IdDataProblemaEncontrado" Type="int" />
+                <Property Name="IdDataVerificacion" Type="int" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -2261,6 +2241,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="AniosTrabajados" Type="int" Mode="In" />
           <Parameter Name="DomicilioLaboral" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spTildarPantallaParaPostulate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
+        </Function>
         <Function Name="spTransaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="spUsuariosAdministrativosELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="varchar" Mode="In" />
@@ -2306,7 +2289,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="ConsultaProgramada" EntityType="Self.ConsultaProgramada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Convocatoria" EntityType="Self.Convocatoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataProblemaEncontrado" EntityType="Self.DataProblemaEncontrado" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DataProblemaPantalla" EntityType="Self.DataProblemaPantalla" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataVerificacion" EntityType="Self.DataVerificacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Domicilio" EntityType="Self.Domicilio" Schema="dbo" store:Type="Tables" />
@@ -2889,14 +2871,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="PeriodosInscripciones" EntitySet="PeriodosInscripciones" />
             <End Role="Convocatoria" EntitySet="Convocatoria" />
           </AssociationSet>
-          <AssociationSet Name="FK_DataProblema_Persona" Association="Self.FK_DataProblema_Persona">
-            <End Role="Postulante" EntitySet="Postulante" />
-            <End Role="DataProblemaPantalla" EntitySet="DataProblemaPantalla" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DataProblema_VerificacionPantallas" Association="Self.FK_DataProblema_VerificacionPantallas">
-            <End Role="VerificacionPantallas" EntitySet="VerificacionPantallas" />
-            <End Role="DataProblemaPantalla" EntitySet="DataProblemaPantalla" />
-          </AssociationSet>
           <AssociationSet Name="FK_DataProblemaEncontrado_DataVerificacion" Association="Self.FK_DataProblemaEncontrado_DataVerificacion">
             <End Role="DataVerificacion" EntitySet="DataVerificacion" />
             <End Role="DataProblemaEncontrado" EntitySet="DataProblemaEncontrado" />
@@ -2904,6 +2878,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <AssociationSet Name="FK_DataProblemaEncontrado_Postulante" Association="Self.FK_DataProblemaEncontrado_Postulante">
             <End Role="Postulante" EntitySet="Postulante" />
             <End Role="DataProblemaEncontrado" EntitySet="DataProblemaEncontrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataVerificacion_VerificacionPantallas" Association="Self.FK_DataVerificacion_VerificacionPantallas">
+            <End Role="VerificacionPantallas" EntitySet="VerificacionPantallas" />
+            <End Role="DataVerificacion" EntitySet="DataVerificacion" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -3065,8 +3043,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="OficinasYDelegaciones" EntitySet="OficinasYDelegaciones" />
             <End Role="Usuario_OficyDeleg" EntitySet="Usuario_OficyDeleg" />
           </AssociationSet>
-          <AssociationSet Name="FK_VerificacionPantallasCerradas_Persona" Association="Self.FK_VerificacionPantallasCerradas_Persona">
-            <End Role="Persona" EntitySet="Persona" />
+          <AssociationSet Name="FK_VerificacionPantallasCerradas_Postulante" Association="Self.FK_VerificacionPantallasCerradas_Postulante">
+            <End Role="Postulante" EntitySet="Postulante" />
             <End Role="VerificacionPantallasCerradas" EntitySet="VerificacionPantallasCerradas" />
           </AssociationSet>
           <AssociationSet Name="FK_VerificacionPantallasCerradas_VerificacionPantallas" Association="Self.FK_VerificacionPantallasCerradas_VerificacionPantallas">
@@ -3365,7 +3343,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <NavigationProperty Name="Estudio" Relationship="Self.PersonaEstudio" FromRole="Persona" ToRole="Estudio" />
           <NavigationProperty Name="SituacionOcupacional" Relationship="Self.PersonaSituacionOcupacional" FromRole="Persona" ToRole="SituacionOcupacional" />
           <NavigationProperty Name="Interes" Relationship="SINUModel.PersonaInteres" FromRole="Persona" ToRole="Interes" />
-          <NavigationProperty Name="DataProblemaPantalla" Relationship="SINUModel.FK_DataProblema_Persona" FromRole="Persona" ToRole="DataProblemaPantalla" />
           <NavigationProperty Name="ActividadMilitar" Relationship="SINUModel.PersonaActividadMilitar" FromRole="Persona" ToRole="ActividadMilitar" />
           <NavigationProperty Name="VerificacionPantallasCerradas" Relationship="SINUModel.FK_VerificacionPantallasCerradas_Persona" FromRole="Persona" ToRole="VerificacionPantallasCerradas" />
           </EntityType>
@@ -3398,10 +3375,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Postulante" FromRole="Postulante" ToRole="Inscripcion" />
           <NavigationProperty Name="Persona" Relationship="Self.FK_Postulante_Persona" FromRole="Postulante" ToRole="Persona" />
           <NavigationProperty Name="PostulanteViaje" Relationship="Self.FK_PostulanteViaje_Postulante" FromRole="Postulante" ToRole="PostulanteViaje" />
-          <NavigationProperty Name="DataProblemaPantalla" Relationship="SINUModel.FK_DataProblema_Persona1" FromRole="Postulante" ToRole="DataProblemaPantalla" />
           <Property Name="IdComoSeEntero" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ComoSeEntero1" Relationship="SINUModel.FK_Postulante_ComoSeEntero" FromRole="Postulante" ToRole="ComoSeEntero" />
           <NavigationProperty Name="DataProblemaEncontrado" Relationship="SINUModel.FK_DataProblemaEncontrado_Postulante" FromRole="Postulante" ToRole="DataProblemaEncontrado" />
+          <NavigationProperty Name="VerificacionPantallasCerradas" Relationship="SINUModel.FK_VerificacionPantallasCerradas_Postulante" FromRole="Postulante" ToRole="VerificacionPantallasCerradas" />
         </EntityType>
         <EntityType Name="PostulanteViaje">
           <Key>
@@ -4542,21 +4519,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="OficinasYDelegaciones" EntitySet="OficinasYDelegaciones" />
             <End Role="Usuario_OficyDeleg" EntitySet="Usuario_OficyDeleg" />
           </AssociationSet>
-          <EntitySet Name="DataProblemaPantalla" EntityType="SINUModel.DataProblemaPantalla" />
           <EntitySet Name="VerificacionPantallas" EntityType="SINUModel.VerificacionPantallas" />
           <EntitySet Name="VPantalla_Problema" EntityType="SINUModel.VPantalla_Problema" />
-          <AssociationSet Name="FK_DataProblema_Persona" Association="SINUModel.FK_DataProblema_Persona">
-            <End Role="Persona" EntitySet="Persona" />
-            <End Role="DataProblemaPantalla" EntitySet="DataProblemaPantalla" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DataProblema_VerificacionPantallas" Association="SINUModel.FK_DataProblema_VerificacionPantallas">
-            <End Role="VerificacionPantallas" EntitySet="VerificacionPantallas" />
-            <End Role="DataProblemaPantalla" EntitySet="DataProblemaPantalla" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DataProblema_Persona1" Association="SINUModel.FK_DataProblema_Persona1">
-            <End Role="Postulante" EntitySet="Postulante" />
-            <End Role="DataProblemaPantalla" EntitySet="DataProblemaPantalla" />
-          </AssociationSet>
           <AssociationSet Name="PersonaActividadMilitar" Association="SINUModel.PersonaActividadMilitar">
             <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
             <End Role="Persona" EntitySet="Persona" />
@@ -4759,8 +4723,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="VerificacionPantallas" EntitySet="VerificacionPantallas" />
             <End Role="VerificacionPantallasCerradas" EntitySet="VerificacionPantallasCerradas" />
           </AssociationSet>
+          <AssociationSet Name="FK_DataVerificacion_VerificacionPantallas" Association="SINUModel.FK_DataVerificacion_VerificacionPantallas">
+            <End Role="VerificacionPantallas" EntitySet="VerificacionPantallas" />
+            <End Role="DataVerificacion" EntitySet="DataVerificacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VerificacionPantallasCerradas_Postulante" Association="SINUModel.FK_VerificacionPantallasCerradas_Postulante">
+            <End Role="Postulante" EntitySet="Postulante" />
+            <End Role="VerificacionPantallasCerradas" EntitySet="VerificacionPantallasCerradas" />
+          </AssociationSet>
           <FunctionImport Name="PantallasYComentariosDelPostulante" IsComposable="true" ReturnType="Collection(SINUModel.PantallasYComentariosDelPostulante_Result)">
-          <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spTildarPantallaParaPostulate" ReturnType="Collection(SINUModel.spTildarPantallaParaPostulate_Result)">
+            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -4892,26 +4867,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DataProblemaPantalla">
-          <Key>
-            <PropertyRef Name="IdDataProblema" />
-          </Key>
-          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
-          <Property Name="IdPantalla" Type="Int32" Nullable="false" />
-          <Property Name="IdDataProblema" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Persona" Relationship="SINUModel.FK_DataProblema_Persona" FromRole="DataProblemaPantalla" ToRole="Persona" />
-          <NavigationProperty Name="VerificacionPantallas" Relationship="SINUModel.FK_DataProblema_VerificacionPantallas" FromRole="DataProblemaPantalla" ToRole="VerificacionPantallas" />
-          <NavigationProperty Name="Postulante" Relationship="SINUModel.FK_DataProblema_Persona1" FromRole="DataProblemaPantalla" ToRole="Postulante" />
-        </EntityType>
         <EntityType Name="VerificacionPantallas">
           <Key>
             <PropertyRef Name="IdPantalla" />
           </Key>
           <Property Name="IdPantalla" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Pantalla" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DataProblemaPantalla" Relationship="SINUModel.FK_DataProblema_VerificacionPantallas" FromRole="VerificacionPantallas" ToRole="DataProblemaPantalla" />
           <NavigationProperty Name="VerificacionPantallasCerradas" Relationship="SINUModel.FK_VerificacionPantallasCerradas_VerificacionPantallas" FromRole="VerificacionPantallas" ToRole="VerificacionPantallasCerradas" />
+          <NavigationProperty Name="DataVerificacion" Relationship="SINUModel.FK_DataVerificacion_VerificacionPantallas" FromRole="VerificacionPantallas" ToRole="DataVerificacion" />
         </EntityType>
         <EntityType Name="VPantalla_Problema">
           <Key>
@@ -4926,48 +4889,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK_DataProblema_Persona">
-          <End Type="SINUModel.Persona" Role="Persona" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SINUModel.DataProblemaPantalla" Role="DataProblemaPantalla" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Persona">
-              <PropertyRef Name="IdPersona" />
-            </Principal>
-            <Dependent Role="DataProblemaPantalla">
-              <PropertyRef Name="IdPostulantePersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DataProblema_VerificacionPantallas">
-          <End Type="SINUModel.VerificacionPantallas" Role="VerificacionPantallas" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SINUModel.DataProblemaPantalla" Role="DataProblemaPantalla" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VerificacionPantallas">
-              <PropertyRef Name="IdPantalla" />
-            </Principal>
-            <Dependent Role="DataProblemaPantalla">
-              <PropertyRef Name="IdPantalla" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DataProblema_Persona1">
-          <End Type="SINUModel.Postulante" Role="Postulante" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SINUModel.DataProblemaPantalla" Role="DataProblemaPantalla" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Postulante">
-              <PropertyRef Name="IdPersona" />
-            </Principal>
-            <Dependent Role="DataProblemaPantalla">
-              <PropertyRef Name="IdPostulantePersona" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PersonaActividadMilitar">
           <End Type="SINUModel.ActividadMilitar" Role="ActividadMilitar" Multiplicity="*" />
           <End Type="SINUModel.Persona" Role="Persona" Multiplicity="*" />
@@ -5204,6 +5125,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdDataVerificacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DataProblemaEncontrado" Relationship="SINUModel.FK_DataProblemaEncontrado_DataVerificacion" FromRole="DataVerificacion" ToRole="DataProblemaEncontrado" />
+          <Property Name="IdPantalla" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="VerificacionPantallas" Relationship="SINUModel.FK_DataVerificacion_VerificacionPantallas" FromRole="DataVerificacion" ToRole="VerificacionPantallas" />
         </EntityType>
         <EntityType Name="GrupoCarrOficio">
           <Key>
@@ -5566,6 +5489,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="fechaCierre" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Persona" Relationship="SINUModel.FK_VerificacionPantallasCerradas_Persona" FromRole="VerificacionPantallasCerradas" ToRole="Persona" />
           <NavigationProperty Name="VerificacionPantallas" Relationship="SINUModel.FK_VerificacionPantallasCerradas_VerificacionPantallas" FromRole="VerificacionPantallasCerradas" ToRole="VerificacionPantallas" />
+          <NavigationProperty Name="Postulante" Relationship="SINUModel.FK_VerificacionPantallasCerradas_Postulante" FromRole="VerificacionPantallasCerradas" ToRole="Postulante" />
         </EntityType>
         <Association Name="FK_VerificacionPantallasCerradas_Persona">
           <End Type="SINUModel.Persona" Role="Persona" Multiplicity="1">
@@ -5595,15 +5519,50 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DataVerificacion_VerificacionPantallas">
+          <End Type="SINUModel.VerificacionPantallas" Role="VerificacionPantallas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SINUModel.DataVerificacion" Role="DataVerificacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VerificacionPantallas">
+              <PropertyRef Name="IdPantalla" />
+            </Principal>
+            <Dependent Role="DataVerificacion">
+              <PropertyRef Name="IdPantalla" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VerificacionPantallasCerradas_Postulante">
+          <End Type="SINUModel.Postulante" Role="Postulante" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SINUModel.VerificacionPantallasCerradas" Role="VerificacionPantallasCerradas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postulante">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="VerificacionPantallasCerradas">
+              <PropertyRef Name="IdPostulantePersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <ComplexType Name="PantallasYComentariosDelPostulante_Result">
           <Property Type="Int64" Name="ID" Nullable="true" />
           <Property Type="String" Name="Pantalla" Nullable="false" MaxLength="50" />
           <Property Type="Boolean" Name="Abierta" Nullable="true" />
           <Property Type="DateTime" Name="fechaCierre" Nullable="true" Precision="23" />
           <Property Type="String" Name="Comentario" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Realizar_Verificacion" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="IdPantalla" Nullable="false" />
           <Property Type="Int32" Name="IdPostulantePersona" Nullable="true" />
-          <Property Type="Int32" Name="IdDataProblema" Nullable="true" />
+          <Property Type="Int32" Name="IdDataProblemaEncontrado" Nullable="true" />
+          <Property Type="Int32" Name="IdDataVerificacion" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spTildarPantallaParaPostulate_Result">
+          <Property Type="String" Name="Pantalla" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Abierta" Nullable="true" />
+          <Property Type="Int32" Name="IdPantalla" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6465,16 +6424,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DataProblemaPantalla">
-            <EntityTypeMapping TypeName="SINUModel.DataProblemaPantalla">
-              <MappingFragment StoreEntitySet="DataProblemaPantalla">
-                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="IdDataProblema" ColumnName="IdDataProblema" />
-                <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
-                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VerificacionPantallas">
             <EntityTypeMapping TypeName="SINUModel.VerificacionPantallas">
               <MappingFragment StoreEntitySet="VerificacionPantallas">
@@ -6708,6 +6657,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="DataVerificacion">
             <EntityTypeMapping TypeName="SINUModel.DataVerificacion">
               <MappingFragment StoreEntitySet="DataVerificacion">
+                <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdDataVerificacion" ColumnName="IdDataVerificacion" />
               </MappingFragment>
@@ -6965,9 +6915,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Abierta" ColumnName="Abierta" />
                 <ScalarProperty Name="fechaCierre" ColumnName="fechaCierre" />
                 <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Realizar_Verificacion" ColumnName="Realizar Verificacion" />
                 <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
                 <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
-                <ScalarProperty Name="IdDataProblema" ColumnName="IdDataProblema" />
+                <ScalarProperty Name="IdDataProblemaEncontrado" ColumnName="IdDataProblemaEncontrado" />
+                <ScalarProperty Name="IdDataVerificacion" ColumnName="IdDataVerificacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spTildarPantallaParaPostulate" FunctionName="SINUModel.Store.spTildarPantallaParaPostulate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spTildarPantallaParaPostulate_Result">
+                <ScalarProperty Name="Pantalla" ColumnName="Pantalla" />
+                <ScalarProperty Name="Abierta" ColumnName="Abierta" />
+                <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

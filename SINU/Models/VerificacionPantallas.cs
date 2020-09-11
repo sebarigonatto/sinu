@@ -17,16 +17,16 @@ namespace SINU.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VerificacionPantallas()
         {
-            this.DataProblemaPantalla = new HashSet<DataProblemaPantalla>();
             this.VerificacionPantallasCerradas = new HashSet<VerificacionPantallasCerradas>();
+            this.DataVerificacion = new HashSet<DataVerificacion>();
         }
     
         public int IdPantalla { get; set; }
         public string Pantalla { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DataProblemaPantalla> DataProblemaPantalla { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VerificacionPantallasCerradas> VerificacionPantallasCerradas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DataVerificacion> DataVerificacion { get; set; }
     }
 }

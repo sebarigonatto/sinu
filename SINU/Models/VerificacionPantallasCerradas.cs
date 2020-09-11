@@ -20,5 +20,6 @@ namespace SINU.Models
     
         public virtual Persona Persona { get; set; }
         public virtual VerificacionPantallas VerificacionPantallas { get; set; }
+        public virtual Postulante Postulante { get; set; }
     }
 }

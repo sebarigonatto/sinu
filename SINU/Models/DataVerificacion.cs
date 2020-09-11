@@ -22,8 +22,10 @@ namespace SINU.Models
     
         public int IdDataVerificacion { get; set; }
         public string Descripcion { get; set; }
+        public int IdPantalla { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DataProblemaEncontrado> DataProblemaEncontrado { get; set; }
+        public virtual VerificacionPantallas VerificacionPantallas { get; set; }
     }
 }
