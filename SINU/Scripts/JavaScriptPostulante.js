@@ -109,7 +109,7 @@ $(document).ready(function () {
         edadMAXMIN($("#edad").val());
     }
 
-    if ($("#edad").val() > 0) {
+    if ($("#fechacumpleaños").val()!= "") {
         ActualizarINStDatosBasicos();
     }
 
@@ -153,7 +153,7 @@ $(document).ready(function () {
                 IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
                 Fecha: $("#fechacumpleaños").val().toString()
 
-            },
+            },                                                                                                                                                                                                                                                                           
             function (data) {
 
                 var idselect = $("#InstitutoPref").val();
