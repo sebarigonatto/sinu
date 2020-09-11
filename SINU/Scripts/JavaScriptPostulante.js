@@ -177,7 +177,7 @@ $(document).ready(function () {
 
             })
     }
-
+    
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         ComoSeEntero();

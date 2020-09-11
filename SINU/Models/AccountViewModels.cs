@@ -111,7 +111,7 @@ namespace SINU.Models
         public SelectList ListOficinaYDelegacion { get; set; }
 
         public SelectList ListIntitutos { get; set; }
-
+         public string DatosDelegacion { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SINU.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace SINU.Controllers
 {
@@ -60,7 +63,7 @@ namespace SINU.Controllers
             {
                 ViewBag.logueado = true;
             }
-            ViewBag.ReturnUrl = returnUrl; 
+            ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -100,16 +103,16 @@ namespace SINU.Controllers
                         case SignInStatus.Success:
                             //VER  redigir al controlador segun el tipo de usuario o CodGrupo ej /Postulante/index /Delegacion/index.. /Administracion/index ../Consultor/index
                             //tener en cuenta que si no exite el usuario registrado en la base de datos seguridad causara una excepcion 
-                            
+
                             if (returnUrl != null && (returnUrl.Contains("/Home/Index") || returnUrl != "/"))
                             {
                                 return Redirect(returnUrl);
                             }
                             else
                             {
-                                 string Grupo = db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd();
+                                string Grupo = db.vSeguridad_Grupos_Usuarios.FirstOrDefault(sg => sg.codUsuario == model.Email).codGrupo.TrimEnd();
                                 return RedirectToAction("Index", Grupo);
-                          
+
                             }
                         //el codigo anterior reemplaza al comentado                       
                         // return RedirectToAction("Index","Postulante");
@@ -184,12 +187,19 @@ namespace SINU.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            RegisterViewModel regi = new RegisterViewModel 
+            RegisterViewModel regi = new RegisterViewModel
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
-                ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre"),
-                ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(),"IdInstitucion","NombreInst"),
+                ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre"),
+                ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst"),
                 IdInstituto = idInstitucion
             };
+            var DatosDelegacion2 = new List<Array>();
+            db.OficinasYDelegaciones.ToList().ForEach(m => DatosDelegacion2.Add(new object[] { m.IdOficinasYDelegaciones,
+                                                                                               m.Provincia + ", " + m.Localidad + ", " + m.Direccion,
+                                                                                               m.Telefono,
+                                                                                               m.Celular}));
+            regi.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
+
             idInstitucion = (idInstitucion == 0) ? 1 : idInstitucion;
 
             if (idInstitucion != 0)
@@ -208,7 +218,7 @@ namespace SINU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
-            model.ListOficinaYDelegacion  = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
+            model.ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre");
             model.ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst");
 
             if (ModelState.IsValid)
@@ -251,12 +261,12 @@ namespace SINU.Controllers
                         //Id de la Persona para obtener el correo de destino
                         //Asusnto de Mail.
                         string MODALIDAD = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdInstitucion == model.IdInstituto).IdModalidad;
-                        if (MODALIDAD=="CPESNM" || MODALIDAD == "CPESSA" || MODALIDAD== "CUIM")
+                        if (MODALIDAD == "CPESNM" || MODALIDAD == "CPESSA" || MODALIDAD == "CUIM")
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id,null, "MailAsunto"+MODALIDAD);
-                    
+                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD);
+
                         return RedirectToAction("Login");
                     }
                     AddErrors(result);
@@ -305,14 +315,14 @@ namespace SINU.Controllers
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
 
                     Task<IdentityResult> resultado = UserManager.AddToRoleAsync(userId, "Postulante");
-                    
+
                     //siendo exitoso el ingreso a seguridad del postulante hago que avance a la secuencia siguiente : "DATOS BASICOS-Inicio De Carga"
-                    db.spProximaSecuenciaEtapaEstado(persona.IdPersona, 0,false,0, "DATOS BASICOS", "Inicio De Carga");
+                    db.spProximaSecuenciaEtapaEstado(persona.IdPersona, 0, false, 0, "DATOS BASICOS", "Inicio De Carga");
 
                     //envio mail a todos los usuarios de la delegaacion coorespondiete al postulante ye valido el correo
-                    int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona==persona.IdPersona).IdDelegacionOficinaIngresoInscribio;
+                    int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdDelegacionOficinaIngresoInscribio;
                     var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
-                    ViewModels.ValidoCorreoPostulante datosMail= new ViewModels.ValidoCorreoPostulante();
+                    ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante();
                     foreach (var dele in mailDelegacion)
                     {
                         var idAsp_delegacion = db.AspNetUsers.FirstOrDefault(m => m.Email == dele.Email).Id;
@@ -323,7 +333,7 @@ namespace SINU.Controllers
                         datosMail.Dni_P = persona.DNI;
                         datosMail.IdInscripcion_P = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion;
                         datosMail.Nombre_P = persona.Nombres;
-                        datosMail.url = Url.Action("Details", "Delegacion", new { id= db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme);
+                        datosMail.url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme);
 
                         Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", idAsp_delegacion, null, "MailAsunto6");
                     }

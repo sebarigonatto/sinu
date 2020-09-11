@@ -76,12 +76,20 @@
     <div class="form-group">
         @Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "---Seleccione la mas cercana ---", htmlAttributes: new { @class = "form-control selectpicker" })
+            @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion,"Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker",@id="DelegacionOfi" })
             <div class="h-100"></div>
 
             @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
 
         </div>
+    </div>
+    <div id="DatosDelegacion" class="form-group control-label" hidden>
+        @Html.Label("Direccion", new { @class = "col-md-2 control-label" })
+        <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+        @Html.Label("Telefono", new { @class = "col-md-2 control-label" })
+        <p id="Telefono"  class="control-label col"><b>asdasda</b></p>
+        @Html.Label("Celular", new { @class = "col-md-2 control-label" })
+        <p id="Celular"  class="control-label col"><b>asdasda</b></p>
     </div>
     <br />
 
@@ -105,7 +113,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(".selectpicker").selectpicker({
             size: 7,
             noneSelectedText: 'Ninguna Opcion Seleccionada'
@@ -113,10 +121,30 @@
         });
         $(document).ready( function () {
             $("#Contraseña").attr("data-toggle", "tooltip")
-                            .attr("data-placement", "top")
-                            .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder")
-                            .tooltip({ 'trigger': 'focus' })
+                .attr("data-placement", "top")
+                .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder")
+                .tooltip({ 'trigger': 'focus' });
 
+            var model = '@Html.Raw(Model.DatosDelegacion)';
+            var jsonDatosDelegacion = JSON.parse(model);
+            $("#DelegacionOfi").on("changed.bs.select", function () {
+                if ($(this).val() != "") {
+                    var value = $(this).val();
+                    var DeleOfi = "";
+                    $.each(jsonDatosDelegacion, function (index, item) {
+                        DeleOfi = (item[0] == value) ? item : DeleOfi;
+                        if (DeleOfi != "") {
+                            return false;
+                        }
+                    });
+                    $("#Direccion b").text(DeleOfi[1]);
+                    $("#Telefono b").text(DeleOfi[2]);
+                    $("#Celular b").text(DeleOfi[3] == "" ? "-------" : DeleOfi[3]);
+                    $("#DatosDelegacion").removeAttr("hidden");
+                } else {
+                    $("#DatosDelegacion").attr("hidden",true);
+                }
+            })
         });
-    </script>
+</script>
 }

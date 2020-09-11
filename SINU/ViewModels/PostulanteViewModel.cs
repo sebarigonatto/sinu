@@ -18,7 +18,7 @@ namespace SINU.ViewModels
         public string NomyApe { get; set; }
         //public bool YAguardado { get; set; }
         public bool NoPostulado { get; set; }
-        public List<DataProblemaPantalla> ListProblemaPantalla { get; set; }
+        //public List<DataProblemaPantalla> ListProblemaPantalla { get; set; }
     }
 
     public class PersonaFamiliaVM
