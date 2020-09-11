@@ -38,17 +38,25 @@ namespace SINU.Controllers
                 {
                     ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
+                //cargo los ID de las etapas por las que paso el postulante
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                //busco el IDinscripcion del postulante logueado
                 int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
-                //creo array con las secuecias correspondiente al Postulante
+                //creo array con las secuecias por las que el Postulante
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Select(m => m.IdSecuencia).ToList();
-                var Secus11_12 = Secuencias.Where(m => m == 11 || m == 12).ToList();
-                pers.NoPostulado = (Secus11_12.Count() > 0 && Secus11_12[0] == 12);//ver como mostrar esta pantalla de si fue postulado o no
-                ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;
 
+                //verifico si se lo postulo o no en la entrevista
+                pers.NoPostulado = (Secuencias[0] == 12);
+                //ver como mostrar esta pantalla de si fue 
+                if (pers.NoPostulado){ ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;}
+               
                 //verifico si la validacion esta en curso o no
-                ViewBag.ValidacionEnCurso = (Secuencias[0]==14)?true:false;
+                ViewBag.ValidacionEnCurso = (Secuencias[0]==14);
+
+                //cargo listado de problemas de pantallas que le corresponde al postulante
+                //pers.ListProblemaPantalla = db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == pers.ID_PER).ToList();
 
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
@@ -81,14 +89,14 @@ namespace SINU.Controllers
                 var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
                 pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true : false;//ver como mostrar esta pantalla de si fue postulado o no
                 ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;
-                //if (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m=>m.IdInscripcionEtapaEstado==idInscri).ToList()[0].IdSecuencia==14)
-                //{
-                //     ViewBag.TextValidacionenCurso = "True";
-                //}
-                //else
-                //{
-                //    ViewBag.TextValidacionenCurso = "False";
-                //}
+                if (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).ToList()[0].IdSecuencia == 14)
+                {
+                    ViewBag.ValidacionEnCurso = true;
+                }
+                else
+                {
+                    ViewBag.ValidacionEnCurso = false;
+                }
 
                 //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
                 //´verifico si ya realizo el guardado de datos basicos.
@@ -239,17 +247,9 @@ namespace SINU.Controllers
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var estado = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion).Where(m => m.IdSecuencia == 8 || m.IdSecuencia == 10 || m.IdSecuencia == 11).OrderBy(m => m.Fecha).ToList();
                 int IDsecu = estado[estado.Count - 1].IdSecuencia;
+                //coloco el estado de la entrevista
                 ViewBag.EstadoEntre = (IDsecu == 11) ? "Concretada" : db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == IDsecu).Estado;
-                if (entrevistafh.FechaEntrevista == null)
-                {
-                    ViewBag.NoAsignado = true;
-
-                }
-                else
-                {
-                    entrevistafh.FechaEntrevista = entrevistafh.FechaEntrevista;
-                    ViewBag.NoAsignado = false;
-                }
+                ViewBag.FechaAsisgnada = (entrevistafh.FechaEntrevista != null);
                 //se carga los texto parametrizados desde la tabla configuracion
                 string[] consideraciones = {
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
@@ -1278,7 +1278,7 @@ namespace SINU.Controllers
             {
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 14, "", "");
-                return Json(new { success = true, msg = "Operacion Exitosa", form = "BTValidar" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Operacion Exitosa", form = "ValidarDatos" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

@@ -1,31 +1,34 @@
 ﻿@model SINU.Models.vEntrevistaLugarFecha
- <h2>Lugar y Fecha:</h2>
-<div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-    @*<h5>Estado </h5>*@
-    @if (ViewBag.NoAsignado)
-    {
+<h2>Lugar y Fecha:</h2>
+
+@if (ViewBag.FechaAsisgnada)
+{
+    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
+        <h5>Direccion: <b>@Model.Direccion</b></h5>
+        <h5>Telefono: <b>@Model.Telefono</b></h5>
+        @if (Model.Celular != null)
+        {
+        <h5>Celular: <b>@Model.Celular</b></h5>
+        }
+        <h5> Fecha y Hora: @Model.FechaEntrevista.Value.ToString("dd/MM/yyyy") </h5>
+        <h4>Estado: <b>@ViewBag.EstadoEntre </b></h4>
+    </div>
+    <hr />
+    <div class="jumbotron" style="background-color: #08495f; color:white">
+        <h5><b>@ViewBag.Considere[0]</b></h5>
+        <hr />
+        <h5>@ViewBag.Considere[1]</h5>
+    </div>
+}
+else
+{
+    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
         <h5>Se le informara via correo cuando le hayan asignado una fecha de entrevista, solicitamos este atento.</h5>
         <h5>Por Consultas comunicarse con la Delegacion seleccionada. </h5>
         <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
         <h5>Direccion: <b>@Model.Direccion</b></h5>
         <h5>Telefono: <b>@Model.Telefono</b></h5>
-    }
-    else
-    {
-        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-        <h5>Direccion: <b>@Model.Direccion</b></h5>
-        <h5>Telefono: <b>@Model.Telefono</b></h5>
-        if (Model.Celular != null)
-        {
-            <h5>Celular: <b>@Model.Celular</b></h5>
-        }
-        <h5> Fecha y Hora: @Model.FechaEntrevista.Value.ToString("dd/MM/yyyy") </h5>
-    }
-    <h4>Estado: <b>@ViewBag.EstadoEntre </b></h4>
-</div>
-<hr />
-<div class="jumbotron" style="background-color: #08495f; color:white">
-    <h5><b>@ViewBag.Considere[0]</b></h5>
-    <hr/>
-    <h5>@ViewBag.Considere[1]</h5>
-</div>
+        <h4>Estado: <b>@ViewBag.EstadoEntre </b></h4>
+    </div>
+}
