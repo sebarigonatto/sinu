@@ -46,5 +46,15 @@ namespace SINU.Controllers.Consultor
             }
             return View(Listado);
         }
+        public ActionResult ConsultaTotalPostulantes()
+        {
+            List<vInscripcionEtapaEstadoUltimoEstado> Todos;
+           
+            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5).ToList();
+            return View(Todos);
+
+        }
+       
+
     }
 }

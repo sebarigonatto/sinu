@@ -48,12 +48,12 @@
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
-        @*@Html.ActionLink("Inscriptos", "InscriptosPorModalidad", new { modalidadElegida = item.Modalidad_Siglas })*@
     }
     <div>
-        @Html.ActionLink("Volver al Listado de consultas", "Index","ConsultaProgramadas" );
+        @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
     </div>
+    @Html.ActionLink("Atras", "TotalesPorModalidadYGenero", "CallConsulta");
 
-    @Html.ActionLink("Inscriptos Todos", "InscriptosPorModalidad", new { ModalidadElegida = "Todos" })
+    @* @Html.ActionLink("Inscriptos Todos", "InscriptosPorModalidad", new { ModalidadElegida = "Todos" })*@
 
 </table>

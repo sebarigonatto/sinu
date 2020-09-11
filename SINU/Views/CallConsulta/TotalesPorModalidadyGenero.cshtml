@@ -3,7 +3,7 @@
 @*<p>
     @Html.ActionLink("Create New", "Create")
 </p>*@
-    <table class="table">
+    <table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Modalidad_Siglas)
@@ -41,17 +41,19 @@
                 @*<td>
                     @Html.DisplayFor(modelItem => item.Total)
                 </td>*@
-            <td>
-                @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
-                @*@Html.ActionLink("Detalle", "Details", new { id = item.ID }) |*@
-                @*Nombre,Action, Controlador*@
-                @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
-                @*No se puede tener dos ActionLink con el mismo nombre*@
-                @Html.ActionLink("Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas })
-            </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
+                    @*@Html.ActionLink("Detalle", "Details", new { id = item.ID }) |*@
+                    @*Nombre,Action, Controlador*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                    @*No se puede tener dos ActionLink con el mismo nombre*@
+                    @Html.ActionLink("Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas })
+                </td>
             </tr>
-            
-           
         }
+        <div>
+            @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
+        </div>
+        @Html.ActionLink("Atras", "TotalesPorModalidadYGenero", "CallConsulta");
 
     </table>
