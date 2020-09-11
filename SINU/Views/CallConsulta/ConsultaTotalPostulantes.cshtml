@@ -63,13 +63,15 @@
             <td>
                 @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @*No se puede tener dos ActionLink con el mismo nombre*@
+                @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
                 @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
     }
-    <div>
+    @*<div>*@
         @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
-    </div>
+    @*</div>*@
 
    
     @*probar esto*@
