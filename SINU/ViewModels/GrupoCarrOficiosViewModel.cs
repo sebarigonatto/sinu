@@ -12,7 +12,7 @@ namespace SINU.ViewModels
     {
         [Required]
         [Display(Name = "Grupo(ID)")]
-        [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar máximo 10 digitos")]
+        [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar mínimo 5 Carácteres (máximo 10)")]
         public string IdGrupoCarrOficio { set; get; }     
         [Display(Name = "Carrera/Oficio (ID)")]
         public string IdCarreraOficio { set; get; }

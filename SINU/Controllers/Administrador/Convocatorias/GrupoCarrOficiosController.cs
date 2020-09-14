@@ -105,7 +105,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             //    return RedirectToAction("Create");
             //}
             grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
-            ViewBag.Mensaje = "No se creó registro";
+            ViewBag.Mensaje = "No se creó registro. Verifique errores mencionados.";
             return View(grupoCarrOficiovm);
 }
 

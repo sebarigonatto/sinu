@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace SINU.Controllers.Administrador
 {
-    //[AuthorizacionPermiso("CRUDParam")]
+    //[AuthorizacionPermiso("CRUDParam")] //TODO De OTTINO:esto en algun momento lo vas a desmarcar no?
     public class ModalidadsController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -31,6 +31,7 @@ namespace SINU.Controllers.Administrador
         {
             if (id == null)
             {
+                //TODO De OTTINO: comentario para hacer ..cambiar esto
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Modalidad modalidad = db.Modalidad.Find(id);
@@ -44,6 +45,7 @@ namespace SINU.Controllers.Administrador
         // GET: Modalidads/Create
         public ActionResult Create()
         {
+            //TODO De OTTINO: esto lo haremos con mucho cuidado
             return View();
         }
 
