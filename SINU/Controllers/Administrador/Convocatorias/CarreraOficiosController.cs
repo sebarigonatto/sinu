@@ -17,7 +17,27 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // GET: CarreraOficios
         public ActionResult Index()
         {
-            return View(db.CarreraOficio.ToList());
+            List <CarreraOficio> carreraOficio = db.CarreraOficio.ToList();
+
+            for (int i = 0; i < carreraOficio.Count(); i++)
+            {
+                switch (carreraOficio[i].Personal)
+                {
+                    case "O":
+                        carreraOficio[i].Personal = "Oficiales";
+                        break;
+                    case "S":
+                        carreraOficio[i].Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        carreraOficio[i].Personal = "Marineros";
+                        break;
+                }
+            }
+
+            
+            return View(carreraOficio);
+
         }
 
         // GET: CarreraOficios/Details/5
@@ -97,6 +117,18 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CarreraOficio carreraOficio = db.CarreraOficio.Find(id);
+            switch (carreraOficio.Personal)
+            {
+                case "O":
+                    carreraOficio.Personal = "Oficiales";
+                    break;
+                case "S":
+                    carreraOficio.Personal = "Suboficiales";
+                    break;
+                case "M":
+                    carreraOficio.Personal = "Marineros";
+                    break;
+            }
             if (carreraOficio == null)
             {
                 return HttpNotFound();

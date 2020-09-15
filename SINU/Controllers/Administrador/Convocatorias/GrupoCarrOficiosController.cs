@@ -26,6 +26,23 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Index(string Mensaje)
         {
             ViewBag.Mensaje = Mensaje;
+            List<GrupoCarrOficio> grupoCarrOficio = db.GrupoCarrOficio.ToList();
+            for (int i = 0; i < grupoCarrOficio.Count(); i++)
+            {
+
+                switch (grupoCarrOficio[i].Personal)
+                {
+                    case "O":
+                        grupoCarrOficio[i].Personal = "Oficiales";
+                        break;
+                    case "S":
+                        grupoCarrOficio[i].Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        grupoCarrOficio[i].Personal = "Marinero";
+                        break;
+                }
+            }
             return View(db.GrupoCarrOficio.ToList());
         }
 
@@ -290,6 +307,17 @@ public ActionResult Edit(string id)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+            switch (grupoCarrOficio.Personal)
+            {
+                case "O":grupoCarrOficio.Personal = "Oficiales";
+                    break;
+                case "S":
+                    grupoCarrOficio.Personal = "Suboficiales";
+                    break;
+                case "M":
+                    grupoCarrOficio.Personal = "Marinero";
+                    break;
+            }
             if (grupoCarrOficio == null)
             {
                 return HttpNotFound();
