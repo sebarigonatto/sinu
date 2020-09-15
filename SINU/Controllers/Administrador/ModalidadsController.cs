@@ -23,7 +23,24 @@ namespace SINU.Controllers.Administrador
         // GET: Modalidads
         public ActionResult Index()
         {
-            return View(db.Modalidad.ToList());
+            List<Modalidad> modalidad  = db.Modalidad.ToList();
+
+            for (int i = 0; i < modalidad.Count(); i++)
+            {
+                switch (modalidad[i].Personal)
+                {
+                    case "O":
+                        modalidad[i].Personal = "Oficiales";
+                        break;
+                    case "S":
+                        modalidad[i].Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        modalidad[i].Personal = "Marineros";
+                        break;
+                }
+            }
+            return View(modalidad);
         }
 
         // GET: Modalidads/Details/5
@@ -35,6 +52,22 @@ namespace SINU.Controllers.Administrador
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Modalidad modalidad = db.Modalidad.Find(id);
+            List<CarreraOficio> carreraOficio = db.CarreraOficio.ToList();
+
+           
+                switch (modalidad.Personal)
+                {
+                    case "O":
+                        modalidad.Personal = "Oficiales";
+                        break;
+                    case "S":
+                    modalidad.Personal = "Suboficiales";
+                        break;
+                    case "M":
+                    modalidad.Personal = "Marineros";
+                        break;
+                }
+            
             if (modalidad == null)
             {
                 return HttpNotFound();
