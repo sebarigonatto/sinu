@@ -29,7 +29,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             List<GrupoCarrOficio> grupoCarrOficio = db.GrupoCarrOficio.ToList();
             for (int i = 0; i < grupoCarrOficio.Count(); i++)
             {
-
+                //TODO de OTTINO: aca vamos a acceder a la tablita que cree que te trae esto.. lo tenes en varios lugares y te acordas que me dijiste de crear la tablita.. ya lo hice.. en vez de hacer esto traete la tablita
                 switch (grupoCarrOficio[i].Personal)
                 {
                     case "O":
@@ -96,13 +96,18 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 {
                 string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
                 grupoCarrOficiovm.Esinsert = true;
+                //el stgCarreras si es INSERT debe estar en el campo siguiente:
+                //grupoCarrOficiovm.IdGrupoCarrOficio = stgCarreras;
+                //grupoCarrOficiovm.IdGCOOriginal = "";
                 //03 agosto, graba en grupo carrera oficio
                 // aca iria un sp donde le paso todo el listado de carreras y 
                 //el id del grupo carrera oficio para asignarle a las mismas.
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
                 //db.SaveChanges(); 
 
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal,
+                    grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, 
+                    grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
                     //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                     String mens = ObjMensaje.Value.ToString();
                     switch (mens)
