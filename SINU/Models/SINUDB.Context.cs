@@ -107,7 +107,6 @@ namespace SINU.Models
         public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
-        public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
         public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
@@ -115,6 +114,8 @@ namespace SINU.Models
         public virtual DbSet<vDataProblemaEncontrado> vDataProblemaEncontrado { get; set; }
         public virtual DbSet<VerificacionPantallasCerradas> VerificacionPantallasCerradas { get; set; }
         public virtual DbSet<vVerificacionPantallasYDatosAVerificar> vVerificacionPantallasYDatosAVerificar { get; set; }
+        public virtual DbSet<vRestriccionesGrupo> vRestriccionesGrupo { get; set; }
+        public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
