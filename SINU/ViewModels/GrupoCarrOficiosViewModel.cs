@@ -40,6 +40,9 @@ namespace SINU.ViewModels
         //para usar checkbox
         public List<CheckBoxes> Carreras3 { get; set; }
         public string ErrorDevuelto { set; get; }
+        [Required(ErrorMessage = "Elija o cree una nueva restricción")]
+        [Display(Name = "Restricción de Grupo")]
+        public int IdResGrupo { set; get; }
     }
 
     public class CheckBoxes

@@ -77,6 +77,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create()
         {
             GrupoCarrOficiosvm prueba = new GrupoCarrOficiosvm { Carreras2 = db.CarreraOficio.ToList() };
+            List <ResGrupo> lstResGrupo = db.ResGrupo.ToList();
+            ViewBag.lstresGrupo = lstResGrupo;
                        return View(prueba);
         }
 
@@ -379,5 +381,24 @@ public ActionResult Edit(string id)
             }
         }
 
+        public JsonResult DevolverRestricciones(int RegionId)
+        {
+            using (db = new SINUEntities())
+            {
+                //carreras Tpersonal
+                //var Restriccion = db.CarreraOficio.Where(x => x.Personal == RegionId).Select(m => new SelectListItem
+                //{
+                //    Value = m.IdCarreraOficio.ToString(),
+                //    Text = m.CarreraUoficio
+                //}).ToList();
+                var Restriccion = db.ResGrupo.Where(x => x.IdResGrupo == RegionId).Select(x => new SelectListItem
+                {
+                    Value = x.IdResGrupo.ToString(),
+                    Text = x.IdEstadoCivil.ToString()
+                }).ToList();
+                return Json(Restriccion, JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
     }
 }
