@@ -12,14 +12,9 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vRestriccionesGrupo
+    public partial class vRestriccionesGrupoLista
     {
-        public int EdadMinCAutoriz { get; set; }
-        public int EdadMin { get; set; }
-        public int EdadMax { get; set; }
-        public Nullable<System.DateTime> Edad_a_fecha { get; set; }
-        public string EstadoCivil { get; set; }
+        public string Restriccion { get; set; }
         public int IdResGrupo { get; set; }
-        public string IdEstadoCivil { get; set; }
     }
 }

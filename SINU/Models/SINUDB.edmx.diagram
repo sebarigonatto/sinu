@@ -140,8 +140,9 @@
         <AssociationConnector Association="SINUModel.FK_DataVerificacion_VerificacionPantallas" />
         <AssociationConnector Association="SINUModel.FK_VerificacionPantallasCerradas_Postulante" />
         <EntityTypeShape EntityType="SINUModel.vVerificacionPantallasYDatosAVerificar" Width="1.5" PointX="18.375" PointY="26.75" />
-        <EntityTypeShape EntityType="SINUModel.vRestriccionesGrupo" Width="1.5" PointX="20.375" PointY="26.75" />
         <EntityTypeShape EntityType="SINUModel.TipoPersonal" Width="1.5" PointX="27.375" PointY="4.75" />
+        <EntityTypeShape EntityType="SINUModel.vRestriccionesGrupo" Width="1.5" PointX="27.375" PointY="25.75" />
+        <EntityTypeShape EntityType="SINUModel.vRestriccionesGrupoLista" Width="1.5" PointX="20.375" PointY="26.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

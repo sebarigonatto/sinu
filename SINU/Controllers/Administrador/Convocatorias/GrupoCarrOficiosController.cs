@@ -146,7 +146,8 @@ public ActionResult Edit(string id)
             List<CarreraOficio> lst = new List<CarreraOficio>();
             List<CarreraOficio> lstCarreras2 = new List<CarreraOficio>();
             lst = db.CarreraOficio.ToList();
-
+            //prueba de viewbag enviando carreras a otro tipo de modelo
+            ViewBag.Carreras = lst;
             for (int i = 0; i < lst.Count; i++)
             {
                 if (lst[i].Personal == idCArreras2)

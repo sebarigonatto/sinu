@@ -114,8 +114,9 @@ namespace SINU.Models
         public virtual DbSet<vDataProblemaEncontrado> vDataProblemaEncontrado { get; set; }
         public virtual DbSet<VerificacionPantallasCerradas> VerificacionPantallasCerradas { get; set; }
         public virtual DbSet<vVerificacionPantallasYDatosAVerificar> vVerificacionPantallasYDatosAVerificar { get; set; }
-        public virtual DbSet<vRestriccionesGrupo> vRestriccionesGrupo { get; set; }
         public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
+        public virtual DbSet<vRestriccionesGrupo> vRestriccionesGrupo { get; set; }
+        public virtual DbSet<vRestriccionesGrupoLista> vRestriccionesGrupoLista { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
