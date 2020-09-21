@@ -151,7 +151,7 @@ $(document).ready(function () {
         $.get("/Postulante/EdadInstituto",
             {
                 IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
-                Fecha: $("#fechacumpleaños").val().toString()
+                Fecha: $("#fechacumpleaños").val()
 
             },                                                                                                                                                                                                                                                                           
             function (data) {
@@ -528,6 +528,7 @@ $(document).ready(function () {
                         $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
                             ActualizaTabla();
+                            $("#OK").hide();
                             $("#BTNModal").html("Cerrar");
                             $("#GuardarDTF").css("display", "none");
                             $("#ModalCenterTitle").html("SINU:");
