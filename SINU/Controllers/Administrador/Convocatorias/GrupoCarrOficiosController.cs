@@ -26,6 +26,23 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Index(string Mensaje)
         {
             ViewBag.Mensaje = Mensaje;
+            List<GrupoCarrOficio> grupoCarrOficio = db.GrupoCarrOficio.ToList();
+            for (int i = 0; i < grupoCarrOficio.Count(); i++)
+            {
+                //TODO de OTTINO: aca vamos a acceder a la tablita que cree que te trae esto.. lo tenes en varios lugares y te acordas que me dijiste de crear la tablita.. ya lo hice.. en vez de hacer esto traete la tablita
+                switch (grupoCarrOficio[i].Personal)
+                {
+                    case "O":
+                        grupoCarrOficio[i].Personal = "Oficiales";
+                        break;
+                    case "S":
+                        grupoCarrOficio[i].Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        grupoCarrOficio[i].Personal = "Marinero";
+                        break;
+                }
+            }
             return View(db.GrupoCarrOficio.ToList());
         }
 
@@ -60,6 +77,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create()
         {
             GrupoCarrOficiosvm prueba = new GrupoCarrOficiosvm { Carreras2 = db.CarreraOficio.ToList() };
+            List <ResGrupo> lstResGrupo = db.ResGrupo.ToList();
+            ViewBag.lstresGrupo = lstResGrupo;
                        return View(prueba);
         }
 
@@ -79,13 +98,18 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 {
                 string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
                 grupoCarrOficiovm.Esinsert = true;
+                //el stgCarreras si es INSERT debe estar en el campo siguiente:
+                //grupoCarrOficiovm.IdGrupoCarrOficio = stgCarreras;
+                //grupoCarrOficiovm.IdGCOOriginal = "";
                 //03 agosto, graba en grupo carrera oficio
                 // aca iria un sp donde le paso todo el listado de carreras y 
                 //el id del grupo carrera oficio para asignarle a las mismas.
                 //db.GrupoCarrOficio.Add(grupoCarrOficio);
                 //db.SaveChanges(); 
 
-                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion, grupoCarrOficiovm.IdGCOOriginal, grupoCarrOficiovm.Esinsert, stgCarreras, ObjMensaje);
+                db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal,
+                    grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, 
+                    grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
                     //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                     String mens = ObjMensaje.Value.ToString();
                     switch (mens)
@@ -105,7 +129,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             //    return RedirectToAction("Create");
             //}
             grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
-            ViewBag.Mensaje = "No se creó registro";
+            ViewBag.Mensaje = "No se creó registro. Verifique errores mencionados.";
             return View(grupoCarrOficiovm);
 }
 
@@ -124,7 +148,8 @@ public ActionResult Edit(string id)
             List<CarreraOficio> lst = new List<CarreraOficio>();
             List<CarreraOficio> lstCarreras2 = new List<CarreraOficio>();
             lst = db.CarreraOficio.ToList();
-
+            //prueba de viewbag enviando carreras a otro tipo de modelo
+            ViewBag.Carreras = lst;
             for (int i = 0; i < lst.Count; i++)
             {
                 if (lst[i].Personal == idCArreras2)
@@ -290,6 +315,17 @@ public ActionResult Edit(string id)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
+            switch (grupoCarrOficio.Personal)
+            {
+                case "O":grupoCarrOficio.Personal = "Oficiales";
+                    break;
+                case "S":
+                    grupoCarrOficio.Personal = "Suboficiales";
+                    break;
+                case "M":
+                    grupoCarrOficio.Personal = "Marinero";
+                    break;
+            }
             if (grupoCarrOficio == null)
             {
                 return HttpNotFound();
@@ -345,5 +381,24 @@ public ActionResult Edit(string id)
             }
         }
 
+        public JsonResult DevolverRestricciones(int RegionId)
+        {
+            using (db = new SINUEntities())
+            {
+                //carreras Tpersonal
+                //var Restriccion = db.CarreraOficio.Where(x => x.Personal == RegionId).Select(m => new SelectListItem
+                //{
+                //    Value = m.IdCarreraOficio.ToString(),
+                //    Text = m.CarreraUoficio
+                //}).ToList();
+                var Restriccion = db.ResGrupo.Where(x => x.IdResGrupo == RegionId).Select(x => new SelectListItem
+                {
+                    Value = x.IdResGrupo.ToString(),
+                    Text = x.IdEstadoCivil.ToString()
+                }).ToList();
+                return Json(Restriccion, JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
     }
 }

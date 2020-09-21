@@ -548,6 +548,12 @@
     <Compile Include="Models\vRELIGION.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vRestriccionesGrupo.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vRestriccionesGrupoLista.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vRestriccionesPorConvYFechaPeriodosInscrip.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

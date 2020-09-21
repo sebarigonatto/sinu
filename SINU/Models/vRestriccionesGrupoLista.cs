@@ -12,9 +12,9 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoPersonal
+    public partial class vRestriccionesGrupoLista
     {
-        public string IdPersonal { get; set; }
-        public string Personal { get; set; }
+        public string Restriccion { get; set; }
+        public int IdResGrupo { get; set; }
     }
 }
