@@ -490,7 +490,7 @@ namespace SINU.Controllers
                     if (p.IdPais != "AR")
                     {
                         p.IdLocalidad = null;
-                        p.Prov_Loc_CP = p.Provincia + "-" + p.Localidad + "-" + p.CODIGO_POSTAL;
+                        p.Prov_Loc_CP = p.TBoxProvincia + "-" + p.Localidad + "-" + p.CODIGO_POSTAL;
                     }
                     else
                     {
@@ -500,7 +500,7 @@ namespace SINU.Controllers
                     if (p.EventualIdPais != "AR")
                     {
                         p.EventualIdLocalidad = null;
-                        p.EventualProv_Loc = p.EventualProvincia + "-" + p.EventualLocalidad + "-" + p.EventualCodigo_Postal;
+                        p.EventualProv_Loc = p.TBoxEventualProvincia + "-" + p.EventualLocalidad + "-" + p.EventualCodigo_Postal;
                     }
                     else
                     {

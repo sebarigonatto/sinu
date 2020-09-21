@@ -125,37 +125,47 @@ namespace SINU.Models
         public string Genero { get; set; }
         [Required]
         [Display(Name = "Altura(en cm)")]
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> Altura { get; set; }
         [Required]
         [Display(Name = "Peso(en kg)")]
         [DisplayFormat(DataFormatString = "{0:F1}", ApplyFormatInEditMode = true)]
-        [RegularExpression("([0-9]{1,3})(,[0-9])?", ErrorMessage = "Debe cumplir este formato 999,9")]
+        [RegularExpression("([0-9]{1,3})(,[0-9])?([0-9])?", ErrorMessage = "Debe cumplir este formato 999,9")]
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         [Required]
         [Display(Name = "1° Perimetro de Cabeza")]
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> PerimCabeza { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Display(Name = "2° Perimetro de Torax")]
         [Required]
         public Nullable<int> PerimTorax { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Display(Name = "3° Perimetro de Cintura")]
         [Required]
         public Nullable<int> PerimCintura { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
         [Display(Name = "4° Largo de Pantalon")]
-        public Nullable<int> LargoPantalon { get; set; } 
+        public Nullable<int> LargoPantalon { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
         [Display(Name = "5° Largo de Entrepierna")]
         public Nullable<int> LargoEntrep { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]  
         [Display(Name = "6° Perimetro de Cadera")]
         public Nullable<int> PerimCaderas { get; set; }
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [RequiredIf("Genero",true, "Mujer",ErrorMessage ="Debe Completar este campo")]
         [Display(Name = "7° Largo de Falda")]
         public Nullable<int> LargoFalda { get; set; }
         [Required]
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> Cuello { get; set; }
         [Required]
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> Calzado { get; set; }
         [Required]
         public int IdPersona { get; set; }
@@ -356,6 +366,7 @@ namespace SINU.Models
         public string DomicilioLaboral { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Años Trabajados")]
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage ="Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> AniosTrabajados { get; set; }
         [Required]
         public string Oficio { get; set; }
