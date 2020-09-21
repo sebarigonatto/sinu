@@ -12,7 +12,7 @@ namespace SINU.ViewModels
     {
         [Required]
         [Display(Name = "Grupo(ID)")]
-        [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar máximo 10 digitos")]
+        [StringLength(10, MinimumLength = 5, ErrorMessage = "Debe ingresar mínimo 5 Carácteres (máximo 10)")]
         public string IdGrupoCarrOficio { set; get; }     
         [Display(Name = "Carrera/Oficio (ID)")]
         public string IdCarreraOficio { set; get; }
@@ -40,6 +40,9 @@ namespace SINU.ViewModels
         //para usar checkbox
         public List<CheckBoxes> Carreras3 { get; set; }
         public string ErrorDevuelto { set; get; }
+        [Required(ErrorMessage = "Elija o cree una nueva restricción")]
+        [Display(Name = "Restricción de Grupo")]
+        public int IdResGrupo { set; get; }
     }
 
     public class CheckBoxes

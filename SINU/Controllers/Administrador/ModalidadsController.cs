@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace SINU.Controllers.Administrador
 {
-    //[AuthorizacionPermiso("CRUDParam")]
+    //[AuthorizacionPermiso("CRUDParam")] //TODO De OTTINO:esto en algun momento lo vas a desmarcar no?
     public class ModalidadsController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -23,7 +23,24 @@ namespace SINU.Controllers.Administrador
         // GET: Modalidads
         public ActionResult Index()
         {
-            return View(db.Modalidad.ToList());
+            List<Modalidad> modalidad  = db.Modalidad.ToList();
+
+            for (int i = 0; i < modalidad.Count(); i++)
+            {
+                switch (modalidad[i].Personal)
+                {
+                    case "O":
+                        modalidad[i].Personal = "Oficiales";
+                        break;
+                    case "S":
+                        modalidad[i].Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        modalidad[i].Personal = "Marineros";
+                        break;
+                }
+            }
+            return View(modalidad);
         }
 
         // GET: Modalidads/Details/5
@@ -31,9 +48,26 @@ namespace SINU.Controllers.Administrador
         {
             if (id == null)
             {
+                //TODO De OTTINO: comentario para hacer ..cambiar esto
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Modalidad modalidad = db.Modalidad.Find(id);
+            List<CarreraOficio> carreraOficio = db.CarreraOficio.ToList();
+
+           
+                switch (modalidad.Personal)
+                {
+                    case "O":
+                        modalidad.Personal = "Oficiales";
+                        break;
+                    case "S":
+                    modalidad.Personal = "Suboficiales";
+                        break;
+                    case "M":
+                    modalidad.Personal = "Marineros";
+                        break;
+                }
+            
             if (modalidad == null)
             {
                 return HttpNotFound();
@@ -44,6 +78,7 @@ namespace SINU.Controllers.Administrador
         // GET: Modalidads/Create
         public ActionResult Create()
         {
+            //TODO De OTTINO: esto lo haremos con mucho cuidado
             return View();
         }
 
