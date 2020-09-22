@@ -1,5 +1,4 @@
 ﻿<!--
-    
 ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS: 
     SE DEBE QUITAR EL STYLE Y UBICAR DONDE CORRESPONDE, 
     SE DEBE CREAR EL SUBMENU QUE AHORA ESTA CREADO CON UN BOTON TIPO COMBO DESPLEGABLE DE UNA MEJOR MANERA
@@ -9,57 +8,16 @@ ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS:
 @{
     //ViewBag.Title = "DELEGACION";
 }
-<!--
-<h2>MenuPerfil</h2>
--->
-<!--
-TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
--->
-<style>
-    /* Dropdown content (hidden by default) */
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-        /* Links inside the dropdown */
-        .dropdown-content a {
-            float: none;
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-            /* Add a grey background color to dropdown links on hover */
-            .dropdown-content a:hover {
-                background-color: #ddd;
-            }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-</style>
 
 <li class="nav-item">@Html.ActionLink("Postulantes", "Index", "Delegacion", null, htmlAttributes: new { @class = "nav-link" })</li>
-@*<li class="nav-item">@Html.DropDownList()*@
-
-<li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="dropdown">
+    <a class="dropdown-toggle nav-link" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Tareas
     </a>
-    <div class="dropdown-menu  ">
-        <a  class="dropdown-item " href="~/Delegacion">Asignar Fecha Entrevista</a>
-        <a  class="dropdown-item" href="~/Delegacion">Listado Entrevistas</a>
-        <a  class="dropdown-item"  href="~/Delegacion">Asignar Presentacion</a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="~/Delegacion">Asignar Fecha Entrevista</a>
+        <a class="dropdown-item" href="~/Delegacion">Listado Entrevistas</a>
+        <a class="dropdown-item" href="~/Delegacion">Asignar Presentacion</a>
     </div>
-</li>
-
-
-
+</div>
