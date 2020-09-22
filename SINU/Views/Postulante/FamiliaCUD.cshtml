@@ -504,14 +504,17 @@
         });
 
         function Exito(response, status, xhr) {
+            //alert(response.IDperFAMI);
             //response.sucess esta pero pero ver si me sirve mas adelante
-            if (response.IDperFAMI == 0) {
+            if (response.IDperFAMI == 0 || response.IDperFAMI == undefined) {
                 $("#BTNModal").html("Cerrar").show();
-            } else { $("#BTNModal").hide();}
+            } else { $("#BTNModal").hide(); }
+
             $("#OK").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
             $("#ModalAnuncios").modal();
+
             if (response.IDperFAMI > 0) {
                 window.setTimeout(redirige, 2000);
                 function redirige() {
@@ -520,7 +523,7 @@
             }   
             switch (response.form) {
                  case "Elimina":
-                    $.Elimina(response.url_Tabla);
+                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
                 default:
 
