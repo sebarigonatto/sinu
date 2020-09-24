@@ -109,7 +109,7 @@ namespace SINU.ViewModels
         public vPersona_SituacionOcupacional VPersona_SituacionOcupacionalVM { get; set; }
         public SelectList EstadoDescripcionVM { get; set; }
         public List<SelectListItem> InteresesVM { get; set; }
-        [Required]
+        //[Required]
         public List<string> IdInteres { get; set; }
 
     }

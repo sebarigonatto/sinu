@@ -49,8 +49,11 @@ namespace SINU.Controllers
 
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
+
                 //ver como mostrar esta pantalla de si fue 
-                if (pers.NoPostulado){ ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;}
+                if (pers.NoPostulado){
+                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
+                };
                
                 //verifico si la validacion esta en curso o no
                 ViewBag.ValidacionEnCurso = (Secuencias[0]==14);

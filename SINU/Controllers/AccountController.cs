@@ -251,7 +251,8 @@ namespace SINU.Controllers
                         var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
                         {
                             Apellido = model.Apellido,
-                            LinkConfirmacion = callbackUrl
+                            LinkConfirmacion = callbackUrl,
+                            CuerpoMail= db.Configuracion.FirstOrDefault(m=>m.NombreDato== "CuerpoMailRegistro").ValorDato.ToString()
                         };
 
                         //la funcio para enviar devuelve un booleano, 

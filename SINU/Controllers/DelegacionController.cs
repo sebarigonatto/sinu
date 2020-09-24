@@ -236,12 +236,13 @@ namespace SINU.Controllers
                     case "Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
                         x = true;
-                        configuracion = db.Configuracion.FirstOrDefault(m => m.IdConfiguracion == 1044);
+                        configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4Postulado");
                         cuerpo = configuracion.ValorDato.ToString();
                         break;
                     case "No Postular":
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
-                        configuracion = db.Configuracion.FirstOrDefault(m => m.IdConfiguracion == 1046);
+                        //el texto de respuesta aqui depende de la preferencia que selecciono al moneto de llenar datos basicos
+                        configuracion = (db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == id).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2") : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1");
                         cuerpo = configuracion.ValorDato.ToString();
                         break;
                     case "Volver":

@@ -103,7 +103,6 @@ namespace SINU.Models
         {
             Exception x = new Exception(mnsg);
             System.Web.Mvc.HandleErrorInfo UnError = new System.Web.Mvc.HandleErrorInfo(x, cntrlr, actn);
-
             return UnError;
         }
 
@@ -135,6 +134,7 @@ namespace SINU.Models
                 {
                     TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
                     DisableTempFileLocking = true
+                 
                 };
 
                 Engine.Razor = RazorEngineService.Create(configuracion);
@@ -179,10 +179,8 @@ namespace SINU.Models
             }
             catch (Exception x)
             {
-
                 throw;
             }
-           
         }
 
         /// <summary>Modelo de funcion o rutina para armar

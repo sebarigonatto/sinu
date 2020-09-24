@@ -359,9 +359,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                
             </div>
             <div class="modal-body">
                 <p id="TextModal">@* mensaje del Modal *@</p>
@@ -425,7 +423,8 @@
                     $("#TextModal").html("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!");
                     $("#BTNModal").text("Cerrar");
                     $("#OK").hide();
-                    $("#ModalAnuncios").modal("show");
+                    $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
+
                 }
 
                
@@ -459,7 +458,7 @@
                                      $("#TextModal").html(response.msg);
                                      $("#BTNModal").text("Cancelar");
                                      $("#OK").html("Si, agregarlo");
-                                     $("#ModalAnuncios").modal("show");
+                                     $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
                                      break;
                                  case "son_familiares":
                                      var url = window.location.href.toString().search("Familia=0")
@@ -470,7 +469,7 @@
                                          $("#TextModal").html(response.msg);
                                          $("#BTNModal").hide();
                                          $("#OK").hide();
-                                         $("#ModalAnuncios").modal("show");
+                                         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
                                          window.setTimeout(redirige, 2000);
                                      } else {
                                          $("#BeginFormFamiliar").submit();
@@ -513,7 +512,7 @@
             $("#OK").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal();
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
 
             if (response.IDperFAMI > 0) {
                 window.setTimeout(redirige, 2000);
