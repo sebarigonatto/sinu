@@ -28,10 +28,10 @@
             @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Estado)
+       @*     @Html.DisplayNameFor(model => model.Estado)*@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+          @*  @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)*@
         </th>
         <th></th>
     </tr>
@@ -55,21 +55,23 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Estado)
+             @*   @Html.DisplayFor(modelItem => item.Estado)*@
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+              @*  @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)*@
             </td>
             <td>
                 @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+               @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                @*No se puede tener dos ActionLink con el mismo nombre*@
+                @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
                 @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
     }
-    <div>
+    @*<div>*@
         @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas");
-    </div>
+    @*</div>*@
 
    
     @*probar esto*@

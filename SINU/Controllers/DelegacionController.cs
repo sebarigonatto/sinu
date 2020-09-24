@@ -42,13 +42,6 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
         }
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Index(string[] select)
-        {
-
-            return View();
-        }
         // GET: Delegacion/Details/5
         public ActionResult Details(int? id)
         {
@@ -320,28 +313,47 @@ namespace SINU.Controllers
         //fin del codigo
         public ActionResult DocPenal(int id)
         {
-            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-            string NombreArchivo = id + "_Certificado.pdf";
-            string Descargar = CarpetaDeGuardado + NombreArchivo;
-            //string UbicacionPDF = $"{ubicacion}Documentacion\\"+id+".pdf";
-            byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-            //el tercer para obligar la descarga del archivo
-            return File(FileBytes, "application/pdf", NombreArchivo);
-
+            try
+            {
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string NombreArchivo = id + "_Certificado.pdf";
+                string Descargar = CarpetaDeGuardado + NombreArchivo;
+                bool file = System.IO.File.Exists(Descargar);
+                if (file == false)
+                {
+                  return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
+                }
+                byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
+                return File(FileBytes, "application/pdf", NombreArchivo);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
+            }
         }
 
 
         public ActionResult GetAnexo2Pdf(int id)
         {
-            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-            string NombreArchivo = id + "_Anexo2.pdf";
-            string Descargar = CarpetaDeGuardado + NombreArchivo;
-            //string UbicacionPDF = $"{ubicacion}Documentacion\\"+id+".pdf";
-            byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-            //el tercer para obligar la descarga del archivo
-            return File(FileBytes, "application/pdf", NombreArchivo);
+            try
+            {
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string NombreArchivo = id + "_Certificado.pdf";
+                string Descargar = CarpetaDeGuardado + NombreArchivo;
+                bool file = System.IO.File.Exists(Descargar);
+                if (file == false)
+                {
+                    return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
+                }
+                byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
+                return File(FileBytes, "application/pdf", NombreArchivo);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
+            }
         }
         public ActionResult PresentacionAsignaFecha(int id)
         {
