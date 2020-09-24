@@ -321,6 +321,16 @@
                                               }, new { @id = "BTValidar", @class = "btn btn-success" })
 
                                 @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
+
+                                @Ajax.ActionLink("Volver Etapa Anterior", "VolverEtapa", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                              {
+                                                HttpMethod = "POST",
+                                                OnSuccess = "Exito(data,status,xhr)",
+                                                OnFailure = "Falla"
+                                              }, new { @id = "BTValidar", @class = "btn btn-success" })
+
+                                @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
+
                             </div>
                         </div>
                     </div>
@@ -328,215 +338,214 @@
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content " id="ModalEIACuerpo">
+    <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+            <div class="modal-content " id="ModalEIACuerpo">
 
-            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+                <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
-
-            </div>
-            <div class="modal-body">
-                <p id="TextModal">@* mensaje del Modal *@</p>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
             </div>
         </div>
     </div>
-</div>
-    
-@*}*@
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $.arrayEtapas = true;
-            $(".BTAcciones").html("");
-            $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
-            $(".habil").removeAttr("disabled");
-            $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
-            var bloqueoSUBMIT = false;
-            $(".Agrega").on("click", function () {
-                bloqueoSUBMIT = true;
+
+    <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
+
+                </div>
+                <div class="modal-body">
+                    <p id="TextModal">@* mensaje del Modal *@</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
+                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*}*@
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $.arrayEtapas = true;
+                $(".BTAcciones").html("");
+                $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
+                $(".habil").removeAttr("disabled");
+                $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+                var bloqueoSUBMIT = false;
+                $(".Agrega").on("click", function () {
+                    bloqueoSUBMIT = true;
+                })
+                $("#formularioid").on('submit', function (evt) {
+                    if (bloqueoSUBMIT) {
+                        evt.preventDefault();
+                    }
+                    bloqueoSUBMIT = false;
+                    // tu codigo aqui
+                });
+                $("#BtnDP0").click(function () {
+                    $("#CheckVal0").removeAttr("hidden");
+                    $("#BtnDP0").hide();
+                });
+                $("#BtnDP1").click(function () {
+                    $("#CheckVal1").removeAttr("hidden");
+                    $("#BtnDP1").hide();
+                });
+                $("#BtnDP2").click(function () {
+                    $("#CheckVal2").removeAttr("hidden");
+                    $("#BtnDP2").hide();
+                });
+                $("#BtnDP3").click(function () {
+                    $("#CheckVal3").removeAttr("hidden");
+                    $("#BtnDP3").hide();
+                });
+                $("#BtnDP4").click(function () {
+                    $("#CheckVal4").removeAttr("hidden");
+                    $("#BtnDP4").hide();
+                });
+                $("#BtnDP5").click(function () {
+                    $("#CheckVal5").removeAttr("hidden");
+                    $("#BtnDP5").hide();
+                });
+                $("#BtnDP6").click(function () {
+                    $("#CheckVal6").removeAttr("hidden");
+                    $("#BtnDP6").hide();
+                });
+                $("#BtnDP7").click(function () {
+                    $("#CheckVal7").removeAttr("hidden");
+                    $("#BtnDP7").hide();
+                });
+                $("#BtnDP8").click(function () {
+                    $("#CheckVal8").removeAttr("hidden");
+                    $("#BtnDP8").hide();
+                });
+
+
+                var tabla = $("#TListadoProblema").DataTable({
+                    retrieve: true,
+                });
+                tabla.destroy();
+                $("#TListadoProblema").DataTable({
+                    retrieve: true,
+                    paging: true,
+                    "autoWidth": false,
+
+                    //ver si es necesario este fragmento
+                    select: false,//'single',
+                    "columnDefs": [{
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": [0]
+                    }],
+                    "ordering": false,
+                    //"dom": 'frtp',
+                    "language":
+                    {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        },
+                    },
+                });
+
+                //$(".Agrega").on("click", function () {
+                //    id_registro = $(this).attr("data-ID");
+                //    id_tabla = id = $(this).closest("table").attr("ID");
+                //    //alert(id_registro+ "  " +id_tabla);
+                //    ModalEIACUD(id_registro, id_persona, id_tabla);
+                //    $("#ModalEIA").modal("show");
+                //});
+
+                //$(".Nuevo_REG").on("click", function () {
+                //    var id_Tabla = $(this).attr("data-IdTabla");
+                //    ModalEIACUD(null, id_persona, id_Tabla);
+                //});
+
+                //var tablaProblema = $("#TListadoProblema").DataTable()
+
+                //function ModalEIACUD(id_registro, id_persona, id_Tabla) {
+
+                //    //elimino el contenido html del modal
+                //    $('#ModalEIACuerpo').html("");
+
+                //    //cargo la url que se utilizara para el armado del MODAL
+                //    //estos datos esta como atributos de las distintas tablas
+
+
+
+                //    $.ajax({
+                //        cache: false,
+                //        asyn: false,
+                //        type: "GET",
+                //        url: '/Postulante/' + url_CUD,
+                //        data: { ID: id_registro, ID_persona: id_persona },
+                //        //si no surge error al redireccionar se reemplaza el contenido de la div
+                //        success: function (response) {
+                //            $('#ModalEIACuerpo').html(response);
+
+                //            //con esto  funciona la validacion del lado del cliente con la vista parcial
+                //            $('#ModalEIACuerpo').removeData("validator");
+                //            $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
+                //            $.validator.unobtrusive.parse('#ModalEIACuerpo');
+
+                //            //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
+                //            /* https://developer.snapappointments.com/bootstrap-select/ */
+                //            $(".combobox").selectpicker({
+                //                liveSearch: true,
+                //                size: 7,
+                //                liveSearchPlaceholder: "Ingrese su busqueda",
+                //                liveSearchStyle: 'contains',//'startsWith'
+                //                noneResultsText: 'No se Encuantran Resultados',
+                //                noneSelectedText: 'Ninguna Opcion Seleccionada'
+                //            });
+
+                //        }
+                //    })
+                //}
             })
-            $("#formularioid").on('submit', function (evt) {
-                if (bloqueoSUBMIT) {
-                    evt.preventDefault();
+            function Exito(response) {
+                if (response.View == "Index") {
+                    window.location.href = "/Delegacion/Index"
                 }
-                bloqueoSUBMIT = false;
-                // tu codigo aqui
-            });
-            $("#BtnDP0").click(function () {
-                $("#CheckVal0").removeAttr("hidden");
-                $("#BtnDP0").hide();
-            });
-            $("#BtnDP1").click(function () {
-                $("#CheckVal1").removeAttr("hidden");
-                $("#BtnDP1").hide();
-            });
-            $("#BtnDP2").click(function () {
-                $("#CheckVal2").removeAttr("hidden");
-                $("#BtnDP2").hide();
-            });
-            $("#BtnDP3").click(function () {
-                $("#CheckVal3").removeAttr("hidden");
-                $("#BtnDP3").hide();
-            });
-            $("#BtnDP4").click(function () {
-                $("#CheckVal4").removeAttr("hidden");
-                $("#BtnDP4").hide();
-            });
-            $("#BtnDP5").click(function () {
-                $("#CheckVal5").removeAttr("hidden");
-                $("#BtnDP5").hide();
-            });
-            $("#BtnDP6").click(function () {
-                $("#CheckVal6").removeAttr("hidden");
-                $("#BtnDP6").hide();
-            });
-            $("#BtnDP7").click(function () {
-                $("#CheckVal7").removeAttr("hidden");
-                $("#BtnDP7").hide();
-            });
-            $("#BtnDP8").click(function () {
-                $("#CheckVal8").removeAttr("hidden");
-                $("#BtnDP8").hide();
-            });
 
-
-            var tabla = $("#TListadoProblema").DataTable({
-                retrieve: true,
-            });
-            tabla.destroy();
-            $("#TListadoProblema").DataTable({
-                retrieve: true,
-                paging: true,
-                "autoWidth": false,
-
-                //ver si es necesario este fragmento
-                select: false,//'single',
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": [0]
-                }],
-                "ordering": false,
-                //"dom": 'frtp',
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    },
-                },
-            });
-
-            //$(".Agrega").on("click", function () {
-            //    id_registro = $(this).attr("data-ID");
-            //    id_tabla = id = $(this).closest("table").attr("ID");
-            //    //alert(id_registro+ "  " +id_tabla);
-            //    ModalEIACUD(id_registro, id_persona, id_tabla);
-            //    $("#ModalEIA").modal("show");
-            //});
-
-            //$(".Nuevo_REG").on("click", function () {
-            //    var id_Tabla = $(this).attr("data-IdTabla");
-            //    ModalEIACUD(null, id_persona, id_Tabla);
-            //});
-
-            //var tablaProblema = $("#TListadoProblema").DataTable()
-
-            //function ModalEIACUD(id_registro, id_persona, id_Tabla) {
-
-            //    //elimino el contenido html del modal
-            //    $('#ModalEIACuerpo').html("");
-
-            //    //cargo la url que se utilizara para el armado del MODAL
-            //    //estos datos esta como atributos de las distintas tablas
-
-
-
-            //    $.ajax({
-            //        cache: false,
-            //        asyn: false,
-            //        type: "GET",
-            //        url: '/Postulante/' + url_CUD,
-            //        data: { ID: id_registro, ID_persona: id_persona },
-            //        //si no surge error al redireccionar se reemplaza el contenido de la div
-            //        success: function (response) {
-            //            $('#ModalEIACuerpo').html(response);
-
-            //            //con esto  funciona la validacion del lado del cliente con la vista parcial
-            //            $('#ModalEIACuerpo').removeData("validator");
-            //            $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
-            //            $.validator.unobtrusive.parse('#ModalEIACuerpo');
-
-            //            //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
-            //            /* https://developer.snapappointments.com/bootstrap-select/ */
-            //            $(".combobox").selectpicker({
-            //                liveSearch: true,
-            //                size: 7,
-            //                liveSearchPlaceholder: "Ingrese su busqueda",
-            //                liveSearchStyle: 'contains',//'startsWith'
-            //                noneResultsText: 'No se Encuantran Resultados',
-            //                noneSelectedText: 'Ninguna Opcion Seleccionada'
-            //            });
-
-            //        }
-            //    })
-            //}
-        })
-        function Exito(response) {
-            if (response.View == "Index") {
-                window.location.href = "/Delegacion/Index"
+                $("#BTNModal").html("Cerrar");
+                $("#GuardarDTF").css("display", "none");
+                $("#ModalCenterTitle").html("SINU:");
+                $("#TextModal").html(response.msg);
+                $("#ModalAnuncios").modal();
+                switch (response.form) {
+                    case "Elimina":
+                        $.ActualizaTabla(response.url_Tabla, response.url_Controller);
+                        break;
+                    default:
+                };
             }
-
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal();
-            switch (response.form) {
-                case "Elimina":
-                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
-                    break;
-                default:
-            };
-        }
-        function Falla(response) {
-            alert(reponse.msg)
-        }
-    </script>
-}
+            function Falla(response) {
+                alert(reponse.msg)
+            }
+        </script>
+    }
