@@ -9,6 +9,7 @@ namespace SINU.ViewModels
     }
     public class PlantillaMailConfirmacion : PlantillaMail
     {
+        public string CuerpoMail { get; set; }
         public string LinkConfirmacion { get; set; }
     }
     public class PlantillaMailCuenta : PlantillaMail

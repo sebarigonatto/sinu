@@ -38,9 +38,7 @@
                     </label>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
                 </div>
-                <div class=" mt-4 BTAcciones">
-                    <input type="submit" class="btn btn-success " value="Subir Archivos" />
-                </div>
+
             </div>
             <h5>2°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
             <p>
@@ -59,6 +57,9 @@
                     Seleccione archivo...
                 </label>
                 @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
+            </div>
+            <div class=" mt-4 BTAcciones">
+                <input type="submit" class="btn btn-success " value="Subir Archivos" />
             </div>
         </div>
         <br />

@@ -181,9 +181,9 @@ namespace SINU.Models
         [Required]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
         public string Numero { get; set; }
-        [Required]
+        //[Required]
         public string Piso { get; set; }
-        [Required]
+        //[Required]
         public string Unidad { get; set; }
         public string Pais { get; set; }
         [RequiredIf("IdPais",true,"AR",ErrorMessage ="Debe seleccionar un Provincia")]
@@ -205,10 +205,10 @@ namespace SINU.Models
         [Display(Name = "Numero")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
         public string EventualNumero { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Piso")]
         public string EventualPiso { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Unidad")]
         public string EventualUnidad { get; set; }
         [Display(Name = "Pais")]

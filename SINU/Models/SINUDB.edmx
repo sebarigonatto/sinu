@@ -792,6 +792,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="Delegacion" Type="varchar" MaxLength="100" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
@@ -2524,6 +2525,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha] AS [Fecha], 
     [vInscripcionEtapaEstadoUltimoEstado].[Email] AS [Email], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
+    [vInscripcionEtapaEstadoUltimoEstado].[Delegacion] AS [Delegacion], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdModalidad] AS [IdModalidad], 
     [vInscripcionEtapaEstadoUltimoEstado].[Apellido] AS [Apellido], 
@@ -3620,6 +3622,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -6114,6 +6117,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />

@@ -83,7 +83,7 @@ $(document).ready(function () {
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     //https://developer.snapappointments.com/bootstrap-select/
     $(".selectpicker").selectpicker({
-        size: 7,
+        size: 6,
         noneSelectedText: 'Seleccione una Opcion',
         //styleBase:'btn',
         //style: 'btn-white'
@@ -91,7 +91,7 @@ $(document).ready(function () {
     });
     $(".combobox").selectpicker({
         liveSearch: true,
-        size: 7,
+        size: 6,
         liveSearchPlaceholder: "Ingrese su busqueda",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
@@ -247,7 +247,7 @@ $(document).ready(function () {
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
-            $("#ModalAnuncios").modal();
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
 
         };
 
@@ -370,12 +370,12 @@ $(document).ready(function () {
         //guardo el index de la fila seleccionada
         //se llama al modal y se le envia la id de estudio correspondiete
 
-        $(".Agrega").on("click", function () {
+        $(".Edita").not(".NoModal").on("click", function () {
             id_registro = $(this).attr("data-ID");
             id_tabla = id = $(this).closest("table").attr("ID");
             //alert(id_registro+ "  " +id_tabla); 
             ModalEIACUD(id_registro, id_persona, id_tabla);
-            $("#ModalEIA").modal("show");
+            $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
         });
 
 
@@ -533,7 +533,7 @@ $(document).ready(function () {
                             $("#GuardarDTF").css("display", "none");
                             $("#ModalCenterTitle").html("SINU:");
                             $("#TextModal").html(response.msg);
-                            $("#ModalAnuncios").modal();
+                            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
                         });
                     } else {
                         $(form_actual).submit();

@@ -62,7 +62,7 @@
             @if (Model.NoPostulado)
             {
                 <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                    <h3> @ViewBag.TextNoAsignado</h3>
+                    <h3> @Html.Raw((string)ViewBag.TextNoAsignado)</h3>
                 </div>
             }
             else
@@ -353,7 +353,6 @@
             @if (Model.EtapaTabs.Contains(5))
             {
                 @Html.Action("Presentacion", "Postulante", new { ID_persona = Model.ID_PER })
-
             }
 
         </div>
@@ -432,10 +431,10 @@
             $.each(SolapaPrincipales, function (index, item) {
                 if (IDETP[IDETP.length - 1] != item[0]) {
                     $(item[1] + " .BTAcciones").html("");
-                    $(item[1] + " :input," + item[1] + " input").attr("disabled", "true");
+                    $(item[1] + " :input," + item[1] + " input").not(".Edita").attr("disabled", "true");
                     if (item[0] == "4") {
-                        $(item[1] + " .BTMuestraTable :input," + item[1] + " .BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
-                        //$(item[1]).
+                        $(item[1] + " .Edita").removeClass("fa-edit").addClass("fa-eye");
+                       
                     };
                 }
                 //alert(item[0] + "   "+item[1]);
@@ -460,6 +459,7 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
+  
 
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
@@ -493,7 +493,8 @@
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal();
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+
 
            // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
@@ -525,7 +526,7 @@
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-            $("#ModalAnuncios").modal();
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
         };
 
     </script>
