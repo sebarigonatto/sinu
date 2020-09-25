@@ -28,22 +28,23 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Action)
-            </th>*@
-            <th>
-                opciones
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Parametros)
+            </th>*@
+        <th></th>
     </tr>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreMenu)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DescripcionConsulta)
-                </td>
-                @*<td>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreMenu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionConsulta)
+            </td>
+            @*<td>
                     @Html.DisplayFor(modelItem => item.OrdenConsulta)
                 </td>
                 <td>
@@ -58,18 +59,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Parametros)
                 </td>*@
-                <td>
-                    @*  @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |*@
-                    @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
-                    @*  @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })*@
-                    @* @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })*@
-                    @Html.ActionLink("ABRIR", item.Action, item.Controller)
+            <td>
+                @*  @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |*@
+                @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
+                @*  @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })*@
+                @* @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })*@
+                @Html.ActionLink("ABRIR", item.Action, item.Controller)
 
-                </td>
+            </td>
 
-            </tr>
-        }
-    </tbody>
-    
+        </tr>
+    }
 
 </table>

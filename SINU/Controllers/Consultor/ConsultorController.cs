@@ -13,8 +13,8 @@ namespace SINU.Controllers
         // GET: Consultor
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "ConsultaProgramadas");
-            //return View();
+            //return RedirectToAction("Index", "ConsultaProgramadas");
+            return View();
         }
     }
 }
