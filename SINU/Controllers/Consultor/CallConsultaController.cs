@@ -27,7 +27,7 @@ namespace SINU.Controllers.Consultor
             {
                 return HttpNotFound();
             }
-            return View(Datos);
+            return PartialView(Datos);
         }
         public ActionResult InscriptosPorModalidad(string ModalidadElegida)
         {
@@ -44,14 +44,14 @@ namespace SINU.Controllers.Consultor
                 Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida).ToList();
                 ViewBag.modalidadElegida = ModalidadElegida;
             }
-            return View(Listado);
+            return PartialView(Listado);
         }
         public ActionResult ConsultaTotalPostulantes()
         {
             List<vInscripcionEtapaEstadoUltimoEstado> Todos;
            
             Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5).ToList();
-            return View(Todos);
+            return PartialView(Todos);
 
         }
        

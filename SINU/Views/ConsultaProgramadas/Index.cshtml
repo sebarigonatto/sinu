@@ -9,66 +9,194 @@
 @*<p>
         @Html.ActionLink("Create New", "Create")
     </p>*@
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NombreMenu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DescripcionConsulta)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.OrdenConsulta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Link)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Controller)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Action)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Parametros)
-            </th>*@
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+@*<table class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreMenu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DescripcionConsulta)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.OrdenConsulta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Link)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Controller)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Action)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Parametros)
-                </td>*@
-        <td>
-            @*  @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |*@
-            @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
-            @*  @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })*@
-            @* @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })*@
-            @Html.ActionLink("ABRIR", item.Action, item.Controller)
-
-        </td>
-
+            <th>
+                @Html.DisplayNameFor(model => model.NombreMenu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescripcionConsulta)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.OrdenConsulta)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Link)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Controller)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Action)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Parametros)
+                </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreMenu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescripcionConsulta)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.OrdenConsulta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Link)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Controller)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Action)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Parametros)
+                    </td>
+                <td>
+                      @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
+                      @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })
+                     @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })
+                    @Html.ActionLink("ABRIR", item.Action, item.Controller)
 
-</table>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+<br />
+<div class="container p-0">
+    <div class="row">
+
+
+        <nav class="col-sm-2 mr-3 navbar navbar1 navbar-expand-md  navbar-light ml-3 pl-2 oculto">
+            @*<a class="navbar-brand" href="#">Navbar</a>*@
+
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="TABDocumentacion">
+                <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-left" id="myTab" role="tablist" style="border-bottom: 0px solid;">
+                    <li class="nav-item flex-sm-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" data-toggle="tab" href="#Consulta1" role="tab" aria-controls="DatosPersonales" aria-selected="true">
+                            Total Postulantes
+                        </a>
+                    </li>
+                    <li class="nav-item flex-sm-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" data-toggle="tab" href="#Consulta2" role="tab" aria-controls="DocuPenal" aria-selected="false">
+                            Inscriptos por Modalidad
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta3" role="tab" aria-controls="Domicilio" aria-selected="false">
+                            Totales Por Modalidad y Genero
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta4" role="tab" aria-controls="Estudios" aria-selected="false">
+                            Estudios
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta5" role="tab" aria-controls="Idiomas" aria-selected="false">
+                            Idiomas
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta6" role="tab" aria-controls="ActMilitar" aria-selected="false">
+                            Actividad Militar
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta7" role="tab" aria-controls="SituOcu" aria-selected="false">
+                            Situacion Ocupacional
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta8" role="tab" aria-controls="Antropometria" aria-selected="false">
+                            Antropometria
+                        </a>
+                    </li>
+                    <li class="nav-item flex-md-fill bli" id="FamiTAB">
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta9" role="tab" aria-controls="Familia" aria-selected="false">
+                            Familia
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <div class="col-md-9 borderdiv1">
+            <div class="tab-content TABMovil" id="TabDocumentacion">
+                <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="Consulta1">
+                    @Html.Action("ConsultaTotalPostulantes", "CallConsulta", null)
+                </div>
+                @* VISTA DE Antecedentes Penales *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta2">
+                    @Html.Action("InscriptosPorModalidad", "CallConsulta", null)
+
+                </div>
+
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta3">
+                    @Html.Action("TotalesPorModalidadyGenero", "CallConsulta", null)
+
+                </div>
+
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta4">
+                    sgagdf
+                </div>
+
+
+                @* VISTA DE IDIOMAS *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta5">
+                    gfjytjtyj
+                </div>
+
+                @* VISTA DE ACTIVIDAD MILITAR *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta6">
+                    454645
+                </div>
+
+                @* VISTA DE SITUACION OCUPACIONAL*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta7">
+                    dfsgh
+                </div>
+
+                @* VISTA DE ANTROPOMETRIA *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta8">
+                    kuktyu7kyu
+                </div>
+
+                @* VISTA DE FAMILIA*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta9">
+                    try345345
+                </div>
+
+
+            </div>
+        </div>
+        <!-- /.col-md-8 -->
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('table').DataTable();
+
+        });
+    </script>
+
+}
