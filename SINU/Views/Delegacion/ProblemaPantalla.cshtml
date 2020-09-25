@@ -12,16 +12,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ListDataProblemaPantallaVM[0].Comentario)
+                @Html.DisplayNameFor(model => model.ListvDataProblemaEncontradoVM[0].DataVerificacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ListvDataProblemaEncontradoVM[0].Comentario)
             </th>
             <th hidden>
-                @Html.DisplayNameFor(model => model.ListDataProblemaPantallaVM[0].Persona.Apellido)
+                @Html.DisplayNameFor(model => model.ListvDataProblemaEncontradoVM[0].IdPantalla)
             </th>
             <th hidden>
-                @Html.DisplayNameFor(model => model.ListDataProblemaPantallaVM[0].VerificacionPantallas.Pantalla)
-            </th>
-            <th hidden>
-                @Html.DisplayNameFor(model => model.ListDataProblemaPantallaVM[0].Postulante.IdPersona)
+                @Html.DisplayNameFor(model => model.ListvDataProblemaEncontradoVM[0].IdPostulantePersona)
             </th>
             <th>Opciones</th>
         </tr>
@@ -29,23 +29,29 @@
     <tbody >
 
 
-        @foreach (var item in Model.ListDataProblemaPantallaVM)
+        @foreach (var item in Model.ListvDataProblemaEncontradoVM)
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.DataVerificacion)
+                </td>
+                <td >
                     @Html.DisplayFor(modelItem => item.Comentario)
                 </td>
                 <td hidden>
-                    @Html.DisplayFor(modelItem => item.Persona.Apellido)
-                </td>
-                <td hidden>
-                    @Html.DisplayFor(modelItem => item.VerificacionPantallas.Pantalla)
+                    @Html.DisplayFor(modelItem => item.IdPantalla)
                 </td >
                 <td hidden>
-                    @Html.DisplayFor(modelItem => item.Postulante.IdPersona)
+                    @Html.DisplayFor(modelItem => item.IdPostulantePersona)
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.IdDataProblema })
+                    @Ajax.ActionLink(" ", "EliminaProblemaPantalla","Delegacion", new { IDdataproblema = item.IdDataProblemaEncontrado }, new AjaxOptions
+                 {
+                   HttpMethod = "POST",
+                   OnSuccess = "Exito(data,status,xhr)",
+                   OnFailure = "Falla",
+                 }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                    @*@Ajax.ActionLink("Delete", "Delete", "Delegacion", new AjaxOptions() { HttpMethod }, new { id = item.IdDataProblemaEncontrado })*@
                 </td>
             </tr>
         }
@@ -72,14 +78,21 @@
     <div class="form-group BTMuestraTable">
         <div class="form-group row ">
 
-            @Html.HiddenFor(model=>model.DataProblemaPantallaVM.IdPantalla)
-            @Html.HiddenFor(model=>model.DataProblemaPantallaVM.IdPostulantePersona)
-            
+            @Html.HiddenFor(model => model.DataProblemaEncontradoVM.IdPostulantePersona)
+
             <div class="form-group col-12">
-                @Html.LabelFor(model => model.DataProblemaPantallaVM.Comentario, htmlAttributes: new { @class = "control-label col-md-6" })
+                @Html.LabelFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion, htmlAttributes: new { @class = "control-label col-md-6" })
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.DataProblemaPantallaVM.Comentario, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DataProblemaPantallaVM.Comentario, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion,new SelectList(Model.DataVerificacionVM,"IdDataVerificacion","Descripcion"),  new { @class = "form-control selectpicker" } )
+                    @Html.ValidationMessageFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-12">
+                @Html.LabelFor(model => model.DataProblemaEncontradoVM.Comentario, htmlAttributes: new { @class = "control-label col-md-6" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.DataProblemaEncontradoVM.Comentario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DataProblemaEncontradoVM.Comentario, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -21,5 +21,7 @@ namespace SINU.Models
         public int IdDataVerificacion { get; set; }
         public int IdDataProblemaEncontrado { get; set; }
         public int IdPostulantePersona { get; set; }
+        public int IdPantalla { get; set; }
+        public string Pantalla { get; set; }
     }
 }
