@@ -16,6 +16,8 @@ using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
+
 
 namespace SINU.Controllers
 {
@@ -55,9 +57,17 @@ namespace SINU.Controllers
                     ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
                 };
                
-                //verifico si la validacion esta en curso o no
+                //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
                 ViewBag.ValidacionEnCurso = (Secuencias[0]==14);
+                //Boolenao de si paso por validacion
+                ViewBag.ValidoUnaVez =Secuencias.IndexOf(14)!=-1;
 
+                //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
+                var PantallasEstadoProblemas = new List<Array>();
+                db.PantallasYComentariosDelPostulante(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla,//nombre de la pantalla
+                                                                                                                            m.Abierta,//si esta abierta o no
+                                                                                                                            db.vDataProblemaEncontrado.Where(o=>o.IdPostulantePersona==pers.ID_PER).Where(e=>e.IdPantalla==m.IdPantalla).Count() }));//cantidad de problemas
+                ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
                 //cargo listado de problemas de pantallas que le corresponde al postulante
                 //pers.ListProblemaPantalla = db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == pers.ID_PER).ToList();
 
@@ -1061,6 +1071,7 @@ namespace SINU.Controllers
         {
             try
             {
+                a.LargoFalda??= 0;
                 db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
                 return Json(new { success = true, msg = "Se guardaron los DATOS exitosamente." });
             }
@@ -1203,7 +1214,7 @@ namespace SINU.Controllers
                     {
                         db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
                         datos.IdPersonaFamiliar = per.IdPersona;
-                        idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar;
+                        idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI.ToString()).IdPersonaFamiliar;
 
                     }
                     return Json(new { success = true, msg = msgs, IDperFAMI = idpersonafamiliar, IDperPOST = IDPOSTULANTE }, JsonRequestBehavior.AllowGet);

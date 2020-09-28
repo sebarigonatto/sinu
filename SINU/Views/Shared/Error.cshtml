@@ -35,15 +35,15 @@
     }
 </style>
 <br />
-<div class="row" style="align-content:center;margin-top:5vw">
-    <div class="col-sm-6 bordererror">
-        <img class="img-fluid" accesskey="" src="~/Imagenes/monitor_error.png" />
+<div class="row" style="align-content:center;margin-top:3vw">
+    <div class="col-sm-12 justify-content-sm-center align-content-center d-flex" >
+        <img class="img-fluid " style="width:20%;margin-bottom:-3rem" accesskey="" src="~/Imagenes/monitor_error.png" />
     </div>
-    <div class="col-sm-6 ">
+    <div class="col-sm-12 ">
         <div>
-            <h1 class="text-black-50 text-center" style="font-size:20vh">Error!!</h1>
-            <h2 style="font-size:5vh; color:#ff3c3c; text-align:justify">Error al procesar la solicitud.</h2>
-            <p class="text-danger" style="        text-align: left !important">
+            <h2 class="text-black-50 text-center" style="font-size:20vh">Error!!</h2>
+            <h2 style="font-size:5vh; color:#ff3c3c" class="text-center">Error al procesar la solicitud.</h2>
+            <p class="text-danger text-center">
 
 
                 @if (Model == null)
@@ -53,10 +53,10 @@
                 else
                 {
 
-                    <h2> @Model.Exception.Message </h2>
-                    <h3> <b class="negro-sub">Controlador</b>: @Model.ControllerName </h3>
-                    <h3> <b class="negro-sub">Accion</b>: @Model.ActionName </h3>
-                    <h3> <b class="negro-sub">Menu</b>: @ViewBag.Menu </h3>
+                    <h2 class="text-center"> @Model.Exception.Message </h2>
+                    <h3  class="negro-sub text-center"> <b >Controlador</b>: @Model.ControllerName </h3>
+                    <h3 class="negro-sub text-center"> <b >Accion</b>: @Model.ActionName </h3>
+                    <h3 class="negro-sub text-center"> <b >Menu</b>: @ViewBag.Menu </h3>
 
                 }
 

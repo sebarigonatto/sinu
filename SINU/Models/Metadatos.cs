@@ -134,34 +134,35 @@ namespace SINU.Models
         public Nullable<decimal> Peso { get; set; }
         public Nullable<decimal> IMC { get; set; }
         [Required]
-        [Display(Name = "1° Perimetro de Cabeza")]
+        [Display(Name = "1° Perimetro de Cabeza (en cm)")]
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> PerimCabeza { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
-        [Display(Name = "2° Perimetro de Torax")]
+        [Display(Name = "2° Perimetro de Torax (en cm)")]
         [Required]
         public Nullable<int> PerimTorax { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
-        [Display(Name = "3° Perimetro de Cintura")]
+        [Display(Name = "3° Perimetro de Cintura (en cm)")]
         [Required]
         public Nullable<int> PerimCintura { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
-        [Display(Name = "4° Largo de Pantalon")]
+        [Display(Name = "4° Largo de Pantalon (en cm)")]
         public Nullable<int> LargoPantalon { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
-        [Display(Name = "5° Largo de Entrepierna")]
+        [Display(Name = "5° Largo de Entrepierna (en cm)")]
         public Nullable<int> LargoEntrep { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]  
-        [Display(Name = "6° Perimetro de Cadera")]
+        [Display(Name = "6° Perimetro de Cadera (en cm)")]
         public Nullable<int> PerimCaderas { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [RequiredIf("Genero",true, "Mujer",ErrorMessage ="Debe Completar este campo")]
-        [Display(Name = "7° Largo de Falda")]
+        [Display(Name = "7° Largo de Falda (en cm)")]
         public Nullable<int> LargoFalda { get; set; }
         [Required]
+        [Display(Name = "Cuello (en cm)")]
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> Cuello { get; set; }
         [Required]
