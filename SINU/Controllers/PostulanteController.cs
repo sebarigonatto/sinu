@@ -60,14 +60,16 @@ namespace SINU.Controllers
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
                 ViewBag.ValidacionEnCurso = (Secuencias[0]==14);
                 //Boolenao de si paso por validacion
-                ViewBag.ValidoUnaVez =Secuencias.IndexOf(14)!=-1;
+                ViewBag.ValidoUnaVez =(Secuencias.IndexOf(14)!=-1) && (Secuencias[0]==13);
 
                 //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
                 db.PantallasYComentariosDelPostulante(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla,//nombre de la pantalla
                                                                                                                             m.Abierta,//si esta abierta o no
                                                                                                                             db.vDataProblemaEncontrado.Where(o=>o.IdPostulantePersona==pers.ID_PER).Where(e=>e.IdPantalla==m.IdPantalla).Count() }));//cantidad de problemas
+                pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
+
                 //cargo listado de problemas de pantallas que le corresponde al postulante
                 //pers.ListProblemaPantalla = db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == pers.ID_PER).ToList();
 
@@ -1300,6 +1302,21 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult ProblemasPantalla(int IDPostulante,int IdPantalla)
+        {
+            try
+            {
+                return PartialView(db.vDataProblemaEncontrado.Where(p=>p.IdPostulantePersona==IDPostulante).Where(m=>m.IdPantalla==IdPantalla).ToList());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
         [AuthorizacionPermiso("ListarRP")]
