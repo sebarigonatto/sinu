@@ -1,0 +1,11 @@
+﻿@model  IEnumerable<SINU.Models.vDataProblemaEncontrado>
+
+<div class="jumbotron mb-0" style="background-color: #08495f;color: white;padding-top: 2rem;padding-bottom: 2rem">
+    <h5>Problemas Econtrados:</h5>
+    @foreach (var item in Model)
+    {
+        <h6>@item.DataVerificacion, @item.Comentario</h6>
+    }
+
+</div>
+<br />
