@@ -423,30 +423,24 @@
         //array con los ID de las solapas principales que se bloquearan
         var SolapaPrincipales = [["2", "#datosbasicos"], ["4", "#Documentacion"]];
 
-        var SolapaSecundarias = [[]];
 
-        var SolapaSecundarias = [["", ""], ["", ""]];
         //bloquea las patallas principales segun las Etapas en las que esta actualmente.
-        $.BloqueaPantallasPrincipales=function () {
+        $.BloqueaPantallasPrincipales = function () {
             $.each(SolapaPrincipales, function (index, item) {
-                if (IDETP[IDETP.length - 1] != item[0]) {
-                    $(item[1] + " .BTAcciones").html("");
-                    $(item[1] + " :input"/*," + item[1] + " input"*/).not(".Edita").attr("disabled", "true");
-                    if (item[0] == "4") {
-                        $(item[1] + " .Edita").removeClass("fa-edit").addClass("fa-eye");
-                        
-                    };
+                if (IDETP[IDETP.length - 1] != item[0] ||"@ViewBag.ValidacionEnCurso" == "True") {
+                    BloqueaPantalla(item[1]);
+                    if ("@ViewBag.ValidacionEnCurso" == "True") {
+                        $.arrayEtapas = true;
+                    }
                 }
-                //alert(item[0] + "   "+item[1]);
-                
             })
+        };
 
-        }
-
-        function Bloqueo(IDSolapa) {
-
-        }
-
+        function BloqueaPantalla(IDPantalla) {
+            $(IDPantalla + " .BTAcciones").html("");
+            $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita").attr("disabled", "true");
+            $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
+        };
 
         //funcion para habilitar el TAB indicado.
         function HabilitarTAb(idtab) {
@@ -461,11 +455,11 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-  
+
 
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
-          
+
             //bloqueo los tabs de las etapas por las que no pase
             $("#TabGeneral li").each(function () {
                 idTAB = $(this).attr("id");
@@ -483,8 +477,28 @@
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             $("#" + IDETP[IDETP.length - 1] + " a").tab("show");
 
-            var bloqueo_vistas = IDETP.indexOf("5") != -1;
-            $.arrayEtapas = bloqueo_vistas;
+            if ("@ViewBag.ValidoUnaVez"=="True") {
+                //Bloqueo de pantallas cerradas y mostrar Problemas
+                var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
+                var jsonProblemas = JSON.parse(Problemas);
+                $.each(jsonProblemas, function (index, item) {
+                    //alert(item[1]);
+                    if (!item[1]) {
+                        //alert("cerrado");
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
+                    } else if (item[2]==0) {
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw ' style='color: #f8de00fa; border-radius: 100%; border: 2px solid;'>!</i>");
+                    } else {
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw ' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>"+item[2]+"</i>");
+                    }
+                    //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i> ");
+
+                    //<i class="fa fa-fw " style="color: #f8de00fa; border-radius: 100%; border: 2px solid;">!</i>
+                     //<i class="fa fa-fw " style="color: #ff0018; border-radius: 100%; border: 2px solid;">1</i> 
+                });
+
+            }
+
 
         });
 
@@ -514,10 +528,12 @@
                     $.ActualizaTabla(response.url_Tabla,response.url_Controller);
                     break;
                 case "ValidarDatos":
+                    BloqueaPantalla("#Documentacion");
+                    $.arrayEtapas=true;
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden","true");
                     break;
-                   
+
                 default:
             };
         };
