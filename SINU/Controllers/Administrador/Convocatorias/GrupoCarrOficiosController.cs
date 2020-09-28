@@ -87,7 +87,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs")]  GrupoCarrOficiosvm
+        public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs,IdResGrupo")]  GrupoCarrOficiosvm
  grupoCarrOficiovm )
         {
             //try
@@ -381,24 +381,24 @@ public ActionResult Edit(string id)
             }
         }
 
-        public JsonResult DevolverRestricciones(int RegionId)
-        {
-            using (db = new SINUEntities())
-            {
-                //carreras Tpersonal
-                //var Restriccion = db.CarreraOficio.Where(x => x.Personal == RegionId).Select(m => new SelectListItem
-                //{
-                //    Value = m.IdCarreraOficio.ToString(),
-                //    Text = m.CarreraUoficio
-                //}).ToList();
-                var Restriccion = db.ResGrupo.Where(x => x.IdResGrupo == RegionId).Select(x => new SelectListItem
-                {
-                    Value = x.IdResGrupo.ToString(),
-                    Text = x.IdEstadoCivil.ToString()
-                }).ToList();
-                return Json(Restriccion, JsonRequestBehavior.AllowGet);
-                //carrerasFiltradas
-            }
-        }
+        //public JsonResult DevolverRestricciones(int RegionId)
+        //{
+        //    using (db = new SINUEntities())
+        //    {
+        //        //carreras Tpersonal
+        //        //var Restriccion = db.CarreraOficio.Where(x => x.Personal == RegionId).Select(m => new SelectListItem
+        //        //{
+        //        //    Value = m.IdCarreraOficio.ToString(),
+        //        //    Text = m.CarreraUoficio
+        //        //}).ToList();
+        //        var Restriccion = db.ResGrupo.Where(x => x.IdResGrupo == RegionId).Select(x => new SelectListItem
+        //        {
+        //            Value = x.IdResGrupo.ToString(),
+        //            Text = "Restricción n° "+x.IdResGrupo.ToString()
+        //        }).ToList();
+        //        return Json(Restriccion, JsonRequestBehavior.AllowGet);
+        //        //carrerasFiltradas
+        //    }
+        //}
     }
 }

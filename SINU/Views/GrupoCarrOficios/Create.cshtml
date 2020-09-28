@@ -91,7 +91,7 @@
         <tbody>
             <tr class="row">
                 <td class="col-6">
-                    @Html.DropDownListFor(model => model.IdResGrupo, new SelectList(@ViewBag.lstresGrupo, "IdResGrupo", "IdResGrupo"), new { @class = "form-control", @id = "ComboRestricciones" })
+                    @Html.DropDownListFor(model => model.IdResGrupo, new SelectList(@ViewBag.lstresGrupo, "", "IdResGrupo","Seleccione Restricción"), new { @class = "form-control", @id = "ComboRestricciones" })
                     @Html.ValidationMessageFor(Model => Model.IdResGrupo, "", new { @class = "text-danger" })
                 </td>
             </tr>
@@ -204,31 +204,31 @@
                     });
                 });
 
-                $(document).ready(function () {
-                    //ddlRegions es igual al ID del listado de Personal.
-                    $("#ComboRestricciones").change(function () {
-                        //$("#ComboRestricciones").prop("disabled", true);
-                        alert($("#ComboRestricciones").val());
-                        // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+                //$(document).ready(function () {
+                //    //ddlRegions es igual al ID del listado de Personal.
+                //    $("#ComboRestricciones").change(function () {
+                //        //$("#ComboRestricciones").prop("disabled", true);
+                //        alert($("#ComboRestricciones").val());
+                //        // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-                        $.get("/grupoCarrOficios/DevolverRestricciones", { RegionId: $("#ComboRestricciones").val() }, function (data) {
-                            // VACIAMOS EL DropDownList aca hay que poner
-                            //ddlterritories es ID de la lista carreras
-                            //alert("textovaconcomilla");
-                            //$("#GruposyCarreras").empty();
+                //        $.get("/grupoCarrOficios/DevolverRestricciones", { RegionId: $("#ComboRestricciones").val() }, function (data) {
+                //            // VACIAMOS EL DropDownList aca hay que poner
+                //            //ddlterritories es ID de la lista carreras
+                //            //alert("textovaconcomilla");
+                //            //$("#GruposyCarreras").empty();
 
-                            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                            $("#ComboRestricciones").append("<option value>Seleccionar Restricción" + "</option>")
+                //            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                //            $("#ComboRestricciones").append("<option value>Seleccionar Restricción" + "</option>")
 
-                            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-                            $.each(data, function (index, row) {
+                //            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                //            $.each(data, function (index, row) {
 
-                                $("#ComboRestricciones").prop("disabled", false);
-                                $("#ComboRestricciones").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-                            });
-                        });
-                    });
-                });
+                //                $("#ComboRestricciones").prop("disabled", false);
+                //                $("#ComboRestricciones").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                //            });
+                //        });
+                //    });
+                //});
             </script>
 
         }
