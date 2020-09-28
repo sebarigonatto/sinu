@@ -422,23 +422,25 @@
 
         //array con los ID de las solapas principales que se bloquearan
         var SolapaPrincipales = [["2", "#datosbasicos"], ["4", "#Documentacion"]];
+
         var SolapaSecundarias = [[]];
 
-        var SolapaSecundarias = [["",""], ["",""]];
-
+        var SolapaSecundarias = [["", ""], ["", ""]];
         //bloquea las patallas principales segun las Etapas en las que esta actualmente.
         $.BloqueaPantallasPrincipales=function () {
             $.each(SolapaPrincipales, function (index, item) {
                 if (IDETP[IDETP.length - 1] != item[0]) {
                     $(item[1] + " .BTAcciones").html("");
-                    $(item[1] + " :input," + item[1] + " input").not(".Edita").attr("disabled", "true");
+                    $(item[1] + " :input"/*," + item[1] + " input"*/).not(".Edita").attr("disabled", "true");
                     if (item[0] == "4") {
                         $(item[1] + " .Edita").removeClass("fa-edit").addClass("fa-eye");
-                       
+                        
                     };
                 }
                 //alert(item[0] + "   "+item[1]);
+                
             })
+
         }
 
         function Bloqueo(IDSolapa) {

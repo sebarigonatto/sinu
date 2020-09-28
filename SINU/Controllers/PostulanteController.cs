@@ -58,6 +58,10 @@ namespace SINU.Controllers
                 //verifico si la validacion esta en curso o no
                 ViewBag.ValidacionEnCurso = (Secuencias[0]==14);
 
+
+
+                //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
+                
                 //cargo listado de problemas de pantallas que le corresponde al postulante
                 //pers.ListProblemaPantalla = db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == pers.ID_PER).ToList();
 
@@ -1061,6 +1065,7 @@ namespace SINU.Controllers
         {
             try
             {
+                a.LargoFalda??= 0;
                 db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
                 return Json(new { success = true, msg = "Se guardaron los DATOS exitosamente." });
             }
