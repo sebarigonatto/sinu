@@ -7,7 +7,7 @@
     lst.Add(new SelectListItem() { Text = "Oficiales", Value = "O" });
     lst.Add(new SelectListItem() { Text = "Suboficiales", Value = "S" });
     lst.Add(new SelectListItem() { Text = "Marineros", Value = "M" });
-    
+
 
 
 }
@@ -52,10 +52,11 @@
             @Html.ValidationMessageFor(model => model.Personal, "", new { @class = "text-danger" })
         </div>
     </div>
-
+    <br />
+    <br />
     <table class="col-6">
         <thead>
-            <tr>
+            <tr class="col-6">
                 <th>
                     @Html.LabelFor(model => model.Carreras2, htmlAttributes: new { @class = "control-label col-md-6" })
                 </th>
@@ -64,11 +65,12 @@
         </thead>
         <tbody>
             <tr class="row">
-                <td class="col-6">
+                <td>
                     @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple", @id = "ddlTerritories" })
                     @Html.ValidationMessageFor(Model => Model.SelectedIDs, "", new { @class = "text-danger" })
                 </td>
-                <td class="col-6">
+                <td>       </td>
+                <td>
                     <div class="alert alert-info">
                         Presione la tecla "Ctrl" + click para seleccionar más de una carrera.
                     </div>
@@ -76,40 +78,41 @@
             </tr>
         </tbody>
     </table>
-
+    <br />
+    <br />
 
     <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
         <thead>
             <tr>
 
-                <th>@Html.Label("EdadMinCAutoriz")</th>
-                <th>@Html.Label("EdadMin")</th>
-                <th>@Html.Label("EdadMax")</th>
-                <th>@Html.Label("Edad_a_fecha")</th>                
-                <th>@Html.Label("EstadoCivil")</th> 
-                <th>@Html.Label("Opciones")</th>
+                <th>@Html.Label("Edad Mínima (Con Autorización)")</th>
+                <th>@Html.Label("Edad Mínima")</th>
+                <th>@Html.Label("Edad Máxima")</th>
+                <th>@Html.Label("Edad a fecha")</th>
+                <th>@Html.Label("Estado Civil")</th>
+                <th>@Html.Label("Seleccionar")</th>
         </thead>
         <tbody>
             @foreach (var item in ViewBag.lstresGrupo as List<SINU.Models.vRestriccionesGrupo>)
             {
-            <tr>
-                <td>
-                    @item.EdadMinCAutoriz
-                </td>
-                <td>
-                    @item.EdadMin
-                </td>
-                <td>
-                    @item.EdadMax
-                </td>
-                <td>
-                    @item.Edad_a_fecha
-                </td>
-                <td>
-                    @item.EstadoCivil
-                </td>
-                <td>@Html.RadioButtonFor(m=>m.IdResGrupo,item.IdResGrupo)</td>
-            </tr>
+                <tr>
+                    <td>
+                        @item.EdadMinCAutoriz
+                    </td>
+                    <td>
+                        @item.EdadMin
+                    </td>
+                    <td>
+                        @item.EdadMax
+                    </td>
+                    <td>
+                        @item.Edad_a_fecha
+                    </td>
+                    <td>
+                        @item.EstadoCivil
+                    </td>
+                    <td>@Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -119,17 +122,18 @@
             <tr>
 
                 <th>
-                                        
+
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr>               
+            <tr>
                 <td><input type="button" value="Nueva Restricción" onclick="location.href='@Url.Action("Create", "ResGrupoes")'" class="btn btn-default" />
             </tr>
         </tbody>
     </table>
-
+    <br />
+    <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Guardar" class="btn btn-default" />
@@ -233,31 +237,31 @@
             });
         });
 
-                    //$(document).ready(function () {
-                    //    //ddlRegions es igual al ID del listado de Personal.
-                    //    $("#ComboRestricciones").change(function () {
-                    //        //$("#ComboRestricciones").prop("disabled", true);
-                    //        alert($("#ComboRestricciones").val());
-                    //        // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+                                //$(document).ready(function () {
+                                //    //ddlRegions es igual al ID del listado de Personal.
+                                //    $("#ComboRestricciones").change(function () {
+                                //        //$("#ComboRestricciones").prop("disabled", true);
+                                //        alert($("#ComboRestricciones").val());
+                                //        // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-                    //        $.get("/grupoCarrOficios/DevolverRestricciones", { RegionId: $("#ComboRestricciones").val() }, function (data) {
-                    //            // VACIAMOS EL DropDownList aca hay que poner
-                    //            //ddlterritories es ID de la lista carreras
-                    //            //alert("textovaconcomilla");
-                    //            //$("#GruposyCarreras").empty();
+                                //        $.get("/grupoCarrOficios/DevolverRestricciones", { RegionId: $("#ComboRestricciones").val() }, function (data) {
+                                //            // VACIAMOS EL DropDownList aca hay que poner
+                                //            //ddlterritories es ID de la lista carreras
+                                //            //alert("textovaconcomilla");
+                                //            //$("#GruposyCarreras").empty();
 
-                    //            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                    //            $("#ComboRestricciones").append("<option value>Seleccionar Restricción" + "</option>")
+                                //            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                                //            $("#ComboRestricciones").append("<option value>Seleccionar Restricción" + "</option>")
 
-                    //            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-                    //            $.each(data, function (index, row) {
+                                //            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                                //            $.each(data, function (index, row) {
 
-                    //                $("#ComboRestricciones").prop("disabled", false);
-                    //                $("#ComboRestricciones").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-                    //            });
-                    //        });
-                    //    });
-                    //});
+                                //                $("#ComboRestricciones").prop("disabled", false);
+                                //                $("#ComboRestricciones").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                                //            });
+                                //        });
+                                //    });
+                                //});
     </script>
 
 }
