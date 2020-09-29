@@ -1215,13 +1215,13 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<PantallasYComentariosDelPostulante_Result>("[SINUEntities].[PantallasYComentariosDelPostulante](@IdpostulantePersona)", idpostulantePersonaParameter);
         }
     
-        public virtual ObjectResult<spTildarPantallaParaPostulate_Result> spTildarPantallaParaPostulate(Nullable<int> idpostulantePersona)
+        public virtual ObjectResult<spTildarPantallaParaPostulate_Result1> spTildarPantallaParaPostulate(Nullable<int> idpostulantePersona)
         {
             var idpostulantePersonaParameter = idpostulantePersona.HasValue ?
                 new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
                 new ObjectParameter("IdpostulantePersona", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTildarPantallaParaPostulate_Result>("spTildarPantallaParaPostulate", idpostulantePersonaParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTildarPantallaParaPostulate_Result1>("spTildarPantallaParaPostulate", idpostulantePersonaParameter);
         }
     }
 }

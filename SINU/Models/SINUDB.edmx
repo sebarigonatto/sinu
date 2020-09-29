@@ -4811,13 +4811,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="PantallasYComentariosDelPostulante" IsComposable="true" ReturnType="Collection(SINUModel.PantallasYComentariosDelPostulante_Result)">
           <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="spTildarPantallaParaPostulate" ReturnType="Collection(SINUModel.spTildarPantallaParaPostulate_Result)">
-          <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="vVerificacionPantallasYDatosAVerificar" EntityType="SINUModel.vVerificacionPantallasYDatosAVerificar" />
           <EntitySet Name="TipoPersonal" EntityType="SINUModel.TipoPersonal" />
           <EntitySet Name="vRestriccionesGrupo" EntityType="SINUModel.vRestriccionesGrupo" />
           <EntitySet Name="vRestriccionesGrupoLista" EntityType="SINUModel.vRestriccionesGrupoLista" />
+          <FunctionImport Name="spTildarPantallaParaPostulate" ReturnType="Collection(SINUModel.spTildarPantallaParaPostulate_Result1)">
+            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5687,6 +5687,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Restriccion" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
           <Property Name="IdResGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
+        <ComplexType Name="spTildarPantallaParaPostulate_Result1">
+          <Property Type="String" Name="Pantalla" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="Abierta" Nullable="true" />
+          <Property Type="Int32" Name="CantComentarios" Nullable="true" />
+          <Property Type="Int32" Name="IdPantalla" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7042,15 +7048,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spTildarPantallaParaPostulate" FunctionName="SINUModel.Store.spTildarPantallaParaPostulate">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spTildarPantallaParaPostulate_Result">
-                <ScalarProperty Name="Pantalla" ColumnName="Pantalla" />
-                <ScalarProperty Name="Abierta" ColumnName="Abierta" />
-                <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="vVerificacionPantallasYDatosAVerificar">
             <EntityTypeMapping TypeName="SINUModel.vVerificacionPantallasYDatosAVerificar">
               <MappingFragment StoreEntitySet="vVerificacionPantallasYDatosAVerificar">
@@ -7090,6 +7087,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spTildarPantallaParaPostulate" FunctionName="SINUModel.Store.spTildarPantallaParaPostulate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spTildarPantallaParaPostulate_Result1">
+                <ScalarProperty Name="Pantalla" ColumnName="Pantalla" />
+                <ScalarProperty Name="Abierta" ColumnName="Abierta" />
+                <ScalarProperty Name="CantComentarios" ColumnName="CantComentarios" />
+                <ScalarProperty Name="IdPantalla" ColumnName="IdPantalla" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

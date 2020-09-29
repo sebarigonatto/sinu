@@ -494,7 +494,7 @@
                         $("#" + item[0] + "NAV :input"/*," + item[1] + " input"*/).not(".Edita").attr("disabled", "true");
                         $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
                     } else if (item[2]=="0") {
-                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-hourglass' style='color: #f8de00fa; font-size:1.2em'></i>");
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
                     } else {
                         $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>"+item[2]+"</i>");
                     }

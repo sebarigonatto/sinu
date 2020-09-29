@@ -64,9 +64,7 @@ namespace SINU.Controllers
 
                 //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
-                db.PantallasYComentariosDelPostulante(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla,//nombre de la pantalla
-                                                                                                                            m.Abierta,//si esta abierta o no
-                                                                                                                            db.vDataProblemaEncontrado.Where(o=>o.IdPostulantePersona==pers.ID_PER).Where(e=>e.IdPantalla==m.IdPantalla).Count() }));//cantidad de problemas
+                db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta,m.CantComentarios }));
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
@@ -103,7 +101,7 @@ namespace SINU.Controllers
 
                 var Secus = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Where(m => m.IdSecuencia == 11 || m.IdSecuencia == 12).ToList();
                 pers.NoPostulado = (Secus.Count() > 0 && Secus[0].IdSecuencia == 12) ? true : false;//ver como mostrar esta pantalla de si fue postulado o no
-                ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado").ValorDato;
+                ViewBag.TextNoAsignado = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
                 if (db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).ToList()[0].IdSecuencia == 14)
                 {
                     ViewBag.ValidacionEnCurso = true;
