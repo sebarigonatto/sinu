@@ -90,44 +90,30 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create([Bind(Include = "IdGrupoCarrOficio,Personal,Descripcion,SelectedIDs,IdResGrupo")]  GrupoCarrOficiosvm
  grupoCarrOficiovm )
         {
-            //try
-            //{
+
             ObjectParameter ObjMensaje = new ObjectParameter("Mensaje", "");
-            //grupoCarrOficiovm.IdGCOOriginal = grupoCarrOficiovm.IdGrupoCarrOficio;
+            //if (grupoCarrOficiovm.IdResGrupo!=0)
+            //{
+            //grupoCarrOficiovm.IdResGrupo = "";
+            //}
             if (ModelState.IsValid)
-                {
+            {
                 string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
                 grupoCarrOficiovm.Esinsert = true;
-                //el stgCarreras si es INSERT debe estar en el campo siguiente:
-                //grupoCarrOficiovm.IdGrupoCarrOficio = stgCarreras;
-                //grupoCarrOficiovm.IdGCOOriginal = "";
-                //03 agosto, graba en grupo carrera oficio
-                // aca iria un sp donde le paso todo el listado de carreras y 
-                //el id del grupo carrera oficio para asignarle a las mismas.
-                //db.GrupoCarrOficio.Add(grupoCarrOficio);
-                //db.SaveChanges(); 
-
                 db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal,
-                    grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert, 
-                    grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
-                    //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
-                    String mens = ObjMensaje.Value.ToString();
-                    switch (mens)
-                    {
-                        case string a when a.Contains("Exito"):
-                            return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"                            
-                    }
-                    //aca haria un case of segun lo recibido en el mensaje (supongo)
-                    //lo mando al index si hay exito o queda en la pantalla de create con el error
-
+                  grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert,
+                  grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
+                //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
+                String mens = ObjMensaje.Value.ToString();
+                switch (mens)
+                {
+                    case string a when a.Contains("Exito"):
+                        return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"                            
                 }
-            //}
-            //catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
-            //{
-            //    //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
-            //    ViewBag.Mensaje = ex;
-            //    return RedirectToAction("Create");
-            //}
+                //aca haria un case of segun lo recibido en el mensaje (supongo)
+                //lo mando al index si hay exito o queda en la pantalla de create con el error
+
+            }
             List<vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
             ViewBag.lstresGrupo = lstResGrupo;
             grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
@@ -207,8 +193,9 @@ public ActionResult Edit(string id)
                 NuevogrupocarroficioVM.SelectedIDs.Add(NuevogrupocarroficioVM.Carreras[i].IdCarreraOficio);
 
             }
-            NuevogrupocarroficioVM.SelIDsEdit = NuevogrupocarroficioVM.SelectedIDs;
-    
+            NuevogrupocarroficioVM.SelIDsEdit = NuevogrupocarroficioVM.SelectedIDs; List<vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
+            ViewBag.lstresGrupo = lstResGrupo;
+
             return View(NuevogrupocarroficioVM);
         }
 
