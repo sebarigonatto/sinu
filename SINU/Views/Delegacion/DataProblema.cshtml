@@ -30,7 +30,7 @@
                         @*<div class="form-group row ">*@
 
 
-                        <hr />
+                        @*<hr />*@
                         <div class="form-group">
                             @Html.LabelFor(model => model.vListDataProblemasVM.Apellido_Y_Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
@@ -55,11 +55,12 @@
 
                             </div>
                         </div>
-                        <br />
-                        <h4>
+                        @*<br />*@
+                        <hr />
+                        <h5>
                             Texto del problema Encontrado:
                             <br /> @ViewBag.Texto
-                        </h4>
+                        </h5>
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             @Html.LabelFor(model => model.vListDataProblemasVM.Comentario, htmlAttributes: new { @class = "control-label col-md-2" })
