@@ -77,7 +77,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create()
         {
             GrupoCarrOficiosvm prueba = new GrupoCarrOficiosvm { Carreras2 = db.CarreraOficio.ToList() };
-            List <ResGrupo> lstResGrupo = db.ResGrupo.ToList();
+            List <vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
             ViewBag.lstresGrupo = lstResGrupo;
                        return View(prueba);
         }
@@ -128,6 +128,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             //    ViewBag.Mensaje = ex;
             //    return RedirectToAction("Create");
             //}
+            List<vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
+            ViewBag.lstresGrupo = lstResGrupo;
             grupoCarrOficiovm.Carreras2= db.CarreraOficio.ToList();
             ViewBag.Mensaje = "No se creó registro. Verifique errores mencionados.";
             return View(grupoCarrOficiovm);

@@ -118,445 +118,537 @@
                         <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
                             @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <div id="ProblemaPantalla2">@* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 2 })
-                            </div>
-                           
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP0">Validar</button>
-                            </div>
+                            <hr />
+                            <div id="ProblemaPantalla1">
+                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 1 })
+                        </div>
+
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
+                </div>
 
-                    @* VISTA DE Antecedentes Penales *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Antecedentes Penales</a>
-                            <button id="BTDocuPenalNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                @* VISTA DE Antecedentes Penales *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Antecedentes Penales</a>
+                        <button id="BTDocuPenalNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
+                        @*@Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })*@
+                        @Html.Partial("_Docupenal")
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla2">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 2 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 2 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
+                        </div>
+                    </div>
+                </div>
+
+                @* VISTA DE DOMICILIO *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Domicilio</a>
+                        @*<button id="BTDomicilioNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
-                            </button>
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
-                            @*@Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })*@
-                            @Html.Partial("_Docupenal")
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP1">Validar</button>
-                            </div>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
+                        @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla3">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 3 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 3 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
+                </div>
 
-                    @* VISTA DE DOMICILIO *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Domicilio</a>
-                            @*<button id="BTDomicilioNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
-                            @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP2">Validar</button>
-                            </div>
+                @* VISTA DE ESTUDIOS *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Estudios">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Estudios</a>
+                        @*<button id="BTEstudiosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
+                        @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla4">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 4 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 4 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
+                </div>
 
-                    @* VISTA DE ESTUDIOS *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="Estudios">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Estudios</a>
-                            @*<button id="BTEstudiosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
-                            @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP3">Validar</button>
-                            </div>
+                @* VISTA DE IDIOMAS *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Idiomas">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Idiomas</a>
+                        @*<button id="BTIdiomasNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
+                        @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
+                    </div>
+                    <br />
+                    <hr />
+                    <div id="ProblemaPantalla5">
+                        @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                        @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 5 })
+                    </div>
+                    <div class="container text-center">
+                        @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5 }, new AjaxOptions
+                      {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla"
+                      }, new { @id = "BTValidar", @class = "btn btn-success" })
+                    </div>
+                </div>
+
+
+                @* VISTA DE ACTIVIDAD MILITAR *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="ActMilitar">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Activiadad Militar</a>
+                        @*<button id="BTActMilitarNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
+                        @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla6">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 6 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 6 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
+                </div>
 
-                    @* VISTA DE IDIOMAS *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="Idiomas">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Idiomas</a>
-                            @*<button id="BTIdiomasNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
-                            @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
+                @* VISTA DE SITUACION OCUPACIONAL*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Situcion Ocipacional</a>
+                        @*<button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
+                        @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla7">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 7 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 7 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
+                        </div>
+                    </div>
+                </div>
+
+                @* VISTA DE ANTROPOMETRIA *@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Antropometria">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Antropometria</a>
+                        @*<button id="BTAntropometriaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
+                        @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla8">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 8 })
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 8 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                         <br />
+                    </div>
+                </div>
+
+                @* VISTA DE FAMILIA*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Familia</a>
+                        @*<button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
+                        @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
+                        <br />
+                        <hr />
+                        <div id="ProblemaPantalla9">
+                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 9 })
+                        </div>
                         <div class="container text-center">
-                            <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP4">Validar</button>
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 9 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
+                </div>
 
 
-                    @* VISTA DE ACTIVIDAD MILITAR *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="ActMilitar">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Activiadad Militar</a>
-                            @*<button id="BTActMilitarNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
-                            @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP5">Validar</button>
-                            </div>
+                @* VISTA DE Verificacion*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="ListaProblema">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Verificacion</a>
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="ListaProblemaNAV">
+                        @Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER })
+                        @*@Html.Partial("ListaProblema")*@
+                        @*<br />*@
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Cerrar Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success" })
                         </div>
                     </div>
-
-                    @* VISTA DE SITUACION OCUPACIONAL*@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Situcion Ocipacional</a>
-                            @*<button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
-                            @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP6">Validar</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    @* VISTA DE ANTROPOMETRIA *@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="Antropometria">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Antropometria</a>
-                            @*<button id="BTAntropometriaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
-                            @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP7">Validar</button>
-                            </div>
-                            <br />
-                        </div>
-                    </div>
-
-                    @* VISTA DE FAMILIA*@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Familia</a>
-                            @*<button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
-                            @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <div class="container text-center">
-                                <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP8">Validar</button>
-                            </div>
-                        </div>
-                    </div>
+                </div>
 
 
-                    @* VISTA DE Verificacion*@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="ListaProblema">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Verificacion</a>
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="ListaProblemaNAV">
-                            @Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER })
-                            @*@Html.Partial("ListaProblema")*@
-                            @*<br />*@
-                            @*<div class="container text-center">
-                                    <button class="btn btn-primary btn-lg w-25 habil" id="BtnDP8">Validar</button>
-                                </div>*@
-                        </div>
-                    </div>
+                @* Validar Datos*@
+                <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
+                    <nav class="navbar navbar-dark bg-dark ocultnav">
+                        <a class="navbar-brand" href="#">Validar Datos</a>
+                        @*<button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>*@
+                    </nav>
+                    <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
+                        @*<h2>Validar Datos</h2>*@
+                        <br />
+                        <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                            <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
+                            @Ajax.ActionLink("Volver Etapa Anterior", "VolverEtapa", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                          {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "Exito(data,status,xhr)",
+                                            OnFailure = "Falla"
+                                          }, new { @id = "BTValidar", @class = "btn btn-success" })
+                            <hr />
+                            <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
+                            @Ajax.ActionLink("Comfirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                          {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "Exito(data,status,xhr)",
+                                            OnFailure = "Falla"
+                                          }, new { @id = "BTValidar", @class = "btn btn-success" })
 
 
-                    @* Validar Datos*@
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
-                        <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Validar Datos</a>
-                            @*<button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
-                        </nav>
-                        <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
-                            <h2>Validar Datos</h2>
-                            <br />
-                            <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                                <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
-                                <br />
-                                @Ajax.ActionLink("Comfirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                              {
-                                                HttpMethod = "POST",
-                                                OnSuccess = "Exito(data,status,xhr)",
-                                                OnFailure = "Falla"
-                                              }, new { @id = "BTValidar", @class = "btn btn-success" })
 
-                                @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
 
-                                @Ajax.ActionLink("Volver Etapa Anterior", "VolverEtapa", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                              {
-                                                HttpMethod = "POST",
-                                                OnSuccess = "Exito(data,status,xhr)",
-                                                OnFailure = "Falla"
-                                              }, new { @id = "BTValidar", @class = "btn btn-success" })
 
-                                @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
+                            @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-            <div class="modal-content " id="ModalEIACuerpo">
+<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content " id="ModalEIACuerpo">
 
-                <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
+
+            </div>
+            <div class="modal-body">
+                <p id="TextModal">@* mensaje del Modal *@</p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
+                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
-
-                </div>
-                <div class="modal-body">
-                    <p id="TextModal">@* mensaje del Modal *@</p>
-                </div>
-                <div class="modal-footer ">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @*}*@
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $.arrayEtapas = true;
-                $(".BTAcciones").html("");
-                $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
-                $(".habil").removeAttr("disabled");
-                $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
-                var bloqueoSUBMIT = false;
-                $(".Agrega").on("click", function () {
-                    bloqueoSUBMIT = true;
-                })
-                $("#formularioid").on('submit', function (evt) {
-                    if (bloqueoSUBMIT) {
-                        evt.preventDefault();
-                    }
-                    bloqueoSUBMIT = false;
-                    // tu codigo aqui
-                });
-                $("#BtnDP0").click(function () {
-                    $("#CheckVal0").removeAttr("hidden");
-                    $("#BtnDP0").hide();
-                });
-                $("#BtnDP1").click(function () {
-                    $("#CheckVal1").removeAttr("hidden");
-                    $("#BtnDP1").hide();
-                });
-                $("#BtnDP2").click(function () {
-                    $("#CheckVal2").removeAttr("hidden");
-                    $("#BtnDP2").hide();
-                });
-                $("#BtnDP3").click(function () {
-                    $("#CheckVal3").removeAttr("hidden");
-                    $("#BtnDP3").hide();
-                });
-                $("#BtnDP4").click(function () {
-                    $("#CheckVal4").removeAttr("hidden");
-                    $("#BtnDP4").hide();
-                });
-                $("#BtnDP5").click(function () {
-                    $("#CheckVal5").removeAttr("hidden");
-                    $("#BtnDP5").hide();
-                });
-                $("#BtnDP6").click(function () {
-                    $("#CheckVal6").removeAttr("hidden");
-                    $("#BtnDP6").hide();
-                });
-                $("#BtnDP7").click(function () {
-                    $("#CheckVal7").removeAttr("hidden");
-                    $("#BtnDP7").hide();
-                });
-                $("#BtnDP8").click(function () {
-                    $("#CheckVal8").removeAttr("hidden");
-                    $("#BtnDP8").hide();
-                });
-
-
-                var tabla = $("#TListadoProblema").DataTable({
-                    retrieve: true,
-                });
-                tabla.destroy();
-                $("#TListadoProblema").DataTable({
-                    retrieve: true,
-                    paging: true,
-                    "autoWidth": false,
-
-                    //ver si es necesario este fragmento
-                    select: false,//'single',
-                    "columnDefs": [{
-                        "searchable": false,
-                        "orderable": false,
-                        "targets": [0]
-                    }],
-                    "ordering": false,
-                    //"dom": 'frtp',
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        },
-                    },
-                });
-
-                //$(".Agrega").on("click", function () {
-                //    id_registro = $(this).attr("data-ID");
-                //    id_tabla = id = $(this).closest("table").attr("ID");
-                //    //alert(id_registro+ "  " +id_tabla);
-                //    ModalEIACUD(id_registro, id_persona, id_tabla);
-                //    $("#ModalEIA").modal("show");
-                //});
-
-                //$(".Nuevo_REG").on("click", function () {
-                //    var id_Tabla = $(this).attr("data-IdTabla");
-                //    ModalEIACUD(null, id_persona, id_Tabla);
-                //});
-
-                //var tablaProblema = $("#TListadoProblema").DataTable()
-
-                //function ModalEIACUD(id_registro, id_persona, id_Tabla) {
-
-                //    //elimino el contenido html del modal
-                //    $('#ModalEIACuerpo').html("");
-
-                //    //cargo la url que se utilizara para el armado del MODAL
-                //    //estos datos esta como atributos de las distintas tablas
-
-
-
-                //    $.ajax({
-                //        cache: false,
-                //        asyn: false,
-                //        type: "GET",
-                //        url: '/Postulante/' + url_CUD,
-                //        data: { ID: id_registro, ID_persona: id_persona },
-                //        //si no surge error al redireccionar se reemplaza el contenido de la div
-                //        success: function (response) {
-                //            $('#ModalEIACuerpo').html(response);
-
-                //            //con esto  funciona la validacion del lado del cliente con la vista parcial
-                //            $('#ModalEIACuerpo').removeData("validator");
-                //            $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
-                //            $.validator.unobtrusive.parse('#ModalEIACuerpo');
-
-                //            //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
-                //            /* https://developer.snapappointments.com/bootstrap-select/ */
-                //            $(".combobox").selectpicker({
-                //                liveSearch: true,
-                //                size: 7,
-                //                liveSearchPlaceholder: "Ingrese su busqueda",
-                //                liveSearchStyle: 'contains',//'startsWith'
-                //                noneResultsText: 'No se Encuantran Resultados',
-                //                noneSelectedText: 'Ninguna Opcion Seleccionada'
-                //            });
-
-                //        }
-                //    })
-                //}
-              
+</div>
+</div>
+@*}*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.arrayEtapas = true;
+            $(".BTAcciones").html("");
+            $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
+            $(".habil").removeAttr("disabled");
+            $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            var bloqueoSUBMIT = false;
+            $(".Agrega").on("click", function () {
+                bloqueoSUBMIT = true;
             })
-            function Exito(response) {
-                if (response.View == "Index") {
-                    window.location.href = "/Delegacion/Index"
+            $("#formularioid").on('submit', function (evt) {
+                if (bloqueoSUBMIT) {
+                    evt.preventDefault();
                 }
+                bloqueoSUBMIT = false;
+                // tu codigo aqui
+            });
+            $("#BtnDP0").click(function () {
+                $("#CheckVal0").removeAttr("hidden");
+                $("#BtnDP0").hide();
+            });
+            $("#BtnDP1").click(function () {
+                $("#CheckVal1").removeAttr("hidden");
+                $("#BtnDP1").hide();
+            });
+            $("#BtnDP2").click(function () {
+                $("#CheckVal2").removeAttr("hidden");
+                $("#BtnDP2").hide();
+            });
+            $("#BtnDP3").click(function () {
+                $("#CheckVal3").removeAttr("hidden");
+                $("#BtnDP3").hide();
+            });
+            $("#BtnDP4").click(function () {
+                $("#CheckVal4").removeAttr("hidden");
+                $("#BtnDP4").hide();
+            });
+            $("#BtnDP5").click(function () {
+                $("#CheckVal5").removeAttr("hidden");
+                $("#BtnDP5").hide();
+            });
+            $("#BtnDP6").click(function () {
+                $("#CheckVal6").removeAttr("hidden");
+                $("#BtnDP6").hide();
+            });
+            $("#BtnDP7").click(function () {
+                $("#CheckVal7").removeAttr("hidden");
+                $("#BtnDP7").hide();
+            });
+            $("#BtnDP8").click(function () {
+                $("#CheckVal8").removeAttr("hidden");
+                $("#BtnDP8").hide();
+            });
 
-                $("#BTNModal").html("Cerrar");
-                $("#GuardarDTF").css("display", "none");
-                $("#ModalCenterTitle").html("SINU:");
-                $("#TextModal").html(response.msg);
-                $("#ModalAnuncios").modal();
-                switch (response.form) {
-                    case "Elimina":
-                        $.ActualizaTabla(response.url_Tabla, response.url_Controller);
-                    case "sd":
-                        var idpostulante = $("#vPersona_DatosBasicosVM_IdPersona").val();
-                        var idPantalla = response.IdPantalla;
-                        $("#" + response.url_Tabla + response.IdPantalla).load("/" + response.url_Controller + "/" + response.url_Tabla + "?",  $.param({ IdPostulante:  idpostulante ,IdPantalla: idPantalla }), function () {
-                            $("#" + response.url_Tabla + response.IdPantalla + " table").DataTable();
-                            $("#" + response.url_Tabla + response.IdPantalla + " select").selectpicker();
-                        });
-                        break;
-                    default:
-                };
+
+            var tabla = $("#TListadoProblema").DataTable({
+                retrieve: true,
+            });
+            tabla.destroy();
+            $("#TListadoProblema").DataTable({
+                retrieve: true,
+                paging: true,
+                "autoWidth": false,
+
+                //ver si es necesario este fragmento
+                select: false,//'single',
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": [0]
+                }],
+                "ordering": false,
+                //"dom": 'frtp',
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    },
+                },
+            });
+
+            //$(".Agrega").on("click", function () {
+            //    id_registro = $(this).attr("data-ID");
+            //    id_tabla = id = $(this).closest("table").attr("ID");
+            //    //alert(id_registro+ "  " +id_tabla);
+            //    ModalEIACUD(id_registro, id_persona, id_tabla);
+            //    $("#ModalEIA").modal("show");
+            //});
+
+            //$(".Nuevo_REG").on("click", function () {
+            //    var id_Tabla = $(this).attr("data-IdTabla");
+            //    ModalEIACUD(null, id_persona, id_Tabla);
+            //});
+
+            //var tablaProblema = $("#TListadoProblema").DataTable()
+
+            //function ModalEIACUD(id_registro, id_persona, id_Tabla) {
+
+            //    //elimino el contenido html del modal
+            //    $('#ModalEIACuerpo').html("");
+
+            //    //cargo la url que se utilizara para el armado del MODAL
+            //    //estos datos esta como atributos de las distintas tablas
+
+
+
+            //    $.ajax({
+            //        cache: false,
+            //        asyn: false,
+            //        type: "GET",
+            //        url: '/Postulante/' + url_CUD,
+            //        data: { ID: id_registro, ID_persona: id_persona },
+            //        //si no surge error al redireccionar se reemplaza el contenido de la div
+            //        success: function (response) {
+            //            $('#ModalEIACuerpo').html(response);
+
+            //            //con esto  funciona la validacion del lado del cliente con la vista parcial
+            //            $('#ModalEIACuerpo').removeData("validator");
+            //            $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
+            //            $.validator.unobtrusive.parse('#ModalEIACuerpo');
+
+            //            //se aplicael selecpicker a alos conbo/s con autocomplete Y busqueda
+            //            /* https://developer.snapappointments.com/bootstrap-select/ */
+            //            $(".combobox").selectpicker({
+            //                liveSearch: true,
+            //                size: 7,
+            //                liveSearchPlaceholder: "Ingrese su busqueda",
+            //                liveSearchStyle: 'contains',//'startsWith'
+            //                noneResultsText: 'No se Encuantran Resultados',
+            //                noneSelectedText: 'Ninguna Opcion Seleccionada'
+            //            });
+
+            //        }
+            //    })
+            //}
+        })
+        function Exito(response) {
+            if (response.View == "Index") {
+                window.location.href = "/Delegacion/Index"
             }
-            function Falla(response) {
-                alert(reponse.msg)
-            }
-        </script>
-    }
+
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html(response.msg);
+            $("#ModalAnuncios").modal();
+            switch (response.form) {
+                case "Elimina":
+                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
+                    var idpostulante = $("#vPersona_DatosBasicosVM_IdPersona").val();
+                    var idPantalla = response.IdPantalla;
+                    $("#" + response.url_Tabla + response.IdPantalla).load("/" + response.url_Controller + "/" + response.url_Tabla + "?", $.param({ IdPostulante: idpostulante, IdPantalla: idPantalla }), function () {
+                        $("#" + response.url_Tabla + response.IdPantalla + " table").DataTable();
+                        $("#" + response.url_Tabla + response.IdPantalla + " select").selectpicker();
+                    });
+                    break;
+                default:
+            };
+        }
+        function Falla(response) {
+            alert(reponse.msg)
+        }
+    </script>
+}

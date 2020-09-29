@@ -352,7 +352,7 @@ namespace SINU.Controllers
             {
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string NombreArchivo = id + "_Certificado.pdf";
+                string NombreArchivo = id + "_Anexo2.pdf";
                 string Descargar = CarpetaDeGuardado + NombreArchivo;
                 bool file = System.IO.File.Exists(Descargar);
                 if (file == false)
@@ -574,7 +574,33 @@ namespace SINU.Controllers
                 throw;
             }
         }
-        //[HttpPost]
+        [HttpPost]
+        public ActionResult CerrarPantalla(int id , int IdPanatlla)
+        {
+            try
+            {
+              if (ModelState.IsValid)
+                {
+                    VerificacionPantallasCerradas verificacionPantallas = new VerificacionPantallasCerradas
+                        {
+                            IdPostulantePersona=id,
+                            IdPantalla=IdPanatlla,
+                            fechaCierre=DateTime.Now
+                        };
+             
+                    db.VerificacionPantallasCerradas.Add(verificacionPantallas);
+                    db.SaveChanges();
+                    return Json(new { success = true, msg = "Se Cerro Correctamente la pantalla" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.InnerException.Message });
+            }
+
+            return Json(new { success = false, msg = "Error en el Modelo Recibido" });
+        }
         //[ValidateAntiForgeryToken]
         //public ActionResult DataProblema([Bind(Include = "Comentario,IdPostulantePersona,IdDataVerificacion")] ProblemaEcontradoVM problemaEcontradoVM)
         //{
