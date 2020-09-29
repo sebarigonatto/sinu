@@ -1,5 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SINU.Models;
@@ -220,7 +219,13 @@ namespace SINU.Controllers
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
             model.ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre");
             model.ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst");
-
+            var DatosDelegacion2 = new List<Array>();
+            db.OficinasYDelegaciones.ToList().ForEach(m => DatosDelegacion2.Add(new object[] { m.IdOficinasYDelegaciones,
+                                                                                               m.Provincia + ", " + m.Localidad + ", " + m.Direccion,
+                                                                                               m.Telefono,
+                                                                                               m.Celular}));
+            model.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
+                
             if (ModelState.IsValid)
             {
                 try

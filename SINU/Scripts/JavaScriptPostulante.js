@@ -43,14 +43,14 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 });
 
-
+$.arrayEtapas;
 $(document).ready(function () {
     //cada vez que se modifique un input verificar su validez
 
 
 
 
-    $.arrayEtapas;
+
 
     //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
     //$.ajaxSetup({
@@ -454,7 +454,7 @@ $(document).ready(function () {
                 $(".selectpicker").selectpicker({ size: 7 });
 
                 //ver remuevo el boton de guardado
-
+                //alert($.arrayEtapas);
                 if ($.arrayEtapas) {
                     $(".BTAcciones").html("");
                     $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
