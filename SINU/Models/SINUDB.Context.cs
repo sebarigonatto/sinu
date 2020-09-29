@@ -1223,5 +1223,31 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTildarPantallaParaPostulate_Result1>("spTildarPantallaParaPostulate", idpostulantePersonaParameter);
         }
+    
+        public virtual int spCierraPantallaDePostulante(Nullable<int> idPantalla, Nullable<int> idpostulantePersona)
+        {
+            var idPantallaParameter = idPantalla.HasValue ?
+                new ObjectParameter("IdPantalla", idPantalla) :
+                new ObjectParameter("IdPantalla", typeof(int));
+    
+            var idpostulantePersonaParameter = idpostulantePersona.HasValue ?
+                new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
+                new ObjectParameter("IdpostulantePersona", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCierraPantallaDePostulante", idPantallaParameter, idpostulantePersonaParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> spTieneProblemasEnPantallaEstePostulate(Nullable<int> idpostulantePersona, Nullable<int> idPantalla)
+        {
+            var idpostulantePersonaParameter = idpostulantePersona.HasValue ?
+                new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
+                new ObjectParameter("IdpostulantePersona", typeof(int));
+    
+            var idPantallaParameter = idPantalla.HasValue ?
+                new ObjectParameter("IdPantalla", idPantalla) :
+                new ObjectParameter("IdPantalla", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("spTieneProblemasEnPantallaEstePostulate", idpostulantePersonaParameter, idPantallaParameter);
+        }
     }
 }
