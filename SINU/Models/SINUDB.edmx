@@ -517,6 +517,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" />
           <Property Name="Edad_a_fecha" Type="date" StoreGeneratedPattern="Computed" />
           <Property Name="IdResGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AlturaMinF" Type="int" />
+          <Property Name="AlturaMinM" Type="int" />
+          <Property Name="IMC_min" Type="int" />
+          <Property Name="IMC_max" Type="int" />
         </EntityType>
         <EntityType Name="Secuencia_EtapaEstado">
           <Key>
@@ -5253,6 +5257,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Edad_a_fecha" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="0" />
           <Property Name="IdResGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="GrupoCarrOficio" Relationship="SINUModel.GrupoCarrOficioResGrupo" FromRole="ResGrupo" ToRole="GrupoCarrOficio" />
+          <Property Name="AlturaMinF" Type="Int32" />
+          <Property Name="AlturaMinM" Type="Int32" />
+          <Property Name="IMC_min" Type="Int32" />
+          <Property Name="IMC_max" Type="Int32" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="SINUModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -6824,6 +6832,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="ResGrupo">
             <EntityTypeMapping TypeName="SINUModel.ResGrupo">
               <MappingFragment StoreEntitySet="ResGrupo">
+                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
+                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
+                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
+                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
                 <ScalarProperty Name="IdResGrupo" ColumnName="IdResGrupo" />
                 <ScalarProperty Name="Edad_a_fecha" ColumnName="Edad_a_fecha" />
                 <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />

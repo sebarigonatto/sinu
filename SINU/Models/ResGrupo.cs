@@ -29,6 +29,10 @@ namespace SINU.Models
         public string IdEstadoCivil { get; set; }
         public Nullable<System.DateTime> Edad_a_fecha { get; set; }
         public int IdResGrupo { get; set; }
+        public Nullable<int> AlturaMinF { get; set; }
+        public Nullable<int> AlturaMinM { get; set; }
+        public Nullable<int> IMC_min { get; set; }
+        public Nullable<int> IMC_max { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GrupoCarrOficio> GrupoCarrOficio { get; set; }
