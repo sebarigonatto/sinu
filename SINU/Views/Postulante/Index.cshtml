@@ -187,6 +187,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 2 })
+                                        }
                                         @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
 
@@ -203,6 +207,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[2])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 3 })
+                                        }
                                         @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
 
                                     </div>
@@ -220,6 +228,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 4 })
+                                        }
                                         @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
 
                                     </div>
@@ -238,6 +250,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 5 })
+                                        }
                                         @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>
@@ -253,6 +269,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 6 })
+                                        }
                                         @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>
@@ -268,6 +288,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 7 })
+                                        }
                                         @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>
@@ -283,6 +307,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 8 })
+                                        }
                                         @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>
@@ -298,6 +326,10 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[8])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        {
+                                            @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 9 })
+                                        }
                                         @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
                                     </div>
                                 </div>

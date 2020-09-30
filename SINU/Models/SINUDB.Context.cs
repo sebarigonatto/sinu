@@ -1107,7 +1107,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraOficio>("CarrerasDelGrupo", mergeOption, idGrupoCarrOficioParameter, personalParameter);
         }
     
-        public virtual int spGrupoYAgrupacionCarreras(string nuevoIdGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio, Nullable<bool> esInsert, string originalIdGrupoCarrOficio, ObjectParameter mensaje)
+        public virtual int spGrupoYAgrupacionCarreras(string nuevoIdGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio, Nullable<int> idResGrupo, Nullable<bool> esInsert, string originalIdGrupoCarrOficio, ObjectParameter mensaje)
         {
             var nuevoIdGrupoCarrOficioParameter = nuevoIdGrupoCarrOficio != null ?
                 new ObjectParameter("NuevoIdGrupoCarrOficio", nuevoIdGrupoCarrOficio) :
@@ -1125,6 +1125,10 @@ namespace SINU.Models
                 new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
                 new ObjectParameter("IdCarreraOficio", typeof(string));
     
+            var idResGrupoParameter = idResGrupo.HasValue ?
+                new ObjectParameter("IdResGrupo", idResGrupo) :
+                new ObjectParameter("IdResGrupo", typeof(int));
+    
             var esInsertParameter = esInsert.HasValue ?
                 new ObjectParameter("EsInsert", esInsert) :
                 new ObjectParameter("EsInsert", typeof(bool));
@@ -1133,10 +1137,10 @@ namespace SINU.Models
                 new ObjectParameter("OriginalIdGrupoCarrOficio", originalIdGrupoCarrOficio) :
                 new ObjectParameter("OriginalIdGrupoCarrOficio", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spGrupoYAgrupacionCarreras", nuevoIdGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter, esInsertParameter, originalIdGrupoCarrOficioParameter, mensaje);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spGrupoYAgrupacionCarreras", nuevoIdGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter, idResGrupoParameter, esInsertParameter, originalIdGrupoCarrOficioParameter, mensaje);
         }
     
-        public virtual int spPGrupoYAgrupacionCrreras(string nuevoIdGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio, Nullable<bool> esInsert, string originalIdGrupoCarrOficio, ObjectParameter mensaje)
+        public virtual int spPGrupoYAgrupacionCrreras(string nuevoIdGrupoCarrOficio, string personal, string descripcion, string idCarreraOficio, Nullable<int> idResGrupo, Nullable<bool> esInsert, string originalIdGrupoCarrOficio, ObjectParameter mensaje)
         {
             var nuevoIdGrupoCarrOficioParameter = nuevoIdGrupoCarrOficio != null ?
                 new ObjectParameter("NuevoIdGrupoCarrOficio", nuevoIdGrupoCarrOficio) :
@@ -1154,6 +1158,10 @@ namespace SINU.Models
                 new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
                 new ObjectParameter("IdCarreraOficio", typeof(string));
     
+            var idResGrupoParameter = idResGrupo.HasValue ?
+                new ObjectParameter("IdResGrupo", idResGrupo) :
+                new ObjectParameter("IdResGrupo", typeof(int));
+    
             var esInsertParameter = esInsert.HasValue ?
                 new ObjectParameter("EsInsert", esInsert) :
                 new ObjectParameter("EsInsert", typeof(bool));
@@ -1162,7 +1170,7 @@ namespace SINU.Models
                 new ObjectParameter("OriginalIdGrupoCarrOficio", originalIdGrupoCarrOficio) :
                 new ObjectParameter("OriginalIdGrupoCarrOficio", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPGrupoYAgrupacionCrreras", nuevoIdGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter, esInsertParameter, originalIdGrupoCarrOficioParameter, mensaje);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spPGrupoYAgrupacionCrreras", nuevoIdGrupoCarrOficioParameter, personalParameter, descripcionParameter, idCarreraOficioParameter, idResGrupoParameter, esInsertParameter, originalIdGrupoCarrOficioParameter, mensaje);
         }
     
         public virtual ObjectResult<spCarrerasParaEsteInscripto_Result2> spCarrerasParaEsteInscripto(Nullable<int> idInscripcion, string idModalidad)

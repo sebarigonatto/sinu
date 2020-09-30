@@ -2216,6 +2216,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Personal" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="IdCarreraOficio" Type="varchar" Mode="In" />
+          <Parameter Name="IdResGrupo" Type="int" Mode="In" />
           <Parameter Name="EsInsert" Type="bit" Mode="In" />
           <Parameter Name="OriginalIdGrupoCarrOficio" Type="varchar" Mode="In" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
@@ -4769,6 +4770,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="IdResGrupo" Mode="In" Type="Int32" />
             <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
             <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
@@ -4778,6 +4780,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="IdResGrupo" Mode="In" Type="Int32" />
             <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
             <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />

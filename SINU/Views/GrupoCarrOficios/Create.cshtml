@@ -111,7 +111,10 @@
                     <td>
                         @item.EstadoCivil
                     </td>
-                    <td>@Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)</td>
+                    <td>
+                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)
+                        @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })               
+                    </td>
                 </tr>
             }
         </tbody>
