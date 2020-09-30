@@ -224,7 +224,6 @@
         padding-right: 5px !important
     }
 </style>
-
 <h1>@Model.ID_PER IDpostulante</h1>
 
 <section id="ContieneTabs">
@@ -515,45 +514,12 @@
 
 
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
 
-        //VER COMO ANEJAR LO DELOS CAMBIOS DE UN CAMPO Y NO SE LO ALLAS GUARDADO
 
-        //var select = [];
-        //$(document).ready( function () {
-        //    $("input, select").change(function () {
-        //        //alert("se modifico un campo de carga de datos!!!" + $(this).attr("id") + select.length);
-        //        var id_form_elemento = [$(this).closest("form").attr("id"),$(this).attr("id")];
-        //        select.push(id_form_elemento)
-        //    });
-        //});
-
-
-        //    $(window).unbind().bind('beforeunload', (e) => {
-        //        if (select.length>0) {
-        //            MarcaCambios();
-        //        return true;
-        //        }
-        //        return;
-        //    });
-
-
-        //    function MarcaCambios() {
-        //        $.each(select, function (e,i) {
-        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
-        //            $("#" + i[1]).addClass("cambio").focus();
-        //        });
-        //    };
-
-        //    $("#jeje").click(function () {
-        //        $.each(select, function (e,i) {
-        //            //alert(e + "  ---  " + i[0] + "---" + i[1]);
-        //        });
-        //    });
 
         $(document).ready(function () {
             var IDETP

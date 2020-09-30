@@ -370,10 +370,12 @@ $(document).ready(function () {
         //guardo el index de la fila seleccionada
         //se llama al modal y se le envia la id de estudio correspondiete
 
-        $(".Edita").not(".NoModal").on("click", function () {
+        $(".Edita").not(".NoModal").on("click", function (e) {
+            e.preventDefault();
             id_registro = $(this).attr("data-ID");
             id_tabla = id = $(this).closest("table").attr("ID");
             //alert(id_registro+ "  " +id_tabla); 
+            $.arrayEtapas = $(this).hasClass("fa-eye");
             ModalEIACUD(id_registro, id_persona, id_tabla);
             $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
         });
@@ -456,9 +458,9 @@ $(document).ready(function () {
                 //ver remuevo el boton de guardado
                 //alert($.arrayEtapas);
                 if ($.arrayEtapas) {
-                    $(".BTAcciones").html("");
-                    $("#ModalEIACuerpo :input,#TabDocumentacion input").attr("disabled", "true");
-                    $(".BTMuestraTable :input").removeAttr("disabled");
+                    $("#ModalEIACuerpo .BTAcciones").html("");
+                    $("#ModalEIACuerpo :input,#ModalEIACuerpo input").not("button").attr("disabled", "true");
+                    //$("#ModalEIACuerpo .BTMuestraTable :input").removeAttr("disabled");
                 }
 
                 $(".Habilitar :input, .Habilitar input").removeAttr("disabled");

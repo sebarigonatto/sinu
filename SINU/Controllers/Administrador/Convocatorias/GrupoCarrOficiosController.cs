@@ -130,46 +130,27 @@ public ActionResult Edit(string id)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
-
-            string idCArreras2 = grupoCarrOficio.Personal;
-            //List<spCarrerasDelGrupo_Result> lst = new List<spCarrerasDelGrupo_Result>();
-            //lst = db.spCarrerasDelGrupo(id, idCArreras2).ToList();
-            List<CarreraOficio> lst = new List<CarreraOficio>();
-            List<CarreraOficio> lstCarreras2 = new List<CarreraOficio>();
-            lst = db.CarreraOficio.ToList();
-            //prueba de viewbag enviando carreras a otro tipo de modelo
-            ViewBag.Carreras = lst;
-            for (int i = 0; i < lst.Count; i++)
-            {
-                if (lst[i].Personal == idCArreras2)
-                {
-                    CarreraOficio itemlst = new CarreraOficio { CarreraUoficio = lst[i].CarreraUoficio, IdCarreraOficio = lst[i].IdCarreraOficio };
-                    lstCarreras2.Add(itemlst);
-                    
-                }
-            }
-
-            //CheckBoxes li = new CheckBoxes { Text = NuevogrupocarroficioVM.Carreras2[i].CarreraUoficio, Value = NuevogrupocarroficioVM.Carreras2[i].IdCarreraOficio };
-            //NuevogrupocarroficioVM.Carreras3.Add(li);
-
             if (grupoCarrOficio == null)
             {
                 return HttpNotFound();
             }
+            List<CarreraOficio> lst = new List<CarreraOficio>();
+            lst = db.CarreraOficio.ToList();            
+            ViewBag.Carreras = lst;                       
             GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm {
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
                 IdGCOOriginal=grupoCarrOficio.IdGrupoCarrOficio,
                 Personal = grupoCarrOficio.Personal,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
-                Carreras2 = lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
+                Carreras2 = lst.Where(m => m.Personal == grupoCarrOficio.Personal).ToList()//lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
         };          
             //creo lista para compara y marcar como checkeada
             NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
                     //cargo la lista que se va a mostrar checkeada
             for (int i = 0; i < NuevogrupocarroficioVM.Carreras2.Count(); i++)
             {
-                //ListItem li = new ListItem(value, value);
+                
                 CheckBoxes li = new CheckBoxes { Text = NuevogrupocarroficioVM.Carreras2[i].CarreraUoficio, Value = NuevogrupocarroficioVM.Carreras2[i].IdCarreraOficio };
                 NuevogrupocarroficioVM.Carreras3.Add(li);
                     
@@ -207,7 +188,7 @@ public ActionResult Edit(string id)
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal")] GrupoCarrOficiosvm grupoCarrOficiovm)
         {
-            //grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
+            
             string stgCarreras = "";
             try
             {
@@ -249,7 +230,7 @@ public ActionResult Edit(string id)
                     {
                         case string a when a.Contains("Exito"):
                             return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() });
-                        //write "<div>Custom Value 1</div>"
+                        
                         case string a when a.Contains("Error"):
                             {
                                 grupoCarrOficiovm.Carreras2 = db.CarreraOficio.ToList();
@@ -279,12 +260,10 @@ public ActionResult Edit(string id)
                         }
                     }                 
                     grupoCarrOficiovm.Carreras2 = lstCarreras2.ToList();
-                    //prueba de carrera 3
                     grupoCarrOficiovm.Carreras3 = new List<CheckBoxes>();
                     //cargo la lista que se va a mostrar checkeada
                     for (int i = 0; i < grupoCarrOficiovm.Carreras2.Count(); i++)
-                    {
-                        //ListItem li = new ListItem(value, value);
+                    {                       
                         CheckBoxes li = new CheckBoxes { Text = grupoCarrOficiovm.Carreras2[i].CarreraUoficio, Value = grupoCarrOficiovm.Carreras2[i].IdCarreraOficio };
                         grupoCarrOficiovm.Carreras3.Add(li);
 
