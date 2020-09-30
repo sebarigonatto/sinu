@@ -522,6 +522,7 @@
                     if (!item[1]) {
                         //alert("cerrado");
                         $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
+                        //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
                         $("#" + item[0] + "NAV .BTAcciones").html("");
                         $("#" + item[0] + "NAV :input"/*," + item[1] + " input"*/).not(".Edita").attr("disabled", "true");
                         $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
@@ -531,16 +532,18 @@
                         $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>"+item[2]+"</i>");
                     }
                 });
+            };
 
-            }
 
+
+             
 
         });
 
         //en caso de ser exitosa la llamada al controlador
         function Exito(response, status, xhr) {
 
-            $("#BTNModal").html("Cerrar");
+            $("#BTNModal").html("Cerrar");  
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);

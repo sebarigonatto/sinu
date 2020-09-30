@@ -1138,6 +1138,8 @@ namespace SINU.Controllers
                 {
                     var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                     EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
+                    //le coloco 5 por si la pantalla esta cerrada
+                    if(!(bool)db.spTildarPantallaParaPostulate(idPostulante).FirstOrDefault(m=>m.IdPantalla==9).Abierta) pers.IDETAPA += "5,";
                 }
                 else
                 {
