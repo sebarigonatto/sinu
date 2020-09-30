@@ -2134,6 +2134,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdInscripcion" Type="int" Mode="In" />
           <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="spCierraPantallaDePostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPantalla" Type="int" Mode="In" />
+          <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
+        </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -2290,6 +2294,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Oficio" Type="varchar" Mode="In" />
           <Parameter Name="AniosTrabajados" Type="int" Mode="In" />
           <Parameter Name="DomicilioLaboral" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="spTieneProblemasEnPantallaEstePostulate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
+          <Parameter Name="IdPantalla" Type="int" Mode="In" />
         </Function>
         <Function Name="spTildarPantallaParaPostulate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
@@ -4821,6 +4829,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spTildarPantallaParaPostulate" ReturnType="Collection(SINUModel.spTildarPantallaParaPostulate_Result1)">
           <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="spCierraPantallaDePostulante">
+            <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
+            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spTieneProblemasEnPantallaEstePostulate" ReturnType="Collection(Boolean)">
+            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -7100,6 +7116,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCierraPantallaDePostulante" FunctionName="SINUModel.Store.spCierraPantallaDePostulante" />
+          <FunctionImportMapping FunctionImportName="spTieneProblemasEnPantallaEstePostulate" FunctionName="SINUModel.Store.spTieneProblemasEnPantallaEstePostulate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
