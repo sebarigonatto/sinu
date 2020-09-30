@@ -100,8 +100,9 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 string stgCarreras = String.Join(",", grupoCarrOficiovm.SelectedIDs);
                 grupoCarrOficiovm.Esinsert = true;
+                
                 db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio, grupoCarrOficiovm.Personal,
-                  grupoCarrOficiovm.Descripcion, stgCarreras, grupoCarrOficiovm.Esinsert,
+                  grupoCarrOficiovm.Descripcion, stgCarreras,grupoCarrOficiovm.IdResGrupo, grupoCarrOficiovm.Esinsert,
                   grupoCarrOficiovm.IdGCOOriginal, ObjMensaje);
                 //aca debo MANIPULAR al MensajeDevuelto.Value.ToString()
                 String mens = ObjMensaje.Value.ToString();
@@ -238,7 +239,7 @@ public ActionResult Edit(string id)
                 {
                     db.spGrupoYAgrupacionCarreras(grupoCarrOficiovm.IdGrupoCarrOficio,
                         grupoCarrOficiovm.Personal, grupoCarrOficiovm.Descripcion,
-                        stgCarreras, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal,
+                        stgCarreras, grupoCarrOficiovm.IdResGrupo, grupoCarrOficiovm.Esinsert, grupoCarrOficiovm.IdGCOOriginal,
                         ObjMensaje);
 
 

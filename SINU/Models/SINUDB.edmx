@@ -2212,6 +2212,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Personal" Type="varchar" Mode="In" />
           <Parameter Name="Descripcion" Type="varchar" Mode="In" />
           <Parameter Name="IdCarreraOficio" Type="varchar" Mode="In" />
+          <Parameter Name="IdResGrupo" Type="int" Mode="In" />
           <Parameter Name="EsInsert" Type="bit" Mode="In" />
           <Parameter Name="OriginalIdGrupoCarrOficio" Type="varchar" Mode="In" />
           <Parameter Name="Mensaje" Type="varchar" Mode="InOut" />
@@ -4761,6 +4762,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="IdResGrupo" Mode="In" Type="Int32" />
             <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
             <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
@@ -4770,6 +4772,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Personal" Mode="In" Type="String" />
             <Parameter Name="Descripcion" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="String" />
+            <Parameter Name="IdResGrupo" Mode="In" Type="Int32" />
             <Parameter Name="EsInsert" Mode="In" Type="Boolean" />
             <Parameter Name="OriginalIdGrupoCarrOficio" Mode="In" Type="String" />
             <Parameter Name="Mensaje" Mode="InOut" Type="String" />
@@ -4816,7 +4819,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vRestriccionesGrupo" EntityType="SINUModel.vRestriccionesGrupo" />
           <EntitySet Name="vRestriccionesGrupoLista" EntityType="SINUModel.vRestriccionesGrupoLista" />
           <FunctionImport Name="spTildarPantallaParaPostulate" ReturnType="Collection(SINUModel.spTildarPantallaParaPostulate_Result1)">
-            <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+          <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
