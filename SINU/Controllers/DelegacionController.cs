@@ -7,6 +7,8 @@ using SINU.ViewModels;
 using System.Threading.Tasks;
 using System;
 using System.IO;
+using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
 
 namespace SINU.Controllers
 {
@@ -292,7 +294,10 @@ namespace SINU.Controllers
             personaVM.ID_PER = id;
             personaVM.NomyApe = NyA;
 
-
+            var PantallasEstadoProblemas = new List<Array>();
+            db.spTildarPantallaParaPostulate(personaVM.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+            personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
+            ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
             return View(personaVM);
         }

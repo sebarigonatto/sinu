@@ -486,43 +486,20 @@
                 bloqueoSUBMIT = false;
                 // tu codigo aqui
             });
-            $("#BtnDP0").click(function () {
-                $("#CheckVal0").removeAttr("hidden");
-                $("#BtnDP0").hide();
-            });
-            $("#BtnDP1").click(function () {
-                $("#CheckVal1").removeAttr("hidden");
-                $("#BtnDP1").hide();
-            });
-            $("#BtnDP2").click(function () {
-                $("#CheckVal2").removeAttr("hidden");
-                $("#BtnDP2").hide();
-            });
-            $("#BtnDP3").click(function () {
-                $("#CheckVal3").removeAttr("hidden");
-                $("#BtnDP3").hide();
-            });
-            $("#BtnDP4").click(function () {
-                $("#CheckVal4").removeAttr("hidden");
-                $("#BtnDP4").hide();
-            });
-            $("#BtnDP5").click(function () {
-                $("#CheckVal5").removeAttr("hidden");
-                $("#BtnDP5").hide();
-            });
-            $("#BtnDP6").click(function () {
-                $("#CheckVal6").removeAttr("hidden");
-                $("#BtnDP6").hide();
-            });
-            $("#BtnDP7").click(function () {
-                $("#CheckVal7").removeAttr("hidden");
-                $("#BtnDP7").hide();
-            });
-            $("#BtnDP8").click(function () {
-                $("#CheckVal8").removeAttr("hidden");
-                $("#BtnDP8").hide();
-            });
-
+                        //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla
+                var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
+                var jsonProblemas = JSON.parse(Problemas);
+                $.each(jsonProblemas, function (index, item) {
+                    //alert(item[1]);
+                    if (!item[1]) {
+                        //alert("cerrado");
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
+                    } else if (item[2]=="0") {
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
+                    } else {
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>"+item[2]+"</i>");
+                    }
+                });
 
             var tabla = $("#TListadoProblema").DataTable({
                 retrieve: true,
