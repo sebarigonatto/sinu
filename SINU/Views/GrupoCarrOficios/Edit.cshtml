@@ -120,7 +120,7 @@
                     }
                     else
                     {
-                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo, htmlAttributes: new { @checked = false })
+                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)
                     }
                     @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })
                 </td>
