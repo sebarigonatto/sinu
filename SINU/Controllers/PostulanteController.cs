@@ -1082,6 +1082,33 @@ namespace SINU.Controllers
 
         }
 
+        //public JsonResult VerificaAltIcm(int IdPostulante,string AltIcm,int num)
+        //{
+        //    try
+        //    {
+
+        //        var IdConvocatoria = db.Postulante.Find(IdPostulante).Inscripcion.;    
+        //        switch (AltIcm)
+        //        {
+        //            case "Altura":
+                         
+        //                break;
+        //            case "ICM":
+
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        return Json(new { SI = true });
+
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
 
 
@@ -1091,6 +1118,7 @@ namespace SINU.Controllers
             try
             {
                 //List<int> id_PER_FAMI = db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).Select(m => m.IdPersona).ToList();
+                //List<vPersona_Familiar> FAMILIARES = db.vPersona_Familiar.Where(i => i.IdPersonaPostulante == ID_persona).ToList();
                 var FAMI = db.Familiares.Where(id => id.IdPostulantePersona == ID_persona).ToList();
                 List<vPersona_Familiar> FAMILIARES = new List<vPersona_Familiar>();
                 FAMI.ForEach(f =>

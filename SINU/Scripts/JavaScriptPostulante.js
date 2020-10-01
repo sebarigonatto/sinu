@@ -1,4 +1,5 @@
-﻿//configuraciones por default de las DataTables
+﻿
+//configuraciones por default de las DataTables
 $.extend(true, $.fn.dataTable.defaults, {
     responsive:
     {
@@ -17,6 +18,7 @@ $.extend(true, $.fn.dataTable.defaults, {
     "dom": 'frt',
     "language":
     {
+        "searchPlaceholder": "Ingrese su Busqueda",
         "sProcessing": "Procesando...",
         "sLengthMenu": "Mostrar _MENU_ registros",
         "sZeroRecords": "No se encontraron resultados",
@@ -43,19 +45,9 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 });
 
-$.arrayEtapas;
+$.BloqueoPantalla;
+$.Delegacion=false;
 $(document).ready(function () {
-    //cada vez que se modifique un input verificar su validez
-
-
-
-
-
-
-    //ver esto ya que en el navegador aparece UNA aadvertencia relacionado si es asincronico o sincronico
-    //$.ajaxSetup({
-    //    async: false
-    //});
 
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
     var id_persona
@@ -109,9 +101,12 @@ $(document).ready(function () {
         edadMAXMIN($("#edad").val());
     }
 
-    if ($("#fechacumpleaños").val()!= "") {
-        ActualizarINStDatosBasicos();
+    if (($("#fechacumpleaños").val() != "")) {
+        if (!($.Delegacion)) ActualizarINStDatosBasicos(); 
+
+        
     }
+
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
@@ -153,7 +148,7 @@ $(document).ready(function () {
                 IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
                 Fecha: $("#fechacumpleaños").val()
 
-            },                                                                                                                                                                                                                                                                           
+            },
             function (data) {
 
                 var idselect = $("#InstitutoPref").val();
@@ -177,7 +172,7 @@ $(document).ready(function () {
 
             })
     }
-    
+
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         ComoSeEntero();
@@ -352,6 +347,7 @@ $(document).ready(function () {
                 function (data) {
                     //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
                     $(ComboCP).val(data.Text);
+                    ValidInput($(ComboCP).attr("name"));
                 });
             ////para actualizar el combobox
         }
@@ -375,23 +371,11 @@ $(document).ready(function () {
             id_registro = $(this).attr("data-ID");
             id_tabla = id = $(this).closest("table").attr("ID");
             //alert(id_registro+ "  " +id_tabla); 
-            $.arrayEtapas = $(this).hasClass("fa-eye");
+            $.BloqueoPantalla = $(this).hasClass("fa-eye");
             ModalEIACUD(id_registro, id_persona, id_tabla);
             $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
         });
 
-
-        //Tabla.on('select.dt', function (e, dt, type, index) {
-        //    var id_Tabla = $(this).attr("id");
-        //    //solo utilizo modal para las que no tengan el id TABLAFAMILIA
-        //    if (id_Tabla != "TablaFamilia") {
-        //        var data = dt.rows(index).data();
-        //        var id_registro = data[0][0];
-        //        //llamo a la funcion para mostrar el modal y le envio 2 paremtros
-        //        ModalEIACUD(id_registro, id_persona, id_Tabla);
-        //        $("#ModalEIA").modal("show");
-        //    };
-        //});
     };
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
@@ -456,10 +440,10 @@ $(document).ready(function () {
                 $(".selectpicker").selectpicker({ size: 7 });
 
                 //ver remuevo el boton de guardado
-                //alert($.arrayEtapas);
-                if ($.arrayEtapas) {
+                //alert($.BloqueoPantalla);
+                if ($.BloqueoPantalla) {
                     $("#ModalEIACuerpo .BTAcciones").html("");
-                    $("#ModalEIACuerpo :input,#ModalEIACuerpo input").not("button").attr("disabled", "true");
+                    $("#ModalEIACuerpo :input,#ModalEIACuerpo input").not("[data-dismiss='modal']").attr("disabled", "true");
                     //$("#ModalEIACuerpo .BTMuestraTable :input").removeAttr("disabled");
                 }
 
@@ -539,12 +523,24 @@ $(document).ready(function () {
                         });
                     } else {
                         $(form_actual).submit();
+
                     };
 
                 });
 
                 $("select").on("changed.bs.select", function () {
                     $(this).valid();
+                });
+
+                $(":input").on('change', function (e) {
+                    ValidInput($(this).attr('name'));
+                });
+
+                //valido cada input al ser crgado
+                $("form").on("submit", function () {
+                    //alert($(this).attr("id"));
+                    ValidForm("#" + $(this).attr("id"));
+
                 });
             },
 
@@ -787,43 +783,6 @@ $(document).ready(function () {
         });
     });
 
-    //////////////////////////////////////////////  DATOS BASICOS CONTROL DE EDAD //////////////////////////////////////////////////////////////////////////
-    //$("#DatosBasicosBTGuarda").on("click", function () {
-    //    var valido = $("#BeginFormDatosBasicos").valid();
-    //    //alert(valido);
-    //    if (!valido) {
-    //        $("#BeginFormDatosBasicos").submit();
-    //    } else {
-    //        alert($("#vPersona_DatosBasicosVM_IdPostulante").val() + "   " + $("#edad").val());
-    //        $.getJSON('/Postulante/EdadInstituto', {
-    //            IdPOS: $("#vPersona_DatosBasicosVM_IdPostulante").val(),
-    //            edad: $("#edad").val(),
-    //            Fecha: $("#fechacumpleaños").val(),
-    //            grupoCarreraOficio: $("#vPersona_DatosBasicosVM_IdGrupoCarreraOficio").val()
-    //        },
-    //            function (response) {
-    //                //alert(response.coherencia);
-    //                if (response.coherencia) {
-    //                    $("#BeginFormDatosBasicos").submit();
-    //                } else {
-
-    //                    //Datos Basicos control de edad si es valido para la inscripcion a la que quiere inscribirse
-    //                    $("#BTNModal").html("Cancelar");
-    //                    $("#ModalCenterTitle").html("Advertencia");
-    //                    $("#GuardarDTF").css("display", "block");
-    //                    $("#TextModal").html("La EDAD ingresado supera la permitida para el Instituto a Inscribirse Seleccionado.");
-    //                    $("#ModalAnuncios").modal();
-    //                };
-    //            });
-    //    };
-    //});
-
-
-    //$("#GuardarDTF").on("click", function (e) {
-    //    e.preventDefault;
-    //    e.stopImmediatePropagation();
-    //    $("#BeginFormDatosBasicos").submit();
-    //});
 
 
     //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
@@ -853,3 +812,49 @@ $(document).ready(function () {
 
 
 });
+
+//manejo de formy subrayado de si estasn validos o no 
+$(":input").on('change', function (e) {
+    if ($(this).val() != "") {
+        ValidInput($(this).attr('name'));
+
+    }
+})
+
+//valido cada input al ser crgado
+$("form").on("submit", function () {
+    //alert($(this).attr("id"));
+    ValidForm("#" + $(this).attr("id"));
+
+});
+
+function ValidForm(idForm) {
+    list = $(idForm + " :input").not("[type='hidden']").serializeArray();
+    if ($(idForm).valid()) {
+        $(idForm + " :input").not(".selecpicker, .combobox, [type='submit']").css("border-bottom", "2px solid #08495f");
+        $(idForm + " :input").next("button[role='combobox']").removeClass("BTNotValid BTValid");
+    } else {
+        $.each(list, function (index, item) {
+            nameas = item["name"];
+            if (!$(idForm + " [name='" + item["name"] + "']").valid()) {
+                //alert($.type((idForm + " [name='" + item["name"] + "']")))
+                $("[name='" + item["name"] + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
+                $("select[name='" + item["name"] + "']").next("button[role='combobox']").addClass("BTNotValid");
+            };
+        })
+    }
+}
+
+function ValidInput(nameInput) {
+    idForm = "#" + $("[name = '" + nameInput + "']").closest("form").attr("id");
+    //alert(idForm)
+    if (!$(idForm + " [name='" + nameInput + "']").valid()) {
+        //alert($.type((idForm + " [name='" + item["name"] + "']")))
+        $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
+        $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTValid").addClass("BTNotValid");
+    } else {
+        $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #28a745");
+        $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTNotValid").addClass("BTValid");
+
+    }
+}

@@ -117,6 +117,7 @@ namespace SINU.Models
         public virtual DbSet<TipoPersonal> TipoPersonal { get; set; }
         public virtual DbSet<vRestriccionesGrupo> vRestriccionesGrupo { get; set; }
         public virtual DbSet<vRestriccionesGrupoLista> vRestriccionesGrupoLista { get; set; }
+        public virtual DbSet<vGruposYCarreras> vGruposYCarreras { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

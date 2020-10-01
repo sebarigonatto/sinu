@@ -26,5 +26,9 @@ namespace SINU.Models
         public string IdEstadoCivil { get; set; }
         public int IdConvocatoria { get; set; }
         public string NombreInst { get; set; }
+        public Nullable<int> AlturaMinF { get; set; }
+        public Nullable<int> AlturaMinM { get; set; }
+        public Nullable<int> IMC_min { get; set; }
+        public Nullable<int> IMC_max { get; set; }
     }
 }

@@ -68,7 +68,7 @@ new { id = "BeginFormActMilitarCUD" }))
                             <div class="form-group si ">
                                 @Html.LabelFor(model => model.ACTMilitarIDVM.FechaIngreso, htmlAttributes: new { @class = "control-label col-md-6 " })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaIngreso, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true })
+                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaIngreso, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @placeholder="dd/mm/yyyy" })
 
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.FechaIngreso, "", new { @class = "text-danger" })
                                 </div>
@@ -76,7 +76,7 @@ new { id = "BeginFormActMilitarCUD" }))
                             <div class="form-group si">
                                 @Html.LabelFor(model => model.ACTMilitarIDVM.FechaBaja, htmlAttributes: new { @class = "control-label col-md-6" })
                                 <div class="col-md-12">
-                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaBaja, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true })
+                                    @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaBaja, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @placeholder = "dd/mm/yyyy"  })
 
                                     @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.FechaBaja, "", new { @class = "text-danger" })
                                 </div>

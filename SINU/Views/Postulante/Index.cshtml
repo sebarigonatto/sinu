@@ -436,6 +436,15 @@
     </div>
 </div>
 
+@*<br />
+    @Ajax.ActionLink("asd", "VerificaAltIcm","Postulante",new { IdPostulante= Model.ID_PER, AltIcm= "Altura", num=150},new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "Exito(data,status,xhr)",
+        OnFailure = "Falla"
+    }, new { @class = "btn btn-success" })
+<br />*@
+
 
 
 
@@ -465,7 +474,7 @@
                 if (IDETP[IDETP.length - 1] != item[0] ||"@ViewBag.ValidacionEnCurso" == "True") {
                     BloqueaPantalla(item[1]);
                     if ("@ViewBag.ValidacionEnCurso" == "True") {
-                        $.arrayEtapas = true;
+                        $.BloqueoPantalla = true;
                     }
                 }
             })
@@ -567,7 +576,7 @@
                     break;
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
-                    $.arrayEtapas = true;
+                    $.BloqueoPantalla = true;
                     $("#TABDocumentacion i").remove();
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden","true");

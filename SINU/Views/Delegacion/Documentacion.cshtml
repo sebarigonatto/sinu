@@ -469,12 +469,15 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
+        $.Delegacion = true;
+
         $(document).ready(function () {
-            $.arrayEtapas = true;
+            $.BloqueoPantalla = true;
             $(".BTAcciones").html("");
             $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
+
             $(".habil").removeAttr("disabled");
-            $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
+            $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").not("[role='combobox']").removeClass("fa-edit").addClass("fa-eye");
             var bloqueoSUBMIT = false;
             $(".Agrega").on("click", function () {
                 bloqueoSUBMIT = true;

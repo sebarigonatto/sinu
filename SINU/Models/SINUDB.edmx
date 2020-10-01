@@ -743,6 +743,29 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vGruposYCarreras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vGruposYCarreras">
+          <Key>
+            <PropertyRef Name="EstadoCivil" />
+          </Key>
+          <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Personal" Type="varchar" MaxLength="2" />
+          <Property Name="CarreraUoficio" Type="varchar" MaxLength="100" />
+          <Property Name="Pers" Type="varchar" MaxLength="2" />
+          <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="EdadMinCAutoriz" Type="int" />
+          <Property Name="EdadMin" Type="int" />
+          <Property Name="EdadMax" Type="int" />
+          <Property Name="Edad_a_fecha" Type="date" />
+          <Property Name="AlturaMinF" Type="int" />
+          <Property Name="AlturaMinM" Type="int" />
+          <Property Name="IMC_min" Type="int" />
+          <Property Name="IMC_max" Type="int" />
+          <Property Name="EstadoCivil" Type="varchar" MaxLength="112" Nullable="false" />
+          <Property Name="IdResGrupo" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionDetalle">
           <Key>
@@ -1213,16 +1236,20 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupo' no tiene defin
             <PropertyRef Name="EdadMin" />
             <PropertyRef Name="EdadMax" />
             <PropertyRef Name="EstadoCivil" />
-            <PropertyRef Name="IdResGrupo" />
             <PropertyRef Name="IdEstadoCivil" />
+            <PropertyRef Name="IdResGrupo" />
           </Key>
           <Property Name="EdadMinCAutoriz" Type="int" Nullable="false" />
           <Property Name="EdadMin" Type="int" Nullable="false" />
           <Property Name="EdadMax" Type="int" Nullable="false" />
           <Property Name="Edad_a_fecha" Type="date" />
           <Property Name="EstadoCivil" Type="varchar" MaxLength="112" Nullable="false" />
-          <Property Name="IdResGrupo" Type="int" Nullable="false" />
+          <Property Name="AlturaMinF" Type="int" />
+          <Property Name="AlturaMinM" Type="int" />
+          <Property Name="IMC_min" Type="int" />
+          <Property Name="IMC_max" Type="int" />
           <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="IdResGrupo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupoLista' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1231,7 +1258,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupoLista' no tiene 
             <PropertyRef Name="Restriccion" />
             <PropertyRef Name="IdResGrupo" />
           </Key>
-          <Property Name="Restriccion" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Restriccion" Type="varchar" MaxLength="158" Nullable="false" />
           <Property Name="IdResGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
@@ -1257,6 +1284,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodos
           <Property Name="EdadMin" Type="int" Nullable="false" />
           <Property Name="EdadMax" Type="int" Nullable="false" />
           <Property Name="Edad_a_fecha" Type="date" />
+          <Property Name="AlturaMinF" Type="int" />
+          <Property Name="AlturaMinM" Type="int" />
+          <Property Name="IMC_min" Type="int" />
+          <Property Name="IMC_max" Type="int" />
           <Property Name="IdEstadoCivil" Type="varchar" MaxLength="8" />
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
@@ -2509,6 +2540,26 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vEstCivil].[Descripcion] AS [Descripcion]
     FROM [dbo].[vEstCivil] AS [vEstCivil]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vGruposYCarreras" EntityType="Self.vGruposYCarreras" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vGruposYCarreras].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio], 
+    [vGruposYCarreras].[Descripcion] AS [Descripcion], 
+    [vGruposYCarreras].[Personal] AS [Personal], 
+    [vGruposYCarreras].[CarreraUoficio] AS [CarreraUoficio], 
+    [vGruposYCarreras].[Pers] AS [Pers], 
+    [vGruposYCarreras].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vGruposYCarreras].[EdadMinCAutoriz] AS [EdadMinCAutoriz], 
+    [vGruposYCarreras].[EdadMin] AS [EdadMin], 
+    [vGruposYCarreras].[EdadMax] AS [EdadMax], 
+    [vGruposYCarreras].[Edad_a_fecha] AS [Edad_a_fecha], 
+    [vGruposYCarreras].[AlturaMinF] AS [AlturaMinF], 
+    [vGruposYCarreras].[AlturaMinM] AS [AlturaMinM], 
+    [vGruposYCarreras].[IMC_min] AS [IMC_min], 
+    [vGruposYCarreras].[IMC_max] AS [IMC_max], 
+    [vGruposYCarreras].[EstadoCivil] AS [EstadoCivil], 
+    [vGruposYCarreras].[IdResGrupo] AS [IdResGrupo]
+    FROM [dbo].[vGruposYCarreras] AS [vGruposYCarreras]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vInscripcionDetalle" EntityType="Self.vInscripcionDetalle" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vInscripcionDetalle].[FechaRegistro] AS [FechaRegistro], 
@@ -2844,8 +2895,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vRestriccionesGrupo].[EdadMax] AS [EdadMax], 
     [vRestriccionesGrupo].[Edad_a_fecha] AS [Edad_a_fecha], 
     [vRestriccionesGrupo].[EstadoCivil] AS [EstadoCivil], 
-    [vRestriccionesGrupo].[IdResGrupo] AS [IdResGrupo], 
-    [vRestriccionesGrupo].[IdEstadoCivil] AS [IdEstadoCivil]
+    [vRestriccionesGrupo].[AlturaMinF] AS [AlturaMinF], 
+    [vRestriccionesGrupo].[AlturaMinM] AS [AlturaMinM], 
+    [vRestriccionesGrupo].[IMC_min] AS [IMC_min], 
+    [vRestriccionesGrupo].[IMC_max] AS [IMC_max], 
+    [vRestriccionesGrupo].[IdEstadoCivil] AS [IdEstadoCivil], 
+    [vRestriccionesGrupo].[IdResGrupo] AS [IdResGrupo]
     FROM [dbo].[vRestriccionesGrupo] AS [vRestriccionesGrupo]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vRestriccionesGrupoLista" EntityType="Self.vRestriccionesGrupoLista" store:Type="Views" store:Schema="dbo">
@@ -2866,6 +2921,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vRestriccionesPorConvYFechaPeriodosInscrip].[EdadMin] AS [EdadMin], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[EdadMax] AS [EdadMax], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[Edad_a_fecha] AS [Edad_a_fecha], 
+    [vRestriccionesPorConvYFechaPeriodosInscrip].[AlturaMinF] AS [AlturaMinF], 
+    [vRestriccionesPorConvYFechaPeriodosInscrip].[AlturaMinM] AS [AlturaMinM], 
+    [vRestriccionesPorConvYFechaPeriodosInscrip].[IMC_min] AS [IMC_min], 
+    [vRestriccionesPorConvYFechaPeriodosInscrip].[IMC_max] AS [IMC_max], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[IdEstadoCivil] AS [IdEstadoCivil], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[IdConvocatoria] AS [IdConvocatoria]
     FROM [dbo].[vRestriccionesPorConvYFechaPeriodosInscrip] AS [vRestriccionesPorConvYFechaPeriodosInscrip]</DefiningQuery>
@@ -4841,6 +4900,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
             <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vGruposYCarreras" EntityType="SINUModel.vGruposYCarreras" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5468,6 +5528,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
           <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="AlturaMinF" Type="Int32" />
+          <Property Name="AlturaMinM" Type="Int32" />
+          <Property Name="IMC_min" Type="Int32" />
+          <Property Name="IMC_max" Type="Int32" />
         </EntityType>
         <ComplexType Name="spRestriccionesParaEstePostulante_Result">
           <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
@@ -5705,13 +5769,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="EstadoCivil" Type="String" Nullable="false" MaxLength="112" FixedLength="false" Unicode="false" />
           <Property Name="IdResGrupo" Type="Int32" Nullable="false" />
           <Property Name="IdEstadoCivil" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="AlturaMinF" Type="Int32" />
+          <Property Name="AlturaMinM" Type="Int32" />
+          <Property Name="IMC_min" Type="Int32" />
+          <Property Name="IMC_max" Type="Int32" />
         </EntityType>
         <EntityType Name="vRestriccionesGrupoLista">
           <Key>
             <PropertyRef Name="Restriccion" />
             <PropertyRef Name="IdResGrupo" />
           </Key>
-          <Property Name="Restriccion" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Restriccion" Type="String" Nullable="false" MaxLength="158" FixedLength="false" Unicode="false" />
           <Property Name="IdResGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <ComplexType Name="spTildarPantallaParaPostulate_Result1">
@@ -5720,6 +5788,27 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="Int32" Name="CantComentarios" Nullable="true" />
           <Property Type="Int32" Name="IdPantalla" Nullable="false" />
         </ComplexType>
+        <EntityType Name="vGruposYCarreras">
+          <Key>
+            <PropertyRef Name="EstadoCivil" />
+          </Key>
+          <Property Name="IdGrupoCarrOficio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Personal" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="CarreraUoficio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Pers" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IdCarreraOficio" Type="Int32" />
+          <Property Name="EdadMinCAutoriz" Type="Int32" />
+          <Property Name="EdadMin" Type="Int32" />
+          <Property Name="EdadMax" Type="Int32" />
+          <Property Name="Edad_a_fecha" Type="DateTime" Precision="0" />
+          <Property Name="AlturaMinF" Type="Int32" />
+          <Property Name="AlturaMinM" Type="Int32" />
+          <Property Name="IMC_min" Type="Int32" />
+          <Property Name="IMC_max" Type="Int32" />
+          <Property Name="EstadoCivil" Type="String" Nullable="false" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="IdResGrupo" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6945,6 +7034,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vRestriccionesPorConvYFechaPeriodosInscrip">
             <EntityTypeMapping TypeName="SINUModel.vRestriccionesPorConvYFechaPeriodosInscrip">
               <MappingFragment StoreEntitySet="vRestriccionesPorConvYFechaPeriodosInscrip">
+                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
+                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
+                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
+                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
                 <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
@@ -7100,6 +7193,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vRestriccionesGrupo">
             <EntityTypeMapping TypeName="SINUModel.vRestriccionesGrupo">
               <MappingFragment StoreEntitySet="vRestriccionesGrupo">
+                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
+                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
+                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
+                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
                 <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
                 <ScalarProperty Name="IdResGrupo" ColumnName="IdResGrupo" />
                 <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
@@ -7130,6 +7227,28 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spCierraPantallaDePostulante" FunctionName="SINUModel.Store.spCierraPantallaDePostulante" />
           <FunctionImportMapping FunctionImportName="spTieneProblemasEnPantallaEstePostulate" FunctionName="SINUModel.Store.spTieneProblemasEnPantallaEstePostulate" />
+          <EntitySetMapping Name="vGruposYCarreras">
+            <EntityTypeMapping TypeName="SINUModel.vGruposYCarreras">
+              <MappingFragment StoreEntitySet="vGruposYCarreras">
+                <ScalarProperty Name="IdResGrupo" ColumnName="IdResGrupo" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
+                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
+                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
+                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
+                <ScalarProperty Name="Edad_a_fecha" ColumnName="Edad_a_fecha" />
+                <ScalarProperty Name="EdadMax" ColumnName="EdadMax" />
+                <ScalarProperty Name="EdadMin" ColumnName="EdadMin" />
+                <ScalarProperty Name="EdadMinCAutoriz" ColumnName="EdadMinCAutoriz" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+                <ScalarProperty Name="Pers" ColumnName="Pers" />
+                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
