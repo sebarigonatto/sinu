@@ -140,8 +140,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
 
 
             var idresgrupoNuevo = grupoCarrOficio.ResGrupo.Where(m=>m.IdResGrupo>0).Select(m=> m.IdResGrupo);
-
-            int nuevo = idresgrupoNuevo.First();
+            
             GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm {
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
                 IdGCOOriginal=grupoCarrOficio.IdGrupoCarrOficio,
@@ -149,7 +148,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 Descripcion = grupoCarrOficio.Descripcion,
                 Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
                 Carreras2 = lst.Where(m => m.Personal == grupoCarrOficio.Personal).ToList(),//lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
-                IdResGrupo= idresgrupoNuevo.First()
+                IdResGrupo= idresgrupoNuevo.FirstOrDefault()
 
         };
         //creo lista para compara y marcar como checkeada
