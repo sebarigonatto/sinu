@@ -122,8 +122,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             return View(grupoCarrOficiovm);
 }
 
-// GET: GrupoCarrOficios/Edit/5
-public ActionResult Edit(string id)
+        // GET: GrupoCarrOficios/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -135,18 +135,25 @@ public ActionResult Edit(string id)
                 return HttpNotFound();
             }
             List<CarreraOficio> lst = new List<CarreraOficio>();
-            lst = db.CarreraOficio.ToList();            
-            ViewBag.Carreras = lst;                       
+            lst = db.CarreraOficio.ToList();
+            ViewBag.Carreras = lst;
+
+
+            var idresgrupoNuevo = grupoCarrOficio.ResGrupo.Where(m=>m.IdResGrupo>0).Select(m=> m.IdResGrupo);
+
+            int nuevo = idresgrupoNuevo.First();
             GrupoCarrOficiosvm NuevogrupocarroficioVM = new GrupoCarrOficiosvm {
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
                 IdGCOOriginal=grupoCarrOficio.IdGrupoCarrOficio,
                 Personal = grupoCarrOficio.Personal,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Carreras = db.spCarrerasDelGrupo(id, "").ToList(),
-                Carreras2 = lst.Where(m => m.Personal == grupoCarrOficio.Personal).ToList()//lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
-        };          
-            //creo lista para compara y marcar como checkeada
-            NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
+                Carreras2 = lst.Where(m => m.Personal == grupoCarrOficio.Personal).ToList(),//lstCarreras2.ToList()/*db.CarreraOficio.ToList()*/,                
+                IdResGrupo= idresgrupoNuevo.First()
+
+        };
+        //creo lista para compara y marcar como checkeada
+        NuevogrupocarroficioVM.Carreras3 = new List<CheckBoxes>();
                     //cargo la lista que se va a mostrar checkeada
             for (int i = 0; i < NuevogrupocarroficioVM.Carreras2.Count(); i++)
             {

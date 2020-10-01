@@ -96,27 +96,35 @@
         <tbody>
             @foreach (var item in ViewBag.lstresGrupo as List<SINU.Models.vRestriccionesGrupo>)
             {
-                <tr>
-                    <td>
-                        @item.EdadMinCAutoriz
-                    </td>
-                    <td>
-                        @item.EdadMin
-                    </td>
-                    <td>
-                        @item.EdadMax
-                    </td>
-                    <td>
-                        @item.Edad_a_fecha
-                    </td>
-                    <td>
-                        @item.EstadoCivil
-                    </td>
-                    <td>
-                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)
-                        @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @item.EdadMinCAutoriz
+                </td>
+                <td>
+                    @item.EdadMin
+                </td>
+                <td>
+                    @item.EdadMax
+                </td>
+                <td>
+                    @item.Edad_a_fecha
+                </td>
+                <td>
+                    @item.EstadoCivil
+                </td>
+                                
+                <td>
+                    @if (Model.IdResGrupo == item.IdResGrupo)
+                    {
+                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo, htmlAttributes: new { @checked = true })
+                    }
+                    else
+                    {
+                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo, htmlAttributes: new { @checked = false })
+                    }
+                    @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })
+                </td>
+            </tr>
             }
         </tbody>
     </table>
