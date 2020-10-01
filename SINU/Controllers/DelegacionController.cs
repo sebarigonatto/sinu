@@ -586,15 +586,16 @@ namespace SINU.Controllers
             {
               if (ModelState.IsValid)
                 {
-                    VerificacionPantallasCerradas verificacionPantallas = new VerificacionPantallasCerradas
-                        {
-                            IdPostulantePersona=id,
-                            IdPantalla=IdPanatlla,
-                            fechaCierre=DateTime.Now
-                        };
-             
-                    db.VerificacionPantallasCerradas.Add(verificacionPantallas);
-                    db.SaveChanges();
+                    //VerificacionPantallasCerradas verificacionPantallas = new VerificacionPantallasCerradas
+                    //    {
+                    //        IdPostulantePersona=id,
+                    //        IdPantalla=IdPanatlla,
+                    //        fechaCierre=DateTime.Now
+                    //    };
+
+                    //db.VerificacionPantallasCerradas.Add(verificacionPantallas);
+                    //db.SaveChanges();
+                    db.spCierraPantallaDePostulante(IdPanatlla, id);
                     return Json(new { success = true, msg = "Se Cerro Correctamente la pantalla" });
                 }
 
