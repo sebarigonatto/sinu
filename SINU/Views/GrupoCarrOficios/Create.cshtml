@@ -90,32 +90,56 @@
                 <th>@Html.Label("Edad Máxima")</th>
                 <th>@Html.Label("Edad a fecha")</th>
                 <th>@Html.Label("Estado Civil")</th>
+                <th>
+                    @Html.Label("Altura Mínima Femenina")
+                </th>
+                <th>
+                    @Html.Label("Altura Mínima Masculina")
+                </th>
+                <th>
+                    @Html.Label("IMC Máximo")
+                </th>
+                <th>
+                    @Html.Label("IMC Mínimo")
+                </th>
                 <th>@Html.Label("Seleccionar")</th>
-        </thead>
+</thead>
         <tbody>
             @foreach (var item in ViewBag.lstresGrupo as List<SINU.Models.vRestriccionesGrupo>)
             {
-                <tr>
-                    <td>
-                        @item.EdadMinCAutoriz
-                    </td>
-                    <td>
-                        @item.EdadMin
-                    </td>
-                    <td>
-                        @item.EdadMax
-                    </td>
-                    <td>
-                        @item.Edad_a_fecha
-                    </td>
-                    <td>
-                        @item.EstadoCivil
-                    </td>
-                    <td>
-                        @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)
-                        @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })               
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @item.EdadMinCAutoriz
+                </td>
+                <td>
+                    @item.EdadMin
+                </td>
+                <td>
+                    @item.EdadMax
+                </td>
+                <td>
+                    @item.Edad_a_fecha
+                </td>
+                <td>
+                    @item.EstadoCivil
+                </td>
+                <td>
+                    @item.AlturaMinF
+                </td>
+                <td>
+                    @item.AlturaMinM
+                </td>
+                <td>
+                    @item.IMC_max
+                </td>
+                <td>
+                    @item.IMC_min
+                </td>
+                <td>
+                    @Html.RadioButtonFor(m => m.IdResGrupo, item.IdResGrupo)
+                    @Html.ValidationMessageFor(m => m.IdResGrupo, "", new { @class = "text-danger" })
+                </td>
+            </tr>
             }
         </tbody>
     </table>
