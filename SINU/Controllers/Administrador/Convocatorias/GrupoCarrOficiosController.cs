@@ -192,7 +192,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal")] GrupoCarrOficiosvm grupoCarrOficiovm)
+        public ActionResult Edit([Bind(Include = "IdGrupoCarrOficio,Descripcion,Personal,SelectedIDs,IdGCOOriginal,IdResGrupo")] GrupoCarrOficiosvm grupoCarrOficiovm)
         {
             
             string stgCarreras = "";
