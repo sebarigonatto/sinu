@@ -1196,19 +1196,6 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vGruposYCarreras_Result>("sp_vGruposYCarreras", idGrupoCarrOficioParameter);
         }
     
-        public virtual ObjectResult<spRestriccionesParaEstePostulante_Result1> spRestriccionesParaEstePostulante(Nullable<int> idPostulantePersona, Nullable<System.DateTime> fechaNacimiento)
-        {
-            var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
-                new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
-                new ObjectParameter("IdPostulantePersona", typeof(int));
-    
-            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
-                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
-                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result1>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter);
-        }
-    
         public virtual ObjectResult<sp_ConsultaInscriptosModalidadGenero_Result> sp_ConsultaInscriptosModalidadGenero()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ConsultaInscriptosModalidadGenero_Result>("sp_ConsultaInscriptosModalidadGenero");
@@ -1257,6 +1244,28 @@ namespace SINU.Models
                 new ObjectParameter("IdPantalla", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("spTieneProblemasEnPantallaEstePostulate", idpostulantePersonaParameter, idPantallaParameter);
+        }
+    
+        public virtual ObjectResult<spRestriccionesParaEstePostulante_Result2> spRestriccionesParaEstePostulante(Nullable<int> idPostulantePersona, Nullable<System.DateTime> fechaNacimiento)
+        {
+            var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
+                new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
+                new ObjectParameter("IdPostulantePersona", typeof(int));
+    
+            var fechaNacimientoParameter = fechaNacimiento.HasValue ?
+                new ObjectParameter("FechaNacimiento", fechaNacimiento) :
+                new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result2>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter);
+        }
+    
+        public virtual ObjectResult<sp_vPersona_Familiar_Result> sp_vPersona_Familiar(Nullable<int> idPersonaPostulante)
+        {
+            var idPersonaPostulanteParameter = idPersonaPostulante.HasValue ?
+                new ObjectParameter("IdPersonaPostulante", idPersonaPostulante) :
+                new ObjectParameter("IdPersonaPostulante", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPersona_Familiar_Result>("sp_vPersona_Familiar", idPersonaPostulanteParameter);
         }
     }
 }

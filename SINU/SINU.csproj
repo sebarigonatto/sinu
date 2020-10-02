@@ -418,6 +418,9 @@
     <Compile Include="Models\spRestriccionesParaEstePostulante_Result1.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\spRestriccionesParaEstePostulante_Result2.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\spTildarPantallaParaPostulate_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -443,6 +446,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_vPaises_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_vPersona_Familiar_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">

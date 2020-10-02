@@ -732,6 +732,13 @@ $(document).ready(function () {
 
     });
 
+
+
+
+
+
+
+
     ////cargo todo los campos con 0, para eviarlos al POST de Antropometria
     //$("#antropo input").each(function () {
     //    if ($(this).val() == "") {

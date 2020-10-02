@@ -1085,21 +1085,35 @@ namespace SINU.Controllers
         {
             try
             {
-                var asd = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).FechaNacimiento;
-                var IdConvocatoria = db.spRestriccionesParaEstePostulante(IdPostulante, asd).ToList();//db.Postulante.Find(IdPostulante).Inscripcion.ToList()[0].IdModalidad;
-
+                
+                var FechaNac = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).FechaNacimiento;
+                object sexo = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).IdSexo;
+                string Carrera = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante).CarreraRelacionada;
+                sexo = (Carrera == "Médicos") ? "Medico" : sexo;
+           
+                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).ToList()[0];//db.Postulante.Find(IdPostulante).Inscripcion.ToList()[0].IdModalidad;
+                bool NOaplica=false;
                 switch (AltIcm)
-                {
+                { 
                     case "Altura":
-
+                        switch (sexo)
+                        {
+                            case 1:
+                                NOaplica = (Restric.AlturaMinM > num);
+                                break;
+                            case 2:
+                                NOaplica = (Restric.AlturaMinF > num);
+                                break;
+                            case "Medico":
+                                NOaplica = false;
+                                break;
+                        }
                         break;
                     case "ICM":
-
-                        break;
-                    default:
+                        NOaplica = (Restric.IMC_max < num || Restric.IMC_min > num);
                         break;
                 }
-                return Json(new { SI = true });
+                return Json(new { NOaplica});
 
             }
             catch (Exception)
@@ -1118,23 +1132,8 @@ namespace SINU.Controllers
             try
             {
                 //List<int> id_PER_FAMI = db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).Select(m => m.IdPersona).ToList();
-                //List<vPersona_Familiar> FAMILIARES = db.vPersona_Familiar.Where(i => i.IdPersonaPostulante == ID_persona).ToList();
-                var FAMI = db.Familiares.Where(id => id.IdPostulantePersona == ID_persona).ToList();
-                List<vPersona_Familiar> FAMILIARES = new List<vPersona_Familiar>();
-                FAMI.ForEach(f =>
-
-                    FAMILIARES.Add(
-                            new vPersona_Familiar
-                            {
-                                IdFamiliar = f.IdFamiliar,
-                                Relacion = db.vParentesco.FirstOrDefault(m => m.idParentesco == f.idParentesco).Relacion,
-                                IdPersonaPostulante = f.IdPostulantePersona,
-                                IdPersonaFamiliar = f.IdPersona,
-                                Apellido = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Apellido,
-                                Nombres = db.Persona.FirstOrDefault(m => m.IdPersona == f.IdPersona).Nombres,
-                            }
-                        )
-                );
+                List<sp_vPersona_Familiar_Result> FAMILIARES = db.sp_vPersona_Familiar(ID_persona).ToList();
+            
                 return PartialView(FAMILIARES);
             }
             catch (Exception)
