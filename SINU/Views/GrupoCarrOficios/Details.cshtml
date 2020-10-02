@@ -35,7 +35,7 @@
         </dd>
     </dl>
 
-    @*aca tiene que ir una tabla*@
+    <div><label class="alert-dark">Carreras/Oficios</label></div>
 
     <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
         <thead>
@@ -45,7 +45,7 @@
                 </th>
                 <th class="text-center">
                     @Html.DisplayNameFor(model => model.Personal)
-                </th>                
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -62,6 +62,70 @@
             }
         </tbody>
     </table>
+
+    <div><label class="alert-dark">Restricciones</label></div>
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%" title="Restricciones">
+        <thead>
+            <tr>
+
+                <th>@Html.Label("Edad Mínima (Con Autorización)")</th>
+                <th>@Html.Label("Edad Mínima")</th>
+                <th>@Html.Label("Edad Máxima")</th>
+                <th>@Html.Label("Edad a fecha")</th>
+                <th>@Html.Label("Estado Civil")</th>
+                @*<th>@Html.Label("Seleccionar")</th>*@
+                <th>
+                    @Html.Label("Altura Mínima Femenina")
+                </th>
+                <th>
+                    @Html.Label("Altura Mínima Masculina")
+                </th>
+                <th>
+                    @Html.Label("IMC Máximo")
+                </th>
+                <th>
+                    @Html.Label("IMC Mínimo")
+                </th>
+</thead>
+        <tbody>
+            @foreach (var item in ViewBag.lstresGrupo as List<SINU.Models.vRestriccionesGrupo>)
+            {
+                if (Model.IdResGrupo == item.IdResGrupo)
+                {
+            <tr>
+                <td>
+                    @item.EdadMinCAutoriz
+                </td>
+                <td>
+                    @item.EdadMin
+                </td>
+                <td>
+                    @item.EdadMax
+                </td>
+                <td>
+                    @item.Edad_a_fecha
+                </td>
+                <td>
+                    @item.EstadoCivil
+                </td>
+                <td>
+                    @item.AlturaMinF
+                </td>
+                <td>
+                    @item.AlturaMinM
+                </td>
+                <td>
+                    @item.IMC_max
+                </td>
+                <td>
+                    @item.IMC_min
+                </td>
+            </tr>
+                 }
+            }
+       
+    </table>
+
 </div>
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.IdGrupoCarrOficio }) |

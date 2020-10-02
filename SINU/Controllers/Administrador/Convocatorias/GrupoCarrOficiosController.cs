@@ -62,16 +62,18 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 //return HttpNotFound();
                 return View("Error", Func.ConstruyeError("Ese ID de Grupo no se encontro en la tabla de GrupoCarrOficio", "GrupoCarrOficios", "Details"));
             }
-            //ViewBag.Carreras = db.spCarrerasDelGrupo(id).ToList();
+            var idresgrupoNuevo = grupoCarrOficio.ResGrupo.Where(m => m.IdResGrupo > 0).Select(m => m.IdResGrupo);
             GrupoCarrOficiosvm datosgrupocarroficio = new GrupoCarrOficiosvm()
             {
 
                 IdGrupoCarrOficio = grupoCarrOficio.IdGrupoCarrOficio,
                 Descripcion = grupoCarrOficio.Descripcion,
                 Personal = grupoCarrOficio.Personal,
-                Carreras = db.spCarrerasDelGrupo(id,"").ToList()
-
-            };            
+                Carreras = db.spCarrerasDelGrupo(id,"").ToList(),
+                IdResGrupo = idresgrupoNuevo.FirstOrDefault()
+                };
+            List<vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
+            ViewBag.lstresGrupo = lstResGrupo;
             return View(datosgrupocarroficio);
         }
         public ActionResult Create()
