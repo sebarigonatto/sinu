@@ -122,7 +122,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control", @readonly = true, @id = "fechacumpleaños" })
+                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker", @readonly = true })
 
                                             @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -381,7 +381,7 @@
                 .tooltip('enable');
 
         }());
-
+        $.NoEjecutar = true;
         $(document).ready(function () {
             var URLanterior = document.referrer.toString();
 

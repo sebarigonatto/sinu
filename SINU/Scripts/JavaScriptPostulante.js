@@ -46,7 +46,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 });
 
 $.BloqueoPantalla;
-$.Delegacion=false;
+$.NoEjecutar = false;
 $(document).ready(function () {
 
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
@@ -102,7 +102,7 @@ $(document).ready(function () {
     }
 
     if (($("#fechacumpleaños").val() != "")) {
-        if (!($.Delegacion)) ActualizarINStDatosBasicos(); 
+        if (!($.NoEjecutar)) ActualizarINStDatosBasicos(); 
 
         
     }
@@ -782,20 +782,8 @@ $(document).ready(function () {
 
         });
     });
+    
 
-
-
-    //si la vista Index es llamada por la vista FamiliaCUD se ase visible la tabla Familia
-    var paganterior = document.referrer.toString().indexOf("FamiliaCUD");
-    if (paganterior > 1) {
-        //alert("vino de familia");
-        $("#5 a").tab("show");
-        $("#FamiTAB a").tab("show");
-        $("#BTFamiliaNAV").trigger("click");
-        //$("html,body").animate({
-        //    scrollTop: 250
-        //}, 1500);
-    }
     //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
 
     //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
@@ -810,51 +798,50 @@ $(document).ready(function () {
         $(this).valid();
     })
 
-
-});
-
-//manejo de formy subrayado de si estasn validos o no 
-$(":input").on('change', function (e) {
-    if ($(this).val() != "") {
+    //manejo de formy subrayado de si estasn validos o no 
+    $(":input").on('change', function (e) {
+        /*if ($(this).val() != "") {*/
         ValidInput($(this).attr('name'));
 
+        //}
+    })
+
+    //valido cada input al ser crgado
+    $("form").on("submit", function () {
+        //alert($(this).attr("id"));
+        ValidForm("#" + $(this).attr("id"));
+
+    });
+
+    function ValidForm(idForm) {
+        list = $(idForm + " :input").not("[type='hidden']").serializeArray();
+        if ($(idForm).valid()) {
+            $(idForm + " :input").not(".selecpicker, .combobox, [type='submit']").css("border-bottom", "2px solid #08495f");
+            $(idForm + " :input").next("button[role='combobox']").removeClass("BTNotValid BTValid");
+        } else {
+            $.each(list, function (index, item) {
+                nameas = item["name"];
+                if (!$(idForm + " [name='" + item["name"] + "']").valid()) {
+                    //alert($.type((idForm + " [name='" + item["name"] + "']")))
+                    $("[name='" + item["name"] + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
+                    $("select[name='" + item["name"] + "']").next("button[role='combobox']").addClass("BTNotValid");
+                };
+            })
+        }
     }
-})
 
-//valido cada input al ser crgado
-$("form").on("submit", function () {
-    //alert($(this).attr("id"));
-    ValidForm("#" + $(this).attr("id"));
+    function ValidInput(nameInput) {
+        idForm = "#" + $("[name = '" + nameInput + "']").closest("form").attr("id");
+        //alert(idForm)
+        if (!$(idForm + " [name='" + nameInput + "']").valid()) {
+            //alert($.type((idForm + " [name='" + item["name"] + "']")))
+            $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
+            $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTValid").addClass("BTNotValid");
+        } else {
+            $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #28a745");
+            $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTNotValid").addClass("BTValid");
 
+        }
+    }
 });
 
-function ValidForm(idForm) {
-    list = $(idForm + " :input").not("[type='hidden']").serializeArray();
-    if ($(idForm).valid()) {
-        $(idForm + " :input").not(".selecpicker, .combobox, [type='submit']").css("border-bottom", "2px solid #08495f");
-        $(idForm + " :input").next("button[role='combobox']").removeClass("BTNotValid BTValid");
-    } else {
-        $.each(list, function (index, item) {
-            nameas = item["name"];
-            if (!$(idForm + " [name='" + item["name"] + "']").valid()) {
-                //alert($.type((idForm + " [name='" + item["name"] + "']")))
-                $("[name='" + item["name"] + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
-                $("select[name='" + item["name"] + "']").next("button[role='combobox']").addClass("BTNotValid");
-            };
-        })
-    }
-}
-
-function ValidInput(nameInput) {
-    idForm = "#" + $("[name = '" + nameInput + "']").closest("form").attr("id");
-    //alert(idForm)
-    if (!$(idForm + " [name='" + nameInput + "']").valid()) {
-        //alert($.type((idForm + " [name='" + item["name"] + "']")))
-        $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #dc3545");
-        $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTValid").addClass("BTNotValid");
-    } else {
-        $("[name='" + nameInput + "']").not(".selecpicker, .combobox").css("border-bottom", "2px solid #28a745");
-        $("select[name='" + nameInput + "']").next("button[role='combobox']").removeClass("BTNotValid").addClass("BTValid");
-
-    }
-}

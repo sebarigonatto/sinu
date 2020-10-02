@@ -17,7 +17,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-
+using System.ServiceModel.Dispatcher;
 
 namespace SINU.Controllers
 {
@@ -35,7 +35,6 @@ namespace SINU.Controllers
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
-
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
@@ -1082,32 +1081,33 @@ namespace SINU.Controllers
 
         }
 
-        //public JsonResult VerificaAltIcm(int IdPostulante,string AltIcm,int num)
-        //{
-        //    try
-        //    {
+        public JsonResult VerificaAltIcm(int IdPostulante, string AltIcm, int num)
+        {
+            try
+            {
+                var asd = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).FechaNacimiento;
+                var IdConvocatoria = db.spRestriccionesParaEstePostulante(IdPostulante, asd).ToList();//db.Postulante.Find(IdPostulante).Inscripcion.ToList()[0].IdModalidad;
 
-        //        var IdConvocatoria = db.Postulante.Find(IdPostulante).Inscripcion.;    
-        //        switch (AltIcm)
-        //        {
-        //            case "Altura":
-                         
-        //                break;
-        //            case "ICM":
+                switch (AltIcm)
+                {
+                    case "Altura":
 
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //        return Json(new { SI = true });
+                        break;
+                    case "ICM":
 
-        //    }
-        //    catch (Exception)
-        //    {
+                        break;
+                    default:
+                        break;
+                }
+                return Json(new { SI = true });
 
-        //        throw;
-        //    }
-        //}
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
 
@@ -1147,6 +1147,7 @@ namespace SINU.Controllers
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
         public ActionResult FamiliaCUD(int idPersonaFamilia, int idPostulante)
         {
+            Session["FamiTable"] = true;
             //verificar que al crear un postulante llenar con los datos completos, si no es asi el familiar no se mostrara en vPersona_Familiar
             //viewmodel creado para la creacion de un familiar
             //cargo los datos necesarios para los combobox
@@ -1207,10 +1208,7 @@ namespace SINU.Controllers
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
         {
 
-            {
-
-            }
-
+            
             if (ModelState.IsValid)
             {
                 var datos = fami.vPersona_FamiliarVM;

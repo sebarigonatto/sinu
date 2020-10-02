@@ -436,14 +436,14 @@
     </div>
 </div>
 
-@*<br />
+<br />
     @Ajax.ActionLink("asd", "VerificaAltIcm","Postulante",new { IdPostulante= Model.ID_PER, AltIcm= "Altura", num=150},new AjaxOptions
     {
         HttpMethod = "POST",
         OnSuccess = "Exito(data,status,xhr)",
         OnFailure = "Falla"
     }, new { @class = "btn btn-success" })
-<br />*@
+<br />
 
 
 
@@ -499,8 +499,14 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-
-
+            if ('@Session["FamiTable"]'=='True') {
+                $("#5 a").tab("show");
+                $("#FamiTAB a").tab("show");
+                $("#BTFamiliaNAV").trigger("click");
+            }
+          @{
+              Session["FamiTable"] = false;
+           }
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
 
@@ -545,14 +551,14 @@
 
 
 
-             
+
 
         });
 
         //en caso de ser exitosa la llamada al controlador
         function Exito(response, status, xhr) {
 
-            $("#BTNModal").html("Cerrar");  
+            $("#BTNModal").html("Cerrar");
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
