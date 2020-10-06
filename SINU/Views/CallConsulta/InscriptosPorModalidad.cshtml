@@ -1,9 +1,17 @@
 ﻿@model IEnumerable<SINU.Models.vConsultaInscripciones>
 
+@{
+    ViewBag.Title = "Inscriptos Por Modalidad " + ViewBag.modalidadElegida;
+}
+
+<h2>
+    @ViewBag.Title
+</h2>
+
 @*@{
-    ViewBag.Title = "InscriptosPorModalidad";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
+        ViewBag.Title = "InscriptosPorModalidad";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
 
 <h2>InscriptosPorModalidad</h2>
 
@@ -21,8 +29,8 @@
             </th>
 
             @*<th>
-                @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+                </th>*@
             <th></th>
         </tr>
     </thead>
@@ -41,8 +49,8 @@
                     @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+                    </td>*@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
