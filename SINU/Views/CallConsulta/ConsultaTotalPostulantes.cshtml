@@ -24,10 +24,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
-            </th>
-            <th>sdfs</th>
+            </th>*@
+           @* <th>sdfs</th>*@
         </tr>
     </thead>
     <tbody>
@@ -52,17 +52,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                </td>
-                <td>
-                    sasd
+                </td>*@
+                @*<td>
+                    sasd*@
                     @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
                     @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
                     @*No se puede tener dos ActionLink con el mismo nombre*@
                     @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
                     @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                </td>
+               @* </td>*@
             </tr>
         }
 

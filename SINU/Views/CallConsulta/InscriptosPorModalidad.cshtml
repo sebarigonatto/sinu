@@ -19,9 +19,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
-            <th>
+
+            @*<th>
                 @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -39,9 +40,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                </td>
+                </td>*@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
