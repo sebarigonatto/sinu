@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Ajax.Utilities;
+using System.Collections;
 
 namespace SINU.Controllers
 {
@@ -288,7 +289,7 @@ namespace SINU.Controllers
             vInscripcionDetalle vdetalle;
             vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
             var NyA = vdetalle.Nombres +" "+ vdetalle.Apellido;
-
+            ViewBag.NInscripcion = vdetalle.IdInscripcion;
 
             IDPersonaVM personaVM = new IDPersonaVM();
             personaVM.ID_PER = id;
@@ -320,6 +321,19 @@ namespace SINU.Controllers
             try
             {
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+            }
+            return Json(new { View = "Index" });
+        }
+        [HttpPost]
+        public ActionResult InterrumpirProceso(int? ID_persona)
+        {
+            try
+            {
+                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
             }
             catch (System.Exception ex)
             {
@@ -385,12 +399,9 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
-        // POST: Delegacion/Create
         [HttpPost]
         public ActionResult PresentacionAsignaFecha(string[] select, DateTime fecha)
         {
-            //List<vInscripcionDetalle> InscripcionElegida;
-            //vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
 
             try
             {
@@ -405,23 +416,6 @@ namespace SINU.Controllers
 
                 }
                 db.SaveChanges();
-
-                //MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
-                //{
-                //    Apellido = datos.Apellido,
-                //    FechaEntrevista = datos.FechaEntrevista
-                //};
-                ////verificar el llamado de una funcion asyncronica desde un metodo sincronico
-                //var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4");
-
-                //InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
-                //vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
-
-                //if (vInscripcionEtapas.Estado == "Asignada")
-                //{
-                //    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
-                //}
-
                 return RedirectToAction("Index");
             }
 
@@ -539,7 +533,6 @@ namespace SINU.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 
@@ -547,13 +540,18 @@ namespace SINU.Controllers
         [HttpPost]
         public JsonResult ProblemaPantalla(ProblemaPantallaVM datos)
         {
+            var ProblemaExiste = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == datos.DataProblemaEncontradoVM.IdDataVerificacion && m.IdPostulantePersona == datos.DataProblemaEncontradoVM.IdPostulantePersona);
             try
             {
-                var data = datos.DataProblemaEncontradoVM;
-                db.DataProblemaEncontrado.Add(data);
-                db.SaveChanges();
-                int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
-                return Json(new { success = true, form="Elimina", msg = "Problema Agregado", url_Tabla= "ProblemaPantalla", url_Controller= "Delegacion",IdPantalla = idPantalla },JsonRequestBehavior.AllowGet);
+                if (ProblemaExiste == null)
+                {
+                    var data = datos.DataProblemaEncontradoVM;
+                    db.DataProblemaEncontrado.Add(data);
+                    db.SaveChanges();
+                    int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
+                    return Json(new { success = true, form="Elimina", msg = "Problema Agregado", url_Tabla= "ProblemaPantalla", url_Controller= "Delegacion",IdPantalla = idPantalla },JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
             }
             catch (Exception x)
             {
@@ -582,19 +580,17 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult CerrarPantalla(int id , int IdPanatlla)
         {
+
             try
             {
-              if (ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
-                    //VerificacionPantallasCerradas verificacionPantallas = new VerificacionPantallasCerradas
-                    //    {
-                    //        IdPostulantePersona=id,
-                    //        IdPantalla=IdPanatlla,
-                    //        fechaCierre=DateTime.Now
-                    //    };
 
-                    //db.VerificacionPantallasCerradas.Add(verificacionPantallas);
-                    //db.SaveChanges();
+                     var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
+                    if (TieneProblema.ToList().First()==true)
+                    {
+                        return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados"});
+                    }
                     db.spCierraPantallaDePostulante(IdPanatlla, id);
                     return Json(new { success = true, msg = "Se Cerro Correctamente la pantalla" });
                 }
