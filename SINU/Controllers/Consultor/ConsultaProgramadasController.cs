@@ -17,12 +17,9 @@ namespace Consulta.Controllers
         private SINUEntities db = new SINUEntities();
 
         // GET: ConsultaProgramadas
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            //Si no dan un id asume el que tenga id de consulta en 1, 
-            //si no hay ninguno en id 1 simplemente no selecciona ninguno
-            ViewBag.ActivarId = id??1;
-            return View(db.ConsultaProgramada.ToList());
+            return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
 
         // GET: ConsultaProgramadas/Details/5

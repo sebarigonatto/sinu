@@ -1,24 +1,92 @@
 ﻿@model IEnumerable<SINU.Models.ConsultaProgramada>
-@using SINU.Models;
+@*@using SINU.Models;*@
 
 @{
     ViewBag.Title = "CONSULTAS";
 
-    List<ConsultaProgramada> Consulta = (new SINUEntities()).ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList();
-    string referencia = "";
-    String activar = "";
+    //List<ConsultaProgramada> Consulta = (new SINUEntities()).ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList();
+    //string referencia = "";
+    //String activar = "";
 }
 
 <h2>@ViewBag.Title</h2>
+<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 
+<table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NombreMenu)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DescripcionConsulta)
+                </th>
+                <th>
+                        @Html.DisplayNameFor(model => model.OrdenConsulta)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Link)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Controller)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Action)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Parametros)
+                    </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreMenu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DescripcionConsulta)
+                    </td>
+                    <td>
+                            @Html.DisplayFor(modelItem => item.OrdenConsulta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Link)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Controller)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Action)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parametros)
+                        </td>
+                    <td>
+                          @Html.ActionLink("Edit", "Edit", new { id=item.IdConsulta }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdConsulta })
+                          @Html.ActionLink("Delete", "Delete", new { id=item.IdConsulta })
+                         @Html.ActionLink("Abrir", "Details", new { id = item.IdConsulta })
+                        @Html.ActionLink("ABRIR", item.Action, item.Controller)
+
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
 <br />
-<div class="container p-0">
+@*<div class="container p-0">
     <div class="row">
 
 
         <nav class="col-sm-2 mr-3 navbar navbar1 navbar-expand-md  navbar-light ml-3 pl-2 oculto">
 
-            <!-- Navbar links -->
+             <!-- Navbar links  --!>
             <div class="collapse navbar-collapse" id="TABDocumentacion">
                 <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-left" id="myTab" role="tablist" style="border-bottom: 0px solid;">
                     @foreach (var item in Consulta)
@@ -53,9 +121,9 @@
 
             </div>
         </div>
-        <!-- /.col-md-8 -->
+         <!-- /.col-md-8  --!>
     </div>
-</div>
+</div>*@
 
 @section Scripts {
     <script type="text/javascript">
