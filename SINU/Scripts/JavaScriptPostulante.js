@@ -102,9 +102,9 @@ $(document).ready(function () {
     }
 
     if (($("#fechacumpleaños").val() != "")) {
-        if (!($.NoEjecutar)) ActualizarINStDatosBasicos(); 
+        if (!($.NoEjecutar)) ActualizarINStDatosBasicos();
 
-        
+
     }
 
 
@@ -721,30 +721,55 @@ $(document).ready(function () {
 
     //calculo de la IMC cuando los campos de altura y peso con cargados
     $("#altura,#peso").on("change", function () {
+        var anuncio = "";
+        if ($(this).attr("id") == "altura" && $(this).val != "") {
+            var valor = $(this).val();
+            $.get("/Postulante/VerificaAltIcm", { IdPostulante: id_persona, AltIcm: "altura", num: valor }, function (response) {
+                if (response.APLICA == "NO") {
+                    anuncio = response.POPUP;
+                };
+                CALIMC($("#altura").val(), $("#peso").val(), anuncio);
 
-        var altura = $("#altura").val() / 100,
-            peso = $("#peso").val().replace(",", ".");
-        if (altura != 0 && peso != 0) {
-            var imc = peso / (altura * altura);
-            //alert(imc);
-            $("#imc").val(imc.toFixed(2).replace(".", ","));
-        }
-
+            });
+        } else {
+            CALIMC($("#altura").val(), $("#peso").val(), anuncio);
+        };
     });
+    function CALIMC(altura, peso, anuncio) {
+        if (altura != "" && peso != "") {
+            var Altura = altura / 100,
+                Peso = peso.replace(",", ".");
+
+            var imc = Peso / (Altura * Altura);
+            //alert(imc);
+            $.get("/Postulante/VerificaAltIcm", { IdPostulante: id_persona, AltIcm: 'imc', num: imc }, function (response) {
+                if (response.APLICA == "NO") {
+                    if (anuncio != "") {
+                        anuncio = anuncio + "<br>" + response.POPUP;
+                    } else {
+                        anuncio = response.POPUP;
+                    };
+                    $("#BTNModal").html("Cerrar");
+                    $("#GuardarDTF").css("display", "none");
+                    $("#ModalCenterTitle").html("SINU:");
+                    $("#TextModal").html(anuncio);
+                    $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+                };
+                
+               
+            });
+            $("#imc").val(imc.toFixed(2).replace(".", ","));
+
+        } else if(anuncio!="") {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html(anuncio);
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+        }
+    }
 
 
-
-
-
-
-
-
-    ////cargo todo los campos con 0, para eviarlos al POST de Antropometria
-    //$("#antropo input").each(function () {
-    //    if ($(this).val() == "") {
-    //        $(this).val(0);
-    //    }
-    //});
 
     $("#EstadoCivil").on("change", function () {
         var estci = $(this).val();
@@ -789,7 +814,7 @@ $(document).ready(function () {
 
         });
     });
-    
+
 
     //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
 

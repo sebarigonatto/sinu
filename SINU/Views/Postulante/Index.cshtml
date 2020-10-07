@@ -396,15 +396,6 @@
     <!-- End lined tabs -->
 </div>
 
-@*}
-    catch (Exception ex)
-    {
-
-        <script>
-            //alert('@ex.InnerException.Message')
-                location.href = '@Url.Action("AccionNoAutorizada","Error")'
-        </script>
-    }*@
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
@@ -435,15 +426,6 @@
         </div>
     </div>
 </div>
-
-@*<br />
-    @Ajax.ActionLink("asd", "VerificaAltIcm","Postulante",new { IdPostulante= Model.ID_PER, AltIcm= "Altura", num=155},new AjaxOptions
-    {
-        HttpMethod = "POST",
-        OnSuccess = "Exito(data,status,xhr)",
-        OnFailure = "Falla"
-    }, new { @class = "btn btn-success" })
-<br />*@
 
 
 
@@ -548,11 +530,6 @@
                     }
                 });
             };
-
-
-
-
-
         });
 
         //en caso de ser exitosa la llamada al controlador
@@ -583,6 +560,7 @@
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
                     $.BloqueoPantalla = true;
+                    $(".jumbotron.problemapantalla").remove();
                     $("#TABDocumentacion i").remove();
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden","true");
