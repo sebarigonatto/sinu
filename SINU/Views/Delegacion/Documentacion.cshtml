@@ -12,7 +12,7 @@
     <ul role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
         <li class="nav-item flex-sm-fill" data-placement="top">
             <a class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                Documentacion de @Model.NomyApe N°Inscripcion:@Model.ID_PER
+                Documentacion de @Model.NomyApe N° de Preinscripcion:@ViewBag.NInscripcion
             </a>
         </li>
     </ul>
@@ -88,7 +88,7 @@
                         <li class="nav-item flex-md-fill bli" id="ListaProblemaAB">
                             <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ListaProblema" role="tab" aria-controls="ListaProblema" aria-selected="false">
                                 Verificacion de Documentacion
-                                @*<span class="fa fa-check-circle" id="CheckVal8" hidden></span>*@
+                                <span class="fa fa-check-circle" id="CheckVal9" hidden></span>
                             </a>
                         </li>
                         <li class="nav-item flex-md-fill bli" id="ValidarTAB">
@@ -404,28 +404,33 @@
                     </nav>
                     <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
                         @*<h2>Validar Datos</h2>*@
-                        <br />
                         <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                            <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
+                            @Ajax.ActionLink("Comfirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                            {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "Exito(data,status,xhr)",
+                                            OnFailure = "Falla"
+                                            }, new { @id = "BTValidar", @class = "btn btn-success w-25" })
+                            <hr />
                             <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
                             @Ajax.ActionLink("Volver Etapa Anterior", "VolverEtapa", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                           {
                                             HttpMethod = "POST",
                                             OnSuccess = "Exito(data,status,xhr)",
                                             OnFailure = "Falla"
-                                          }, new { @id = "BTValidar", @class = "btn btn-success" })
+                                          }, new { @id = "BTValidar", @class = "btn btn-warning w-25" })
                             <hr />
-                            <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
-                            @Ajax.ActionLink("Comfirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                          {
-                                            HttpMethod = "POST",
-                                            OnSuccess = "Exito(data,status,xhr)",
-                                            OnFailure = "Falla"
-                                          }, new { @id = "BTValidar", @class = "btn btn-success" })
-
-
-
-
-
+                            <p>En el caso que caso que usted considera que el postulanet no es apto para seguir el proceso de inscripcion.</p>
+                            
+                                @Ajax.ActionLink("Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                                          {
+                                                                            HttpMethod = "POST",
+                                                                            OnSuccess = "Exito(data,status,xhr)",
+                                                                            OnFailure = "Falla"
+                                                                          }, new { @id = "BTValidar", @class = "fa fa-check btn btn-danger w-25" })
+                          
+                            
                             @*<button type="submit" class="btn btn-primary habil" value="Validado">Confirmar</button>*@
 
                         </div>
