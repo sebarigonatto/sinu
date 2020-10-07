@@ -6,7 +6,7 @@
 
     List<ConsultaProgramada> Consulta = (new SINUEntities()).ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList();
     string referencia = "";
-
+    String activar = "";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -24,8 +24,9 @@
                     @foreach (var item in Consulta)
                     {
                         referencia = "#Consulta" + item.IdConsulta.ToString();
+                        activar = ((Int32)ViewBag.ActivarId) == item.IdConsulta ? " active " : "";
                         <li class="nav-item flex-md-fill bli">
-                            <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="@referencia" role="tab" aria-controls="XXXXX" aria-selected="false">
+                            <a class="nav-link text-uppercase font-weight-bold rounded-0 @activar atab" data-toggle="tab" href="@referencia" role="tab" aria-controls="XXXXX" aria-selected="false">
                                 @item.NombreMenu
                             </a>
                         </li>
@@ -42,8 +43,9 @@
                 @foreach (var item in Consulta)
                 {
                     referencia = "Consulta" + item.IdConsulta.ToString();
+                    activar = ((Int32)ViewBag.ActivarId) == item.IdConsulta ? "show active" : "";
 
-                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="@referencia">
+                    <div class="pos-f-t collapse tab-pane fade @activar tab-nav" id="@referencia">
                         @Html.Action(item.Action, item.Controller, null)
                     </div>
                 }

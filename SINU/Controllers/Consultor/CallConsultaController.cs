@@ -48,7 +48,7 @@ namespace SINU.Controllers.Consultor
         }
 
         /// <summary>Esta rutina InscriptosPorModalidad es una SUBCONSULTA que es disparada desde un link  
-        /// generado en la consulta TotalesPorModalidadyGenero
+        /// generado en la CONSULTA TotalesPorModalidadyGenero
         /// Si la ModalidadElegida es TODOS muestra todos los inscriptos sin discriminar
         /// Si la ModalidadElegida es otra cosa muestra los datos según la modalidad elegida
         /// </summary>
@@ -56,6 +56,8 @@ namespace SINU.Controllers.Consultor
         /// <returns>Devuelve los inscriptos de la vista vConsultaInscripciones pero filtrado por modalidad dada</returns>
         public ActionResult InscriptosPorModalidad(string ModalidadElegida)
         {
+            //busco el id que le corresponde a la consulta original TotalesPorModalidadyGenero
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalesPorModalidadyGenero").Select(m => m.IdConsulta).FirstOrDefault();
             //si la modalidad elegida es string, el signo ?? Verifica si esta nula dicha var, asignandole lo q sigue a ella, en este caso "" , de lo contrario queda con su valor original
             ModalidadElegida = ModalidadElegida ?? "";
             List<vConsultaInscripciones> Listado;
