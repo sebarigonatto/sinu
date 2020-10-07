@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>CONSULTAS</h2>
+@*<h2>CONSULTAS</h2>*@
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -93,17 +93,17 @@
                             Total Postulantes
                         </a>
                     </li>
-                    <li class="nav-item flex-sm-fill bli">
+                    @*<li class="nav-item flex-sm-fill bli">
                         <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" data-toggle="tab" href="#Consulta2" role="tab" aria-controls="DocuPenal" aria-selected="false">
                             Inscriptos por Modalidad
                         </a>
-                    </li>
+                    </li>*@
                     <li class="nav-item flex-md-fill bli">
                         <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta3" role="tab" aria-controls="Domicilio" aria-selected="false">
                             Totales Por Modalidad y Genero
                         </a>
                     </li>
-                    <li class="nav-item flex-md-fill bli">
+                    @*<li class="nav-item flex-md-fill bli">
                         <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta4" role="tab" aria-controls="Estudios" aria-selected="false">
                             Estudios
                         </a>
@@ -132,7 +132,7 @@
                         <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#Consulta9" role="tab" aria-controls="Familia" aria-selected="false">
                             Familia
                         </a>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </nav>
@@ -140,49 +140,50 @@
 
         <div class="col-md-9 borderdiv1">
             <div class="tab-content TABMovil" id="TabDocumentacion">
+                @* VISTA DE TOTAL DE POSTULANTES *@
                 <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="Consulta1">
                     @Html.Action("ConsultaTotalPostulantes", "CallConsulta", null)
                 </div>
-                @* VISTA DE Antecedentes Penales *@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta2">
+                @* VISTA DE INSCRIPTOS POR MODALIDAD *@
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta2">
                     @Html.Action("InscriptosPorModalidad", "CallConsulta", null)
 
-                </div>
-
+                </div>*@
+                @* VISTA DE TOTALES POR MODALIDAD Y GENERO *@
                 <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta3">
                     @Html.Action("TotalesPorModalidadyGenero", "CallConsulta", null)
 
                 </div>
 
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta4">
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta4">
                     sgagdf
-                </div>
+                </div>*@
 
 
                 @* VISTA DE IDIOMAS *@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta5">
-                    gfjytjtyj
-                </div>
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta5">
+            gfjytjtyj
+        </div>*@
 
                 @* VISTA DE ACTIVIDAD MILITAR *@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta6">
-                    454645
-                </div>
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta6">
+            454645
+        </div>*@
 
                 @* VISTA DE SITUACION OCUPACIONAL*@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta7">
-                    dfsgh
-                </div>
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta7">
+            dfsgh
+        </div>*@
 
                 @* VISTA DE ANTROPOMETRIA *@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta8">
-                    kuktyu7kyu
-                </div>
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta8">
+            kuktyu7kyu
+        </div>*@
 
                 @* VISTA DE FAMILIA*@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta9">
-                    try345345
-                </div>
+                @*<div class="pos-f-t collapse tab-pane fade tab-nav" id="Consulta9">
+            try345345
+        </div>*@
 
 
             </div>

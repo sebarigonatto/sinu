@@ -29,6 +29,13 @@ namespace SINU.Controllers.Consultor
             }
             return PartialView(Datos);
         }
+        /// <summary>Esta rutina es una subconsulta que es disparada desde un link  
+        /// generado en la consulta TotalesPorModalidadyGenero
+        /// Si la ModalidadElegida es TODOS muestra todos los inscriptos sin discriminar
+        /// Si la ModalidadElegida es otra cosa muestra los datos según la modalidad elegida
+        /// </summary>
+        /// <param name="ModalidadElegida">Este parametro es la modalidad por la cual desea ver los datos filtrados</param>
+        /// <returns>Devuelve los inscriptos de la vista vConsultaInscripciones pero filtrado por modalidad dada</returns>
         public ActionResult InscriptosPorModalidad(string ModalidadElegida)
         {
           //si la modalidad elegida es string, el signo ?? Verifica si esta nula dicha var, asignandole lo q sigue a ella, en este caso "" , de lo contrario queda con su valor original
