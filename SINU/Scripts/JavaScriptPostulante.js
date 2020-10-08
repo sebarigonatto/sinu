@@ -667,6 +667,10 @@ $(document).ready(function () {
             //alert("no");
             $(".si input,.si select").val("");
             $(".no").show();
+            $(".si select").selectpicker("refresh");
+            $(".si :input").validate().resetForm();
+            $(".si :input").removeClass("has-error");
+
             $(".si").hide();
         };
     };

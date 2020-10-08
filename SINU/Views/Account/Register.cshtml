@@ -119,7 +119,11 @@
             noneSelectedText: 'Ninguna Opcion Seleccionada'
 
         });
-        $(document).ready( function () {
+    $(document).ready(function () {
+        if ($("#IdInstituto").val()!="") {
+            $("#IdInstituto").next("button[data-id='IdInstituto']").attr('disabled', 'true').children().css('color', 'black !important');
+
+        }
             $("#Contraseña").attr("data-toggle", "tooltip")
                 .attr("data-placement", "top")
                 .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder")

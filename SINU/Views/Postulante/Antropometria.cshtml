@@ -30,7 +30,7 @@ new { id = "BeginFormAntropometria" }))
                 <img src="~/Imagenes/hombremedidas.jpg" class="img-fluid" />
                 <div class="form-group">
                     @Html.LabelFor(model => model.Genero, htmlAttributes: new { @class = "control-label col-md-6" })
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         @Html.TextBoxFor(model => model.Genero,new { @class = "form-control", @id = "Sexo" , @readonly = "readonly" })
                     </div>
                 </div>
@@ -43,7 +43,7 @@ new { id = "BeginFormAntropometria" }))
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Peso, htmlAttributes: new { @class = "control-label col-md-6" })
+                    @Html.LabelFor(model => model.Peso, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(model => model.Peso, new { @class = "form-control", @id = "peso" })
                         @Html.ValidationMessageFor(model => model.Peso, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@ new { id = "BeginFormAntropometria" }))
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.IMC, htmlAttributes: new { @class = "control-label col-md-6" })
+                    @Html.LabelFor(model => model.IMC, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-10">
                         @Html.TextBoxFor(model => model.IMC,  new { @class = "form-control", @id = "imc", @readonly = "readonly" })
                         @Html.ValidationMessageFor(model => model.IMC, "", new { @class = "text-danger" })

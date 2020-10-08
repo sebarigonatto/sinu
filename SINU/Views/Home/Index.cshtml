@@ -48,6 +48,7 @@
         .back-color {
             background-color: #1717178a !important;
         }
+
         titulo {
             font-size: 60px;
         }
@@ -56,11 +57,12 @@
             flex: none !important;
         }
     }
- 
+
     @@media screen and (min-width: 731px) {
         .tcard {
             font-size: 40px;
         }
+
         titulo {
             font-size: 90px;
         }
@@ -71,6 +73,7 @@
             font-size: 50px;
             text-align: center;
         }
+
         .tcard {
             font-size: 25px;
         }
@@ -78,6 +81,7 @@
         .back-color {
             background-color: #000000d4 !important
         }
+
         .card1 {
             width: 100% !important
         }
@@ -180,7 +184,7 @@
         </div>
     </div>
     <!-- /.row -->
-    <div class="card-deck justify-content-center">
+    <!--<div class="card-deck justify-content-center">
         @{
             List<SINU.Models.vPeriodosInscrip> Periodos = Model.ToList();
             Int32 inst = 0; //indice del vector vPeriodosInscrip indicando que Instituto se esta creando su tarjeta
@@ -227,13 +231,54 @@
                     </div>
                 </div>
             }
-        }
+        }-->
 
         @* Link de ¨Plantillas https://getbootstrap.com/docs/4.1/examples/#content *@
 
 
-    </div>
+    <!--</div>-->
+    <br />
+    <div class="card-deck justify-content-center">
+        @{
+            int[] ordenID = new[] { 9, 2, 10, 4, 6 };
+            List<SINU.Models.vPeriodosInscrip> Periodos1 = Model.ToList();
+            foreach (var item in ordenID)
+            {
+                var inscripINST = Periodos1.Where(m => m.IdInstitucion == item).OrderBy(m=>m.FechaInicio).ToList();
+                if (inscripINST.Count() > 0)
+                {
+                    <div class="card card1" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17)">
+                        @{string imagen1 = item + ".png"; }
+                        <img class="card-img imgi" src="~/Imagenes/@imagen1" alt="Card image cap" style="">
+                        <div class="card-header container-fluid">
+                            <h3 class="my-0 font-weight-normal ">@inscripINST[0].Titulo @inscripINST[0].NombreInst</h3>
+                        </div>
 
+                        <div class="card-body container-fluid">
+                            @foreach (var item2 in inscripINST)
+                            {
+                                <h5>Inicio @item2.FechaInicio.ToString("dd/MM/yyyy")</h5>
+                                <h5>Cierre @item2.FechaFinal.ToString("dd/MM/yyyy")</h5>
+                                if (!User.Identity.IsAuthenticated)
+                                {
+                                    <div class="row card-footer lead justify-content-center">
+                                        @Html.ActionLink("Inscribite", "Register", "Account", new { idInstitucion = item2.IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+
+                                    </div>
+                                }
+
+                            }
+                        </div>
+                    </div>
+                }
+            }
+
+
+
+        }
+
+
+    </div>
     <!-- /.row -->
     <hr>
 

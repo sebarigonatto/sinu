@@ -238,6 +238,10 @@ button[role="combobox"] {
         box-shadow: 0 0 0 0.2rem rgb(255 255 255 / 25%);
     }
 
-.field-validation-error, .field-validation-error span {
+.field-validation-error span {
     float: left !important;
+    margin-bottom: 0.5rem;
+}
+.field-validation-valid {
+    margin-bottom: 1rem;
 }
