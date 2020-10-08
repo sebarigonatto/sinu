@@ -7,15 +7,31 @@ using SINU.Models;
 
 namespace SINU.Controllers.Consultor
 {
+    /// <summary>Este Controlador CallConsulta depende de las Consultas Principales
+    /// que se encuentran escritas en la tabla ConsultaProgramada.
+    /// Cada método ACTION aquí tiene el nombre exacto que se carga
+    /// en el campo ACTION de la tabla ConsultProgramada
+    /// TODO registro en la tabla ConsultaProgramada debe tener un dato en ACTION
+    /// que se encuentre en este Controller y si aun no se creo su ACTION
+    /// se colocara el action por DEFUALT: FaltaCrearNuevoAction
+    /// </summary>
     public class CallConsultaController : Controller
-    {
-        // GET: CallConsulta
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
+    { 
         private SINUEntities db = new SINUEntities();
+        /// <summary>Pantalla principal que genera el indice lateral de Consultas
+        /// 
+        /// </summary>
+        /// <param name="id">parameto opcional que es el nro de id de consulta que deseo 
+        /// este activada o seleccionada</param>
+        /// <returns></returns>
+        public ActionResult Index(int? id)
+        {
+            //Si no dan un id asume el que tenga id de consulta en 1, 
+            //si no hay ninguno en id 1 simplemente no selecciona ninguno
+            ViewBag.ActivarId = id ?? 1;
+            return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
+        }
+
         /// <summary>FaltaCrearNuevoAction Es una rutina modelo 
         /// que se usa como plantilla para crear nuevas actions para nuevas CONSULTAS PRINCIPALES.
         /// Tiene asociada una View que solo emite el mensaje que falta desarrollar elementos.
