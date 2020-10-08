@@ -487,15 +487,7 @@ $(document).ready(function () {
                     UltimoAñoSINO();
                 });
 
-                function UltimoAñoSINO() {
-                    //alert("asda");
-                    if ($("#UltimoAño").val() == "true") {
-                        $("#CANTMATERIA, #ULT_AÑO").hide()
-                        $("#CANTMATERIA input, #ULT_AÑO input").val("");
-                    } else {
-                        $("#CANTMATERIA, #ULT_AÑO").show();
-                    }
-                }
+                
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -607,14 +599,25 @@ $(document).ready(function () {
     function EgresoSINO() {
         if ($("#TerminoEST").val() == "true") {
             $("#PROMEDIO").show();
-            $("#CurUltAño").hide();
+            UltimoAñoSINO();
+            $("#CurUltAño,#CANTMATERIA,#ULT_AÑO").hide();
+            $("#CANTMATERIA :input,#ULT_AÑO :input").val("");
         } else {
             $("#CurUltAño").show();
+            UltimoAñoSINO();
             $("#PROMEDIO").hide();
             $("#PROMEDIO input").val("");
         };
     };
-
+    function UltimoAñoSINO() {
+        //alert("asda");
+        if ($("#UltimoAño").val() == "true") {
+            $("#CANTMATERIA, #ULT_AÑO").hide()
+            $("#CANTMATERIA input, #ULT_AÑO input").val("");
+        } else {
+            $("#CANTMATERIA, #ULT_AÑO").show();
+        }
+    }
 
 
 
@@ -664,6 +667,10 @@ $(document).ready(function () {
             //alert("no");
             $(".si input,.si select").val("");
             $(".no").show();
+            $(".si select").selectpicker("refresh");
+            $(".si :input").validate().resetForm();
+            $(".si :input").removeClass("has-error");
+
             $(".si").hide();
         };
     };

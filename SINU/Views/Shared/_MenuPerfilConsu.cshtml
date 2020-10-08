@@ -16,6 +16,13 @@ ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS/REVISADOS:
 TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
 -->
 <li class="nav-item">@Html.ActionLink("Principal", "Index", "Consultor", null, htmlAttributes: new { @class = "nav-link" })</li>
+
+<!-- ESTE LINK "TABLA" ES TRANSITORIO Y DEBERÁ SER ELIMINADO UNA VEZ FINALIZADA LA CREACION DE ESTA APLICACION 
+    ES SOLO A LOS FINES DE CARGAR Y MODIFICAR LA TABLA PARA NUEVOAS CONSULTAS-->
+<li class="nav-item">@Html.ActionLink("TABLA", "Index", "ConsultaProgramadas", null, htmlAttributes: new { @class = "nav-link" })</li>
+
+<!-- Combo desplegable en el menu usado al principio y cambiado por el menu lateral en el INDEX de CallConsulta-->
+<!--
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Consultas
@@ -27,4 +34,4 @@ TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
         <a class="dropdown-item" href="">Por Periodo de inscripciones</a>
     </div>
 </li>
-
+-->

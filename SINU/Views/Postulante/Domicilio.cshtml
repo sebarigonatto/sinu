@@ -125,7 +125,7 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCalle, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCalle, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DomicilioVM.EventualCalle, new { htmlAttributes = new { @class = "form-control  " } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualCalle, "", new { @class = "text-danger" })
@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualNumero, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualNumero, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DomicilioVM.EventualNumero, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualNumero, "", new { @class = "text-danger" })
@@ -141,14 +141,14 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualPiso, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualPiso, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DomicilioVM.EventualPiso, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualPiso, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualUnidad, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualUnidad, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DomicilioVM.EventualUnidad, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualUnidad, "", new { @class = "text-danger" })
@@ -158,7 +158,7 @@
                 <div class="col-md-6">
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualPais, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualPais, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                             @Html.DropDownListFor(model => model.vPersona_DomicilioVM.EventualIdPais, new SelectList(Model.sp_vPaises_ResultVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualPais, "", new { @class = "text-danger" })
@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualProvincia, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualProvincia, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.TBoxEventualProvincia, new { @class = "form-control Eventual", @id = "ProvinciaE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.TBoxEventualProvincia, "", new { @class = "text-danger Eventual" })
@@ -178,7 +178,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualLocalidad, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DomicilioVM.EventualLocalidad, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualLocalidad, new { @class = "form-control Eventual", @id = "LocalidadE" })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualLocalidad, "", new { @class = "text-danger Eventual" })
@@ -190,7 +190,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-6" })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE" })
                             <div class="h-100"></div>

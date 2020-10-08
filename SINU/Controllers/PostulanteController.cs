@@ -368,7 +368,6 @@ namespace SINU.Controllers
                     IdPersona = ID_persona
 
                 };
-                //d.Anexo2 = (System.IO.File.Exists("~/Documentacion/ArchivoDocuPenal/" + ID_persona + "_Anexo2*"))?"":
                 return PartialView(d);
             }
             catch (Exception ex)
@@ -425,8 +424,6 @@ namespace SINU.Controllers
             return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
 
         }
-
-
 
         //----------------------------------Domicilio----------------------------------------------------------------------//
 
@@ -1178,7 +1175,6 @@ namespace SINU.Controllers
                     pers.IDETAPA = "5,0";
                 };
 
-
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
@@ -1311,6 +1307,15 @@ namespace SINU.Controllers
             {
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+        /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
+
+        public ActionResult DocumentacionAnexo()
+        {
+            DocuAnexoVM asd= new DocuAnexoVM() { 
+            IdPersona=1369};
+            
+            return PartialView("DocumentacionAnexo",asd);
         }
 
 

@@ -8,8 +8,10 @@
     @ViewBag.Title
 </h2>
 
-<div>
-    @Html.ActionLink("Atras", "Index", "ConsultaProgramadas", new { id = ViewBag.ActivarId },null)
+<div><!-- en esta linea estoy llamando al Index de ConsultaProgramadas 
+         con el id de la consulta que deseo se encuentre activa 
+         cuando arme el menú lateral de consultas-->
+    @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId },null)
 </div>
 <table class="table">
     <thead>
