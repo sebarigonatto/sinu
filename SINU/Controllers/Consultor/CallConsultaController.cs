@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
-
+using SINU.Authorize;
 namespace SINU.Controllers.Consultor
 {
     /// <summary>Este Controlador CallConsulta depende de las Consultas Principales
@@ -15,6 +15,7 @@ namespace SINU.Controllers.Consultor
     /// que se encuentre en este Controller y si aun no se creo su ACTION
     /// se colocara el action por DEFUALT: FaltaCrearNuevoAction
     /// </summary>
+    [AuthorizacionPermiso("ListarRP")]
     public class CallConsultaController : Controller
     { 
         private SINUEntities db = new SINUEntities();
