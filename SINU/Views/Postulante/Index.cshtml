@@ -174,7 +174,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 1 })
                                         }
@@ -192,7 +192,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 2 })
                                         }
@@ -212,7 +212,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[2])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[2])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 3 })
                                         }
@@ -233,7 +233,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 4 })
                                         }
@@ -255,7 +255,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 5 })
                                         }
@@ -274,7 +274,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 6 })
                                         }
@@ -293,7 +293,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 7 })
                                         }
@@ -312,7 +312,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 8 })
                                         }
@@ -331,7 +331,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[8])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[8])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 9 })
                                         }
@@ -349,7 +349,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade nav-tab pt-4" id="DocuAnexoNAV">
-                                        @if ((int)((object[])Model.ListProblemaCantPantalla[9])[2] > 0 && ViewBag.ValidoUnaVez)
+                                        @if ((int)((object[])Model.ListProblemaCantPantalla[9])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 10 })
                                         }
@@ -523,11 +523,11 @@
             });
 
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
-           
 
-            //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla
-            //alert("@ViewBag.ValidoUnaVez");
-            if ("@ViewBag.ValidoUnaVez"=="True") {
+
+            //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
+            //alert("@Session["ValidoUnaVez"]");
+            if ("@Session["ValidoUnaVez"]"=="True") {
                 var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
                 var jsonProblemas = JSON.parse(Problemas);
                 $.each(jsonProblemas, function (index, item) {
@@ -560,10 +560,17 @@
             } else {
                 $("#" + IDETP[IDETP.length - 1] + " a").tab("show");
             }
-              @{
+               @{
                   Session["FamiTable"] = false;
                }
+            if ("@Session["DeleConsul"]" == "True") {
+                $.each(SolapaPrincipales, function (index, item) {
+                    BloqueaPantalla(item[1]);
+                });
+                $("#TABDocumentacion i").remove();
+                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
 
+            }
         });
 
         //en caso de ser exitosa la llamada al controlador

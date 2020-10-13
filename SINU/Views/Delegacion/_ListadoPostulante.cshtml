@@ -56,7 +56,7 @@
                     <td class="align-content-md-center">
                         @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
                         &ensp;
-                        @Html.ActionLink(" ", "Details", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
+                        @Html.ActionLink(" ", "Index","Postulante", new { ID_Postulante = item.IdPersona }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
 
                         &ensp;
 

@@ -31,16 +31,19 @@ namespace SINU.Controllers
 
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
-        [Authorize(Roles = "Postulante")]
-        public ActionResult Index()
+        //[Authorize(Roles = "Postulante")]
+        public ActionResult Index(int? ID_Postulante)
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
                 IDPersonaVM pers = new IDPersonaVM
                 {
-                    ID_PER = db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
+                    ID_PER =(ID_Postulante != null)? (int)ID_Postulante: db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
+
+                Session["DeleConsul"] = ID_Postulante != null;
+
                 //cargo los ID de las etapas por las que paso el postulante
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                 //cargo esto ID etapas en un string
@@ -62,9 +65,9 @@ namespace SINU.Controllers
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
                 ViewBag.ValidacionEnCurso = (Secuencias[0] == 14);
                 //Boolenao de si paso por validacion
-                ViewBag.ValidoUnaVez = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13);
+                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13);
 
-                //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
+                //Cargo listado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
                 db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
@@ -368,6 +371,14 @@ namespace SINU.Controllers
                     IdPersona = ID_persona
 
                 };
+
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string archivo = ID_persona + "_Certificado.*";
+                string[] filePaths = Directory.GetFiles(CarpetaDeGuardado, archivo);
+                //ViewBag.docuCertificado = filePaths[0];
+
+
                 return PartialView(d);
             }
             catch (Exception ex)
@@ -401,7 +412,10 @@ namespace SINU.Controllers
                     ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo;
                     data.ConstanciaAntcPenales.SaveAs(guarda);
+                  
+
                     return Json(new { success = true, msg = "Se Guardaron correctamnete los archivos seleccionados." });
+
                 }
                 return Json(new { success = false, msg = "Modelo no VALIDO" });
             }
