@@ -388,8 +388,11 @@
             if (URLanterior.indexOf("Delegacion") > 0) {
                 var index = URLanterior.indexOf("Documentacion");
                 var href = URLanterior.substring(index);
-                $("#BTvolver").attr("href","/Delegacion/"+href);
-
+                $("#BTvolver").attr("href", "/Delegacion/" + href);
+            } else {
+                var index = URLanterior.indexOf("ID_Postulante");
+                var href = URLanterior.substring(index);
+                $("#BTvolver").attr("href", "/Postulante?" + href);
             }
             //array de la etapa del postulante
 
