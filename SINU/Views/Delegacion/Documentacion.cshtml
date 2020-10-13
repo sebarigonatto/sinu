@@ -87,8 +87,8 @@
                             </a>
                         </li>
                         <li class="nav-item flex-md-fill bli" id="ListaProblemaAB">
-                            <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ListaProblema" role="tab" aria-controls="ListaProblema" aria-selected="false">
-                                Verificacion de Documentacion
+                            <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ListaProblema" role="tab" aria-controls="DocuAnexo" aria-selected="false">
+                                Documentacion Presentada
                                 <span class="fa fa-check-circle" id="CheckVal9" hidden></span>
                             </a>
                         </li>
@@ -480,7 +480,7 @@
         $(document).ready(function () {
             $.BloqueoPantalla = true;
             $(".BTAcciones").html("");
-            $("#TABBloqueo :input,#TABBloqueo input").attr("disabled", "true");
+            $("#TABBloqueo :input,#TABBloqueo input").not(".dataTables_wrapper input[type='search']").attr("disabled", "true");
 
             $(".habil").removeAttr("disabled");
             $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").not("[role='combobox']").removeClass("fa-edit").addClass("fa-eye");
