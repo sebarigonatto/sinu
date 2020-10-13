@@ -8,76 +8,124 @@
 <h2>Detalle</h2>
 
 <div>
-    @*<h4>ResGrupo</h4>*@
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
-        </dt>
+    <table class="table table-filters" id="le-filters">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_AnioSig)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_Dia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_Al_Mes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EdadMax)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdEstadoCivil)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Edad_a_fecha)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Edad_Al_AnioSig)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Edad_Al_Dia)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Edad_Al_Mes)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.EdadMinCAutoriz)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.EdadMin)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.EdadMax)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.IdEstadoCivil)
+                </td>             
 
-        <dd>
-            @Html.DisplayFor(model => model.Edad_Al_AnioSig)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Edad_Al_Dia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Edad_Al_Dia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Edad_Al_Mes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Edad_Al_Mes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EdadMinCAutoriz)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EdadMinCAutoriz)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EdadMin)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EdadMin)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EdadMax)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EdadMax)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstadoCivil)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IdEstadoCivil)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Edad_a_fecha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Edad_a_fecha)
-        </dd>
-
-    </dl>
+                <td>
+                    @Html.DisplayFor(model => model.Edad_a_fecha)
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 <p>
     @Html.ActionLink("Editar", "Edit", new { id = Model.IdResGrupo }) |
     @Html.ActionLink("Volver", "Index")
 </p>
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                    }]
+            });
+
+        });
+    </script>
+}

@@ -76,7 +76,7 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
         [Required]
-        [Display(Name = "Sexo")]
+        [Display(Name = "Genero")]
         public int IdSexo { get; set; }
         [Required]
         [Display(Name = "Oficinas y Delegaciones")]
@@ -126,7 +126,8 @@ namespace SINU.Models
         public string Genero { get; set; }
         [Required]
         [Display(Name = "Altura(en cm)")]
-        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0  
+        [Range(100,300,ErrorMessage ="Altura ingresada no valida")]
         public Nullable<int> Altura { get; set; }
         [Required]
         [Display(Name = "Peso(en kg)")]
@@ -475,7 +476,7 @@ namespace SINU.Models
         [Display(Name = "Parentesco")]
         public Nullable<int> idParentesco { get; set; }
         [Required]
-        [Display(Name = "Sexo")]
+        [Display(Name = "Genero")]
         public Nullable<int> IdSexo { get; set; }
         [Required]
         [Display(Name = "Estado Civil")]
