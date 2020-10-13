@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.IO;
 using SINU.ViewModels;
+using System.Windows.Media.Imaging;
 
 namespace SINU.Models
 {
@@ -136,7 +137,6 @@ namespace SINU.Models
                     DisableTempFileLocking = true
                  
                 };
-
                 Engine.Razor = RazorEngineService.Create(configuracion);
 
                 string Carpeta = AppDomain.CurrentDomain.BaseDirectory;

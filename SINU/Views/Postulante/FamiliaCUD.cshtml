@@ -397,11 +397,11 @@
                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
                 IDETP.splice(IDETP.length - 1);
-                var bloqueo_vistas = IDETP.indexOf("5") != -1;
+                var bloqueo_vistas = "@ViewBag.ValidacionEnCurso"=="True";
                 $.BloqueoPantalla = bloqueo_vistas;
                 if (bloqueo_vistas) {
                     $(".BTAcciones").html("");
-                    $("#TabFamilia :input,#TabFamilia input").attr("disabled", "true");
+                    $("#TabFamilia :input").attr("disabled", "true");
                     $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
                 }
             }
@@ -427,7 +427,7 @@
 
                 }
 
-               
+
                 //alert("es un postulante");
                 //Deshabilito los input de los formularios
                 $("form :input,form input").attr("disabled", "true");
@@ -519,7 +519,7 @@
                 function redirige() {
                     window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.IDperFAMI + "&idPostulante=" + response.IDperPOST;
                 }
-            }   
+            }
             switch (response.form) {
                  case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);

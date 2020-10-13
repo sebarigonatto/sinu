@@ -1162,8 +1162,8 @@ namespace SINU.Controllers
             if (idPersonaFamilia != 0)
             {
                 string mailLogin = HttpContext.User.Identity.Name.ToString();
-                bool EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id) != null;
-                if (EsPostulante)
+                var EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id);
+                if (EsPostulante != null )
                 {
                     var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                     EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
@@ -1178,11 +1178,13 @@ namespace SINU.Controllers
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
+                //verifico si la persona familiar es postulante
                 if (p != null)
                 {
                     //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
                     pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER).FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
+                ViewBag.ValidacionEnCurso =  db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona==idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0]==14;
 
             }
             else
@@ -1330,6 +1332,7 @@ namespace SINU.Controllers
                 if (antropo != null)
                 {
                     DataProblemaEncontrado dataProblemaEncontrado;
+                    //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
                     if (APLICAAltura == "NO" && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion==48)==null)
                     {
@@ -1343,7 +1346,7 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(dataProblemaEncontrado);
 
                     }
-
+                    //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAImc = VerificaAltIcm(ID_persona, "imc", (float)antropo.IMC).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
                     if (APLICAImc == "NO" && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 49) == null)
                     {
@@ -1357,8 +1360,26 @@ namespace SINU.Controllers
                     }
                     db.SaveChanges();
 
-                }
+                };
 
+                //Envio de Mail para notificar a la delegacion correpondiente
+                int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdDelegacionOficinaIngresoInscribio;
+                int ID_INSCRIP=db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+                var grupoDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
+                ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante();
+                foreach (var dele in grupoDelegacion)
+                {
+                    var idAsp_delegacion = db.AspNetUsers.FirstOrDefault(m => m.Email == dele.Email).Id;
+                    //armo modelo para armar el correo
+                    datosMail.Apellido = dele.Apellido;
+                    datosMail.Apellido_P = antropo.Postulante.Persona.Apellido;
+                    datosMail.Dni_P = antropo.Postulante.Persona.DNI;
+                    datosMail.IdInscripcion_P = ID_INSCRIP;
+                    datosMail.Nombre_P = antropo.Postulante.Persona.Nombres;
+                    datosMail.url = Url.Action("Documentacion", "Delegacion", new { id = ID_persona }, protocol: Request.Url.Scheme);
+
+                    Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
+                };
 
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 14, "", "");

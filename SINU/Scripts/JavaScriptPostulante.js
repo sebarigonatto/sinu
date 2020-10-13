@@ -668,9 +668,6 @@ $(document).ready(function () {
             $(".si input,.si select").val("");
             $(".no").show();
             $(".si select").selectpicker("refresh");
-            $(".si :input").validate().resetForm();
-            $(".si :input").removeClass("has-error");
-
             $(".si").hide();
         };
     };
@@ -743,7 +740,7 @@ $(document).ready(function () {
         };
     });
     function CALIMC(altura, peso, anuncio) {
-        if (altura != "" && peso != "") {
+        if (altura != "" && peso != "" && $("#altura").valid() && $("#peso").valid()) {
             var Altura = altura / 100,
                 Peso = peso.replace(",", ".");
 
@@ -756,18 +753,23 @@ $(document).ready(function () {
                     } else {
                         anuncio = response.POPUP;
                     };
+                  
+                   
+                };
+                if (anuncio != "") {
                     $("#BTNModal").html("Cerrar");
                     $("#GuardarDTF").css("display", "none");
                     $("#ModalCenterTitle").html("SINU:");
                     $("#TextModal").html(anuncio);
                     $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
-                };
-                
+                }
                
+                    
             });
+           
             $("#imc").val(imc.toFixed(2).replace(".", ","));
 
-        } else if(anuncio!="") {
+        } else if (anuncio != "") {
             $("#BTNModal").html("Cerrar");
             $("#GuardarDTF").css("display", "none");
             $("#ModalCenterTitle").html("SINU:");
@@ -775,7 +777,6 @@ $(document).ready(function () {
             $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
         }
     }
-
 
 
     $("#EstadoCivil").on("change", function () {
