@@ -18,6 +18,8 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using System.ServiceModel.Dispatcher;
+using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace SINU.Controllers
 {
@@ -52,18 +54,19 @@ namespace SINU.Controllers
                 pers.NoPostulado = (Secuencias[0] == 12);
 
                 //ver como mostrar esta pantalla de si fue 
-                if (pers.NoPostulado){
+                if (pers.NoPostulado)
+                {
                     ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
                 };
-               
+
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
-                ViewBag.ValidacionEnCurso = (Secuencias[0]==14);
+                ViewBag.ValidacionEnCurso = (Secuencias[0] == 14);
                 //Boolenao de si paso por validacion
-                ViewBag.ValidoUnaVez =(Secuencias.IndexOf(14)!=-1) && (Secuencias[0]==13);
+                ViewBag.ValidoUnaVez = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13);
 
                 //Cargo llistado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
-                db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta,m.CantComentarios }));
+                db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
@@ -365,7 +368,6 @@ namespace SINU.Controllers
                     IdPersona = ID_persona
 
                 };
-                //d.Anexo2 = (System.IO.File.Exists("~/Documentacion/ArchivoDocuPenal/" + ID_persona + "_Anexo2*"))?"":
                 return PartialView(d);
             }
             catch (Exception ex)
@@ -422,8 +424,6 @@ namespace SINU.Controllers
             return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
 
         }
-
-
 
         //----------------------------------Domicilio----------------------------------------------------------------------//
 
@@ -733,7 +733,7 @@ namespace SINU.Controllers
                     //msg:mensjae que figurara en el modal
                     //form: se ejecutar un accion en un switch del script de la vista index
                     //url_Tabla: es el nombre de la accion y colocandole el subfijo NAV es el contenedor de la tabla actual
-                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado",form="Elimina", url_Tabla= "Estudios", url_Controller="Postulante" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado", form = "Elimina", url_Tabla = "Estudios", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
             }
@@ -867,7 +867,7 @@ namespace SINU.Controllers
                 var regidioma = db.PersonaIdioma.FirstOrDefault(m => m.IdPersonaIdioma == ID);
                 db.PersonaIdioma.Remove(regidioma);
                 db.SaveChanges();
-                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado",form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" },JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado", form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -1070,7 +1070,7 @@ namespace SINU.Controllers
         {
             try
             {
-                a.LargoFalda??= 0;
+                a.LargoFalda ??= 0;
                 db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
                 return Json(new { success = true, msg = "Se guardaron los DATOS exitosamente." });
             }
@@ -1081,39 +1081,40 @@ namespace SINU.Controllers
 
         }
 
-        public JsonResult VerificaAltIcm(int IdPostulante, string AltIcm, int num)
+        public JsonResult VerificaAltIcm(int IdPostulante, string AltIcm, float num)
         {
             try
             {
-                
                 var FechaNac = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).FechaNacimiento;
                 object sexo = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).IdSexo;
                 string Carrera = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante).CarreraRelacionada;
                 sexo = (Carrera == "Médicos") ? "Medico" : sexo;
-           
+                string PopUp = "";
                 var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).ToList()[0];//db.Postulante.Find(IdPostulante).Inscripcion.ToList()[0].IdModalidad;
-                bool NOaplica=false;
+                string Aplica = "";
                 switch (AltIcm)
-                { 
-                    case "Altura":
+                {
+                    case "altura":
+                        PopUp = db.Configuracion.First(m => m.NombreDato == "PopUpAltura").ValorDato;
                         switch (sexo)
                         {
                             case 1:
-                                NOaplica = (Restric.AlturaMinM > num);
+                                Aplica = (Restric.AlturaMinM > num) ? "NO" : "SI";
                                 break;
                             case 2:
-                                NOaplica = (Restric.AlturaMinF > num);
+                                Aplica = (Restric.AlturaMinF > num) ? "NO" : "SI";
                                 break;
                             case "Medico":
-                                NOaplica = false;
+                                Aplica = "SI";
                                 break;
                         }
                         break;
-                    case "ICM":
-                        NOaplica = (Restric.IMC_max < num || Restric.IMC_min > num);
+                    case "imc":
+                        Aplica = (Restric.IMC_max < num || Restric.IMC_min > num) ? "NO" : "SI";
+                        PopUp = db.Configuracion.First(m => m.NombreDato == "PopUpICM").ValorDato;
                         break;
                 }
-                return Json(new { NOaplica});
+                return Json(new { APLICA = Aplica, POPUP = PopUp, ALTIMC = AltIcm }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception)
@@ -1133,7 +1134,7 @@ namespace SINU.Controllers
             {
                 //List<int> id_PER_FAMI = db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).Select(m => m.IdPersona).ToList();
                 List<sp_vPersona_Familiar_Result> FAMILIARES = db.sp_vPersona_Familiar(ID_persona).ToList();
-            
+
                 return PartialView(FAMILIARES);
             }
             catch (Exception)
@@ -1161,28 +1162,29 @@ namespace SINU.Controllers
             if (idPersonaFamilia != 0)
             {
                 string mailLogin = HttpContext.User.Identity.Name.ToString();
-                bool EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id) != null;
-                if (EsPostulante)
+                var EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id);
+                if (EsPostulante != null )
                 {
                     var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                     EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                     //le coloco 5 por si la pantalla esta cerrada
-                    if(!(bool)db.spTildarPantallaParaPostulate(idPostulante).FirstOrDefault(m=>m.IdPantalla==9).Abierta) pers.IDETAPA += "5,";
+                    if (!(bool)db.spTildarPantallaParaPostulate(idPostulante).FirstOrDefault(m => m.IdPantalla == 9).Abierta) pers.IDETAPA += "5,";
                 }
                 else
                 {
                     pers.IDETAPA = "5,0";
                 };
 
-
                 pers.ID_PER = idPersonaFamilia;
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
+                //verifico si la persona familiar es postulante
                 if (p != null)
                 {
                     //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
                     pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER).FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
+                ViewBag.ValidacionEnCurso =  db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona==idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0]==14;
 
             }
             else
@@ -1207,7 +1209,7 @@ namespace SINU.Controllers
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
         {
 
-            
+
             if (ModelState.IsValid)
             {
                 var datos = fami.vPersona_FamiliarVM;
@@ -1308,6 +1310,15 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
+
+        public ActionResult DocumentacionAnexo()
+        {
+            DocuAnexoVM asd= new DocuAnexoVM() { 
+            IdPersona=1369};
+            
+            return PartialView("DocumentacionAnexo",asd);
+        }
 
 
         /*--------------------------------------------------------------VALIDAR DATOS------------------------------------------------------------------------------*/
@@ -1317,6 +1328,59 @@ namespace SINU.Controllers
         {
             try
             {
+                var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
+                if (antropo != null)
+                {
+                    DataProblemaEncontrado dataProblemaEncontrado;
+                    //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
+                    var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
+                    if (APLICAAltura == "NO" && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion==48)==null)
+                    {
+                        
+                        dataProblemaEncontrado = new DataProblemaEncontrado()
+                        {
+                            Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 48).Descripcion,
+                            IdDataVerificacion = 48,
+                            IdPostulantePersona = ID_persona
+                        };
+                        db.DataProblemaEncontrado.Add(dataProblemaEncontrado);
+
+                    }
+                    //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
+                    var APLICAImc = VerificaAltIcm(ID_persona, "imc", (float)antropo.IMC).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
+                    if (APLICAImc == "NO" && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 49) == null)
+                    {
+                        dataProblemaEncontrado = new DataProblemaEncontrado()
+                        {
+                            Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 49).Descripcion,
+                            IdDataVerificacion = 49,
+                            IdPostulantePersona = ID_persona
+                        };
+                        db.DataProblemaEncontrado.Add(dataProblemaEncontrado);
+                    }
+                    db.SaveChanges();
+
+                };
+
+                //Envio de Mail para notificar a la delegacion correpondiente
+                int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdDelegacionOficinaIngresoInscribio;
+                int ID_INSCRIP=db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+                var grupoDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
+                ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante();
+                foreach (var dele in grupoDelegacion)
+                {
+                    var idAsp_delegacion = db.AspNetUsers.FirstOrDefault(m => m.Email == dele.Email).Id;
+                    //armo modelo para armar el correo
+                    datosMail.Apellido = dele.Apellido;
+                    datosMail.Apellido_P = antropo.Postulante.Persona.Apellido;
+                    datosMail.Dni_P = antropo.Postulante.Persona.DNI;
+                    datosMail.IdInscripcion_P = ID_INSCRIP;
+                    datosMail.Nombre_P = antropo.Postulante.Persona.Nombres;
+                    datosMail.url = Url.Action("Documentacion", "Delegacion", new { id = ID_persona }, protocol: Request.Url.Scheme);
+
+                    Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
+                };
+
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"
                 db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 14, "", "");
                 return Json(new { success = true, msg = "Operacion Exitosa", form = "ValidarDatos" }, JsonRequestBehavior.AllowGet);
@@ -1328,11 +1392,11 @@ namespace SINU.Controllers
             }
         }
 
-        public ActionResult ProblemasPantalla(int IDPostulante,int IdPantalla)
+        public ActionResult ProblemasPantalla(int IDPostulante, int IdPantalla)
         {
             try
             {
-                return PartialView(db.vDataProblemaEncontrado.Where(p=>p.IdPostulantePersona==IDPostulante).Where(m=>m.IdPantalla==IdPantalla).ToList());
+                return PartialView(db.vDataProblemaEncontrado.Where(p => p.IdPostulantePersona == IDPostulante).Where(m => m.IdPantalla == IdPantalla).ToList());
             }
             catch (Exception)
             {

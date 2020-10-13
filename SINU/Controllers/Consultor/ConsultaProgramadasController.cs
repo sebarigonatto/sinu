@@ -19,7 +19,7 @@ namespace Consulta.Controllers
         // GET: ConsultaProgramadas
         public ActionResult Index()
         {
-            return View(db.ConsultaProgramada.ToList());
+            return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
 
         // GET: ConsultaProgramadas/Details/5

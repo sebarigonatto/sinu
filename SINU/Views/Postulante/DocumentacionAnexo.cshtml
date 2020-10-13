@@ -1,0 +1,78 @@
+﻿@model SINU.ViewModels.DocuAnexoVM
+
+
+@using (Ajax.BeginForm("DocumentacionAnexo", "Postulante", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "Exito(data,status,xhr)",
+        OnFailure = "Falla",
+        LoadingElementId = "carga",
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
+    new { id = "BeginDocumentacionAnexo", enctype = "multipart/form-data" }))
+{
+    <h2>Documentacion  Extra</h2>
+    <div class="form-group">
+        <div class="jumbotron mb-0 p-3 pt-4" style="background-color: #08495f; color:white">
+            <h5>
+                Los siguientes archivos los puede subir en formato de PDF o JPG.
+            </h5>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CopiaDNI, new { @class = "control-label col-md-6" })
+                <div class="custom-file col-md-6" id="customFile2">
+                    @Html.TextBoxFor(m => m.CopiaDNI, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
+                    <label class="custom-file-label" for="exampleInputFile2">
+                        Seleccione archivo...
+                    </label>
+                    @Html.ValidationMessageFor(m => m.CopiaDNI, null, new { @style = "color:yellow" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.TituloSecundario, new { @class = "control-label col-md-6"})
+                <div class="custom-file col-md-6" id="customFile2">
+                    @Html.TextBoxFor(m => m.TituloSecundario, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
+                    <label class="custom-file-label" for="exampleInputFile2">
+                        Seleccione archivo...
+                    </label>
+                    @Html.ValidationMessageFor(m => m.TituloSecundario, null, new { @style = "color:yellow" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.PartidaDeNacimiento, new { @class = "control-label col-md-6" })
+                <div class="custom-file col-md-6" id="customFile2">
+                    @Html.TextBoxFor(m => m.PartidaDeNacimiento, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
+                    <label class="custom-file-label" for="exampleInputFile2">
+                        Seleccione archivo...
+                    </label>
+                    @Html.ValidationMessageFor(m => m.PartidaDeNacimiento, null, new { @style = "color:yellow" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.LibretaSanitaria, new { @class = "control-label col-md-6" })
+                <div class="custom-file col-md-6" id="customFile2">
+                    @Html.TextBoxFor(m => m.LibretaSanitaria, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
+                    <label class="custom-file-label" for="exampleInputFile2">
+                        Seleccione archivo...
+                    </label>
+                    @Html.ValidationMessageFor(m => m.LibretaSanitaria, null, new { @style = "color:yellow" })
+                </div>
+            </div>
+
+
+            <div class=" mt-4 BTAcciones">
+                <input type="submit" class="btn btn-success " value="Subir Archivos" />
+            </div>
+        </div>
+        <br />
+
+    </div>
+
+
+}

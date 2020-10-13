@@ -90,15 +90,15 @@
                                     @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdFamiliar)
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
+                                        <div class="col-md-12">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.Apellido, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Apellido, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Nombres, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.Nombres, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Nombres, "", new { @class = "text-danger" })
@@ -106,14 +106,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id = "DNI_FAMI" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.DNI, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.CUIL, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.CUIL, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.CUIL, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.CUIL, "", new { @class = "text-danger" })
@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idParentesco, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idParentesco, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idParentesco, Model.vParentecoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.Vive, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.Vive, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.Vive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -145,7 +145,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.ConVive, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.ConVive, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.ConVive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -158,7 +158,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdSexo, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdSexo, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdSexo, Model.SexoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -166,7 +166,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Telefono, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Telefono" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Telefono, "", new { @class = "text-danger" })
@@ -174,7 +174,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Celular, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Celular" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Celular, "", new { @class = "text-danger" })
@@ -182,14 +182,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Mail, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Mail, htmlAttributes: new { @class = "control-label col-md-10" })
                                         <div class="col-md-10">
                                             @Html.EditorFor(model => model.vPersona_FamiliarVM.Mail, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Mail, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "EstadoCivil" })
                                             <div class="h-100"></div>
@@ -205,7 +205,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdReligion, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdReligion, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdReligion, Model.ReligionVM, null, new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -214,7 +214,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idTipoNacionalidad, new { @class = "col-md-6 control-label" })
+                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idTipoNacionalidad, new { @class = "col-md-10 control-label" })
                                         <div class="col-md-10">
                                             @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, Model.TipoDeNacionalidadVm, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
                                             <div class="h-100"></div>
@@ -397,11 +397,11 @@
                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
                 IDETP.splice(IDETP.length - 1);
-                var bloqueo_vistas = IDETP.indexOf("5") != -1;
+                var bloqueo_vistas = "@ViewBag.ValidacionEnCurso"=="True";
                 $.BloqueoPantalla = bloqueo_vistas;
                 if (bloqueo_vistas) {
                     $(".BTAcciones").html("");
-                    $("#TabFamilia :input,#TabFamilia input").attr("disabled", "true");
+                    $("#TabFamilia :input").attr("disabled", "true");
                     $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
                 }
             }
@@ -427,7 +427,7 @@
 
                 }
 
-               
+
                 //alert("es un postulante");
                 //Deshabilito los input de los formularios
                 $("form :input,form input").attr("disabled", "true");
@@ -519,7 +519,7 @@
                 function redirige() {
                     window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.IDperFAMI + "&idPostulante=" + response.IDperPOST;
                 }
-            }   
+            }
             switch (response.form) {
                  case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);

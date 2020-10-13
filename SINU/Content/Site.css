@@ -71,8 +71,11 @@ textarea {
 }
 
 /*ajusta ancho de los dropdown con la clase selectpicker*/
-.bootstrap-select {
+ /*{
     max-width: 280px !important;
+}*/
+input, select, textarea ,.bootstrap-select{
+    max-width: 350px;
 }
 
 
@@ -145,3 +148,15 @@ table.dataTable.nowrap th, table.dataTable.nowrap td,.dropdown-item {
     border-right: 1px none #fff !important;
     border-bottom: 1px solid #ced4da8f !important;
 }*/
+
+button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
+    opacity: 100 !important;
+    color: black;
+    font-weight: 350 !important;
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+    button[disabled="disabled"].dropdown-toggle::after {
+        border-top: none !important;
+    }
