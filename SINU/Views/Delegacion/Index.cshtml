@@ -175,7 +175,7 @@
                             <button type="button" class="btn btn-success btn-lg w-100 float-right">Asignar Fecha</button>
                         </div>
                         <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
@@ -184,7 +184,26 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <input name="fecha" type="datetime" class="datepicker" />
+                                        <div class="container-fluid">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
+                                                            <input name="fecha" type="datetime" class="datepicker" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label">Lugar de presentacion:</label>
+                                                            <select class="form-control">
+                                                                <option>Centro de Convenciones</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -218,7 +237,7 @@
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
-               dom: 'Bfrtip',
+                dom: 'Bfrtip',
                 buttons: [
                     'excel', 'pdf',//'colvis',
                     //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
@@ -233,17 +252,17 @@
                     //    visibility: false,
                     //    columns: '.secondary'
                     //},
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
-                        },
-                         {
-                            extend: 'copy',
-                            text: 'copiar',                          
-                        }
-         
-         
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        messageTop: 'Armada Argentina'
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'copiar',
+                    }
+
+
                 ],
                 responsive: true,
                 "language":
@@ -288,7 +307,7 @@
                 startView: "days",
                 startDate: "Today"
             });
-           
+
         });
     </script>
 
