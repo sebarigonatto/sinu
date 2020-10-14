@@ -2,7 +2,8 @@
 
 @{
     ViewBag.Title = "Convocatorias";
-    Layout = "~/Views/Shared/_Layout.cshtml";    
+    //ViewBag.FechaFinProc = Model.Fecha_Fin_Proceso;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Editar</h2>
@@ -15,6 +16,7 @@
         @*<h4>Convocatoria</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Fecha_Inicio_Proceso);
         <div class="form-group">
             @Html.LabelFor(model => model.IdPeriodoInscripcion, "IdPeriodoInscripcion", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,9 +26,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdModalidad, "IdModalidad", htmlAttributes: new { @class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.IdModalidad, "IdModalidad", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdModalidad", null,"Seleccione Modalidad", htmlAttributes: new { @class = "form-control",  @id="ComboModalidad" })
+                @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "ComboModalidad" })
                 @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -34,12 +36,25 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdGrupoCarrOficio, "IdGrupoCarrOficio", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdGrupoCarrOficio", null, htmlAttributes: new { @class = "form-control",@id="ComboIDgcof" })
+                @Html.DropDownList("IdGrupoCarrOficio", null, htmlAttributes: new { @class = "form-control", @id = "ComboIDgcof" })
                 @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @Html.HiddenFor(model => model.IdConvocatoria)
+        <table>
+            <thead>
+                <tr>
+                    @Html.LabelFor(m => m.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-2" })
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", title = "Fecha de finalización del proceso de esta convocatoria" } })
+                    @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
+                </tr>
+            </tbody>
+        </table>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -48,7 +63,9 @@
         </div>
     </div>
 }
+<p>
 
+</p>
 <div>
     @Html.ActionLink("Volver", "Index")
 </div>
@@ -106,12 +123,12 @@
                 }]
 
             });
-          });
+        });
 
-         $(document).ready(function () {
+        $(document).ready(function () {
             //ddlRegions es igual al ID del listado de Personal.
-             $("#ComboModalidad").change(function () {
-                 $("#ComboIDgcof").prop("disabled", true);
+            $("#ComboModalidad").change(function () {
+                $("#ComboIDgcof").prop("disabled", true);
                 //alert($("#Modalidades").val());
                 // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
@@ -122,7 +139,7 @@
                     $("#ComboIDgcof").empty();
 
                     // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                    $("#ComboIDgcof").append("<option value>Seleccionar IDGrupo"+"</option>")
+                    $("#ComboIDgcof").append("<option value>Seleccionar IDGrupo" + "</option>")
 
                     // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
                     $.each(data, function (index, row) {
@@ -132,7 +149,7 @@
                     });
                 });
             });
-         });
+        });
         //activacion de las fechas
         //$(document).ready(function () {
         //    $("#ComboInscripcion").change(function () {
@@ -141,4 +158,19 @@
         //    });
         //});
     </script>
-    }
+    <script type="text/javascript">
+        //alterala validacion de la fechas
+        //jQuery.validator.methods["date"] = function (value, element) { return true; };
+        var date = new Date();
+        date.setDate(date.getDate());
+        $('.datepicker').datepicker({
+            autoclose: true,
+            startDate: date,
+        });
+    </script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+}

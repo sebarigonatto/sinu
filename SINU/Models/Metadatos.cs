@@ -608,6 +608,12 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convocatoria")]
         public string IdConvocatoria { get; set; }
+        [Required]
+        [Display(Name = "Fecha Inicial del Proceso")]
+        public string Fecha_Inicio_Proceso { get; set; }
+        [Required]
+        [Display(Name = "Fecha Final del Proceso")]
+        public string Fecha_Fin_Proceso { get; set; }
     }
     public partial class CarrerauOficioMetadata
     {

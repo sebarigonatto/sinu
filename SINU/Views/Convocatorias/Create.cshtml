@@ -105,11 +105,13 @@
         </thead>
         <tbody>
             <tr>
-                @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true, title="Fecha donde se cierra el proceso automaticamente" } })
+                @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true, title = "Fecha de finalización del proceso de esta convocatoria" } })
+                @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
+
             </tr>
         </tbody>
     </table>
-
+    <p></p>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Guardar" class="btn btn-default" />
