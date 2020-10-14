@@ -24,5 +24,7 @@ namespace SINU.Models
         public int IdPeriodoInscripcion { get; set; }
         public string IdModalidad { get; set; }
         public string IdGrupoCarrOficio { get; set; }
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 }
