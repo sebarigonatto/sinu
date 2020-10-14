@@ -133,12 +133,11 @@ namespace SINU.ViewModels
     public class DocuPenalVM
     {
         public int IdPersona { get; set; }
-        [Required(ErrorMessage ="La Constancia de Antecedentes Penales es OBLIGATORIO")]
+        
         public HttpPostedFileBase ConstanciaAntcPenales { get; set; }
-        [Required(ErrorMessage = "El Formulario 'ANEXO 2' es OBLIGATORIO")]
         public HttpPostedFileBase FormularioAanexo2  { get; set; }
-        public string Anexo2 { get; set; }
-        public string Constancia { get; set; }
+        public string PathFormularioAanexo2 { get; set; }
+        public string PathConstanciaAntcPenales { get; set; }
     }
 
     public class DocuAnexoVM

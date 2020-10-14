@@ -39,7 +39,7 @@ namespace SINU.Controllers
             {
                 IDPersonaVM pers = new IDPersonaVM
                 {
-                    ID_PER =(ID_Postulante != null)? (int)ID_Postulante: db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
+                    ID_PER = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
 
                 Session["DeleConsul"] = ID_Postulante != null;
@@ -374,11 +374,15 @@ namespace SINU.Controllers
 
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string archivo = ID_persona + "_Certificado.*";
-                string[] filePaths = Directory.GetFiles(CarpetaDeGuardado, archivo);
-                //ViewBag.docuCertificado = filePaths[0];
-
-
+                string carpetaLink = "Documentacion/ArchivosDocuPenal/";
+                string archivo = ID_persona + "*";
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, archivo);
+                foreach (var item in archivos)
+                {
+                    if (item.IndexOf("Anexo2") > 0) d.PathFormularioAanexo2 = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1); 
+                    if (item.IndexOf("Certificado") > 0) d.PathConstanciaAntcPenales = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1);
+                }
+                
                 return PartialView(d);
             }
             catch (Exception ex)
@@ -396,28 +400,41 @@ namespace SINU.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string carpetaLink = "Documentacion/ArchivosDocuPenal/";
+                string anexo = "",anexolink="";
+                string cert ="",certlink="";
+                string NombreArchivo, ExtencioArchivo, guarda;
+               
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, data.IdPersona + "*");
+                foreach (var item in archivos)
                 {
-                    string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                    string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-
-                    //guardio certificado
-                    string NombreArchivo = data.IdPersona + "_Certificado"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
-                    string ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
-                    string guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo;
-                    data.ConstanciaAntcPenales.SaveAs(guarda);
-
-                    //guardio anexo2
-                    NombreArchivo = data.IdPersona + "_Anexo2"; //Path.GetFileNameWithoutExtension(data.ConstanciaAntcPenales.FileName);
-                    ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
-                    guarda = CarpetaDeGuardado + NombreArchivo + ExtencioArchivo;
-                    data.ConstanciaAntcPenales.SaveAs(guarda);
-                  
-
-                    return Json(new { success = true, msg = "Se Guardaron correctamnete los archivos seleccionados." });
-
+                    if (item.IndexOf("Anexo2") > 0) anexo= item;
+                    if (item.IndexOf("Certificado") > 0) cert = item;
                 }
-                return Json(new { success = false, msg = "Modelo no VALIDO" });
+
+                if (data.FormularioAanexo2!=null)
+                {
+                    if (anexo != "")System.IO.File.Delete(anexo);
+                    NombreArchivo = data.IdPersona + "&Anexo2";
+                    ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
+                    guarda = CarpetaDeGuardado + NombreArchivo+ "&" + data.FormularioAanexo2.FileName ;
+                    data.FormularioAanexo2.SaveAs(guarda);
+                    anexolink = carpetaLink + NombreArchivo + "&" + data.FormularioAanexo2.FileName;
+                }
+                if (data.ConstanciaAntcPenales != null)
+                {
+                    if (cert != "") System.IO.File.Delete(cert);
+                    NombreArchivo = data.IdPersona + "&Certificado";
+                    ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
+                    guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName ;
+                    data.ConstanciaAntcPenales.SaveAs(guarda);
+                    certlink = carpetaLink + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName;
+                }
+
+                return Json(new { success = true , form="DocuPenal" , msg = "Se Guardaron correctamnete los archivos seleccionados.", anexo= anexolink, cert= certlink });
+
             }
             catch (Exception ex)
             {
@@ -427,15 +444,16 @@ namespace SINU.Controllers
 
         }
 
-
-        public FileResult GetAnexo2()
+       
+        public ActionResult GetAnexo2()
         {
-
-            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-            string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
-            byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
-            //el tercer para obligar la descarga del archivo
-            return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
+           
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
+                byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
+                //el tercer para obligar la descarga del archivo
+                return File(FileBytes, "application/pdf", "ANEXO 2 A LA SOLICITUD DE INGRESO.pdf");
+       
 
         }
 

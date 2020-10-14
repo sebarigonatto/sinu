@@ -19,7 +19,8 @@
         <div class="jumbotron mb-0 p-3 pt-4" style="background-color: #08495f; color:white">
             @Html.HiddenFor(m => m.IdPersona)
 
-
+            @Html.HiddenFor(m => m.PathConstanciaAntcPenales)
+            @Html.HiddenFor(m => m.PathFormularioAanexo2)
             <div class="form-group mt-4">
                 <h5>1°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
                 <p>
@@ -27,17 +28,32 @@
                     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
                 </p>
                 <div class="BTAcciones">
-                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary " , @target="_blank" })
+                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary " })
                 </div>
                 <div class="w-100"></div>
                 <br />
                 <div class="custom-file col-md-6" id="customFile2">
                     @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
                     <label class="custom-file-label" for="exampleInputFile2">
-                        Seleccione archivo...
+                        @if (Model.PathFormularioAanexo2 != null)
+                        {
+                            <b>@Model.PathFormularioAanexo2.Substring(Model.PathFormularioAanexo2.LastIndexOf("&") + 1)</b>
+
+                        }
+                        else
+                        { <o>Seleccione archivo...</o>}
                     </label>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
+
                 </div>
+                @if (Model.PathFormularioAanexo2 != null)
+                {
+                    <a class="btn btn-info" href="@Model.PathFormularioAanexo2" target="_blank" id="DocuAnexo">Ver Archivo</a>
+                }
+                else
+                {
+                    <a class="btn btn-info" href="@Model.PathFormularioAanexo2" target="_blank" id="DocuAnexo" hidden="hidden">Ver Archivo</a>
+                }
 
             </div>
             <h5>2°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
@@ -54,10 +70,24 @@
                 @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile" })
                 @*<input type="button" name="name" value="" />*@
                 <label class="custom-file-label" for="exampleInputFile">
-                    Seleccione archivo...
+                    @if (Model.PathConstanciaAntcPenales != null)
+                    {
+                        <b>@Model.PathConstanciaAntcPenales.Substring(Model.PathConstanciaAntcPenales.LastIndexOf("&") + 1)</b>
+
+                    }
+                    else
+                    { <o>Seleccione archivo...</o>}
                 </label>
                 @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
             </div>
+            @if (Model.PathConstanciaAntcPenales != null)
+            {
+                <a class="btn btn-info" href="@Model.PathConstanciaAntcPenales" target="_blank" id="DocuCert">Ver Archivo</a>
+            }
+            else
+            {
+              <a class="btn btn-info" href="@Model.PathConstanciaAntcPenales" target="_blank" id="DocuCert" hidden="hidden">Ver Archivo</a>
+            }
             <div class=" mt-4 BTAcciones">
                 <input type="submit" class="btn btn-success " value="Subir Archivos" />
             </div>

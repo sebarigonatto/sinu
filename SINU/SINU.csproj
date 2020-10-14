@@ -1279,6 +1279,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Documentacion\ArchivosDocuPenal\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\ManejoArchivos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -596,7 +596,7 @@
                     $("#3 a").tab("show");
                     break;
                 case "Elimina":
-                    $.ActualizaTabla(response.url_Tabla,response.url_Controller);
+                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
@@ -604,9 +604,13 @@
                     $(".jumbotron.problemapantalla").remove();
                     $("#TABDocumentacion i").remove();
                     $("#ValidaEnCurso").removeAttr("hidden");
-                    $("#NOValidaEnCurso").attr("hidden","true");
+                    $("#NOValidaEnCurso").attr("hidden", "true");
                     break;
-
+                case "DocuPenal":
+                    alert(response.anexo + "  " + response.cert);
+                    if (response.anexo != "") { $("#DocuAnexo").attr("href", response.anexo).removeAttr("hidden") };
+                    if (response.cert != "")  { $("#DocuCert").attr("href", response.cert).removeAttr("hidden")    };
+                    break;
                 default:
             };
         };
