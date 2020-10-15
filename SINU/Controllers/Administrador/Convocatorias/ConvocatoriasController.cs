@@ -92,6 +92,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion", convocatoria.IdModalidad);
             ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
             ViewBag.FechaFinProc = convocatoria.Fecha_Fin_Proceso;
+            ViewBag.fechaInscripcion = convocatoria.IdPeriodoInscripcion;
+            ViewBag.lst = convocatoria.PeriodosInscripciones.FechaInicio + "/" + convocatoria.PeriodosInscripciones.FechaFinal;/*db.PeriodosInscripciones.Where(x => x.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion).*/
             return View(convocatoria);
         }
 
