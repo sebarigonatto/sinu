@@ -22,28 +22,34 @@
             <th>
                 @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+            </th>
             <th>@Html.Label("Opciones")</th>
         </tr>
 </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td  >
-                    @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
-                </td>
-                <td >
-                    @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-                </td>
-                <td >
-                    @Html.DisplayFor(modelItem => item.PeriodosInscripciones.IdPeriodoInscripcion)
-                </td>
-                <td class="justify-content-center align-items-center d-md-flex">
-                    @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
-                    @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodosInscripciones.IdPeriodoInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
+            </td>
+            <td class="justify-content-center align-items-center d-md-flex">
+                @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

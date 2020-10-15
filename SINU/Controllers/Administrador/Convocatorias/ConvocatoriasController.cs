@@ -63,6 +63,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,IdConvocatoria,Fecha_Fin_Proceso,Fecha_Inicio_Proceso")] Convocatoria convocatoria)
         {
+            
             if (ModelState.IsValid)
             {              
                 db.Convocatoria.Add(convocatoria);
