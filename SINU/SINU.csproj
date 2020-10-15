@@ -1257,6 +1257,7 @@
     <Content Include="Views\Postulante\DocumentacionAnexo.cshtml" />
     <Content Include="Views\CallConsulta\FaltaCrearNuevoAction.cshtml" />
     <Content Include="Views\CallConsulta\Index.cshtml" />
+    <Content Include="Views\Delegacion\RestaurarPostulante.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

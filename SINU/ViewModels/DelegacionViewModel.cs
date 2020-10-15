@@ -29,5 +29,9 @@ namespace SINU.ViewModels
         public DataProblemaEncontrado DataProblemaEncontradoVM { get; set; }
         public List<DataVerificacion> DataVerificacionVM { get; set; }
     }
-
+    public class RestaurarPostulanteVM
+    {
+        public List<vDataProblemaEncontrado> vDataProblemaEncontradoVM { get; set; }
+        public List<vInscripcionDetalle> vInscripcionDetallesVM { get; set; }
+    }
 }
