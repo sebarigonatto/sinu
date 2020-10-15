@@ -847,7 +847,7 @@ $(document).ready(function () {
     })
 
     //valido cada input al ser crgado
-    $("form").on("submit", function () {
+    $("form").not("[type='file']").on("submit", function () {
         //alert($(this).attr("id"));
         ValidForm("#" + $(this).attr("id"));
 

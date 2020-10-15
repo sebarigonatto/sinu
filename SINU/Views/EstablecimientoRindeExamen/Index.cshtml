@@ -1,91 +1,80 @@
-﻿@model SINU.Models.vUsuariosAdministrativos
+﻿@model IEnumerable<SINU.Models.EstablecimientoRindeExamen>
 
-<div>
-    <h4>Detalle Usuario Administrativo seleccionado</h4>
-    <table class="table table-filters" id="le-filters">
+@{
+    ViewBag.Title = "Establecimientos para Rendir exámen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
         <thead>
             <tr>
                 <th>
-                    @Html.LabelFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.Jurisdiccion)
                 </th>
                 <th>
-                    @Html.LabelFor(model => model.Nombre)
+                    @Html.DisplayNameFor(model => model.Localidad)
                 </th>
                 <th>
-                    @Html.LabelFor(model => model.Apellido)
+                    @Html.DisplayNameFor(model => model.Departamento)
                 </th>
                 <th>
-                    @Html.LabelFor(model => model.mr)
+                    @Html.DisplayNameFor(model => model.Nombre)
                 </th>
                 <th>
-                    @Html.LabelFor(model => model.Grado)
+                    @Html.DisplayNameFor(model => model.Comentario)
                 </th>
-                <th>
-                    @Html.LabelFor(model => model.Destino)
-                </th>
-                <th>
-                    @Html.LabelFor(model => model.Comentario)
-                </th>
-                <th>
-                    @Html.LabelFor(model => model.codGrupo)
-                </th>               
-                    <th>
-                        @Html.DisplayNameFor(model => model.Delegacion)
-                    </th>                         
-            </thead>
-        <tbody>
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => model.Email)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Nombre)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Apellido)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.mr)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Grado)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Destino)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.Comentario)
-                </td>
-
-
-                <td>
-                    @Html.DisplayFor(model => model.codGrupo)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(model => model.Delegacion)
-                </td>
-                @*<td>
-                     @Html.DisplayNameFor(model => model.IdOficinasYDelegaciones)
-                </td>
-
-                <td>
-                     @Html.DisplayFor(model => model.IdOficinasYDelegaciones)
-                </td>*@
+                <th class="ni-o-ni-bu"></th>
             </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+              
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jurisdiccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Localidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jurisdiccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jurisdiccion)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+                </td>
+                
+            </tr>
+               
+            }
         </tbody>
-            </table>
-</div>
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ })*@
-    @Html.ActionLink("Editar", "Edit", new { Email = Model.Email })|
-    @Html.ActionLink("Volver a la lista", "Index")
-</p>
+    </table>
+    <br />
+    <p>
+        @Html.ActionLink(" Nuevo Establecimiento", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+    </p>
+
+</body>
+</html>
+
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
 <!-- ***********************************************************************-->
@@ -136,9 +125,13 @@
                     "searchable": false,
                     "orderable": false
 
-                    }]
+                }]
+
+
             });
 
         });
     </script>
-    }
+
+}
+
