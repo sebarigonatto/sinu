@@ -1263,6 +1263,7 @@
     <Content Include="Views\EstablecimientoRindeExamen\Details.cshtml" />
     <Content Include="Views\EstablecimientoRindeExamen\Edit.cshtml" />
     <Content Include="Views\EstablecimientoRindeExamen\Index.cshtml" />
+    <Content Include="Views\Delegacion\RestaurarPostulante.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

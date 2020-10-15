@@ -407,7 +407,7 @@
                         @*<h2>Validar Datos</h2>*@
                         <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                             <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
-                            @Ajax.ActionLink("Comfirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                            @Ajax.ActionLink("Confirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                             {
                                             HttpMethod = "POST",
                                             OnSuccess = "Exito(data,status,xhr)",
