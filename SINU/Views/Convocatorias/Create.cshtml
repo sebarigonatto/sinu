@@ -15,6 +15,7 @@
     @*<h4>Convocatoria</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model=>model.Fecha_Inicio_Proceso)    
     <table>
         <thead>
             <tr>

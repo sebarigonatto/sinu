@@ -1,0 +1,76 @@
+﻿@model SINU.Models.EstablecimientoRindeExamen
+
+@{
+   ViewBag.Title = "Establecimientos para Rendir exámen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eliminar Registro</title>
+</head>
+<body>
+    <div class="alert alert-warning" role="alert">
+        Esta a punto de eliminar un registro.¿Esta seguro?
+    </div>
+        <div>
+
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Jurisdiccion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Jurisdiccion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Localidad)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Localidad)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Departamento)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Departamento)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Comentario)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Comentario)
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                    @Html.ActionLink("Volver", "Index")
+                </div>
+            }
+        </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@model SINU.Models.EstablecimientoRindeExamen
+
+@{
+    ViewBag.Title = "Establecimientos para Rendir exámen";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalle</title>
+</head>
+<body>
+    <div>
+         <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Jurisdiccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Jurisdiccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Localidad)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Localidad)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Departamento)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Comentario)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Comentario)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdEstablecimientoRindeExamen }) |
+        @Html.ActionLink("Volver", "Index")
+    </p>
+</body>
+</html>
