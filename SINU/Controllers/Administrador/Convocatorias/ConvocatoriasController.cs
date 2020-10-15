@@ -52,6 +52,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
             ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
             ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
+
             return View();
         }
 
