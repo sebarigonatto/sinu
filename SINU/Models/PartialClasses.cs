@@ -125,7 +125,9 @@ namespace SINU.Models
     { }
     [MetadataType(typeof(ConvocatoriaMetadata))]
     public partial class Convocatoria
-    { }
+    {
+        public string ff { get; set; }
+    }
     
 [MetadataType(typeof(CarrerauOficioMetadata))]
     public partial class CarreraOficio
