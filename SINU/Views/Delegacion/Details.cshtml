@@ -44,16 +44,10 @@
     <div class="container-fluid">
         <div class="form-group row">
             <div class="col-sm-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-dark btn-lg w-100" })
             </div>
             <div class="col-sm-2">
-                @*@Html.ActionLink("Restaurar", "VolverEtapa","Delegacion", new {ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @class = "btn btn-dark" })*@
-                @Ajax.ActionLink("Volver Etapa Anterior", "VolverEtapa", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new AjaxOptions
-           {
-               HttpMethod = "POST",
-               OnSuccess = "Exito(data,status,xhr)",
-               OnFailure = "Falla"
-           }, new { @id = "BTValidar", @class = "fa fa-reply btn btn-warning w-25" })
+                @Html.ActionLink("Volver Etapa Anterior", "VolverEtapa", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-dark btn-lg" })
             </div>
         </div>
     </div>

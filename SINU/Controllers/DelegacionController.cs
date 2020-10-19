@@ -321,18 +321,18 @@ namespace SINU.Controllers
             }
             return Json(new{View="Index"});
         }
-        [HttpPost]
+       
         public ActionResult VolverEtapa(int? ID_persona)
         {
             try
             {
-                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
-            }
-            return Json( new {View = "Index" });
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                }
+                catch (System.Exception ex)
+                {
+                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+                }
+            return RedirectToAction("Index");
             }
         [HttpPost]
         public ActionResult InterrumpirProceso(int? ID_persona)
