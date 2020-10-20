@@ -1,62 +1,80 @@
-﻿@model IEnumerable<SINU.Models.Convocatoria>
+﻿@model IEnumerable<SINU.Models.EstablecimientoRindeExamen>
 
 @{
-    ViewBag.Title = "Convocatorias";
+    ViewBag.Title = "Establecimientos para Rendir exámen";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Convocatorias</h2>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
 
-<table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
-    <thead>
-        <tr>
-            <th>
-                @*@Html.DisplayNameFor(model => model.GrupoCarrOficio.Descripcion)*@
-                <label>Descripción Grupo</label>
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Modalidad.Descripcion)*@
-                <label>Descripción Modalidad</label>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PeriodosInscripciones.IdPeriodoInscripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
-            </th>
-            <th>@Html.Label("Opciones")</th>
-        </tr>
-</thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PeriodosInscripciones.IdPeriodoInscripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
-            </td>
-            <td class="justify-content-center align-items-center d-md-flex">
-                @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
-                @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
-                @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Jurisdiccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Localidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Departamento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Comentario)
+                </th>
+                <th class="ni-o-ni-bu"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+              
+            <tr>
 
-<p>
-    @Html.ActionLink(" Nuevo Registro", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
-</p>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jurisdiccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Localidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comentario)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Details", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+                    @Html.ActionLink(" ", "Delete", new { id = item.IdEstablecimientoRindeExamen }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+                </td>
+                
+            </tr>
+               
+            }
+        </tbody>
+    </table>
+    <br />
+    <p>
+        @Html.ActionLink(" Nuevo Establecimiento", "Create", null, new { @class = "btn btn-success btn-lg fas fa-plus font-jumb", @style = "height:auto" })
+    </p>
+
+</body>
+</html>
+
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
 <!-- ***********************************************************************-->
@@ -114,4 +132,6 @@
 
         });
     </script>
+
 }
+

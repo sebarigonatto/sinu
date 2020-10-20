@@ -18,6 +18,7 @@ using System.Net;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
+    
     [AuthorizacionPermiso("AdminMenu")]
     public class ConvocatoriasController : Controller
     {
@@ -49,10 +50,12 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // GET: Convocatorias/Create
         public ActionResult Create()
         {
+            Convocatoria convoca = new Convocatoria();
             ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
             ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
             ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
-            return View();
+
+            return View(convoca);
         }
 
         // POST: Convocatorias/Create
@@ -60,10 +63,13 @@ namespace SINU.Controllers.Administrador.Convocatorias
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,IdConvocatoria,Fecha_Fin_Proceso")] Convocatoria convocatoria)
+        public ActionResult Create([Bind(Include = "IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,IdConvocatoria,ff")] Convocatoria convocatoria)
         {
+            
             if (ModelState.IsValid)
-            {              
+            {
+                convocatoria.Fecha_Inicio_Proceso = DateTime.Today;
+                convocatoria.Fecha_Fin_Proceso = DateTime.Parse(convocatoria.ff);         
                 db.Convocatoria.Add(convocatoria);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -91,6 +97,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion", convocatoria.IdModalidad);
             ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
             ViewBag.FechaFinProc = convocatoria.Fecha_Fin_Proceso;
+            ViewBag.fechaInscripcion = convocatoria.IdPeriodoInscripcion;
+            ViewBag.lst = convocatoria.PeriodosInscripciones.FechaInicio + "/" + convocatoria.PeriodosInscripciones.FechaFinal;/*db.PeriodosInscripciones.Where(x => x.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion).*/
             return View(convocatoria);
         }
 

@@ -147,9 +147,9 @@
                         Presentacion
                     </a>
                 </li>
-                <li class="nav-item flex-sm-fill bli">
+                @*<li class="nav-item flex-sm-fill bli">
                     <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                </li>
+                </li>*@
             </ul>
         </div>
         <div class="col-sm-9 borderdiv1">
@@ -172,7 +172,7 @@
                     {
                         @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
                         <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
-                            <button type="button" class="btn btn-success btn-lg w-100 float-right">Asignar Fecha</button>
+                            <button type="button" id="habilboton" class="btn btn-success btn-lg w-100 float-right" >Asignar Fecha</button>
                         </div>
                         <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
@@ -214,10 +214,10 @@
                         </div>
                     }
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                @*<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <h2>Contact</h2>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -299,7 +299,9 @@
                     "searchable": false,
                     "orderable": false
                 }]
+
             });
+
             $(".datepicker").datepicker({
                 format: "dd/mm/yyyy",
                 language: "es",
@@ -309,6 +311,17 @@
             });
 
         });
+
+        function myFunction() {
+              var checkBox = document.getElementById("Micheck");
+              var text = document.getElementById("habilboton");
+            if (checkBox.checked == true) {
+                alert("exito")
+                text.style.display = "block";
+              //} else {
+              //   text.style.display = "none";
+              }
+            }
     </script>
 
 

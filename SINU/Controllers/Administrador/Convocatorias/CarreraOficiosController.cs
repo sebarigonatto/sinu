@@ -7,12 +7,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
+using SINU.Authorize;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
+    [AuthorizacionPermiso("AdminMenu")]
     public class CarreraOficiosController : Controller
     {
-        private SINUEntities db = new SINUEntities();
+         
+    
+    private SINUEntities db = new SINUEntities();
 
         // GET: CarreraOficios
         public ActionResult Index()

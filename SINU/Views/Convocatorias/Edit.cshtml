@@ -2,8 +2,8 @@
 
 @{
     ViewBag.Title = "Convocatorias";
-    //ViewBag.FechaFinProc = Model.Fecha_Fin_Proceso;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.lst = new List<SINU.Models.PeriodosInscripciones>();
 }
 
 <h2>Editar</h2>
@@ -16,46 +16,59 @@
         @*<h4>Convocatoria</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Fecha_Inicio_Proceso);
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdPeriodoInscripcion, "IdPeriodoInscripcion", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdPeriodoInscripcion", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdPeriodoInscripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.Fecha_Inicio_Proceso)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdModalidad, "IdModalidad", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "ComboModalidad" })
-                @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdGrupoCarrOficio, "IdGrupoCarrOficio", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdGrupoCarrOficio", null, htmlAttributes: new { @class = "form-control", @id = "ComboIDgcof" })
-                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr >
+                    <th>
+                        @Html.LabelFor(model => model.IdPeriodoInscripcion, "Período de Inscripción", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.IdModalidad, "Modalidad", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.IdGrupoCarrOficio, "Grupo Carrera Oficio", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td >
+                        @Html.DropDownList("IdPeriodoInscripcion", null, htmlAttributes: new { @class = "form-control", @id = "ComboInscripcion" })
+                        @Html.ValidationMessageFor(model => model.IdPeriodoInscripcion, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "ComboModalidad" })
+                        @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.DropDownList("IdGrupoCarrOficio", null, htmlAttributes: new { @class = "form-control", @id = "ComboIDgcof" })
+                        @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         @Html.HiddenFor(model => model.IdConvocatoria)
         <table>
             <thead>
                 <tr>
-                    @Html.LabelFor(m => m.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <th>
+                        @Html.LabelFor(m => m.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-12" })
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", title = "Fecha de finalización del proceso de esta convocatoria" } })
-                    @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
+                    <td>
+                        @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", title = "Fecha de finalización del proceso de esta convocatoria" } })
+                        @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
+                    </td>
                 </tr>
             </tbody>
         </table>
-
+        <p></p>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Guardar" class="btn btn-default" />
@@ -146,6 +159,30 @@
 
                         $("#ComboIDgcof").prop("disabled", false);
                         $("#ComboIDgcof").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    });
+                });
+            });
+        });
+        $(document).ready(function () {
+            //ddlRegions es igual al ID del listado de Personal.
+            $("#ComboInscripcion").change(function () {
+                //$("#FechasIniFin").show();
+                //alert($("#ddlRegions").val());
+                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+
+                $.get("/Convocatorias/DevolverFechas", { RegionId: $("#ComboInscripcion").val() }, function (data) {
+                    // VACIAMOS EL DropDownList aca hay que poner
+                    //ddlterritories es ID de la lista carreras
+                    //alert("textovaconcomilla");
+                    $("#FechasIniFin").empty();
+
+                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                    //$("#ddlTerritories").append("<option value> -- Seleccionar Carreras Para " + $("#ddlRegions option:selected").text() + " --</option>")
+
+                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                    $.each(data, function (index, row) {
+                        alert(row.Text)
+                        $("#FechasIniFin").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
                     });
                 });
             });

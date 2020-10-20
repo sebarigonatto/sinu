@@ -598,22 +598,27 @@ namespace SINU.Models
     {
         [Required]
         [Display(Name = "Período Inscripción")]
-        public string IdPeriodoInscripcion { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
         [Required]
         [Display(Name = "Modalidad")]
         public string IdModalidad { get; set; }
         [Required]
         [Display(Name = "Grupo de Carreras y Oficios")]
-        public string IdGrupoCarrOficio { get; set; }
-        [Required]
+        public int IdGrupoCarrOficio { get; set; }
+     
         [Display(Name = "Convocatoria")]
-        public string IdConvocatoria { get; set; }
-        [Required]
+        public int IdConvocatoria { get; set; }
+       
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Inicial del Proceso")]
-        public string Fecha_Inicio_Proceso { get; set; }
-        [Required]
+        public System.DateTime Fecha_Inicio_Proceso { get; set; }
+      
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Final del Proceso")]
-        public string Fecha_Fin_Proceso { get; set; }
+        public System.DateTime Fecha_Fin_Proceso { get; set; }
+        [Required]
+        [Display(Name = "Fecha de finlaización de Proceso")]
+        public string ff { get; set; }
     }
     public partial class CarrerauOficioMetadata
     {

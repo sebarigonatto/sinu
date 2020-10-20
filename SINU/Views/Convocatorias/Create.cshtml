@@ -15,6 +15,7 @@
     @*<h4>Convocatoria</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model=>model.Fecha_Inicio_Proceso)    
     <table>
         <thead>
             <tr>
@@ -100,14 +101,17 @@
     <table>
         <thead>
             <tr>
-                @Html.LabelFor(m => m.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-2" })
+                <th>
+                    @Html.LabelFor(m => m.ff, htmlAttributes: new { @class = "label col-md-12" })
+                </th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                @Html.EditorFor(m => m.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true, title = "Fecha de finalización del proceso de esta convocatoria" } })
-                @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
-
+                <td>
+                    @Html.EditorFor(m => m.ff, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFin",@Type="Text", placeholder = "DD/MM/YYYY", @readOnly = true, title = "Fecha de finalización del proceso de esta convocatoria" } })
+                    @Html.ValidationMessageFor(model => model.ff, "", new { @class = "text-danger" })
+                </td>
             </tr>
         </tbody>
     </table>
@@ -231,24 +235,30 @@
                 });
             });
         });
-        //activacion de las fechas
-        //$(document).ready(function () {
-        //    $("#ComboInscripcion").change(function () {
-        //        //$("#FechasIniFin").prop("disabled", false);
-        //        $("#FechasIniFin").show();
-        //    });
-        //});
+        $('#FechaFin').datepicker({
+            format: "dd/mm/yyyy",
+          
+            weekStart: 1,
+            startDate: "today",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "es",
+            daysOfWeekDisabled: "0,6",
+            daysOfWeekHighlighted: "1,2,3,4,5",
+            todayHighlight: true
+        });
     </script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         //alterala validacion de la fechas
         //jQuery.validator.methods["date"] = function (value, element) { return true; };
         var date = new Date();
         date.setDate(date.getDate() +1);
         $('.datepicker').datepicker({
+            dateFormat: 'yyyy/dd/mm',
             autoclose: true,
             startDate: date,
         });
-    </script>
+    </script>*@
     <script>
         $(function () {
   $('[data-toggle="tooltip"]').tooltip()

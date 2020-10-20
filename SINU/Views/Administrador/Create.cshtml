@@ -5,7 +5,11 @@
     ViewBag.Title = "Creacion Usuario Administrativo";
     //creando la lista para la vista Create usa combo de las oficinas de ingreso y delegaciones si es DELEGACION
     ViewBag.OficinaYDelegacion = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "Nombre");
-    ViewBag.CodGrupo = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
+    // ViewBag.CodGrupo = new SelectList(new SINU.Models.SINUEntities().vSeguridad_Grupos.ToList(), "codGrupo", "codGrupo");
+    ViewBag.CodGrupo =  new SINU.Models.SINUEntities().vSeguridad_Grupos.Where(x => x.codGrupo != "Postulante").Select(x=> new SelectListItem
+    {
+        Value = x.codGrupo,
+        Text= x.codGrupo}).ToList();
     ViewBag.Grado = new SelectList(new SINU.Models.SINUEntities().vParam_Grados.ToList(), "GRADO", "DESCRIPCION");
     ;}
 @*@section MenuPerfil{
@@ -86,7 +90,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.codGrupo, new { @class = "col-md-2 control-label" })
         <div class="col-md-4">
-            @Html.DropDownListFor(m => m.codGrupo, (SelectList)ViewBag.CodGrupos, "---Seleccione Perfil ---", htmlAttributes: new { @class = "form-control selectpicker", @id = "inaoact" })
+            @Html.DropDownListFor(m => m.codGrupo, new SelectList (ViewBag.CodGrupo,"Text","Text","Seleccione"), htmlAttributes: new { @class = "form-control selectpicker", @id = "inaoact" })
         </div>
     </div>
 
