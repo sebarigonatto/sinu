@@ -36,7 +36,7 @@
                     @Html.HiddenFor(model => model.vPersona_DatosPerVM.Email)
                     @Html.HiddenFor(model => model.vPersona_DatosPerVM.IdInscripcion)
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdModalidad, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdModalidad, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                             <select class="form-control selectpicker dropdown-fast" data-val="true" data-val-required="El campo Modalidad es obligatorio."
                                id="@Html.IdFor(m=>m.vPersona_DatosPerVM.IdModalidad)" name="@Html.NameFor(m=>m.vPersona_DatosPerVM.IdModalidad)" tabindex="null">
@@ -56,11 +56,11 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdCarreraOficio, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdCarreraOficio, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                             <select class="form-control selectpicker" data-val="true" data-val-number="El campo Carrera debe ser un número." data-val-required="El campo Carrera es obligatorio."
-                               id="@Html.IdFor(m=>m.vPersona_DatosPerVM.IdCarreraOficio)" name="@Html.NameFor(m=>m.vPersona_DatosPerVM.IdCarreraOficio)" tabindex="null">
-                                <option value="" modali="">Seleccione una Opcion</option>
+                               id="@Html.IdFor(m=>m.vPersona_DatosPerVM.IdCarreraOficio)" name="@Html.NameFor(m=>m.vPersona_DatosPerVM.IdCarreraOficio)" tabindex="null" disabled="disabled">
+                                <option value="" modali="">Seleccione una Modalidad</option>
 
                                 @foreach (var item in Model.CarreraOficioVm)
                                  {
@@ -75,17 +75,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdEstadoCivil, new { @class = "col-md-6 control-label" })
+                        @Html.LabelFor(m => m.vPersona_DatosPerVM.IdEstadoCivil, new { @class = "col-md-12 control-label" })
                         <div class="col-md-10">
                          
-                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, new SelectList(Model.vEstCivilVM, "Codigo_n", "Descripcion"), "Seleccione una Modalidad", htmlAttributes: new { @class = "form-control selectpicker" , @disabled="disabled" })
                             <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.IdEstadoCivil, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DatosPerVM.CUIL, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.CUIL, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DatosPerVM.CUIL, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ingresar Cuil sin guiones" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.CUIL, "", new { @class = "text-danger" })
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DatosPerVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.TextBoxFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true })
 
@@ -105,7 +105,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DatosPerVM.edad, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.vPersona_DatosPerVM.edad, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DatosPerVM.edad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.edad, "", new { @class = "text-danger" })
@@ -117,7 +117,7 @@
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.IdReligion, new { @class = "col-md-6 control-label" })
                         <div class="col-md-10">
                             @*@Html.DropDownListFor(model => model.vPersona_DatosPerVM.IdReligion, new SelectList(Model.vRELIGIONVM, "CODIGO", "DESCRIPCION"), null, htmlAttributes: new { @class = "form-control combobox" })*@
-                            <select class="form-control combobox" id="@Html.IdFor(m=>m.vPersona_DatosPerVM.IdReligion)" name="@Html.NameFor(m=>m.vPersona_DatosPerVM.IdReligion)" tabindex="null">
+                            <select class="form-control combobox" id="@Html.IdFor(m=>m.vPersona_DatosPerVM.IdReligion)" name="@Html.NameFor(m=>m.vPersona_DatosPerVM.IdReligion)" tabindex="null" >
                             
                                 @foreach (var item in Model.vRELIGIONVM)
                                 {
@@ -134,7 +134,7 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.vPersona_DatosPerVM.idTipoNacionalidad, new { @class = "col-md-10 control-label" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, new SelectList(Model.TipoNacionalidadVM, "idTipoNacionalidad", "Descripcion"), "Seleccione una Opcion", htmlAttributes: new { @class = "form-control selectpicker" })
+                            @Html.DropDownListFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, new SelectList(Model.TipoNacionalidadVM, "idTipoNacionalidad", "Descripcion"), "Seleccione una Modalidad", htmlAttributes: new { @class = "form-control selectpicker", @disabled="disabled" })
                             <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DatosPerVM.idTipoNacionalidad, "", new { @class = "text-danger" })
                         </div>

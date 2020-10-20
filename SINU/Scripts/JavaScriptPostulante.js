@@ -189,50 +189,73 @@ $(document).ready(function () {
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
 
+    //$("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
-
-    ActualizaCarrerasCivil($("#vPersona_DatosPerVM_IdModalidad").val());
-    $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
-        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
-        var modalidad = $(this).val();
-        //alert(modalidad); 
-        $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
-        ActualizaCarrerasCivil(modalidad)
-
-    });
-
-    function ActualizaCarrerasCivil(modalidad) {
+    (function () {
+        var modalidad = $("#vPersona_DatosPerVM_IdModalidad").val();
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
+
             if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
-            if ($("#vPersona_DatosPerVM_edad").val() > 30) {
-
-            }
+            
         })
+        $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker("refresh");
+    }())
 
-        $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
+    $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
+        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
+        var modalidad = $(this).val();
 
-        var estCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
-        //alert(estCivil);
-        $("#vPersona_DatosPerVM_IdEstadoCivil option").each(function (index, element) {
-            if (estCivil != "") {
-                if ($(element).val() == estCivil && $(element).val() != "") {
-                    $(element).removeAttr("hidden");
-                } else if ($(element).val() != "") {
-                    $(element).attr("hidden", true);
-                }
-            } else {
+        //alert(modalidad); 
+        $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
+        ActualizaCombos(modalidad)
+
+    });
+
+    function ActualizaCombos(modalidad) {
+        if (modalidad != "") {
+            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").removeAttr("disabled").val("");
+            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Opcion");
+
+
+        } else {
+            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").attr("disabled", "disabled").val("");
+            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Modalidad");
+        }
+
+        $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
+
+            if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
+            } else if ($(element).val() != "") {
+                $(element).attr("hidden", true);
             }
 
-
         })
-        $("#vPersona_DatosPerVM_IdEstadoCivil").selectpicker('refresh');
+
+        $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").selectpicker('refresh');
+
     }
 
+    //Para ESNM, ESSA, SMV, en caso de seleccionar estado civil distinto a soltero se muestra un mensaje
+    $("#vPersona_DatosPerVM_IdEstadoCivil").on("changed.bs.select", function () {
+        
+        val = $(this).val();
+        estadoCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
+        if (estadoCivil != "" && val != estadoCivil) {
+            $("#BTNModal").html("Aceptar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("Para la modalidad Seleccionada, " + $("#vPersona_DatosPerVM_IdModalidad option:selected").html() + ", existe la restriccion de Estado Civil Soltero. <br>Consultar Guia de Ingreso - Capitulo 01 - Punto 103 inc. F.");
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+        };
+
+    })
+
+    //En de seleccionar nacionalidad por Opcion de muestra un mensaje, exepto para la modalidad SMV
     $("#vPersona_DatosPerVM_idTipoNacionalidad").on("changed.bs.select", function () {
 
         var modali = $("#vPersona_DatosPerVM_IdModalidad").val();
@@ -487,7 +510,7 @@ $(document).ready(function () {
                     UltimoAñoSINO();
                 });
 
-                
+
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -753,8 +776,8 @@ $(document).ready(function () {
                     } else {
                         anuncio = response.POPUP;
                     };
-                  
-                   
+
+
                 };
                 if (anuncio != "") {
                     $("#BTNModal").html("Cerrar");
@@ -763,10 +786,10 @@ $(document).ready(function () {
                     $("#TextModal").html(anuncio);
                     $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
                 }
-               
-                    
+
+
             });
-           
+
             $("#imc").val(imc.toFixed(2).replace(".", ","));
 
         } else if (anuncio != "") {
@@ -883,5 +906,29 @@ $(document).ready(function () {
 
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // DOCUMENTACION PENAL
+    // se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
+    //$("input[type='file']").change( function () {
+    //    var extencion = $(this).val().split('.').pop();
+    //    if (extencion!="") {
+
+    //    }
+    //    alert(extencion);
+    //});
+
+
+    $("#BeginDocuPenal").submit(function () {
+        if ($("#FormularioAanexo2").val() == "" && $("#ConstanciaAntcPenales").val() == "") {
+            $("#BTNModal").html("Cerrar");
+            $("#GuardarDTF").css("display", "none");
+            $("#ModalCenterTitle").html("SINU:");
+            $("#TextModal").html("No selecciono o cambio ningun archivo!!!");
+            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            return false;
+        } else
+            return true;
+    });
 });
 

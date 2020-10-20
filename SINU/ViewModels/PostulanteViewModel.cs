@@ -16,10 +16,11 @@ namespace SINU.ViewModels
         public List<int> EtapaTabs { get; set; }
         public string IDETAPA { get; set; }
         public string NomyApe { get; set; }
-        //public bool YAguardado { get; set; }
+        public bool ProcesoInterrumpido { get; set; }
         public bool NoPostulado { get; set; }
         public List<Array> ListProblemaCantPantalla { get; set; }
         public bool DocuPenal { get; set; }
+        public OficinasYDelegaciones OfiDele { get; set; }
     }
 
     public class PersonaFamiliaVM

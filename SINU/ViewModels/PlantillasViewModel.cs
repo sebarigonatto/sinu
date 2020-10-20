@@ -40,6 +40,16 @@ namespace SINU.ViewModels
         public string url { get; set; }
     }
 
+    public class SolicitudEntreCorreoPostulante : PlantillaMail
+    {
+        public string Nombre_P { get; set; }
+        public string Apellido_P { get; set; }
+        public string Dni_P { get; set; }
+        public int IdInscripcion_P { get; set; }
+        public string Delegacion { get; set; }
+        public string url { get; set; }
+    }
+
     //public class xxx : PlantillaMail
     //{
     //    public string xxx { get; set; }

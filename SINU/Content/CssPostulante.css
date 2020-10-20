@@ -1,16 +1,19 @@
 ﻿@media (min-width: 576px) {
     .rounded-nav {
         border-radius: 50rem !important;
-    } 
-    .rounded-nav .nav-link {
-        border-radius: 50rem !important;
     }
+
+        .rounded-nav .nav-link {
+            border-radius: 50rem !important;
+        }
+
     .ocultnav {
         display: none !important
     }
+
     .nav-tab {
         display: block !important;
-        opacity:100 !important
+        opacity: 100 !important
     }
 }
 
@@ -27,22 +30,23 @@
     .oculto {
         display: none !important
     }
+
     .tab-nav {
         display: block !important;
         opacity: 100 !important;
-        border-bottom:1px solid #909090 !important
+        border-bottom: 1px solid #909090 !important
     }
 
     #TabDocumentacion div.nav-tab {
         margin-left: 10px;
         margin-right: 10px;
     }
-   
 }
+
 @media (min-width: 768px) {
     .navbar1 {
-        display:block;
-        }
+        display: block;
+    }
 }
 
 /*.oculto {
@@ -71,7 +75,7 @@
 .lined .nav-link {
     border: none;
     border-bottom: 3px solid transparent;
-    font-size:medium;
+    font-size: medium;
 }
 
     .lined .nav-link:hover {
@@ -80,7 +84,7 @@
     }
 
     .lined .nav-link.active {
-        font-size:large;
+        font-size: large;
         background: none;
         color: #555;
         border-color: #ffffff;
@@ -91,8 +95,8 @@
 }
 
 .borderdiv1 {
-    border-left: 1px solid #dee2e6 ;
-    padding-top:1px;
+    border-left: 1px solid #dee2e6;
+    padding-top: 1px;
     padding-left: 50px;
 }
 
@@ -100,12 +104,11 @@
 .bli {
     border-bottom: 1px solid #909090 !important;
 }
-        
-/*Para deshabilitar el uso del tab*/
-.Tabdesabilitado a{
-    pointer-events: none;
-    color:#808080 !important
 
+/*Para deshabilitar el uso del tab*/
+.Tabdesabilitado a {
+    pointer-events: none;
+    color: #808080 !important
 }
 
 /*para ajutar el ancho de los controles que utilicen SELECTPICKER*/
@@ -123,26 +126,26 @@
 
 
 .navbar-toggler {
-	background: none;
-	border: none;
+    background: none;
+    border: none;
 }
 
-	.navbar-toggler:active,
-	.navbar-toggler:focus {
-		outline: 0;
-	}
+    .navbar-toggler:active,
+    .navbar-toggler:focus {
+        outline: 0;
+    }
 
-	.navbar-toggler .icon-bar {
-		display: block;
-		width: 22px;
-		height: 2px;
-		border-radius: 1px;
-		margin: 4px 0 4px 0;
-		transition: all 0.2s;
-	}
+    .navbar-toggler .icon-bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 1px;
+        margin: 4px 0 4px 0;
+        transition: all 0.2s;
+    }
 
 .navbar-dark .navbar-toggler .icon-bar {
-	background: #ffffff;
+    background: #ffffff;
 }
 
 .navbar-toggler .icon-bar:nth-of-type(1) {
@@ -230,6 +233,7 @@ button[role="combobox"] {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     border-bottom: 2px solid #08495f;
 }
+
     .form-control:focus {
         color: #495057;
         background-color: #e5edf3;
@@ -242,6 +246,7 @@ button[role="combobox"] {
     float: left !important;
     margin-bottom: 0.5rem;
 }
+
 .field-validation-valid {
     margin-bottom: 1rem;
 }

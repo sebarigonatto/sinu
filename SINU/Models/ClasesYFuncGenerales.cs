@@ -171,7 +171,6 @@ namespace SINU.Models
                 //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
                 var finalHtml = HtmlLayout.Replace("Mail_CUERPO", cuerpoMail);
 
-
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
                 await UserManager.SendEmailAsync(ID_AspNetUser, asunto, finalHtml);
 
