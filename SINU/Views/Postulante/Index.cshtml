@@ -596,11 +596,7 @@
         //en caso de ser exitosa la llamada al controlador
         function Exito(response, status, xhr) {
 
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            $.Anuncio(response.msg);
 
 
            // alert("success: " + response.success + " - " + response.msg);
@@ -628,8 +624,8 @@
                     break;
                 case "DocuPenal":
                     //alert(response.anexo + "  " + response.cert);
-                    if (response.anexo == "True") { $("#DocuAnex").removeAttr("hidden") };
-                    if (response.cert == "True")  { $("#DocuCert").removeAttr("hidden")    };
+                    if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
+                    if (response.cert)  { $("#DocuCert").removeAttr("hidden")    };
                     break;
                 default:
             };
@@ -637,11 +633,7 @@
 
         //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
 
     </script>

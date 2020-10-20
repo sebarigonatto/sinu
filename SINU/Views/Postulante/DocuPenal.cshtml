@@ -49,11 +49,11 @@
                 <div class="col col col-md-8 p-0">
                     @if (Model.PathFormularioAanexo2 == null)
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id = "DocuAnex" })
                     }
                     else
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @id= "DocuAnex" })
                     }
                 </div>
 
@@ -86,11 +86,11 @@
                 <div class="col col col-md-7 pl-0">
                     @if (Model.PathConstanciaAntcPenales == null)
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id= "DocuCert" })
                     }
                     else
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuCert" })
                     }
 
                 </div>
