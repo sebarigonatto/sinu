@@ -216,6 +216,7 @@ button[role="combobox"] {
     border-left: 0px !important;
     border-right: 0px !important;
     border-bottom: 2px solid #08495f !important;
+    background-color: #f4f7f9 !important
 }
 
 .form-control {
@@ -225,7 +226,7 @@ button[role="combobox"] {
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color: #e6ebef;
+    background-color: #f4f7f9;
     background-clip: padding-box;
     /* border: 1px solid #ced4da; */
     /* border-radius: 0.25rem; */
@@ -241,7 +242,9 @@ button[role="combobox"] {
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgb(255 255 255 / 25%);
     }
-
+button[role="combobox"]:focus {
+    background-color: #e5edf3 !important;
+}
 .field-validation-error span {
     float: left !important;
     margin-bottom: 0.5rem;

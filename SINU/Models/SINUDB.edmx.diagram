@@ -144,6 +144,11 @@
         <EntityTypeShape EntityType="SINUModel.vRestriccionesGrupo" Width="1.5" PointX="27.375" PointY="25.75" />
         <EntityTypeShape EntityType="SINUModel.vRestriccionesGrupoLista" Width="1.5" PointX="20.375" PointY="26.75" />
         <EntityTypeShape EntityType="SINUModel.vGruposYCarreras" Width="1.5" PointX="28.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SINUModel.vModalidadYDocumento" Width="1.5" PointX="28.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SINUModel.Delegacion_EstablecExamen" Width="1.5" PointX="14.5" PointY="0.75" />
+        <AssociationConnector Association="SINUModel.FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen" />
+        <AssociationConnector Association="SINUModel.FK_Delegacion_EstablecExamen_OficinasYDelegaciones" />
+        <EntityTypeShape EntityType="SINUModel.vDelegacion_EstablecExamen" Width="1.5" PointX="25.375" PointY="10.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

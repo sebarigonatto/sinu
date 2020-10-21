@@ -118,6 +118,9 @@ namespace SINU.Models
         public virtual DbSet<vRestriccionesGrupo> vRestriccionesGrupo { get; set; }
         public virtual DbSet<vRestriccionesGrupoLista> vRestriccionesGrupoLista { get; set; }
         public virtual DbSet<vGruposYCarreras> vGruposYCarreras { get; set; }
+        public virtual DbSet<vModalidadYDocumento> vModalidadYDocumento { get; set; }
+        public virtual DbSet<Delegacion_EstablecExamen> Delegacion_EstablecExamen { get; set; }
+        public virtual DbSet<vDelegacion_EstablecExamen> vDelegacion_EstablecExamen { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1266,6 +1269,16 @@ namespace SINU.Models
                 new ObjectParameter("IdPersonaPostulante", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPersona_Familiar_Result>("sp_vPersona_Familiar", idPersonaPostulanteParameter);
+        }
+    
+        [DbFunction("SINUEntities", "DocumentosNecesariosDelInscripto")]
+        public virtual IQueryable<DocumentosNecesariosDelInscripto_Result> DocumentosNecesariosDelInscripto(Nullable<int> idInscripcion)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
         }
     }
 }

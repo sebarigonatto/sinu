@@ -1,8 +1,7 @@
 ﻿@{
     ViewBag.Title = "Confirmacion de Cuenta";
 }
-@if (ViewBag.YAconfirmo)
-{
+
 
     <div class="container h-100">
         <div class="row justify-content-center h-100">
@@ -12,8 +11,13 @@
                         <h1>Armada Argentina</h1>
                         <img src="~/Imagenes/loader.png" style="width: 40% !important;" alt="Alternate Text" />
                         <div style="font-size:24px;" class="text-center">
-                            <h2>La Cuenta ya fue Confirmada!!!</h2>
-                        </div>
+                            @if (ViewBag.YAconfirmo)
+                            {
+                                <h2>La Cuenta ya fue Confirmada!!!</h2>}
+                            else
+                            {
+                                <h2>Confirmacion de Cuenta Exitosa.</h2>
+                            }</div>
                         <p>
                             Porfavor @Html.ActionLink("haga click aqui para Iniciar Sesion", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
                         </p>
@@ -22,28 +26,3 @@
             </div>
         </div>
     </div>
-
-}
-else
-{
-
-    <div class="container h-100">
-        <div class="row justify-content-center h-100">
-            <div class="col-sm-8 align-self-center text-center">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h1>Armada Argentina</h1>
-                        <img src="~/Imagenes/loader.png" style="width: 40% !important;" alt="Alternate Text" />
-                        <div style="font-size:24px;" class="text-center">
-
-                            <h2>Confirmacion de Cuenta Exitosa.</h2>
-                        </div>
-                        <p>
-                            Porfavor @Html.ActionLink("haga click aqui para Iniciar Sesion", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}

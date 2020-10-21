@@ -1,4 +1,4 @@
-﻿
+﻿    
 //configuraciones por default de las DataTables
 $.extend(true, $.fn.dataTable.defaults, {
     responsive:
@@ -45,7 +45,11 @@ $.extend(true, $.fn.dataTable.defaults, {
 
 });
 
+//$("form").validate({ focusCleanup: true });
+
+//booleano, si es "true" bloqueo los input del modal que se mostrara.
 $.BloqueoPantalla;
+//Si no es postulante no se ejecutaran determinadas funciones
 $.NoEjecutar = false;
 $(document).ready(function () {
 
@@ -56,8 +60,8 @@ $(document).ready(function () {
         $("#fechacumpleaños").attr("data-date-end-date", "0d");
         //alert(id_persona);
     })();
-
-
+     
+    //cuando es cargado un documento muestro el nombre del archivo
     $(document).on('change', '.custom-file-input', function (event) {
         $(this).next('.custom-file-label').html(event.target.files[0].name);
     })
@@ -72,7 +76,7 @@ $(document).ready(function () {
 
     });
 
-    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
+    //se aplicael selecpicker a alos conbos
     //https://developer.snapappointments.com/bootstrap-select/
     $(".selectpicker").selectpicker({
         size: 6,
@@ -81,6 +85,7 @@ $(document).ready(function () {
         //style: 'btn-white'
 
     });
+    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     $(".combobox").selectpicker({
         liveSearch: true,
         size: 6,
@@ -92,12 +97,12 @@ $(document).ready(function () {
     });
     //verificar luego anchura para disposititvos mobiles
     $(".combobox button[role='combobox'] .filter-option-inner-inner").css("text-overflow", "ellipsis")
-
+   
 
     ///////////////////////////////////////////////////////////////////////////////  DATOS BASICOS  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     if ($("#edad").val() > 35 || $("#edad").val() < 17 && $("#edad").val() != 0) {
-        alert($("#edad").val());
+        //alert($("#edad").val());
         edadMAXMIN($("#edad").val());
     }
 
@@ -178,15 +183,34 @@ $(document).ready(function () {
             $("#IdComentario").hide();
             $("#IdComentario input").val("");
         }
-    }
+    };
+    //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
+
+    //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
+    $("#BeginFormDatosBasicos").on("change", function () {
+        //alert($(this).valid());
+        ($(this).valid()) ? $("#BTentrevista").removeClass("disabled") : $("#BTentrevista").addClass("disabled");
+    });
+   
+    //al solicitar un a entrevista me aseguro que el formulario sea valido 
+    $("#BTentrevista").on("click", function (e) {
+        if (!$(this).closest("form").valid()) {return false; $.Anuncio("Formulario invalido") };
+    });
+    //habilito el boto solicitar entrevista cuando el fomrulario de DATOSBASICOS sea valido al mosneto de cargarse la pagina
+    $("#BeginFormDatosBasicos").validate({
+        success: function () {
+            $("#BTentrevista").removeClass("disabled");
+        }
+    });
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
 
-    //$("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
+    //id de los combos que se veran afectados por el cambio de IDMODALIDAD
+    idComboDPer = "#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad";
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
     (function () {
         var modalidad = $("#vPersona_DatosPerVM_IdModalidad").val();
-        if (modalidad != "") { $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").removeAttr("disabled") };
+        if (modalidad != "") { $(idComboDPer).removeAttr("disabled") };
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
 
             if ($(element).attr("modali") == modalidad && $(element).val() != "") {
@@ -196,7 +220,7 @@ $(document).ready(function () {
             }
             
         })
-        $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").selectpicker('refresh');
+        $(idComboDPer).selectpicker('refresh');
     }())
 
     $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
@@ -212,13 +236,13 @@ $(document).ready(function () {
     function ActualizaCombos(modalidad) {
        
         if (modalidad != "") {
-            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").removeAttr("disabled").val("");
-            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Opcion");
+            $(idComboDPer).removeAttr("disabled").val("")
+                .find("option:first").html("Seleccione una Opcion");
 
 
         } else {
-            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").attr("disabled", "disabled").val("");
-            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Modalidad");
+            $(idComboDPer).attr("disabled", "disabled").val("")
+                .find("option:first").html("Seleccione una Modalidad");;
         }
 
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
@@ -231,7 +255,7 @@ $(document).ready(function () {
 
         })
 
-        $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").selectpicker('refresh');
+        $(idComboDPer).selectpicker('refresh');
 
     }
 
@@ -720,17 +744,15 @@ $(document).ready(function () {
     /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
 
     //verifico el sexo del postulante para olcultar o mostrar determinados input
-    sexo($("#Sexo").val());
-
-    function sexo(sexo) {
-        //alert(element);
-        if (sexo != "Mujer") {
-            $("#mujer").hide();
-            $("#mujer input").val("");
+  
+    (function() {
+        if ($("#Sexo").val() != "Femenino") {
+            $("#mujer").hide()
+                       .find("input").val("");
         } else {
             $("#mujer").show();
         }
-    };
+    })();
 
     //calculo de la IMC cuando los campos de altura y peso con cargados
     $("#altura,#peso").on("change", function () {
@@ -825,13 +847,9 @@ $(document).ready(function () {
     });
 
 
-    //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
+    
 
-    //habilito el boto solicitar entrevista una vez haya realizado el guardado de datos
-    //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
-    if ($("#BeginFormDatosBasicos .fechacumple").val() != "") {
-        $("#BTentrevista").removeClass("disabled");
-    };
+
 
 
     //ver esto y unificar con las del MOdal
@@ -918,7 +936,7 @@ $(document).ready(function () {
         } else
             return true;
     });
-
+    //FUNCIONES VARIAS
     $.Anuncio = function (texto) {
         $("#BTNModal").html("Cerrar");
         $("#GuardarDTF").css("display", "none");
@@ -926,5 +944,7 @@ $(document).ready(function () {
         $("#TextModal").html(texto);
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
+
+    
 });
 
