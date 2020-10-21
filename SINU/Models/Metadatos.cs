@@ -65,7 +65,7 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         [Required]
-        [Display(Name = "Instituto a Inscribirse")]
+        [Display(Name = "Modalidad a Inscribirse")]
         public Nullable<int> IdPreferencia { get; set; }
         [ScaffoldColumn(false)]
         public string NombreInst { get; set; }
