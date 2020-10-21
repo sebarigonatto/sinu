@@ -317,32 +317,31 @@ namespace SINU.Controllers
             string cuerpo = "";
             try
             {
-             //db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
-             vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == id);
+                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == id);
                 configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionValidado");
                 cuerpo = configuracion.ValorDato.ToString();
                 data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
-                //var x = data.Count;
-                foreach (var item in data.Count.ToString())
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(id).Where(m => m.Abierta == true).ToList();
+                if (PantallaCerradas.Count==0)
                 {
-                    Convert.ToInt32(item);
-                    List<string> error = new List<string>(); 
-                    error= data[item].DataVerificacion;
-                }
-                var modeloPlantilla = new ViewModels.MailDocumentacion
-                {
-                    Etapa = vInscripcionEtapaEstado.Etapa,
-                    MailCuerpo=cuerpo,
-                    Apellido=vInscripcionEtapaEstado.Apellido,
-                    Errores=null
+                    var modeloPlantilla = new ViewModels.MailDocumentacion
+                        {
+                            Etapa = vInscripcionEtapaEstado.Etapa,
+                            MailCuerpo=cuerpo,
+                            Apellido=vInscripcionEtapaEstado.Apellido,
+                            Errores = data
+                        };
+                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
+                    db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+                    return Json(new{View="Index"});
                 };
-                var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
+                return Json(new { success = true, msg = "No se pudo confirmar ya existen Problemas en los datos" });
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-            return Json(new{View="Index"});
+           
         }
        
         public ActionResult VolverEtapa(int? ID_persona)
@@ -630,7 +629,7 @@ namespace SINU.Controllers
                         return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados"});
                     }
                     db.spCierraPantallaDePostulante(IdPanatlla, id);
-                    return Json(new { success = true, msg = "Se Cerro Correctamente la pantalla" });
+                    return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                 }
 
             }

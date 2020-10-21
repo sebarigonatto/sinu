@@ -1,32 +1,23 @@
 ﻿<!--    CUERPO DEL CORREO    -->
 
 <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">
- Docuementacion del postulante
- @if (Model.Errores == null)
- {
-    <p> No hay problemas</p>
+    Docuementacion del postulante
+    @if (Model.Errores == null)
+    {
+    <p> @Model.MailCuerpo</p>
 
- }
- else
- {
-    <p> hay problemas  </p>
- }
-@if (Model.Etapa=="No Validado")
-{
-    <p>Docuemntacion No validad</p>
 }
-fin del texto
-</p>
-
-    @*@Raw(Model.MailCuerpo)
-</p>
-<br />
-@if (Model.Postulado == true)
+else
 {
-    <p style="text-align:center;">
-        <a href="@Model.LinkConfirmacion" style="background: #0078D4;border: 1px solid #FFF;color: #FFF;font-family: sans-serif;font-size: 15px;line-height: 1; text-align: center;text-decoration: none; width:480px;height:170px ; padding:15px;">
-            CONTINUAR
-        </a>
-    </p>
-}*@
+    <p> @Model.MailCuerpo</p>
+    foreach (var item in Model.Errores)
+    {
+        <p>@item.DataVerificacion: @item.Comentario </p>
+    }
+}
+    @if (Model.Etapa == "No Validado")
+    {
+        <p> @Model.MailCuerpo</p>
+    }
+    
 

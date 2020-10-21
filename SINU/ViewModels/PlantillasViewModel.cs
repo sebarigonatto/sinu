@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using SINU.Models;
 
 namespace SINU.ViewModels
 {
@@ -53,7 +55,7 @@ namespace SINU.ViewModels
     public class MailDocumentacion : PlantillaMail
     {
         public string MailCuerpo { get; set; }
-        public Array Errores { get; set; }
+        public  List<vDataProblemaEncontrado> Errores { get; set; }
         public string Etapa { get; set; }
     }
 
