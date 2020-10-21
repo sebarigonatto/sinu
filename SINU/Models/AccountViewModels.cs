@@ -101,7 +101,7 @@ namespace SINU.Models
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse no sera necesario mostra su valor en la vista Register.cshtml
         //sera requerido al momento de guardar su preferencia en el controlador AccountController.cs
         [Required]
-        [Display(Name = "Instituto a Inscribirse")]
+        [Display(Name = "Modalidad a inscribirse")]
         public int IdInstituto { get; set; }
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse
         [Required]
