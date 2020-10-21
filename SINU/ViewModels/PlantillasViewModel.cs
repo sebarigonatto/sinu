@@ -50,11 +50,12 @@ namespace SINU.ViewModels
         public string url { get; set; }
     }
 
-    //public class xxx : PlantillaMail
-    //{
-    //    public string xxx { get; set; }
-    //    public string xxx { get; set; }
-    //}
+    public class MailDocumentacion : PlantillaMail
+    {
+        public string MailCuerpo { get; set; }
+        public Array Errores { get; set; }
+        public string Etapa { get; set; }
+    }
 
     public class DatosResponsable
     {

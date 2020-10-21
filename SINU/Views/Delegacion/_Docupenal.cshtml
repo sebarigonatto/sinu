@@ -9,7 +9,7 @@
 </p>
 
 <div class="container text-center">
-    @Html.ActionLink("Descargar Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-primary w-100 " })
+    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER ,docu = "Anexo2"}, new { @class = "btn btn-primary w-100 ", @target = "_blank"  })
 </div>
 
 <h5>2°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
@@ -18,7 +18,7 @@
     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
 </p>
 <div class="container text-center">
-    @Html.ActionLink("Descargar Formulario", "GetAnexo2Pdf", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-primary w-100 " })
+    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER,docu = "Certificado"  }, new { @class = "btn btn-primary w-100 ", @target = "_blank"  })
 </div>
 <br />
 <br />

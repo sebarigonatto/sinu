@@ -888,6 +888,7 @@
     <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-SMV.pdf" />
     <Content Include="Plantillas\PlantillaInicioValidacionParaDelegacion.cshtml" />
     <Content Include="Plantillas\PlantillaMailSolicitudEntrevista.cshtml" />
+    <Content Include="Plantillas\MailDocumentacion.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
