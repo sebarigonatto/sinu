@@ -395,7 +395,7 @@
                 $("#BTvolver").attr("href", "/Postulante?" + href);
             }
             //array de la etapa del postulante
-
+            //alert("@ViewBag.ValidacionEnCurso");
             if ('@Model.IDETAPA.ToString()'!="") {
                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
@@ -417,24 +417,14 @@
 
 
             //en caso de ser postulante solo muestro la informacion y deshabilito la edicion de los datos
-            if ('@Model.postulante' == "True") {
+            if ('@Model.postulante' == "True" ) {
 
-                var URLanterior = document.referrer.toString();
-
-                if (URLanterior.indexOf("Postulante") > 0) {
-                    $("#ModalCenterTitle").html("Anuncio");
-                    $("#TextModal").html("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!");
-                    $("#BTNModal").text("Cerrar");
-                    $("#OK").hide();
-                    $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
-
-                }
-
+                if ("@ViewBag.ValidacionEnCurso" != "True") { $("#OK").hide();$.Anuncio("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!") };
 
                 //alert("es un postulante");
                 //Deshabilito los input de los formularios
                 $("form :input,form input").attr("disabled", "true");
-               //elimino los boton de edicion
+                //elimino los boton de edicion
                 $(".BTAcciones").html("");
                 $(".BTMuestraTable :input").removeClass("fa-edit").addClass("fa-eye");
                 $.BloqueoPantalla = true;

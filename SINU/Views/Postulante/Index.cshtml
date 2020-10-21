@@ -5,7 +5,20 @@
 }
 <link href="~/Content/CssPostulante.css" rel="stylesheet" />
 <br />
-<h3>Etapas de la Inscripcion</h3>
+<div class="col-12">
+    <h3 class="d-inline">Etapas de la Inscripcion</h3>
+    @if ((bool)Session["DeleConsul"])
+    {
+
+        <a class="btn btn-info float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
+        if (ViewBag.ULTISECU==8)
+        {
+            @Html.ActionLink("Asignar Entrevista", "PresentacionAsignaFecha","Delegacion",new {id= Model.ID_PER },new { @class= "btn btn-secondary float-right" }) 
+        }
+    }
+   
+</div>
+
 <br />
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
 @*@try
@@ -583,24 +596,24 @@
                @{
                   Session["FamiTable"] = false;
                }
+            //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
             if ("@Session["DeleConsul"]" == "True") {
                 $.each(SolapaPrincipales, function (index, item) {
                     BloqueaPantalla(item[1]);
                 });
                 $("#TABDocumentacion i").remove();
                 $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
-
+                //cambio el href del button
+                pageanterior = document.referrer.toString()
+                
+                $("#BTatras").attr("href", "/Delegacion");
             }
         });
 
         //en caso de ser exitosa la llamada al controlador
         function Exito(response, status, xhr) {
 
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            $.Anuncio(response.msg);
 
 
            // alert("success: " + response.success + " - " + response.msg);
@@ -628,8 +641,8 @@
                     break;
                 case "DocuPenal":
                     //alert(response.anexo + "  " + response.cert);
-                    if (response.anexo == "True") { $("#DocuAnex").removeAttr("hidden") };
-                    if (response.cert == "True")  { $("#DocuCert").removeAttr("hidden")    };
+                    if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
+                    if (response.cert)  { $("#DocuCert").removeAttr("hidden")    };
                     break;
                 default:
             };
@@ -637,11 +650,7 @@
 
         //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
 
     </script>
