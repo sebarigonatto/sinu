@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SINU.Models.vConsultaInscripciones>
+@{
+    ViewBag.Title = "Inscriptos Por Delegacion " + ViewBag.delegacionSeleccionada;
+}
+
+<h2>
+    @ViewBag.Title
+</h2>
+
+<div>
+    <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
+        con el id de la consulta que deseo se encuentre activa
+        cuando arme el menú lateral de consultas-->
+    @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, null)
+</div>
+
+<table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Delegacion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Delegacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+                    </td>*@
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

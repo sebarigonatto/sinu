@@ -105,7 +105,26 @@ namespace SINU.Controllers.Consultor
             return PartialView(Todos);
 
         }
+        ///<summary>Consulta por todas las Delegaciones o solamente una 
+        public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
+        {
+            //ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaPorDelegacion").Select(m => m.IdConsulta).FirstOrDefault();
+            DelegacionSeleccionada = DelegacionSeleccionada ?? "";
+            List<vConsultaInscripciones> ListadoDelegaciones;
 
+            if (DelegacionSeleccionada == "TODAS")
+            {
+                ListadoDelegaciones = db.vConsultaInscripciones.ToList();
+                ViewBag.DelegacionSeleccionada = "Todas las Delegaciones";
+            }
+            else
+            {
+                ListadoDelegaciones = db.vConsultaInscripciones.Where(d => d.Delegacion == DelegacionSeleccionada).ToList();
+                ViewBag.delegacionSeleccionada = DelegacionSeleccionada;
+            }
+            return PartialView(ListadoDelegaciones);
+
+        }
 
     }
 }

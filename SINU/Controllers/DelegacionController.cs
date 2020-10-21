@@ -311,9 +311,32 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult Documentacion(int? id)
         {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
             try
             {
-             db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+             //db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+             vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == id);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
+                //var x = data.Count;
+                foreach (var item in data.Count.ToString())
+                {
+                    Convert.ToInt32(item);
+                    List<string> error = new List<string>(); 
+                    error= data[item].DataVerificacion;
+                }
+                var modeloPlantilla = new ViewModels.MailDocumentacion
+                {
+                    Etapa = vInscripcionEtapaEstado.Etapa,
+                    MailCuerpo=cuerpo,
+                    Apellido=vInscripcionEtapaEstado.Apellido,
+                    Errores=null
+                };
+                var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
             }
             catch (System.Exception ex)
             {
@@ -348,21 +371,30 @@ namespace SINU.Controllers
             return Json(new { View = "Index" });
         }
         //fin del codigo
-        public ActionResult DocPenal(int id)
+        public ActionResult DocPenal(int id ,string docu)
         {
             try
             {
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string NombreArchivo = id + "_Certificado.pdf";
-                string Descargar = CarpetaDeGuardado + NombreArchivo;
-                bool file = System.IO.File.Exists(Descargar);
-                if (file == false)
+                string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string[] archivos = Directory.GetFiles(Ubicacionfile, id + "&" + docu + "*");
+                byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
+                string app = "";
+                switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
                 {
-                  return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
-                }
-                byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-                return File(FileBytes, "application/pdf", NombreArchivo);
+                    case "jpg":
+                        app = "image/jpeg";
+                        break;
+                    case "pdf":
+                        app = "application/pdf";
+                        break;
+                    default:
+                        break;
+                };
+                return File(FileBytes, app);
+
+
+
             }
             catch (System.Exception ex)
             {
