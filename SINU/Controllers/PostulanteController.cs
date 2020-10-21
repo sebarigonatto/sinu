@@ -1153,14 +1153,16 @@ namespace SINU.Controllers
         {
             try
             {
-                var FechaNac = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).FechaNacimiento;
-                object sexo = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante).IdSexo;
-                string Carrera = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante).CarreraRelacionada;
+                var p = db.Persona.FirstOrDefault(m => m.IdPersona == IdPostulante);
+                var FechaNac = p.FechaNacimiento;
+                object sexo = p.IdSexo;
+                var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
+                string Carrera = inscrip.CarreraRelacionada;
                 sexo = (Carrera == "Médicos") ? "Medico" : sexo;
                 string PopUp = "";
-                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).ToList()[0];//db.Postulante.Find(IdPostulante).Inscripcion.ToList()[0].IdModalidad;
+                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).FirstOrDefault(m=>m.IdInstitucion == p.Postulante.Inscripcion.ToList()[0].IdPreferencia);
                 string Aplica = "";
-                switch (AltIcm)
+                switch (AltIcm) 
                 {
                     case "altura":
                         PopUp = db.Configuracion.First(m => m.NombreDato == "PopUpAltura").ValorDato;
@@ -1180,6 +1182,8 @@ namespace SINU.Controllers
                     case "imc":
                         Aplica = (Restric.IMC_max < num || Restric.IMC_min > num) ? "NO" : "SI";
                         PopUp = db.Configuracion.First(m => m.NombreDato == "PopUpICM").ValorDato;
+                        break;
+                    default:
                         break;
                 }
                 return Json(new { APLICA = Aplica, POPUP = PopUp, ALTIMC = AltIcm }, JsonRequestBehavior.AllowGet);

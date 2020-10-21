@@ -19,6 +19,7 @@ namespace SINU.Models
         {
             this.Inscripcion = new HashSet<Inscripcion>();
             this.Usuario_OficyDeleg = new HashSet<Usuario_OficyDeleg>();
+            this.Delegacion_EstablecExamen = new HashSet<Delegacion_EstablecExamen>();
         }
     
         public string Nombre { get; set; }
@@ -37,5 +38,7 @@ namespace SINU.Models
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Delegacion_EstablecExamen> Delegacion_EstablecExamen { get; set; }
     }
 }

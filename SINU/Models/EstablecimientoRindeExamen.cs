@@ -18,6 +18,7 @@ namespace SINU.Models
         public EstablecimientoRindeExamen()
         {
             this.Inscripcion = new HashSet<Inscripcion>();
+            this.Delegacion_EstablecExamen = new HashSet<Delegacion_EstablecExamen>();
         }
     
         public string Jurisdiccion { get; set; }
@@ -26,8 +27,11 @@ namespace SINU.Models
         public string Nombre { get; set; }
         public string Comentario { get; set; }
         public int IdEstablecimientoRindeExamen { get; set; }
+        public string Direccion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Delegacion_EstablecExamen> Delegacion_EstablecExamen { get; set; }
     }
 }

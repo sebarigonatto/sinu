@@ -282,7 +282,13 @@
     <Compile Include="Models\DataVerificacion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Delegacion_EstablecExamen.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DocPresentado.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentosNecesariosDelInscripto_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domicilio.cs">
@@ -480,6 +486,9 @@
     <Compile Include="Models\vDataProblemaEncontrado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vDelegacion_EstablecExamen.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -505,6 +514,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vModalidadYDocumento.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VPantalla_Problema.cs">
@@ -1260,6 +1272,7 @@
     <Content Include="Views\Postulante\DocumentacionAnexo.cshtml" />
     <Content Include="Views\CallConsulta\FaltaCrearNuevoAction.cshtml" />
     <Content Include="Views\CallConsulta\Index.cshtml" />
+    <Content Include="Views\CallConsulta\ConsultaPorDelegacion.cshtml" />
     <Content Include="Views\EstablecimientoRindeExamen\Create.cshtml" />
     <Content Include="Views\EstablecimientoRindeExamen\Delete.cshtml" />
     <Content Include="Views\EstablecimientoRindeExamen\Details.cshtml" />
