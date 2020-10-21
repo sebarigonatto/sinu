@@ -8,63 +8,100 @@
         OnSuccess = "Exito(data,status,xhr)",
         OnFailure = "Falla",
         LoadingElementId = "carga",
-        //LoadingElementDuration = 1000,
-        //UpdateTargetId = "resultTarget"
-    },
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
     new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 {
     <h2>Antecedetes Penales</h2>
     <br />
     <div class="form-group">
-        <div class="jumbotron mb-0 p-3 pt-4" style="background-color: #08495f; color:white">
+        <div class="jumbotron mb-0 p-3 row" style="background-color: #08495f; color:white">
             @Html.HiddenFor(m => m.IdPersona)
 
-
-            <div class="form-group mt-4">
+            @Html.HiddenFor(m => m.PathConstanciaAntcPenales)
+            @Html.HiddenFor(m => m.PathFormularioAanexo2)
+            <div class="form-group">
                 <h5>1°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
                 <p>
                     Debera descargar el formulario e imprimirlo, rellenar con los datos que se solicitan en el mismo, firmar y aclarar.
                     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
                 </p>
                 <div class="BTAcciones">
-                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary " })
+                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary ", @target = "_blank" })
                 </div>
                 <div class="w-100"></div>
                 <br />
-                <div class="custom-file col-md-6" id="customFile2">
-                    @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile2" })
+                <div class="custom-file col col-md-6 mb-2">
+                    @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input" })
                     <label class="custom-file-label" for="exampleInputFile2">
-                        Seleccione archivo...
+                        @if (Model.PathFormularioAanexo2 != null)
+                        {
+                            <b>@Model.PathFormularioAanexo2.Substring(Model.PathFormularioAanexo2.LastIndexOf("&") + 1)</b>
+
+                        }
+                        else
+                        { <o>Seleccione archivo...</o>}
                     </label>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
+
+                </div>
+                <div class="col col col-md-8 p-0">
+                    @if (Model.PathFormularioAanexo2 == null)
+                    {
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id = "DocuAnex" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @id= "DocuAnex" })
+                    }
                 </div>
 
             </div>
-            <h5>2°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
-            <p>
-                Otorgado por el Registro Nacional de Reincidencia, dependiente del Ministerio de
-                Justicia y Derechos Humanos. (NO Constancia Policial). Tener presente que este
-                documento tiene una validez de SEIS (6) meses y es un <b>“requisito condicionante”</b>,
-                conforme a lo dispuesto en el Anexo A, Artículo 5 de la Ley Marco de Regulación del
-                Empleo Público Nacional Nº 25.164.
+            <div class="form-group">
+                <h5>2°- “CERTIFICADO ANTECEDENTES PENALES”</h5>
+                <p>
+                    Otorgado por el Registro Nacional de Reincidencia, dependiente del Ministerio de
+                    Justicia y Derechos Humanos. (NO Constancia Policial). Tener presente que este
+                    documento tiene una validez de SEIS (6) meses y es un <b>“requisito condicionante”</b>,
+                    conforme a lo dispuesto en el Anexo A, Artículo 5 de la Ley Marco de Regulación del
+                    Empleo Público Nacional Nº 25.164.
 
-            </p>
-            <div class="custom-file col-md-6" id="customFile">
+                </p>
+                <div class="custom-file col col-md-6 mb-2">
 
-                @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @id = "exampleInputFile" })
-                @*<input type="button" name="name" value="" />*@
-                <label class="custom-file-label" for="exampleInputFile">
-                    Seleccione archivo...
-                </label>
-                @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
-            </div>
-            <div class=" mt-4 BTAcciones">
-                <input type="submit" class="btn btn-success " value="Subir Archivos" />
+                    @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input" })
+                    @*<input type="button" name="name" value="" />*@
+                    <label class="custom-file-label" for="exampleInputFile">
+                        @if (Model.PathConstanciaAntcPenales != null)
+                        {
+                            <b>@Model.PathConstanciaAntcPenales.Substring(Model.PathConstanciaAntcPenales.LastIndexOf("&") + 1)</b>
+
+                        }
+                        else
+                        { <o>Seleccione archivo...</o>}
+                    </label>
+                    @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
+                </div>
+                <div class="col col col-md-7 pl-0">
+                    @if (Model.PathConstanciaAntcPenales == null)
+                    {
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id= "DocuCert" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuCert" })
+                    }
+
+                </div>
+                <br />
+                <div class=" col col-sm-12 BTAcciones pl-0 ">
+                    <input type="submit" class="btn btn-success " id="btDOCUPENAL" value="Subir Archivos" />
+                </div>
             </div>
         </div>
         <br />
-
     </div>
-   
-   
+
+
 }

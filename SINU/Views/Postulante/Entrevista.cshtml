@@ -9,17 +9,18 @@
         <h5>Telefono: <b>@Model.Telefono</b></h5>
         @if (Model.Celular != null)
         {
-        <h5>Celular: <b>@Model.Celular</b></h5>
+            <h5>Celular: <b>@Model.Celular</b></h5>
         }
         <h5> Fecha y Hora: @Model.FechaEntrevista.Value.ToString("dd/MM/yyyy") </h5>
         <h4>Estado: <b>@ViewBag.EstadoEntre </b></h4>
     </div>
-    <hr />
-    <div class="jumbotron" style="background-color: #08495f; color:white">
-        <h5><b>@ViewBag.Considere[0]</b></h5>
         <hr />
-        <h5>@ViewBag.Considere[1]</h5>
-    </div>
+        <div class="jumbotron" style="background-color: #08495f; color:white" id="MensajedeConsideraciones">
+            <h5><b>@ViewBag.Considere[0]</b></h5>
+            <hr />
+            <h5>@ViewBag.Considere[1]</h5>
+        </div>
+  
 }
 else
 {

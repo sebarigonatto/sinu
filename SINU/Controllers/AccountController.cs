@@ -235,6 +235,12 @@ namespace SINU.Controllers
 
 
                     var result = await UserManager.CreateAsync(user, model.Password);
+                    //var personareg = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
+                    //if (personareg != null)
+                    //{
+                    //    personareg.Postulante;
+                    //}
+
 
                     if (result.Succeeded)
                     {

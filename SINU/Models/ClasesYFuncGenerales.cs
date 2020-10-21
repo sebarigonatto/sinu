@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
 using System.IO;
 using SINU.ViewModels;
+using System.Windows.Media.Imaging;
 
 namespace SINU.Models
 {
@@ -136,7 +137,6 @@ namespace SINU.Models
                     DisableTempFileLocking = true
                  
                 };
-
                 Engine.Razor = RazorEngineService.Create(configuracion);
 
                 string Carpeta = AppDomain.CurrentDomain.BaseDirectory;
@@ -170,7 +170,6 @@ namespace SINU.Models
                 string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\"+Plantilla+".cshtml", null, ModeloPlantilla);
                 //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
                 var finalHtml = HtmlLayout.Replace("Mail_CUERPO", cuerpoMail);
-
 
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
                 await UserManager.SendEmailAsync(ID_AspNetUser, asunto, finalHtml);

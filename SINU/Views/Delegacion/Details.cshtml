@@ -1,76 +1,55 @@
-﻿@model SINU.Models.vPersona_DatosBasicos
-
-<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas (COPIAR ESTE BLOQUE) xxxxxxxxxxxxxx -->
-@{
-    ViewBag.Title = "DETALLE INSCRIPTO";
-}
-@*@section MenuPerfil{
-
-        @Html.Partial("_MenuPerfilDeleg")
-    }*@
-<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+﻿@model SINU.ViewModels.RestaurarPostulanteVM
 
 
-<h2>Detalles Inscripción seleccionada de @ViewBag.Delegacion</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+@*<h2>Desea restaurar al postulante al proceso de Inscripcion</h2>*@
+@Html.AntiForgeryToken()
 
     <div class="container">
         @*<h4>@Model.IdInscripcion</h4>*@
         <hr />
 
-
-        @Html.HiddenFor(m => m.IdPersona)
+        
+        @Html.HiddenFor(m => m.vInscripcionDetallesVM[0].IdInscripcion)
         @*@Html.HiddenFor(m => m.IdInscripcion)*@
-        <div class="list-group">
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.Apellido)</b>:    @Html.DisplayFor(model => model.Apellido)
-            </div>
 
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.Nombres)</b>:    @Html.DisplayFor(model => model.Nombres)
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Restaurar Postulante</h1>
+                <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Apellido)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Apellido)
+                    </div>
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Nombres)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Nombres)
+                    </div>
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].DNI)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].DNI)
+                    </div>
+                    <div class="list-group-item">
+                        <b>N° de preinscripcion</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].IdInscripcion)
+                    </div>
+                </div>
             </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.DNI)</b>:    @Html.DisplayFor(model => model.DNI)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.Sexo)</b>:    @Html.DisplayFor(model => model.Sexo)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.Telefono)</b>:    @Html.DisplayFor(model => model.Telefono)
-            </div>
-            <div class="list-group-item">
-
-                <b>@Html.DisplayNameFor(model => model.Celular)</b>:    @Html.Label(Model.Celular ?? "  -- ")
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.ComoSeEntero)</b>:    @Html.DisplayFor(model => model.ComoSeEntero)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.NombreInst)</b>:    @Html.DisplayFor(model => model.NombreInst)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.FechaNacimiento)</b>:    @Html.DisplayFor(model => model.FechaNacimiento)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(model => model.Edad)</b>:    @Html.DisplayFor(model => model.Edad)
-            </div>
-            <div class="list-group-item">
-                <b>@Html.DisplayNameFor(Model => Model.Email)</b>:   @Html.DisplayFor(Model => Model.Email)
-            </div>
-            <div class="list-group-item" id="Ocul" hidden>
-                <b>@Html.DisplayNameFor(Model => Model.Oficina)</b>:  @Html.DisplayFor(Model => Model.Oficina)
-            </div>
-
         </div>
+        @foreach (var item in Model.vDataProblemaEncontradoVM)
+        {
+            <div class="note small bg-light p-2">
+                <b>* @Html.DisplayFor(modelitem => item.DataVerificacion) :</b> @Html.DisplayFor(modelitem=>item.Comentario)
+            </div>
+        }
+        
     </div>
     <br />
     <div class="container-fluid">
         <div class="form-group row">
             <div class="col-sm-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-dark btn-lg w-100" })
+            </div>
+            <div class="col-sm-2">
+                @Html.ActionLink("Volver Etapa Anterior", "VolverEtapa", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-dark btn-lg" })
             </div>
         </div>
     </div>
-}
+
+

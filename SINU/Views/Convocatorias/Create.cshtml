@@ -15,14 +15,13 @@
     @*<h4>Convocatoria</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model=>model.Fecha_Inicio_Proceso)    
     <table>
         <thead>
             <tr>
                 <th>
-                    @*@Html.LabelFor(model => model.IdPeriodoInscripcion, "IdPeriodoInscripcion", htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <label>Perído de Inscripcion</label>
                 </th>
-                <th><label>Fechas de Inicio y Fin</label></th>
                 <th></th>
             </tr>
         </thead>
@@ -33,18 +32,25 @@
                     @Html.ValidationMessageFor(model => model.IdPeriodoInscripcion, "", new { @class = "text-danger" })
                 </td>
                 <td>
-                    @*@Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple", @id = "ddlTerritories" })*@
-                    @Html.ListBoxFor(model => model.PeriodosInscripciones, new MultiSelectList(ViewBag.lst, "Value", "Text"), new { @class = "multiselect form-control", @multiple = "multiple", @id = "FechasIniFin" })
-
-
-                </td>
-                <td>
                     <input type="button" value="Nuevo Período" onclick="location.href='@Url.Action("Create", "PeriodoInscripciones")'" class="btn btn-default" />
                 </td>
             </tr>
         </tbody>
     </table>
-
+    <table>
+        <thead>
+            <tr>
+                <th><label>Fechas de Inicio y Fin</label></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.ListBoxFor(model => model.PeriodosInscripciones, new SelectList(ViewBag.lst, "Value", "Text"), new { @class = "form-control", @id = "FechasIniFin" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
     <table>
         <thead>
             <tr>
@@ -92,7 +98,24 @@
         </tbody>
     </table>
     <p></p>
-
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.ff, htmlAttributes: new { @class = "label col-md-12" })
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.EditorFor(m => m.ff, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFin",@Type="Text", placeholder = "DD/MM/YYYY", @readOnly = true, title = "Fecha de finalización del proceso de esta convocatoria" } })
+                    @Html.ValidationMessageFor(model => model.ff, "", new { @class = "text-danger" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Guardar" class="btn btn-default" />
@@ -180,7 +203,7 @@
 
                     // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
                     $.each(data, function (index, row) {
-                        //alert(row.Value)
+                        alert(row.Text)
                         $("#FechasIniFin").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
                     });
                 });
@@ -190,7 +213,7 @@
         $(document).ready(function () {
             //ddlRegions es igual al ID del listado de Personal.
             $("#Modalidades").change(function () {
-              // $("#GruposyCarreras").prop("disabled", true);
+                // $("#GruposyCarreras").prop("disabled", true);
                 //alert($("#Modalidades").val());
                 // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
@@ -212,15 +235,35 @@
                 });
             });
         });
-                    //activacion de las fechas
-                    //$(document).ready(function () {
-                    //    $("#ComboInscripcion").change(function () {
-                    //        //$("#FechasIniFin").prop("disabled", false);
-                    //        $("#FechasIniFin").show();
-                    //    });
-                    //});
+        $('#FechaFin').datepicker({
+            format: "dd/mm/yyyy",
+          
+            weekStart: 1,
+            startDate: "today",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "es",
+            daysOfWeekDisabled: "0,6",
+            daysOfWeekHighlighted: "1,2,3,4,5",
+            todayHighlight: true
+        });
     </script>
-
+    @*<script type="text/javascript">
+        //alterala validacion de la fechas
+        //jQuery.validator.methods["date"] = function (value, element) { return true; };
+        var date = new Date();
+        date.setDate(date.getDate() +1);
+        $('.datepicker').datepicker({
+            dateFormat: 'yyyy/dd/mm',
+            autoclose: true,
+            startDate: date,
+        });
+    </script>*@
+    <script>
+        $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+    </script>
 
 }
 

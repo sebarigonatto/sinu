@@ -76,7 +76,7 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
         [Required]
-        [Display(Name = "Sexo")]
+        [Display(Name = "Genero")]
         public int IdSexo { get; set; }
         [Required]
         [Display(Name = "Oficinas y Delegaciones")]
@@ -126,7 +126,8 @@ namespace SINU.Models
         public string Genero { get; set; }
         [Required]
         [Display(Name = "Altura(en cm)")]
-        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
+        [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0  
+        [Range(100,300,ErrorMessage ="Altura ingresada no valida")]
         public Nullable<int> Altura { get; set; }
         [Required]
         [Display(Name = "Peso(en kg)")]
@@ -475,7 +476,7 @@ namespace SINU.Models
         [Display(Name = "Parentesco")]
         public Nullable<int> idParentesco { get; set; }
         [Required]
-        [Display(Name = "Sexo")]
+        [Display(Name = "Genero")]
         public Nullable<int> IdSexo { get; set; }
         [Required]
         [Display(Name = "Estado Civil")]
@@ -597,16 +598,27 @@ namespace SINU.Models
     {
         [Required]
         [Display(Name = "Período Inscripción")]
-        public string IdPeriodoInscripcion { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
         [Required]
         [Display(Name = "Modalidad")]
         public string IdModalidad { get; set; }
         [Required]
         [Display(Name = "Grupo de Carreras y Oficios")]
-        public string IdGrupoCarrOficio { get; set; }
-        [Required]
+        public int IdGrupoCarrOficio { get; set; }
+     
         [Display(Name = "Convocatoria")]
-        public string IdConvocatoria { get; set; }
+        public int IdConvocatoria { get; set; }
+       
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha Inicial del Proceso")]
+        public System.DateTime Fecha_Inicio_Proceso { get; set; }
+      
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha Final del Proceso")]
+        public System.DateTime Fecha_Fin_Proceso { get; set; }
+        [Required]
+        [Display(Name = "Fecha de finlaización de Proceso")]
+        public string ff { get; set; }
     }
     public partial class CarrerauOficioMetadata
     {
@@ -618,5 +630,9 @@ namespace SINU.Models
         public string Personal { get; set; }
         
     }
-
+    public partial class vInscripcionEtapaEstadoUltimoEstado
+    {
+        [Display(Name = "Modalidad")]
+        public string Idmodalidad { get; set; }
+    }
 }

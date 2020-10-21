@@ -129,17 +129,10 @@ $(document).ready(function () {
 
     function edadMAXMIN(edad) {
         if (edad > 35 && $("#idetapaactual").val() == 2) {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Su edad supera las edades maximas permitidas de los distintos Institutos.");
-            $("#ModalAnuncios").modal();
+            $.Anuncio("Su edad supera las edades maximas permitidas de los distintos Institutos.");
         } else if (edad != 0 && edad < 17 && $("#idetapaactual").val() == 2) {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
-            $("#ModalAnuncios").modal();
+           $.Anuncio("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
+            
         }
     }
     function ActualizarINStDatosBasicos() {
@@ -189,60 +182,79 @@ $(document).ready(function () {
 
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
 
+    //$("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
-
-    ActualizaCarrerasCivil($("#vPersona_DatosPerVM_IdModalidad").val());
-    $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
-        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
-        var modalidad = $(this).val();
-        //alert(modalidad); 
-        $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
-        ActualizaCarrerasCivil(modalidad)
-
-    });
-
-    function ActualizaCarrerasCivil(modalidad) {
+    (function () {
+        var modalidad = $("#vPersona_DatosPerVM_IdModalidad").val();
+        if (modalidad != "") { $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").removeAttr("disabled") };
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
+
             if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
-            if ($("#vPersona_DatosPerVM_edad").val() > 30) {
-
-            }
+            
         })
+        $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").selectpicker('refresh');
+    }())
 
-        $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
+    $("#vPersona_DatosPerVM_IdModalidad").on('changed.bs.select', function () {
+        //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
+        var modalidad = $(this).val();
 
-        var estCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
-        //alert(estCivil);
-        $("#vPersona_DatosPerVM_IdEstadoCivil option").each(function (index, element) {
-            if (estCivil != "") {
-                if ($(element).val() == estCivil && $(element).val() != "") {
-                    $(element).removeAttr("hidden");
-                } else if ($(element).val() != "") {
-                    $(element).attr("hidden", true);
-                }
-            } else {
+        
+        $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
+        ActualizaCombos(modalidad)
+
+    });
+
+    function ActualizaCombos(modalidad) {
+       
+        if (modalidad != "") {
+            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").removeAttr("disabled").val("");
+            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Opcion");
+
+
+        } else {
+            $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").attr("disabled", "disabled").val("");
+            $("#vPersona_DatosPerVM_IdCarreraOficio option:first, #vPersona_DatosPerVM_IdEstadoCivil option:first, #vPersona_DatosPerVM_idTipoNacionalidad option:first").html("Seleccione una Modalidad");
+        }
+
+        $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
+
+            if ($(element).attr("modali") == modalidad && $(element).val() != "") {
                 $(element).removeAttr("hidden");
+            } else if ($(element).val() != "") {
+                $(element).attr("hidden", true);
             }
 
-
         })
-        $("#vPersona_DatosPerVM_IdEstadoCivil").selectpicker('refresh');
+
+        $("#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad").selectpicker('refresh');
+
     }
 
+    //Para ESNM, ESSA, SMV, en caso de seleccionar estado civil distinto a soltero se muestra un mensaje
+    $("#vPersona_DatosPerVM_IdEstadoCivil").on("changed.bs.select", function () {
+        
+        val = $(this).val();
+        estadoCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
+        if (estadoCivil != "" && val != estadoCivil) {
+           $.Anuncio("Para la modalidad Seleccionada, " + $("#vPersona_DatosPerVM_IdModalidad option:selected").html() + ", existe la restriccion de Estado Civil Soltero. <br>Consultar Guia de Ingreso - Capitulo 01 - Punto 103 inc. F.");
+            
+        };
+
+    })
+
+    //En de seleccionar nacionalidad por Opcion de muestra un mensaje, exepto para la modalidad SMV
     $("#vPersona_DatosPerVM_idTipoNacionalidad").on("changed.bs.select", function () {
 
         var modali = $("#vPersona_DatosPerVM_IdModalidad").val();
         if (modali != "SMV" && $(this).val() == 3) {
 
-            $("#BTNModal").html("Aceptar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+          $.Anuncio("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
+            
 
         };
 
@@ -487,7 +499,7 @@ $(document).ready(function () {
                     UltimoAñoSINO();
                 });
 
-                
+
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
                 IngreSINO();
@@ -507,11 +519,8 @@ $(document).ready(function () {
                             $("#ModalEIA").modal("hide");
                             ActualizaTabla();
                             $("#OK").hide();
-                            $("#BTNModal").html("Cerrar");
-                            $("#GuardarDTF").css("display", "none");
-                            $("#ModalCenterTitle").html("SINU:");
-                            $("#TextModal").html(response.msg);
-                            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+                            $.Anuncio(response.msg);
+                            
                         });
                     } else {
                         $(form_actual).submit();
@@ -668,9 +677,6 @@ $(document).ready(function () {
             $(".si input,.si select").val("");
             $(".no").show();
             $(".si select").selectpicker("refresh");
-            $(".si :input").validate().resetForm();
-            $(".si :input").removeClass("has-error");
-
             $(".si").hide();
         };
     };
@@ -743,7 +749,7 @@ $(document).ready(function () {
         };
     });
     function CALIMC(altura, peso, anuncio) {
-        if (altura != "" && peso != "") {
+        if (altura != "" && peso != "" && $("#altura").valid() && $("#peso").valid()) {
             var Altura = altura / 100,
                 Peso = peso.replace(",", ".");
 
@@ -756,26 +762,22 @@ $(document).ready(function () {
                     } else {
                         anuncio = response.POPUP;
                     };
-                    $("#BTNModal").html("Cerrar");
-                    $("#GuardarDTF").css("display", "none");
-                    $("#ModalCenterTitle").html("SINU:");
-                    $("#TextModal").html(anuncio);
-                    $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+
+
                 };
-                
-               
+                if (anuncio != "") {
+                    $.Anuncio(anuncio);
+                }
+
+
             });
+
             $("#imc").val(imc.toFixed(2).replace(".", ","));
 
-        } else if(anuncio!="") {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(anuncio);
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+        } else if (anuncio != "") {
+            $.Anuncio(anuncio);
         }
     }
-
 
 
     $("#EstadoCivil").on("change", function () {
@@ -846,7 +848,7 @@ $(document).ready(function () {
     })
 
     //valido cada input al ser crgado
-    $("form").on("submit", function () {
+    $("form").not("[type='file']").on("submit", function () {
         //alert($(this).attr("id"));
         ValidForm("#" + $(this).attr("id"));
 
@@ -882,5 +884,47 @@ $(document).ready(function () {
 
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // DOCUMENTACION PENAL
+    //limito el tipo de archivos que puedo cargar, solo "JPG" y "PDF"
+    $("input[type='file']").change( function () {
+        var extencion = $(this).val().split('.').pop()
+        //alert(extencion);
+        if (extencion != "jpg" && extencion != "pdf") {
+            $(this).val("");
+            $.Anuncio("Tipo de archivo seleccionado invalido, solo se permite archivos con extencion 'jpg' y 'pdf'!!!")
+        } else {
+            //en el caso de cambio el documento se oculta el boton para ver el archivo
+            switch ($(this).attr("id")) {
+               
+                case "ConstanciaAntcPenales":
+                    $("#DocuCert").attr("hidden", "hidden");
+                    break;
+                case "FormularioAanexo2":
+                    $("#DocuAnex").attr("hidden", "hidden");
+                    break;
+                default:
+            }
+            
+        }
+    });
+   
+     //se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
+    $("#BeginDocuPenal").submit(function () {
+        if ($("#FormularioAanexo2").val() == "" && $("#ConstanciaAntcPenales").val() == "") {
+            $.Anuncio("No selecciono o cambio ningun archivo!!!")
+            return false;
+        } else
+            return true;
+    });
+
+    $.Anuncio = function (texto) {
+        $("#BTNModal").html("Cerrar");
+        $("#GuardarDTF").css("display", "none");
+        $("#ModalCenterTitle").html("SINU:");
+        $("#TextModal").html(texto);
+        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+    };
 });
 

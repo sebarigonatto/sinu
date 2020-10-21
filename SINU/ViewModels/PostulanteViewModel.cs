@@ -16,10 +16,11 @@ namespace SINU.ViewModels
         public List<int> EtapaTabs { get; set; }
         public string IDETAPA { get; set; }
         public string NomyApe { get; set; }
-        //public bool YAguardado { get; set; }
+        public bool ProcesoInterrumpido { get; set; }
         public bool NoPostulado { get; set; }
         public List<Array> ListProblemaCantPantalla { get; set; }
         public bool DocuPenal { get; set; }
+        public OficinasYDelegaciones OfiDele { get; set; }
     }
 
     public class PersonaFamiliaVM
@@ -133,12 +134,11 @@ namespace SINU.ViewModels
     public class DocuPenalVM
     {
         public int IdPersona { get; set; }
-        [Required(ErrorMessage ="La Constancia de Antecedentes Penales es OBLIGATORIO")]
+        
         public HttpPostedFileBase ConstanciaAntcPenales { get; set; }
-        [Required(ErrorMessage = "El Formulario 'ANEXO 2' es OBLIGATORIO")]
         public HttpPostedFileBase FormularioAanexo2  { get; set; }
-        public string Anexo2 { get; set; }
-        public string Constancia { get; set; }
+        public string PathFormularioAanexo2 { get; set; }
+        public string PathConstanciaAntcPenales { get; set; }
     }
 
     public class DocuAnexoVM

@@ -46,31 +46,37 @@ namespace SINU.Controllers
             }
         }
         // GET: Delegacion/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id)//Recibe el IdPersona
         {
-            vInscripcionDetalle vInscripcionDetalle;
-            List<vPersona_DatosBasicos> vPersona_Datos;
+            //List<vInscripcionDetalle> vInscripcionDetalle;
+            //List<DataProblemaEncontrado> dataProblemas;
             try
             {
-                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-                ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-                if (id == null)
+                RestaurarPostulanteVM datos = new RestaurarPostulanteVM()
                 {
-                    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
-                }
-                vInscripcionDetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == id);
-                int x = vInscripcionDetalle.IdPersona;
-                vPersona_Datos=db.vPersona_DatosBasicos.Where(m=>m.IdPersona==x && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-                if (vPersona_Datos.Count == 0)
-                {
-                    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
-                }
+                    vInscripcionDetallesVM=db.vInscripcionDetalle.Where(m=>m.IdPersona==id).ToList(),
+                    vDataProblemaEncontradoVM=db.vDataProblemaEncontrado.Where(m=>m.IdPostulantePersona == id).ToList()
+                };
+                //UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                //ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+                //if (id == null)
+                //{
+                //    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
+                //}
+                //vInscripcionDetalle=db.vInscripcionDetalle.Where(m=>m.IdPersona == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                //dataProblemas = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
+                ////ViewBag.DataProblema == dataProblemas;
+                //if (vInscripcionDetalle.Count == 0)
+                //{
+                //    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
+                //}
+                return View(datos);
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
             }
-            return View(vPersona_Datos.ToList()[0]);
+           
         }
         public ActionResult EntrevistaAsignaFecha(int id)
         {
@@ -305,9 +311,32 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult Documentacion(int? id)
         {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
             try
             {
-             db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+             //db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
+             vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == id);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
+                //var x = data.Count;
+                foreach (var item in data.Count.ToString())
+                {
+                    Convert.ToInt32(item);
+                    List<string> error = new List<string>(); 
+                    error= data[item].DataVerificacion;
+                }
+                var modeloPlantilla = new ViewModels.MailDocumentacion
+                {
+                    Etapa = vInscripcionEtapaEstado.Etapa,
+                    MailCuerpo=cuerpo,
+                    Apellido=vInscripcionEtapaEstado.Apellido,
+                    Errores=null
+                };
+                var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
             }
             catch (System.Exception ex)
             {
@@ -315,19 +344,19 @@ namespace SINU.Controllers
             }
             return Json(new{View="Index"});
         }
-        [HttpPost]
+       
         public ActionResult VolverEtapa(int? ID_persona)
         {
             try
             {
-                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                }
+                catch (System.Exception ex)
+                {
+                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+                }
+            return RedirectToAction("Index");
             }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
-            }
-            return Json(new { View = "Index" });
-        }
         [HttpPost]
         public ActionResult InterrumpirProceso(int? ID_persona)
         {
@@ -342,21 +371,30 @@ namespace SINU.Controllers
             return Json(new { View = "Index" });
         }
         //fin del codigo
-        public ActionResult DocPenal(int id)
+        public ActionResult DocPenal(int id ,string docu)
         {
             try
             {
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string NombreArchivo = id + "_Certificado.pdf";
-                string Descargar = CarpetaDeGuardado + NombreArchivo;
-                bool file = System.IO.File.Exists(Descargar);
-                if (file == false)
+                string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+                string[] archivos = Directory.GetFiles(Ubicacionfile, id + "&" + docu + "*");
+                byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
+                string app = "";
+                switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
                 {
-                  return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
-                }
-                byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-                return File(FileBytes, "application/pdf", NombreArchivo);
+                    case "jpg":
+                        app = "image/jpeg";
+                        break;
+                    case "pdf":
+                        app = "application/pdf";
+                        break;
+                    default:
+                        break;
+                };
+                return File(FileBytes, app);
+
+
+
             }
             catch (System.Exception ex)
             {
@@ -526,7 +564,7 @@ namespace SINU.Controllers
                         IdPostulantePersona = IdPostulante
 
                     },
-                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).ToList()
+                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).Concat(db.DataVerificacion.Where(m=>m.IdDataVerificacion==26)).ToList()
                 };
 
                 return PartialView(datos);

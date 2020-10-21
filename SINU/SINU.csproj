@@ -202,6 +202,7 @@
     <Compile Include="Controllers\Administrador\Convocatorias\ConvocatoriasController.cs" />
     <Compile Include="Controllers\Administrador\Convocatorias\GrupoCarrOficiosController.cs" />
     <Compile Include="Controllers\Administrador\Convocatorias\ResGrupoesController.cs" />
+    <Compile Include="Controllers\Administrador\EstablecimientoRindeExamenController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
     <Compile Include="Controllers\Administrador\ModalidadsController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
@@ -885,6 +886,9 @@
     <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-CPESNM-CPESSA.pdf" />
     <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-CUINA.pdf" />
     <Content Include="Documentacion\GUÍA DE INGRESO A LA ARMADA ARGENTINA-SMV.pdf" />
+    <Content Include="Plantillas\PlantillaInicioValidacionParaDelegacion.cshtml" />
+    <Content Include="Plantillas\PlantillaMailSolicitudEntrevista.cshtml" />
+    <Content Include="Plantillas\MailDocumentacion.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1257,6 +1261,12 @@
     <Content Include="Views\CallConsulta\FaltaCrearNuevoAction.cshtml" />
     <Content Include="Views\CallConsulta\Index.cshtml" />
     <Content Include="Views\CallConsulta\ConsultaPorDelegacion.cshtml" />
+    <Content Include="Views\EstablecimientoRindeExamen\Create.cshtml" />
+    <Content Include="Views\EstablecimientoRindeExamen\Delete.cshtml" />
+    <Content Include="Views\EstablecimientoRindeExamen\Details.cshtml" />
+    <Content Include="Views\EstablecimientoRindeExamen\Edit.cshtml" />
+    <Content Include="Views\EstablecimientoRindeExamen\Index.cshtml" />
+    <Content Include="Views\Delegacion\RestaurarPostulante.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
@@ -1279,6 +1289,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Documentacion\ArchivosDocuPenal\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Views\ManejoArchivos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

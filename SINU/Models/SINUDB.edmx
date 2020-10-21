@@ -178,6 +178,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdConvocatoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
         </EntityType>
         <EntityType Name="DataProblemaEncontrado">
           <Key>
@@ -677,6 +679,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene def
           <Property Name="NombreInst" Type="varchar" MaxLength="60" />
           <Property Name="Modalidad" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Desc_Grupo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
           <Property Name="IdInstitucion" Type="int" Nullable="false" />
           <Property Name="IdPeriodoInscripcion" Type="int" Nullable="false" />
@@ -2499,6 +2503,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConvocatoriaDetalles].[NombreInst] AS [NombreInst], 
     [vConvocatoriaDetalles].[Modalidad] AS [Modalidad], 
     [vConvocatoriaDetalles].[Desc_Grupo] AS [Desc_Grupo], 
+    [vConvocatoriaDetalles].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
+    [vConvocatoriaDetalles].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
     [vConvocatoriaDetalles].[IdConvocatoria] AS [IdConvocatoria], 
     [vConvocatoriaDetalles].[IdInstitucion] AS [IdInstitucion], 
     [vConvocatoriaDetalles].[IdPeriodoInscripcion] AS [IdPeriodoInscripcion], 
@@ -4905,7 +4911,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_vPersona_Familiar" ReturnType="Collection(SINUModel.sp_vPersona_Familiar_Result)">
-            <Parameter Name="IdPersonaPostulante" Mode="In" Type="Int32" />
+          <Parameter Name="IdPersonaPostulante" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -5216,6 +5222,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdPeriodoInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdGrupoCarrOficio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="VPersonaProblema">
           <Key>
@@ -5276,6 +5284,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <NavigationProperty Name="GrupoCarrOficio" Relationship="SINUModel.FK_Convocatoria_GrupoCarrOficio" FromRole="Convocatoria" ToRole="GrupoCarrOficio" />
           <NavigationProperty Name="Modalidad" Relationship="SINUModel.FK_Convocatoria_Modalidad" FromRole="Convocatoria" ToRole="Modalidad" />
           <NavigationProperty Name="PeriodosInscripciones" Relationship="SINUModel.FK_Convocatoria_PeriodosInscripciones" FromRole="Convocatoria" ToRole="PeriodosInscripciones" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="DataProblemaEncontrado">
           <Key>
@@ -6874,6 +6884,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vConvocatoriaDetalles">
             <EntityTypeMapping TypeName="SINUModel.vConvocatoriaDetalles">
               <MappingFragment StoreEntitySet="vConvocatoriaDetalles">
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
                 <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="IdPeriodoInscripcion" ColumnName="IdPeriodoInscripcion" />
@@ -6936,6 +6948,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="Convocatoria">
             <EntityTypeMapping TypeName="SINUModel.Convocatoria">
               <MappingFragment StoreEntitySet="Convocatoria">
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
                 <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
                 <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
