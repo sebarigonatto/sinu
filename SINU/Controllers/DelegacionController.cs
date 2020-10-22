@@ -35,7 +35,7 @@ namespace SINU.Controllers
                     EntrevistaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
                     DocumentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
                     PresentacionVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                 };
+                };
 
                 return View("Index", datos);
 
@@ -54,8 +54,8 @@ namespace SINU.Controllers
             {
                 RestaurarPostulanteVM datos = new RestaurarPostulanteVM()
                 {
-                    vInscripcionDetallesVM=db.vInscripcionDetalle.Where(m=>m.IdPersona==id).ToList(),
-                    vDataProblemaEncontradoVM=db.vDataProblemaEncontrado.Where(m=>m.IdPostulantePersona == id).ToList()
+                    vInscripcionDetallesVM = db.vInscripcionDetalle.Where(m => m.IdPersona == id).ToList(),
+                    vDataProblemaEncontradoVM = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList()
                 };
                 //UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 //ViewBag.Delegacion = UsuarioDelegacion.Nombre;
@@ -76,7 +76,7 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
             }
-           
+
         }
         public ActionResult EntrevistaAsignaFecha(int id)
         {
@@ -94,7 +94,7 @@ namespace SINU.Controllers
         // POST: Delegacion/Create
         [HttpPost]
         public ActionResult EntrevistaAsignaFecha(vEntrevistaLugarFecha datos)
-            {
+        {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
 
@@ -105,10 +105,11 @@ namespace SINU.Controllers
                 var da = db.Inscripcion.Find(datos.IdInscripcion);
                 da.FechaEntrevista = datos.FechaEntrevista;
                 db.SaveChanges();
-                db.spProximaSecuenciaEtapaEstado(0,datos.IdInscripcion,false,0,"","");
+                db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
 
 
-                MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista{
+                MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
+                {
                     Apellido = datos.Apellido,
                     FechaEntrevista = datos.FechaEntrevista
                 };
@@ -138,7 +139,7 @@ namespace SINU.Controllers
         {
             try
             {
-                vInscripcionDetalle elegido = db.vInscripcionDetalle.First(m=>m.IdPersona==id);
+                vInscripcionDetalle elegido = db.vInscripcionDetalle.First(m => m.IdPersona == id);
                 if (elegido == null)
                 {
                     return View("Error", Func.ConstruyeError("Ese usuario no se encontro", "Delegacion", "Edit"));
@@ -237,7 +238,7 @@ namespace SINU.Controllers
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
             Configuracion configuracion;
             bool x = false;
-            string cuerpo="";
+            string cuerpo = "";
             try
             {
                 switch (botonPostular)
@@ -258,18 +259,18 @@ namespace SINU.Controllers
                         db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
                         break;
                 }
-                    InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
-                    vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-                    
-                    var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
 
-                    var modeloPlanti = new ViewModels.MailPostular
-                    {
-                        Apellido = vInscripcionEtapas.Apellido,
-                        MailCuerpo = cuerpo,
-                        LinkConfirmacion = callbackUrl,
-                        Postulado=x
-                    };
+                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
+
+                var modeloPlanti = new ViewModels.MailPostular
+                {
+                    Apellido = vInscripcionEtapas.Apellido,
+                    MailCuerpo = cuerpo,
+                    LinkConfirmacion = callbackUrl,
+                    Postulado = x
+                };
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
@@ -294,7 +295,7 @@ namespace SINU.Controllers
         {
             vInscripcionDetalle vdetalle;
             vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
-            var NyA = vdetalle.Nombres +" "+ vdetalle.Apellido;
+            var NyA = vdetalle.Nombres + " " + vdetalle.Apellido;
             ViewBag.NInscripcion = vdetalle.IdInscripcion;
 
             IDPersonaVM personaVM = new IDPersonaVM();
@@ -322,18 +323,18 @@ namespace SINU.Controllers
                 cuerpo = configuracion.ValorDato.ToString();
                 data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
                 var PantallaCerradas = db.spTildarPantallaParaPostulate(id).Where(m => m.Abierta == true).ToList();
-                if (PantallaCerradas.Count==0)
+                if (PantallaCerradas.Count == 0)
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
-                        {
-                            Etapa = vInscripcionEtapaEstado.Etapa,
-                            MailCuerpo=cuerpo,
-                            Apellido=vInscripcionEtapaEstado.Apellido,
-                            Errores = data
-                        };
+                    {
+                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        MailCuerpo = cuerpo,
+                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Errores = data
+                    };
                     var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
                     db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
-                    return Json(new{View="Index"});
+                    return Json(new { View = "Index" });
                 };
                 return Json(new { success = true, msg = "No se pudo confirmar ya existen Problemas en los datos" });
             }
@@ -341,10 +342,10 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-           
+
         }
-       
-        public async Task<ActionResult> VolverEtapa(int? ID_persona)
+
+        public ActionResult VolverEtapa(int? ID_persona)
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
             Configuracion configuracion;
@@ -366,19 +367,20 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+                     Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
-                    return RedirectToAction("Index");
+                    return Json(new { View ="Index" });
 
                 }
-                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" });
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" },JsonRequestBehavior.AllowGet);
             }
-                catch (System.Exception ex)
-                {
-                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
-                }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
+        }
+
         [HttpPost]
         public async Task<ActionResult> InterrumpirProceso(int? ID_persona)
         {
@@ -418,7 +420,7 @@ namespace SINU.Controllers
             //return Json(new { View = "Index" });
         }
         //fin del codigo
-        public ActionResult DocPenal(int id ,string docu)
+        public ActionResult DocPenal(int id, string docu)
         {
             try
             {
@@ -494,9 +496,9 @@ namespace SINU.Controllers
                 foreach (var item in select)
                 {
                     int x = Convert.ToInt32(item);
-                    var da = db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona==x);
+                    var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
                     da.FechaRindeExamen = fecha;
-                    
+
                     db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
 
                 }
@@ -514,12 +516,12 @@ namespace SINU.Controllers
         {
             List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
 
-            
+
             return View(problema);
 
         }
         [HttpGet]
-        public ActionResult DataProblema(int? ID,int ID_persona)
+        public ActionResult DataProblema(int? ID, int ID_persona)
         {
             try
             {
@@ -530,18 +532,19 @@ namespace SINU.Controllers
                 var postu = db.Persona.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (ID == null)
                 {
-                    problema.vListDataProblemasVM = new vDataProblemaEncontrado() {
-                        IdPostulantePersona= ID_persona,
-                        Apellido_Y_Nombres= postu.Apellido +", "+postu.Nombres,
-                        DNI= postu.DNI
+                    problema.vListDataProblemasVM = new vDataProblemaEncontrado()
+                    {
+                        IdPostulantePersona = ID_persona,
+                        Apellido_Y_Nombres = postu.Apellido + ", " + postu.Nombres,
+                        DNI = postu.DNI
                     };
-                     
+
                 }
                 else
                 {
-                    problema.vListDataProblemasVM = db.vDataProblemaEncontrado.FirstOrDefault(m => m.IdDataProblemaEncontrado==ID);
+                    problema.vListDataProblemasVM = db.vDataProblemaEncontrado.FirstOrDefault(m => m.IdDataProblemaEncontrado == ID);
                 }
-                 return PartialView(problema);
+                return PartialView(problema);
             }
             catch (System.Exception ex)
             {
@@ -575,7 +578,7 @@ namespace SINU.Controllers
                             Comentario = dato.vListDataProblemasVM.Comentario,
                             IdDataVerificacion = dato.vListDataProblemasVM.IdDataVerificacion,
                             IdPostulantePersona = dato.vListDataProblemasVM.IdPostulantePersona,
-                            IdDataProblemaEncontrado=dato.vListDataProblemasVM.IdDataProblemaEncontrado
+                            IdDataProblemaEncontrado = dato.vListDataProblemasVM.IdDataProblemaEncontrado
                         };
                         db.Entry(dataProblemaEncontrado).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
@@ -583,7 +586,7 @@ namespace SINU.Controllers
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(new { success = false, msg = ex.InnerException.Message });
             }
@@ -611,7 +614,7 @@ namespace SINU.Controllers
                         IdPostulantePersona = IdPostulante
 
                     },
-                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).Concat(db.DataVerificacion.Where(m=>m.IdDataVerificacion==26)).ToList()
+                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).Concat(db.DataVerificacion.Where(m => m.IdDataVerificacion == 26)).ToList()
                 };
 
                 return PartialView(datos);
@@ -634,7 +637,7 @@ namespace SINU.Controllers
                     db.DataProblemaEncontrado.Add(data);
                     db.SaveChanges();
                     int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
-                    return Json(new { success = true, form="Elimina", msg = "Problema Agregado", url_Tabla= "ProblemaPantalla", url_Controller= "Delegacion",IdPantalla = idPantalla },JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = idPantalla }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
             }
@@ -663,7 +666,7 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult CerrarPantalla(int id , int IdPanatlla)
+        public ActionResult CerrarPantalla(int id, int IdPanatlla)
         {
 
             try
@@ -671,10 +674,10 @@ namespace SINU.Controllers
                 if (ModelState.IsValid)
                 {
 
-                     var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
-                    if (TieneProblema.ToList().First()==true)
+                    var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
+                    if (TieneProblema.ToList().First() == true)
                     {
-                        return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados"});
+                        return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
                     }
                     db.spCierraPantallaDePostulante(IdPanatlla, id);
                     return Json(new { success = true, msg = "Se valido Correctamente los datos" });
