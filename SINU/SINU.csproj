@@ -634,6 +634,8 @@
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\CssPostulante.css" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Param_DestVigRelacDerog.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Param_ESCOLARIDAD.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Param_EstCivil.Synonym.sql" />
@@ -901,6 +903,12 @@
     <Content Include="Plantillas\PlantillaInicioValidacionParaDelegacion.cshtml" />
     <Content Include="Plantillas\PlantillaMailSolicitudEntrevista.cshtml" />
     <Content Include="Plantillas\MailDocumentacion.cshtml" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1369&amp;Anexo2&amp;ReporteGMV.pdf" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1369&amp;Certificado&amp;ReporteGMV.pdf" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Certificado&amp;ReporteGMV.pdf" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
+    <Content Include="Documentacion\ArchivosDocuPenal\1386&amp;Anexo2&amp;Formulario Solicitud Ingreso a ARA.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1299,7 +1307,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Documentacion\ArchivosDocuPenal\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\ManejoArchivos\" />
   </ItemGroup>
