@@ -1,7 +1,6 @@
 ﻿<!--    CUERPO DEL CORREO    -->
 
 <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">
-    Docuementacion del postulante
     @if (Model.Errores == null)
     {
     <p> @Model.MailCuerpo</p>
@@ -10,6 +9,7 @@
 else
 {
     <p> @Model.MailCuerpo</p>
+    <p>Acontinuacion se detalla los problemas que tuve al momento de cargar o presentar la documentacion </p>
     foreach (var item in Model.Errores)
     {
         <p>@item.DataVerificacion: @item.Comentario </p>
@@ -18,6 +18,7 @@ else
     @if (Model.Etapa == "No Validado")
     {
         <p> @Model.MailCuerpo</p>
+        <p>Su documentacion no fue validada por los siguientes problemas</p>
     }
     
 
