@@ -344,30 +344,78 @@ namespace SINU.Controllers
            
         }
        
-        public ActionResult VolverEtapa(int? ID_persona)
+        public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
             try
             {
+                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
+                if (PantallaCerradas.Count != 0)
+                {
+                    var modeloPlantilla = new ViewModels.MailDocumentacion
+                    {
+                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        MailCuerpo = cuerpo,
+                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Errores = data
+                    };
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                    return RedirectToAction("Index");
+
                 }
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" });
+            }
                 catch (System.Exception ex)
                 {
                     return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
                 }
-            return RedirectToAction("Index");
             }
         [HttpPost]
-        public ActionResult InterrumpirProceso(int? ID_persona)
+        public async Task<ActionResult> InterrumpirProceso(int? ID_persona)
         {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
             try
             {
-                db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
+                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
+                if (PantallaCerradas.Count != 0)
+                {
+                    var modeloPlantilla = new ViewModels.MailDocumentacion
+                    {
+                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        MailCuerpo = cuerpo,
+                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Errores = data
+                    };
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
+                    //db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "", "");
+                    //return RedirectToAction("Index");
+                    return Json(new { View = "Index" });
+
+                }
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" });
             }
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-            return Json(new { View = "Index" });
+            //return Json(new { View = "Index" });
         }
         //fin del codigo
         public ActionResult DocPenal(int id ,string docu)
