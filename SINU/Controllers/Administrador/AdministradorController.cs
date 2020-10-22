@@ -113,6 +113,7 @@ namespace SINU.Controllers.Administrador
                             Apellido = usuario.Apellido,
                             Email = usuario.Email,
                             Password = usuario.Password,
+                            LinkConfirmacion = Url.Action("Login", "Account")
                         };
                         //la funcio para enviar devuelve un booleano, 
                         //necesita 4 paramtros:

@@ -125,7 +125,6 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "Index"));
             }
 
@@ -1254,7 +1253,7 @@ namespace SINU.Controllers
                 if (p != null)
                 {
                     //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
-                    pers.postulante = (db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER).FechaRegistro.Date.Year == DateTime.Now.Year);
+                    pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
                 ViewBag.ValidacionEnCurso = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0] == 14;
                 //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
@@ -1519,7 +1518,7 @@ namespace SINU.Controllers
             else
             {
                 prese.FechaPresentacion = (DateTime)FechaPrese;
-                string url = "Link donde estaran los datos del postulante.";
+                string url = HttpContext.Request.Url.Host  + Url.Action("Index","Postulante",new { ID_Postulante = ID_persona });
                 ViewBag.QRCodeImage = generarQR(url);
                 ViewBag.QRCodeImageLink = url;
             };

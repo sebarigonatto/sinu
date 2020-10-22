@@ -53,7 +53,7 @@
                 else
                 {
 
-                    <h2 class="text-center"> @Model.Exception.Message </h2>
+                    <h2 class="text-center"> @Model.Exception.InnerException.Message </h2>
                     <h3  class="negro-sub text-center"> <b >Controlador</b>: @Model.ControllerName </h3>
                     <h3 class="negro-sub text-center"> <b >Accion</b>: @Model.ActionName </h3>
                     <h3 class="negro-sub text-center"> <b >Menu</b>: @ViewBag.Menu </h3>
