@@ -1,0 +1,63 @@
+﻿@model SINU.ViewModels.vContacto
+
+<h2 class="font-weight-bold">
+    SELECCIONE UNA DELEGACION
+</h2>
+
+<table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.listoficinas[0].Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.listoficinas[0].Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+        </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model.listoficinas)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Nombre,"ConsultaPorDelegacion",new { DelegacionSeleccionada = item.Nombre })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email1)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+                    </td>*@
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
