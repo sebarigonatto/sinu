@@ -416,13 +416,15 @@ namespace SINU.Controllers
         {
             try
             {
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                ViewBag.baase = AppDomain.CurrentDomain.BaseDirectory;
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory??"no";
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string anexo = "";
                 string cert = "";
-                string NombreArchivo, ExtencioArchivo, guarda;
+                string NombreArchivo, ExtencioArchivo,guarda;
                 bool btanexo=false, btcert=false;
-                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, data.IdPersona + "*");
+                int id = data.IdPersona;
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, id + "*");
                 foreach (var item in archivos)
                 {
                     if (item.IndexOf("Anexo2") > 0) anexo = item;
@@ -432,7 +434,7 @@ namespace SINU.Controllers
                 if (data.FormularioAanexo2 != null)
                 {
                     if (anexo != "") System.IO.File.Delete(anexo);
-                    NombreArchivo = data.IdPersona + "&Anexo2";
+                    NombreArchivo = id + "&Anexo2";
                     ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.FormularioAanexo2.FileName;
                     data.FormularioAanexo2.SaveAs(guarda);
@@ -441,20 +443,19 @@ namespace SINU.Controllers
                 if (data.ConstanciaAntcPenales != null)
                 {
                     if (cert != "") System.IO.File.Delete(cert);
-                    NombreArchivo = data.IdPersona + "&Certificado";
+                    NombreArchivo = id + "&Certificado";
                     ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName;
                     data.ConstanciaAntcPenales.SaveAs(guarda);
                     btcert = true;
                 }
-
-                return Json(new { success = true, form = "DocuPenal", msg = "Se Guardaron correctamnete los archivos seleccionados.", anexo = btanexo,cert=btcert }) ;
+                
+                return Json(new { success = true, form = "DocuPenal", msg = "Se Guardaron correctamnete los archivos seleccionados." , anexo = btanexo,cert=btcert },JsonRequestBehavior.AllowGet) ;
 
             }
             catch (Exception ex)
             {
-
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = ex.InnerException.Message +"  "+ ViewBag.path },JsonRequestBehavior.AllowGet);
             }
 
         }

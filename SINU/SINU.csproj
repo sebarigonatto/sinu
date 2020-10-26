@@ -50,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
+    <ExcludeFoldersFromDeployment>Documentacion\ArchivosDocuPenal</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -908,7 +909,6 @@
     <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Certificado&amp;ReporteGMV.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1386&amp;Anexo2&amp;Formulario Solicitud Ingreso a ARA.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

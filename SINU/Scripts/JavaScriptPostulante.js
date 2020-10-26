@@ -108,10 +108,8 @@ $(document).ready(function () {
 
     if (($("#fechacumpleaños").val() != "")) {
         if (!($.NoEjecutar)) ActualizarINStDatosBasicos();
-
-
     }
-
+    
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
     $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
@@ -148,26 +146,23 @@ $(document).ready(function () {
 
             },
             function (data) {
-
-                var idselect = $("#InstitutoPref").val();
+                
+                var idselect = $("input[name='IdPrefe']").val();
                 $("#InstitutoPref").empty();
                 $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
 
                 $.each(data.institucion, function (index, row) {
                     if (row.Value == idselect) {
-                        $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
+                        $("#InstitutoPref").append("<option selected='selected' value='" + row.Value + "'>" + row.Text + "</option>")
                     } else {
                         $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
                     }
-
 
                 });
 
                 $("#InstitutoPref").removeAttr("disabled");
                 $("#InstitutoPref").selectpicker('refresh');
-
-
-
+                $("#BTentrevista").removeClass("disabled");
             })
     }
 
@@ -189,7 +184,7 @@ $(document).ready(function () {
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
     $("#BeginFormDatosBasicos").on("change", function () {
         //alert($(this).valid());
-        ($(this).valid()) ? $("#BTentrevista").removeClass("disabled") : $("#BTentrevista").addClass("disabled");
+        $("#BTentrevista").addClass("disabled");
     });
    
     //al solicitar un a entrevista me aseguro que el formulario sea valido 
