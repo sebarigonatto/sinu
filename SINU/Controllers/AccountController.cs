@@ -189,7 +189,7 @@ namespace SINU.Controllers
             RegisterViewModel regi = new RegisterViewModel
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
                 ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre"),
-                ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst"),
+                ListIntitutos = new SelectList(db.vPeriodosInscrip.OrderBy(m=>m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst"),
                 IdInstituto = idInstitucion
             };
             var DatosDelegacion2 = new List<Array>();
