@@ -15,5 +15,9 @@ namespace SINU.Models
     public partial class vDelegacion_EstablecExamen
     {
         public string Direccion { get; set; }
+        public string Jurisdiccion { get; set; }
+        public string Localidad { get; set; }
+        public string Nombre { get; set; }
+        public int IdOficinasYDelegaciones { get; set; }
     }
 }

@@ -30,5 +30,6 @@ namespace SINU.Models
         public Nullable<int> AlturaMinM { get; set; }
         public Nullable<int> IMC_min { get; set; }
         public Nullable<int> IMC_max { get; set; }
+        public string IdModalidad { get; set; }
     }
 }

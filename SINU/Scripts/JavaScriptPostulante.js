@@ -279,6 +279,15 @@ $(document).ready(function () {
 
     });
 
+    $("#BeginFormDatosPersonales :input").on("change", function () {
+        if (!$("#BTValidarDP").hasClass("disabled")) {
+            $("#BTValidarDP").addClass("disabled");
+            $.Anuncio("Deberas Guadar los Datos Nuevamente para Solicitar la Validacion de los mimos");
+        }
+      
+    });
+
+
 
     /////////////////////////////////////////////////////////////////////////////////
     /*FUNCION DE LA VISTA DE DOMICILIOS */

@@ -77,6 +77,7 @@ namespace SINU
                 //Ver BRINDA CERTIFICADOS DE SEGURIDAD - quitado por el jefe
                 //ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
                 //SE ENVIA EL MAIL ATRAVEs DEL CLIENTE
+                
                 smtpClient.Send(mensage);
 
             }

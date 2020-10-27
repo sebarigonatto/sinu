@@ -34,6 +34,7 @@ namespace SINU.Controllers
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
+
         public ActionResult Index(int? ID_Postulante)
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
@@ -204,7 +205,7 @@ namespace SINU.Controllers
             try
             {
                 DateTime fechaNAC = DateTime.Parse(Fecha);
-                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
+                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC,null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
                 institutos.Add(new SelectListItem() { Value = "1", Text = "Necesito Orientacion" });
                 return Json(new { institucion = institutos }, JsonRequestBehavior.AllowGet);
             }
@@ -319,7 +320,7 @@ namespace SINU.Controllers
                     ModalidadVm = new List<ComboModalidad>()
 
                 };
-                var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento).ToList();
+                var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento,null).ToList();
                 foreach (var item in validosInscrip)
                 {
 
@@ -361,9 +362,11 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio);
+                    //busco el nuevo id preferencia para la modalidad seleccionada
+                    int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio,IDpreNuevo);
                    
-                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
+                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES",form="DatosPersonales" });
                 }
                 catch (Exception ex)
                 {
@@ -520,7 +523,7 @@ namespace SINU.Controllers
                 {
                     vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
-                    provincias = db.vProvincia_Depto_Localidad.Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
+                    provincias = db.vProvincia_Depto_Localidad.OrderBy(m=>m.Provincia).Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
                 };
 
                 if (datosdomilio.vPersona_DomicilioVM.IdPais != "AR")
@@ -1160,7 +1163,7 @@ namespace SINU.Controllers
                 string Carrera = inscrip.CarreraRelacionada;
                 sexo = (Carrera == "Médicos") ? "Medico" : sexo;
                 string PopUp = "";
-                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).FirstOrDefault(m=>m.IdInstitucion == p.Postulante.Inscripcion.ToList()[0].IdPreferencia);
+                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac, p.Postulante.Inscripcion.ToList()[0].IdPreferencia).ToList()[0];
                 string Aplica = "";
                 switch (AltIcm) 
                 {
@@ -1270,8 +1273,6 @@ namespace SINU.Controllers
                 pers.vPersona_FamiliarVM.IdFamiliar = 0;
                 pers.vPersona_FamiliarVM.IdPersonaFamiliar = 0;
             }
-
-
 
             return View(pers);
         }
@@ -1430,7 +1431,7 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(problema);
                     };
                 };
-                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento).ToList()[0].IdEstadoCivil ?? "";
+                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento,db.Inscripcion.FirstOrDefault(m=>m.IdInscripcion==persona.IdInscripcion).IdPreferencia).ToList()[0];
                 if (persona.IdModalidad!=null)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
@@ -1443,13 +1444,13 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(problema);
                     };
                     //verifico si cumple con la restrccion de Estado Civil para la modalidad que corresponde
-                    if (restriccionesEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
-                    {
-                        problema.IdDataVerificacion = 50;
-                        problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
+                    //if (restriccionesEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
+                    //{
+                    //    problema.IdDataVerificacion = 50;
+                    //    problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
 
-                        db.DataProblemaEncontrado.Add(problema);
-                    };
+                    //    db.DataProblemaEncontrado.Add(problema);
+                    //};
                    
                 }
                 db.SaveChanges();
@@ -1470,7 +1471,7 @@ namespace SINU.Controllers
                     datosMail.Nombre_P = per.Nombres;
                     datosMail.url = Url.Action("Documentacion", "Delegacion", new { id = ID_persona }, protocol: Request.Url.Scheme);
 
-                    Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
+                    //Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
                 };
 
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"
@@ -1495,8 +1496,6 @@ namespace SINU.Controllers
                 throw;
             }
         }
-
-
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
         [AuthorizacionPermiso("ListarRP")]
@@ -1544,7 +1543,6 @@ namespace SINU.Controllers
             }
 
         }
-
 
     }
 }

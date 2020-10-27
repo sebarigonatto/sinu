@@ -470,7 +470,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, fechaNacimientoParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idComoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
         }
     
-        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, Nullable<int> idInscripcion, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad, string idModalidad, Nullable<int> idCarreraOficio)
+        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, Nullable<int> idInscripcion, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad, string idModalidad, Nullable<int> idCarreraOficio, Nullable<int> idpreferencia)
         {
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
@@ -508,7 +508,11 @@ namespace SINU.Models
                 new ObjectParameter("IdCarreraOficio", idCarreraOficio) :
                 new ObjectParameter("IdCarreraOficio", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, idInscripcionParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter, idModalidadParameter, idCarreraOficioParameter);
+            var idpreferenciaParameter = idpreferencia.HasValue ?
+                new ObjectParameter("idpreferencia", idpreferencia) :
+                new ObjectParameter("idpreferencia", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, idInscripcionParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter, idModalidadParameter, idCarreraOficioParameter, idpreferenciaParameter);
         }
     
         public virtual int spDomiciliosU(Nullable<int> idDomicilioDNI, string calle, string numero, string piso, string unidad, Nullable<int> idLocalidad, string prov_Loc_CP, string idPais, Nullable<int> idDomicilioActual, string eventualCalle, string eventualNumero, string eventualPiso, string eventualUnidad, Nullable<int> eventualIdLocalidad, string eventualProv_Loc_CP, string eventualIdPais)
@@ -1249,7 +1253,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("spTieneProblemasEnPantallaEstePostulate", idpostulantePersonaParameter, idPantallaParameter);
         }
     
-        public virtual ObjectResult<spRestriccionesParaEstePostulante_Result2> spRestriccionesParaEstePostulante(Nullable<int> idPostulantePersona, Nullable<System.DateTime> fechaNacimiento)
+        public virtual ObjectResult<spRestriccionesParaEstePostulante_Result2> spRestriccionesParaEstePostulante(Nullable<int> idPostulantePersona, Nullable<System.DateTime> fechaNacimiento, Nullable<int> idpreferencia)
         {
             var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
                 new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
@@ -1259,7 +1263,11 @@ namespace SINU.Models
                 new ObjectParameter("FechaNacimiento", fechaNacimiento) :
                 new ObjectParameter("FechaNacimiento", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result2>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter);
+            var idpreferenciaParameter = idpreferencia.HasValue ?
+                new ObjectParameter("idpreferencia", idpreferencia) :
+                new ObjectParameter("idpreferencia", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result2>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter, idpreferenciaParameter);
         }
     
         public virtual ObjectResult<sp_vPersona_Familiar_Result> sp_vPersona_Familiar(Nullable<int> idPersonaPostulante)
