@@ -2263,6 +2263,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="spCierraPantallaDePostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPantalla" Type="int" Mode="In" />
           <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
+          <Parameter Name="SeCierra" Type="bit" Mode="In" />
         </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
@@ -5019,6 +5020,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spCierraPantallaDePostulante">
             <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
             <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="SeCierra" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="spTieneProblemasEnPantallaEstePostulate" ReturnType="Collection(Boolean)">
             <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />

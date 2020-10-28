@@ -1227,7 +1227,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spTildarPantallaParaPostulate_Result1>("spTildarPantallaParaPostulate", idpostulantePersonaParameter);
         }
     
-        public virtual int spCierraPantallaDePostulante(Nullable<int> idPantalla, Nullable<int> idpostulantePersona)
+        public virtual int spCierraPantallaDePostulante(Nullable<int> idPantalla, Nullable<int> idpostulantePersona, Nullable<bool> seCierra)
         {
             var idPantallaParameter = idPantalla.HasValue ?
                 new ObjectParameter("IdPantalla", idPantalla) :
@@ -1237,7 +1237,11 @@ namespace SINU.Models
                 new ObjectParameter("IdpostulantePersona", idpostulantePersona) :
                 new ObjectParameter("IdpostulantePersona", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCierraPantallaDePostulante", idPantallaParameter, idpostulantePersonaParameter);
+            var seCierraParameter = seCierra.HasValue ?
+                new ObjectParameter("SeCierra", seCierra) :
+                new ObjectParameter("SeCierra", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCierraPantallaDePostulante", idPantallaParameter, idpostulantePersonaParameter, seCierraParameter);
         }
     
         public virtual ObjectResult<Nullable<bool>> spTieneProblemasEnPantallaEstePostulate(Nullable<int> idpostulantePersona, Nullable<int> idPantalla)
