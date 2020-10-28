@@ -144,7 +144,7 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.OrderBy(m=>m.Descripcion).ToList(),
+                    SexoVM = db.Sexo.OrderBy(m=>m.Descripcion).Where(m=>m.Descripcion!="Seleccione Sexo").ToList(),
                     vPeriodosInscripsVM = new List<vPeriodosInscrip>(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
@@ -320,6 +320,7 @@ namespace SINU.Controllers
                     ModalidadVm = new List<ComboModalidad>()
 
                 };
+                datosba.vPersona_DatosPerVM.IdModalidad ??= "";
                 var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento,null).ToList();
                 foreach (var item in validosInscrip)
                 {
@@ -1444,14 +1445,14 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(problema);
                     };
                     //verifico si cumple con la restrccion de Estado Civil para la modalidad que corresponde
-                    //if (restriccionesEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
-                    //{
-                    //    problema.IdDataVerificacion = 50;
-                    //    problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
+                    if (restriccionesEstadoCivil.IdEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil.IdEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
+                    {
+                        problema.IdDataVerificacion = 50;
+                        problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
 
-                    //    db.DataProblemaEncontrado.Add(problema);
-                    //};
-                   
+                        db.DataProblemaEncontrado.Add(problema);
+                    };
+
                 }
                 db.SaveChanges();
                 //Envio de Mail para notificar a la delegacion correpondiente
@@ -1471,7 +1472,7 @@ namespace SINU.Controllers
                     datosMail.Nombre_P = per.Nombres;
                     datosMail.url = Url.Action("Documentacion", "Delegacion", new { id = ID_persona }, protocol: Request.Url.Scheme);
 
-                    //Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
+                    Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", idAsp_delegacion, null, "MailAsunto7");
                 };
 
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"

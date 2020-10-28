@@ -207,6 +207,12 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
+                                        @if ((bool)((object[])Model.ListProblemaCantPantalla[0])[1] && !(bool)ViewBag.ValidacionEnCurso)
+                                        {
+                                            <div id="DatoPermsg" class="jumbotron " style="background-color: #08495f; color:white; padding-top:10px !important;padding-bottom:10px !important">
+                                                <h4>Deberas completar este fomulario y enviar a Validar para continuar con las demas pantallas</h4>
+                                            </div>
+                                        }
                                         @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 1 })
@@ -502,8 +508,9 @@
 
         //array con los ID de las solapas principales que se bloquearan
         var SolapaPrincipales = [["2", "#datosbasicos"], ["4", "#Documentacion"]];
-
-
+        //json con info de cada pantalla si estan abiertas o cerradas
+        var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
+        var jsonProblemas = JSON.parse(Problemas);
         //bloquea las patallas principales segun las Etapas en las que esta actualmente.
         $.BloqueaPantallasPrincipales = function () {
             $.each(SolapaPrincipales, function (index, item) {
@@ -557,21 +564,9 @@
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
             //alert("@Session["ValidoUnaVez"]");
             if ("@Session["ValidoUnaVez"]"=="True" && "@Session["DeleConsul"]" != "True" ) {
-                var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
-                var jsonProblemas = JSON.parse(Problemas);
+
                 //verifico que la pantalla Datos Personles este cerrada, si lo esta habilito las demas pantallas
 
-                if (jsonProblemas[0][1]) {
-                    $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) {
-
-                        $(item).closest('li').addClass("Tabdesabilitado");
-
-                    });
-                    //$("#TabDocumentacion .tab-nav").not("#DatosPersonales").each(function (index, item) {
-                    //    $(item).remove();
-                    //});
-
-                } else {
                     $.each(jsonProblemas, function (index, item) {
 
                         //alert(item[1]);
@@ -594,9 +589,26 @@
                             $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
                         }
                     });
-                }
 
             };
+
+            if (jsonProblemas[0][1]) {
+                $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) { $(item).closest('li').addClass("Tabdesabilitado"); })
+            } else { BloqueaPantalla("DatosPersonales");};
+
+
+            //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
+            if ("@Session["DeleConsul"]" == "True") {
+                $.each(SolapaPrincipales, function (index, item) {
+                    BloqueaPantalla(item[1]);
+                });
+                //$("#TABDocumentacion i").remove();
+                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
+                //cambio el href del button
+                pageanterior = document.referrer.toString()
+
+                $("#BTatras").attr("href", "/Delegacion");
+            }
 
             if ('@Session["FamiTable"]' == 'True') {
                 $("#Documentacion-tab").tab("show");
@@ -609,19 +621,6 @@
                @{
                   Session["FamiTable"] = false;
                }
-            //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
-            if ("@Session["DeleConsul"]" == "True") {
-                $.each(SolapaPrincipales, function (index, item) {
-                    BloqueaPantalla(item[1]);
-                });
-
-                //$("#TABDocumentacion i").remove();
-                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
-                //cambio el href del button
-                pageanterior = document.referrer.toString()
-
-                $("#BTatras").attr("href", "/Delegacion");
-            }
         });
 
         //en caso de ser exitosa la llamada al controlador delos distintos POST
@@ -651,7 +650,7 @@
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
                     $.BloqueoPantalla = true;
-                    $(".jumbotron.problemapantalla").remove();
+                    $(".jumbotron.problemapantalla, #DatoPermsg").remove();
                     $("#TABDocumentacion i").remove();
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden", "true");
