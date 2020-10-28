@@ -421,7 +421,7 @@
                                                    HttpMethod = "POST",
                                                    OnSuccess = "Exito(data,status,xhr)",
                                                    OnFailure = "Falla"
-                                               }, new { @id = "BTValidar", @class = "btn btn-success" })
+                                               }, new { @id = "BTValidar", @class = "btn btn-success load-submit" })
                                                 </div>
                                                 <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -457,6 +457,8 @@
         </div>
 
     </div>
+
+
     <!-- End lined tabs -->
 </div>
 
@@ -473,23 +475,7 @@
 </div>
 
 
-<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
 
-            </div>
-            <div class="modal-body">
-                <p id="TextModal">@* mensaje del Modal *@</p>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

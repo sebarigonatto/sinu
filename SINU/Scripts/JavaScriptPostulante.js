@@ -937,13 +937,17 @@ $(document).ready(function () {
     });
     //FUNCIONES VARIAS
     $.Anuncio = function (texto) {
-        $("#BTNModal").html("Cerrar");
+        $("#BTNModal").show().html("Cerrar");
+        $("#ModalAnuncios .modal-content").css("background-color", "white").css("border-color", "white");
         $("#GuardarDTF").css("display", "none");
+        $(".modal-header,.modal-footer").show();
         $("#ModalCenterTitle").html("SINU:");
         $("#TextModal").html(texto);
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
 
-    
+
+  
+   
 });
 
