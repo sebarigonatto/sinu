@@ -213,7 +213,6 @@ $(document).ready(function () {
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
-
         })
         $(idComboDPer).selectpicker('refresh');
     }())
@@ -263,7 +262,6 @@ $(document).ready(function () {
             $.Anuncio("Para la modalidad Seleccionada, " + $("#vPersona_DatosPerVM_IdModalidad option:selected").html() + ", existe la restriccion de Estado Civil Soltero. <br>Consultar Guia de Ingreso - Capitulo 01 - Punto 103 inc. F.");
 
         };
-
     })
 
     //En de seleccionar nacionalidad por Opcion de muestra un mensaje, exepto para la modalidad SMV
@@ -273,21 +271,18 @@ $(document).ready(function () {
         if (modali != "SMV" && $(this).val() == 3) {
 
             $.Anuncio("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
-
-
         };
-
     });
-    //alert($("#BeginFormDatosPersonales input[name='vPersona_DatosPerVM.IdModalidad']").val());
-   
+    //verifico si la pantalla esta cargada
+    cargadoDP = $("#vPersona_DatosPerVM_IdModalidad").val() != "";
     $("#BeginFormDatosPersonales :input").on("change", function () {
-        if (!$("#BTValidarDP").hasClass("disabled") && $("#BeginFormDatosPersonales input[name='vPersona_DatosPerVM.IdModalidad']").val()!="") {
+        if (!$("#BTValidarDP").hasClass("disabled") && cargadoDP) {
             $("#BTValidarDP").addClass("disabled");
             $.Anuncio("Deberas Guadar los Datos Nuevamente para Solicitar la Validacion de los mimos");
         }
       
     });
-    if ($("#BeginFormDatosPersonales input[name='vPersona_DatosPerVM.IdModalidad']").val() != "") {
+    if (cargadoDP) {
         $("#BTValidarDP").removeClass("disabled");
     }
 
@@ -551,11 +546,9 @@ $(document).ready(function () {
                             ActualizaTabla();
                             $("#OK").hide();
                             $.Anuncio(response.msg);
-                            
                         });
                     } else {
                         $(form_actual).submit();
-
                     };
 
                 });
@@ -572,7 +565,6 @@ $(document).ready(function () {
                 $("form").on("submit", function () {
                     //alert($(this).attr("id"));
                     ValidForm("#" + $(this).attr("id"));
-
                 });
             },
 

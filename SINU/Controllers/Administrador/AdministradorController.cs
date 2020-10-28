@@ -82,8 +82,6 @@ namespace SINU.Controllers.Administrador
                     ApplicationUser user = (await UserManager.FindByNameAsync(usuario.Email)) ?? new ApplicationUser { UserName = usuario.Email, Email = usuario.Email };                    
 
                     //verificar si el año es ==1 ya existe el usuario sino recien lo voy a crear, por ahora dejo que aborte y luego decidimos que se hace
-
-
                     user.EmailConfirmed = true;
                     IdentityResult result ;
 

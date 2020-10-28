@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Microsoft.Ajax.Utilities;
 
 namespace SINU.Controllers
 {
@@ -189,9 +190,10 @@ namespace SINU.Controllers
             RegisterViewModel regi = new RegisterViewModel
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
                 ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre"),
-                ListIntitutos = new SelectList(db.vPeriodosInscrip.OrderBy(m=>m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst"),
+                ListIntitutos = new SelectList(db.vPeriodosInscrip.DistinctBy(mbox=>mbox.IdInstitucion).OrderBy(m => m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst"),
                 IdInstituto = idInstitucion
             };
+        
             var DatosDelegacion2 = new List<Array>();
             db.OficinasYDelegaciones.ToList().ForEach(m => DatosDelegacion2.Add(new object[] { m.IdOficinasYDelegaciones,
                                                                                                m.Provincia + ", " + m.Localidad + ", " + m.Direccion,
