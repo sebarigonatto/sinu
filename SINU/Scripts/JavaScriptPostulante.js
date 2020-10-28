@@ -60,7 +60,7 @@ $(document).ready(function () {
         $("#fechacumpleaños").attr("data-date-end-date", "0d");
         //alert(id_persona);
     })();
-     
+
     //cuando es cargado un documento muestro el nombre del archivo
     $(document).on('change', '.custom-file-input', function (event) {
         $(this).next('.custom-file-label').html(event.target.files[0].name);
@@ -97,7 +97,7 @@ $(document).ready(function () {
     });
     //verificar luego anchura para disposititvos mobiles
     $(".combobox button[role='combobox'] .filter-option-inner-inner").css("text-overflow", "ellipsis")
-   
+
 
     ///////////////////////////////////////////////////////////////////////////////  DATOS BASICOS  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -108,8 +108,6 @@ $(document).ready(function () {
 
     if (($("#fechacumpleaños").val() != "")) {
         if (!($.NoEjecutar)) ActualizarINStDatosBasicos();
-
-
     }
 
 
@@ -136,8 +134,8 @@ $(document).ready(function () {
         if (edad > 35 && $("#idetapaactual").val() == 2) {
             $.Anuncio("Su edad supera las edades maximas permitidas de los distintos Institutos.");
         } else if (edad != 0 && edad < 17 && $("#idetapaactual").val() == 2) {
-           $.Anuncio("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
-            
+            $.Anuncio("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
+
         }
     }
     function ActualizarINStDatosBasicos() {
@@ -149,25 +147,22 @@ $(document).ready(function () {
             },
             function (data) {
 
-                var idselect = $("#InstitutoPref").val();
+                var idselect = $("input[name='IdPrefe']").val();
                 $("#InstitutoPref").empty();
                 $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
 
                 $.each(data.institucion, function (index, row) {
                     if (row.Value == idselect) {
-                        $("#InstitutoPref").append("<option selected = 'selected' value='" + row.Value + "'>" + row.Text + "</option>")
+                        $("#InstitutoPref").append("<option selected='selected' value='" + row.Value + "'>" + row.Text + "</option>")
                     } else {
                         $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
                     }
-
 
                 });
 
                 $("#InstitutoPref").removeAttr("disabled");
                 $("#InstitutoPref").selectpicker('refresh');
-
-
-
+                $("#BTentrevista").removeClass("disabled");
             })
     }
 
@@ -189,12 +184,12 @@ $(document).ready(function () {
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
     $("#BeginFormDatosBasicos").on("change", function () {
         //alert($(this).valid());
-        ($(this).valid()) ? $("#BTentrevista").removeClass("disabled") : $("#BTentrevista").addClass("disabled");
+        $("#BTentrevista").addClass("disabled");
     });
-   
+
     //al solicitar un a entrevista me aseguro que el formulario sea valido 
     $("#BTentrevista").on("click", function (e) {
-        if (!$(this).closest("form").valid()) {return false; $.Anuncio("Formulario invalido") };
+        if (!$(this).closest("form").valid()) { return false; $.Anuncio("Formulario invalido") };
     });
     //habilito el boto solicitar entrevista cuando el fomrulario de DATOSBASICOS sea valido al mosneto de cargarse la pagina
     $("#BeginFormDatosBasicos").validate({
@@ -218,7 +213,6 @@ $(document).ready(function () {
             } else if ($(element).val() != "") {
                 $(element).attr("hidden", true);
             }
-            
         })
         $(idComboDPer).selectpicker('refresh');
     }())
@@ -227,14 +221,14 @@ $(document).ready(function () {
         //var idInscr = $("#vPersona_DatosPerVM_IdInscripcion").val();
         var modalidad = $(this).val();
 
-        
+
         $("#vPersona_DatosPerVM_IdCarreraOficio").val("");
         ActualizaCombos(modalidad)
 
     });
 
     function ActualizaCombos(modalidad) {
-       
+
         if (modalidad != "") {
             $(idComboDPer).removeAttr("disabled").val("")
                 .find("option:first").html("Seleccione una Opcion");
@@ -261,14 +255,13 @@ $(document).ready(function () {
 
     //Para ESNM, ESSA, SMV, en caso de seleccionar estado civil distinto a soltero se muestra un mensaje
     $("#vPersona_DatosPerVM_IdEstadoCivil").on("changed.bs.select", function () {
-        
+
         val = $(this).val();
         estadoCivil = $("#vPersona_DatosPerVM_IdModalidad option:selected").attr("civil");
         if (estadoCivil != "" && val != estadoCivil) {
-           $.Anuncio("Para la modalidad Seleccionada, " + $("#vPersona_DatosPerVM_IdModalidad option:selected").html() + ", existe la restriccion de Estado Civil Soltero. <br>Consultar Guia de Ingreso - Capitulo 01 - Punto 103 inc. F.");
-            
-        };
+            $.Anuncio("Para la modalidad Seleccionada, " + $("#vPersona_DatosPerVM_IdModalidad option:selected").html() + ", existe la restriccion de Estado Civil Soltero. <br>Consultar Guia de Ingreso - Capitulo 01 - Punto 103 inc. F.");
 
+        };
     })
 
     //En de seleccionar nacionalidad por Opcion de muestra un mensaje, exepto para la modalidad SMV
@@ -277,12 +270,21 @@ $(document).ready(function () {
         var modali = $("#vPersona_DatosPerVM_IdModalidad").val();
         if (modali != "SMV" && $(this).val() == 3) {
 
-          $.Anuncio("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
-            
-
+            $.Anuncio("Al menos uno de sus padres debe ser argentino nativo y haber formalizado tramite ante el Ministerio del Interior. Comunicarse con Delegacion Naval para acreditar documentacion.");
         };
-
     });
+    //verifico si la pantalla esta cargada
+    cargadoDP = $("#vPersona_DatosPerVM_IdModalidad").val() != "";
+    $("#BeginFormDatosPersonales :input").on("change", function () {
+        if (!$("#BTValidarDP").hasClass("disabled") && cargadoDP) {
+            $("#BTValidarDP").addClass("disabled");
+            $.Anuncio("Deberas Guadar los Datos Nuevamente para Solicitar la Validacion de los mimos");
+        }
+      
+    });
+    if (cargadoDP) {
+        $("#BTValidarDP").removeClass("disabled");
+    }
 
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -544,11 +546,9 @@ $(document).ready(function () {
                             ActualizaTabla();
                             $("#OK").hide();
                             $.Anuncio(response.msg);
-                            
                         });
                     } else {
                         $(form_actual).submit();
-
                     };
 
                 });
@@ -565,7 +565,6 @@ $(document).ready(function () {
                 $("form").on("submit", function () {
                     //alert($(this).attr("id"));
                     ValidForm("#" + $(this).attr("id"));
-
                 });
             },
 
@@ -938,13 +937,17 @@ $(document).ready(function () {
     });
     //FUNCIONES VARIAS
     $.Anuncio = function (texto) {
-        $("#BTNModal").html("Cerrar");
+        $("#BTNModal").show().html("Cerrar");
+        $("#ModalAnuncios .modal-content").css("background-color", "white").css("border-color", "white");
         $("#GuardarDTF").css("display", "none");
+        $(".modal-header,.modal-footer").show();
         $("#ModalCenterTitle").html("SINU:");
         $("#TextModal").html(texto);
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
 
-    
+
+  
+   
 });
 

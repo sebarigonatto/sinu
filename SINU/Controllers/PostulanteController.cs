@@ -34,6 +34,7 @@ namespace SINU.Controllers
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
+
         public ActionResult Index(int? ID_Postulante)
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
@@ -143,7 +144,7 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.OrderBy(m=>m.Descripcion).ToList(),
+                    SexoVM = db.Sexo.OrderBy(m=>m.Descripcion).Where(m=>m.Descripcion!="Seleccione Sexo").ToList(),
                     vPeriodosInscripsVM = new List<vPeriodosInscrip>(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
@@ -204,7 +205,7 @@ namespace SINU.Controllers
             try
             {
                 DateTime fechaNAC = DateTime.Parse(Fecha);
-                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
+                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC,null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
                 institutos.Add(new SelectListItem() { Value = "1", Text = "Necesito Orientacion" });
                 return Json(new { institucion = institutos }, JsonRequestBehavior.AllowGet);
             }
@@ -319,7 +320,8 @@ namespace SINU.Controllers
                     ModalidadVm = new List<ComboModalidad>()
 
                 };
-                var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento).ToList();
+                datosba.vPersona_DatosPerVM.IdModalidad ??= "";
+                var validosInscrip = db.spRestriccionesParaEstePostulante(ID_persona, datosba.vPersona_DatosPerVM.FechaNacimiento,null).ToList();
                 foreach (var item in validosInscrip)
                 {
 
@@ -361,9 +363,11 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio);
+                    //busco el nuevo id preferencia para la modalidad seleccionada
+                    int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio,IDpreNuevo);
                    
-                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES" });
+                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES",form="DatosPersonales" });
                 }
                 catch (Exception ex)
                 {
@@ -416,13 +420,15 @@ namespace SINU.Controllers
         {
             try
             {
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+                ViewBag.baase = AppDomain.CurrentDomain.BaseDirectory;
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory??"no";
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string anexo = "";
                 string cert = "";
-                string NombreArchivo, ExtencioArchivo, guarda;
+                string NombreArchivo, ExtencioArchivo,guarda;
                 bool btanexo=false, btcert=false;
-                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, data.IdPersona + "*");
+                int id = data.IdPersona;
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, id + "*");
                 foreach (var item in archivos)
                 {
                     if (item.IndexOf("Anexo2") > 0) anexo = item;
@@ -432,7 +438,7 @@ namespace SINU.Controllers
                 if (data.FormularioAanexo2 != null)
                 {
                     if (anexo != "") System.IO.File.Delete(anexo);
-                    NombreArchivo = data.IdPersona + "&Anexo2";
+                    NombreArchivo = id + "&Anexo2";
                     ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.FormularioAanexo2.FileName;
                     data.FormularioAanexo2.SaveAs(guarda);
@@ -441,20 +447,19 @@ namespace SINU.Controllers
                 if (data.ConstanciaAntcPenales != null)
                 {
                     if (cert != "") System.IO.File.Delete(cert);
-                    NombreArchivo = data.IdPersona + "&Certificado";
+                    NombreArchivo = id + "&Certificado";
                     ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
                     guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName;
                     data.ConstanciaAntcPenales.SaveAs(guarda);
                     btcert = true;
                 }
-
-                return Json(new { success = true, form = "DocuPenal", msg = "Se Guardaron correctamnete los archivos seleccionados.", anexo = btanexo,cert=btcert }) ;
+                
+                return Json(new { success = true, form = "DocuPenal", msg = "Se Guardaron correctamnete los archivos seleccionados." , anexo = btanexo,cert=btcert },JsonRequestBehavior.AllowGet) ;
 
             }
             catch (Exception ex)
             {
-
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = ex.InnerException.Message +"  "+ ViewBag.path },JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -519,7 +524,7 @@ namespace SINU.Controllers
                 {
                     vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
-                    provincias = db.vProvincia_Depto_Localidad.Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
+                    provincias = db.vProvincia_Depto_Localidad.OrderBy(m=>m.Provincia).Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
                 };
 
                 if (datosdomilio.vPersona_DomicilioVM.IdPais != "AR")
@@ -1159,7 +1164,7 @@ namespace SINU.Controllers
                 string Carrera = inscrip.CarreraRelacionada;
                 sexo = (Carrera == "Médicos") ? "Medico" : sexo;
                 string PopUp = "";
-                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac).FirstOrDefault(m=>m.IdInstitucion == p.Postulante.Inscripcion.ToList()[0].IdPreferencia);
+                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac, p.Postulante.Inscripcion.ToList()[0].IdPreferencia).ToList()[0];
                 string Aplica = "";
                 switch (AltIcm) 
                 {
@@ -1269,8 +1274,6 @@ namespace SINU.Controllers
                 pers.vPersona_FamiliarVM.IdFamiliar = 0;
                 pers.vPersona_FamiliarVM.IdPersonaFamiliar = 0;
             }
-
-
 
             return View(pers);
         }
@@ -1429,7 +1432,7 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(problema);
                     };
                 };
-                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento).ToList()[0].IdEstadoCivil ?? "";
+                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento,db.Inscripcion.FirstOrDefault(m=>m.IdInscripcion==persona.IdInscripcion).IdPreferencia).ToList()[0];
                 if (persona.IdModalidad!=null)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
@@ -1442,14 +1445,14 @@ namespace SINU.Controllers
                         db.DataProblemaEncontrado.Add(problema);
                     };
                     //verifico si cumple con la restrccion de Estado Civil para la modalidad que corresponde
-                    if (restriccionesEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
+                    if (restriccionesEstadoCivil.IdEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil.IdEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
                     {
                         problema.IdDataVerificacion = 50;
                         problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
 
                         db.DataProblemaEncontrado.Add(problema);
                     };
-                   
+
                 }
                 db.SaveChanges();
                 //Envio de Mail para notificar a la delegacion correpondiente
@@ -1494,8 +1497,6 @@ namespace SINU.Controllers
                 throw;
             }
         }
-
-
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
         [AuthorizacionPermiso("ListarRP")]
@@ -1543,7 +1544,6 @@ namespace SINU.Controllers
             }
 
         }
-
 
     }
 }

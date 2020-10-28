@@ -8,9 +8,9 @@
         OnSuccess = "Exito(data,status,xhr)",
         OnFailure = "Falla",
         LoadingElementId = "carga",
-//LoadingElementDuration = 1000,
-//UpdateTargetId = "resultTarget"
-},
+        //LoadingElementDuration = 1000,
+        //UpdateTargetId = "resultTarget"
+    },
     new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 {
     <h2>Antecedetes Penales</h2>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="w-100"></div>
                 <br />
-                <div class="custom-file col col-md-6 mb-2">
+                <div  class="BTAcciones custom-file col col-md-6 mb-2">
                     @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input" })
                     <label class="custom-file-label" for="exampleInputFile2">
                         @if (Model.PathFormularioAanexo2 != null)
@@ -68,7 +68,7 @@
                     Empleo Público Nacional Nº 25.164.
 
                 </p>
-                <div class="custom-file col col-md-6 mb-2">
+                <div class="BTAcciones custom-file col col-md-6 mb-2">
 
                     @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input" })
                     @*<input type="button" name="name" value="" />*@

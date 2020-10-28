@@ -724,8 +724,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vDelegacion_EstablecExamen' no tien
         <EntityType Name="vDelegacion_EstablecExamen">
           <Key>
             <PropertyRef Name="Direccion" />
+            <PropertyRef Name="Jurisdiccion" />
+            <PropertyRef Name="Localidad" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="IdOficinasYDelegaciones" />
           </Key>
           <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Localidad" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="201" Nullable="false" />
+          <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1304,6 +1312,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodos
             <PropertyRef Name="FInicioPeriodo" />
             <PropertyRef Name="FFinalPeriodo" />
             <PropertyRef Name="IdInstitucion" />
+            <PropertyRef Name="IdModalidad" />
             <PropertyRef Name="IdGrupoCarrOficio" />
             <PropertyRef Name="EdadMinCAutoriz" />
             <PropertyRef Name="EdadMin" />
@@ -1314,6 +1323,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodos
           <Property Name="FFinalPeriodo" Type="date" Nullable="false" />
           <Property Name="IdInstitucion" Type="int" Nullable="false" />
           <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Mensaje" Type="varchar" MaxLength="48" />
           <Property Name="EdadMinCAutoriz" Type="int" Nullable="false" />
@@ -2253,6 +2263,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="spCierraPantallaDePostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPantalla" Type="int" Mode="In" />
           <Parameter Name="IdpostulantePersona" Type="int" Mode="In" />
+          <Parameter Name="SeCierra" Type="bit" Mode="In" />
         </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
@@ -2288,6 +2299,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="idTipoNacionalidad" Type="int" Mode="In" />
           <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
           <Parameter Name="IdCarreraOficio" Type="int" Mode="In" />
+          <Parameter Name="idpreferencia" Type="int" Mode="In" />
         </Function>
         <Function Name="spDomiciliosU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdDomicilioDNI" Type="int" Mode="In" />
@@ -2401,6 +2413,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="spRestriccionesParaEstePostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPostulantePersona" Type="int" Mode="In" />
           <Parameter Name="FechaNacimiento" Type="date" Mode="In" />
+          <Parameter Name="idpreferencia" Type="int" Mode="In" />
         </Function>
         <Function Name="spSituacionOcupacionalIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdSituacionOcupacional" Type="int" Mode="In" />
@@ -2602,7 +2615,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySet>
           <EntitySet Name="vDelegacion_EstablecExamen" EntityType="Self.vDelegacion_EstablecExamen" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [vDelegacion_EstablecExamen].[Direccion] AS [Direccion]
+    [vDelegacion_EstablecExamen].[Direccion] AS [Direccion], 
+    [vDelegacion_EstablecExamen].[Jurisdiccion] AS [Jurisdiccion], 
+    [vDelegacion_EstablecExamen].[Localidad] AS [Localidad], 
+    [vDelegacion_EstablecExamen].[Nombre] AS [Nombre], 
+    [vDelegacion_EstablecExamen].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones]
     FROM [dbo].[vDelegacion_EstablecExamen] AS [vDelegacion_EstablecExamen]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
@@ -3014,6 +3031,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vRestriccionesPorConvYFechaPeriodosInscrip].[FFinalPeriodo] AS [FFinalPeriodo], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[IdInstitucion] AS [IdInstitucion], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[NombreInst] AS [NombreInst], 
+    [vRestriccionesPorConvYFechaPeriodosInscrip].[IdModalidad] AS [IdModalidad], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[Mensaje] AS [Mensaje], 
     [vRestriccionesPorConvYFechaPeriodosInscrip].[EdadMinCAutoriz] AS [EdadMinCAutoriz], 
@@ -4688,6 +4706,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="idTipoNacionalidad" Mode="In" Type="Int32" />
             <Parameter Name="IdModalidad" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="Int32" />
+            <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spDomiciliosU">
             <Parameter Name="IdDomicilioDNI" Mode="In" Type="Int32" />
@@ -5001,6 +5020,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spCierraPantallaDePostulante">
             <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
             <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="SeCierra" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="spTieneProblemasEnPantallaEstePostulate" ReturnType="Collection(Boolean)">
             <Parameter Name="IdpostulantePersona" Mode="In" Type="Int32" />
@@ -5010,6 +5030,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spRestriccionesParaEstePostulante" ReturnType="Collection(SINUModel.spRestriccionesParaEstePostulante_Result2)">
             <Parameter Name="IdPostulantePersona" Mode="In" Type="Int32" />
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_vPersona_Familiar" ReturnType="Collection(SINUModel.sp_vPersona_Familiar_Result)">
           <Parameter Name="IdPersonaPostulante" Mode="In" Type="Int32" />
@@ -5646,6 +5667,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="EdadMin" />
             <PropertyRef Name="EdadMax" />
             <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="IdModalidad" />
           </Key>
           <Property Name="FInicioPeriodo" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FFinalPeriodo" Type="DateTime" Nullable="false" Precision="0" />
@@ -5663,6 +5685,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="AlturaMinM" Type="Int32" />
           <Property Name="IMC_min" Type="Int32" />
           <Property Name="IMC_max" Type="Int32" />
+          <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <ComplexType Name="spRestriccionesParaEstePostulante_Result">
           <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
@@ -6048,8 +6071,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <EntityType Name="vDelegacion_EstablecExamen">
           <Key>
             <PropertyRef Name="Direccion" />
+            <PropertyRef Name="Jurisdiccion" />
+            <PropertyRef Name="Localidad" />
+            <PropertyRef Name="Nombre" />
+            <PropertyRef Name="IdOficinasYDelegaciones" />
           </Key>
           <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Jurisdiccion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Localidad" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -7281,6 +7312,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vRestriccionesPorConvYFechaPeriodosInscrip">
             <EntityTypeMapping TypeName="SINUModel.vRestriccionesPorConvYFechaPeriodosInscrip">
               <MappingFragment StoreEntitySet="vRestriccionesPorConvYFechaPeriodosInscrip">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
                 <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
                 <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
@@ -7569,6 +7601,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vDelegacion_EstablecExamen">
             <EntityTypeMapping TypeName="SINUModel.vDelegacion_EstablecExamen">
               <MappingFragment StoreEntitySet="vDelegacion_EstablecExamen">
+                <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
               </MappingFragment>
             </EntityTypeMapping>

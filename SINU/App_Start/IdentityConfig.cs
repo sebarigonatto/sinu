@@ -78,14 +78,15 @@ namespace SINU
                 //ServicePointManager.ServerCertificateValidationCallback = delegate (object s, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) { return true; };
                 //SE ENVIA EL MAIL ATRAVEs DEL CLIENTE
                 smtpClient.Send(mensage);
+                smtpClient.Dispose();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
                 //if (Ex.HResult==-2146233088) //error de correo inaccesible tal vez xq esta mal escrito o la cuenta esta bloqueada
             }
-
+            
         }
 
         /// <summary>PROCESO que Busca el nro de paso que se esta haciendo, ejemplos: (1) registracion (2) datos personales,
