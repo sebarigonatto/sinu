@@ -666,7 +666,7 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult CerrarPantalla(int id, int IdPanatlla)
+        public ActionResult CerrarPantalla(int id, int IdPanatlla,int AoC)
         {
 
             try
@@ -679,7 +679,7 @@ namespace SINU.Controllers
                     {
                         return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
                     }
-                    db.spCierraPantallaDePostulante(IdPanatlla, id);
+                    db.spCierraPantallaDePostulante(IdPanatlla, id,Convert.ToBoolean(AoC));
                     return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                 }
 
