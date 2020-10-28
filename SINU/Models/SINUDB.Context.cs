@@ -1292,5 +1292,26 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
         }
+    
+        public virtual int spDocumentoInscripto(Nullable<bool> esInsert, Nullable<int> idInscripcion, Nullable<int> idTipoDocPresentado, string pathAlmacenamiento)
+        {
+            var esInsertParameter = esInsert.HasValue ?
+                new ObjectParameter("EsInsert", esInsert) :
+                new ObjectParameter("EsInsert", typeof(bool));
+    
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            var idTipoDocPresentadoParameter = idTipoDocPresentado.HasValue ?
+                new ObjectParameter("IdTipoDocPresentado", idTipoDocPresentado) :
+                new ObjectParameter("IdTipoDocPresentado", typeof(int));
+    
+            var pathAlmacenamientoParameter = pathAlmacenamiento != null ?
+                new ObjectParameter("PathAlmacenamiento", pathAlmacenamiento) :
+                new ObjectParameter("PathAlmacenamiento", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDocumentoInscripto", esInsertParameter, idInscripcionParameter, idTipoDocPresentadoParameter, pathAlmacenamientoParameter);
+        }
     }
 }
