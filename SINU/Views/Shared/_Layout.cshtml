@@ -209,7 +209,7 @@
 
                 </div>
                 <div class="modal-body text-center">
-                    <p id="TextModal" style="font-size:1.5rem">@* mensaje del Modal *@</p>
+                    <p id="TextModal" style="font-size:1rem">@* mensaje del Modal *@</p>
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
@@ -247,6 +247,7 @@
     }); 
     $.Cargando = function () {
         $("#ModalAnuncios").hide();
+        $("#ModalAnuncios .modal-body").addClass("text-center");
         $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
         $("#GuardarDTF").css("display", "none");
         $("#ModalAnuncios .modal-header,#ModalAnuncios .modal-footer").hide();

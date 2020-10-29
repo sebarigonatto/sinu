@@ -736,7 +736,6 @@ $(document).ready(function () {
         selectAllText: 'Seleccionar Todo',
         noneSelectedText: 'Ninguna Opcion Seleccionada',
         header: 'Cerrrar'
-
     });
 
     /////////////////////////////////////////////////////////////////////////////
@@ -760,7 +759,7 @@ $(document).ready(function () {
             var valor = $(this).val();
             $.get("/Postulante/VerificaAltIcm", { IdPostulante: id_persona, AltIcm: "altura", num: valor }, function (response) {
                 if (response.APLICA == "NO") {
-                    anuncio = response.POPUP;
+                    anuncio ="Altura:<br>"+ response.POPUP;
                 };
                 CALIMC($("#altura").val(), $("#peso").val(), anuncio);
 
@@ -779,18 +778,14 @@ $(document).ready(function () {
             $.get("/Postulante/VerificaAltIcm", { IdPostulante: id_persona, AltIcm: 'imc', num: imc }, function (response) {
                 if (response.APLICA == "NO") {
                     if (anuncio != "") {
-                        anuncio = anuncio + "<br>" + response.POPUP;
+                        anuncio = anuncio + "<br>" + "IMC: <br>" + response.POPUP;
                     } else {
-                        anuncio = response.POPUP;
+                        anuncio = "IMC: <br>"+ response.POPUP;
                     };
-
-
                 };
                 if (anuncio != "") {
                     $.Anuncio(anuncio);
                 }
-
-
             });
 
             $("#imc").val(imc.toFixed(2).replace(".", ","));
@@ -938,6 +933,7 @@ $(document).ready(function () {
     //FUNCIONES VARIAS
     $.Anuncio = function (texto) {
         $("#BTNModal").show().html("Cerrar");
+        $("#ModalAnuncios .modal-body").removeClass("text-center");
         $("#ModalAnuncios .modal-content").css("background-color", "white").css("border-color", "white");
         $("#GuardarDTF").css("display", "none");
         $(".modal-header,.modal-footer").show();

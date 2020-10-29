@@ -146,11 +146,11 @@
                 <input type="submit" value="Guadar Datos" class="btn btn-success m-1" id="DatosBasicosBTGuarda" />
 
                 @Ajax.ActionLink("Solicitar Entrevista", "SolicitudEntrevistaAsync", new { ID_persona = Model.vPersona_DatosBasicosVM.IdPersona }, new AjaxOptions
-                   {
-                       HttpMethod = "POST",
-                       OnSuccess = "Exito(data,status,xhr)",
-                       OnFailure = "Falla"
-                   }, new { @id = "BTentrevista", @class = "btn btn-danger disabled m-1" })
+           {
+               HttpMethod = "POST",
+               OnSuccess = "Exito(data,status,xhr)",
+               OnFailure = "Falla"
+           }, new { @id = "BTentrevista", @class= "load-submit btn btn-danger disabled m-1" })
 
             </div>
         </div>

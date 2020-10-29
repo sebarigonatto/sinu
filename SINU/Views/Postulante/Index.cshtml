@@ -5,24 +5,26 @@
 }
 <link href="~/Content/CssPostulante.css" rel="stylesheet" />
 <br />
-<div class="col-12">
-    <h3 class="d-inline">Etapas de la Inscripcion</h3>
-    @if ((bool)Session["DeleConsul"])
-    {
-
-        <a class="btn btn-info float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
-        if (ViewBag.ULTISECU == 8)
+<div class="row">
+    <div class="col col-sm-6">
+        <h3>Etapas de la Inscripcion</h3>
+    </div>
+   
+    <div class="col col-sm-6">
+        @if ((bool)Session["DeleConsul"])
         {
-            @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
-        }
-    }
 
+            <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
+            if (ViewBag.ULTISECU == 8)
+            {
+                @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
+            }
+        }
+    </div>
 </div>
 
-<br />
+
 @* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
-@*@try
-    {*@
 
 <div class="p-1 bg-white rounded shadow mb-1" style="padding:0px !important">
 
@@ -207,7 +209,7 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
-                                        @if ((bool)((object[])Model.ListProblemaCantPantalla[0])[1] && !(bool)ViewBag.ValidacionEnCurso)
+                                        @if ((bool)((object[])Model.ListProblemaCantPantalla[0])[1] && !(bool)ViewBag.ValidacionEnCurso && !(bool)Session["ValidoUnaVez"])
                                         {
                                             <div id="DatoPermsg" class="jumbotron " style="background-color: #08495f; color:white; padding-top:10px !important;padding-bottom:10px !important">
                                                 <h4>Deberas completar este fomulario y enviar a Validar para continuar con las demas pantallas</h4>
@@ -510,9 +512,13 @@
         };
 
         function BloqueaPantalla(IDPantalla) {
-            $(IDPantalla + " .BTAcciones").html("");
-            $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search']").attr("disabled", "true");
+            $(IDPantalla + " .BTAcciones").remove();
+            $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search'],.navbar-toggler").attr("disabled", "true");
             $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
+            $("a[target='_blank']").each(function (index, item) {
+                //alert($(item).attr("id"));
+                if ($(item).hasClass("hidden") && IDPantalla =="#Documentacion") $(item).closest("div").append("<h5 style='color:yellow'>No hay archivos subido</h5>");
+            })
         };
 
         //funcion para habilitar el TAB indicado.
@@ -562,8 +568,8 @@
 
                             $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
                             //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
-                            $("#" + item[0] + "NAV .BTAcciones").html("");
-                            $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search']").attr("disabled", "true");
+                            $("#" + item[0] + "NAV .BTAcciones").remove();
+                            $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
                             $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
 
                         } else if (item[2] == "0") {
