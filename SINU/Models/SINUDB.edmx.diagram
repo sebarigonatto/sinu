@@ -149,6 +149,7 @@
         <AssociationConnector Association="SINUModel.FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen" />
         <AssociationConnector Association="SINUModel.FK_Delegacion_EstablecExamen_OficinasYDelegaciones" />
         <EntityTypeShape EntityType="SINUModel.vDelegacion_EstablecExamen" Width="1.5" PointX="25.375" PointY="10.75" />
+        <AssociationConnector Association="SINUModel.FK_Institucion_Modalidad" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
