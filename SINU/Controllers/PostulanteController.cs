@@ -46,7 +46,8 @@ namespace SINU.Controllers
 
                 };
                 pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
-                Session["DeleConsul"] = ID_Postulante != null;
+                //verifico el ROL al que pertenece el Usuario alctualmente logueado 
+                Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
 
                 //cargo los ID de las etapas por las que paso el postulante
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
@@ -1407,7 +1408,6 @@ namespace SINU.Controllers
             {
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
-                DataProblemaEncontrado problema = new DataProblemaEncontrado { IdPostulantePersona = persona.IdPersona };
                 var problemasPostu = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona);
                 if (antropo != null)
                 {
@@ -1415,21 +1415,21 @@ namespace SINU.Controllers
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
                     if (APLICAAltura == "NO" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 48) == null)
                     {
-
-                        problema.Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 48).Descripcion;
-                        problema.IdDataVerificacion = 48;
-                          
-                        db.DataProblemaEncontrado.Add(problema);
-
+                        db.DataProblemaEncontrado.Add(new DataProblemaEncontrado {  IdPostulantePersona = persona.IdPersona, 
+                                                                                    Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 48).Descripcion, 
+                                                                                    IdDataVerificacion = 48 });
                     };
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAImc = VerificaAltIcm(ID_persona, "imc", (float)antropo.IMC).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
                     if (APLICAImc == "NO" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 49) == null)
                     {
-                        problema.Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 49).Descripcion;
-                        problema.IdDataVerificacion = 49;
-                         
-                        db.DataProblemaEncontrado.Add(problema);
+                       
+                        db.DataProblemaEncontrado.Add(new DataProblemaEncontrado
+                        {
+                            IdPostulantePersona = persona.IdPersona,
+                            Comentario = db.DataVerificacion.First(m => m.IdDataVerificacion == 49).Descripcion,
+                            IdDataVerificacion = 49
+                        });
                     };
                 };
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento,db.Inscripcion.FirstOrDefault(m=>m.IdInscripcion==persona.IdInscripcion).IdPreferencia).ToList()[0];
@@ -1439,18 +1439,24 @@ namespace SINU.Controllers
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado
                     if (persona.idTipoNacionalidad == 3 && persona.IdModalidad != "SMV" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 51) == null)
                     {
-                        problema.IdDataVerificacion = 51;
-                        problema.Comentario = "Verificar que al menos uno de los padres tenga tipo de nacionalidad NATIVO.";
-
-                        db.DataProblemaEncontrado.Add(problema);
+                     
+                        db.DataProblemaEncontrado.Add(new DataProblemaEncontrado
+                        {
+                            IdPostulantePersona = persona.IdPersona,
+                            Comentario = "Verificar que al menos uno de los padres tenga tipo de nacionalidad NATIVO.",
+                            IdDataVerificacion = 51
+                        });
                     };
                     //verifico si cumple con la restrccion de Estado Civil para la modalidad que corresponde
                     if (restriccionesEstadoCivil.IdEstadoCivil != persona.IdEstadoCivil && restriccionesEstadoCivil.IdEstadoCivil != "" && problemasPostu.FirstOrDefault(m => m.IdDataVerificacion == 50) == null)
                     {
-                        problema.IdDataVerificacion = 50;
-                        problema.Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion";
-
-                        db.DataProblemaEncontrado.Add(problema);
+                     
+                        db.DataProblemaEncontrado.Add(new DataProblemaEncontrado
+                        {
+                            IdPostulantePersona = persona.IdPersona,
+                            Comentario = "Restrccion que causa Interrupcion de Proceso de Inscripcion",
+                            IdDataVerificacion = 50
+                        });
                     };
 
                 }
@@ -1507,7 +1513,8 @@ namespace SINU.Controllers
             {
                 IdPersona = per.IdPersona,
                 Apellido = per.Apellido,
-                Nombre = per.Nombres
+                Nombre = per.Nombres,
+                ID_Inscripcion= per.Postulante.Inscripcion.ToList()[0].IdInscripcion
 
             };
             ViewBag.Asignado = true;
@@ -1519,7 +1526,7 @@ namespace SINU.Controllers
             else
             {
                 prese.FechaPresentacion = (DateTime)FechaPrese;
-                string url = HttpContext.Request.Url.Host  + Url.Action("Index","Postulante",new { ID_Postulante = ID_persona });
+                string url = "http://"+HttpContext.Request.Url.Host  + Url.Action("Index","Postulante",new { ID_Postulante = ID_persona });
                 ViewBag.QRCodeImage = generarQR(url);
                 ViewBag.QRCodeImageLink = url;
             };
