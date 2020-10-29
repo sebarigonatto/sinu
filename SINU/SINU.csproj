@@ -208,6 +208,7 @@
     <Compile Include="Controllers\Administrador\ModalidadsController.cs" />
     <Compile Include="Controllers\Administrador\OficinasYDelegacionesController.cs" />
     <Compile Include="Controllers\Administrador\PeriodoInscripcionesController.cs" />
+    <Compile Include="Controllers\Administrador\PeriodosConvocatoriasController.cs" />
     <Compile Include="Controllers\Administrador\SexoesController.cs" />
     <Compile Include="Controllers\Administrador\TipoNacionalidadsController.cs" />
     <Compile Include="Controllers\Consultor\CallConsultaController.cs" />
@@ -613,6 +614,7 @@
     <Compile Include="ViewModels\DeletePeriodoInscripcion.cs" />
     <Compile Include="ViewModels\PostulanteViewModel.cs" />
     <Compile Include="ViewModels\GrupoCarrOficiosViewModel.cs" />
+    <Compile Include="ViewModels\PeriodosConvocatorias.cs" />
     <Compile Include="ViewModels\vContacto.cs" />
     <Compile Include="ViewModels\PlantillasViewModel.cs" />
     <Compile Include="ViewModels\ProvLocalidades.cs" />
@@ -1289,6 +1291,11 @@
     <Content Include="Views\EstablecimientoRindeExamen\Index.cshtml" />
     <Content Include="Views\Delegacion\RestaurarPostulante.cshtml" />
     <Content Include="Views\CallConsulta\ConsultaDelegacionPrincipal.cshtml" />
+    <Content Include="Views\PeriodosConvocatorias\Create.cshtml" />
+    <Content Include="Views\PeriodosConvocatorias\Delete.cshtml" />
+    <Content Include="Views\PeriodosConvocatorias\Details.cshtml" />
+    <Content Include="Views\PeriodosConvocatorias\Edit.cshtml" />
+    <Content Include="Views\PeriodosConvocatorias\Index.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

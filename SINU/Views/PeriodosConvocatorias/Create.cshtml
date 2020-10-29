@@ -1,0 +1,311 @@
+﻿@model SINU.ViewModels.PeriodosConvocatorias
+
+@{
+    ViewBag.Title = "Nueva Convocatoria";
+    ViewBag.lst = new List<SINU.Models.PeriodosInscripciones>();
+    //Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+    //este if verifica si el viewdata esta vacio, si no es que el controlador devolvio un error
+    //por tanto, le indico un mensaje en pantalla al usuario
+    if (ViewData["error"] != null)
+    {
+       
+        <div class="alert alert-warning" role="alert">
+            @ViewData["error"]
+        </div>
+    }
+}
+
+@*<h2>Nueva Convocatoria</h2>*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Nuevo Periodo de Inscripción</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.IdConvocatoria)
+        @Html.HiddenFor(m => m.IdPeriodoInscripcion)
+        @*Modelo de tabla vacia*@
+        @*<table>
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+            </tbody>
+        </table>*@
+
+        @*Periodo de inscripcion*@
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label col-md-6" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label col-md-6" })
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.EditorFor(model => model.FechaInicio, new
+                        {
+                            htmlAttributes = new
+                            {
+                                @class = "form-control datepicker",
+                                @id = "FechaInicio",
+                                @type = "text",
+                                placeholder = "DD/MM/YYYY"@*, @readOnly = true*@ }
+                        })
+                        @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.FechaFinal, new
+                        {
+                            htmlAttributes = new
+                            {
+                                @class = "form-control datepicker",
+                                @id = "FechaFinal",
+                                @type = "text",
+                                placeholder = "DD/MM/YYYY"@*, @readOnly = true*@ }
+                        })
+                        @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdInstitucion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant"})
+                @Html.ValidationMessageFor(model => model.IdInstitucion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <h4>Modalidad</h4>
+        <hr />
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
+                @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <h4>Carrera/Oficio</h4>
+        <hr />
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("IdGrupoCarrOficio", null, "Seleccione Grupo", htmlAttributes: new { @class = "form-control", @id = "GruposyCarreras" }) @*, @disabled = "disable" })*@
+                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <h4>Inicio/Fin del proceso</h4>
+        <hr />
+
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.LabelFor(model => model.Fecha_Inicio_Proceso, htmlAttributes: new { @class = "control-label col-md-12" })
+                    </th>
+                    <th>
+                        @Html.LabelFor(model => model.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-12" })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.EditorFor(model => model.Fecha_Inicio_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicioProceso", @type = "text", placeholder = "DD/MM/YYYY" } })
+                        @Html.ValidationMessageFor(model => model.Fecha_Inicio_Proceso, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFinalProceso", @type = "text", placeholder = "DD/MM/YYYY" } })
+                        @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-group">
+
+            <div class="col-md-10">
+
+            </div>
+        </div>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.ff, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ff, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ff, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Grabar Registro" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver", "Index")
+</div>
+
+@*<script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+            });
+        });
+
+        $(document).ready(function () {
+            //ddlRegions es igual al ID del listado de Personal.
+            $("#IdInstitucion").change(function () {
+                //$("#FechasIniFin").show();
+                //alert($("#ddlRegions").val());
+                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+
+                $.get("/PeriodosConvocatorias/FiltrarInstituciones", { InstitucionID: $("#IdInstitucion").val() }, function (data) {
+                    // VACIAMOS EL DropDownList aca hay que poner
+                    //ddlterritories es ID de la lista carreras
+                    //alert("textovaconcomilla");
+                    $("#Modalidades").empty();
+
+                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                    $("#Modalidades").append("<option value> -- Seleccionar Modalidad " + $("#ddlRegions option:selected").text() + " --</option>")
+
+                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                    $.each(data, function (index, row) {
+                        //alert(row.Text)
+                        $("#Modalidades").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    });
+                });
+            });
+        });
+
+        //carreras filtradas
+        $(document).ready(function () {
+            //ddlRegions es igual al ID del listado de Personal.
+            $("#Modalidades").change(function () {
+                // $("#GruposyCarreras").prop("disabled", true);
+                //alert($("#Modalidades").val());
+                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+
+                $.get("/PeriodosConvocatorias/DevolverCArrerasFiltradas", { ModalidadId: $("#Modalidades").val() }, function (data) {
+                    // VACIAMOS EL DropDownList aca hay que poner
+                    //ddlterritories es ID de la lista carreras
+                    //alert("textovaconcomilla");
+                    $("#GruposyCarreras").empty();
+
+                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                    $("#GruposyCarreras").append("<option value>Seleccionar Grupo" + "</option>")
+
+                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                    $.each(data, function (index, row) {
+
+                        $("#GruposyCarreras").prop("disabled", false);
+                        $("#GruposyCarreras").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    });
+                });
+            });
+        });
+        $('.datepicker').datepicker({
+            //format: "dd/mm/yyyy",
+            autoclose: true,
+            weekStart: 1,
+            startDate: "today",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "es",
+            //daysOfWeekDisabled: "0,6",
+            //daysOfWeekHighlighted: "1,2,3,4,5",
+            todayHighlight: true
+        });
+    </script>
+    @*<script type="text/javascript">
+            //alterala validacion de la fechas
+            //jQuery.validator.methods["date"] = function (value, element) { return true; };
+            var date = new Date();
+            date.setDate(date.getDate() +1);
+            $('.datepicker').datepicker({
+                dateFormat: 'yyyy/dd/mm',
+                autoclose: true,
+                startDate: date,
+            });
+        </script>*@
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+}

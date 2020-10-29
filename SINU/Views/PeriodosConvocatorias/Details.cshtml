@@ -1,0 +1,91 @@
+﻿@model SINU.ViewModels.PeriodosConvocatorias
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PeriodosConvocatorias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdInstitucion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdInstitucion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPeriodoInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdPeriodoInscripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdModalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdModalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdGrupoCarrOficio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdGrupoCarrOficio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Inicio_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Fin_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ff)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdConvocatoria }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
