@@ -30,7 +30,8 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-
+        //id del postulante del que se listar, esditara o se creara registros
+        public static int IDpostuactual;
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
@@ -40,6 +41,9 @@ namespace SINU.Controllers
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
+
+                IDpostuactual = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
+
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     ID_PER = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
@@ -145,7 +149,7 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.OrderBy(m=>m.Descripcion).Where(m=>m.Descripcion!="Seleccione Sexo").ToList(),
+                    SexoVM = db.Sexo.OrderBy(m => m.Descripcion).Where(m => m.Descripcion != "Seleccione Sexo").ToList(),
                     vPeriodosInscripsVM = new List<vPeriodosInscrip>(),
                     OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
@@ -200,13 +204,13 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Modelo no VALIDO" });
         }
 
-       
+
         public JsonResult EdadInstituto(int? IdPOS, string? Fecha)
         {
             try
             {
                 DateTime fechaNAC = DateTime.Parse(Fecha);
-                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC,null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
+                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC, null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
                 institutos.Add(new SelectListItem() { Value = "1", Text = "Necesito Orientacion" });
                 return Json(new { institucion = institutos }, JsonRequestBehavior.AllowGet);
             }
@@ -219,8 +223,9 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
-
+        [HttpPost]
         [AuthorizacionPermiso("ModificarSecuenciaP")]
+        
         public async Task<JsonResult> SolicitudEntrevistaAsync(int ID_persona)
         {
             try
@@ -465,8 +470,8 @@ namespace SINU.Controllers
 
         }
 
-
-        public FileContentResult GetAnexo2(string? docu,int? Id)
+        [AuthorizacionPermiso("ListarRP")]
+        public FileContentResult GetAnexo2(int? IdPersona,string? docu)
         {
             string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
             
@@ -480,7 +485,7 @@ namespace SINU.Controllers
             else
             {
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string[] archivos = Directory.GetFiles(Ubicacionfile, Id + "&" + docu + "*");
+                string[] archivos = Directory.GetFiles(Ubicacionfile, IdPersona + "&" + docu + "*");
                 byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
                 string app = "";
                 switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.')+1))
@@ -527,6 +532,7 @@ namespace SINU.Controllers
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
                     provincias = db.vProvincia_Depto_Localidad.OrderBy(m=>m.Provincia).Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
                 };
+                //datosdomilio.vPersona_DomicilioVM.IdpersonaPostu=()
 
                 if (datosdomilio.vPersona_DomicilioVM.IdPais != "AR")
                 {
@@ -794,14 +800,14 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("EliminarDatosP")]
-        public JsonResult EliminaEST(int ID)
+        public JsonResult EliminaEST(int IdPersona, int IDEstudio)
         {
             try
             {
-                var estu = db.Estudio.Find(ID);
+                var estu = db.Estudio.Find(IDEstudio);
                 if (estu != null)
                 {
-                    db.spEstudiosEliminar(ID);
+                    db.spEstudiosEliminar(IDEstudio);
                     //success: es true cundo la operacion es exitosa
                     //msg:mensjae que figurara en el modal
                     //form: se ejecutar un accion en un switch del script de la vista index
@@ -1490,7 +1496,7 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult ProblemasPantalla(int IDPostulante, int IdPantalla)
         {
             try
@@ -1533,7 +1539,7 @@ namespace SINU.Controllers
             return PartialView(prese);
         }
 
-
+        [AuthorizacionPermiso("CreaEditaDatosP")]
         private byte[] generarQR(string texto)
         {   //https://github.com/codebude/QRCoder ver documentacion ejemplo de usos ej logo en el qr entre muchas otras cosas
             //establesco la ubicacion del logo que aparecera em el codigo QR

@@ -14,6 +14,9 @@ namespace SINU.Authorize
         SINUEntities db = new SINUEntities();   
  
         public string Funcion { get; set; }
+        public int IdPostu { get; set; }
+        public int IDpostuactual { get; set; }
+
         //private readonly [] funciones;
 
         // public AuthorizacionPermiso(params string[] funcion)
@@ -23,11 +26,27 @@ namespace SINU.Authorize
             //this.funciones = funcion;
         }
 
+        public AuthorizacionPermiso(string funcion, int idpostu)
+        {
+            this.Funcion = funcion;
+            this.IdPostu = idpostu;
+        }
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             
             //LOGICA DE VALIDACION segun funcion 
             List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, Funcion).ToList();
+            
+            var fun=new[] { "CreaEditaDatosP", "EliminarDatosP", "ModificarSecuenciaP" };
+            
+            if (fun.Contains(Funcion) )
+            {
+                var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
+                var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? httpContext.Request.Form[1] : httpContext.Request.QueryString[0];
+                if(IDpersonaDatos != IDpersonaActual.ToString())return false;
+            }
+
             //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }

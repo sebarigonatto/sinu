@@ -26,9 +26,9 @@ new { id = "BeginFormSituOcupacional" }))
 
             <div class="form-group row">
 
-
-                @Html.HiddenFor(model => model.VPersona_SituacionOcupacionalVM.IdSituacionOcupacional)
                 @Html.HiddenFor(model => model.VPersona_SituacionOcupacionalVM.IdPersona)
+                @Html.HiddenFor(model => model.VPersona_SituacionOcupacionalVM.IdSituacionOcupacional)
+
 
                 <div class="col-md-6">
                     <div class="form-group ">
@@ -62,7 +62,7 @@ new { id = "BeginFormSituOcupacional" }))
                         </div>
                     </div>
 
-                    
+
                 </div>
                 <div class="col-md-6">
                     <div class="form-group SI">
@@ -76,11 +76,11 @@ new { id = "BeginFormSituOcupacional" }))
                         @Html.LabelFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-12">
                             @Html.EditorFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, new { htmlAttributes = new { @class = "form-control", @min = "0" } })
-                            @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger"})
+                            @Html.ValidationMessageFor(model => model.VPersona_SituacionOcupacionalVM.AniosTrabajados, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    
+
                 </div>
 
 
