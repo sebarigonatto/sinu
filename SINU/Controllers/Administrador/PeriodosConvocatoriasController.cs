@@ -247,36 +247,21 @@ namespace SINU.Controllers.Administrador
             {
                 if (InstitucionID > 0)
                 {
-
-                    /*var ModTipoPersonal*/
-                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();
-                    //string y = ModTipoPersonal[0].ToString();
-                    //string TPersonal = "";
-                    //29/10/2020 el switch a pedal esperando se tome la decision de que pasa con modalidad e instituto
-                    //switch (y)
+                    //esta logica era para filtrar desde Institucion a Modalidad, pero ese paso intermedio lo sacamos
+                    //y directamente Institucion filtra Carrera Oficio
+                    //string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();                    
+                    //var grupo_carreras = db.Modalidad.Where(x => x.IdModalidad == y).Select(x => new SelectListItem
                     //{
-                    //    case "Profesionales":
-                    //        TPersonal = "O";
-                    //        break; 
-                    //    case "Tecnico":
-                    //        TPersonal = "S";
-                    //        break;
-                    //    case "Escuela de Formación (Oficiales)":
-                    //        TPersonal = "S";
-                    //        break;
-                    //    case "Escuela de Formación (Suboficiales)":
-                    //        TPersonal = "S";
-                    //        break;
-                    //    case "Servicio Militar Voluntario":
-                    //        TPersonal = "M";
-                    ////        break;
-                    //}
-                    var grupo_carreras = db.Modalidad.Where(x => x.IdModalidad == y).Select(x => new SelectListItem
+                    //    Value = x.IdModalidad,
+                    //    Text = x.Descripcion
+                    //}).ToList();
+                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();
+                    string z = db.Modalidad.Where(x => x.IdModalidad == y).Select(m=>m.Personal).FirstOrDefault();
+                    var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == z).Select(m => new SelectListItem
                     {
-                        Value = x.IdModalidad,
-                        Text = x.Descripcion
+                        Value = m.IdGrupoCarrOficio,
+                        Text = m.Descripcion
                     }).ToList();
-
                     return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
                 }
                 return Json("", JsonRequestBehavior.AllowGet);

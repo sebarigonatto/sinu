@@ -111,15 +111,16 @@
             <tbody>
                 <tr>
                     <td>
-                        @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
-                        @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
+                        @*@Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
+        @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })*@
+                        @Html.Label("",new { @class = "form-control", @id = "Modalidades" })
                     </td>
                     <td>
-                        @Html.ActionLink(" ", "Create", "Modalidads", null, new
+                        @*@Html.ActionLink(" ", "Create", "Modalidads", null, new
                    {
                        @class = "btn btn-success btn-lg btn-xs fas fa-plus font-jumb",
                        @style = "height:auto"
-                   })
+                   })*@
                     </td>
                 </tr>
             </tbody>
@@ -256,40 +257,16 @@
             });
         });
 
-        $(document).ready(function () {
-            //ddlRegions es igual al ID del listado de Personal.
-            $("#IdInstitucion").change(function () {
-                //$("#FechasIniFin").show();
-                //alert($("#ddlRegions").val());
-                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
-
-                $.get("/PeriodosConvocatorias/FiltrarInstituciones", { InstitucionID: $("#IdInstitucion").val() }, function (data) {
-                    // VACIAMOS EL DropDownList aca hay que poner
-                    //ddlterritories es ID de la lista carreras
-                    //alert("textovaconcomilla");
-                    $("#Modalidades").empty();
-
-                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                    $("#Modalidades").append("<option value> -- Seleccionar Modalidad " + $("#ddlRegions option:selected").text() + " --</option>")
-
-                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-                    $.each(data, function (index, row) {
-                        //alert(row.Text)
-                        $("#Modalidades").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-                    });
-                });
-            });
-        });
 
         //carreras filtradas
         $(document).ready(function () {
             //ddlRegions es igual al ID del listado de Personal.
-            $("#Modalidades").change(function () {
+            $("#IdInstitucion").change(function () {
                 // $("#GruposyCarreras").prop("disabled", true);
                 //alert($("#Modalidades").val());
                 // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-                $.get("/PeriodosConvocatorias/DevolverCArrerasFiltradas", { ModalidadId: $("#Modalidades").val() }, function (data) {
+                $.get("/PeriodosConvocatorias/FiltrarInstituciones", { InstitucionID: $("#IdInstitucion").val() }, function (data) {
                     // VACIAMOS EL DropDownList aca hay que poner
                     //ddlterritories es ID de la lista carreras
                     //alert("textovaconcomilla");
