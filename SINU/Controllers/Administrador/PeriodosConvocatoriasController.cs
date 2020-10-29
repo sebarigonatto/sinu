@@ -237,30 +237,51 @@ namespace SINU.Controllers.Administrador
             }
         }
 
-        //public JsonResult FiltrarModalidadIDGrupoCArreraOficio(string ModalidadId)
-        //{
+        public JsonResult FiltrarInstituciones(int InstitucionID)
+        {
 
 
-        //    using (db = new SINUEntities())
+            using (db = new SINUEntities())
 
 
-        //    {
-        //        if (ModalidadId != "")
-        //        {
+            {
+                if (InstitucionID > 0)
+                {
 
-        //            var ModTipoPersonal = db.Modalidad.Where(x => x.IdModalidad == ModalidadId).Select(m => m.Personal).ToList();
-        //            string y = ModTipoPersonal[0].ToString();
-        //            var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == y).Select(m => new SelectListItem
-        //            {
-        //                Value = m.IdGrupoCarrOficio,
-        //                Text = m.Descripcion
-        //            }).ToList();
+                    /*var ModTipoPersonal*/
+                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.NombreInst).ToList())[0].ToString();
+                    //string y = ModTipoPersonal[0].ToString();
+                    string TPersonal = "";
+                    //29/10/2020 el switch a pedal esperando se tome la decision de que pasa con modalidad e instituto
+                    switch (y)
+                    {
+                        case "Profesionales":
+                            TPersonal = "O";
+                            break; 
+                        case "Tecnico":
+                            TPersonal = "S";
+                            break;
+                        case "Escuela de Formación (Oficiales)":
+                            TPersonal = "S";
+                            break;
+                        case "Escuela de Formación (Suboficiales)":
+                            TPersonal = "S";
+                            break;
+                        case "Servicio Militar Voluntario":
+                            TPersonal = "M";
+                            break;
+                    }
+                    var grupo_carreras = db.Modalidad.Where(x => x.Personal == TPersonal).Select(x => new SelectListItem
+                    {
+                        Value = x.IdModalidad,
+                        Text = x.Descripcion
+                    }).ToList();
 
-        //            return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
-        //        }
-        //        return Json("", JsonRequestBehavior.AllowGet);
-        //        //carrerasFiltradas
-        //    }
-        //}
+                    return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
+                }
+                return Json("", JsonRequestBehavior.AllowGet);
+                //carrerasFiltradas
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@
         @Html.HiddenFor(m => m.IdConvocatoria)
         @Html.HiddenFor(m => m.IdPeriodoInscripcion)
         @*Modelo de tabla vacia*@
-        <table>
+        @*<table>
             <thead>
                 <tr>
                     <th>
@@ -42,7 +42,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table>*@
 
         @*Periodo de inscripcion*@
         <table>
@@ -89,7 +89,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdInstitucion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant" })
+                @Html.DropDownListFor(m => m.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant"})
                 @Html.ValidationMessageFor(model => model.IdInstitucion, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -98,7 +98,7 @@
         <h4>Modalidad</h4>
         <hr />
         <div class="form-group">
-            @Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
                 @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
@@ -107,7 +107,7 @@
         <h4>Carrera/Oficio</h4>
         <hr />
         <div class="form-group">
-            @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownList("IdGrupoCarrOficio", null, "Seleccione Grupo", htmlAttributes: new { @class = "form-control", @id = "GruposyCarreras" }) @*, @disabled = "disable" })*@
                 @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
@@ -227,30 +227,30 @@
             });
         });
 
-        //$(document).ready(function () {
-        //    //ddlRegions es igual al ID del listado de Personal.
-        //    $("#ComboInscripcion").change(function () {
-        //        //$("#FechasIniFin").show();
-        //        //alert($("#ddlRegions").val());
-        //        // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+        $(document).ready(function () {
+            //ddlRegions es igual al ID del listado de Personal.
+            $("#IdInstitucion").change(function () {
+                //$("#FechasIniFin").show();
+                //alert($("#ddlRegions").val());
+                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-        //        $.get("/PeriodosConvocatorias/DevolverFechas", { RegionId: $("#ComboInscripcion").val() }, function (data) {
-        //            // VACIAMOS EL DropDownList aca hay que poner
-        //            //ddlterritories es ID de la lista carreras
-        //            //alert("textovaconcomilla");
-        //            $("#FechasIniFin").empty();
+                $.get("/PeriodosConvocatorias/FiltrarInstituciones", { InstitucionID: $("#IdInstitucion").val() }, function (data) {
+                    // VACIAMOS EL DropDownList aca hay que poner
+                    //ddlterritories es ID de la lista carreras
+                    //alert("textovaconcomilla");
+                    $("#Modalidades").empty();
 
-        //            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-        //            //$("#ddlTerritories").append("<option value> -- Seleccionar Carreras Para " + $("#ddlRegions option:selected").text() + " --</option>")
+                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                    $("#Modalidades").append("<option value> -- Seleccionar Modalidad " + $("#ddlRegions option:selected").text() + " --</option>")
 
-        //            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-        //            $.each(data, function (index, row) {
-        //                alert(row.Text)
-        //                $("#FechasIniFin").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-        //            });
-        //        });
-        //    });
-        //});
+                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                    $.each(data, function (index, row) {
+                        //alert(row.Text)
+                        $("#Modalidades").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                    });
+                });
+            });
+        });
 
         //carreras filtradas
         $(document).ready(function () {
