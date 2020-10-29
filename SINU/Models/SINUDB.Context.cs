@@ -1292,7 +1292,5 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
         }
-
-        public System.Data.Entity.DbSet<SINU.ViewModels.PeriodosConvocatorias> PeriodosConvocatorias { get; set; }
     }
 }

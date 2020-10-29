@@ -18,6 +18,7 @@ namespace SINU.Models
         public Modalidad()
         {
             this.Convocatoria = new HashSet<Convocatoria>();
+            this.Institucion = new HashSet<Institucion>();
         }
     
         public string IdModalidad { get; set; }
@@ -26,5 +27,7 @@ namespace SINU.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Convocatoria> Convocatoria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Institucion> Institucion { get; set; }
     }
 }

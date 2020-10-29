@@ -28,13 +28,13 @@ namespace SINU.Controllers.Administrador
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            if (periodosConvocatorias == null)
-            {
-                return HttpNotFound();
-            }
-            return View(periodosConvocatorias);
+            }            
+            //PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
+            //if (periodosConvocatorias == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // GET: PeriodosConvocatorias/Create
@@ -152,16 +152,16 @@ namespace SINU.Controllers.Administrador
         // GET: PeriodosConvocatorias/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            if (periodosConvocatorias == null)
-            {
-                return HttpNotFound();
-            }
-            return View(periodosConvocatorias);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            ////PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
+            //if (periodosConvocatorias == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // POST: PeriodosConvocatorias/Edit/5
@@ -183,16 +183,16 @@ namespace SINU.Controllers.Administrador
         // GET: PeriodosConvocatorias/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            if (periodosConvocatorias == null)
-            {
-                return HttpNotFound();
-            }
-            return View(periodosConvocatorias);
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            ////PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
+            //if (periodosConvocatorias == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View();
         }
 
         // POST: PeriodosConvocatorias/Delete/5
@@ -200,8 +200,8 @@ namespace SINU.Controllers.Administrador
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            db.PeriodosConvocatorias.Remove(periodosConvocatorias);
+            //PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
+            //db.PeriodosConvocatorias.Remove(periodosConvocatorias);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -249,29 +249,29 @@ namespace SINU.Controllers.Administrador
                 {
 
                     /*var ModTipoPersonal*/
-                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.NombreInst).ToList())[0].ToString();
+                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();
                     //string y = ModTipoPersonal[0].ToString();
-                    string TPersonal = "";
+                    //string TPersonal = "";
                     //29/10/2020 el switch a pedal esperando se tome la decision de que pasa con modalidad e instituto
-                    switch (y)
-                    {
-                        case "Profesionales":
-                            TPersonal = "O";
-                            break; 
-                        case "Tecnico":
-                            TPersonal = "S";
-                            break;
-                        case "Escuela de Formación (Oficiales)":
-                            TPersonal = "S";
-                            break;
-                        case "Escuela de Formación (Suboficiales)":
-                            TPersonal = "S";
-                            break;
-                        case "Servicio Militar Voluntario":
-                            TPersonal = "M";
-                            break;
-                    }
-                    var grupo_carreras = db.Modalidad.Where(x => x.Personal == TPersonal).Select(x => new SelectListItem
+                    //switch (y)
+                    //{
+                    //    case "Profesionales":
+                    //        TPersonal = "O";
+                    //        break; 
+                    //    case "Tecnico":
+                    //        TPersonal = "S";
+                    //        break;
+                    //    case "Escuela de Formación (Oficiales)":
+                    //        TPersonal = "S";
+                    //        break;
+                    //    case "Escuela de Formación (Suboficiales)":
+                    //        TPersonal = "S";
+                    //        break;
+                    //    case "Servicio Militar Voluntario":
+                    //        TPersonal = "M";
+                    ////        break;
+                    //}
+                    var grupo_carreras = db.Modalidad.Where(x => x.IdModalidad == y).Select(x => new SelectListItem
                     {
                         Value = x.IdModalidad,
                         Text = x.Descripcion

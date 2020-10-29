@@ -352,6 +352,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
           <Property Name="Tooltip" Type="varchar" MaxLength="100" />
           <Property Name="CodigoPcia" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IdInstitucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Institutos">
           <Key>
@@ -1808,6 +1809,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vVerificacionPantallasYDatosAVerifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Institucion_Modalidad">
+          <End Role="Modalidad" Type="Self.Modalidad" Multiplicity="0..1" />
+          <End Role="Institucion" Type="Self.Institucion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modalidad">
+              <PropertyRef Name="IdModalidad" />
+            </Principal>
+            <Dependent Role="Institucion">
+              <PropertyRef Name="IdModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PeriodosInscripciones_Institucion">
           <End Role="Institucion" Type="Self.Institucion" Multiplicity="1" />
           <End Role="PeriodosInscripciones" Type="Self.PeriodosInscripciones" Multiplicity="*" />
@@ -3225,6 +3238,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Secuencia_EtapaEstado" EntitySet="Secuencia_EtapaEstado" />
             <End Role="InscripcionEtapaEstado" EntitySet="InscripcionEtapaEstado" />
           </AssociationSet>
+          <AssociationSet Name="FK_Institucion_Modalidad" Association="Self.FK_Institucion_Modalidad">
+            <End Role="Modalidad" EntitySet="Modalidad" />
+            <End Role="Institucion" EntitySet="Institucion" />
+          </AssociationSet>
           <AssociationSet Name="FK_PeriodosInscripciones_Institucion" Association="Self.FK_PeriodosInscripciones_Institucion">
             <End Role="Institucion" EntitySet="Institucion" />
             <End Role="PeriodosInscripciones" EntitySet="PeriodosInscripciones" />
@@ -3530,6 +3547,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
           <NavigationProperty Name="PeriodosInscripciones" Relationship="Self.FK_PeriodosInscripciones_Institucion" FromRole="Institucion" ToRole="PeriodosInscripciones" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Modalidad" Relationship="SINUModel.FK_Institucion_Modalidad" FromRole="Institucion" ToRole="Modalidad" />
         </EntityType>
         <EntityType Name="Institutos">
           <Key>
@@ -5049,6 +5068,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Delegacion_EstablecExamen" EntitySet="Delegacion_EstablecExamen" />
           </AssociationSet>
           <EntitySet Name="vDelegacion_EstablecExamen" EntityType="SINUModel.vDelegacion_EstablecExamen" />
+          <AssociationSet Name="FK_Institucion_Modalidad" Association="SINUModel.FK_Institucion_Modalidad">
+            <End Role="Modalidad" EntitySet="Modalidad" />
+            <End Role="Institucion" EntitySet="Institucion" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5288,6 +5311,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Personal" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Convocatoria" Relationship="SINUModel.FK_Convocatoria_Modalidad" FromRole="Modalidad" ToRole="Convocatoria" />
+          <NavigationProperty Name="Institucion" Relationship="SINUModel.FK_Institucion_Modalidad" FromRole="Modalidad" ToRole="Institucion" />
         </EntityType>
         <Association Name="FK_Postulante_ComoSeEntero">
           <End Type="SINUModel.ComoSeEntero" Role="ComoSeEntero" Multiplicity="1" />
@@ -6082,6 +6106,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Institucion_Modalidad">
+          <End Type="SINUModel.Modalidad" Role="Modalidad" Multiplicity="0..1" />
+          <End Type="SINUModel.Institucion" Role="Institucion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modalidad">
+              <PropertyRef Name="IdModalidad" />
+            </Principal>
+            <Dependent Role="Institucion">
+              <PropertyRef Name="IdModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6268,6 +6304,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="Institucion">
             <EntityTypeMapping TypeName="SINUModel.Institucion">
               <MappingFragment StoreEntitySet="Institucion">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Titulo" ColumnName="Titulo" />

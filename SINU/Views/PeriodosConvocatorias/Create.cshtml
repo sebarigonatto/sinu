@@ -97,22 +97,60 @@
 
         <h4>Modalidad</h4>
         <hr />
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
-                @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        @*@Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
+                        @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
+                    </td>
+                    <td>
+                        @Html.ActionLink(" ", "Create", "Modalidads", null, new
+                   {
+                       @class = "btn btn-success btn-lg btn-xs fas fa-plus font-jumb",
+                       @style = "height:auto"
+                   })
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+       
         <h4>Carrera/Oficio</h4>
         <hr />
-        <div class="form-group">
-            @*@Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })*@
-            <div class="col-md-10">
-                @Html.DropDownList("IdGrupoCarrOficio", null, "Seleccione Grupo", htmlAttributes: new { @class = "form-control", @id = "GruposyCarreras" }) @*, @disabled = "disable" })*@
-                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                @*@Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DropDownList("IdGrupoCarrOficio", null, "Seleccione Grupo", htmlAttributes: new { @class = "form-control", @id = "GruposyCarreras" })
+                                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
+                            </td>
+                            <td>
+                                @Html.ActionLink(" ", "Create", "GrupoCarrOficios", null, new { @class = "btn btn-success btn-lg btn-xs fas fa-plus font-jumb", @style = "height:auto" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
         <h4>Inicio/Fin del proceso</h4>
         <hr />
 
@@ -148,15 +186,6 @@
             </div>
         </div>
 
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.ff, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ff, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ff, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Grabar Registro" class="btn btn-default" />
@@ -166,7 +195,7 @@
 }
 
 <div>
-    @Html.ActionLink("Volver", "Index")
+    @Html.ActionLink("Volver", "Index","Convocatorias")
 </div>
 
 @*<script src="~/Scripts/jquery-3.3.1.js"></script>

@@ -27,10 +27,12 @@ namespace SINU.Models
         public string Tooltip { get; set; }
         public string CodigoPcia { get; set; }
         public int IdInstitucion { get; set; }
+        public string IdModalidad { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PeriodosInscripciones> PeriodosInscripciones { get; set; }
+        public virtual Modalidad Modalidad { get; set; }
     }
 }
