@@ -515,6 +515,9 @@
     <Compile Include="Models\vInstitucionesConvocadasYCarrerasAsociadas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vInstitucionModalidad.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vLOCALIDAD.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

@@ -878,6 +878,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionesConvocadasYCarrerasAs
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionModalidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vInstitucionModalidad">
+          <Key>
+            <PropertyRef Name="IdInstitucion" />
+          </Key>
+          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
+          <Property Name="IdPersonal" Type="varchar" MaxLength="2" />
+          <Property Name="Personal" Type="varchar" MaxLength="30" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="Titulo" Type="varchar" MaxLength="100" />
+          <Property Name="Tooltip" Type="varchar" MaxLength="100" />
+          <Property Name="IdInstitucion" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -2730,6 +2745,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInstitucionesConvocadasYCarrerasAsociadas].[IdCarreraOficio] AS [IdCarreraOficio], 
     [vInstitucionesConvocadasYCarrerasAsociadas].[IdConvocatoria] AS [IdConvocatoria]
     FROM [dbo].[vInstitucionesConvocadasYCarrerasAsociadas] AS [vInstitucionesConvocadasYCarrerasAsociadas]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vInstitucionModalidad" EntityType="Self.vInstitucionModalidad" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vInstitucionModalidad].[NombreInst] AS [NombreInst], 
+    [vInstitucionModalidad].[IdModalidad] AS [IdModalidad], 
+    [vInstitucionModalidad].[IdPersonal] AS [IdPersonal], 
+    [vInstitucionModalidad].[Personal] AS [Personal], 
+    [vInstitucionModalidad].[Descripcion] AS [Descripcion], 
+    [vInstitucionModalidad].[Titulo] AS [Titulo], 
+    [vInstitucionModalidad].[Tooltip] AS [Tooltip], 
+    [vInstitucionModalidad].[IdInstitucion] AS [IdInstitucion]
+    FROM [dbo].[vInstitucionModalidad] AS [vInstitucionModalidad]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5072,6 +5099,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Modalidad" EntitySet="Modalidad" />
             <End Role="Institucion" EntitySet="Institucion" />
           </AssociationSet>
+          <EntitySet Name="vInstitucionModalidad" EntityType="SINUModel.vInstitucionModalidad" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6118,6 +6146,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vInstitucionModalidad">
+          <Key>
+            <PropertyRef Name="IdInstitucion" />
+          </Key>
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersonal" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Personal" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7643,6 +7684,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Localidad" ColumnName="Localidad" />
                 <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vInstitucionModalidad">
+            <EntityTypeMapping TypeName="SINUModel.vInstitucionModalidad">
+              <MappingFragment StoreEntitySet="vInstitucionModalidad">
+                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+                <ScalarProperty Name="Tooltip" ColumnName="Tooltip" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Personal" ColumnName="Personal" />
+                <ScalarProperty Name="IdPersonal" ColumnName="IdPersonal" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
