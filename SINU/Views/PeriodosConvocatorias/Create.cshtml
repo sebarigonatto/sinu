@@ -95,8 +95,8 @@
         </div>
 
 
-        <h4>Modalidad</h4>
-        <hr />
+        @*<h4>Modalidad</h4>
+        <hr />*@
         <table>
             <thead>
                 <tr>
@@ -113,7 +113,7 @@
                     <td>
                         @*@Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
         @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })*@
-                        @Html.Label("",new { @class = "form-control", @id = "Modalidades" })
+                        @*@Html.Label("",new { @class = "form-control", @id = "Modalidades" })*@
                     </td>
                     <td>
                         @*@Html.ActionLink(" ", "Create", "Modalidads", null, new
