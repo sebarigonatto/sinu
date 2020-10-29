@@ -64,8 +64,7 @@ namespace SINU.Controllers.Administrador
             {
                 try
                 {
-                    //aca grabamos el periodo de inscripcion
-                    //27/10/2020 da error de validacion de entidad, no se logra guardar el periodo de inscripcion
+                    //aca grabamos el periodo de inscripcion                    
                     //esta parte es fundamental para obtener el id y poder generar la covocatoria
                     PeriodosInscripciones PeriodoInscrip = new PeriodosInscripciones();                   
                     PeriodoInscrip.IdInstitucion = periodosConvocatorias.IdInstitucion;
@@ -83,6 +82,8 @@ namespace SINU.Controllers.Administrador
                         foreach (var validationError in validationErrors.ValidationErrors)
                         {
                             System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                            //aca guardo el error, pero si hay mas de uno, porque creo que lo relaciona con la validacion del viewmodel/metadata
+                            //solo dejara el ultimo, no se como hacer un array com viewdata[X] asi tener el listado completo cuando es mas de uno
                             ViewData["error"]= validationError.ErrorMessage.ToString();
                         }
                     }
@@ -111,6 +112,7 @@ namespace SINU.Controllers.Administrador
                             NuevConvocatoria.IdPeriodoInscripcion = Convert.ToInt32 (idNuevoPeriodo.FirstOrDefault());
                             NuevConvocatoria.Fecha_Inicio_Proceso = periodosConvocatorias.Fecha_Inicio_Proceso;
                             NuevConvocatoria.Fecha_Fin_Proceso = periodosConvocatorias.Fecha_Fin_Proceso;
+                            ViewBag.eliminar = NuevConvocatoria.IdPeriodoInscripcion;
                             db.Convocatoria.Add(NuevConvocatoria);
                             db.SaveChanges();
                             //return RedirectToAction("Index");
@@ -130,6 +132,11 @@ namespace SINU.Controllers.Administrador
                     ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
                     ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
                     periodosConvocatorias.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+                    //elimino el periodo de inscripcion creado, para poder volver a crearlo nuevamente 
+                    //y que  no incurra en error de existencia en este punto
+                    PeriodosInscripciones EliminarPerConv = db.PeriodosInscripciones.Find(ViewBag.eliminar);
+                    db.PeriodosInscripciones.Remove(EliminarPerConv);
+                    db.SaveChanges();
 
                     #region Aclaracion: estos valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
                     periodosConvocatorias.IdConvocatoria = 1;

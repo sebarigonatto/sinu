@@ -4,20 +4,13 @@
     ViewBag.Title = "Nueva Convocatoria";
     ViewBag.lst = new List<SINU.Models.PeriodosInscripciones>();
     //Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+    //este if verifica si el viewdata esta vacio, si no es que el controlador devolvio un error
+    //por tanto, le indico un mensaje en pantalla al usuario
     if (ViewData["error"] != null)
     {
-        @*<div id='myModal' class='modal'>
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div id='myModalContent'>
-                            <label>ViewData["error"]</label>
-                           </div>
-                    </div>
-                </div>
-
-            </div>*@
+       
         <div class="alert alert-warning" role="alert">
-            SI EXISTE SOLAPAMIENTO DE RANGOS DEBE MODIFICAR EL ACTUAL O CORREGIR/ELIMINAR LOS EXISTENTES QUE PROVOQUEN ERROR!
+            @ViewData["error"]
         </div>
     }
 }
