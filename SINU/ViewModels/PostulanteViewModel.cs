@@ -128,6 +128,7 @@ namespace SINU.ViewModels
         public int IdPersona { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
+        public int ID_Inscripcion { get; set; }
         public DateTime FechaPresentacion { get; set; }
     }
 

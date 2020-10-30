@@ -45,12 +45,12 @@
                     <div class="BTAcciones d-inline">
                         &ensp; |&ensp;
 
-                        @Ajax.ActionLink(" ", "EliminaEST", new { ID = item.IdEstudio }, new AjaxOptions
-                          {
-                            HttpMethod = "POST",
-                            OnSuccess = "Exito(data,status,xhr)",
-                            OnFailure = "Falla",
-                          }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
+                        @Ajax.ActionLink(" ", "EliminaEST", new { IdPersona = item.IdPersona, IDEstudio = item.IdEstudio }, new AjaxOptions
+                   {
+                       HttpMethod = "POST",
+                       OnSuccess = "Exito(data,status,xhr)",
+                       OnFailure = "Falla",
+                   }, new { @id = "EliminaEST", @class = "btn btn-danger fas fa-trash-alt" })
                     </div>
                 </td>
             </tr>

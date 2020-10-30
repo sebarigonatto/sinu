@@ -1,0 +1,97 @@
+﻿@model SINU.ViewModels.PeriodosConvocatorias
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PeriodosConvocatorias</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaFinal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaFinal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdInstitucion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdInstitucion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPeriodoInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdPeriodoInscripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdModalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdModalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdGrupoCarrOficio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdGrupoCarrOficio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Inicio_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Fin_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ff)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ff)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

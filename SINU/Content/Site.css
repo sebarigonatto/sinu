@@ -160,3 +160,6 @@ button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
     button[disabled="disabled"].dropdown-toggle::after {
         border-top: none !important;
     }
+#TabGeneral ul {
+    margin-top: revert !important
+}

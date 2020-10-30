@@ -8,11 +8,12 @@
         OnSuccess = "Exito(data,status,xhr)",
         OnFailure = "Falla",
         LoadingElementId = "carga",
-        //LoadingElementDuration = 1000,
-        //UpdateTargetId = "resultTarget"
-    },
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
     new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken()
     <h2>Antecedetes Penales</h2>
     <br />
     <div class="form-group">
@@ -29,12 +30,14 @@
                 </p>
                 <div class="BTAcciones">
                     @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary ", @target = "_blank" })
+
                 </div>
                 <div class="w-100"></div>
-                <br />
-                <div  class="BTAcciones custom-file col col-md-6 mb-2">
+                <br class="BTAcciones" />
+                <div class="BTAcciones custom-file col col-md-6 mb-2">
+
                     @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input" })
-                    <label class="custom-file-label" for="exampleInputFile2">
+                    <label class="custom-file-label" for="exampleInputFile">
                         @if (Model.PathFormularioAanexo2 != null)
                         {
                             <b>@Model.PathFormularioAanexo2.Substring(Model.PathFormularioAanexo2.LastIndexOf("&") + 1)</b>
@@ -46,14 +49,14 @@
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
 
                 </div>
-                <div class="col col col-md-8 p-0">
+                <div class="col col col-md-12 p-0 ">
                     @if (Model.PathFormularioAanexo2 == null)
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id = "DocuAnex" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Anexo2" }, new { @class = "btn btn-primary hidden", @target = "_blank", @hidden = "hidden", @id = "DocuAnex" })
                     }
                     else
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @id= "DocuAnex" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuAnex" })
                     }
                 </div>
 
@@ -83,14 +86,14 @@
                     </label>
                     @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
                 </div>
-                <div class="col col col-md-7 pl-0">
+                <div class="col col col-md-12 pl-0">
                     @if (Model.PathConstanciaAntcPenales == null)
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @hidden = "hidden", @id= "DocuCert" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona.ToString(), docu = "Certificado" }, new { @class = "btn btn-primary hidden", @target = "_blank", @hidden = "hidden", @id = "DocuCert" })
                     }
                     else
                     {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona, docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuCert" })
+                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { Id = Model.IdPersona.ToString(), docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuCert" })
                     }
 
                 </div>

@@ -32,9 +32,9 @@ new { id = "BeginFormEstudioCUD" }))
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-12">
-
-                    @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdEstudio)
                     @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdPersona)
+                    @Html.HiddenFor(model => model.vPersona_EstudioIdVM.IdEstudio)
+
 
                     <div class="form-group row ">
 
@@ -82,7 +82,7 @@ new { id = "BeginFormEstudioCUD" }))
                                     @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.Nombre, "", new { @class = "text-danger" })
 
                                     <div class="INSAR">
-                                         @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboIdInstEST" })
+                                        @Html.DropDownListFor(model => model.vPersona_EstudioIdVM.IdInstitutos, new SelectList(Model.InstitutoVM, "Value", "Text"), null, htmlAttributes: new { @class = "form-control combobox COM_ESTUAR", @id = "ComboIdInstEST" })
                                         @Html.ValidationMessageFor(model => model.vPersona_EstudioIdVM.IdInstitutos, "", new { @class = "text-danger" })
                                     </div>
                                 </div>

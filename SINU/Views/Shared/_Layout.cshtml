@@ -110,12 +110,12 @@
         }
 
         }
-                animation-delay: -0.32s;
-            }
+        animation-delay: -0.32s;
+        }
 
-            .loader:after {
-                left: 3.5em;
-            }
+        .loader:after {
+            left: 3.5em;
+        }
 
         @@-webkit-keyframes load7 {
             0%,
@@ -201,19 +201,25 @@
             </footer>*@
     </div>
 
-
-
-    @*<div class="modal fade show" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" style="display: block" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document" style="width: 50%; height: 100%; margin: 0 auto;">
-                <div class="modal-content" style="height: 30%;">
-                    <div class="modal-body">
-                        <div class="loader2">Loading...</div>
-                        <h6>Espere...</h6>
-                    </div>
+    <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
 
                 </div>
+                <div class="modal-body text-center">
+                    <p id="TextModal" style="font-size:1rem">@* mensaje del Modal *@</p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
+                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
+                </div>
             </div>
-        </div>*@
+        </div>
+    </div>
+
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
@@ -232,8 +238,20 @@
         
         });
         $('#loader').delay(300).fadeOut('fast');
-        //$("#exampleModalCenter").modal("show")
+
 
     });
 
+    $(".load-submit").on("click", function () {
+        $.Cargando();
+    }); 
+    $.Cargando = function () {
+        $("#ModalAnuncios").hide();
+        $("#ModalAnuncios .modal-body").addClass("text-center");
+        $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
+        $("#GuardarDTF").css("display", "none");
+        $("#ModalAnuncios .modal-header,#ModalAnuncios .modal-footer").hide();
+        $("#TextModal").html("<img src='../Imagenes/loader.gif' style='width:30vh;border-radius: 5px'/>");
+        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+    };
 </script>

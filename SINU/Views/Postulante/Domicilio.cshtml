@@ -28,6 +28,7 @@
             <h2>Domicilio que figura en el DNI:</h2>
             <br />
             <div class="form-group row">
+                @Html.HiddenFor(m=>m.vPersona_DomicilioVM.IdPersona)
                 @Html.HiddenFor(model => model.vPersona_DomicilioVM.IdDomicilioDNI)
                 @Html.HiddenFor(model => model.vPersona_DomicilioVM.IdDomicilioActual)
 
