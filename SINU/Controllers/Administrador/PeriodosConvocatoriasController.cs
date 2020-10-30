@@ -48,7 +48,8 @@ namespace SINU.Controllers.Administrador
 
             #region Aclaracion: estis valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
             convoca.IdConvocatoria = 1;
-            convoca.IdPeriodoInscripcion = 1; 
+            convoca.IdPeriodoInscripcion = 1;
+            convoca.IdModalidad = "x";
             #endregion
             return View(convoca);
         }
@@ -104,12 +105,16 @@ namespace SINU.Controllers.Administrador
                 //lo graba, paso a crear la convocatoria con el periodo de inscripcion nuevo
                 try
                 {
-                            Convocatoria NuevConvocatoria = new Convocatoria();
-                            NuevConvocatoria.IdModalidad = periodosConvocatorias.IdModalidad;
+                            Convocatoria NuevConvocatoria = new Convocatoria();                            
                             NuevConvocatoria.IdGrupoCarrOficio = periodosConvocatorias.IdGrupoCarrOficio;
+                            //aca cargo en una variable el id del periodo de inscripcion anteriormente grabado
+                            //lo busco por los datos ingresados, asi puedo pasarlo como dato para la nueva CONVOCATORIA
                             var idNuevoPeriodo = db.PeriodosInscripciones.Where(m => m.IdInstitucion == periodosConvocatorias.IdInstitucion
-                           && m.FechaFinal == periodosConvocatorias.FechaFinal && m.FechaInicio == periodosConvocatorias.FechaInicio).Select(m => m.IdPeriodoInscripcion);
+                            && m.FechaFinal == periodosConvocatorias.FechaFinal && m.FechaInicio == periodosConvocatorias.FechaInicio).Select(m => m.IdPeriodoInscripcion);                   
                             NuevConvocatoria.IdPeriodoInscripcion = Convert.ToInt32 (idNuevoPeriodo.FirstOrDefault());
+
+                    //modalidad
+                    NuevConvocatoria.IdModalidad = db.vInstitucionModalidad.Where(m => m.IdInstitucion == periodosConvocatorias.IdInstitucion).Select(m => m.IdModalidad).FirstOrDefault();
                             NuevConvocatoria.Fecha_Inicio_Proceso = periodosConvocatorias.Fecha_Inicio_Proceso;
                             NuevConvocatoria.Fecha_Fin_Proceso = periodosConvocatorias.Fecha_Fin_Proceso;
                             ViewBag.eliminar = NuevConvocatoria.IdPeriodoInscripcion;
