@@ -34,4 +34,8 @@ namespace SINU.ViewModels
         public List<vDataProblemaEncontrado> vDataProblemaEncontradoVM { get; set; }
         public List<vInscripcionDetalle> vInscripcionDetallesVM { get; set; }
     }
+    public class DocuNecesaria
+    {
+        public List<DocumentosNecesariosDelInscripto_Result> DocumentosNecesarios { get; set; }
+    }
 }

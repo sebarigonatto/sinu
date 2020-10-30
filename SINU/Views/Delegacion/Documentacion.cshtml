@@ -169,7 +169,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 2, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -204,7 +204,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 3, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -239,7 +239,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 4, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -276,7 +276,7 @@
                         OnSuccess = "Exito(data,status,xhr)",
                         OnFailure = "Falla"
                       }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                        @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                        @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -311,7 +311,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 6, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -346,7 +346,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 7, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -381,7 +381,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 8, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -417,7 +417,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 9, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -433,8 +433,12 @@
                     <nav class="navbar navbar-dark bg-dark ocultnav">
                         <a class="navbar-brand" href="#">Verificacion</a>
                     </nav>
+
                     <div class="collapse tab-pane fade nav-tab pt-4" id="ListaProblemaNAV">
-                        @Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER })
+                        @Html.Action("DocumentosNecesarios","Delegacion",new {IdPostulante=Model.ID_PER })
+                        <br />
+                        <hr />
+                        @Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER, IdPanatlla = 10 })
                         @*@Html.Partial("ListaProblema")*@
                         @*<br />*@
                         <div class="container text-center">
@@ -444,7 +448,7 @@
                             OnSuccess = "Exito(data,status,xhr)",
                             OnFailure = "Falla"
                           }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 0 }, new AjaxOptions
+                            @Ajax.ActionLink("Abrir Pantalla", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
                              {
                                HttpMethod = "POST",
                                OnSuccess = "Exito(data,status,xhr)",
@@ -541,7 +545,7 @@
         $(document).ready(function () {
             $.BloqueoPantalla = true;
             $(".BTAcciones").html("");
-            $("#TABBloqueo :input,#TABBloqueo input").not(".dataTables_wrapper input[type='search']").attr("disabled", "true");
+            $("#TABBloqueo :input,#TABBloqueo input").not(".dataTables_wrapper input[type='search'],[type='checkbox']").attr("disabled", "true");
 
             $(".habil").removeAttr("disabled");
             $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").not("[role='combobox']").removeClass("fa-edit").addClass("fa-eye");

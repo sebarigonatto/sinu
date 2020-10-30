@@ -512,9 +512,9 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
-        public ActionResult ListaProblema(int ID_persona)
+        public ActionResult ListaProblema(int ID_persona,int IdPanatlla)
         {
-            List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+            List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).Where(m=>m.IdPantalla== IdPanatlla).ToList();
 
 
             return View(problema);
@@ -527,7 +527,7 @@ namespace SINU.Controllers
             {
                 ProblemaEcontradoVM problema = new ProblemaEcontradoVM
                 {
-                    ListDataVerificacionVM = new SelectList(db.DataVerificacion.ToList(), "IdDataVerificacion", "Descripcion")
+                    ListDataVerificacionVM = new SelectList(db.DataVerificacion.Where(m=>m.IdPantalla==10).ToList(), "IdDataVerificacion", "Descripcion")
                 };
                 var postu = db.Persona.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (ID == null)
@@ -614,7 +614,7 @@ namespace SINU.Controllers
                         IdPostulantePersona = IdPostulante
 
                     },
-                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).Concat(db.DataVerificacion.Where(m => m.IdDataVerificacion == 26)).ToList()
+                    DataVerificacionVM = db.DataVerificacion.Where(m => m.IdPantalla == IdPantalla).ToList()
                 };
 
                 return PartialView(datos);
@@ -690,6 +690,18 @@ namespace SINU.Controllers
             }
 
             return Json(new { success = false, msg = "Error en el Modelo Recibido" });
+        }
+        [HttpGet]
+        public ActionResult DocumentosNecesarios(int IdPostulante)
+        {
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
+            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
+            DocuNecesaria datos = new DocuNecesaria()
+            {
+                DocumentosNecesarios=DocuNecesarios,
+            }; 
+            //var listDocu = DocuNecesarios.ToList();
+            return PartialView(datos);
         }
         //[ValidateAntiForgeryToken]
         //public ActionResult DataProblema([Bind(Include = "Comentario,IdPostulantePersona,IdDataVerificacion")] ProblemaEcontradoVM problemaEcontradoVM)
