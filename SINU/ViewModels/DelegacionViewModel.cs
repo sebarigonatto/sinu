@@ -36,6 +36,6 @@ namespace SINU.ViewModels
     }
     public class DocuNecesaria
     {
-        public List<DocumentosNecesariosDelInscripto_Result> DocumentosNecesarios { get; set; }
+        public List<DocumentosNecesariosDelInscripto_Result1> DocumentosNecesarios { get; set; }
     }
 }

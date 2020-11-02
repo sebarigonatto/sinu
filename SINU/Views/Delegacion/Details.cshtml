@@ -47,7 +47,13 @@
                 @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-dark btn-lg w-100" })
             </div>
             <div class="col-sm-2">
-                @Html.ActionLink("Volver Etapa Anterior", "VolverEtapa", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-dark btn-lg" })
+                @Html.ActionLink("Volver Etapa Anterior", "RestaurarPostulante", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-dark btn-lg" })
+                @*@Ajax.ActionLink("Volver Etapa Anterior", "RestaurarPostulante", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new AjaxOptions
+                {
+                                                                           HttpMethod = "POST",
+                                                                           OnSuccess = "Exito(data,status,xhr)",
+                                                                           OnFailure = "Falla"
+                                                                         }, new { @id = "BTValidar", @class = "fa fa-reply btn btn-warning w-25" })*@
             </div>
         </div>
     </div>
