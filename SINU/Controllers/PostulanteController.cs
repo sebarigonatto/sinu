@@ -1395,13 +1395,15 @@ namespace SINU.Controllers
         }
         /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
 
-        public ActionResult DocumentacionAnexo()
+        public ActionResult DocumentacionAnexo( int IdPersona)
         {
             DocuAnexoVM asd = new DocuAnexoVM()
             {
-                IdPersona = 1369
-                
+                IdPersona = IdPersona
+
             };
+            int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.ToList()[0].IdInscripcion;
+            asd.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
 
             return PartialView("DocumentacionAnexo", asd);
         }

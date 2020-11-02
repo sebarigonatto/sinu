@@ -146,18 +146,7 @@ namespace SINU.ViewModels
     {
 
         public int IdPersona { get; set; }
-        [Display(Name ="Copia de DNI")]
-        [Required(ErrorMessage = "El DNI es obligatorio")]
-        public HttpPostedFileBase CopiaDNI { get; set; }
-        [Display(Name = "Titulo del Secundario")]
-        [Required(ErrorMessage = "El Titulo Secundario es Obligatorio")]
-        public HttpPostedFileBase TituloSecundario { get; set; }
-        [Display(Name = "Partida Nacimiento")]
-        [Required(ErrorMessage = "La Partida de Nacimiento es Obligatoria")]
-        public HttpPostedFileBase PartidaDeNacimiento { get; set; }
-        [Display(Name = "Libreta Sanitria")]
-        [Required(ErrorMessage = "La Libreta Sanitaria es Obligatorio")]
-        public HttpPostedFileBase LibretaSanitaria { get; set; }
+        public List<DocumentosNecesariosDelInscripto_Result1> docus { get; set; }
 
     }
 }

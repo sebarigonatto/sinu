@@ -15,12 +15,29 @@
 {
     <h2>Documentacion  Extra</h2>
     <div class="form-group">
-        <div class="jumbotron mb-0 p-3 pt-4" style="background-color: #08495f; color:white">
+        <div class="jumbotron mb-0 p-3 pt-4 " style="background-color: #08495f; color:white">
+            @foreach (var item in Model.docus)
+            {
+                <div class="row" style="border-bottom:1px solid white">
+                    <div class=" col col-sm-8">
+                        <h5><b>@Html.Label(item.Tipo):</b></h5><h6> @item.Descripcion</h6>
+                    </div>
+                    <div class="col col-sm-2 ">
+                        @if ((bool)item.Presentado)
+                        {
+                            <b style="color:green; ">Entregado</b>
+                        }
+                        else
+                        {
+                            <b style="color:red">No Entregado</b>
+                        }
+                    </div>
+                </div>
 
-            <h6><b>@Html.Label(cont.ToString()):</b> @item.DataVerificacion, @item.Comentario</h6>
+            }
 
         </div>
-       
+
 
     </div>
 
