@@ -1404,7 +1404,7 @@ namespace SINU.Controllers
             };
             int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.ToList()[0].IdInscripcion;
             asd.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
-
+            ViewBag.secucu = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList()[0].IdSecuencia;
             return PartialView("DocumentacionAnexo", asd);
         }
 
