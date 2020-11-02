@@ -146,13 +146,6 @@
             <div class="form-group pl-3 BTAcciones">
                 <input type="submit" value="Guadar Datos" class="btn btn-success" />
 
-
-                @Ajax.ActionLink("Solicitar Validacion", "ValidarDatos", new { ID_persona = Model.vPersona_DatosPerVM.IdPersona }, new AjaxOptions
-                                                             {
-                                                                 HttpMethod = "POST",
-                                                                 OnSuccess = "Exito(data,status,xhr)",
-                                                                 OnFailure = "Falla"
-                                                             }, new { @id = "BTValidarDP", @class = "btn btn-danger disabled load-submit" })
             </div>
         </div>
     </div>

@@ -279,7 +279,7 @@ namespace SINU.Controllers
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        bool seenvio = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD);
+                        await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null);
 
                         return RedirectToAction("Login");
                     }
@@ -335,23 +335,19 @@ namespace SINU.Controllers
 
                     //envio mail a todos los usuarios de la delegaacion coorespondiete al postulante ye valido el correo
                     int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdDelegacionOficinaIngresoInscribio;
-                    var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
-                    ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante();
-                    foreach (var dele in mailDelegacion)
+                    
+                    ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante
                     {
-                        var idAsp_delegacion = db.AspNetUsers.FirstOrDefault(m => m.Email == dele.Email).Id;
-                        //armo modelo para armar el correo
-                        datosMail.Apellido = dele.Apellido;
-                        datosMail.Delegacion = dele.Delegacion;
-                        datosMail.Apellido_P = persona.Apellido;
-                        datosMail.Dni_P = persona.DNI;
-                        datosMail.IdInscripcion_P = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion;
-                        datosMail.Nombre_P = persona.Nombres;
-                        datosMail.url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme);
-
-                        Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", idAsp_delegacion, null, "MailAsunto6");
-                    }
-
+                        Apellido="",
+                        Apellido_P = persona.Apellido,
+                        Dni_P = persona.DNI,
+                        IdInscripcion_P = persona.Postulante.Inscripcion.ToList()[0].IdInscripcion,
+                        Nombre_P = persona.Nombres,
+                        url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme),
+                        Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
+                    };
+                   
+                    Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", null, null, "MailAsunto6", ID_Delegacion);
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {

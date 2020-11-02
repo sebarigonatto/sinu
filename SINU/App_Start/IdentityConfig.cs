@@ -17,12 +17,32 @@ using System.Web;
 
 namespace SINU
 {
-    public class EmailService : IIdentityMessageService
+    //clase para que se pueda enviar un correo a un listado de correos
+    public  class messageMAil 
     {
-        private SINUEntities db = new SINUEntities();
+        public List<string> Correos { get; set; }
+        public string Body { get; set; }
+        public string Subject { get; set; }
+        public string Destination { get; set; }
+    }
 
-        public Task SendAsync(IdentityMessage message)
+    //public interface IIdentityMessageService
+    //{
+    //    public Task SendMessage(messageMAil message);
+    //// define methods for other message types that you want to send
+    //}
+    public  class EmailService 
+    {
+        private static SINUEntities db = new SINUEntities();
+
+        public static Task SendEmail(string iD_AspNetUser, string asunto,string html, List<string> mails)
         {
+            messageMAil message = new messageMAil { 
+                Correos= mails,
+                Subject= asunto,
+                Body= html,
+                Destination= iD_AspNetUser
+            };
             return Task.Factory.StartNew(() =>
             {
                 SendMail(message);
@@ -30,8 +50,8 @@ namespace SINU
 
         }
 
-        void SendMail(IdentityMessage message)
-        {
+         static void SendMail(messageMAil message)
+         {
             //LEVANTO LOS DATOS DE LA TABLA CONFIGURACION
 
             try
@@ -49,8 +69,19 @@ namespace SINU
                 string MailAplicacionDisplay = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAplicacionDisp").ValorDato;
 
                 mensage.From = new MailAddress(MailAplicacion, MailAplicacionDisplay);
-
-                mensage.To.Add(new MailAddress(message.Destination));
+                message.Destination = message.Destination!=""? db.AspNetUsers.FirstOrDefault(m=>m.Id== message.Destination).Email : "";
+                if (message.Destination!="")
+                {
+                    mensage.To.Add(new MailAddress(message.Destination));
+                }
+                else
+                {
+                    foreach (var item in message.Correos)
+                    {
+                        mensage.To.Add(new MailAddress(item));
+                    }
+                }
+                
                 BuscarAdjuntos(message, mensage);
 
                 mensage.Subject = message.Subject;
@@ -99,7 +130,7 @@ namespace SINU
         /// </summary>
         /// <param name="Mensaje"></param>
         /// <param name="MensajeCorreo"></param>
-        private void BuscarAdjuntos(IdentityMessage Mensaje, MailMessage MensajeCorreo)
+        private static void BuscarAdjuntos(messageMAil Mensaje, MailMessage MensajeCorreo)
         {
             #region Busco el nro de paso que se esta haciendo, ejemplos: (1) registracion (2) datos personales
             String paso;
@@ -129,6 +160,8 @@ namespace SINU
             }
             return;
         }
+
+   
     }
 
     public class SmsService : IIdentityMessageService
@@ -187,7 +220,7 @@ namespace SINU
             //    Subject = "Código de seguridad",
             //    BodyFormat = "Su código de seguridad es {0}"
             //});
-            manager.EmailService = new EmailService();
+            //manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             var passTokenProvider = options.DataProtectionProvider;

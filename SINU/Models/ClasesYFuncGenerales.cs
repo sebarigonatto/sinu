@@ -11,13 +11,17 @@ using System.Threading.Tasks;
 using System.IO;
 using SINU.ViewModels;
 using System.Windows.Media.Imaging;
+using Microsoft.AspNet.Identity;
+using System.Windows.Documents;
+
 
 namespace SINU.Models
 {
 
     /// <summary>Listado de Funciones prácticas que pueden ser usadas desde cualquier parte del sistema
     /// </summary>
-    public class Func        
+
+    public class Func
     {
         private static ApplicationUserManager _userManager;
         private static SINUEntities db = new SINUEntities();
@@ -71,12 +75,12 @@ namespace SINU.Models
         /// OJO: Cada nombre de Grupo debe tener su archivo _MenuPerfilGrupo
         /// </summary>
         /// <returns></returns>
-        private static  string f_BuscaGrupo()
+        private static string f_BuscaGrupo()
         {
 
             String Respuesta = "";
-            List<vSeguridad_Grupos_Usuarios> grupo = db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario== HttpContext.Current.User.Identity.Name).ToList();
-            Respuesta = (grupo.Count > 0) ? ("_MenuPerfil"+(grupo[0].codGrupo.Trim()).Substring(0,5)) : "_MenuPerfilNoIde";
+            List<vSeguridad_Grupos_Usuarios> grupo = db.vSeguridad_Grupos_Usuarios.Where(m => m.codUsuario == HttpContext.Current.User.Identity.Name).ToList();
+            Respuesta = (grupo.Count > 0) ? ("_MenuPerfil" + (grupo[0].codGrupo.Trim()).Substring(0, 5)) : "_MenuPerfilNoIde";
 
             return Respuesta;
         }
@@ -114,18 +118,19 @@ namespace SINU.Models
         /// <param name="ID_Persona">O el IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <returns></returns>
-        public static async Task<bool> EnvioDeMail(ViewModels.PlantillaMail ModeloPlantilla,string Plantilla, string? ID_AspNetUser,int? ID_Persona, string Asunto)
+        public static async Task<bool> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion)
         {
             try
             {
-                int idInscrip=0;
-               
-                if (ID_AspNetUser==null || ID_AspNetUser=="")
+                ID_AspNetUser ??= "";
+                int idInscrip = 0;
+                //Para delegacion
+                if (ID_AspNetUser == "" && ID_Delegacion == null)
                 {
                     ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
-                    idInscrip=db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_Persona).IdInscripcion;
+                    idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_Persona).IdInscripcion;
                 }
-                else if(db.Postulante.FirstOrDefault(m=>m.IdAspNetUser==ID_AspNetUser)!=null)
+                else if (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser) != null && ID_Delegacion == null)
                 {
                     idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser).IdPersona).IdInscripcion;
                 }
@@ -135,7 +140,7 @@ namespace SINU.Models
                 {
                     TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
                     DisableTempFileLocking = true
-                 
+
                 };
                 Engine.Razor = RazorEngineService.Create(configuracion);
 
@@ -148,7 +153,7 @@ namespace SINU.Models
                     var OfiDeleg = db.OficinasYDelegaciones.Find(id_OfiDeleg);
                     datos = new DatosResponsable()
                     {
-                        Apellido = ModeloPlantilla.Apellido,
+                        Apellido = ModeloPlantilla.Apellido.ToUpper(),
                         ResponsableMail = OfiDeleg.Email1,
                         ResponsablePisoOfic = OfiDeleg.Provincia + ", " + OfiDeleg.Localidad + ", " + OfiDeleg.Direccion,
                         ResponsableTelefonoEinterno = OfiDeleg.Telefono,
@@ -166,13 +171,25 @@ namespace SINU.Models
                     };
                 }
                 string HtmlLayout = Engine.Razor.RunCompile(LayautCarpeta, null, datos);
-              
-                string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\"+Plantilla+".cshtml", null, ModeloPlantilla);
+
+                string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\" + Plantilla + ".cshtml", null, ModeloPlantilla);
                 //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
                 var finalHtml = HtmlLayout.Replace("Mail_CUERPO", cuerpoMail);
 
+
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
-                await UserManager.SendEmailAsync(ID_AspNetUser, asunto, finalHtml);
+                List<string> correos = new List<string>();
+                if (ID_Delegacion != null)
+                {
+                    var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
+
+                    foreach (vUsuariosAdministrativos dele in mailDelegacion)
+                    {
+                        correos.Add(dele.Email);
+                    }
+                }
+
+                EmailService.SendEmail(ID_AspNetUser, asunto, finalHtml, correos);
 
                 return true;
             }

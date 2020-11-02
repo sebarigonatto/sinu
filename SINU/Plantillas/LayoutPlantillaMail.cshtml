@@ -79,17 +79,21 @@
                                         <!--  EL TEXTO DEL SALUDO DEPENDERA DEL HORARIO ACTUAL  -->
                                         <h3 style="color:#000;font-family:HelveticaNeue-Light,'Helvetica Neue Light','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size:22px;font-weight:500;line-height:1.1;margin:0;margin-bottom:15px;padding:0">
                                             @{int hora = DateTime.Now.Hour;
-                                                string saludo = "Buenas Noches ";
+                                                string saludo = "Buenas Noches";
                                                 if (hora < 12)
                                                 {
-                                                    saludo = "Buenos Dias ";
+                                                    saludo = "Buenos Dias";
                                                 }
                                                 else if (hora > 11 && hora < 19)
                                                 {
-                                                    saludo = "Buenas Tardes ";
+                                                    saludo = "Buenas Tardes";
+                                                }
+                                                if (Model.Apellido != "")
+                                                {
+                                                    saludo = saludo+ " " + Model.Apellido;
                                                 }
                                             }
-                                            @saludo@Model.Apellido.ToUpper():
+                                            @saludo :
                                         </h3>
 
                                         Mail_CUERPO

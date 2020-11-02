@@ -114,7 +114,7 @@ namespace SINU.Controllers
                     FechaEntrevista = datos.FechaEntrevista
                 };
                 //verificar el llamado de una funcion asyncronica desde un metodo sincronico
-                var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4");
+                var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4",null);
 
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
                 vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
@@ -274,11 +274,11 @@ namespace SINU.Controllers
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
-                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2");
+                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2",null);
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
                         break;
                     case "No Postulado":
-                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2");
+                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2",null);
                         break;
                 }
             }
@@ -332,7 +332,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4");
+                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4",null);
                     db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
                     return Json(new { View = "Index" });
                 };
@@ -367,7 +367,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                     Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+                     Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return Json(new { View ="Index" });
@@ -404,7 +404,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
                     //db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "", "");
                     //return RedirectToAction("Index");
