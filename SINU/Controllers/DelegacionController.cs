@@ -696,45 +696,37 @@ namespace SINU.Controllers
         {
             var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
-            DocuNecesaria datos = new DocuNecesaria()
-            {
-                DocumentosNecesarios=DocuNecesarios,
-            }; 
+            
+            //DocuNecesaria datos = new DocuNecesaria()
+            //{
+            //    DocumentosNecesarios=DocuNecesarios,
+            //}; 
             //var listDocu = DocuNecesarios.ToList();
-            return PartialView(datos);
+            return PartialView("Index");
         }
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DataProblema([Bind(Include = "Comentario,IdPostulantePersona,IdDataVerificacion")] ProblemaEcontradoVM problemaEcontradoVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        DataProblemaEncontrado DataProblemaEncontrado = new DataProblemaEncontrado
-        //        {
-        //            Comentario = ProblemaEcontradoVM.,
-        //            IdPostulantePersona = ProblemaEcontradoVM.IdPostulantePersona,
-        //            IdDataVerificacion = ProblemaEcontradoVM.IdDataVerificacion
-        //        };
-        //        db.DataProblemaEncontrado.Add(DataProblemaEncontrado);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        [HttpPost]
+        public ActionResult DocumentosNecesarios(string[]select,int IdInscripto)
+        {
+            //db.spDocumentoInscripto(,)
+            return View("Index");
+        }
 
-        //    return View(ProblemaEcontradoVM);
-        //}
-        //public FileResult GetHTMLPageAsPDF(long empID)
-        //{
-        //    string htmlPagePath = "anypath...";
-        //    // convert html page to pdf
-        //    PageToPDF obj_PageToPDF = new PageToPDF();
-        //    byte[] databytes = obj_PageToPDF.ConvertURLToPDF(htmlPagePath);
+//        //{
+//         try
+//            {
+//                // TODO: Add insert logic here
+//                foreach (var item in select)
+//                {
+//                      int x = Convert.ToInt32(item);
+//                      var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
+//                      da.FechaRindeExamen = fecha;
+//                      db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
 
-        //    //return resulted pdf document        
-        //    var contentLength = databytes.Length;
-        //    Response.AppendHeader("Content-Length", contentLength.ToString());
-        //    Response.AppendHeader("Content-Disposition", "inline; filename=" + empID + ".pdf");
-
-        //    return File(databytes, "application/pdf;");
-        //}
+//                }
+//    db.SaveChanges();
+//                return RedirectToAction("Index");
+//}
+//        //}
 
 
 

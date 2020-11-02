@@ -2173,6 +2173,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <Property Name="PathAlmacenamiento" Type="varchar" MaxLength="50" />
                 <Property Name="IdInscripcion" Type="int" />
                 <Property Name="IdPostulantePersona" Type="int" />
+                <Property Name="IdTipoDocPresentado" Type="int" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -5088,9 +5089,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdPersonaPostulante" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vModalidadYDocumento" EntityType="SINUModel.vModalidadYDocumento" />
-          <FunctionImport Name="DocumentosNecesariosDelInscripto" IsComposable="true" ReturnType="Collection(SINUModel.DocumentosNecesariosDelInscripto_Result)">
-          <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="Delegacion_EstablecExamen" EntityType="SINUModel.Delegacion_EstablecExamen" />
           <AssociationSet Name="FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen" Association="SINUModel.FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen">
             <End Role="EstablecimientoRindeExamen" EntitySet="EstablecimientoRindeExamen" />
@@ -5111,6 +5109,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
             <Parameter Name="IdTipoDocPresentado" Mode="In" Type="Int32" />
             <Parameter Name="PathAlmacenamiento" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DocumentosNecesariosDelInscripto" IsComposable="true" ReturnType="Collection(SINUModel.DocumentosNecesariosDelInscripto_Result1)">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -6171,6 +6172,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="DocumentosNecesariosDelInscripto_Result1">
+          <Property Type="Int32" Name="Orden" Nullable="true" />
+          <Property Type="String" Name="IdModalidad" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Tipo" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="150" />
+          <Property Type="Boolean" Name="Obligatorio" Nullable="false" />
+          <Property Type="Boolean" Name="Presentado" Nullable="true" />
+          <Property Type="String" Name="PathAlmacenamiento" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdInscripcion" Nullable="true" />
+          <Property Type="Int32" Name="IdPostulantePersona" Nullable="true" />
+          <Property Type="Int32" Name="IdTipoDocPresentado" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7664,21 +7677,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DocumentosNecesariosDelInscripto" FunctionName="SINUModel.Store.DocumentosNecesariosDelInscripto">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.DocumentosNecesariosDelInscripto_Result">
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
-                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Obligatorio" ColumnName="Obligatorio" />
-                <ScalarProperty Name="Presentado" ColumnName="Presentado" />
-                <ScalarProperty Name="PathAlmacenamiento" ColumnName="PathAlmacenamiento" />
-                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
-                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Delegacion_EstablecExamen">
             <EntityTypeMapping TypeName="SINUModel.Delegacion_EstablecExamen">
               <MappingFragment StoreEntitySet="Delegacion_EstablecExamen">
@@ -7714,6 +7712,22 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spDocumentoInscripto" FunctionName="SINUModel.Store.spDocumentoInscripto" />
+          <FunctionImportMapping FunctionImportName="DocumentosNecesariosDelInscripto" FunctionName="SINUModel.Store.DocumentosNecesariosDelInscripto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.DocumentosNecesariosDelInscripto_Result1">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Obligatorio" ColumnName="Obligatorio" />
+                <ScalarProperty Name="Presentado" ColumnName="Presentado" />
+                <ScalarProperty Name="PathAlmacenamiento" ColumnName="PathAlmacenamiento" />
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
+                <ScalarProperty Name="IdTipoDocPresentado" ColumnName="IdTipoDocPresentado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
