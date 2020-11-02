@@ -336,7 +336,7 @@ namespace SINU.Controllers
                     db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
                     return Json(new { View = "Index" });
                 };
-                return Json(new { success = true, msg = "No se pudo confirmar ya existen Problemas en los datos" });
+                return Json(new { success = true, msg = "Hay Pantallas no validadas"});
             }
             catch (System.Exception ex)
             {
@@ -345,7 +345,7 @@ namespace SINU.Controllers
 
         }
 
-        public ActionResult VolverEtapa(int? ID_persona)
+        public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
             Configuracion configuracion;
@@ -367,7 +367,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                     Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return Json(new { View ="Index" });
@@ -427,23 +427,24 @@ namespace SINU.Controllers
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string[] archivos = Directory.GetFiles(Ubicacionfile, id + "&" + docu + "*");
-                byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
-                string app = "";
-                switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
+                if (archivos.Count()==0)
                 {
-                    case "jpg":
-                        app = "image/jpeg";
-                        break;
-                    case "pdf":
-                        app = "application/pdf";
-                        break;
-                    default:
-                        break;
-                };
-                return File(FileBytes, app);
-
-
-
+                    return View("Error");
+                }
+                byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
+                    string app = "";
+                    switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
+                    {
+                        case "jpg":
+                            app = "image/jpeg";
+                            break;
+                        case "pdf":
+                            app = "application/pdf";
+                            break;
+                        default:
+                            break;
+                    };
+                    return File(FileBytes, app);
             }
             catch (System.Exception ex)
             {
@@ -696,13 +697,13 @@ namespace SINU.Controllers
         {
             var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
-            
-            //DocuNecesaria datos = new DocuNecesaria()
-            //{
-            //    DocumentosNecesarios=DocuNecesarios,
-            //}; 
-            //var listDocu = DocuNecesarios.ToList();
-            return PartialView("Index");
+
+            DocuNecesaria datos = new DocuNecesaria()
+            {
+                DocumentosNecesarios = DocuNecesarios,
+            };
+            var listDocu = DocuNecesarios.ToList();
+            return PartialView(datos);
         }
         [HttpPost]
         public ActionResult DocumentosNecesarios(string[]select,int IdInscripto)
@@ -711,22 +712,65 @@ namespace SINU.Controllers
             return View("Index");
         }
 
-//        //{
-//         try
-//            {
-//                // TODO: Add insert logic here
-//                foreach (var item in select)
-//                {
-//                      int x = Convert.ToInt32(item);
-//                      var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
-//                      da.FechaRindeExamen = fecha;
-//                      db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
 
-//                }
-//    db.SaveChanges();
-//                return RedirectToAction("Index");
-//}
-//        //}
+        /// <summary>
+        /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
+        /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
+        /// </summary>
+        /// <param name="ID_persona"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> RestaurarPostulante(int? ID_persona)
+        {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
+            try
+            {
+                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
+                if (PantallaCerradas.Count != 0)
+                {
+                    var modeloPlantilla = new ViewModels.MailDocumentacion
+                    {
+                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        MailCuerpo = cuerpo,
+                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Errores = data
+                    };
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4");
+
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                    return RedirectToAction("Index");
+
+                }
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+            }
+        }
+
+        //        //{
+        //         try
+        //            {
+        //                // TODO: Add insert logic here
+        //                foreach (var item in select)
+        //                {
+        //                      int x = Convert.ToInt32(item);
+        //                      var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
+        //                      da.FechaRindeExamen = fecha;
+        //                      db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
+
+        //                }
+        //    db.SaveChanges();
+        //                return RedirectToAction("Index");
+        //}
+        //        //}
 
 
 
