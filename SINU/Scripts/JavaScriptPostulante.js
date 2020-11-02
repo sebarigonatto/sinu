@@ -852,7 +852,7 @@ $(document).ready(function () {
     })
 
     //manejo de formy subrayado de si estasn validos o no 
-    $(":input").on('change', function (e) {
+    $(":input").not("[type='checkbox']").on('change', function (e) {
         /*if ($(this).val() != "") {*/
         ValidInput($(this).attr('name'));
 

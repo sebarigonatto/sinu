@@ -293,6 +293,9 @@
     <Compile Include="Models\DocumentosNecesariosDelInscripto_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentosNecesariosDelInscripto_Result1.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Domicilio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

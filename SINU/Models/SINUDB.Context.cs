@@ -1284,16 +1284,6 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vPersona_Familiar_Result>("sp_vPersona_Familiar", idPersonaPostulanteParameter);
         }
     
-        [DbFunction("SINUEntities", "DocumentosNecesariosDelInscripto")]
-        public virtual IQueryable<DocumentosNecesariosDelInscripto_Result> DocumentosNecesariosDelInscripto(Nullable<int> idInscripcion)
-        {
-            var idInscripcionParameter = idInscripcion.HasValue ?
-                new ObjectParameter("IdInscripcion", idInscripcion) :
-                new ObjectParameter("IdInscripcion", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
-        }
-    
         public virtual int spDocumentoInscripto(Nullable<bool> esInsert, Nullable<int> idInscripcion, Nullable<int> idTipoDocPresentado, string pathAlmacenamiento)
         {
             var esInsertParameter = esInsert.HasValue ?
@@ -1313,6 +1303,16 @@ namespace SINU.Models
                 new ObjectParameter("PathAlmacenamiento", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDocumentoInscripto", esInsertParameter, idInscripcionParameter, idTipoDocPresentadoParameter, pathAlmacenamientoParameter);
+        }
+    
+        [DbFunction("SINUEntities", "DocumentosNecesariosDelInscripto")]
+        public virtual IQueryable<DocumentosNecesariosDelInscripto_Result1> DocumentosNecesariosDelInscripto(Nullable<int> idInscripcion)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result1>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
         }
     }
 }
