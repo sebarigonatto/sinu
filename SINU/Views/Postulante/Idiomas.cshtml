@@ -40,7 +40,7 @@
                     </div>
                     <div class="BTAcciones d-inline">
                          &ensp; |&ensp;
-                         @Ajax.ActionLink(" ", "EliminaIDIO", new { ID = item.IdPersonaIdioma }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @id = "EliminaIDIO", @class = "btn btn-danger fas fa-trash-alt" })
+                         @Ajax.ActionLink(" ", "EliminaIDIO", new {IdPersona= item.IdPersona, IDIdio = item.IdPersonaIdioma }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @id = "EliminaIDIO", @class = "btn btn-danger fas fa-trash-alt" })
                     </div>
                 </td>
 

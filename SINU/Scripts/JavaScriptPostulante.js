@@ -274,17 +274,7 @@ $(document).ready(function () {
         };
     });
     //verifico si la pantalla esta cargada
-    cargadoDP = $("#vPersona_DatosPerVM_IdModalidad").val() != "";
-    $("#BeginFormDatosPersonales :input").on("change", function () {
-        if (!$("#BTValidarDP").hasClass("disabled") && cargadoDP) {
-            $("#BTValidarDP").addClass("disabled");
-            $.Anuncio("Deberas Guadar los Datos Nuevamente para Solicitar la Validacion de los mimos");
-        }
-      
-    });
-    if (cargadoDP) {
-        $("#BTValidarDP").removeClass("disabled");
-    }
+   
 
 
     /////////////////////////////////////////////////////////////////////////////////

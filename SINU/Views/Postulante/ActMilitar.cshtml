@@ -40,7 +40,7 @@
                     </div>
                     <div class="BTAcciones d-inline">
                         &ensp; |&ensp;
-                        @Ajax.ActionLink(" ", "EliminaACT", new { ID = item.IdActividadMilitar }, new AjaxOptions
+                        @Ajax.ActionLink(" ", "EliminaACT", new {IdPersona= item.IdPersona, IDActMil = item.IdActividadMilitar }, new AjaxOptions
                           {
                             HttpMethod = "POST",
                             OnSuccess = "Exito(data,status,xhr)",

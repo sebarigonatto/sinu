@@ -209,12 +209,6 @@
                                         </button>
                                     </nav>
                                     <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
-                                        @if ((bool)((object[])Model.ListProblemaCantPantalla[0])[1] && !(bool)ViewBag.ValidacionEnCurso && !(bool)Session["ValidoUnaVez"])
-                                        {
-                                            <div id="DatoPermsg" class="jumbotron " style="background-color: #08495f; color:white; padding-top:10px !important;padding-bottom:10px !important">
-                                                <h4>Deberas completar este fomulario y enviar a Validar para continuar con las demas pantallas</h4>
-                                            </div>
-                                        }
                                         @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 1 })
@@ -394,7 +388,7 @@
                                         {
                                             @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 10 })
                                         }
-                                        @Html.Action("DocumentacionAnexo", "Postulante", new { ID_persona = Model.ID_PER })
+                                        @Html.Action("DocumentacionAnexo", "Postulante", new { IdPersona = Model.ID_PER })
                                     </div>
                                 </div>
 
@@ -584,9 +578,9 @@
 
             };
 
-            if (jsonProblemas[0][1]) {
-                $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) { $(item).closest('li').addClass("Tabdesabilitado"); })
-            } else { BloqueaPantalla("DatosPersonales");};
+            //if (jsonProblemas[0][1]) {
+            //    $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) { $(item).closest('li').addClass("Tabdesabilitado"); })
+            //} else { BloqueaPantalla("DatosPersonales");};
 
 
             //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
@@ -650,7 +644,8 @@
                 case "DocuPenal":
                     //alert(response.anexo + "  " + response.cert);
                     if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
-                    if (response.cert)  { $("#DocuCert").removeAttr("hidden")    };
+                    if (response.cert) { $("#DocuCert").removeAttr("hidden") };
+                    $("[type='file']").val("")
                     break;
                 default:
             };

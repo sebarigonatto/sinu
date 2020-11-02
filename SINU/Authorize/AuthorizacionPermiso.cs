@@ -14,8 +14,6 @@ namespace SINU.Authorize
         SINUEntities db = new SINUEntities();   
  
         public string Funcion { get; set; }
-        public int IdPostu { get; set; }
-        public int IDpostuactual { get; set; }
 
         //private readonly [] funciones;
 
@@ -24,12 +22,6 @@ namespace SINU.Authorize
         {
             this.Funcion = funcion;
             //this.funciones = funcion;
-        }
-
-        public AuthorizacionPermiso(string funcion, int idpostu)
-        {
-            this.Funcion = funcion;
-            this.IdPostu = idpostu;
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
@@ -43,8 +35,13 @@ namespace SINU.Authorize
             if (fun.Contains(Funcion) )
             {
                 var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
-                var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? httpContext.Request.Form[1] : httpContext.Request.QueryString[0];
-                if(IDpersonaDatos != IDpersonaActual.ToString())return false;
+                var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? int.Parse(httpContext.Request.Form[1]) : int.Parse(httpContext.Request.QueryString[0]);
+                if (IDpersonaActual != IDpersonaDatos)
+                {
+                    if ((db.Postulante.Find(IDpersonaDatos) != null)? db.Postulante.Find(IDpersonaDatos).FechaRegistro.Date.Year == System.DateTime.Now.Year : false) return false;
+                    if (db.Persona.FirstOrDefault(m => m.IdPersona == IDpersonaDatos).Familiares.ToList().FirstOrDefault(m=>m.IdPostulantePersona== IDpersonaActual)==null)return false;
+                }
+              
             }
 
             //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
