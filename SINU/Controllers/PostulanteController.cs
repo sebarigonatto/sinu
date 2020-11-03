@@ -70,9 +70,9 @@ namespace SINU.Controllers
                 pers.ProcesoInterrumpido = (Secuencias[0] == 24);
 
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
-                ViewBag.ValidacionEnCurso = (Secuencias[0] == 14);
+                ViewBag.ValidacionEnCurso = (Secuencias[0] == 14) || (Secuencias[0] == 24);
                 //Boolenao de si paso por validacion
-                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13);
+                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && ((Secuencias[0] == 13) || (Secuencias[0] == 24));
 
                 //Cargo listado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
@@ -1268,7 +1268,8 @@ namespace SINU.Controllers
                     //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
                     pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
-                ViewBag.ValidacionEnCurso = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0] == 14;
+                int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
+                ViewBag.ValidacionEnCurso = secu == 14 || secu==24;
                 //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
                 ViewBag.ValidacionEnCurso = (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(n => n.UserName == HttpContext.User.Identity.Name).Id) != null) ? ViewBag.ValidacionEnCurso : true;
             }
