@@ -706,10 +706,25 @@ namespace SINU.Controllers
             return PartialView(datos);
         }
         [HttpPost]
-        public ActionResult DocumentosNecesarios(string[]select,int IdInscripto)
+        public ActionResult DocumentosNecesarios(DocuNecesaria datos,string[] select)
         {
-            //db.spDocumentoInscripto(,)
-            return View("Index");
+            try
+            {
+                // TODO: Add insert logic here
+                //foreach (var item in select)
+                //{
+                //    int x = Convert.ToInt32(item);
+                //    db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto,x,null);
+
+                //}
+                return RedirectToAction("Index");
+            }
+
+
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
         }
 
 
