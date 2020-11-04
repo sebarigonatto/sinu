@@ -171,7 +171,7 @@
                     @using (Html.BeginForm("PresentacionAsignaFecha", "Delegacion"))
                     {
                         @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                        <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
+                        @*<div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
                             <button type="button" id="habilboton" class="btn btn-success btn-lg w-100 float-right" >Asignar Fecha</button>
                         </div>
                         <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     }
                 </div>
                 @*<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -309,19 +309,9 @@
                 startView: "days",
                 startDate: "Today"
             });
-
         });
 
-        function myFunction() {
-              var checkBox = document.getElementById("Micheck");
-              var text = document.getElementById("habilboton");
-            if (checkBox.checked == true) {
-                alert("exito")
-                text.style.display = "block";
-              //} else {
-              //   text.style.display = "none";
-              }
-            }
+
     </script>
 
 

@@ -1,24 +1,32 @@
 ﻿<!--    CUERPO DEL CORREO    -->
 
 <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">
-    @if (Model.Errores == null)
+    @if (Model.Estado == "Validado")
     {
-    <p> @Model.MailCuerpo</p>
+        <h1>Documentacion validada</h1>
 
-}
-else
-{
-    <p> @Model.MailCuerpo</p>
-    <p>Acontinuacion se detalla los problemas que tuve al momento de cargar o presentar la documentacion </p>
-    foreach (var item in Model.Errores)
-    {
-        <p>@item.DataVerificacion: @item.Comentario </p>
+        <p> @Model.MailCuerpo</p>
     }
-}
-    @if (Model.Etapa == "No Validado")
+    @if (Model.Estado == "Volver Etapa")
     {
         <p> @Model.MailCuerpo</p>
-        <p>Su documentacion no fue validada por los siguientes problemas</p>
+        <p>Acontinuacion se detalla los problemas que tuvo al momento de cargar o presentar la documentacion </p>
+        foreach (var item in Model.Errores)
+        {
+            <p>@item.DataVerificacion: @item.Comentario </p>
+        }
     }
-    
+    @if (Model.Estado == "No Validado")
+    {
+        <h1>No validado</h1>
+
+        <p> @Model.MailCuerpo</p>
+    }
+    @if (Model.Estado == "Restaurado")
+    {
+        <h1>Restaurado</h1>
+
+        <p> @Model.MailCuerpo</p>
+    }
+
 
