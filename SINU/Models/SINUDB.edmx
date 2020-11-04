@@ -5111,7 +5111,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="PathAlmacenamiento" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DocumentosNecesariosDelInscripto" IsComposable="true" ReturnType="Collection(SINUModel.DocumentosNecesariosDelInscripto_Result1)">
-            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+          <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">

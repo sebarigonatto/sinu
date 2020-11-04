@@ -45,11 +45,13 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
         }
-        // GET: Delegacion/Details/5
+        /// <summary>
+        /// Reutilizo este datails(Modifico la Vista para poder Restaurar un Postulante que en el caso se haya interrumpido su proceso)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int? id)//Recibe el IdPersona
         {
-            //List<vInscripcionDetalle> vInscripcionDetalle;
-            //List<DataProblemaEncontrado> dataProblemas;
             try
             {
                 RestaurarPostulanteVM datos = new RestaurarPostulanteVM()
@@ -57,19 +59,6 @@ namespace SINU.Controllers
                     vInscripcionDetallesVM = db.vInscripcionDetalle.Where(m => m.IdPersona == id).ToList(),
                     vDataProblemaEncontradoVM = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList()
                 };
-                //UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-                //ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-                //if (id == null)
-                //{
-                //    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
-                //}
-                //vInscripcionDetalle=db.vInscripcionDetalle.Where(m=>m.IdPersona == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-                //dataProblemas = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
-                ////ViewBag.DataProblema == dataProblemas;
-                //if (vInscripcionDetalle.Count == 0)
-                //{
-                //    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
-                //}
                 return View(datos);
             }
             catch (System.Exception ex)
@@ -327,7 +316,7 @@ namespace SINU.Controllers
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
-                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        Estado = "Validado",
                         MailCuerpo = cuerpo,
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
@@ -362,7 +351,7 @@ namespace SINU.Controllers
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
-                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        Estado = "Volver Etapa",
                         MailCuerpo = cuerpo,
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
@@ -399,15 +388,13 @@ namespace SINU.Controllers
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
-                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        Estado = "No Validado",
                         MailCuerpo = cuerpo,
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
                     bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
-                    //db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "", "");
-                    //return RedirectToAction("Index");
                     return Json(new { View = "Index" });
 
                 }
@@ -417,7 +404,6 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
-            //return Json(new { View = "Index" });
         }
         //fin del codigo
         public ActionResult DocPenal(int id, string docu)
@@ -630,17 +616,30 @@ namespace SINU.Controllers
         public JsonResult ProblemaPantalla(ProblemaPantallaVM datos)
         {
             var ProblemaExiste = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == datos.DataProblemaEncontradoVM.IdDataVerificacion && m.IdPostulantePersona == datos.DataProblemaEncontradoVM.IdPostulantePersona);
+            var Comentario = datos.DataProblemaEncontradoVM.Comentario;///guarda en la variable comentario si trae un comentario o no
+            var IdDataVerificacion = datos.DataProblemaEncontradoVM.IdDataVerificacion;
+            var Idpantalla = db.DataVerificacion.Find(IdDataVerificacion).IdPantalla;
+            var abierto = db.spTildarPantallaParaPostulate(datos.DataProblemaEncontradoVM.IdPostulantePersona).FirstOrDefault(m => m.IdPantalla == Idpantalla);
             try
             {
-                if (ProblemaExiste == null)
+                if (abierto.Abierta==false)
                 {
-                    var data = datos.DataProblemaEncontradoVM;
-                    db.DataProblemaEncontrado.Add(data);
-                    db.SaveChanges();
-                    int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
-                    return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = idPantalla }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "La pantalla se encuentra validada y no se puede agrgar problemas" });
                 }
-                return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
+
+                if (Comentario != null)///se utiliza la variable para verificar si agregaron un comentario(Si agregaron un comentarios lo deja avanzar/ en caso contrario le pedira al usuario agregar un comentario)
+                {
+                    if (ProblemaExiste == null)///en este IF se utiliza la variable ProblemaExiste para probar si ya existe un problema con el mismo id en la misma pantalla(si es el valor es verdadero lo deja agregar/caso contrario avisa al usuario que hay un problema ya existente en la panatlla)
+                    {
+                        var data = datos.DataProblemaEncontradoVM;
+                            db.DataProblemaEncontrado.Add(data);
+                            db.SaveChanges();
+                            //int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
+                            return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
+                    }
+                    return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
+                }
+                return Json(new { success = true, msg = "Es Importante Agregar comentario" });
             }
             catch (Exception x)
             {
@@ -669,19 +668,32 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla,int AoC)
         {
-
+            var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
+            var Abierto = db.spTildarPantallaParaPostulate(id).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
             try
             {
                 if (ModelState.IsValid)
                 {
-
-                    var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
-                    if (TieneProblema.ToList().First() == true)
+                    if (Abierto.Abierta==true)
                     {
-                        return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
+                        if (TieneProblema.ToList().First() == true)
+                        {
+                            return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
+                        }
+                        if (AoC==1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
+                        {
+                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                            return Json(new { success = true, msg = "Se valido Correctamente los datos" });
+                        }
+                        if (AoC==0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
+                        {
+                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                            return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
+                        }
+
                     }
-                    db.spCierraPantallaDePostulante(IdPanatlla, id,Convert.ToBoolean(AoC));
-                    return Json(new { success = true, msg = "Se valido Correctamente los datos" });
+                    return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
+
                 }
 
             }
@@ -706,17 +718,17 @@ namespace SINU.Controllers
             return PartialView(datos);
         }
         [HttpPost]
-        public ActionResult DocumentosNecesarios(DocuNecesaria datos,string[] select)
+        public ActionResult DocumentosNecesarios(string[]select,int IdInscripto)
         {
             try
             {
                 // TODO: Add insert logic here
-                //foreach (var item in select)
-                //{
-                //    int x = Convert.ToInt32(item);
-                //    db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto,x,null);
+                foreach (var item in select)
+                {
+                    int x = Convert.ToInt32(item);
+                    db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto,x,null);
 
-                //}
+                }
                 return RedirectToAction("Index");
             }
 
@@ -726,7 +738,20 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
+        public ActionResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
+        {
+            try
+            {
+                db.spDocumentoInscripto(esInser, Idinscripto, idtipodoc, null);
+                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu",url_Tabla= "DocumentosNecesarios",url_Controller="Delegacion" });
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+            //return View("Index");
+        }
 
         /// <summary>
         /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
@@ -751,7 +776,7 @@ namespace SINU.Controllers
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
-                        Etapa = vInscripcionEtapaEstado.Etapa,
+                        Estado = "Restaurado",
                         MailCuerpo = cuerpo,
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data

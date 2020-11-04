@@ -56,7 +56,7 @@ namespace SINU.ViewModels
     {
         public string MailCuerpo { get; set; }
         public  List<vDataProblemaEncontrado> Errores { get; set; }
-        public string Etapa { get; set; }
+        public string Estado { get; set; }
     }
 
     public class DatosResponsable

@@ -34,7 +34,14 @@
                             }
                             else
                             {
-                                <b class="fa fa-check-circle" style="color:green"></b>
+                                <b class="fa fa-check-circle" style="color:green"> |</b>
+                                @*@Html.ActionLink(" ", "Documentacion", new { id = item.IdInscripcion }, new { @class = "fas fa-trash-alt", @style = "color:#dc3545", @title = "Documentacion No Presentada" })*@
+                            @Ajax.ActionLink(" ", "DelDocuNecesaria", new { Idinscripto = item.IdInscripcion , idtipodoc=item.IdTipoDocPresentado, esInser=false }, new AjaxOptions
+                       {
+                           HttpMethod = "POST",
+                           OnSuccess = "Exito(data,status,xhr)",
+                           OnFailure = "Falla",
+                       }, new { @id = "EliminaEST", @class = "fas fa-trash-alt" })
                             }
 
                         }
