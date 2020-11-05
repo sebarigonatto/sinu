@@ -151,6 +151,8 @@
         <EntityTypeShape EntityType="SINUModel.vDelegacion_EstablecExamen" Width="1.5" PointX="25.375" PointY="10.75" />
         <AssociationConnector Association="SINUModel.FK_Institucion_Modalidad" />
         <EntityTypeShape EntityType="SINUModel.vInstitucionModalidad" Width="1.5" PointX="29.75" PointY="3.75" />
+        <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" Width="1.5" PointX="29.75" PointY="12.75" />
+        <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" Width="1.5" PointX="29.75" PointY="16.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

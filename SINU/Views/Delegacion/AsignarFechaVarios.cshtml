@@ -1,0 +1,68 @@
+﻿@model SINU.ViewModels.ListadoPostulanteAsignarFecha
+@*@{
+    ViewBag.Title = "AsignarFechaVarios";
+    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+}*@
+
+<h2 class="text-center">Asignar fecha ha varios Postulante</h2>
+<table class="table table-filters table-bordered table-light text-center" id="le-filters" style="width:100%">
+    <thead>
+        <tr>
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+            </th>
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+            </th>
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Etapa)
+            </th>
+            <th class="secondary">
+                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Estado)
+            </th>
+            <th class="ni-o-ni-bu">
+               Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.AsignarFechaVM)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelitem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Etapa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.Estado)
+            </td>
+            <td>
+                <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
+            </td>
+        </tr>
+        }
+        
+    </tbody>
+
+</table>
+<form>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
+            <input name="fecha" type="datetime" class="datepicker" />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">lugar de Presentacion:</label> @Html.DropDownListFor(m => m.LugarPresentacion,Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @class = "form-control" })
+
+        </div>
+    </div>
+</div>
+</form>

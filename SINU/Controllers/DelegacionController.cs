@@ -797,10 +797,26 @@ namespace SINU.Controllers
             }
         }
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
-        //public ActionResult AsignarFechaVarios()
-        //{
-        //    return;
-        //}
+        public ActionResult AsignarFechaVarios()
+        {
+            try
+            {
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
+                {
+                    AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),"Id","")
+                    };
+                return View("AsignarFechaVarios",listadoPostulanteAsignarFecha);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+            
+        }
         #endregion
     }
 }
