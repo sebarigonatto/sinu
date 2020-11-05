@@ -366,8 +366,15 @@ namespace SINU.Controllers
             {
                 try
                 {
-
                     var p = Datos.vPersona_DatosPerVM;
+                    var iDMOd = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == p.IdPersona).IdModalidad;
+                    //verifico si cambio la modalidad par quitar la restricciones que tienen ya que se debe verificar nuevamente
+                    if (iDMOd !=p.IdModalidad)
+                    {
+                        db.DataProblemaEncontrado.RemoveRange(db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
+                        db.VerificacionPantallasCerradas.RemoveRange(db.VerificacionPantallasCerradas.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
+                        db.SaveChanges();
+                    }
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
                     //busco el nuevo id preferencia para la modalidad seleccionada
@@ -481,7 +488,7 @@ namespace SINU.Controllers
                 string UbicacionPDF = $"{ubicacion}Documentacion\\ANEXO 2 A LA SOLICITUD DE INGRESO.pdf";
                 byte[] FileBytes = System.IO.File.ReadAllBytes(UbicacionPDF);
                 //el tercer para obligar la descarga del archivo
-                return File(FileBytes, "application/pdf", "Anexo 2");
+                return File(FileBytes, "application/pdf", "Formulario-AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES.pdf");
             }
             else
             {
@@ -1420,7 +1427,7 @@ namespace SINU.Controllers
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
                 var problemasPostu = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona);
-                if (antropo != null)
+                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m=>m.IdPantalla==8).Abierta )
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
@@ -1448,7 +1455,7 @@ namespace SINU.Controllers
                 };
                 var IDPREFE = db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == persona.IdInscripcion).IdPreferencia;
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).ToList()[0];
-                if (persona.IdModalidad != null)
+                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado
@@ -1532,14 +1539,17 @@ namespace SINU.Controllers
 
             };
             ViewBag.Asignado = true;
-            var FechaPrese = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).FechaRindeExamen;
-            if (FechaPrese == null)
+            var Inscrip = per.Postulante.Inscripcion.ToList()[0];
+            if ((DateTime)Inscrip.FechaRindeExamen == null)
             {
                 ViewBag.Asignado = false;
             }
             else
             {
-                prese.FechaPresentacion = (DateTime)FechaPrese;
+                var lugarExamen = db.EstablecimientoRindeExamen.Find(Inscrip.IdEstablecimientoRindeExamen);
+                prese.DomicilioExamenNombre = lugarExamen.Nombre;
+                prese.DomicilioExamen = lugarExamen.Jurisdiccion + ", " + lugarExamen.Localidad + ", " + lugarExamen.Direccion;
+                prese.FechaPresentacion = (DateTime)Inscrip.FechaRindeExamen;
                 string url = "http://" + HttpContext.Request.Url.Host + Url.Action("Index", "Postulante", new { ID_Postulante = ID_persona });
                 ViewBag.QRCodeImage = generarQR(url);
                 ViewBag.QRCodeImageLink = url;

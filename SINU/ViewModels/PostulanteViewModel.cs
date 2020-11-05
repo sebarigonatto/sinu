@@ -130,6 +130,9 @@ namespace SINU.ViewModels
         public string Apellido { get; set; }
         public int ID_Inscripcion { get; set; }
         public DateTime FechaPresentacion { get; set; }
+        public string DomicilioExamenNombre { get; set; }
+        public string DomicilioExamen { get; set; }
+
     }
 
     public class DocuPenalVM

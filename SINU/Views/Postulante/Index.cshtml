@@ -611,6 +611,23 @@
                }
         });
 
+        function Imprimir() {
+            var mywindow = window.open('', 'PRINT', 'height=800px,width=800px');
+            mywindow.document.write('<html><head><title>' + 'Presentacion' + '</title>');
+            mywindow.document.write('</head><body style="color:black !important">');
+            mywindow.document.write('<h1>' + document.title + '</h1>');
+            $("#Presentacion .jumbotron").css("color", "black");
+            btn = $("#btpresentacion").html(); $("#btpresentacion").html("");
+            mywindow.document.write($('#Presentacion').html());
+            $("#Presentacion .jumbotron").css("color", "white");
+            $("#btpresentacion").html(btn);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close(); 
+            mywindow.focus(); 
+            mywindow.print();
+            mywindow.close();
+        };
+
         //en caso de ser exitosa la llamada al controlador delos distintos POST
         function Exito(response, status, xhr) {
 
