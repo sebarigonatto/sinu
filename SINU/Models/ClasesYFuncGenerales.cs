@@ -117,6 +117,7 @@ namespace SINU.Models
         /// <param name="ID_AspNetUser">ID_AspNetUser de la persona a enviar el mail, segun la tabla AspNetUsers, acepta null</param>
         /// <param name="ID_Persona">O el IdPersona, acepta null</param>
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
+        /// <param name="ID_Delegacion">Id de la Delegacion que se enviara el mail.</param>
         /// <returns></returns>
         public static async Task<bool> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion)
         {
