@@ -193,7 +193,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE" })
+                            @Html.TextBoxFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE", @readonly = true })
                             <div class="h-100"></div>
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.EventualCodigo_Postal, "", new { @class = "text-danger" })
                         </div>
