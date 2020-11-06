@@ -12,14 +12,14 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vDelegacion_EstablecExamen
+    public partial class vSecuencia_EtapaEstadoRECHAZADOS
     {
-        public string Direccion { get; set; }
-        public string Jurisdiccion { get; set; }
-        public string Localidad { get; set; }
-        public string Nombre { get; set; }
-        public int IdOficinasYDelegaciones { get; set; }
-        public int idDelegacion_EstablecExamen { get; set; }
-        public int IdEstablecimientoRindeExamen { get; set; }
+        public int IdSecuencia { get; set; }
+        public int IdEtapa { get; set; }
+        public string Etapa { get; set; }
+        public int IdEstado { get; set; }
+        public string Estado { get; set; }
+        public int Anterior { get; set; }
+        public int Siguiente { get; set; }
     }
 }

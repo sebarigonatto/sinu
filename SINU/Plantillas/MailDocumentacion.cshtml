@@ -3,8 +3,6 @@
 <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">
     @if (Model.Estado == "Validado")
     {
-        <h1>Documentacion validada</h1>
-
         <p> @Model.MailCuerpo</p>
     }
     @if (Model.Estado == "Volver Etapa")
@@ -18,15 +16,13 @@
     }
     @if (Model.Estado == "No Validado")
     {
-        <h1>No validado</h1>
-
         <p> @Model.MailCuerpo</p>
     }
-    @if (Model.Estado == "Restaurado")
+    @*@if (Model.Estado == "Restaurado")
     {
         <h1>Restaurado</h1>
 
         <p> @Model.MailCuerpo</p>
-    }
+    }*@
 
 

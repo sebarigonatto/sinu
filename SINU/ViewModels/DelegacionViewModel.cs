@@ -38,4 +38,9 @@ namespace SINU.ViewModels
     {
         public List<DocumentosNecesariosDelInscripto_Result1> DocumentosNecesarios { get; set; }
     }
+    public class ListadoPostulanteAsignarFecha
+    {
+        public List<vInscripcionEtapaEstadoUltimoEstado> AsignarFechaVM { get; set; }
+        public SelectList LugarPresentacion { get; set; }
+    }
 }

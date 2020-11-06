@@ -1,4 +1,4 @@
-﻿    
+﻿
 //configuraciones por default de las DataTables
 $.extend(true, $.fn.dataTable.defaults, {
     responsive:
@@ -79,7 +79,7 @@ $(document).ready(function () {
     //se aplicael selecpicker a alos conbos
     //https://developer.snapappointments.com/bootstrap-select/
     $(".selectpicker").selectpicker({
-        size: 6,
+        size: 5,
         noneSelectedText: 'Seleccione una Opcion',
         //styleBase:'btn',
         //style: 'btn-white'
@@ -88,7 +88,7 @@ $(document).ready(function () {
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     $(".combobox").selectpicker({
         liveSearch: true,
-        size: 6,
+        size: 5,
         liveSearchPlaceholder: "Ingrese su busqueda",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
@@ -274,7 +274,7 @@ $(document).ready(function () {
         };
     });
     //verifico si la pantalla esta cargada
-   
+
 
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -284,21 +284,24 @@ $(document).ready(function () {
     $("#BeginFormDomicilio select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
         comboid = $(this).attr("id");
         //alert(comboid);
-        switch (comboid) {
-            case "ListaPaisR":
-            case "ListaPaisE":
-                PAIS(comboid, 1)
-                break;
-            case "ComboProvinciaR":
-            case "ComboProvinciaE":
-                PROVINCIA(comboid);
-                break;
-            case "ComboLocalidadR":
-            case "ComboLocalidadE":
-                LOCALIDAD(comboid);
-                break;
-            default:
-        }
+        if ($(this).val() != "") {
+            switch (comboid) {
+                case "ListaPaisR":
+                case "ListaPaisE":
+                    PAIS(comboid, 1)
+                    break;
+                case "ComboProvinciaR":
+                case "ComboProvinciaE":
+                    PROVINCIA(comboid);
+                    break;
+                case "ComboLocalidadR":
+                case "ComboLocalidadE":
+                    LOCALIDAD(comboid);
+                    break;
+                default:
+            };
+        };
+
     });
 
     //al crgar la pagina se verifica si el pais del domiciolio REAL es "AR"
@@ -312,20 +315,22 @@ $(document).ready(function () {
 
         //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
         var Comboelemt = (Combo == "ListaPaisR") ?
-            [".Real", ".RealAR", "#CPR"]
-            : [".Eventual", ".EventualAR", "#CPE"];
+            [".Real", ".RealAR", "#CPR","#ComboLocalidadR"]
+            : [".Eventual", ".EventualAR", "#CPE","#ComboLocalidadE"];
 
         //alert($("#" + Combo).val());
         if ($("#" + Combo).val() != "AR") {
             $(Comboelemt[0]).show();
             $(Comboelemt[1]).hide();
-            //se inhabilita la edicion del campo para el codigo postal
-            $(Comboelemt[2]).attr("readonly", false);
+            $(Comboelemt[2]).removeAttr("readonly");
+
         } else {
             $(Comboelemt[0]).hide();
             $(Comboelemt[1]).show();
-            //se habilita la edicion del campo para el codigo postal
-            $(Comboelemt[2]).attr("readonly", true);
+            if ($(Comboelemt[3]).val()== '20819') {
+                $(Comboelemt[2]).removeAttr("readonly");
+            }
+          
         };
 
         //limpio los campos de "provincia,localidad,codigopostal" si seselecciona otro pais
@@ -342,9 +347,15 @@ $(document).ready(function () {
         var ValP = $("#" + Combo).val();
         if (ValP != "") {
             //alert(Combo + " " + ValP);
-            var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
+            var ComboLocalidad = (Combo == "ComboProvinciaR") ? ["#ComboLocalidadR", "#CPR"] : ["#ComboLocalidadE","#CPE"];
             //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
-            $(ComboLocalidad).empty();
+            $(ComboLocalidad[0]).empty();
+            $(ComboLocalidad[0]+", "+ ComboLocalidad[1]).val("");
+            if (ValP=="CAPITAL FEDERAL") {
+                $(ComboLocalidad[1]).removeAttr("readonly");
+            } else {
+                $(ComboLocalidad[1]).attr("readonly",true);
+            }
 
             //llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
             $.getJSON('/Postulante/DropEnCascadaDomicilio', {
@@ -352,15 +363,14 @@ $(document).ready(function () {
             },
                 function (data) {
                     //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
-                    $(ComboLocalidad).append('<option value="">' + 'Seleccione una Localidad...' + '</option>');
+                    $(ComboLocalidad[0]).append('<option value="">' + 'Seleccione una Localidad...' + '</option>');
                     $.each(data, function () {
-                        $(ComboLocalidad).append('<option value=' + this.Value + '>' + this.Text + '</option>');
+                        $(ComboLocalidad[0]).append('<option value=' + this.Value + '>' + this.Text + '</option>');
                     });
                     //para actualizar el combobox
-                    $(ComboLocalidad).selectpicker('refresh');
+                    $(ComboLocalidad[0]).selectpicker('refresh');
                 });
         }
-
     };
 
     //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
@@ -368,16 +378,22 @@ $(document).ready(function () {
         var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
         //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
         var valCP = $("#" + comboid).val();
-        if (valCP != "") {
+
+        if (valCP!= 20819) {
+
+        
+        
             $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                 Localidad: valCP,
             },
                 function (data) {
+                    if (data != "") {
+                        $(ComboCP).val(data.Text).attr("readonly", true);
+                    }
                     //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
-                    $(ComboCP).val(data.Text);
-                    ValidInput($(ComboCP).attr("name"));
+
+                    //ValidInput($(ComboCP).attr("name"));
                 });
-            ////para actualizar el combobox
         }
     };
 
@@ -732,11 +748,11 @@ $(document).ready(function () {
     /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
 
     //verifico el sexo del postulante para olcultar o mostrar determinados input
-  
-    (function() {
+
+    (function () {
         if ($("#Sexo").val() != "Femenino") {
             $("#mujer").hide()
-                       .find("input").val("");
+                .find("input").val("");
         } else {
             $("#mujer").show();
         }
@@ -749,7 +765,7 @@ $(document).ready(function () {
             var valor = $(this).val();
             $.get("/Postulante/VerificaAltIcm", { IdPostulante: id_persona, AltIcm: "altura", num: valor }, function (response) {
                 if (response.APLICA == "NO") {
-                    anuncio ="Altura:<br>"+ response.POPUP;
+                    anuncio = "Altura:<br>" + response.POPUP;
                 };
                 CALIMC($("#altura").val(), $("#peso").val(), anuncio);
 
@@ -770,7 +786,7 @@ $(document).ready(function () {
                     if (anuncio != "") {
                         anuncio = anuncio + "<br>" + "IMC: <br>" + response.POPUP;
                     } else {
-                        anuncio = "IMC: <br>"+ response.POPUP;
+                        anuncio = "IMC: <br>" + response.POPUP;
                     };
                 };
                 if (anuncio != "") {
@@ -831,7 +847,7 @@ $(document).ready(function () {
     });
 
 
-    
+
 
 
 
@@ -890,7 +906,7 @@ $(document).ready(function () {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // DOCUMENTACION PENAL
     //limito el tipo de archivos que puedo cargar, solo "JPG" y "PDF"
-    $("input[type='file']").change( function () {
+    $("input[type='file']").change(function () {
         var extencion = $(this).val().split('.').pop()
         //alert(extencion);
         if (extencion != "jpg" && extencion != "pdf") {
@@ -899,7 +915,7 @@ $(document).ready(function () {
         } else {
             //en el caso de cambio el documento se oculta el boton para ver el archivo
             switch ($(this).attr("id")) {
-               
+
                 case "ConstanciaAntcPenales":
                     $("#DocuCert").attr("hidden", "hidden");
                     break;
@@ -908,11 +924,11 @@ $(document).ready(function () {
                     break;
                 default:
             }
-            
+
         }
     });
-   
-     //se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
+
+    //se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
     $("#BeginDocuPenal").submit(function () {
         if ($("#FormularioAanexo2").val() == "" && $("#ConstanciaAntcPenales").val() == "") {
             $.Anuncio("No selecciono o cambio ningun archivo!!!")
@@ -933,7 +949,7 @@ $(document).ready(function () {
     };
 
 
-  
-   
+
+
 });
 

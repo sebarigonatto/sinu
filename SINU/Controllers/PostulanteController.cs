@@ -548,6 +548,10 @@ namespace SINU.Controllers
                     datosdomilio.vPersona_DomicilioVM.TBoxProvincia = domiextR[0];
                     datosdomilio.vPersona_DomicilioVM.Localidad = domiextR[1];
                     datosdomilio.vPersona_DomicilioVM.CODIGO_POSTAL = domiextR[2];
+                }
+                else if (datosdomilio.vPersona_DomicilioVM.IdLocalidad== 20819)
+                {
+                    datosdomilio.vPersona_DomicilioVM.CODIGO_POSTAL = datosdomilio.vPersona_DomicilioVM.Prov_Loc_CP;
                 };
 
                 if (datosdomilio.vPersona_DomicilioVM.EventualIdPais != "AR")
@@ -556,7 +560,11 @@ namespace SINU.Controllers
                     datosdomilio.vPersona_DomicilioVM.TBoxEventualProvincia = domiextE[0];
                     datosdomilio.vPersona_DomicilioVM.EventualLocalidad = domiextE[1];
                     datosdomilio.vPersona_DomicilioVM.EventualCodigo_Postal = domiextE[2];
-                };
+                }
+                else if (datosdomilio.vPersona_DomicilioVM.EventualIdLocalidad == 20819)
+                {
+                    datosdomilio.vPersona_DomicilioVM.EventualCodigo_Postal = datosdomilio.vPersona_DomicilioVM.EventualProv_Loc;
+                }; 
 
                 datosdomilio.vProvincia_Depto_LocalidadREALVM = (datosdomilio.vPersona_DomicilioVM.IdLocalidad != null) ?
                     db.vProvincia_Depto_Localidad.Where(m => m.Provincia == datosdomilio.vPersona_DomicilioVM.Provincia).ToList()
@@ -593,7 +601,15 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        p.Prov_Loc_CP = null;
+                        if (p.IdLocalidad==20819)
+                        {
+                            p.Prov_Loc_CP = p.CODIGO_POSTAL;
+                        }
+                        else
+                        {
+                            p.Prov_Loc_CP = null;
+                        };
+                      
                     };
 
                     if (p.EventualIdPais != "AR")
@@ -603,7 +619,14 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        p.EventualProv_Loc = null;
+                        if (p.EventualIdLocalidad == 20819)
+                        {
+                            p.EventualProv_Loc = p.EventualCodigo_Postal;
+                        }
+                        else
+                        {
+                            p.EventualProv_Loc = null;
+                        };
                     };
 
                     db.spDomiciliosU(
@@ -1276,7 +1299,8 @@ namespace SINU.Controllers
                     pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
                 int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
-                ViewBag.ValidacionEnCurso = secu == 14 || secu==24;
+                int[] secublock= {14,24,16,20 };
+                ViewBag.ValidacionEnCurso = secublock.Contains(secu);
                 //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
                 ViewBag.ValidacionEnCurso = (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(n => n.UserName == HttpContext.User.Identity.Name).Id) != null) ? ViewBag.ValidacionEnCurso : true;
             }

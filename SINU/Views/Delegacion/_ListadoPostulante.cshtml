@@ -102,8 +102,8 @@
                             {
                                 case "A Asignar":
                                     @:|&ensp;
-                                    <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
-                                    @*@Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })*@
+                                    @*<input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />*@
+                                    @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })
                                     @*@Html.CheckBox("Select",false ,new {id=item.IdPersona })*@
                                     break;
                             }
@@ -118,9 +118,9 @@
 
 </table>
 <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
-    <button type="button" id="habilboton" class="btn btn-success btn-lg w-100 float-right">Asignar Fecha</button>
+@Html.ActionLink("Asignar fecha a varios","AsignarFechaVarios","Delegacion",new {@class = "btn btn-primary" })
 </div>
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+@*<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exa  mpleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,8 +157,8 @@
             </div>
         </div>
     </div>
-</div>
-@section Scripts {
+</div>*@
+@*@section Scripts {
 
     <script>
         function myFunction() {
@@ -167,4 +167,4 @@
         }
 
     </script>
-}
+}*@

@@ -122,6 +122,8 @@ namespace SINU.Models
         public virtual DbSet<Delegacion_EstablecExamen> Delegacion_EstablecExamen { get; set; }
         public virtual DbSet<vDelegacion_EstablecExamen> vDelegacion_EstablecExamen { get; set; }
         public virtual DbSet<vInstitucionModalidad> vInstitucionModalidad { get; set; }
+        public virtual DbSet<vSecuencia_EtapaEstadoNoRechazados> vSecuencia_EtapaEstadoNoRechazados { get; set; }
+        public virtual DbSet<vSecuencia_EtapaEstadoRECHAZADOS> vSecuencia_EtapaEstadoRECHAZADOS { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1313,6 +1315,12 @@ namespace SINU.Models
                 new ObjectParameter("IdInscripcion", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DocumentosNecesariosDelInscripto_Result1>("[SINUEntities].[DocumentosNecesariosDelInscripto](@IdInscripcion)", idInscripcionParameter);
+        }
+    
+        [DbFunction("SINUEntities", "SecuenciasEtapaEstadosEnOrden")]
+        public virtual IQueryable<SecuenciasEtapaEstadosEnOrden_Result> SecuenciasEtapaEstadosEnOrden()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SecuenciasEtapaEstadosEnOrden_Result>("[SINUEntities].[SecuenciasEtapaEstadosEnOrden]()");
         }
     }
 }
