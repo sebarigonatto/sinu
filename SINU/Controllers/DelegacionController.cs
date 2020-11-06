@@ -685,15 +685,17 @@ namespace SINU.Controllers
                             db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                         }
-                        if (AoC==0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
-                        {
-                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
-                            return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
-                        }
-
                     }
+                    else
+                    {
+                        if (AoC==0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
+                            {
+                                db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                                return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
+                            }
+                    }
+                       
                     return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
-
                 }
 
             }
@@ -794,25 +796,11 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
         }
-
-        //        //{
-        //         try
-        //            {
-        //                // TODO: Add insert logic here
-        //                foreach (var item in select)
-        //                {
-        //                      int x = Convert.ToInt32(item);
-        //                      var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
-        //                      da.FechaRindeExamen = fecha;
-        //                      db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
-
-        //                }
-        //    db.SaveChanges();
-        //                return RedirectToAction("Index");
+        #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
+        //public ActionResult AsignarFechaVarios()
+        //{
+        //    return;
         //}
-        //        //}
-
-
-
+        #endregion
     }
 }
