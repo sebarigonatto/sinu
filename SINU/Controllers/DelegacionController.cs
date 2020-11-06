@@ -298,6 +298,8 @@ namespace SINU.Controllers
 
             return View(personaVM);
         }
+     #region Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avnzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
+
         [HttpPost]
         public ActionResult Documentacion(int? id)
         {
@@ -334,7 +336,11 @@ namespace SINU.Controllers
 
         }
 
-        public async Task<ActionResult> VolverEtapa(int? ID_persona)
+        #endregion
+
+     #region Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
+
+      public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
             Configuracion configuracion;
@@ -356,7 +362,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null);
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return Json(new { View ="Index" });
@@ -369,6 +375,10 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
         }
+
+        #endregion
+
+     #region Esta accion le permite al usuario(delegacion) interrumpir el proceso de inscripcion del postulante tambien se le envia un mail de notificacion al postulante
 
         [HttpPost]
         public async Task<ActionResult> InterrumpirProceso(int? ID_persona)
@@ -393,7 +403,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
                     return Json(new { View = "Index" });
 
@@ -405,6 +415,52 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
             }
         }
+
+        #endregion
+
+     #region La accion permite restaurar un postulante al proceso de inscripcion
+        /// <summary>
+        /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
+        /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
+        /// </summary>
+        /// <param name="ID_persona"></param>
+        /// <returns></returns>
+        public async Task<ActionResult> RestaurarPostulante(int? ID_persona)
+        {
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
+            Configuracion configuracion;
+            List<vDataProblemaEncontrado> data;
+            string cuerpo = "";
+            try
+            {
+                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
+                cuerpo = configuracion.ValorDato.ToString();
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
+                if (PantallaCerradas.Count != 0)
+                {
+                    //var modeloPlantilla = new ViewModels.MailDocumentacion
+                    //{
+                    //    Estado = "Restaurado",
+                    //    MailCuerpo = cuerpo,
+                    //    Apellido = vInscripcionEtapaEstado.Apellido,
+                    //    Errores = data
+                    //};
+                    ////bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
+
+                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
+                    return RedirectToAction("Index");
+
+                }
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
+            }
+        }
+        #endregion
         //fin del codigo
         public ActionResult DocPenal(int id, string docu)
         {
@@ -754,48 +810,6 @@ namespace SINU.Controllers
             }
             //return View("Index");
         }
-
-        /// <summary>
-        /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
-        /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
-        /// </summary>
-        /// <param name="ID_persona"></param>
-        /// <returns></returns>
-        public async Task<ActionResult> RestaurarPostulante(int? ID_persona)
-        {
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
-            Configuracion configuracion;
-            List<vDataProblemaEncontrado> data;
-            string cuerpo = "";
-            try
-            {
-                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
-                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
-                cuerpo = configuracion.ValorDato.ToString();
-                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
-                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
-                if (PantallaCerradas.Count != 0)
-                {
-                    var modeloPlantilla = new ViewModels.MailDocumentacion
-                    {
-                        Estado = "Restaurado",
-                        MailCuerpo = cuerpo,
-                        Apellido = vInscripcionEtapaEstado.Apellido,
-                        Errores = data
-                    };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
-
-                    db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
-                    return RedirectToAction("Index");
-
-                }
-                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" }, JsonRequestBehavior.AllowGet);
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Delete"));
-            }
-        }
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
         public ActionResult AsignarFechaVarios()
         {
@@ -805,7 +819,7 @@ namespace SINU.Controllers
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),"Id","")
+                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion")
                     };
                 return View("AsignarFechaVarios",listadoPostulanteAsignarFecha);
             }

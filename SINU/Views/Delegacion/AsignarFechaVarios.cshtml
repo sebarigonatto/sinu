@@ -60,7 +60,9 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            <label for="recipient-name" class="col-form-label">lugar de Presentacion:</label> @Html.DropDownListFor(m => m.LugarPresentacion,Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @class = "form-control" })
+            <label for="recipient-name" class="col-form-label">
+                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+            </label>
 
         </div>
     </div>
