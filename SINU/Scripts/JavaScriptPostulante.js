@@ -391,7 +391,6 @@ $(document).ready(function () {
     };
 
     //////////////////////////////////////////////////////////////////////////////
-    /* FUNCION DE LA VISTA DE ESTUDIOS */
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
     TablasEIA()
@@ -494,6 +493,7 @@ $(document).ready(function () {
                     if (comboid != "ComboIdInstEST") {
                         //alert(comboid);
                         valcombo = $('#' + comboid + ' option:selected').html();
+                        //alert(valcombo);
                         ComboCascada(comboid, valcombo);
                     };
                 });
@@ -523,7 +523,14 @@ $(document).ready(function () {
                 $("#UltimoAño").on("changed.bs.select", function () {
                     UltimoAñoSINO();
                 });
+                $("#ComboIdInstEST").on("changed.bs.select", function () {
+                    valcombo = $('#ComboIdInstEST option:selected').val();
+                    //alert(valcombo);
+                    if (valcombo == "0") {
 
+                        $("#nanualnombre").removeAttr("hidden")
+                    }
+                })
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
@@ -650,7 +657,7 @@ $(document).ready(function () {
         }
     }
 
-
+ 
 
 
     //funcion que arma los combos en cascada de la vista parcial Estudios
@@ -665,24 +672,34 @@ $(document).ready(function () {
             valprov = $("#ComboJuriEST").val();
             ValC = valprov + "-" + ValC;
             OPC = 1;
-            $("#ComboIdInstEST").html("")
+            $("#ComboIdInstEST").html("");
+            $("#proloc").val("").val($("#ComboJuriEST").val() + "-" + $("#ComboLocaliEST option:selected").html());
         }
         $.getJSON('/Postulante/DropCascadaEST', {
             opc: OPC, val: ValC
         },
             function (data) {
                 //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la juridiccion seleccionada
-                var combocas = (OPC == 0) ? "#ComboLocaliEST" : "#ComboIdInstEST";
+                if (OPC == 0) {
+                    combocas = "#ComboLocaliEST";
+
+                } else {
+                    combocas = "#ComboIdInstEST";
+                    $(combocas).append("<option value='0' >Otro</option>");
+                };                
+              
                 //alert(combocas);
                 $.each(data, function () {
                     $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
                 });
-                $(combocas).val("");
+                $(combocas).val("").removeAttr("disabled");
+
                 //refresco los combobox con los datos nuevos
                 $(combocas).selectpicker('refresh');
 
             });
     };
+
 
     //////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE AACTIVIDAD MILITAR */

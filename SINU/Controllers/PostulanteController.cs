@@ -719,28 +719,59 @@ namespace SINU.Controllers
                     Provincia = db.Institutos
                         .DistinctBy(m => m.Jurisdiccion)
                         .OrderBy(m => m.Jurisdiccion)
-                        .Select(m => m.Jurisdiccion)
+                        .Select(m=>new SelectListItem {Text=m.Jurisdiccion,Value=m.Jurisdiccion }  )
                         .ToList()
                 };
                 //verifico si envio un ID 
                 //SI reciobio ID cargo los datos correspondiente
                 //caso contrario envio un nuevo registro de Estudio
                 if (ID != null)
+                    
                 {
-                    estudio.vPersona_EstudioIdVM = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
+                    var estu = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
+                    estudio.vPersona_Estudioidvm = estu;
 
                     //Si IdInstituto existe se carga los datos relacionados con el, provincia localidad y nombre de institutos
                     //de NO existir se carga datos del campo "NombreYPaisInstituto"
-                    if (estudio.vPersona_EstudioIdVM.IdInstitutos != 0)
-                    {
-                        estudio.Localidad = db.Institutos
-                            .Where(m => m.Jurisdiccion == estudio.vPersona_EstudioIdVM.Jurisdiccion)
+                    
+                    if (estudio.vPersona_Estudioidvm.prov_localidad.Split('0')[0]=="O") {
+                        var proloc = estudio.vPersona_Estudioidvm.prov_localidad.Split('0');
+                        estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[1];
+                        estudio.vPersona_Estudioidvm.Localidad = proloc[2];
+                        //cargo las localidades que corresponde a jujuy
+                        estudio.Localidad= db.Institutos
+                            .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
                             .DistinctBy(m => m.Localidad)
                             .OrderBy(m => m.Localidad)
-                            .Select(m => m.Localidad)
+                            .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
+                            .ToList();
+                        estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                        //cargo loso institutos correspondiente de la localidad
+                        estudio.vPersona_Estudioidvm.IdInstitutos = 0;
+                        estudio.InstitutoVM = db.Institutos
+                           .Where(m => m.Localidad == estudio.vPersona_Estudioidvm.Localidad)
+                           .OrderBy(m => m.Nombre)
+                           .Select(m => new SelectListItem
+                           {
+                               Value = m.Id.ToString(),
+                               Text = m.Nombre
+                           })
+                           .ToList();
+                        estudio.InstitutoVM.Prepend(new SelectListItem { Text = "Otro", Value = "0" });
+                        estudio.vPersona_Estudioidvm.INST_EXT = false;
+                        estudio.vPersona_Estudioidvm.Nombre = "";
+
+                    }
+                    else if (estudio.vPersona_Estudioidvm.IdInstitutos != 0)
+                    {
+                        estudio.Localidad = db.Institutos
+                            .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
+                            .DistinctBy(m => m.Localidad)
+                            .OrderBy(m => m.Localidad)
+                            .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
                             .ToList();
                         estudio.InstitutoVM = db.Institutos
-                            .Where(m => m.Localidad == estudio.vPersona_EstudioIdVM.Localidad)
+                            .Where(m => m.Localidad == estudio.vPersona_Estudioidvm.Localidad)
                             .OrderBy(m => m.Nombre)
                             .Select(m => new SelectListItem
                             {
@@ -748,17 +779,17 @@ namespace SINU.Controllers
                                 Text = m.Nombre
                             })
                             .ToList();
-                        estudio.vPersona_EstudioIdVM.INST_EXT = false;
-                        estudio.vPersona_EstudioIdVM.Nombre = "";
+                        estudio.vPersona_Estudioidvm.INST_EXT = false;
+                        estudio.vPersona_Estudioidvm.Nombre = "";
                     }
                     else
                     {
-                        string[] paisinst = estudio.vPersona_EstudioIdVM.NombreYPaisInstituto.Split('-');
-                        estudio.vPersona_EstudioIdVM.Jurisdiccion = paisinst[0];
-                        estudio.vPersona_EstudioIdVM.Nombre = paisinst[1];
-                        estudio.Localidad = new List<string>();
+                        string[] paisinst = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
+                        estudio.vPersona_Estudioidvm.Jurisdiccion = paisinst[0];
+                        estudio.vPersona_Estudioidvm.Nombre = paisinst[1];
+                        estudio.Localidad = new List<SelectListItem>();
                         estudio.InstitutoVM = new List<SelectListItem>();
-                        estudio.vPersona_EstudioIdVM.INST_EXT = true;
+                        estudio.vPersona_Estudioidvm.INST_EXT = true;
                     }
                 }
                 else
@@ -775,8 +806,8 @@ namespace SINU.Controllers
 
                     };
 
-                    estudio.vPersona_EstudioIdVM = nuevoestu;
-                    estudio.Localidad = new List<string>();
+                    estudio.vPersona_Estudioidvm = nuevoestu;
+                    estudio.Localidad = new List<SelectListItem>();
                     estudio.InstitutoVM = new List<SelectListItem>();
                 };
                 return PartialView(estudio);
@@ -793,23 +824,26 @@ namespace SINU.Controllers
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
-            if (Datos.vPersona_EstudioIdVM.IdInstitutos > 0)
-            {
-                ModelState["vPersona_EstudioIdVM.Jurisdiccion"].Errors.Clear();
-            }
-            else
-            {
-                ModelState["vPersona_EstudioIdVM.Localidad"].Errors.Clear();
-            }
-
+          
+            ModelState["vPersona_Estudioidvm.Jurisdiccion"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.otro_inst"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.Localidad"].Errors.Clear();
+         
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var e = Datos.vPersona_EstudioIdVM;
-                    if (e.IdInstitutos != 0)
+                    var e = Datos.vPersona_Estudioidvm;
+                    if  (e.otro_inst != "")
                     {
+                        e.NombreYPaisInstituto ="O-"+e.prov_localidad+"-"+e.otro_inst;
+
+                    }
+                    else if(e.IdInstitutos != 0)
+                    {
+
                         e.NombreYPaisInstituto = null;
+
                     }
                     else
                     {

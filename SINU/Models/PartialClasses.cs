@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Windows.Documents;
 /*
- * EN LAS PARTIAL CLASSES SE AGREGAN CAMPOS QUE SE NECESITAN PERO QUE NO ESTÁN EN LA TABLA/VISTA/ENTIDAD ORIGINAL
- * ADEMÁS aQUÍ ASOCIO LA CLASE CON LA CLASE DE SU METADATA CORRESPONDIENTE
- * 
- * EJEMPLO: vUsuariosAdministrativos LE AGREGO 2 CAMPOS PARA SU CARGA Y GRABACIÓN
- * Y ASOCIO LA METADATA CORRESPONDIENTE DENOMINADA vUsuariosAdministrativosMetadata
- * */
+* EN LAS PARTIAL CLASSES SE AGREGAN CAMPOS QUE SE NECESITAN PERO QUE NO ESTÁN EN LA TABLA/VISTA/ENTIDAD ORIGINAL
+* ADEMÁS aQUÍ ASOCIO LA CLASE CON LA CLASE DE SU METADATA CORRESPONDIENTE
+* 
+* EJEMPLO: vUsuariosAdministrativos LE AGREGO 2 CAMPOS PARA SU CARGA Y GRABACIÓN
+* Y ASOCIO LA METADATA CORRESPONDIENTE DENOMINADA vUsuariosAdministrativosMetadata
+* */
 namespace SINU.Models
 {
     [MetadataType(typeof(vPersona_DatosBasicosMetadata))]
@@ -25,9 +26,9 @@ namespace SINU.Models
     public partial class vPersona_Domicilio
     {
         //public string IdpersonaPostu { get; set; }
-        [RequiredIf("IdPais", false,"AR",ErrorMessage ="requerido 12345")]
+        [RequiredIf("IdPais", false,"AR")]
         public string TBoxProvincia { get; set; }
-        [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "requerido 12345")]
+        [RequiredIf("EventualIdPais", false, "AR")]
         public string TBoxEventualProvincia { get; set; }
     }
 
@@ -38,6 +39,10 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Instituto en el Exterior?")]
         public bool INST_EXT { get; set; }
+        [RequiredIf("IdInstitutos",true,"0",ErrorMessage ="Nombre de Instituto Requerido")]
+        public string otro_inst { get; set; }
+        public string prov_localidad { get; set; }
+
     }
     [MetadataType(typeof(vPersona_IdiomaMetadadata))]
     public partial class vPersona_Idioma

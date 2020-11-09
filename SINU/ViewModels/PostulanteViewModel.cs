@@ -77,13 +77,13 @@ namespace SINU.ViewModels
     public class EstudiosVM
     {
         public List<VPersona_Estudio> vPersona_EstudioListVM { get; set; }
-        public VPersona_Estudio vPersona_EstudioIdVM { get; set; }
+        public VPersona_Estudio vPersona_Estudioidvm { get; set; }
         [DisplayName("Nivel")]
         public List<NiveldEstudio> NivelEstudioVM { get; set; }
         [DisplayName("Provincia/Juridiccion")]
-        public List<string> Provincia { get; set; }
+        public List<SelectListItem> Provincia { get; set; }
         [DisplayName("Localidad")]
-        public List<string> Localidad { get; set; }
+        public List<SelectListItem> Localidad { get; set; }
         [DisplayName("Instituto")]
         public List<SelectListItem> InstitutoVM { get; set; }
 
