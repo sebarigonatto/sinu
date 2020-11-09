@@ -86,7 +86,8 @@ namespace SINU.Controllers
                
                 if (inscrip.IdModalidad != null)
                 {
-                    var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
+                    
+                    //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
                     var FechaFinConvo = db.Convocatoria.Where(m => m.IdModalidad == inscrip.IdModalidad && m.PeriodosInscripciones.FechaInicio < inscrip.FechaInscripcion && m.PeriodosInscripciones.FechaFinal > inscrip.FechaInscripcion).ToList()[0].Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
                 }          

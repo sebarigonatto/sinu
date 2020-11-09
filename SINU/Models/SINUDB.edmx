@@ -5195,9 +5195,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="DocumentosNecesariosDelInscripto" IsComposable="true" ReturnType="Collection(SINUModel.DocumentosNecesariosDelInscripto_Result1)">
           <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SecuenciasEtapaEstadosEnOrden" IsComposable="true" ReturnType="Collection(SINUModel.SecuenciasEtapaEstadosEnOrden_Result)" />
           <EntitySet Name="vSecuencia_EtapaEstadoNoRechazados" EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" />
           <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" />
-          <FunctionImport Name="SecuenciasEtapaEstadosEnOrden" IsComposable="true" ReturnType="Collection(SINUModel.SecuenciasEtapaEstadosEnOrden_Result)" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6273,6 +6273,14 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="Int32" Name="IdPostulantePersona" Nullable="true" />
           <Property Type="Int32" Name="IdTipoDocPresentado" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="SecuenciasEtapaEstadosEnOrden_Result">
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+          <Property Type="Int32" Name="IdSecuencia" Nullable="true" />
+          <Property Type="String" Name="Etapa" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="Anterior" Nullable="true" />
+          <Property Type="Int32" Name="Siguiente" Nullable="true" />
+        </ComplexType>
         <EntityType Name="vSecuencia_EtapaEstadoNoRechazados">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -6309,14 +6317,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Anterior" Type="Int32" Nullable="false" />
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
         </EntityType>
-        <ComplexType Name="SecuenciasEtapaEstadosEnOrden_Result">
-          <Property Type="Int32" Name="Orden" Nullable="false" />
-          <Property Type="Int32" Name="IdSecuencia" Nullable="true" />
-          <Property Type="String" Name="Etapa" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Estado" Nullable="true" MaxLength="25" />
-          <Property Type="Int32" Name="Anterior" Nullable="true" />
-          <Property Type="Int32" Name="Siguiente" Nullable="true" />
-        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7863,6 +7863,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SecuenciasEtapaEstadosEnOrden" FunctionName="SINUModel.Store.SecuenciasEtapaEstadosEnOrden">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.SecuenciasEtapaEstadosEnOrden_Result">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+                <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="vSecuencia_EtapaEstadoNoRechazados">
             <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstadoNoRechazados">
               <MappingFragment StoreEntitySet="vSecuencia_EtapaEstadoNoRechazados">
@@ -7889,18 +7901,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SecuenciasEtapaEstadosEnOrden" FunctionName="SINUModel.Store.SecuenciasEtapaEstadosEnOrden">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.SecuenciasEtapaEstadosEnOrden_Result">
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Anterior" ColumnName="Anterior" />
-                <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
