@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
 using SINU.Authorize;
+using System.Data.Entity;
+
 namespace SINU.Controllers.Consultor
 {
     /// <summary>Este Controlador CallConsulta depende de las Consultas Principales
@@ -135,6 +137,15 @@ namespace SINU.Controllers.Consultor
             return PartialView(ListadoDelegaciones);
 
         }
+        
+        //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
+        public ActionResult TotalizarPorModalidadyEntrevista()
+        {
+            var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
 
+            return PartialView(convocatoria.ToList());
+        }
+
+              
     }
 }

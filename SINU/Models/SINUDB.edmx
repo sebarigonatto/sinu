@@ -729,12 +729,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vDelegacion_EstablecExamen' no tien
             <PropertyRef Name="Localidad" />
             <PropertyRef Name="Nombre" />
             <PropertyRef Name="IdOficinasYDelegaciones" />
+            <PropertyRef Name="idDelegacion_EstablecExamen" />
+            <PropertyRef Name="IdEstablecimientoRindeExamen" />
           </Key>
           <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Localidad" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="201" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
+          <Property Name="idDelegacion_EstablecExamen" Type="int" Nullable="false" />
+          <Property Name="IdEstablecimientoRindeExamen" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1356,6 +1360,46 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodos
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSecuencia_EtapaEstado">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Anterior" />
+            <PropertyRef Name="Siguiente" />
+          </Key>
+          <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="IdEtapa" Type="int" Nullable="false" />
+          <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Anterior" Type="int" Nullable="false" />
+          <Property Name="Siguiente" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoNoRechazados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vSecuencia_EtapaEstadoNoRechazados">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Anterior" />
+            <PropertyRef Name="Siguiente" />
+          </Key>
+          <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="IdEtapa" Type="int" Nullable="false" />
+          <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Anterior" Type="int" Nullable="false" />
+          <Property Name="Siguiente" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoRECHAZADOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vSecuencia_EtapaEstadoRECHAZADOS">
           <Key>
             <PropertyRef Name="IdSecuencia" />
             <PropertyRef Name="IdEtapa" />
@@ -2202,6 +2246,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="SecuenciasEtapaEstadosEnOrden" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Orden" Type="int" Nullable="false" />
+                <Property Name="IdSecuencia" Type="int" />
+                <Property Name="Etapa" Type="varchar" MaxLength="50" />
+                <Property Name="Estado" Type="varchar" MaxLength="25" />
+                <Property Name="Anterior" Type="int" />
+                <Property Name="Siguiente" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -2654,7 +2712,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vDelegacion_EstablecExamen].[Jurisdiccion] AS [Jurisdiccion], 
     [vDelegacion_EstablecExamen].[Localidad] AS [Localidad], 
     [vDelegacion_EstablecExamen].[Nombre] AS [Nombre], 
-    [vDelegacion_EstablecExamen].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones]
+    [vDelegacion_EstablecExamen].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones], 
+    [vDelegacion_EstablecExamen].[idDelegacion_EstablecExamen] AS [idDelegacion_EstablecExamen], 
+    [vDelegacion_EstablecExamen].[IdEstablecimientoRindeExamen] AS [IdEstablecimientoRindeExamen]
     FROM [dbo].[vDelegacion_EstablecExamen] AS [vDelegacion_EstablecExamen]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
@@ -3103,6 +3163,28 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vSecuencia_EtapaEstado].[Anterior] AS [Anterior], 
     [vSecuencia_EtapaEstado].[Siguiente] AS [Siguiente]
     FROM [dbo].[vSecuencia_EtapaEstado] AS [vSecuencia_EtapaEstado]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vSecuencia_EtapaEstadoNoRechazados" EntityType="Self.vSecuencia_EtapaEstadoNoRechazados" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSecuencia_EtapaEstadoNoRechazados].[IdSecuencia] AS [IdSecuencia], 
+    [vSecuencia_EtapaEstadoNoRechazados].[IdEtapa] AS [IdEtapa], 
+    [vSecuencia_EtapaEstadoNoRechazados].[Etapa] AS [Etapa], 
+    [vSecuencia_EtapaEstadoNoRechazados].[IdEstado] AS [IdEstado], 
+    [vSecuencia_EtapaEstadoNoRechazados].[Estado] AS [Estado], 
+    [vSecuencia_EtapaEstadoNoRechazados].[Anterior] AS [Anterior], 
+    [vSecuencia_EtapaEstadoNoRechazados].[Siguiente] AS [Siguiente]
+    FROM [dbo].[vSecuencia_EtapaEstadoNoRechazados] AS [vSecuencia_EtapaEstadoNoRechazados]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="Self.vSecuencia_EtapaEstadoRECHAZADOS" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[IdSecuencia] AS [IdSecuencia], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[IdEtapa] AS [IdEtapa], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[Etapa] AS [Etapa], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[IdEstado] AS [IdEstado], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[Estado] AS [Estado], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[Anterior] AS [Anterior], 
+    [vSecuencia_EtapaEstadoRECHAZADOS].[Siguiente] AS [Siguiente]
+    FROM [dbo].[vSecuencia_EtapaEstadoRECHAZADOS] AS [vSecuencia_EtapaEstadoRECHAZADOS]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vSeguridad_Grupos" EntityType="Self.vSeguridad_Grupos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5113,6 +5195,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="DocumentosNecesariosDelInscripto" IsComposable="true" ReturnType="Collection(SINUModel.DocumentosNecesariosDelInscripto_Result1)">
           <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vSecuencia_EtapaEstadoNoRechazados" EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" />
+          <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" />
+          <FunctionImport Name="SecuenciasEtapaEstadosEnOrden" IsComposable="true" ReturnType="Collection(SINUModel.SecuenciasEtapaEstadosEnOrden_Result)" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6140,12 +6225,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Localidad" />
             <PropertyRef Name="Nombre" />
             <PropertyRef Name="IdOficinasYDelegaciones" />
+            <PropertyRef Name="idDelegacion_EstablecExamen" />
+            <PropertyRef Name="IdEstablecimientoRindeExamen" />
           </Key>
           <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Jurisdiccion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Localidad" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="idDelegacion_EstablecExamen" Type="Int32" Nullable="false" />
+          <Property Name="IdEstablecimientoRindeExamen" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Institucion_Modalidad">
           <End Type="SINUModel.Modalidad" Role="Modalidad" Multiplicity="0..1" />
@@ -6183,6 +6272,50 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="Int32" Name="IdInscripcion" Nullable="true" />
           <Property Type="Int32" Name="IdPostulantePersona" Nullable="true" />
           <Property Type="Int32" Name="IdTipoDocPresentado" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="vSecuencia_EtapaEstadoNoRechazados">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Anterior" />
+            <PropertyRef Name="Siguiente" />
+          </Key>
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Anterior" Type="Int32" Nullable="false" />
+          <Property Name="Siguiente" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vSecuencia_EtapaEstadoRECHAZADOS">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdEtapa" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="Anterior" />
+            <PropertyRef Name="Siguiente" />
+          </Key>
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="IdEtapa" Type="Int32" Nullable="false" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Anterior" Type="Int32" Nullable="false" />
+          <Property Name="Siguiente" Type="Int32" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="SecuenciasEtapaEstadosEnOrden_Result">
+          <Property Type="Int32" Name="Orden" Nullable="false" />
+          <Property Type="Int32" Name="IdSecuencia" Nullable="true" />
+          <Property Type="String" Name="Etapa" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Estado" Nullable="true" MaxLength="25" />
+          <Property Type="Int32" Name="Anterior" Nullable="true" />
+          <Property Type="Int32" Name="Siguiente" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -7689,6 +7822,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vDelegacion_EstablecExamen">
             <EntityTypeMapping TypeName="SINUModel.vDelegacion_EstablecExamen">
               <MappingFragment StoreEntitySet="vDelegacion_EstablecExamen">
+                <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
+                <ScalarProperty Name="idDelegacion_EstablecExamen" ColumnName="idDelegacion_EstablecExamen" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Localidad" ColumnName="Localidad" />
@@ -7725,6 +7860,44 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
                 <ScalarProperty Name="IdTipoDocPresentado" ColumnName="IdTipoDocPresentado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vSecuencia_EtapaEstadoNoRechazados">
+            <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstadoNoRechazados">
+              <MappingFragment StoreEntitySet="vSecuencia_EtapaEstadoNoRechazados">
+                <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
+                <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vSecuencia_EtapaEstadoRECHAZADOS">
+            <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS">
+              <MappingFragment StoreEntitySet="vSecuencia_EtapaEstadoRECHAZADOS">
+                <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
+                <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SecuenciasEtapaEstadosEnOrden" FunctionName="SINUModel.Store.SecuenciasEtapaEstadosEnOrden">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.SecuenciasEtapaEstadosEnOrden_Result">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Anterior" ColumnName="Anterior" />
+                <ScalarProperty Name="Siguiente" ColumnName="Siguiente" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -10,16 +10,14 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vDelegacion_EstablecExamen
+    public partial class SecuenciasEtapaEstadosEnOrden_Result
     {
-        public string Direccion { get; set; }
-        public string Jurisdiccion { get; set; }
-        public string Localidad { get; set; }
-        public string Nombre { get; set; }
-        public int IdOficinasYDelegaciones { get; set; }
-        public int idDelegacion_EstablecExamen { get; set; }
-        public int IdEstablecimientoRindeExamen { get; set; }
+        public int Orden { get; set; }
+        public Nullable<int> IdSecuencia { get; set; }
+        public string Etapa { get; set; }
+        public string Estado { get; set; }
+        public Nullable<int> Anterior { get; set; }
+        public Nullable<int> Siguiente { get; set; }
     }
 }
