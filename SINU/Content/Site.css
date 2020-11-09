@@ -136,10 +136,8 @@ background-color: lightblue;
     border-bottom: 1px solid #ced4da8f
 }
 
-table.dataTable.nowrap th, table.dataTable.nowrap td,.dropdown-item {
-  
-    white-space: normal !important;
-  
+table.dataTable.nowrap th, table.dataTable.nowrap td, .dropdown-item {
+    /*white-space: normal !important;*/
 }
 
 /*.boto {

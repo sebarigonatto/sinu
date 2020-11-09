@@ -80,13 +80,17 @@ namespace SINU.Controllers
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-                //cargo listado de problemas de pantallas que le corresponde al postulante
-                //pers.ListProblemaPantalla = db.DataProblemaPantalla.Where(m => m.IdPostulantePersona == pers.ID_PER).ToList();
+                //Verifico si la comvocatoria a la que se inscribio vecio o noS
+                var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
 
-                //int idINCRIP = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
-                //´verifico si ya realizo el guardado de datos basicos.
-                //si ya lo hizo bloqueo los input de las vistaparcial DatosBasicos
-                //pers.YAguardado = (db.InscripcionEtapaEstado.Where(i=>i.IdInscripcionEtapaEstado==idINCRIP).Where(i=>i.IdSecuencia==7||i.IdSecuencia==21).ToList().Count() >0 ? true : false);
+               
+                if (inscrip.IdModalidad != null)
+                {
+                    var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
+                    var FechaFinConvo = db.Convocatoria.Where(m => m.IdModalidad == inscrip.IdModalidad && m.PeriodosInscripciones.FechaInicio < inscrip.FechaInscripcion && m.PeriodosInscripciones.FechaFinal > inscrip.FechaInscripcion).ToList()[0].Fecha_Fin_Proceso;
+                    ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
+                }          
+
                 return View(pers);
             }
             catch (Exception ex)
@@ -205,7 +209,7 @@ namespace SINU.Controllers
         }
 
 
-        public JsonResult EdadInstituto(int? IdPOS, string? Fecha)
+        public JsonResult EdadInstituto(int? IdPOS, string Fecha)
         {
             try
             {
