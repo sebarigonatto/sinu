@@ -301,7 +301,6 @@ $(document).ready(function () {
                 default:
             };
         };
-
     });
 
     //al crgar la pagina se verifica si el pais del domiciolio REAL es "AR"
@@ -323,19 +322,15 @@ $(document).ready(function () {
             $(Comboelemt[0]).show();
             $(Comboelemt[1]).hide();
             $(Comboelemt[2]).removeAttr("readonly");
-
         } else {
             $(Comboelemt[0]).hide();
             $(Comboelemt[1]).show();
             if ($(Comboelemt[3]).val()== '20819') {
                 $(Comboelemt[2]).removeAttr("readonly");
             }
-          
         };
-
         //limpio los campos de "provincia,localidad,codigopostal" si seselecciona otro pais
         if (PRI == 1) {
-
             $(Comboelemt[0] + "," + Comboelemt[2]).val("");
             $(Comboelemt[1]).selectpicker('val', '');
         }
@@ -380,8 +375,6 @@ $(document).ready(function () {
         var valCP = $("#" + comboid).val();
 
         if (valCP!= 20819) {
-
-        
         
             $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                 Localidad: valCP,
@@ -467,7 +460,7 @@ $(document).ready(function () {
                 /* https://developer.snapappointments.com/bootstrap-select/ */
                 $(".combobox").selectpicker({
                     liveSearch: true,
-                    size: 7,
+                    size: 6,
                     liveSearchPlaceholder: "Ingrese su busqueda",
                     liveSearchStyle: 'contains',//'startsWith'
                     noneResultsText: 'No se Encuantran Resultados',

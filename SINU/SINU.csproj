@@ -379,9 +379,6 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Metadatos.cs" />
     <Compile Include="Models\PartialClasses.cs" />
-    <Compile Include="Models\SecuenciasEtapaEstadosEnOrden_Result.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Secuencia_EtapaEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -594,12 +591,6 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSecuencia_EtapaEstado.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vSecuencia_EtapaEstadoNoRechazados.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vSecuencia_EtapaEstadoRECHAZADOS.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vSeguridad_Grupos.cs">
@@ -1312,7 +1303,7 @@
     <Content Include="Views\PeriodosConvocatorias\Edit.cshtml" />
     <Content Include="Views\PeriodosConvocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\DocumentosNecesarios.cshtml" />
-    <Content Include="Views\Delegacion\AsignarFechaVarios.cshtml" />
+    <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
