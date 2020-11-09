@@ -51,20 +51,52 @@
 
 </table>
 <form>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
-            <input name="fecha" type="datetime" class="datepicker" />
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">
-                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
-            </label>
+    @*<div class="row">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1>Restaurar Postulante</h1>
+                <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
+                <div class="list-group">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
+                        <input name="fecha" type="datetime" class="datepicker" />
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">
+                            lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                        </label>
 
+                    </div>
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Apellido)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Apellido)
+                    </div>
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Nombres)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Nombres)
+                    </div>
+                    <div class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].DNI)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].DNI)
+                    </div>
+                    <div class="list-group-item">
+                        <b>N° de preinscripcion</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].IdInscripcion)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Fluid jumbotron</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
+                <input name="fecha" type="datetime" class="datepicker" />
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">
+                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                </label>
+
+            </div>
         </div>
     </div>
-</div>
 </form>
