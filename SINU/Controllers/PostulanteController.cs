@@ -83,14 +83,14 @@ namespace SINU.Controllers
                 //Verifico si la comvocatoria a la que se inscribio vecio o noS
                 var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
 
-               
+
                 if (inscrip.IdModalidad != null)
                 {
-                    
+
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
                     var FechaFinConvo = db.Convocatoria.Where(m => m.IdModalidad == inscrip.IdModalidad && m.PeriodosInscripciones.FechaInicio < inscrip.FechaInscripcion && m.PeriodosInscripciones.FechaFinal > inscrip.FechaInscripcion).ToList()[0].Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
-                }          
+                }
 
                 return View(pers);
             }
@@ -374,7 +374,7 @@ namespace SINU.Controllers
                     var p = Datos.vPersona_DatosPerVM;
                     var iDMOd = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == p.IdPersona).IdModalidad;
                     //verifico si cambio la modalidad par quitar la restricciones que tienen ya que se debe verificar nuevamente
-                    if (iDMOd !=p.IdModalidad)
+                    if (iDMOd != p.IdModalidad)
                     {
                         db.DataProblemaEncontrado.RemoveRange(db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
                         db.VerificacionPantallasCerradas.RemoveRange(db.VerificacionPantallasCerradas.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
@@ -554,7 +554,7 @@ namespace SINU.Controllers
                     datosdomilio.vPersona_DomicilioVM.Localidad = domiextR[1];
                     datosdomilio.vPersona_DomicilioVM.CODIGO_POSTAL = domiextR[2];
                 }
-                else if (datosdomilio.vPersona_DomicilioVM.IdLocalidad== 20819)
+                else if (datosdomilio.vPersona_DomicilioVM.IdLocalidad == 20819)
                 {
                     datosdomilio.vPersona_DomicilioVM.CODIGO_POSTAL = datosdomilio.vPersona_DomicilioVM.Prov_Loc_CP;
                 };
@@ -569,7 +569,7 @@ namespace SINU.Controllers
                 else if (datosdomilio.vPersona_DomicilioVM.EventualIdLocalidad == 20819)
                 {
                     datosdomilio.vPersona_DomicilioVM.EventualCodigo_Postal = datosdomilio.vPersona_DomicilioVM.EventualProv_Loc;
-                }; 
+                };
 
                 datosdomilio.vProvincia_Depto_LocalidadREALVM = (datosdomilio.vPersona_DomicilioVM.IdLocalidad != null) ?
                     db.vProvincia_Depto_Localidad.Where(m => m.Provincia == datosdomilio.vPersona_DomicilioVM.Provincia).ToList()
@@ -606,7 +606,7 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        if (p.IdLocalidad==20819)
+                        if (p.IdLocalidad == 20819)
                         {
                             p.Prov_Loc_CP = p.CODIGO_POSTAL;
                         }
@@ -614,7 +614,7 @@ namespace SINU.Controllers
                         {
                             p.Prov_Loc_CP = null;
                         };
-                      
+
                     };
 
                     if (p.EventualIdPais != "AR")
@@ -719,50 +719,22 @@ namespace SINU.Controllers
                     Provincia = db.Institutos
                         .DistinctBy(m => m.Jurisdiccion)
                         .OrderBy(m => m.Jurisdiccion)
-                        .Select(m=>new SelectListItem {Text=m.Jurisdiccion,Value=m.Jurisdiccion }  )
+                        .Select(m => new SelectListItem { Text = m.Jurisdiccion, Value = m.Jurisdiccion })
                         .ToList()
                 };
                 //verifico si envio un ID 
                 //SI reciobio ID cargo los datos correspondiente
                 //caso contrario envio un nuevo registro de Estudio
                 if (ID != null)
-                    
+
                 {
                     var estu = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
                     estudio.vPersona_Estudioidvm = estu;
 
                     //Si IdInstituto existe se carga los datos relacionados con el, provincia localidad y nombre de institutos
                     //de NO existir se carga datos del campo "NombreYPaisInstituto"
-                    
-                    if (estudio.vPersona_Estudioidvm.prov_localidad.Split('0')[0]=="O") {
-                        var proloc = estudio.vPersona_Estudioidvm.prov_localidad.Split('0');
-                        estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[1];
-                        estudio.vPersona_Estudioidvm.Localidad = proloc[2];
-                        //cargo las localidades que corresponde a jujuy
-                        estudio.Localidad= db.Institutos
-                            .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
-                            .DistinctBy(m => m.Localidad)
-                            .OrderBy(m => m.Localidad)
-                            .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
-                            .ToList();
-                        estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
-                        //cargo loso institutos correspondiente de la localidad
-                        estudio.vPersona_Estudioidvm.IdInstitutos = 0;
-                        estudio.InstitutoVM = db.Institutos
-                           .Where(m => m.Localidad == estudio.vPersona_Estudioidvm.Localidad)
-                           .OrderBy(m => m.Nombre)
-                           .Select(m => new SelectListItem
-                           {
-                               Value = m.Id.ToString(),
-                               Text = m.Nombre
-                           })
-                           .ToList();
-                        estudio.InstitutoVM.Prepend(new SelectListItem { Text = "Otro", Value = "0" });
-                        estudio.vPersona_Estudioidvm.INST_EXT = false;
-                        estudio.vPersona_Estudioidvm.Nombre = "";
 
-                    }
-                    else if (estudio.vPersona_Estudioidvm.IdInstitutos != 0)
+                    if (estudio.vPersona_Estudioidvm.IdInstitutos != 0)
                     {
                         estudio.Localidad = db.Institutos
                             .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
@@ -784,12 +756,46 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        string[] paisinst = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
-                        estudio.vPersona_Estudioidvm.Jurisdiccion = paisinst[0];
-                        estudio.vPersona_Estudioidvm.Nombre = paisinst[1];
-                        estudio.Localidad = new List<SelectListItem>();
-                        estudio.InstitutoVM = new List<SelectListItem>();
-                        estudio.vPersona_Estudioidvm.INST_EXT = true;
+
+                        if (estudio.vPersona_Estudioidvm.NombreYPaisInstituto[0] == 'O')
+                        {
+                            var proloc = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
+                            estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[1];
+                            estudio.vPersona_Estudioidvm.Localidad = proloc[2];
+                            //cargo las localidades que corresponde a jujuy
+                            estudio.Localidad = db.Institutos
+                                .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
+                                .DistinctBy(m => m.Localidad)
+                                .OrderBy(m => m.Localidad)
+                                .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
+                                .ToList();
+                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                            //cargo loso institutos correspondiente de la localidad
+                            estudio.vPersona_Estudioidvm.IdInstitutos = 0;
+                            estudio.InstitutoVM = db.Institutos
+                               .Where(m => m.Localidad == estudio.vPersona_Estudioidvm.Localidad)
+                               .OrderBy(m => m.Nombre)
+                               .Select(m => new SelectListItem
+                               {
+                                   Value = m.Id.ToString(),
+                                   Text = m.Nombre
+                               })
+                               .ToList();
+                            estudio.InstitutoVM.Prepend(new SelectListItem { Text = "Otro", Value = "0" });
+                            estudio.vPersona_Estudioidvm.INST_EXT = false;
+                            estudio.vPersona_Estudioidvm.Nombre = "";
+                        }
+                        else
+                        {
+
+                            string[] paisinst = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
+                            estudio.vPersona_Estudioidvm.Jurisdiccion = paisinst[0];
+                            estudio.vPersona_Estudioidvm.Nombre = paisinst[1];
+                            estudio.Localidad = new List<SelectListItem>();
+                            estudio.InstitutoVM = new List<SelectListItem>();
+                            estudio.vPersona_Estudioidvm.INST_EXT = true;
+                        }
+
                     }
                 }
                 else
@@ -824,22 +830,22 @@ namespace SINU.Controllers
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
-          
+
             ModelState["vPersona_Estudioidvm.Jurisdiccion"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.otro_inst"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.Localidad"].Errors.Clear();
-         
+
             if (ModelState.IsValid)
             {
                 try
                 {
                     var e = Datos.vPersona_Estudioidvm;
-                    if  (e.otro_inst != "")
+                    if (e.otro_inst != "")
                     {
-                        e.NombreYPaisInstituto ="O-"+e.prov_localidad+"-"+e.otro_inst;
+                        e.NombreYPaisInstituto = "O-" + e.prov_localidad + "-" + e.otro_inst;
 
                     }
-                    else if(e.IdInstitutos != 0)
+                    else if (e.IdInstitutos != 0)
                     {
 
                         e.NombreYPaisInstituto = null;
@@ -1338,7 +1344,7 @@ namespace SINU.Controllers
                     pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
                 int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
-                int[] secublock= {14,24,16,20 };
+                int[] secublock = { 14, 24, 16, 20 };
                 ViewBag.ValidacionEnCurso = secublock.Contains(secu);
                 //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
                 ViewBag.ValidacionEnCurso = (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(n => n.UserName == HttpContext.User.Identity.Name).Id) != null) ? ViewBag.ValidacionEnCurso : true;
@@ -1466,7 +1472,7 @@ namespace SINU.Controllers
         }
         /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
 
-        public ActionResult DocumentacionAnexo( int IdPersona)
+        public ActionResult DocumentacionAnexo(int IdPersona)
         {
             DocuAnexoVM asd = new DocuAnexoVM()
             {
@@ -1490,7 +1496,7 @@ namespace SINU.Controllers
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
                 var problemasPostu = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona);
-                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m=>m.IdPantalla==8).Abierta )
+                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta)
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
