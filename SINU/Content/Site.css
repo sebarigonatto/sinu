@@ -137,7 +137,7 @@ background-color: lightblue;
 }
 
 table.dataTable.nowrap th, table.dataTable.nowrap td, .dropdown-item {
-    /*white-space: normal !important;*/
+    white-space: normal !important;
 }
 
 /*.boto {

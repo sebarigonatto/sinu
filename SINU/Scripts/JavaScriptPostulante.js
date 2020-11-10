@@ -498,6 +498,14 @@ $(document).ready(function () {
                     };
                 });
 
+                $("#ComboIdInstEST").on('changed.bs.select', function () {
+                    alert($(this).val());
+                    if ($(this).val()==0) {
+                        $("#nanualnombre").removeAttr("hidden");
+                    } else {
+                        $("#nanualnombre").attr("hidden","hidden");
+                    }
+                });
                 //lamo la funcion INSTEXT y mando cero por que esla primera carga
                 INST_EXT(0);
 
@@ -523,14 +531,7 @@ $(document).ready(function () {
                 $("#UltimoAño").on("changed.bs.select", function () {
                     UltimoAñoSINO();
                 });
-                $("#ComboIdInstEST").on("changed.bs.select", function () {
-                    valcombo = $('#ComboIdInstEST option:selected').val();
-                    //alert(valcombo);
-                    if (valcombo == "0") {
-
-                        $("#nanualnombre").removeAttr("hidden")
-                    }
-                })
+            
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
 
@@ -621,12 +622,21 @@ $(document).ready(function () {
             $("#JuriEST,#IdInstEST").show();
             $("label[for='Provincia']").text("Pais");
             $(".INSAR").hide();
-            $("#ComboIdInstEST").val(0);
+            
             //$(".COM_ESTUAR").selectpicker("val", "");
         } else {
             $("#JuriEST,#IdInstEST").hide().val("");
             $("label[for='Provincia']").text("Provincia/Juridiccion");
             $(".INSAR").show();
+            alert($("#ComboIdInstEST").val());
+            if ($("#ComboIdInstEST").val() == 0 && $("#ComboIdInstEST").val() !="") {
+                $("#nanualnombre").removeAttr("hidden")
+            };
+
+            if ($("#ComboIdInstEST").val() !="") {
+                $("#ComboLocaliEST,#ComboIdInstEST").removeAttr("disabled").selectpicker("refresh");
+            }
+            
         };
         if (pri != 0) {
             $("#JuriEST,#IdInstEST").val("");

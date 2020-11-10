@@ -728,8 +728,7 @@ namespace SINU.Controllers
                 if (ID != null)
 
                 {
-                    var estu = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
-                    estudio.vPersona_Estudioidvm = estu;
+                    estudio.vPersona_Estudioidvm = db.VPersona_Estudio.FirstOrDefault(m => m.IdEstudio == ID);
 
                     //Si IdInstituto existe se carga los datos relacionados con el, provincia localidad y nombre de institutos
                     //de NO existir se carga datos del campo "NombreYPaisInstituto"
@@ -751,6 +750,8 @@ namespace SINU.Controllers
                                 Text = m.Nombre
                             })
                             .ToList();
+                        estudio.InstitutoVM.Add(new SelectListItem { Value = "0", Text = "Otro" });
+                        estudio.InstitutoVM = estudio.InstitutoVM.OrderBy(m => m.Value).ToList();
                         estudio.vPersona_Estudioidvm.INST_EXT = false;
                         estudio.vPersona_Estudioidvm.Nombre = "";
                     }
@@ -771,6 +772,7 @@ namespace SINU.Controllers
                                 .ToList();
                             estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
                             //cargo loso institutos correspondiente de la localidad
+                            
                             estudio.vPersona_Estudioidvm.IdInstitutos = 0;
                             estudio.InstitutoVM = db.Institutos
                                .Where(m => m.Localidad == estudio.vPersona_Estudioidvm.Localidad)
@@ -781,9 +783,11 @@ namespace SINU.Controllers
                                    Text = m.Nombre
                                })
                                .ToList();
-                            estudio.InstitutoVM.Prepend(new SelectListItem { Text = "Otro", Value = "0" });
+                            estudio.InstitutoVM.Add(new SelectListItem { Text = "Otro", Value = "0" });
+                            estudio.InstitutoVM = estudio.InstitutoVM.OrderBy(m => m.Value).ToList();
                             estudio.vPersona_Estudioidvm.INST_EXT = false;
                             estudio.vPersona_Estudioidvm.Nombre = "";
+                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
                         }
                         else
                         {
@@ -843,11 +847,12 @@ namespace SINU.Controllers
                     if (e.otro_inst != "")
                     {
                         e.NombreYPaisInstituto = "O-" + e.prov_localidad + "-" + e.otro_inst;
+                        e.IdInstitutos = 0;
 
                     }
                     else if (e.IdInstitutos != 0)
                     {
-
+                        e.prov_localidad = null;
                         e.NombreYPaisInstituto = null;
 
                     }
