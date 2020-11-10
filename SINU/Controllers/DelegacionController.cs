@@ -819,7 +819,8 @@ namespace SINU.Controllers
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion")
+                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
+                   FechaPresentacion=DateTime.Now
                     };
                 return View("AsignarFechaVarios",listadoPostulanteAsignarFecha);
             }
@@ -832,5 +833,11 @@ namespace SINU.Controllers
             
         }
         #endregion
+        [HttpPost]
+        public ActionResult AsignarFechaVarios(ListadoPostulanteAsignarFecha datos)
+        {
+
+            return View("Index");
+        }
     }
 }

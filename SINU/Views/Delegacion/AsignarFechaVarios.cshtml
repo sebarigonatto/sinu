@@ -1,102 +1,119 @@
 ﻿@model SINU.ViewModels.ListadoPostulanteAsignarFecha
 @*@{
-    ViewBag.Title = "AsignarFechaVarios";
-    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
-}*@
+        //ViewBag.Title = "AsignarFechaVarios";
 
-<h2 class="text-center">Asignar fecha ha varios Postulante</h2>
-<table class="table table-filters table-bordered table-light text-center" id="le-filters" style="width:100%">
-    <thead>
-        <tr>
-            <th class="secondary">
-                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
-            </th>
-            <th class="secondary">
-                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
-            </th>
-            <th class="secondary">
-                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Etapa)
-            </th>
-            <th class="secondary">
-                @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Estado)
-            </th>
-            <th class="ni-o-ni-bu">
-               Opciones
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model.AsignarFechaVM)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelitem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Etapa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelitem => item.Estado)
-            </td>
-            <td>
-                <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
-            </td>
-        </tr>
-        }
-        
-    </tbody>
+    }*@
 
-</table>
-<form>
-    @*<div class="row">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h2 class="text-center">Asignar fecha ha varios Postulante</h2>
+    <table class="table table-filters table-bordered table-light text-center" id="le-filters" style="width:100%">
+        <thead>
+            <tr>
+                <th class="secondary">
+                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+                </th>
+                <th class="secondary">
+                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+                </th>
+                <th class="secondary">
+                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Etapa)
+                </th>
+                <th class="secondary">
+                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Estado)
+                </th>
+                <th class="ni-o-ni-bu">
+                    Opciones
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AsignarFechaVM)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Nombres)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Etapa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelitem => item.Estado)
+                    </td>
+                    <td>
+                        <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+    <form>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1>Restaurar Postulante</h1>
-                <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
-                <div class="list-group">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
-                        <input name="fecha" type="datetime" class="datepicker" />
-                    </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">
-                            lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
-                        </label>
+                <h1 class="display-4">Fluid jumbotron</h1>
+                <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
+                    <input name="fecha" type="datetime" class="datepicker" />
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">
+                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                    </label>
 
-                    </div>
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Apellido)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Apellido)
-                    </div>
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Nombres)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Nombres)
-                    </div>
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].DNI)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].DNI)
-                    </div>
-                    <div class="list-group-item">
-                        <b>N° de preinscripcion</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].IdInscripcion)
-                    </div>
                 </div>
             </div>
         </div>
-    </div>*@
+    </form>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Fluid jumbotron</h1>
-            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
-                <input name="fecha" type="datetime" class="datepicker" />
+            @*<h1 class="display-4">Fluid jumbotron</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>*@
+            <div class="row">
+                @*<label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>*@
+                <div class="col-md-10">
+                    @*<b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />*@
+                    @*<b>Fecha de Presentacion: </b>   @Html.TextBoxFor(model => model.FechaPresentacion, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })*@
+                </div>
+                @*<div class="col-md-4">
+                    <b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />
+                    <b>Fecha de Presentacion: </b>   @Html.TextBox()
+                </div>*@
+                <div class="col-md-2">
+                    <b>lugar de Presentacion: </b> @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                </div>
             </div>
-            <div class="form-group">
-                <label for="recipient-name" class="col-form-label">
-                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
-                </label>
 
-            </div>
+            @*<label for="recipient-name" class="col-form-label">
+                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+            </label>*@
+
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
         </div>
     </div>
-</form>
+
+}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).ready(function () {
+
+                $(".datepicker").datepicker({
+                    format: "dd/mm/yyyy",
+                    language: "es",
+                    autoclose: true,
+                    startView: "days",
+                    startDate: "Today"
+                });
+            })
+
+        </script>
+    }

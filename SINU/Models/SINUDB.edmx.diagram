@@ -153,6 +153,7 @@
         <EntityTypeShape EntityType="SINUModel.vInstitucionModalidad" Width="1.5" PointX="29.75" PointY="3.75" />
         <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" Width="1.5" PointX="29.375" PointY="12.75" />
         <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" Width="1.5" PointX="29.375" PointY="16.75" />
+        <EntityTypeShape EntityType="SINUModel.vInscriptosYConvocatorias" Width="1.5" PointX="29.375" PointY="20.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
