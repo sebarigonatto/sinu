@@ -51,6 +51,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 $.BloqueoPantalla;
 //Si no es postulante no se ejecutaran determinadas funciones
 $.NoEjecutar = false;
+$.topp;
 $(document).ready(function () {
 
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
@@ -420,6 +421,10 @@ $(document).ready(function () {
         ModalEIACUD(null, id_persona, id_Tabla);
     });
 
+    $("#ModalEIA").on('hide.bs.modal', function () {
+        $('html,body').animate({ scrollTop: $.topp }, 200);
+    });
+
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla;
     var url_CUD;
@@ -448,6 +453,7 @@ $(document).ready(function () {
             data: { ID: id_registro, ID_persona: id_persona },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
+               
                 $('#ModalEIACuerpo').html(response);
 
                 //con esto  funciona la validacion del lado del cliente con la vista parcial

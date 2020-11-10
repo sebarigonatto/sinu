@@ -19,7 +19,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body class="h-100">
-    <div class="row position-absolute justify-content-center align-content-center h-100 w-100 bg-white" style="z-index:99999; margin-left:0;top:0" id="loader">
+    <div class="row position-fixed justify-content-center align-content-center h-100 w-100 bg-white" style="z-index:99999; margin-left:0;top:0" id="loader">
         <div class=" justify-content-center align-content-center text-center pb-5 pt-3">
             <img class="card-img img-fluid lodaer-img" src="~/Imagenes/loader.png" alt="Card image cap">
             <h4 class="textLoades mb-3">SINU</h4>
@@ -229,13 +229,11 @@
 <script>
 
 
-
     $(window).on('load', function () {
         $("#navMenu li a").each(function (a) {
             if (window.location.href.indexOf($(this).attr("href"))>-1) {
                 $(this).css("color", "white");
             }
-        
         });
         $('#loader').delay(300).fadeOut('fast');
 

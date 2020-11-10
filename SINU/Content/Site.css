@@ -161,3 +161,12 @@ button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
 #TabGeneral ul {
     margin-top: revert !important
 }
+div.dropdown-menu.open {
+    max-height: 314px !important;
+    overflow: hidden;
+}
+
+ul.dropdown-menu.inner {
+    max-height: 260px !important;
+    overflow-y: auto;
+}

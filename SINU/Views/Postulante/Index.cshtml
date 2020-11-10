@@ -411,8 +411,8 @@
                                         <br />
                                         <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                             <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
-                                                <h3>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h3>
-                                                <h3>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h3>
+                                                <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
+                                                <h4>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h4>
                                                 <br />
                                                 @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                            {
@@ -423,8 +423,8 @@
                                             </div>
                                             <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
-                                                <h3>La validacion se encuentra en Proceso.</h3>
-                                                <h4>Via <b>Mail</b> se le informara las novedades de la validacion.</h4>
+                                                <h4>La validacion se encuentra en Proceso.</h4>
+                                                <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
                                             </div>
 
 
@@ -609,6 +609,24 @@
                @{
                   Session["FamiTable"] = false;
                }
+      
+
+            //scroll automatico al selecionar un nav, solo en vista mobil
+            $("#myTab2Content button[aria-label='Toggle navigation']").on('click', function () {
+                bt = $(this).attr("id");
+                $.topp = $(this).closest('.ocultnav').offset().top;
+
+                setTimeout(function () {
+                    
+                    if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
+                        $('html,body').animate({ scrollTop: $.topp }, 800);
+                    };
+                }, 100);
+              
+            });
+           
+
+
         });
 
         function Imprimir() {
