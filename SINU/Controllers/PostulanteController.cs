@@ -709,7 +709,7 @@ namespace SINU.Controllers
 
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult EstudiosCUD(int? ID, int ID_persona)
-        {
+                {
             try
             {
                 EstudiosVM estudio = new EstudiosVM()
@@ -761,8 +761,8 @@ namespace SINU.Controllers
                         if (estudio.vPersona_Estudioidvm.NombreYPaisInstituto[0] == 'O')
                         {
                             var proloc = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
-                            estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[1];
-                            estudio.vPersona_Estudioidvm.Localidad = proloc[2];
+                            estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[2];
+                            estudio.vPersona_Estudioidvm.Localidad = proloc[3];
                             //cargo las localidades que corresponde a jujuy
                             estudio.Localidad = db.Institutos
                                 .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
@@ -770,7 +770,7 @@ namespace SINU.Controllers
                                 .OrderBy(m => m.Localidad)
                                 .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
                                 .ToList();
-                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                            estudio.vPersona_Estudioidvm.otro_inst = proloc[1];
                             //cargo loso institutos correspondiente de la localidad
                             
                             estudio.vPersona_Estudioidvm.IdInstitutos = 0;
@@ -787,7 +787,7 @@ namespace SINU.Controllers
                             estudio.InstitutoVM = estudio.InstitutoVM.OrderBy(m => m.Value).ToList();
                             estudio.vPersona_Estudioidvm.INST_EXT = false;
                             estudio.vPersona_Estudioidvm.Nombre = "";
-                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                            
                         }
                         else
                         {
@@ -838,15 +838,17 @@ namespace SINU.Controllers
             ModelState["vPersona_Estudioidvm.Jurisdiccion"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.otro_inst"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.Localidad"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.IdInstitutos"].Errors.Clear();
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     var e = Datos.vPersona_Estudioidvm;
-                    if (e.otro_inst != "")
+                    if (e.otro_inst != null)
                     {
-                        e.NombreYPaisInstituto = "O-" + e.prov_localidad + "-" + e.otro_inst;
+                        e.NombreYPaisInstituto = "O-" + e.otro_inst+ "-" + e.prov_localidad;
                         e.IdInstitutos = 0;
 
                     }
