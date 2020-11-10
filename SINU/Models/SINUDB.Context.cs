@@ -124,6 +124,7 @@ namespace SINU.Models
         public virtual DbSet<vInstitucionModalidad> vInstitucionModalidad { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstadoNoRechazados> vSecuencia_EtapaEstadoNoRechazados { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstadoRECHAZADOS> vSecuencia_EtapaEstadoRECHAZADOS { get; set; }
+        public virtual DbSet<vInscriptosYConvocatorias> vInscriptosYConvocatorias { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

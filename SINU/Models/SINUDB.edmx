@@ -864,6 +864,28 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vInscriptosYConvocatorias">
+          <Key>
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="IdGrupoCarrOficio" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="IdConvocatoria" />
+          </Key>
+          <Property Name="IdInscripcion" Type="int" Nullable="false" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
+          <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaInscripcion" Type="date" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
+          <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="IdConvocatoria" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionesConvocadasYCarrerasAsociadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInstitucionesConvocadasYCarrerasAsociadas">
           <Key>
@@ -2802,6 +2824,21 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[Apellido] AS [Apellido], 
     [vInscripcionEtapaEstadoUltimoEstado].[Nombres] AS [Nombres]
     FROM [dbo].[vInscripcionEtapaEstadoUltimoEstado] AS [vInscripcionEtapaEstadoUltimoEstado]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vInscriptosYConvocatorias" EntityType="Self.vInscriptosYConvocatorias" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vInscriptosYConvocatorias].[IdInscripcion] AS [IdInscripcion], 
+    [vInscriptosYConvocatorias].[IdModalidad] AS [IdModalidad], 
+    [vInscriptosYConvocatorias].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio], 
+    [vInscriptosYConvocatorias].[FechaInscripcion] AS [FechaInscripcion], 
+    [vInscriptosYConvocatorias].[FechaInicio] AS [FechaInicio], 
+    [vInscriptosYConvocatorias].[FechaFinal] AS [FechaFinal], 
+    [vInscriptosYConvocatorias].[NombreInst] AS [NombreInst], 
+    [vInscriptosYConvocatorias].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
+    [vInscriptosYConvocatorias].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
+    [vInscriptosYConvocatorias].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vInscriptosYConvocatorias].[IdConvocatoria] AS [IdConvocatoria]
+    FROM [dbo].[vInscriptosYConvocatorias] AS [vInscriptosYConvocatorias]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vInstitucionesConvocadasYCarrerasAsociadas" EntityType="Self.vInstitucionesConvocadasYCarrerasAsociadas" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5198,6 +5235,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="SecuenciasEtapaEstadosEnOrden" IsComposable="true" ReturnType="Collection(SINUModel.SecuenciasEtapaEstadosEnOrden_Result)" />
           <EntitySet Name="vSecuencia_EtapaEstadoNoRechazados" EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" />
           <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" />
+          <EntitySet Name="vInscriptosYConvocatorias" EntityType="SINUModel.vInscriptosYConvocatorias" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6316,6 +6354,26 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Anterior" Type="Int32" Nullable="false" />
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vInscriptosYConvocatorias">
+          <Key>
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="IdGrupoCarrOficio" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="IdConvocatoria" />
+          </Key>
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdGrupoCarrOficio" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="IdCarreraOficio" Type="Int32" />
+          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -7898,6 +7956,23 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vInscriptosYConvocatorias">
+            <EntityTypeMapping TypeName="SINUModel.vInscriptosYConvocatorias">
+              <MappingFragment StoreEntitySet="vInscriptosYConvocatorias">
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
