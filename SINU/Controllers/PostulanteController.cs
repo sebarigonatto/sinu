@@ -30,8 +30,7 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-        //id del postulante del que se listar, esditara o se creara registros
-        public static int IDpostuactual;
+
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
@@ -41,14 +40,12 @@ namespace SINU.Controllers
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
-
-                IDpostuactual = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-
+              
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     ID_PER = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
-
                 };
+                
                 pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
                 //verifico el ROL al que pertenece el Usuario alctualmente logueado 
                 Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
@@ -58,9 +55,9 @@ namespace SINU.Controllers
                 //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //busco el IDinscripcion del postulante logueado
-                int idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdInscripcion;
+                var idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
                 //creo array con las secuecias por las que el Postulante
-                List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri).Select(m => m.IdSecuencia).ToList();
+                List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri.IdInscripcion).Select(m => m.IdSecuencia).ToList();
                 ViewBag.ULTISECU = Secuencias[0];
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
@@ -80,15 +77,12 @@ namespace SINU.Controllers
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-                //Verifico si la comvocatoria a la que se inscribio vecio o noS
-                var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
+              
 
-
-                if (inscrip.IdModalidad != null)
+                if (idInscri.IdModalidad != null)
                 {
-
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
-                    var FechaFinConvo = db.Convocatoria.Where(m => m.IdModalidad == inscrip.IdModalidad && m.PeriodosInscripciones.FechaInicio < inscrip.FechaInscripcion && m.PeriodosInscripciones.FechaFinal > inscrip.FechaInscripcion).ToList()[0].Fecha_Fin_Proceso;
+                    var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
                 }
 
@@ -709,7 +703,7 @@ namespace SINU.Controllers
 
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult EstudiosCUD(int? ID, int ID_persona)
-        {
+                {
             try
             {
                 EstudiosVM estudio = new EstudiosVM()
@@ -761,8 +755,8 @@ namespace SINU.Controllers
                         if (estudio.vPersona_Estudioidvm.NombreYPaisInstituto[0] == 'O')
                         {
                             var proloc = estudio.vPersona_Estudioidvm.NombreYPaisInstituto.Split('-');
-                            estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[1];
-                            estudio.vPersona_Estudioidvm.Localidad = proloc[2];
+                            estudio.vPersona_Estudioidvm.Jurisdiccion = proloc[2];
+                            estudio.vPersona_Estudioidvm.Localidad = proloc[3];
                             //cargo las localidades que corresponde a jujuy
                             estudio.Localidad = db.Institutos
                                 .Where(m => m.Jurisdiccion == estudio.vPersona_Estudioidvm.Jurisdiccion)
@@ -770,7 +764,7 @@ namespace SINU.Controllers
                                 .OrderBy(m => m.Localidad)
                                 .Select(m => new SelectListItem { Value = m.Localidad, Text = m.Localidad })
                                 .ToList();
-                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                            estudio.vPersona_Estudioidvm.otro_inst = proloc[1];
                             //cargo loso institutos correspondiente de la localidad
                             
                             estudio.vPersona_Estudioidvm.IdInstitutos = 0;
@@ -787,7 +781,7 @@ namespace SINU.Controllers
                             estudio.InstitutoVM = estudio.InstitutoVM.OrderBy(m => m.Value).ToList();
                             estudio.vPersona_Estudioidvm.INST_EXT = false;
                             estudio.vPersona_Estudioidvm.Nombre = "";
-                            estudio.vPersona_Estudioidvm.otro_inst = proloc[3];
+                            
                         }
                         else
                         {
@@ -838,15 +832,17 @@ namespace SINU.Controllers
             ModelState["vPersona_Estudioidvm.Jurisdiccion"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.otro_inst"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.Localidad"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.IdInstitutos"].Errors.Clear();
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     var e = Datos.vPersona_Estudioidvm;
-                    if (e.otro_inst != "")
+                    if (e.otro_inst != null)
                     {
-                        e.NombreYPaisInstituto = "O-" + e.prov_localidad + "-" + e.otro_inst;
+                        e.NombreYPaisInstituto = "O-" + e.otro_inst+ "-" + e.prov_localidad;
                         e.IdInstitutos = 0;
 
                     }
@@ -1486,7 +1482,9 @@ namespace SINU.Controllers
             };
             int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.ToList()[0].IdInscripcion;
             asd.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
-            ViewBag.secucu = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList()[0].IdSecuencia;
+            var secus=db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList();
+            //verifico que ya haya tenido una respuesta de validacion departe de la delegacion
+            ViewBag.secucu = secus[0].IdSecuencia == 13 && secus.FirstOrDefault(m => m.IdSecuencia == 14) != null;
             return PartialView("DocumentacionAnexo", asd);
         }
 

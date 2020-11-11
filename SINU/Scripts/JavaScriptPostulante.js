@@ -51,6 +51,7 @@ $.extend(true, $.fn.dataTable.defaults, {
 $.BloqueoPantalla;
 //Si no es postulante no se ejecutaran determinadas funciones
 $.NoEjecutar = false;
+$.topp;
 $(document).ready(function () {
 
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
@@ -420,6 +421,10 @@ $(document).ready(function () {
         ModalEIACUD(null, id_persona, id_Tabla);
     });
 
+    $("#ModalEIA").on('hide.bs.modal', function () {
+        $('html,body').animate({ scrollTop: $.topp }, 200);
+    });
+
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla;
     var url_CUD;
@@ -448,6 +453,7 @@ $(document).ready(function () {
             data: { ID: id_registro, ID_persona: id_persona },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
+               
                 $('#ModalEIACuerpo').html(response);
 
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
@@ -489,21 +495,17 @@ $(document).ready(function () {
                 //evento que se desata cuando se selecciona un opcion de los combobox
                 $("#ComboJuriEST,#ComboLocaliEST").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
                     comboid = $(this).attr("id");
-                    //no se realiza nada si el evento fue desatado por el combo de INSTITUTO
-                    if (comboid != "ComboIdInstEST") {
-                        //alert(comboid);
-                        valcombo = $('#' + comboid + ' option:selected').html();
-                        //alert(valcombo);
-                        ComboCascada(comboid, valcombo);
-                    };
+                    valcombo = $('#' + comboid + ' option:selected').html();
+                    ComboCascada(comboid, valcombo);
+                  
                 });
 
                 $("#ComboIdInstEST").on('changed.bs.select', function () {
-                    alert($(this).val());
+                    //alert($(this).val());
                     if ($(this).val()==0) {
-                        $("#nanualnombre").removeAttr("hidden");
+                        $("#nanualnombre").removeAttr("hidden").focus();
                     } else {
-                        $("#nanualnombre").attr("hidden","hidden");
+                        $("#nanualnombre").attr("hidden","hidden").val(null);
                     }
                 });
                 //lamo la funcion INSTEXT y mando cero por que esla primera carga
@@ -561,6 +563,7 @@ $(document).ready(function () {
                 });
 
                 $("select").on("changed.bs.select", function () {
+                    proloc
                     $(this).valid();
                 });
 
@@ -618,23 +621,26 @@ $(document).ready(function () {
 
     //muestra o ocualta los campos relacionado con los campos si el instituto pertenece al exterior o no
     function INST_EXT(pri) {
+        $("#proloc").val($("#ComboJuriEST").val() + "-" + $("#ComboLocaliEST option:selected").html());
         if ($("#DropdownEXT").val() == "true") {
             $("#JuriEST,#IdInstEST").show();
             $("label[for='Provincia']").text("Pais");
             $(".INSAR").hide();
-            
+            $(".INSAR select").val(null).selectpicker('refresh');
+            $("#nanualnombre").val(null);
             //$(".COM_ESTUAR").selectpicker("val", "");
         } else {
             $("#JuriEST,#IdInstEST").hide().val("");
             $("label[for='Provincia']").text("Provincia/Juridiccion");
             $(".INSAR").show();
-            alert($("#ComboIdInstEST").val());
+            //alert($("#ComboIdInstEST").val());
             if ($("#ComboIdInstEST").val() == 0 && $("#ComboIdInstEST").val() !="") {
-                $("#nanualnombre").removeAttr("hidden")
+                $("#nanualnombre").removeAttr("hidden");
+               
             };
 
             if ($("#ComboIdInstEST").val() !="") {
-                $("#ComboLocaliEST,#ComboIdInstEST").removeAttr("disabled").selectpicker("refresh");
+                $("#ComboLocaliEST, #ComboIdInstEST").removeAttr("disabled").selectpicker("refresh");
             }
             
         };
@@ -676,11 +682,13 @@ $(document).ready(function () {
         //en caso de que el combobox es de la provincia
         if (Combo == "ComboJuriEST") {
             OPC = 0;
-            $("#ComboLocaliEST,#ComboIdInstEST").html("")
+            $("#ComboLocaliEST, #ComboIdInstEST").empty().val(null).attr('disabled', 'disabled').selectpicker('refresh');
+
+            
             //cuando el combobox seleccionado es de la localidad
         } else {
             valprov = $("#ComboJuriEST").val();
-            ValC = valprov + "-" + ValC;
+            ValC = valprov + "-" + ValC;    
             OPC = 1;
             $("#ComboIdInstEST").html("");
             $("#proloc").val("").val($("#ComboJuriEST").val() + "-" + $("#ComboLocaliEST option:selected").html());
@@ -708,6 +716,7 @@ $(document).ready(function () {
                 $(combocas).selectpicker('refresh');
 
             });
+
     };
 
 

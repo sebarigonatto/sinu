@@ -635,4 +635,6 @@ namespace SINU.Models
         [Display(Name = "Modalidad")]
         public string Idmodalidad { get; set; }
     }
+
+
 }
