@@ -30,8 +30,7 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-        //id del postulante del que se listar, esditara o se creara registros
-        public static int IDpostuactual;
+
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
@@ -41,14 +40,12 @@ namespace SINU.Controllers
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
             {
-
-                IDpostuactual = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona;
-
+              
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     ID_PER = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
-
                 };
+                
                 pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
                 //verifico el ROL al que pertenece el Usuario alctualmente logueado 
                 Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
