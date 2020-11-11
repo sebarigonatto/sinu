@@ -1,4 +1,5 @@
 ﻿@model SINU.Models.vEntrevistaLugarFecha
+<link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
 
 
 @using (Html.BeginForm())
@@ -33,12 +34,12 @@
         </div>
 
         @*<div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -47,11 +48,12 @@
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-        @* Campo para asignar la fecha*@    
+        @* Campo para asignar la fecha*@
         <div class="form-group">
             @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })
+                <input type="text" id="datetimepicker" name="Fecha" />
+                @*@Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })*@
                 @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -71,17 +73,20 @@
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-
-            $(".datepicker").datepicker({
-                format: "dd/mm/yyyy",
-                language: "es",
-                autoclose: true,
-                startView: "days",
-                startDate: "Today"
-            });
+            jQuery('#datetimepicker').datetimepicker();
+            //$(".datepicker").datepicker({
+            //    format: "dd/mm/yyyy",
+            //    language: "es",
+            //    autoclose: true,
+            //    startView: "days",
+            //    startDate: "Today"
+            //});
         })
 
     </script>
+
 }

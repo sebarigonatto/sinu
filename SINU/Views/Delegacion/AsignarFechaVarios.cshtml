@@ -4,9 +4,11 @@
 
     }*@
 
-@using (Html.BeginForm())
+<link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
+@using (Html.BeginForm("AsignarFechaVarios", "Delegacion"))
 {
     @Html.AntiForgeryToken()
+
     <h2 class="text-center">Asignar fecha ha varios Postulante</h2>
     <table class="table table-filters table-bordered table-light text-center" id="le-filters" style="width:100%">
         <thead>
@@ -15,7 +17,7 @@
                     @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
                 </th>
                 <th class="secondary">
-                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Apellido)
                 </th>
                 <th class="secondary">
                     @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Etapa)
@@ -46,6 +48,7 @@
                     </td>
                     <td>
                         <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
+                        @*@Html.CheckBox("V or F", false,new { })*@
                     </td>
                 </tr>
             }
@@ -60,60 +63,67 @@
                 <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
-                    <input name="fecha" type="datetime" class="datepicker" />
+                    @*<input name="fecha" type="text" id="datetimepicker" />*@
+                    <input type="text" id="datetimepicker" name="Fecha" />
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">
-                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", new { id = "myProduct", name = "Lugar" })
                     </label>
 
+                </div>
+                <div class="col-md-2">
+                    @*<input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />*@
+                    <input type="submit" value="Asignar" class="btn btn-primary w-50" />
                 </div>
             </div>
         </div>
     </form>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            @*<h1 class="display-4">Fluid jumbotron</h1>
-            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>*@
-            <div class="row">
-                @*<label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>*@
-                <div class="col-md-10">
-                    @*<b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />*@
-                    @*<b>Fecha de Presentacion: </b>   @Html.TextBoxFor(model => model.FechaPresentacion, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })*@
+    @*<div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="display-4">Fluid jumbotron</h1>
+                    <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                <div class="row">
+                    <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label>
+                    <div class="col-md-10">
+                        <b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />
+                        <b>Fecha de Presentacion: </b>   @Html.TextBoxFor(model => model.FechaPresentacion, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })
+                    </div>
+                    <div class="col-md-4">
+                            <b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />
+                            <b>Fecha de Presentacion: </b>   @Html.TextBox()
+                        </div>
+                    <div class="col-md-2">
+                        <b>lugar de Presentacion: </b> @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                    </div>
                 </div>
-                @*<div class="col-md-4">
-                    <b>Fecha de Presentacion: </b><input name="fecha" type="datetime" class="datepicker" />
-                    <b>Fecha de Presentacion: </b>   @Html.TextBox()
-                </div>*@
-                <div class="col-md-2">
-                    <b>lugar de Presentacion: </b> @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
-                </div>
+
+                <label for="recipient-name" class="col-form-label">
+                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
+                    </label>
+
             </div>
-
-            @*<label for="recipient-name" class="col-form-label">
-                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---")
-            </label>*@
-
-        </div>
-        <div class="col-md-2">
-            <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
-        </div>
-    </div>
+            <div class="col-md-2">
+                @Html.ActionLink("Enviar", "AsignarFechaVariosPostulante")
+            </div>
+        </div>*@
 
 }
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script>
-            $(document).ready(function () {
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            jQuery('#datetimepicker').datetimepicker();
+            //$(".datepicker").datepicker({
+            //    format: "dd/mm/yyyy",
+            //    language: "es",
+            //    autoclose: true,
+            //    startView: "days",
+            //    startDate: "Today"
+            //});
+        })
 
-                $(".datepicker").datepicker({
-                    format: "dd/mm/yyyy",
-                    language: "es",
-                    autoclose: true,
-                    startView: "days",
-                    startDate: "Today"
-                });
-            })
-
-        </script>
-    }
+    </script>
+}

@@ -811,6 +811,7 @@ namespace SINU.Controllers
             //return View("Index");
         }
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
+        [HttpGet]
         public ActionResult AsignarFechaVarios()
         {
             try
@@ -833,11 +834,11 @@ namespace SINU.Controllers
             
         }
         #endregion
-        [HttpPost]
-        public ActionResult AsignarFechaVarios(ListadoPostulanteAsignarFecha datos)
+       
+        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha,string LugarPresentacion)
         {
 
-            return View("Index");
+            return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
         }
     }
 }

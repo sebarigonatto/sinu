@@ -655,6 +655,7 @@
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\CssPostulante.css" />
+    <Content Include="Content\jquery.datetimepicker.css" />
     <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
     <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Param_DestVigRelacDerog.Synonym.sql" />
@@ -791,6 +792,9 @@
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\JavaScript-Decimal.js" />
     <Content Include="Scripts\JavaScriptPostulante.js" />
+    <Content Include="Scripts\jquery.datetimepicker.full.min.js" />
+    <Content Include="Scripts\jquery.datetimepicker.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -1316,6 +1320,7 @@
     <Content Include="Views\PeriodosConvocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\DocumentosNecesarios.cshtml" />
     <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
+    <Content Include="Views\Delegacion\AsignarFechaVarios.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
