@@ -609,6 +609,38 @@ namespace SINU.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
+        public ActionResult RecuperarCuenta()
+        {
+          
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RecuperarCuenta(RecuperacionCuenta recu)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = UserManager.FindByEmail(recu.EmailOriginal);
+                    if (user == null || !( UserManager.IsEmailConfirmed(user.Id)))
+                    {
+                        // No revelar que el usuario no existe o que no está confirmado
+                        return View();
+                    }
+                    //await UserManager.generate
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+            return View();
+        }
+
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]

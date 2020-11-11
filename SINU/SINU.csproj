@@ -1322,6 +1322,7 @@
     <Content Include="Views\Delegacion\DocumentosNecesarios.cshtml" />
     <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
     <Content Include="Views\Delegacion\AsignarFechaVarios.cshtml" />
+    <Content Include="Views\Account\RecuperarCuenta.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

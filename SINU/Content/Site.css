@@ -155,18 +155,9 @@ button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
     opacity: 1;
 }
 
-    button[disabled="disabled"].dropdown-toggle::after {
-        border-top: none !important;
-    }
+button[disabled="disabled"].dropdown-toggle::after {
+    border-top: none !important;
+}
 #TabGeneral ul {
     margin-top: revert !important
-}
-div.dropdown-menu.open {
-    max-height: 314px !important;
-    overflow: hidden;
-}
-
-ul.dropdown-menu.inner {
-    max-height: 260px !important;
-    overflow-y: auto;
 }
