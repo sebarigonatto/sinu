@@ -934,6 +934,7 @@
     <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Certificado&amp;ReporteGMV.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
+    <Content Include="Plantillas\PlantillaMailForgotPassword.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

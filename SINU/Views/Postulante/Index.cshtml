@@ -619,7 +619,12 @@
                 setTimeout(function () {
                     
                     if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
-                        $('html,body').animate({ scrollTop: $.topp }, 800);
+                        if (navigator.userAgent.match(/ (iPod | iPhone | iPad | Android) /)) {
+                            window.scrollTo(0, $.topp) // primer valor para el desplazamiento a la izquierda, segundo valor para el desplazamiento superior 
+                        } else {
+                            $('html,body').animate({ scrollTop: $.topp }, 800);
+                        }
+                       
                     };
                 }, 100);
               
