@@ -28,6 +28,7 @@ namespace SINU.Models
         public string Comentario { get; set; }
         public int IdEstablecimientoRindeExamen { get; set; }
         public string Direccion { get; set; }
+        public bool ACTIVO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Inscripcion> Inscripcion { get; set; }

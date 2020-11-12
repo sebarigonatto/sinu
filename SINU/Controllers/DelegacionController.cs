@@ -86,7 +86,7 @@ namespace SINU.Controllers
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-
+            //HttpContext.Request.Form
             try
             {
                 // TODO: Add insert logic here
@@ -251,7 +251,7 @@ namespace SINU.Controllers
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                 vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
 
-                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = id }, protocol: Request.Url.Scheme);
 
                 var modeloPlanti = new ViewModels.MailPostular
                 {

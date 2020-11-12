@@ -533,6 +533,9 @@
     <Compile Include="Models\vModalidadYDocumento.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vOficDeleg_EstablecimientoRindExamen.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VPantalla_Problema.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

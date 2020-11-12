@@ -238,7 +238,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Nombre" Type="varchar" MaxLength="201" Nullable="false" />
           <Property Name="Comentario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="IdEstablecimientoRindeExamen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Estado">
           <Key>
@@ -944,6 +945,21 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vModalidadYDocumento' no tiene defi
           <Property Name="Obligatorio" Type="bit" Nullable="false" />
           <Property Name="Orden" Type="int" />
           <Property Name="IdTipoDocPresentado" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vOficDeleg_EstablecimientoRindExamen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vOficDeleg_EstablecimientoRindExamen">
+          <Key>
+            <PropertyRef Name="IdOficinasYDelegaciones" />
+          </Key>
+          <Property Name="OficinaDelegacion" Type="varchar" MaxLength="100" />
+          <Property Name="Establecimiento" Type="varchar" MaxLength="201" />
+          <Property Name="Localidad" Type="varchar" MaxLength="60" />
+          <Property Name="Comentario" Type="varchar" MaxLength="100" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" />
+          <Property Name="ACTIVO" Type="bit" />
+          <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
+          <Property Name="IdEstablecimientoRindeExamen" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2881,6 +2897,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vModalidadYDocumento].[IdTipoDocPresentado] AS [IdTipoDocPresentado]
     FROM [dbo].[vModalidadYDocumento] AS [vModalidadYDocumento]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vOficDeleg_EstablecimientoRindExamen" EntityType="Self.vOficDeleg_EstablecimientoRindExamen" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vOficDeleg_EstablecimientoRindExamen].[OficinaDelegacion] AS [OficinaDelegacion], 
+    [vOficDeleg_EstablecimientoRindExamen].[Establecimiento] AS [Establecimiento], 
+    [vOficDeleg_EstablecimientoRindExamen].[Localidad] AS [Localidad], 
+    [vOficDeleg_EstablecimientoRindExamen].[Comentario] AS [Comentario], 
+    [vOficDeleg_EstablecimientoRindExamen].[Direccion] AS [Direccion], 
+    [vOficDeleg_EstablecimientoRindExamen].[ACTIVO] AS [ACTIVO], 
+    [vOficDeleg_EstablecimientoRindExamen].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones], 
+    [vOficDeleg_EstablecimientoRindExamen].[IdEstablecimientoRindeExamen] AS [IdEstablecimientoRindeExamen]
+    FROM [dbo].[vOficDeleg_EstablecimientoRindExamen] AS [vOficDeleg_EstablecimientoRindExamen]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="VPantalla_Problema" EntityType="Self.VPantalla_Problema" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [VPantalla_Problema].[Email] AS [Email], 
@@ -3598,8 +3626,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Comentario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdEstablecimientoRindeExamen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_EstablecimientoRindeExamen" FromRole="EstablecimientoRindeExamen" ToRole="Inscripcion" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Delegacion_EstablecExamen" Relationship="SINUModel.FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen" FromRole="EstablecimientoRindeExamen" ToRole="Delegacion_EstablecExamen" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Estado">
           <Key>
@@ -5236,6 +5265,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vSecuencia_EtapaEstadoNoRechazados" EntityType="SINUModel.vSecuencia_EtapaEstadoNoRechazados" />
           <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" />
           <EntitySet Name="vInscriptosYConvocatorias" EntityType="SINUModel.vInscriptosYConvocatorias" />
+          <EntitySet Name="vOficDeleg_EstablecimientoRindExamen" EntityType="SINUModel.vOficDeleg_EstablecimientoRindExamen" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6375,6 +6405,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdCarreraOficio" Type="Int32" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="vOficDeleg_EstablecimientoRindExamen">
+          <Key>
+            <PropertyRef Name="IdOficinasYDelegaciones" />
+          </Key>
+          <Property Name="OficinaDelegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Establecimiento" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="Localidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Comentario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVO" Type="Boolean" />
+          <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="IdEstablecimientoRindeExamen" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6468,6 +6511,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="EstablecimientoRindeExamen">
             <EntityTypeMapping TypeName="SINUModel.EstablecimientoRindeExamen">
               <MappingFragment StoreEntitySet="EstablecimientoRindeExamen">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Jurisdiccion" ColumnName="Jurisdiccion" />
                 <ScalarProperty Name="Localidad" ColumnName="Localidad" />
@@ -7973,6 +8017,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vOficDeleg_EstablecimientoRindExamen">
+            <EntityTypeMapping TypeName="SINUModel.vOficDeleg_EstablecimientoRindExamen">
+              <MappingFragment StoreEntitySet="vOficDeleg_EstablecimientoRindExamen">
+                <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
+                <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
+                <ScalarProperty Name="OficinaDelegacion" ColumnName="OficinaDelegacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
