@@ -81,7 +81,7 @@ namespace SINU.Controllers
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-
+                ViewBag.VenceComvocatoria = false;
                 if (idInscri.IdModalidad != null)
                 {
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
