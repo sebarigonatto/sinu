@@ -399,7 +399,22 @@ namespace SINU.Controllers
                 UserManager.Update(user);
 
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Restablecer contraseña", "Para restablecer la contraseña, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+
+                //busco los datos del usuario en las tabla que corresponda
+                var postu = db.Persona.FirstOrDefault(mbox => mbox.Email == user.Email);
+               
+                var apellido = (postu!=null) ? postu.Apellido:db.vUsuariosAdministrativos.FirstOrDefault(mbox => mbox.Email == user.Email).Apellido;
+
+                ViewModels.PlantillaMailConfirmacion datosMail = new ViewModels.PlantillaMailConfirmacion
+                {
+                    Apellido = apellido,
+                    CuerpoMail = "Se inicio el Proceso para el reestablecimiento de la contraseña, desde la opciones de Inicio de Sesion.",
+                    LinkConfirmacion = callbackUrl
+                };
+
+                Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
+
+
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -592,6 +607,38 @@ namespace SINU.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public ActionResult RecuperarCuenta()
+        {
+          
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RecuperarCuenta(RecuperacionCuenta recu)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var user = UserManager.FindByEmail(recu.EmailOriginal);
+                    if (user == null || !( UserManager.IsEmailConfirmed(user.Id)))
+                    {
+                        // No revelar que el usuario no existe o que no está confirmado
+                        return View();
+                    }
+                    //await UserManager.GeneratePasswordResetToken
+
+
+                }
+                catch (Exception ex)
+                {
+
+                    throw;
+                }
+            }
+            return View();
         }
 
         //

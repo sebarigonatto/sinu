@@ -35,31 +35,29 @@
     }
 </style>
 <br />
-<div class="row" style="align-content:center;margin-top:3vw">
-    <div class="col-sm-12 justify-content-sm-center align-content-center d-flex" >
-        <img class="img-fluid " style="width:20%;margin-bottom:-3rem" accesskey="" src="~/Imagenes/monitor_error.png" />
+<div class="row text-center" style="margin-top:3vw">
+    <div class="col-sm-12 " >
+        <img class="img-fluid " style="width: 22vh; margin-bottom: -3rem" accesskey="" src="~/Imagenes/monitor_error.png" />
     </div>
     <div class="col-sm-12 ">
         <div>
-            <h2 class="text-black-50 text-center" style="font-size:20vh">Error!!</h2>
+            <h2 class="text-black-50 text-center" style="font-size:15vh">Error!!</h2>
             <h2 style="font-size:5vh; color:#ff3c3c" class="text-center">Error al procesar la solicitud.</h2>
             <p class="text-danger text-center">
 
 
                 @if (Model == null)
                 {
-                    <h1 class="text-center">No se encuentra la documentacion del Postulante</h1>
+                    <h4 class="text-center">No se encuentra la documentacion del Postulante</h4>
                 }   
                 else
                 {
 
-                    <h2 class="text-center"> @Model.Exception.InnerException.Message </h2>
-                    <h3  class="negro-sub text-center"> <b >Controlador</b>: @Model.ControllerName </h3>
-                    <h3 class="negro-sub text-center"> <b >Accion</b>: @Model.ActionName </h3>
-                    <h3 class="negro-sub text-center"> <b >Menu</b>: @ViewBag.Menu </h3>
+                    <h4 class="text-center"> @Model.Exception.Message </h4>
+                    
 
                 }
-
+                <a href="~/Home/Index" class="card-link">Ir a la Pagina Principal</a>
 
             </p>
         </div>

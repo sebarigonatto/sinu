@@ -937,6 +937,7 @@
     <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Certificado&amp;ReporteGMV.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
+    <Content Include="Plantillas\PlantillaMailForgotPassword.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1324,6 +1325,8 @@
     <Content Include="Views\Delegacion\DocumentosNecesarios.cshtml" />
     <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
     <Content Include="Views\Delegacion\AsignarFechaVarios.cshtml" />
+    <Content Include="Views\Account\RecuperarCuenta.cshtml" />
+    <Content Include="Views\Postulante\InscripConvo.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

@@ -682,8 +682,8 @@ $(document).ready(function () {
         //en caso de que el combobox es de la provincia
         if (Combo == "ComboJuriEST") {
             OPC = 0;
-            $("#ComboLocaliEST, #ComboIdInstEST").empty().val(null).attr('disabled', 'disabled').selectpicker('refresh');
-
+            $("#ComboLocaliEST, #ComboIdInstEST").empty().val(null).attr('disabled', 'disabled');
+            $("#ComboLocaliEST, #ComboIdInstEST").selectpicker('refresh');
             
             //cuando el combobox seleccionado es de la localidad
         } else {
