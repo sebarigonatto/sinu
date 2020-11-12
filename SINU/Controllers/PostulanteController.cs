@@ -34,7 +34,6 @@ namespace SINU.Controllers
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
-
         public ActionResult Index(int? ID_Postulante)
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
@@ -43,12 +42,17 @@ namespace SINU.Controllers
               
                 IDPersonaVM pers = new IDPersonaVM
                 {
-                    ID_PER = (ID_Postulante != null) ? (int)ID_Postulante : db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
+                    ID_PER = ID_Postulante ??  db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
                 
                 pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
                 //verifico el ROL al que pertenece el Usuario alctualmente logueado 
                 Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
+                //controlo la situacion en el que un postulante podria ver los datos de otro
+                if (!(bool)Session["DeleConsul"] && pers.ID_PER != db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona)        
+                {
+                    return RedirectToAction("AccionNoAutorizada", "Error");
+                }
 
                 //cargo los ID de las etapas por las que paso el postulante
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
@@ -77,13 +81,13 @@ namespace SINU.Controllers
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-              
 
                 if (idInscri.IdModalidad != null)
                 {
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
                     var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
+                    ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
                 }
 
                 return View(pers);
@@ -1275,7 +1279,6 @@ namespace SINU.Controllers
                         break;
                 }
                 return Json(new { APLICA = Aplica, POPUP = PopUp, ALTIMC = AltIcm }, JsonRequestBehavior.AllowGet);
-
             }
             catch (Exception)
             {
@@ -1344,11 +1347,19 @@ namespace SINU.Controllers
                     //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
                     pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 }
-                int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante).IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
+                var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante);
+                int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == inscrip.IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
                 int[] secublock = { 14, 24, 16, 20 };
                 ViewBag.ValidacionEnCurso = secublock.Contains(secu);
+                //verifico si la convocatoria del postulante vencio para bloquera los formularios
+                if (inscrip.IdModalidad!=null)
+                {
+                    ViewBag.ValidacionEnCurso = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == inscrip.IdInscripcion).Fecha_Fin_Proceso < DateTime.Now;
+                }
+                
                 //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
                 ViewBag.ValidacionEnCurso = (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(n => n.UserName == HttpContext.User.Identity.Name).Id) != null) ? ViewBag.ValidacionEnCurso : true;
+               
             }
             else
             {
@@ -1648,5 +1659,15 @@ namespace SINU.Controllers
 
         }
 
+
+        public ActionResult InscripConvo()
+        {
+            return View(db.vPeriodosInscrip.ToList());
+        }
+
+        public ActionResult InscripNueva(int id_periodo)
+        {
+            return View();
+        }
     }
 }

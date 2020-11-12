@@ -6,7 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -51,7 +51,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id="Contraseña" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "Contraseña" })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
         </div>
@@ -76,7 +76,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion,"Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker",@id="DelegacionOfi" })
+            @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker", @id = "DelegacionOfi" })
             <div class="h-100"></div>
 
             @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
@@ -87,9 +87,9 @@
         @Html.Label("Direccion", new { @class = "col-md-2 control-label" })
         <p id="Direccion" class="control-label col"><b>asdasda</b></p>
         @Html.Label("Telefono", new { @class = "col-md-2 control-label" })
-        <p id="Telefono"  class="control-label col"><b>asdasda</b></p>
+        <p id="Telefono" class="control-label col"><b>asdasda</b></p>
         @Html.Label("Celular", new { @class = "col-md-2 control-label" })
-        <p id="Celular"  class="control-label col"><b>asdasda</b></p>
+        <p id="Celular" class="control-label col"><b>asdasda</b></p>
     </div>
     <br />
 
@@ -105,7 +105,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-success load-submit" value="Registrarse" />
+            <input type="submit" class="btn btn-success " value="Registrarse" />
         </div>
     </div>
 }
@@ -113,17 +113,17 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
         $(".selectpicker").selectpicker({
             size: 7,
             noneSelectedText: 'Ninguna Opcion Seleccionada'
 
         });
-    $(document).ready(function () {
-        if ($("#IdInstituto").val()!="") {
-            $("#IdInstituto").next("button[data-id='IdInstituto']").attr('disabled', 'true').children().css('color', 'black !important');
+        $(document).ready(function () {
+            if ($("#IdInstituto").val() != "") {
+                $("#IdInstituto").next("button[data-id='IdInstituto']").attr('disabled', 'true').children().css('color', 'black !important');
 
-        }
+            }
             $("#Contraseña").attr("data-toggle", "tooltip")
                 .attr("data-placement", "top")
                 .attr("title", "Ingresá una clave de acceso que te resulte familiar y que utilizarás a lo largo del proceso, cada vez que tengas que acceder")
@@ -146,9 +146,16 @@
                     $("#Celular b").text(DeleOfi[3] == "" ? "-------" : DeleOfi[3]);
                     $("#DatosDelegacion").removeAttr("hidden");
                 } else {
-                    $("#DatosDelegacion").attr("hidden",true);
+                    $("#DatosDelegacion").attr("hidden", true);
                 }
             })
-    });
-</script>
+
+            $('form').on('submit', async function (e) {
+                if ($(this).valid()) {
+                  
+                    $.Cargando();
+                }
+            });
+        });
+    </script>
 }

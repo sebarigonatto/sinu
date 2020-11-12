@@ -628,7 +628,7 @@ namespace SINU.Controllers
                         // No revelar que el usuario no existe o que no está confirmado
                         return View();
                     }
-                    //await UserManager.generate
+                    //await UserManager.GeneratePasswordResetToken
 
 
                 }
