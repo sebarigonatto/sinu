@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Microsoft.Ajax.Utilities;
+using CaptchaMvc.HtmlHelpers;
+using CaptchaMvc.Models;
 
 namespace SINU.Controllers
 {
@@ -72,11 +74,15 @@ namespace SINU.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [CaptchaMvc.Attributes.CaptchaVerify("Captcha is not valid")]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+         
             if (!ModelState.IsValid)
             {
-                return View(model);
+                
+                AddErrors(IdentityResult.Failed("Respuesta de Capcha incorrecto"));
+                return View();
             }
             ////validadndo si el email fue validado por el usuarios
 
@@ -718,17 +724,20 @@ namespace SINU.Controllers
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             var passcuenta = UserManager.CheckPassword(user, model.PasswordOriginal);
-            if (passcuenta)
+            if (!passcuenta)
             {
                 // No revelar que el usuario no existe
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
+            //ejecuto algunsp que cambie los mail de una cuenta
 
             //var result =  UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             //if (result.Succeeded)
             //{
             //    return RedirectToAction("ResetPasswordConfirmation", "Account");
             //}
+
             //AddErrors(result);
             return View();
         }

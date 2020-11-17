@@ -1,5 +1,6 @@
-﻿@using SINU.Models
-@model LoginViewModel
+﻿
+@model SINU.Models.LoginViewModel
+@using CaptchaMvc.HtmlHelpers
 @{
     ViewBag.Title = "Iniciar sesión";
 }
@@ -7,6 +8,11 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <h2>@ViewBag.aviso</h2>
+<style>
+    .field-validation-error {
+        color: #dc3545 !important
+    }
+</style>
 <div class="row">
     <div class="col-md-6 card shadow-sm">
         <br />
@@ -35,11 +41,19 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>*@
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.MathCaptcha("Refrescar","Ingrese el resultado aqui","Este campo es requerido",true)
+                            
                         </div>
                     </div>
                 </div>
@@ -86,6 +100,11 @@
         });
 
     }
+    $(document).ready(function () {
+        $("#CaptchaInputText").addClass("form-control");
+        $("#CaptchaInputText").next("br").remove();
+        $("a[href='#CaptchaImage']").show();
+    })
 </script>
 }
 @*<div class="container h-100">

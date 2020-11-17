@@ -62,6 +62,9 @@ namespace SINU.Models
 
         [Display(Name = "¿Recordar cuenta?")]
         public bool RememberMe { get; set; }
+
+        [Required]
+        public string CaptchaInputText { get; set; }
     }
 
     public class RegisterViewModel

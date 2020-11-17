@@ -53,6 +53,9 @@
     <ExcludeFoldersFromDeployment>Documentacion\ArchivosDocuPenal</ExcludeFoldersFromDeployment>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
+      <HintPath>packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -1328,6 +1331,7 @@
     <Content Include="Views\Account\RecuperarCuenta.cshtml" />
     <Content Include="Views\Postulante\InscripConvo.cshtml" />
     <Content Include="Views\Account\RecuperacionCuenta.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

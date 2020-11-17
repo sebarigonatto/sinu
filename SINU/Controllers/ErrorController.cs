@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace SINU.Controllers
 {
+    [AllowAnonymous]
     public class ErrorController : Controller
     {
         // GET: Error
@@ -26,6 +27,11 @@ namespace SINU.Controllers
             return View("Error", x);
 
             //return View("Error");
+        }
+        public ViewResult NotFound()
+        {
+            Response.StatusCode = 404;  //you may want to set this to 200
+            return View("NotFound");
         }
     }
 }
