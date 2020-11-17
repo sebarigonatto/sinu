@@ -48,7 +48,7 @@ namespace SINU.Controllers
         /// <summary>
         /// Reutilizo este datails(Modifico la Vista para poder Restaurar un Postulante que en el caso se haya interrumpido su proceso)
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">recibe como parametro el IDPostulante o IdPersona que son iguales</param>
         /// <returns></returns>
         public ActionResult Details(int? id)//Recibe el IdPersona
         {
@@ -298,7 +298,7 @@ namespace SINU.Controllers
 
             return View(personaVM);
         }
-     #region Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avnzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
+     #region Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
         [HttpPost]
         public ActionResult Documentacion(int? id)
@@ -732,15 +732,20 @@ namespace SINU.Controllers
                 {
                     if (Abierto.Abierta==true)
                     {
-                        if (TieneProblema.ToList().First() == true)
+                        if (TieneProblema.ToList().First() == true && AoC==1)
                         {
                             return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
+                        }
+                        if (TieneProblema.ToList().First() == true && AoC == 0)
+                        {
+                            return Json(new { success = false, msg = "Esta pantalla ya se encuentra abierta para agregar problemas" });
                         }
                         if (AoC==1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
                         {
                             db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                         }
+
                     }
                     else
                     {
@@ -835,10 +840,14 @@ namespace SINU.Controllers
         }
         #endregion
        
-        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha,string LugarPresentacion)
+        public ActionResult AsignarFechaVarios(string[] select, DateTime Fecha,string LugarPresentacion)
         {
+            if (select == null)
+            {
+                return Json(new { success = true, msg = "Es importante seleccionar un Postulante" });
+            }
 
-            return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
+            return Json(new { success = true, msg = "Es Importante Agregar comentario" });
         }
     }
 }
