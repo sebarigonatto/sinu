@@ -237,6 +237,7 @@ namespace SINU.Controllers
 
 
                     var result = await UserManager.CreateAsync(user, model.Password);
+                    
                     //var personareg = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
                     //if (personareg != null)
                     //{
@@ -247,6 +248,14 @@ namespace SINU.Controllers
                     if (result.Succeeded)
                     {
                         //crea una persona, un postulante y una inscripcion
+                        if (db.Persona.FirstOrDefault(m=>m.DNI==model.DNI)!=null)
+                        {
+                            db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+                            db.SaveChanges();
+                            AddErrors(IdentityResult.Failed("El Dni ingresado ya Existe"));
+                            return View(model);
+                        }
+
                         var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
 
                         //comentado para evitar el inicio de session automatico
@@ -283,7 +292,7 @@ namespace SINU.Controllers
 
                         return RedirectToAction("Login");
                     }
-                    AddErrors(result);
+                    AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
                 }
                 catch (Exception ex)// esto es una prueba ..quiero provocar un error y que venga por aca si falla el mail
                 {
@@ -402,7 +411,7 @@ namespace SINU.Controllers
 
                 //busco los datos del usuario en las tabla que corresponda
                 var postu = db.Persona.FirstOrDefault(mbox => mbox.Email == user.Email);
-               
+                //verifico si el usuario es un postulante o usuario administativo
                 var apellido = (postu!=null) ? postu.Apellido:db.vUsuariosAdministrativos.FirstOrDefault(mbox => mbox.Email == user.Email).Apellido;
 
                 ViewModels.PlantillaMailConfirmacion datosMail = new ViewModels.PlantillaMailConfirmacion
@@ -414,8 +423,9 @@ namespace SINU.Controllers
 
                 Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
 
-
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                ViewBag.Title = "Cambio de Contraseña";
+                ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
+                return View("ForgotPasswordConfirmation");
             }
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
@@ -442,7 +452,8 @@ namespace SINU.Controllers
             var user = UserManager.FindById(userId);
             DateTime FechaGeneToken = DateTime.Parse(user.FechaToken.ToString());
             var horatrascurridas = (DateTime.Now - FechaGeneToken).TotalHours;
-            if (horatrascurridas <= horaexpiToken)
+          
+            if (horatrascurridas <= horaexpiToken && UserManager.VerifyUserToken(user.Id,"ResetPassword",code))
             {
                 return View();
             }
@@ -612,23 +623,54 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult RecuperarCuenta()
         {
-          
+                                                                                                                                                        
             return View();
         }
+
+
+        //accion para cambia el correo de una cuenta
         [HttpPost]
-        public ActionResult RecuperarCuenta(RecuperacionCuenta recu)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult RecuperarCuenta(RecuperarCuenta recu)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var user = UserManager.FindByEmail(recu.EmailOriginal);
+                    var user = UserManager.FindByEmail(recu.Email);
                     if (user == null || !( UserManager.IsEmailConfirmed(user.Id)))
                     {
                         // No revelar que el usuario no existe o que no está confirmado
                         return View();
                     }
-                    //await UserManager.GeneratePasswordResetToken
+
+                    //genero el token 
+                    string code = UserManager.GeneratePasswordResetToken(user.Id);
+                    //Revisar GUARDO LA FECHA Y HORA DE GENERACION DE TOKEN PARA EL USUARIO EN LA TABLA ASPUSER
+
+                    user.FechaToken = DateTime.Now;
+                    UserManager.Update(user);
+
+                    var callbackUrl = Url.Action("RecuperacionCuenta", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+
+                    //busco los datos del usuario en las tabla que corresponda
+                    var postu = db.Persona.FirstOrDefault(mbox => mbox.Email == user.Email);
+                    //verifico si el usuario es un postulante o usuario administativo
+                    var apellido = (postu != null) ? postu.Apellido : db.vUsuariosAdministrativos.FirstOrDefault(mbox => mbox.Email == user.Email).Apellido;
+
+                    ViewModels.PlantillaMailConfirmacion datosMail = new ViewModels.PlantillaMailConfirmacion
+                    {
+                        Apellido = apellido,
+                        CuerpoMail = "Se inicio el Proceso para la recuperacion de la Cuenta, desde la opciones de Inicio de Sesion.",
+                        LinkConfirmacion = callbackUrl
+                    };
+
+                    Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
+
+                    ViewBag.Title = "Recuperacion De Cuenta";
+                    ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
+                    return View("ForgotPasswordConfirmation");
 
 
                 }
@@ -638,10 +680,59 @@ namespace SINU.Controllers
                     throw;
                 }
             }
+            return View(recu);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RecuperacionCuenta(string code, string userId)
+        {
+            if (code == null) return View("Error");
+
+            double horaexpiToken = double.Parse(db.Configuracion.FirstOrDefault(b => b.NombreDato == "TokenCambioContrVida").ValorDato);
+            //levanto la fecha/hora de creacion del token de reestablecimiento de contraseña
+            var user = UserManager.FindById(userId);
+            DateTime FechaGeneToken = DateTime.Parse(user.FechaToken.ToString());
+            var horatrascurridas = (DateTime.Now - FechaGeneToken).TotalHours;
+            if (horatrascurridas <= horaexpiToken && UserManager.VerifyUserToken(user.Id, "ResetPassword", code))
+            {
+                return View();
+            }
+            Session["funcion"] = "Expiro token para el reestablecimiento de Contraseña!!";
+            //revisar logica para cuando expiro el token de reestablesimiento de contraseña
+            return View("Error");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public  ActionResult RecuperacionCuenta(RecuperacionCuenta model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user =  UserManager.FindByEmail(model.EmailOriginal);
+            if (user == null)
+            {
+                // No revelar que el usuario no existe
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            var passcuenta = UserManager.CheckPassword(user, model.PasswordOriginal);
+            if (passcuenta)
+            {
+                // No revelar que el usuario no existe
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+
+            //var result =  UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            //if (result.Succeeded)
+            //{
+            //    return RedirectToAction("ResetPasswordConfirmation", "Account");
+            //}
+            //AddErrors(result);
             return View();
         }
 
-        //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()

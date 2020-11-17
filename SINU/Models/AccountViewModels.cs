@@ -111,7 +111,7 @@ namespace SINU.Models
         public SelectList ListOficinaYDelegacion { get; set; }
 
         public SelectList ListIntitutos { get; set; }
-         public string DatosDelegacion { get; set; }
+        public string DatosDelegacion { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -143,7 +143,18 @@ namespace SINU.Models
         public string Email { get; set; }
 
     }
-    public class RecuperacionCuenta {
+
+    public class RecuperarCuenta
+    {
+
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Correo electrónico Original")]
+        public string Email { get; set; }
+    }
+
+    public class RecuperacionCuenta
+    {
 
         [Required]
         [EmailAddress]
