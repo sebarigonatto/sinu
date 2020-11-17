@@ -1324,5 +1324,22 @@ namespace SINU.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<SecuenciasEtapaEstadosEnOrden_Result>("[SINUEntities].[SecuenciasEtapaEstadosEnOrden]()");
         }
+    
+        public virtual int spExamenParaEsteInscripto(Nullable<int> idInscripcion, Nullable<System.DateTime> fechaRindeExamen, Nullable<int> idEstablecimientoRindeExamen)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            var fechaRindeExamenParameter = fechaRindeExamen.HasValue ?
+                new ObjectParameter("FechaRindeExamen", fechaRindeExamen) :
+                new ObjectParameter("FechaRindeExamen", typeof(System.DateTime));
+    
+            var idEstablecimientoRindeExamenParameter = idEstablecimientoRindeExamen.HasValue ?
+                new ObjectParameter("IdEstablecimientoRindeExamen", idEstablecimientoRindeExamen) :
+                new ObjectParameter("IdEstablecimientoRindeExamen", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spExamenParaEsteInscripto", idInscripcionParameter, fechaRindeExamenParameter, idEstablecimientoRindeExamenParameter);
+        }
     }
 }

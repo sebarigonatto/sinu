@@ -2466,6 +2466,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="NombreYPaisInstituto" Type="varchar" Mode="In" />
           <Parameter Name="CursandoUltimoAnio" Type="bit" Mode="In" />
         </Function>
+        <Function Name="spExamenParaEsteInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
+          <Parameter Name="FechaRindeExamen" Type="datetime" Mode="In" />
+          <Parameter Name="IdEstablecimientoRindeExamen" Type="int" Mode="In" />
+        </Function>
         <Function Name="spFamiliarEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
@@ -5266,6 +5271,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vSecuencia_EtapaEstadoRECHAZADOS" EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" />
           <EntitySet Name="vInscriptosYConvocatorias" EntityType="SINUModel.vInscriptosYConvocatorias" />
           <EntitySet Name="vOficDeleg_EstablecimientoRindExamen" EntityType="SINUModel.vOficDeleg_EstablecimientoRindExamen" />
+          <FunctionImport Name="spExamenParaEsteInscripto">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+            <Parameter Name="FechaRindeExamen" Mode="In" Type="DateTime" />
+            <Parameter Name="IdEstablecimientoRindeExamen" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -8034,6 +8044,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spExamenParaEsteInscripto" FunctionName="SINUModel.Store.spExamenParaEsteInscripto" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

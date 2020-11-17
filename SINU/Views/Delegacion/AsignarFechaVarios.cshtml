@@ -5,9 +5,21 @@
     }*@
 
 <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
-@using (Html.BeginForm("AsignarFechaVarios", "Delegacion"))
+@using (Ajax.BeginForm("AsignarFechaVarios", "Delegacion", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "Exito(data,status,xhr)",
+        OnFailure = "Falla",
+        LoadingElementId = "carga",
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
+    new { id = "BeginFormAsignarFechaVarios" }))
 {
-    @Html.AntiForgeryToken()
+    @*@using (Html.BeginForm("AsignarFechaVarios", "Delegacion"))
+        {*@
+            @Html.AntiForgeryToken()
 
     <h2 class="text-center">Asignar fecha ha varios Postulante</h2>
     <table class="table table-filters table-bordered table-light text-center" id="le-filters" style="width:100%">
@@ -48,7 +60,6 @@
                     </td>
                     <td>
                         <input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />
-                        @*@Html.CheckBox("V or F", false,new { })*@
                     </td>
                 </tr>
             }
@@ -68,7 +79,7 @@
                 </div>
                 <div class="form-group">
                     <label for="recipient-name" class="col-form-label">
-                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", new { id = "myProduct", name = "Lugar" })
+                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", new { id = "myProduct", name = "Lugar" })
                     </label>
 
                 </div>
