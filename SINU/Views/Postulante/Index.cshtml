@@ -187,7 +187,7 @@
                                     </li>
                                     <li class="nav-item flex-md-fill bli">
                                         <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#DocuAnexo" role="tab" aria-controls="DocuAnexo" aria-selected="false">
-                                            Documentacion Extra
+                                            Documentacion
                                         </a>
                                     </li>
                                     @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4)
@@ -388,7 +388,7 @@
                                 @* VISTA DE Documentacion Extra*@
                                 <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuAnexo">
                                     <nav class="navbar navbar-dark bg-dark ocultnav">
-                                        <a class="navbar-brand" href="#">Documentacion Anexo</a>
+                                        <a class="navbar-brand" href="#">Documentacion</a>
                                         <button id="BTDocuAnexoNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuAnexoNAV" role="tabpanel" aria-labelledby="DocuAnexoNAV-tab" aria-controls="DocuAnexoNAV" aria-expanded="false" aria-label="Toggle navigation">
                                             <span class="icon-bar"></span>
                                             <span class="icon-bar"></span>
@@ -419,7 +419,6 @@
                                         <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
 
                                             <h2>Validar Datos</h2>
-                                            <br />
                                             <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                                 <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
                                                     <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
@@ -494,6 +493,8 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
+
+     
         //alert("@ViewBag.ValidacionEnCurso");
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;
@@ -683,8 +684,11 @@
                 case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
-                case "DatosPersonales":
-                    $("#BeginFormDatosPersonales input[type='submit']").next("a").removeClass("disabled");
+                case "CambiaMOD":
+                    id = $("#vPersona_DatosBasicosVM_IdPersona").val();
+                    $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
+                        $("#BeginDocumentacionAnexo").replaceWith(response);
+                    });
                     break;
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");

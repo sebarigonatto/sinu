@@ -48,7 +48,7 @@ namespace SINU.Controllers
                 pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
                 //verifico el ROL al que pertenece el Usuario alctualmente logueado 
                 Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
-                //controlo la situacion en el que un postulante podria ver los datos de otro
+                //controlo la situacion en la que un postulante podria ver los datos de otro
                 if (!(bool)Session["DeleConsul"] && pers.ID_PER != db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona)        
                 {
                     return RedirectToAction("AccionNoAutorizada", "Error");
@@ -267,7 +267,7 @@ namespace SINU.Controllers
                 var grupoDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
 
 
-                Func.EnvioDeMail(datosMail, "PlantillaMailSolicitudEntrevista", null, null, "MailAsunto8", ID_Delegacion);
+               Func.EnvioDeMail(datosMail, "PlantillaMailSolicitudEntrevista", null, null, "MailAsunto8", ID_Delegacion);
 
 
                 return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
@@ -370,13 +370,18 @@ namespace SINU.Controllers
                 try
                 {
                     var p = Datos.vPersona_DatosPerVM;
-                    var iDMOd = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == p.IdPersona).IdModalidad;
+                    var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == p.IdPersona);
+                    string camiamod="";
                     //verifico si cambio la modalidad par quitar la restricciones que tienen ya que se debe verificar nuevamente
-                    if (iDMOd != p.IdModalidad)
+                    if (inscrip.IdModalidad != null && inscrip.IdModalidad != p.IdModalidad)
                     {
                         db.DataProblemaEncontrado.RemoveRange(db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
                         db.VerificacionPantallasCerradas.RemoveRange(db.VerificacionPantallasCerradas.Where(m => m.IdPostulantePersona == p.IdPersona).ToList());
+                        //como cambio de modalidad y los documentos que se requiere para cada un a es distinta borro los documentos entregados por el postulante VER ESTO
+                        db.DocPresentado.RemoveRange(db.DocPresentado.Where(m => m.IdInscripcion == inscrip.IdInscripcion).ToList());
                         db.SaveChanges();
+                        camiamod = "CambiaMOD";
+                        
                     }
                     //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
@@ -384,7 +389,7 @@ namespace SINU.Controllers
                     int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo);
 
-                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES", form = "DatosPersonales" });
+                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES", form = camiamod });
                 }
                 catch (Exception ex)
                 {

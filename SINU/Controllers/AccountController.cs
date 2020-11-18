@@ -61,6 +61,7 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ViewBag.logueado = false;
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.logueado = true;
@@ -80,7 +81,6 @@ namespace SINU.Controllers
          
             if (!ModelState.IsValid)
             {
-                
                 AddErrors(IdentityResult.Failed("Respuesta de Capcha incorrecto"));
                 return View();
             }
@@ -130,7 +130,7 @@ namespace SINU.Controllers
                             return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                         case SignInStatus.Failure:
                         default:
-                            ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
+                            ModelState.AddModelError("", "E-mail o Contraseña incorrecto.");
                             return View(model);
                     }
                 }
@@ -488,6 +488,8 @@ namespace SINU.Controllers
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
+                ViewBag.Title = "Cambio de Contraseña";
+                ViewBag.Parrafo = "Se realizo el cambio de Contraseña exitosamente.";
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
@@ -645,10 +647,13 @@ namespace SINU.Controllers
                 try
                 {
                     var user = UserManager.FindByEmail(recu.Email);
+                    ViewBag.Title = "Recuperacion De Cuenta";
+                    ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
                     if (user == null || !( UserManager.IsEmailConfirmed(user.Id)))
                     {
                         // No revelar que el usuario no existe o que no está confirmado
-                        return View();
+                        return View("ForgotPasswordConfirmation");
+
                     }
 
                     //genero el token 
@@ -674,8 +679,6 @@ namespace SINU.Controllers
 
                     Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
 
-                    ViewBag.Title = "Recuperacion De Cuenta";
-                    ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
                     return View("ForgotPasswordConfirmation");
 
 
@@ -711,12 +714,15 @@ namespace SINU.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public  ActionResult RecuperacionCuenta(RecuperacionCuenta model)
+        [CaptchaMvc.Attributes.CaptchaVerify("Captcha is not valid")]
+        public ActionResult RecuperacionCuenta(RecuperacionCuenta model)
         {
             if (!ModelState.IsValid)
             {
+                AddErrors(IdentityResult.Failed("Respuesta de Capcha incorrecto"));
                 return View(model);
             }
+            //ver su buscar nuevamente el user con el nuevo mail 
             var user =  UserManager.FindByEmail(model.EmailOriginal);
             if (user == null)
             {
@@ -738,8 +744,12 @@ namespace SINU.Controllers
             //    return RedirectToAction("ResetPasswordConfirmation", "Account");
             //}
 
-            //AddErrors(result);
-            return View();
+            ViewBag.Title = "Cambio de Email de la Cuenta";
+            ViewBag.Parrafo = "Se realizo el cambio de E-mail de la Cuenta exitosamente.";
+
+            return RedirectToAction("ResetPasswordConfirmation", "Account");
+
+
         }
 
         // GET: /Account/ExternalLoginFailure

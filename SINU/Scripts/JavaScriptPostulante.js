@@ -89,7 +89,7 @@ $(document).ready(function () {
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     $(".combobox").selectpicker({
         liveSearch: true,
-        size: 5,
+        size: 4.2,
         liveSearchPlaceholder: "Ingrese su busqueda",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
@@ -308,9 +308,7 @@ $(document).ready(function () {
     PAIS("ListaPaisR", 0);
     PAIS("ListaPaisE", 0);
 
-
-
-    ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
+    //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
     function PAIS(Combo, PRI) {
 
         //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
@@ -465,7 +463,7 @@ $(document).ready(function () {
                 /* https://developer.snapappointments.com/bootstrap-select/ */
                 $(".combobox").selectpicker({
                     liveSearch: true,
-                    size: 6,
+                    size: 5,
                     liveSearchPlaceholder: "Ingrese su busqueda",
                     liveSearchStyle: 'contains',//'startsWith'
                     noneResultsText: 'No se Encuantran Resultados',
@@ -561,11 +559,10 @@ $(document).ready(function () {
                     };
 
                 });
-
-                $("select").on("changed.bs.select", function () {
-                    proloc
-                    $(this).valid();
-                });
+                //$("select").on("changed.bs.select", function () {
+                //    proloc
+                //    $(this).valid();
+                //});
 
                 $(":input").on('change', function (e) {
                     ValidInput($(this).attr('name'));
