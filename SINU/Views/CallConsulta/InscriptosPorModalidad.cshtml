@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SINU.Models.vConsultaInscripciones>
 
 @{
-    ViewBag.Title = "Inscriptos Por Modalidad " + ViewBag.modalidadElegida;
+    ViewBag.Title = "Inscriptos Por Modalidad: " + ViewBag.modalidadElegida;
 }
 
 <h2>
@@ -20,38 +20,47 @@
                 @Html.DisplayNameFor(model => model.Delegacion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Modalidad)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha)
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
             </th>
 
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Delegacion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                    </td>*@
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delegacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>*@
+        </tr>
         }
     </tbody>
     @*<div>
@@ -62,3 +71,4 @@
     @* @Html.ActionLink("Inscriptos Todos", "InscriptosPorModalidad", new { ModalidadElegida = "Todos" })*@
 
 </table>
+

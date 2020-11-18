@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
 
 
-<h2>CONSULTA TOTAL POSTULANTES</h2>
+<h2>CONSULTA TOTAL DE INSCRIPTOS</h2>
 
 <table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
     <thead>
@@ -14,9 +14,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -42,9 +39,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
