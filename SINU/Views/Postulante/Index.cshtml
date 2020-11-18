@@ -51,8 +51,8 @@
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
 
         <h4>La convocatoria a la que se inscriobio a finalizado.</h4>
-        <h6>Para inscribirse en otra convocatoria hacer @Html.ActionLink("click aqui","InscripConvo"    )</h6>
-        
+        <h6>Para inscribirse en otra convocatoria hacer @Html.ActionLink("click aqui", "InscripConvo")</h6>
+
     </div>
     <br />
 }
@@ -424,7 +424,7 @@
                                                     <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
                                                     <h4>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h4>
                                                     <br />
-                                                    @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                 @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                {
                                                    HttpMethod = "POST",
                                                    OnSuccess = "Exito(data,status,xhr)",
@@ -436,7 +436,6 @@
                                                     <h4>La validacion se encuentra en Proceso.</h4>
                                                     <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
                                                 </div>
-
 
                                             </div>
                                             <br />
@@ -494,7 +493,7 @@
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
 
-     
+
         //alert("@ViewBag.ValidacionEnCurso");
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;

@@ -176,7 +176,7 @@ namespace SINU.Controllers
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS BASICOS"
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
-
+        [ValidateAntiForgeryToken]
         public ActionResult DatosBasicos(DatosBasicosVM Datos)
         {
             if (Datos.vPersona_DatosBasicosVM.ComoSeEntero == null)
@@ -362,6 +362,7 @@ namespace SINU.Controllers
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public ActionResult DatosPersonales(DatosPersonalesVM Datos)
         {
             var fe = DateTime.Now;
@@ -438,15 +439,14 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public JsonResult DocuPenal(DocuPenalVM data)
         {
             try
             {
-                ViewBag.baase = AppDomain.CurrentDomain.BaseDirectory;
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory ?? "no";
+                string ubicacion = AppDomain.CurrentDomain.BaseDirectory ;
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string anexo = "";
-                string cert = "";
+                string anexo = "", cert = "";
                 string NombreArchivo, ExtencioArchivo, guarda;
                 bool btanexo = false, btcert = false;
                 int id = data.IdPersona;
@@ -481,7 +481,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message + "  " + ViewBag.path }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -595,6 +595,7 @@ namespace SINU.Controllers
         //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public JsonResult Domicilio(DomicilioVM Datos)
         {
             if (ModelState.IsValid)
@@ -835,6 +836,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public ActionResult EstudiosCUD(EstudiosVM Datos)
         {
 
@@ -1005,6 +1007,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public JsonResult IdiomaCUD(IdiomasVM datos)
         {
             if (ModelState.IsValid)
@@ -1099,6 +1102,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public JsonResult ActMilitarCUD(ActividadMIlitarVM datos)
         {
 
@@ -1187,6 +1191,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public ActionResult SituOcupacional(SituacionOcupacionalVM situ)
         {
             if (ModelState.IsValid)
@@ -1231,6 +1236,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public ActionResult Antropometria(vPersona_Antropometria a)
         {
             try
@@ -1322,7 +1328,7 @@ namespace SINU.Controllers
             PersonaFamiliaVM pers = new PersonaFamiliaVM
             {
                 vParentecoVM = db.vParentesco.Select(m => new SelectListItem { Value = m.idParentesco.ToString(), Text = m.Relacion }).ToList(),
-                SexoVM = db.Sexo.Select(m => new SelectListItem { Value = m.IdSexo.ToString(), Text = m.Descripcion }).ToList(),
+                SexoVM = db.Sexo.OrderBy(m => m.Descripcion).Where(m => m.Descripcion != "Seleccione Sexo").Select(m => new SelectListItem { Value = m.IdSexo.ToString(), Text = m.Descripcion }).ToList(),
                 vEstCivilVM = db.vEstCivil.Select(m => new SelectListItem { Value = m.Codigo_n, Text = m.Descripcion }).ToList(),
                 ReligionVM = db.vRELIGION.Select(m => new SelectListItem { Value = m.CODIGO, Text = m.DESCRIPCION }).ToList(),
                 TipoDeNacionalidadVm = db.TipoNacionalidad.Select(m => new SelectListItem { Value = m.IdTipoNacionalidad.ToString(), Text = m.Descripcion }).ToList()
@@ -1383,6 +1389,7 @@ namespace SINU.Controllers
 
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
         {
 
@@ -1599,6 +1606,7 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ProblemasPantalla(int IDPostulante, int IdPantalla)
         {
@@ -1614,6 +1622,7 @@ namespace SINU.Controllers
         }
 
         /*--------------------------------------------------------------PRESENTACION------------------------------------------------------------------------------*/
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Presentacion(int ID_persona)
         {
@@ -1628,7 +1637,7 @@ namespace SINU.Controllers
             };
             ViewBag.Asignado = true;
             var Inscrip = per.Postulante.Inscripcion.ToList()[0];
-            if ((DateTime)Inscrip.FechaRindeExamen == null)
+            if (Inscrip.FechaRindeExamen == null)
             {
                 ViewBag.Asignado = false;
             }
@@ -1667,11 +1676,16 @@ namespace SINU.Controllers
 
         public ActionResult InscripConvo()
         {
+            //ViewBag.idpostu = 
             return View(db.vPeriodosInscrip.ToList());
         }
 
+        [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        [ValidateAntiForgeryToken]
         public ActionResult InscripNueva(int id_periodo)
         {
+
             return View();
         }
     }
