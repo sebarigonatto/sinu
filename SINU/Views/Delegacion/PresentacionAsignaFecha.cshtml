@@ -1,38 +1,54 @@
-﻿@model SINU.Models.vInscripcionDetalle
+﻿@model SINU.ViewModels.PresentaciondelPostulante
 
 
+
+<link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Asignar fecha de Entrevista</h4>
-        <hr />
-       
+<div class="form-horizontal">
+    <h4>Asignar fecha de Entrevista</h4>
+    <hr />
 
 
 
-        @Html.HiddenFor(m => m.IdPersona)
-        @Html.HiddenFor(m => m.IdInscripcion)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*@Html.LabelFor(m => m.DetalleInscripcion.IdInscripcion)
+    @Html.HiddenFor(m => m.DetalleInscripcion.IdInscripcion)*@
+        <input type="hidden" name="Id" value="@Model.DetalleInscripcion.IdInscripcion" />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-            </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DetalleInscripcion.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DetalleInscripcion.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Apellido, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DetalleInscripcion.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DetalleInscripcion.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Nombres, "", new { @class = "text-danger" })
         </div>
-
-        @*<div class="form-group">
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
+            @*<input name="fecha" type="text" id="datetimepicker" />*@
+            <input type="text" class="form-control" id="datetimepicker" name="Fecha" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <label for="recipient-name" class="col-form-label">
+                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
+            </label>
+        </div>
+    </div>
+    @*<div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
@@ -40,48 +56,87 @@
             </div>
         </div>*@
 
-        @*<div class="form-group">
+    @*<div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>*@
-        @* Campo para asignar la fecha*@
-        <div class="form-group">
+    @* Campo para asignar la fecha*@
+    @*<div class="form-group">
             @Html.LabelFor(model => model.FechaRindeExamen, htmlAttributes: new { @class = "control-label col-md-2" })a asignar
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.FechaRindeExamen, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })
                 @Html.ValidationMessageFor(model => model.FechaRindeExamen, "", new { @class = "text-danger" })
             </div>
+        </div>*@
+    <br />
+    <div class="form-group">
+        <div id="DatosDelegacion" class="form-group control-label" hidden>
+            <h4 class="text-center">Datos del Lugar</h4>
+            @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
+            <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+            @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
+            <p id="Telefono" class="control-label col"><b>asdasda</b></p>
+            @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
+            <p id="Celular" class="control-label col"><b>asdasda</b></p>
         </div>
-        <br />
-        <div class="ml-md-0 row ">
-
-            <div class="col-md-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
-            </div>
-            <div class="col-md-2">
-                <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
-            </div>
-        </div>
-
     </div>
+    <div class="ml-md-0 row ">
+
+        <div class="col-md-2">
+            @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
+        </div>
+    </div>
+
+</div>
 
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
+            //$(".selectpicker").selectpicker({
+            //    size: 7,
+            //    noneSelectedText: 'Ninguna Opcion Seleccionada'
 
-            $(".datepicker").datepicker({
-                format: "dd/mm/yyyy",
-                language: "es",
-                autoclose: true,
-                startView: "days",
-                startDate: "Today"
-            });
-        })
+            //});
+            jQuery('#datetimepicker').datetimepicker();
+
+            var model = '@Html.Raw(Model.DatosLugar)';
+            var jsonDatosDelegacion = JSON.parse(model);
+            $("#LugarExamen").on("change", function () {
+                if ($(this).val() != "") {
+                    var value = $(this).val();
+                    var DeleOfi = "";
+                    $.each(jsonDatosDelegacion, function (index, item) {
+                        DeleOfi = (item[0] == value) ? item : DeleOfi;
+                        if (DeleOfi != "") {
+                            return false;
+                        }
+                    });
+                    $("#Direccion b").text(DeleOfi[1]);
+                    $("#Telefono b").text(DeleOfi[2]);
+                    $("#Celular b").text(DeleOfi[3] == "" ? "-------" : DeleOfi[3]);
+                    $("#DatosDelegacion").removeAttr("hidden");
+                } else {
+                    $("#DatosDelegacion").attr("hidden", true);
+                }
+            })
+            //$(".datepicker").datepicker({
+            //    format: "dd/mm/yyyy",
+            //    language: "es",
+            //    autoclose: true,
+            //    startView: "days",
+            //    startDate: "Today"
+            //});
+        });
 
     </script>
 }

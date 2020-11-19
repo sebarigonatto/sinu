@@ -480,7 +480,7 @@
                                             HttpMethod = "POST",
                                             OnSuccess = "Exito(data,status,xhr)",
                                             OnFailure = "Falla"
-                                            }, new { @id = "BTValidar", @class = "fa fa-check btn btn-success w-25" })
+                                            }, new { @id = "BTValidar", @class = "fa fa-check btn btn-success w-25 load-submit" })
                             <hr />
                             <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
                             @Ajax.ActionLink(" Volver Etapa Anterior", "VolverEtapa","Delegacion",new { ID_persona = Model.ID_PER },new AjaxOptions  {

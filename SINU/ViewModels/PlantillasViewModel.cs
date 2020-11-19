@@ -58,7 +58,13 @@ namespace SINU.ViewModels
         public  List<vDataProblemaEncontrado> Errores { get; set; }
         public string Estado { get; set; }
     }
-
+    public class MailPresentacion : PlantillaMail
+    {
+        public string fecha { get; set; }
+        public List<vOficDeleg_EstablecimientoRindExamen> establecimiento { get; set; }
+        public string Link { get; set; }
+        public string MailCuerpo { get; set; }
+    }
     public class DatosResponsable
     {
         public string ResponsablePisoOfic { get; set; }
@@ -66,9 +72,5 @@ namespace SINU.ViewModels
         public string ResponsableCelular { get; set; }
         public string ResponsableMail { get; set; }
         public string Apellido { get; set; }
-
-        //ver agregar direccion
-        //string ResponsableNombreEdificio { get; set; }
-        //string ResponsableCalleYnro { get; set; }
     }
 }

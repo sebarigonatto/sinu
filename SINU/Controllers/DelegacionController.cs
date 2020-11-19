@@ -520,9 +520,18 @@ namespace SINU.Controllers
         {
             try
             {
-                vInscripcionDetalle Dato = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                PresentaciondelPostulante presentaciondel = new PresentaciondelPostulante();
+                presentaciondel.LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO == true).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
 
-                return View(Dato);
+                presentaciondel.DetalleInscripcion = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+                var DatosdelLugar = new List<Array>();
+                db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
+                                                                                               m.Jurisdiccion + ", " + m.Localidad + ", " + m.Departamento,
+                                                                                               m.Nombre,
+                                                                                               m.Direccion+", "+m.Comentario}));
+                presentaciondel.DatosLugar = JsonConvert.SerializeObject(DatosdelLugar);
+                return View(presentaciondel);
             }
             catch (System.Exception ex)
             {
@@ -530,29 +539,34 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult PresentacionAsignaFecha(string[] select, DateTime fecha)
+        public ActionResult PresentacionAsignaFecha( int Id,DateTime Fecha,int LugarPresentacion)
         {
-
+            List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
+            vInscripcionDetalle Inscripto;
+            Configuracion configuracion;
             try
             {
-                // TODO: Add insert logic here
-                foreach (var item in select)
+                db.spExamenParaEsteInscripto(Id, Fecha, LugarPresentacion);
+                Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == Id);
+                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
+                var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = Id }, protocol: Request.Url.Scheme);
+                var modelPlanti = new ViewModels.MailPresentacion
                 {
-                    int x = Convert.ToInt32(item);
-                    var da = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == x);
-                    da.FechaRindeExamen = fecha;
-
-                    db.spProximaSecuenciaEtapaEstado(x, 0, false, 0, "", "");
-
-                }
-                db.SaveChanges();
+                    Apellido=Inscripto.Apellido,
+                    establecimiento=establecExamens,
+                    Link=callbackUrl,
+                    MailCuerpo=configuracion.ValorDato,
+                    fecha=Fecha.ToString("dd/MM/yyyy hh:mm")
+                };
+                var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null);
+                db.spProximaSecuenciaEtapaEstado(null,Id, false, 0, "", "");
                 return RedirectToAction("Index");
             }
-
-
-            catch (System.Exception ex)
+            catch (Exception)
             {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+
+                throw;
             }
         }
         public ActionResult ListaProblema(int ID_persona,int IdPanatlla)
@@ -825,9 +839,18 @@ namespace SINU.Controllers
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    LugarPresentacion= new SelectList(db.vDelegacion_EstablecExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
+                    LugarPresentacion= new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO==true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
                    FechaPresentacion=DateTime.Now
                     };
+
+                var DatosdelLugar = new List<Array>();
+                db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
+                                                                                               m.Jurisdiccion + ", " + m.Localidad + ", " + m.Departamento,
+                                                                                               m.Nombre,
+                                                                                               m.Direccion+", "+m.Comentario}));
+                listadoPostulanteAsignarFecha.DatosLugar = JsonConvert.SerializeObject(DatosdelLugar);
+
+
                 return View("AsignarFechaVarios",listadoPostulanteAsignarFecha);
             }
             catch (Exception)
@@ -840,14 +863,45 @@ namespace SINU.Controllers
         }
         #endregion
        
-        public ActionResult AsignarFechaVarios(string[] select, DateTime Fecha,string LugarPresentacion)
+        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha,int LugarPresentacion)
         {
-            if (select == null)
+            List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
+            vInscripcionDetalle Inscripto;
+            Configuracion configuracion;
+            try
             {
-                return Json(new { success = true, msg = "Es importante seleccionar un Postulante" });
+                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
+                foreach (var item in select)
+                {
+                    int x = Convert.ToInt32(item);
+
+
+                    Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == x);
+                    var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = x }, protocol: Request.Url.Scheme);
+
+
+                    var modelPlanti = new ViewModels.MailPresentacion
+                    {
+                        Apellido = Inscripto.Apellido,
+                        establecimiento = establecExamens,
+                        Link = callbackUrl,
+                        MailCuerpo = configuracion.ValorDato,
+                        fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
+                    };
+                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null);
+                    db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
+
+                    db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "", "");
+                }
+                return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
+            }
+            catch (System.Exception ex)
+            {
+
+                return Json(new { success = false, msg = ex.InnerException.Message });
             }
 
-            return Json(new { success = true, msg = "Es Importante Agregar comentario" });
         }
     }
 }
