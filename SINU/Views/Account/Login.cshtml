@@ -1,5 +1,6 @@
-﻿@using SINU.Models
-@model LoginViewModel
+﻿
+@model SINU.Models.LoginViewModel
+@using CaptchaMvc.HtmlHelpers
 @{
     ViewBag.Title = "Iniciar sesión";
 }
@@ -7,6 +8,11 @@
 <h2>@ViewBag.Title</h2>
 <br />
 <h2>@ViewBag.aviso</h2>
+<style>
+    .field-validation-error {
+        color: #dc3545 !important
+    }
+</style>
 <div class="row">
     <div class="col-md-6 card shadow-sm">
         <br />
@@ -20,35 +26,50 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control"@*, @autocomplete= "off"*@})
+                        @Html.TextBoxFor(m => m.Email, new
+                        {
+                            @class = "form-control"@*, @autocomplete= "off"*@})
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })
                     <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control"@*, @autocomplete = "off"*@  })
+                        @Html.PasswordFor(m => m.Password, new
+                        {
+                            @class = "form-control"@*, @autocomplete = "off"*@})
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
+                </div>*@
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div >
+                            @Html.MathCaptcha("Refrescar","Ingrese el resultado aqui","Este campo es requerido",true)
+                            
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Iniciar sesión" class="btn btn-default" />
+                        <input type="submit" value="Iniciar sesión" class="btn btn-default " />
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Registrarse como usuario nuevo", "Register" ,null, new {@class="ml-3" })
+                    @Html.ActionLink("Registrarse como usuario nuevo", "Register", null, new { @class = "ml-3" })
                 </p>
                 <p>
-                    @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword",null, new {@class="ml-3" })
+                    @Html.ActionLink("Recuperar Cuenta", "RecuperarCuenta", null, new { @class = "ml-3" })
+                </p>
+                <p>
+                    @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword", null, new { @class = "ml-3" })
                 </p>
             }
         </section>
@@ -63,6 +84,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 <script type="text/javascript">
+    
     if ('@ViewBag.logueado' == "True") {
         $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
 
@@ -79,6 +101,18 @@
         });
 
     }
+    $(document).ready(function () {
+        $("#CaptchaInputText").addClass("form-control");
+        $("#CaptchaInputText").next("br").remove();
+        $("a[href='#CaptchaImage']").show();
+
+        $('form').on('submit', async function (e) {
+            if ($(this).valid()) {
+
+                $.Cargando();
+            }
+        });
+    })
 </script>
 }
 @*<div class="container h-100">

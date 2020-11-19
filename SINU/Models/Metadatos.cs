@@ -497,7 +497,6 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convive")]
         public Nullable<bool> ConVive { get; set; }
-         [Required]
         [Display(Name = "Religion")]
         public string IdReligion { get; set; }
         [Required]

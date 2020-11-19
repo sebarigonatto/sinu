@@ -116,14 +116,7 @@
         @Scripts.Render("~/bundles/jqueryval")
         <script>
 
-            $(".combobox").selectpicker({
-                    liveSearch: true,
-                    size: 7,
-                    liveSearchPlaceholder: "Ingrese su busqueda",
-                    liveSearchStyle: 'contains',//'startsWith'
-                    noneResultsText: 'No se Encuantran Resultados',
-                    noneSelectedText: 'Ninguna Opcion Seleccionada'
-            });
+           
 
             //http://api.zippopotam.us/#where
 
@@ -160,7 +153,16 @@
                 $.each(provi, function (i, item) {
                     $("#Provincia").append("<option value=" + item.Value + ">" + item.Text + "</option>");
                 });
+              
             })();
+            $(".combobox").selectpicker({
+                liveSearch: true,
+                size: 7,
+                liveSearchPlaceholder: "Ingrese su busqueda",
+                liveSearchStyle: 'contains',//'startsWith'
+                noneResultsText: 'No se Encuantran Resultados',
+                noneSelectedText: 'Ninguna Opcion Seleccionada'
+            });
 
             var client = new XMLHttpRequest();
 

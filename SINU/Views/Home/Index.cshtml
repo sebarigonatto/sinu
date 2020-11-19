@@ -285,7 +285,6 @@
     <!-- Call to Action Section -->
     @if (User.Identity.IsAuthenticated & SINU.Models.Func.CorrespondeMenu() == "_MenuPerfilPostu")
     {
-
         <div class="row lead justify-content-center mb-4">
             <div class="col-" data-toggle="tooltip" title="Si usted ya se encuentra registrado por favor inicie sesion.">
                 <a>@Html.ActionLink("Proceso de Inscripcion", "Index", "Postulante", null, htmlAttributes: new { @class = "btn btn-lg btn-secondary btn-block" })</a>

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style >
+<style>
     @@media screen and (min-width: 601px) {
         .tcard {
             font-size: 30px;
@@ -105,9 +105,9 @@
 <div class="text-center" style="margin-bottom:4rem">
     <h1>Convocatorias Abiertas</h1>
 
-    <p>
+    <h4>
         Deberas elegir en cual de las siguientes convocatorias deseas inscribirte. Recorda leer las distintas guias de ingreso.
-    </p>
+    </h4>
 </div>
 <div class="card-deck justify-content-center">
     @{
@@ -130,12 +130,12 @@
                         {
                             <h5>Inicio @item2.FechaInicio.ToString("dd/MM/yyyy")</h5>
                             <h5>Cierre @item2.FechaFinal.ToString("dd/MM/yyyy")</h5>
-                            
-                                <div class="row card-footer lead justify-content-center">
-                                    @Html.ActionLink("Inscribirse", "InscripNueva", "Postulante", new { id_periodo = item2.IdInstitucion }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
 
-                                </div>
-                            
+                            <div class="row card-footer lead justify-content-center">
+
+                                @Html.ActionLink("Inscribirse", "InscripNueva", "Postulante", new { id_periodo = item2.IdInstitucion@*, ID_postulante= item2.*@ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+
+                            </div>
 
                         }
                     </div>
@@ -143,10 +143,7 @@
             }
         }
 
-
-
     }
-
 
 </div>
 

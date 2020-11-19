@@ -46,13 +46,9 @@
             <p class="text-danger text-center">
 
 
-                @if (Model == null)
-                {
-                    <h4 class="text-center">No se encuentra la documentacion del Postulante</h4>
-                }   
-                else
-                {
+                @if (Model != null) { 
 
+                    
                     <h4 class="text-center"> @Model.Exception.Message </h4>
                     
 
