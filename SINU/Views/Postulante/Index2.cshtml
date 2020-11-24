@@ -4,22 +4,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
-<br />
-<h3>Etapas de la Inscripcion</h3>
-<br />
-@* TAB GENERAL DONDE FIGURAN LAS DISTINTAS ETAPAS DE LA INSCRIPCION PARA EL POSTULANTE *@
-@*@try
-    {*@
 <style>
     input:-internal-autofill-selected {
         background-color: #f5f5f5 !important
     }
-        .form-control:disabled, .form-control[readonly] {
+
+    .form-control:disabled, .form-control[readonly] {
         cursor: no-drop;
     }
-    .text-danger{
-        font-size:80%;
+
+    .text-danger {
+        font-size: 80%;
     }
+
     .bootstrap-select > select.mobile-device:focus + .dropdown-toggle, .bootstrap-select .dropdown-toggle:focus {
         outline: thin dotted #333333 !important;
         outline: 0px auto -webkit-focus-ring-color !important;
@@ -30,6 +27,7 @@
         border: 0px !important;
         border-bottom: 2px solid #dc3545 !important;
     }
+
     button[role="combobox"].BTValid {
         border: 0px !important;
         border-bottom: 2px solid #28a745 !important;
@@ -137,7 +135,7 @@
         background-color: #08495f;
         color: #fff !important;
         border-bottom: 1px solid #fff;
-        border-top: 1px solid #fff; 
+        border-top: 1px solid #fff;
         margin-bottom: 0.3px
     }
 
@@ -198,6 +196,10 @@
         #TabSecundarioContent, .nav-tab {
             padding: 0rem 1rem 0rem 1rem !important;
         }
+        .oculto {
+            display: none !important
+        }
+
     }
 
     @@media screen and (min-width: 576px) {
@@ -271,8 +273,55 @@
         padding-right: 5px !important
     }
 </style>
-<h1>@Model.ID_PER IDpostulante</h1>
+<div class="row">
+    <div class="col col-sm-6">
+        <h4>Etapas de la Inscripcion</h4>
+    </div>
 
+    <div class="col col-sm-6">
+        @if ((bool)Session["DeleConsul"])
+        {
+
+            <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
+            if (ViewBag.ULTISECU == 8)
+            {
+                @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
+            }
+        }
+    </div>
+</div>
+@if (Model.ProcesoInterrumpido)
+{
+    <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
+
+        <h2>Proceso de Inscripcion Interrupido.</h2>
+        <h3>Ante Consultas comunicarse con la Delegacion/Oficiana Corespondiente.</h3>
+        <h4>
+            Nombre: <b>@Model.OfiDele.Nombre</b>
+        </h4>
+        <h4>
+            Telefono: <b>@Model.OfiDele.Telefono</b>
+        </h4>
+        <h4>
+            Celular: <b>@Model.OfiDele.Celular</b>
+        </h4>
+
+        <h4>
+            Email: <b>@Model.OfiDele.Email1</b>
+        </h4>
+    </div>
+    <br />
+}
+@if (ViewBag.VenceComvocatoria)
+{
+    <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
+
+        <h4>La convocatoria a la que se inscriobio a finalizado.</h4>
+        <h6>Para inscribirse en otra convocatoria hacer @Html.ActionLink("click aqui", "InscripConvo")</h6>
+
+    </div>
+    <br />
+}
 <section id="ContieneTabs">
     <div class="container">
 
@@ -280,20 +329,33 @@
             <div class="col-md-12 ">
                 <nav id="TABPrincipal">
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;Datos Basicos</p> </a>
-                        <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;Entrevista</p></a>
-                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;Documentacion</p>  </a>
-                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;Presentacion</p> </a>
+                        <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;1° Datos Basicos</p> </a>
+                        <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;2° Entrevista</p></a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentacion</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentacion</p> </a>
                     </div>
                 </nav>
                 <div class="tab-content" id="TABPrincipalContent">
-                    <div class="tab-pane fade show active" id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab">
-                        aaaaaaaaaaaaaaaaEt et consectetur ipsum labore excepteur est proident a ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                        <div style="height: 500px !important "></div>
+                    <div class="tab-pane fade show active px-3 py-3" id="datosbasicos" role="tabpanel" aria-labelledby="datosbasicos-tab">
+                        @if (Model.EtapaTabs.Contains(2))
+                        {
+                            @Html.Action("DatosBasicos", "Postulante", new { ID_persona = Model.ID_PER })
+                        }
                     </div>
-                    <div class="tab-pane fade" id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab">
-                        bbbbbbbbbbbbEt et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                        <div style="height: 500px !important "></div>
+                    <div class="tab-pane fade px-3 py-3" id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab">
+                        @if (Model.NoPostulado)
+                        {
+                            <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                <h3> @Html.Raw((string)ViewBag.TextNoAsignado)</h3>
+                            </div>
+                        }
+                        else
+                        {
+                            if (Model.EtapaTabs.Contains(3))
+                            {
+                                @Html.Action("Entrevista", "Postulante", new { ID_persona = Model.ID_PER })
+                            }
+                        }
                     </div>
                     <div class="tab-pane fade p-2" id="Documentacion" role="tabpanel" aria-labelledby="Documentacion-tab">
 
@@ -307,44 +369,55 @@
                                     <a class="nav-item nav-link" href="#Estudios" data-toggle="tab">Estudios</a>
                                     <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab">Idiomas</a>
                                     <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab">Actividad Militar</a>
-                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab">Situacion Militar</a>
-                                    <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab">Antropometria</a>
+                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab">Situacion Ocupacional</a>
+                                    <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab">Medidas y Tallas</a>
                                     <a class="nav-item nav-link" href="#Familia" data-toggle="tab">Familia</a>
-                                    <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab">Validacion</a>
+                                    <a class="nav-item nav-link" href="#Documentacion" data-toggle="tab">Documentacion</a>
+                                    @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4)
+                                    {
+                                        <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
+                                    }
                                     <br />
                                 </div>
                             </div>
 
                             <div class="col-md-10 p-2 pl-sm-4 pr-sm-4" id="TabSecundarioContent">
                                 <div>
-                                    <div class="tab-content">
+                                    <div class="tab-content TABMovil">
 
-
+                                        @* VISTA DE DATO PERSONAL *@
                                         <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="DatosPersonales">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Datos Personales</a>
-                                                <button id="BTDatosPersonalesNAV" ancla="#DatosPersonales" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DatosPersonalesNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTDatosPersonalesNAV" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DatosPersonalesNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 1 })
+                                                }
                                                 @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
-
                                         </div>
                                         @* VISTA DE Antecedentes Penales *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Antecedentes Penales</a>
-                                                <button id="BTDocuPenalNAV" ancla="#DocuPenal" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTDocuPenalNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-controls="DocuPenalNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 2 })
+                                                }
                                                 @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
 
@@ -352,15 +425,19 @@
 
                                         @* VISTA DE DOMICILIO *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Domicilio</a>
-                                                <button id="BTDomicilioNAV" ancla="#Domicilio" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTDomicilioNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[2])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 3 })
+                                                }
                                                 @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
 
                                             </div>
@@ -369,15 +446,19 @@
 
                                         @* VISTA DE ESTUDIOS *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="Estudios">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Estudios</a>
-                                                <button id="BTEstudiosNAV" ancla="#Estudios" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTEstudiosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 4 })
+                                                }
                                                 @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
 
                                             </div>
@@ -387,114 +468,171 @@
 
                                         @* VISTA DE IDIOMAS *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="Idiomas">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Idiomas</a>
-                                                <button id="BTIdiomasNAV" ancla="#Idiomas" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTIdiomasNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 5 })
+                                                }
                                                 @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
                                         </div>
 
                                         @* VISTA DE ACTIVIDAD MILITAR *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="ActMilitar">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Activiadad Militar</a>
-                                                <button id="BTActMilitarNAV" ancla="#ActMilitar" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTActMilitarNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 6 })
+                                                }
                                                 @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
                                         </div>
 
                                         @* VISTA DE SITUACION OCUPACIONAL*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Situcion Ocipacional</a>
-                                                <button id="BTSituOcuNAV" ancla="#SituOcu" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 7 })
+                                                }
                                                 @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
                                         </div>
 
                                         @* VISTA DE ANTROPOMETRIA *@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="Antropometria">
-                                            <nav class="navbar navbar-dark bg-dark">
-                                                <a class="navbar-brand" href="#">Antropometria</a>
-                                                <button id="BTAntropometriaNAV" ancla="#Antropometria" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
+                                                <a class="navbar-brand" href="#">Medidas y Tallas</a>
+                                                <button id="BTAntropometriaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 8 })
+                                                }
                                                 @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
                                         </div>
 
                                         @* VISTA DE FAMILIA*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
-                                            <nav class="navbar navbar-dark bg-dark">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
                                                 <a class="navbar-brand" href="#">Familia</a>
-                                                <button id="BTFamiliaNAV" ancla="#Familia" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                <button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[8])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 9 })
+                                                }
                                                 @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
                                         </div>
-
-                                        @* Validar Datos*@
-                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
-                                            <nav class="navbar navbar-dark bg-dark">
-                                                <a class="navbar-brand" href="#">Validar Datos</a>
-                                                <button id="BTValidarDatosNAV" ancla="#ValidarDatos" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                        @* VISTA DE Documentacion Extra*@
+                                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuAnexo">
+                                            <nav class="navbar navbar-dark bg-dark ocultnav">
+                                                <a class="navbar-brand" href="#">Documentacion</a>
+                                                <button id="BTDocuAnexoNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuAnexoNAV" role="tabpanel" aria-labelledby="DocuAnexoNAV-tab" aria-controls="DocuAnexoNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
                                                 </button>
                                             </nav>
-                                            <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
-
-                                                <h2>Validar Datos</h2>
-                                                <br />
-                                                <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                                                    <p>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</p>
-                                                    <br />
-                                                    @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                              {
-                                                                HttpMethod = "POST",
-                                                                OnSuccess = "Exito(data,status,xhr)",
-                                                                OnFailure = "Falla"
-                                                              }, new { @id = "BTValidar", @class = "btn btn-success" })
-                                                </div>
+                                            <div class="collapse tab-pane fade nav-tab pt-4" id="DocuAnexoNAV">
+                                                @if ((int)((object[])Model.ListProblemaCantPantalla[9])[2] > 0 && (bool)Session["ValidoUnaVez"])
+                                                {
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 10 })
+                                                }
+                                                @Html.Action("DocumentacionAnexo", "Postulante", new { IdPersona = Model.ID_PER })
                                             </div>
                                         </div>
+
+
+                                        @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4)
+                                        {
+                                            @* Validar Datos*@
+                                            <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
+                                                <nav class="navbar navbar-dark bg-dark ocultnav">
+                                                    <a class="navbar-brand" href="#">Validar Datos</a>
+                                                    <button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                        <span class="icon-bar"></span>
+                                                    </button>
+                                                </nav>
+                                                <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
+
+                                                    <h2>Validar Datos</h2>
+                                                    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                                        <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
+                                                            <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
+                                                            <h4>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h4>
+                                                            <br />
+                                                            @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                          {
+                                                              HttpMethod = "POST",
+                                                              OnSuccess = "Exito(data,status,xhr)",
+                                                              OnFailure = "Falla"
+                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit" })
+                                                        </div>
+                                                        <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
+
+                                                            <h4>La validacion se encuentra en Proceso.</h4>
+                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
+                                                        </div>
+
+                                                    </div>
+                                                    <br />
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="tab-pane fade" id="Presentacion" role="tabpanel" aria-labelledby="Presentacion-tab">
-                        ddddddddddddEt et consectetur ipsum labore excepteur est proident excepteur ad velit occaecat qui minim occaecat veniam. Fugiat veniam incididunt anim aliqua enim pariatur veniam sunt est aute sit dolor anim. Velit non irure adipisicing aliqua ullamco irure incididunt irure non esse consectetur nostrud minim non minim occaecat. Amet duis do nisi duis veniam non est eiusmod tempor incididunt tempor dolor ipsum in qui sit. Exercitation mollit sit culpa nisi culpa non adipisicing reprehenderit do dolore. Duis reprehenderit occaecat anim ullamco ad duis occaecat ex.
-                        <div style="height: 500px !important "></div>
+                    @* VISTA DE PRESENTACION CON ID = 5 *@
+                    <div id="Presentacion" role="tabpanel" aria-labelledby="Presentacion-tab" class="tab-pane fade px-3 py-3">
+
+                        @if (Model.EtapaTabs.Contains(5))
+                        {
+                            @Html.Action("Presentacion", "Postulante", new { ID_persona = Model.ID_PER })
+                        }
+
                     </div>
                 </div>
 
@@ -502,31 +640,7 @@
         </div>
     </div>
 </section>
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
 
-
-
-
-
-
-
-
-@*}
-    catch (Exception ex)
-    {
-
-        <script>
-            //alert('@ex.InnerException.Message')
-                location.href = '@Url.Action("AccionNoAutorizada","Error")'
-        </script>
-    }*@
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
@@ -540,24 +654,6 @@
 </div>
 
 
-<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
-
-            </div>
-            <div class="modal-body">
-                <p id="TextModal">@* mensaje del Modal *@</p>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -565,76 +661,41 @@
     <script type="text/javascript">
 
 
+        //alert("@ViewBag.ValidacionEnCurso");
+        //armo un array con las etapas que transito el postulante
+        var IDETP='@Model.IDETAPA.ToString()'.split(',');;
 
-        $(document).ready(function () {
+        //elimino el ultimo elemnto de array, por que es un string vacio
+        IDETP.splice(IDETP.length - 1);
 
-
-            var IDETP
-            //Funcion para deshabilitar las opciones del tab principal segun las Etapas Recibidas en el Model.IDETAPA
-            (function () {
-                $('body').css('overflow-y', 'scroll');
-                //ID de las Etpas por las que paso el Postulante
-                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
-                //elimino el ultimo elemnto de array, por que es un string vacio
-                IDETP.splice(IDETP.length - 1);
-                //alert('@Model.IDETAPA.ToString()' + "    " + IDETP.indexOf("2") + "        " + (IDETP.length -1 ));
-                if (IDETP.indexOf("2") < (IDETP.length - 1)) {
-                    $("#BTDatosBasicos").html("");
-                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
-                };
-
-
-                //inhabilito los tab de etapas en las que los postulantes no estan o no pasaron
-                $("#TABPrincipal a").each(function () {
-                    idTAB = $(this).attr("id");
-                    //alert(IDETP.indexOf(idTAB));
-                    if (IDETP.indexOf(idTAB)<0) {
-                        $(this)
-                            .addClass("bloqueado")
-                            .css("color", "gray")
-                            .attr("data-toggle", "tooltip")
-                            .attr("title","Opcion deshabilitada hasta que avance de secuencia")
-                            .tooltip('enable');
-                    };
-                });
-                //alert(IDETP.length);
-                //Muestro el Tab de la Etapa en la que me encuentro actualmente
-                $("#" + IDETP.length).tab("show");
-            })();
-
-            var bloqueo_vistas = IDETP.indexOf("5") != -1;
-            $.arrayEtapas = bloqueo_vistas;
-
-            if (bloqueo_vistas) {
-                $(".BTAcciones").html("");
-                $("#TabDocumentacion :input,#TabDocumentacion input").attr("disabled", "true");
-                $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
-            }
-
-            //funcion para contraer todos los TAb que esten abiertos al abrir uno nuevo
-            $("#TabSecundarioContent .navbar-toggler").on("click", function (e) {
-                var idBT = $(this).attr("id");
-                var idTAB;
-                $("#TabSecundarioContent .navbar-toggler ").each(function (e, i) {
-                    if ($(this).attr("id") != idBT) {
-                        $(this).addClass("collapsed");
-                        idTAB = $(this).attr("data-target");
-                        $(idTAB).removeClass("show");
+        //array con los ID de las solapas principales que se bloquearan
+        var SolapaPrincipales = [["2", "#datosbasicos"], ["4", "#Documentacion"]];
+        //json con info de cada pantalla si estan abiertas o cerradas
+        var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
+        var jsonProblemas = JSON.parse(Problemas);
+        //bloquea las patallas principales segun las Etapas en las que esta actualmente.
+        $.BloqueaPantallasPrincipales = function () {
+            $.each(SolapaPrincipales, function (index, item) {
+                if (IDETP[IDETP.length - 1] != item[0] ||"@ViewBag.ValidacionEnCurso" == "True") {
+                    BloqueaPantalla(item[1]);
+                    if ("@ViewBag.ValidacionEnCurso" == "True") {
+                        $.BloqueoPantalla = true;
                     }
+                }
+            })
+        };
 
-                });
-                //var ancla = $(this).attr("ancla");
-                //var dest = $(ancla).offset().top;
-                //$("html, body").animate({ scrollTop: dest }, 1000);
-            });
+        function BloqueaPantalla(IDPantalla) {
+            $(IDPantalla + " .BTAcciones").remove();
+            $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search'],.navbar-toggler").attr("disabled", "true");
+            $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
+            $("a[target='_blank']").each(function (index, item) {
+                //alert($(item).attr("id"));
+                if ($(item).hasClass("hidden") && IDPantalla =="#Documentacion") $(item).closest("div").append("<h5 style='color:yellow'>No hay archivos subido</h5>");
+            })
+        };
 
-
-
-
-
-
-        });
-
+        //funcion para habilitar el TAB indicado.
         function HabilitarTAb(idtab) {
             $("#"+idtab)
                 .removeClass('Tabdesabilitado')
@@ -645,66 +706,174 @@
         };
 
         /////////////////////////////////////////////////////////////////////////////////
-        /*FUNCIONES DE AJAX.BeginForm*/
+        //ver esto
+        $(document).ready(function () {
 
+            //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
+            $.BloqueaPantallasPrincipales();
+
+            //bloqueo los tabs de las etapas por las que no pase
+            $("#TabGeneral li").each(function () {
+                idTAB = $(this).attr("id");
+                //alert(IDETP.indexOf(idTAB));
+                if (IDETP.indexOf(idTAB) == -1) {
+                    $(this)
+                        .addClass('Tabdesabilitado')
+                        .css("color", "gray")
+                        .attr("data-toggle", "tooltip")
+                        .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
+                        .tooltip('enable');
+                };
+            });
+
+            //Muestro el Tab de la Etapa en la que me encuentro actualmente
+            //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
+            //alert("@Session["ValidoUnaVez"]");
+            if ("@Session["ValidoUnaVez"]"=="True" && "@Session["DeleConsul"]" != "True" && "@ViewBag.ValidacionEnCurso" == "False") {
+
+                //verifico que la pantalla Datos Personles este cerrada, si lo esta habilito las demas pantallas
+
+                    $.each(jsonProblemas, function (index, item) {
+
+                        //alert(item[1]);
+                        //si la pantalla esta cerrada
+                        if (!item[1]) {
+                            //alert("cerrado");
+
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
+                            //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
+                            $("#" + item[0] + "NAV .BTAcciones").remove();
+                            $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
+                            $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
+
+                        } else if (item[2] == "0") {
+                            //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
+                        } else
+                        {
+                            //SI LA PANTALLA ESTA CON PROBLEMAS LE INDICO CUANTOS POSEE
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
+                        }
+                    });
+
+            };
+
+            //if (jsonProblemas[0][1]) {
+            //    $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) { $(item).closest('li').addClass("Tabdesabilitado"); })
+            //} else { BloqueaPantalla("DatosPersonales");};
+
+
+            //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
+            if ("@Session["DeleConsul"]" == "True") {
+                $.each(SolapaPrincipales, function (index, item) {
+                    BloqueaPantalla(item[1]);
+                });
+                //$("#TABDocumentacion i").remove();
+                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
+                //cambio el href del button
+                pageanterior = document.referrer.toString()
+
+                $("#BTatras").attr("href", "/Delegacion");
+            }
+
+            if ('@Session["FamiTable"]' == 'True') {
+                $("#Documentacion-tab").tab("show");
+                //$("#5 a").tab("show");
+                $("#FamiTAB a").tab("show");
+                $("#BTFamiliaNAV").trigger("click");
+            } else {
+                $("#" + IDETP[IDETP.length - 1]).tab("show");
+            }
+               @{
+                  Session["FamiTable"] = false;
+               }
+
+
+            //scroll automatico al selecionar un nav, solo en vista mobil
+            $("#myTab2Content button[aria-label='Toggle navigation']").on('click', function () {
+                bt = $(this).attr("id");
+                $.topp = $(this).closest('.ocultnav').offset().top;
+
+                setTimeout(function () {
+                
+                        if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
+                            $('body').animate({ scrollTop: $.topp }, 800);
+                        };
+
+                }, 100);
+
+            });
+
+
+
+        });
+
+        function Imprimir() {
+            var mywindow = window.open('', 'PRINT', 'height=800px,width=800px');
+            mywindow.document.write('<html><head><title>' + 'Presentacion' + '</title>');
+            mywindow.document.write('</head><body style="color:black !important">');
+            mywindow.document.write('<h1>' + document.title + '</h1>');
+            $("#Presentacion .jumbotron").css("color", "black");
+            btn = $("#btpresentacion").html(); $("#btpresentacion").html("");
+            mywindow.document.write($('#Presentacion').html());
+            $("#Presentacion .jumbotron").css("color", "white");
+            $("#btpresentacion").html(btn);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            mywindow.print();
+        };
+
+        //en caso de ser exitosa la llamada al controlador delos distintos POST
         function Exito(response, status, xhr) {
 
+            $.Anuncio(response.msg);
 
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal();
-           //alert("success: " + response.success + " - " + response.form);
+
+           // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
                     $("#BTentrevista").removeClass("disabled");
                     break;
                 case "solicitudentrevista":
                     HabilitarTAb(3);
-                    $("#3").tab("show");
-                    $("#BTDatosBasicos").html("");
-                    $("#datosbasicos :input,#datosbasicos input").attr("disabled", "true");
+                    IDETP.push(3);
+                    $.BloqueaPantallasPrincipales();
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
+                    $("#3 a").tab("show");
                     break;
                 case "Elimina":
-                    $.ActualizaTabla(response.url_Tabla);
+                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
-                //case "BTValidar":
-                //    $("#" + response.form).text("Validacion en curso").addClass("disabled");
-                //    break;
+                case "CambiaMOD":
+                    id = $("#vPersona_DatosBasicosVM_IdPersona").val();
+                    $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
+                        $("#BeginDocumentacionAnexo").replaceWith(response);
+                    });
+                    break;
+                case "ValidarDatos":
+                    BloqueaPantalla("#Documentacion");
+                    $.BloqueoPantalla = true;
+                    $(".jumbotron.problemapantalla, #DatoPermsg").remove();
+                    $("#TABDocumentacion i").remove();
+                    $("#ValidaEnCurso").removeAttr("hidden");
+                    $("#NOValidaEnCurso").attr("hidden", "true");
+                    break;
+                case "DocuPenal":
+                    //alert(response.anexo + "  " + response.cert);
+                    if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
+                    if (response.cert) { $("#DocuCert").removeAttr("hidden") };
+                    $("[type='file']").val("")
+                    break;
                 default:
             };
         };
 
+        //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-            $("#ModalAnuncios").modal();
+            $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
-
-        //$(function () {
-        //    $('#frmEnvio').unbind().submit(function (e) {
-        //        e.preventDefault();
-        //        Enviar(data);
-        //    });
-        //});
-
-        //function Enviar(data) {
-        //    $.ajax({
-        //        type: "POST",
-        //        url: url,
-        //        data: data,
-        //        success: function (data) {
-        //            $('#objeto').html(data);
-        //        }
-        //    });
-        //}
-
 
     </script>
 
 }
-
