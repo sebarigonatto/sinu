@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
             <div class="col-md-10">
-                <input type="text" id="datetimepicker" name="FechaEntrevista" />
+                <input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly/>
                 @*@Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })*@
                 @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
             </div>

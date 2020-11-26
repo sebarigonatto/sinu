@@ -1,11 +1,11 @@
-﻿@model SINU.ViewModels.ListadoPostulanteAsignarFecha
+﻿@model IEnumerable<SINU.Models.vEntrevistaLugarFecha>
 @*@{
         //ViewBag.Title = "AsignarFechaVarios";
 
     }*@
 
 <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
-@using (Ajax.BeginForm("AsignarFechaVarios", "Delegacion", null,
+@using (Ajax.BeginForm("AsignarFechaVariosEntrevista", "Delegacion", null,
     new AjaxOptions
     {
         HttpMethod = "POST",
@@ -26,16 +26,16 @@
         <thead>
             <tr>
                 <th class="secondary">
-                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Nombres)
+                    @Html.DisplayNameFor(model => model.Nombres)
                 </th>
                 <th class="secondary">
-                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Apellido)
+                    @Html.DisplayNameFor(model => model.Apellido)
                 </th>
                 <th class="secondary">
-                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Etapa)
+                    @Html.DisplayNameFor(model => model.Etapa)
                 </th>
                 <th class="secondary">
-                    @Html.DisplayNameFor(model => model.AsignarFechaVM[0].Estado)
+                    @Html.DisplayNameFor(model => model.Estado)
                 </th>
                 <th class="ni-o-ni-bu">
                     Opciones
@@ -43,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.AsignarFechaVM)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
@@ -59,7 +59,7 @@
                         @Html.DisplayFor(modelitem => item.Estado)
                     </td>
                     <td>
-                        <input name="Select" type="checkbox" value="@item.IdInscripcionEtapaEstado" id="myCheck" onclick="myFunction()" />
+                        <input name="Select" type="checkbox" value="@item.IdInscripcion" id="myCheck" onclick="myFunction()" />
                     </td>
                 </tr>
             }
@@ -80,14 +80,14 @@
                                 @*<input name="fecha" type="text" id="datetimepicker" />*@
                                 <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly/>
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <label for="recipient-name" class="col-form-label">
                                     lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
                                 </label>
 
-                            </div>
+                            </div>*@
                         </div>
-                        <div class="col-md-6 ">
+                        @*<div class="col-md-6 ">
                             <div class="form-group">
                                 <div id="DatosDelegacion" class="form-group control-label" hidden>
                                     <h4 class="text-center">Datos del Lugar</h4>
@@ -99,7 +99,7 @@
                                     <p id="Celular" class="control-label col"><b>asdasda</b></p>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                     <div class="row">
                         <div class="container text-right">
@@ -126,7 +126,7 @@
             //});
             jQuery('#datetimepicker').datetimepicker();
 
-            var model = '@Html.Raw(Model.DatosLugar)';
+            @*var model = '@Html.Raw(Model.DatosLugar)';
             var jsonDatosDelegacion = JSON.parse(model);
             $("#LugarExamen").on("change", function () {
                 if ($(this).val() != "") {
@@ -145,7 +145,7 @@
                 } else {
                     $("#DatosDelegacion").attr("hidden", true);
                 }
-            })
+            })*@
             //$(".datepicker").datepicker({
             //    format: "dd/mm/yyyy",
             //    language: "es",

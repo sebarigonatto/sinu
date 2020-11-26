@@ -163,65 +163,19 @@
                 </div>
                 <div class="tab-pane fade " id="Entrevista" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
+                    <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
+                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
+                    </div>
                 </div>
                 <div class="tab-pane fade " id="Documentacion" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
                 </div>
                 <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @using (Html.BeginForm("PresentacionAsignaFecha", "Delegacion"))
-                    {
-                        @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                        <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
-                            @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
-                        </div>
-
-                        @*<div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
-                <button type="button" id="habilboton" class="btn btn-success btn-lg w-100 float-right" >Asignar Fecha</button>
-            </div>
-            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
-                                                <input name="fecha" type="datetime" class="datepicker" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <label for="message-text" class="col-form-label">Lugar de presentacion:</label>
-                                                <select class="form-control">
-                                                    <option>Centro de Convenciones</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-primary" value="hi" name="temp">Confirmar</button>
-                        </div>
+                    @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
+                    <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
+                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
                     </div>
                 </div>
-            </div>*@
-                    }
-                </div>
-                @*<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <h2>Contact</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, eveniet earum. Sed accusantium eligendi molestiae quo hic velit nobis et, tempora placeat ratione rem blanditiis voluptates vel ipsam? Facilis, earum!</p>
-                </div>*@
             </div>
         </div>
     </div>
