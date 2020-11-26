@@ -324,6 +324,7 @@ $(document).ready(function () {
         } else {
             $(Comboelemt[0]).hide();
             $(Comboelemt[1]).show();
+            //si se selecciono la Ciudad Autonoma de Buenos Aires habilito el campo de CP
             if ($(Comboelemt[3]).val()== '20819') {
                 $(Comboelemt[2]).removeAttr("readonly");
             }
@@ -871,11 +872,6 @@ $(document).ready(function () {
 
         });
     });
-
-
-
-
-
 
 
     //ver esto y unificar con las del MOdal

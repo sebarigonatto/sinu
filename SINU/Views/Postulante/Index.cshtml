@@ -424,12 +424,12 @@
                                                     <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
                                                     <h4>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h4>
                                                     <br />
-                                                 @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                               {
-                                                   HttpMethod = "POST",
-                                                   OnSuccess = "Exito(data,status,xhr)",
-                                                   OnFailure = "Falla"
-                                               }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit" })
+                                                    @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                  {
+                                                      HttpMethod = "POST",
+                                                      OnSuccess = "Exito(data,status,xhr)",
+                                                      OnFailure = "Falla"
+                                                  }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit" })
                                                 </div>
                                                 <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -627,17 +627,9 @@
                 bt = $(this).attr("id");
                 $.topp = $(this).closest('.ocultnav').offset().top;
 
-                setTimeout(function () {
-
-                    if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
-                        if (navigator.userAgent.match(/ (iPod | iPhone | iPad | Android) /)) {
-                            window.scrollTo(0, $.topp) // primer valor para el desplazamiento a la izquierda, segundo valor para el desplazamiento superior
-                        } else {
-                            $('html,body').animate({ scrollTop: $.topp }, 800);
-                        }
-
-                    };
-                }, 100);
+                        if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
+                            $('body').animate({ scrollTop: $.topp }, 800);
+                        };
 
             });
 
@@ -655,11 +647,12 @@
             mywindow.document.write($('#Presentacion').html());
             $("#Presentacion .jumbotron").css("color", "white");
             $("#btpresentacion").html(btn);
-            mywindow.document.write('</body></html>');
+            mywindow.document.write("</body></html>");
             mywindow.document.close();
             mywindow.focus();
             mywindow.print();
             mywindow.close();
+           
         };
 
         //en caso de ser exitosa la llamada al controlador delos distintos POST
@@ -680,16 +673,16 @@
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
                     $("#3 a").tab("show");
                     break;
-                case "Elimina":
+                    case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
-                case "CambiaMOD":
+                    case "CambiaMOD":
                     id = $("#vPersona_DatosBasicosVM_IdPersona").val();
                     $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
-                        $("#BeginDocumentacionAnexo").replaceWith(response);
+                    $("#BeginDocumentacionAnexo").replaceWith(response);
                     });
                     break;
-                case "ValidarDatos":
+                    case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
                     $.BloqueoPantalla = true;
                     $(".jumbotron.problemapantalla, #DatoPermsg").remove();
@@ -697,20 +690,20 @@
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden", "true");
                     break;
-                case "DocuPenal":
+                    case "DocuPenal":
                     //alert(response.anexo + "  " + response.cert);
                     if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
                     if (response.cert) { $("#DocuCert").removeAttr("hidden") };
                     $("[type='file']").val("")
                     break;
-                default:
-            };
-        };
+                    default:
+                    };
+                    };
 
-        //en caso de que la llamada al controlador no haya sido exitosa
-        function Falla(response) {
-            $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-        };
+                    //en caso de que la llamada al controlador no haya sido exitosa
+                    function Falla(response) {
+                    $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
+                    };
 
     </script>
 

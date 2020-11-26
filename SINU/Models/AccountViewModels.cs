@@ -95,7 +95,7 @@ namespace SINU.Models
 
         [Required]
         [Display(Name = "DNI")]
-        [MaxLength(9, ErrorMessage = "DNI tener una longintud minima de 9 digitos"), MinLength(8, ErrorMessage = "DNI tener una longintud minima de 8 digitos")]
+        [MaxLength(9, ErrorMessage = "DNI debe tener una longintud minima de 9 digitos"), MinLength(8, ErrorMessage = "DNI debe tener una longintud minima de 8 digitos")]
         [RegularExpression("^\\d+$", ErrorMessage = "DNI debe contener sólo números.")]
         public string DNI { get; set; }
 
