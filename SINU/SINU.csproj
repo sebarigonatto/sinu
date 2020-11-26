@@ -1334,6 +1334,7 @@
     <Content Include="Views\Postulante\InscripConvo.cshtml" />
     <Content Include="Views\Account\RecuperacionCuenta.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Delegacion\AsignarFechaVariosEntrevista.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

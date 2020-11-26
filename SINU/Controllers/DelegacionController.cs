@@ -735,22 +735,41 @@ namespace SINU.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Action en donde permite cerrar la pantalla de un postulante, se cierra cuando un postulante no tiene ningun tipo de problemas en el cargado de datos o se abre cuando se necesita cargar problemas a un postulante
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="IdPanatlla">El Numero de Id de la pantalla de la cual se necesita cerrar</param>
+        /// <param name="AoC">AoC Abierto o Cerrar, se necesita enviar un booleano para saber que accion necesita realizar el controlador si abrir o cerra una pantalla</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla,int AoC)
         {
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
             var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
             var Abierto = db.spTildarPantallaParaPostulate(id).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
+            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
+            var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false);
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (Abierto.Abierta==true)
+                  if (IdPanatlla == 10 && EntregTodo != null && AoC==1)
                     {
-                        if (TieneProblema.ToList().First() == true && AoC==1)
+                        return Json(new { success = false, msg = "Para validar esta pantalla debe estar toda la documentacion presentada" });
+                    }
+                    if (Abierto.Abierta == true)
+                    {
+                        if (TieneProblema.ToList().First() == true && AoC==1)//cerrar la pantalla con problemas cargados
                         {
                             return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
                         }
-                        if (TieneProblema.ToList().First() == true && AoC == 0)
+                        if (TieneProblema.ToList().First() == false && AoC == 0)//abrir la pantalla sin problemas cargadaos ya estando abierta
+                        {
+                            return Json(new { success = false, msg = "Esta pantalla ya se encuentra abierta para agregar problemas" });
+                        }
+                        if (TieneProblema.ToList().First() == true && AoC == 0)///Abrir la pantalla con problemas cargados ya estando abierta
                         {
                             return Json(new { success = false, msg = "Esta pantalla ya se encuentra abierta para agregar problemas" });
                         }
@@ -759,7 +778,6 @@ namespace SINU.Controllers
                             db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                         }
-
                     }
                     else
                     {
@@ -768,9 +786,8 @@ namespace SINU.Controllers
                                 db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
                                 return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
                             }
+                        return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
                     }
-                       
-                    return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
                 }
 
             }
@@ -786,19 +803,28 @@ namespace SINU.Controllers
         {
             var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
-
+            ViewBag.Idinscripto = inscrip.IdInscripcion;
             DocuNecesaria datos = new DocuNecesaria()
             {
                 DocumentosNecesarios = DocuNecesarios,
+                //inscipto=inscrip.IdInscripcion
             };
             var listDocu = DocuNecesarios.ToList();
             return PartialView(datos);
         }
         [HttpPost]
-        public ActionResult DocumentosNecesarios(string[]select,int IdInscripto)
+        public ActionResult DocumentosNecesarios(string[]select,int? IdInscripto)
         {
             try
             {
+                if (select==null)
+                {
+                  return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                }
+                if (IdInscripto==null)
+                {
+                    return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                }
                 // TODO: Add insert logic here
                 foreach (var item in select)
                 {
@@ -868,6 +894,10 @@ namespace SINU.Controllers
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
             vInscripcionDetalle Inscripto;
             Configuracion configuracion;
+            if (select == null)
+            {
+                return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes"});
+            }
             try
             {
                 establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
@@ -901,6 +931,70 @@ namespace SINU.Controllers
 
                 return Json(new { success = false, msg = ex.InnerException.Message });
             }
+
+        }
+        [HttpGet]
+        public ActionResult AsignarFechaVariosEntrevista()
+        {
+            try
+            {
+                List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
+
+
+
+                return View(dato);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
+        [HttpPost]
+        public ActionResult AsignarFechaVariosEntrevista(DateTime Fecha,string[] select)
+        {
+            try
+            {
+                vInscripcionDetalle InscripcionElegida;
+                vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+                foreach (var item in select)
+                {
+                    int x = Convert.ToInt32(item);
+
+                    InscripcionElegida = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == x);
+                    var da = db.Inscripcion.Find(x);
+                    da.FechaEntrevista = Fecha;
+                    db.SaveChanges();
+                    db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
+
+                    MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
+                    {
+                        Apellido = InscripcionElegida.Apellido,
+                        FechaEntrevista = Fecha
+                    };
+                    var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, InscripcionElegida.IdPersona, "MailAsunto4", null);
+
+                    vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == x);
+
+
+                    if (vInscripcionEtapas.Estado == "Asignada")
+                    {
+                        db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
+                    }
+                }
+                    return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
+
+                //List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
 
         }
     }
