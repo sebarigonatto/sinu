@@ -34,12 +34,16 @@ namespace SINU.Controllers
                 {
                     ID_PER = ID_Postulante ?? db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona,
                 };
+                pers.OfiDele = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).OficinasYDelegaciones;
 
-                pers.OfiDele = db.OficinasYDelegaciones.FirstOrDefault(mbox => mbox.IdOficinasYDelegaciones == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdDelegacionOficinaIngresoInscribio);
                 //verifico el ROL al que pertenece el Usuario alctualmente logueado 
                 Session["DeleConsul"] = !HttpContext.User.IsInRole("Postulante");
+
+                //cargo el registro de postulante del cual se cargaran los datos
+                Postulante reg_postu = db.Postulante.Find(pers.ID_PER);
+
                 //controlo la situacion en la que un postulante podria ver los datos de otro
-                if (!(bool)Session["DeleConsul"] && pers.ID_PER != db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona)
+                if (!(bool)Session["DeleConsul"] && pers.ID_PER !=  db.Persona.FirstOrDefault(m => m.Email == HttpContext.User.Identity.Name.ToString()).IdPersona)
                 {
                     return RedirectToAction("AccionNoAutorizada", "Error");
                 }
@@ -49,21 +53,22 @@ namespace SINU.Controllers
                 //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //busco el IDinscripcion del postulante logueado
-                var idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
+                var idInscri = reg_postu.Inscripcion.First();
                 //creo array con las secuecias por las que el Postulante
-                List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri.IdInscripcion).Select(m => m.IdSecuencia).ToList();
+                List<int> Secuencias = idInscri.InscripcionEtapaEstado.OrderByDescending(m=>m.Fecha).Select(m=>m.IdSecuencia).ToList();
+
                 ViewBag.ULTISECU = Secuencias[0];
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
-                //ver como mostrar esta pantalla de si fue 
-                if (pers.NoPostulado) ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
-                ;
-                pers.ProcesoInterrumpido = (Secuencias[0] == 24);
+                //ver como mostrar esta pantalla de si fue no postulado actualmente se muestra el mismo texto que se le envia por mail a no se potulado
+                if (pers.NoPostulado) ViewBag.TextNoAsignado = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia != 6 ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato;
+                
+                pers.ProcesoInterrumpido = Secuencias[0] == 24;
 
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
                 ViewBag.ValidacionEnCurso = (Secuencias[0] == 14) || (Secuencias[0] == 24);
                 //Boolenao de si paso por validacion
-                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && ((Secuencias[0] == 13) || (Secuencias[0] == 24));
+                Session["ValidoUnaVez"] = Secuencias.Contains(14) && ((Secuencias[0] == 13) || (Secuencias[0] == 24));
 
                 //Cargo listado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
@@ -77,7 +82,7 @@ namespace SINU.Controllers
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
                     var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
-                    ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
+                    ViewBag.ValidacionEnCurso = ViewBag.VenceComvocatoria;
                 }
 
                 return View(pers);
@@ -90,6 +95,7 @@ namespace SINU.Controllers
 
         }
 
+   
         public ActionResult Index2(int? ID_Postulante)
         {
             try
@@ -205,13 +211,11 @@ namespace SINU.Controllers
                 try
                 {
                     //se guarda los datos de las persona devueltos
-                    var p = Datos.vPersona_DatosBasicosVM;
+                    vPersona_DatosBasicos p = Datos.vPersona_DatosBasicosVM;
 
+                    int result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
 
-                    var result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
-
-                    return Json(new { success = true, msg = "Se guardaron los datos correctamente datos basicos", form = "datosbasicos" });
-
+                    return Json((success: true, msg: "Se guardaron los datos correctamente datos basicos", form: "datosbasicos"));
                 }
                 catch (Exception ex)
                 {
@@ -303,7 +307,7 @@ namespace SINU.Controllers
             {
                 vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
-                var estado = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion).Where(m => m.IdSecuencia == 8 || m.IdSecuencia == 10 || m.IdSecuencia == 11).OrderBy(m => m.Fecha).ToList();
+                var estado = db.Inscripcion.FirstOrDefault(m=>m.IdPostulantePersona== ID_persona).InscripcionEtapaEstado.Where(m => m.IdSecuencia == 8 || m.IdSecuencia == 10 || m.IdSecuencia == 11).OrderBy(m => m.Fecha).ToList();
                 int IDsecu = estado[estado.Count - 1].IdSecuencia;
                 //coloco el estado de la entrevista
                 ViewBag.EstadoEntre = (IDsecu == 11) ? "Concretada" : db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == IDsecu).Estado;
@@ -356,13 +360,13 @@ namespace SINU.Controllers
                     {
                         datosba.ModalidadVm.Add(new ComboModalidad() { IdModalidad = modalidad.IdModalidad, Modalidad = modalidad.Modalidad, EstCivil = item.IdEstadoCivil });
 
-                    }
+                    };
                     //cargo carreras
                     var carrera = db.spCarrerasDelGrupo(modalidad.IdGrupoCarrOficio, "").ToList();
                     foreach (var item2 in carrera)
                     {
                         datosba.CarreraOficioVm.Add(new spCarrerasParaEsteInscripto_Result2 { IdCarreraOficio = item2.IdCarreraOficio, CarreraUoficio = item2.CarreraUoficio, IdModalidad = modalidad.IdModalidad });
-                    }
+                    };
                     //datosba.CarreraOficioVm.Add(carrera);
                 }
                 return PartialView(datosba);
@@ -395,9 +399,8 @@ namespace SINU.Controllers
                         //como cambio de modalidad y los documentos que se requiere para cada un a es distinta borro los documentos entregados por el postulante VER ESTO
                         db.DocPresentado.RemoveRange(db.DocPresentado.Where(m => m.IdInscripcion == inscrip.IdInscripcion).ToList());
                         db.SaveChanges();
-
                     }
-                    //Si el id religion en NULL le envio "", que corresponde a la religion NINGUNA
+                    //Si el id religion en NULL le envio "" corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
                     //busco el nuevo id preferencia para la modalidad seleccionada
                     int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
@@ -500,7 +503,7 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public FileContentResult GetAnexo2(int? IdPersona, string? docu)
+        public FileContentResult GetFile(int? IdPersona, string? docu)
         {
             string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -513,6 +516,7 @@ namespace SINU.Controllers
             }
             else
             {
+          
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string[] archivos = Directory.GetFiles(Ubicacionfile, IdPersona + "&" + docu + "*");
                 byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
@@ -1273,7 +1277,7 @@ namespace SINU.Controllers
                 string Carrera = inscrip.CarreraRelacionada;
                 sexo = (Carrera == "Médicos") ? "Medico" : sexo;
                 string PopUp = "";
-                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac, p.Postulante.Inscripcion.ToList()[0].IdPreferencia).ToList()[0];
+                var Restric = db.spRestriccionesParaEstePostulante(IdPostulante, FechaNac, p.Postulante.Inscripcion.First().IdPreferencia).First();
                 string Aplica = "";
                 switch (AltIcm)
                 {
@@ -1329,12 +1333,17 @@ namespace SINU.Controllers
 
         [AuthorizacionPermiso("ListarRP")]
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
-        public ActionResult FamiliaCUD(int idPersonaFamilia, int idPostulante)
+        public ActionResult FamiliaCUD(int ID_persona, int  idPersonaFamilia )
         {
             Session["FamiTable"] = true;
+            if (db.Familiares.Where(m => m.IdPostulantePersona == ID_persona && m.IdPersona==idPersonaFamilia).FirstOrDefault()==null)
+            {
+                return View("Error", Func.ConstruyeError("Relacion Familinar inexistente", "Postulante", "FamiliaCUD"));
+            };
             //verificar que al crear un postulante llenar con los datos completos, si no es asi el familiar no se mostrara en vPersona_Familiar
             //viewmodel creado para la creacion de un familiar
             //cargo los datos necesarios para los combobox
+
             PersonaFamiliaVM pers = new PersonaFamiliaVM
             {
                 vParentecoVM = db.vParentesco.Select(m => new SelectListItem { Value = m.idParentesco.ToString(), Text = m.Relacion }).ToList(),
@@ -1349,10 +1358,10 @@ namespace SINU.Controllers
                 var EsPostulante = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(m => m.UserName == mailLogin).Id);
                 if (EsPostulante != null)
                 {
-                    var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == idPostulante).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                    var EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == ID_persona).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
                     EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                     //le coloco 5 por si la pantalla esta cerrada
-                    if (!(bool)db.spTildarPantallaParaPostulate(idPostulante).FirstOrDefault(m => m.IdPantalla == 9).Abierta) pers.IDETAPA += "5,";
+                    if (!(bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 9).Abierta) pers.IDETAPA += "5,";
                 }
                 else
                 {
@@ -1365,11 +1374,12 @@ namespace SINU.Controllers
                 //verifico si la persona familiar es postulante
                 if (p != null)
                 {
-                    //ver... verifico que sea un postulante que no se este en proceso de inscripcion en el año actual.
-                    pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
-                }
-                var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == idPostulante);
-                int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == inscrip.IdInscripcion).Select(m => m.IdSecuencia).ToList()[0];
+                    //ver... verifico que sea un postulante que esta en una convocatoria abierta.
+                    pers.postulante = DateTime.Now < db.vInscriptosYConvocatorias.First(m => m.IdInscripcion == p.Inscripcion.First().IdInscripcion).Fecha_Fin_Proceso;
+                    //pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
+                };
+                var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
+                int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == inscrip.IdInscripcion).Select(m => m.IdSecuencia).First();
                 int[] secublock = { 14, 24, 16, 20 };
                 ViewBag.ValidacionEnCurso = secublock.Contains(secu);
                 //verifico si la convocatoria del postulante vencio para bloquera los formularios
@@ -1513,7 +1523,7 @@ namespace SINU.Controllers
                 IdPersona = IdPersona
 
             };
-            int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.ToList()[0].IdInscripcion;
+            int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.First().IdInscripcion;
             asd.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
             var secus = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList();
             //verifico que ya haya tenido una respuesta de validacion departe de la delegacion
@@ -1532,6 +1542,7 @@ namespace SINU.Controllers
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
                 var problemasPostu = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona);
+                // para validadr la pantalla de antropometria veridico que se haya completado el formulario y que la misma este abierta
                 if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta)
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
@@ -1559,7 +1570,7 @@ namespace SINU.Controllers
                     };
                 };
                 var IDPREFE = db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == persona.IdInscripcion).IdPreferencia;
-                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).ToList()[0];
+                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First();
                 if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
@@ -1592,7 +1603,7 @@ namespace SINU.Controllers
                 int ID_Delegacion = (int)db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdDelegacionOficinaIngresoInscribio;
 
                 var per = db.Persona.FirstOrDefault(m => m.IdPersona == ID_persona);
-                int ID_INSCRIP = per.Postulante.Inscripcion.ToList()[0].IdInscripcion;
+                int ID_INSCRIP = per.Postulante.Inscripcion.First().IdInscripcion;
                 ValidoCorreoPostulante datosMail = new ValidoCorreoPostulante()
                 {
 
@@ -1642,11 +1653,11 @@ namespace SINU.Controllers
                 IdPersona = per.IdPersona,
                 Apellido = per.Apellido,
                 Nombre = per.Nombres,
-                ID_Inscripcion = per.Postulante.Inscripcion.ToList()[0].IdInscripcion
+                ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion
 
             };
             ViewBag.Asignado = true;
-            var Inscrip = per.Postulante.Inscripcion.ToList()[0];
+            var Inscrip = per.Postulante.Inscripcion.First();
             if (Inscrip.FechaRindeExamen == null)
             {
                 ViewBag.Asignado = false;

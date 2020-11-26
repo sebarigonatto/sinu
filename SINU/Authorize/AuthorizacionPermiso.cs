@@ -11,14 +11,14 @@ namespace SINU.Authorize
     public class AuthorizacionPermiso : AuthorizeAttribute
     {
         private const string Url = "~/Error/AccionNoAutorizada";
-        SINUEntities db = new SINUEntities();   
- 
+        SINUEntities db = new SINUEntities();
+
         public string Funcion { get; set; }
 
         //private readonly [] funciones;
 
         // public AuthorizacionPermiso(params string[] funcion)
-        public AuthorizacionPermiso( string funcion)
+        public AuthorizacionPermiso(string funcion)
         {
             this.Funcion = funcion;
             //this.funciones = funcion;
@@ -26,27 +26,39 @@ namespace SINU.Authorize
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            
+
             //LOGICA DE VALIDACION segun funcion 
             List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, Funcion).ToList();
-            
-            var fun=new[] { "CreaEditaDatosP", "EliminarDatosP", "ModificarSecuenciaP" };
-            
-            if (fun.Contains(Funcion) )
+            //esta funciones son solo ejecutadas por los POSTULANTES
+            var fun = new[] { "CreaEditaDatosP", "EliminarDatosP", "ModificarSecuenciaP" };
+            if (fun.Contains(Funcion))
             {
                 var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
                 var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? int.Parse(httpContext.Request.Form[1]) : int.Parse(httpContext.Request.QueryString[0]);
                 if (IDpersonaActual != IDpersonaDatos)
                 {
-                    if ((db.Postulante.Find(IDpersonaDatos) != null)? db.Postulante.Find(IDpersonaDatos).FechaRegistro.Date.Year == System.DateTime.Now.Year : false) return false;
-                    if (db.Persona.FirstOrDefault(m => m.IdPersona == IDpersonaDatos).Familiares.ToList().FirstOrDefault(m=>m.IdPostulantePersona== IDpersonaActual)==null)return false;
+                    if ((db.Postulante.Find(IDpersonaDatos) != null) ? db.Postulante.Find(IDpersonaDatos).FechaRegistro.Date.Year == System.DateTime.Now.Year : false) return false;
+                    if (db.Persona.FirstOrDefault(m => m.IdPersona == IDpersonaDatos).Familiares.ToList().FirstOrDefault(m => m.IdPostulantePersona == IDpersonaActual) == null) return false;
                 }
-              
+
+            }
+            else if (Funcion == "ListarRP" && httpContext.User.IsInRole("Postulante") && httpContext.Request.QueryString.Count > 0)
+            {
+                if (httpContext.Request.QueryString.ToString().Contains("ID_persona"))
+                {
+                    var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
+
+                    if (int.Parse(httpContext.Request.QueryString[0]) != IDpersonaActual)
+                    {
+                        return false;
+                    }
+                }
             }
 
             //----------------------------------si devuelve algo esta autorizado caso contrario no tiene permiso de esa funcion-----------------------
             return (permiso.Count() > 0);
         }
+
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             if (!filterContext.HttpContext.Request.IsAuthenticated)
@@ -70,7 +82,6 @@ namespace SINU.Authorize
             }
         }
     }
-  
-}  
 
-  
+}
+

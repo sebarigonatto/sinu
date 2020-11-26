@@ -119,13 +119,10 @@
                     @Html.Action("Entrevista", "Postulante", new { ID_persona = Model.ID_PER })
                 }
             }
-
-
         </div>
 
         @* VISTA DE Documentacion CON ID = 4, que se divide en varias vistas PARCIALES *@
-        <div id="Documentacion" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade  p-0 navbar-expand-lg h-75">
-
+        <div id="Documentacion" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade  p-0 navbar-expand-lg h-75" >
 
             @if (Model.EtapaTabs.Contains(4))
             {
@@ -571,7 +568,7 @@
                         //alert(item[1]);
                         //si la pantalla esta cerrada
                         if (!item[1]) {
-                            //alert("cerrado");
+                            //alert("cerrado");|
 
                             $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
                             //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
@@ -633,8 +630,10 @@
 
             });
 
-
-
+            //si la comvocatoria vencio elimino el tab y contenido de "VALIDAR DATOS"
+            if ("@ViewBag.VenceComvocatoria"=="True") {
+                $("#ValidarTAB, #ValidarDatos").remove();
+            }
         });
 
         function Imprimir() {
@@ -652,7 +651,6 @@
             mywindow.focus();
             mywindow.print();
             mywindow.close();
-           
         };
 
         //en caso de ser exitosa la llamada al controlador delos distintos POST
@@ -673,16 +671,16 @@
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
                     $("#3 a").tab("show");
                     break;
-                    case "Elimina":
+                case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
-                    case "CambiaMOD":
+                case "CambiaMOD":
                     id = $("#vPersona_DatosBasicosVM_IdPersona").val();
                     $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
-                    $("#BeginDocumentacionAnexo").replaceWith(response);
+                        $("#BeginDocumentacionAnexo").replaceWith(response);
                     });
                     break;
-                    case "ValidarDatos":
+                case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");
                     $.BloqueoPantalla = true;
                     $(".jumbotron.problemapantalla, #DatoPermsg").remove();
@@ -690,20 +688,20 @@
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden", "true");
                     break;
-                    case "DocuPenal":
+                case "DocuPenal":
                     //alert(response.anexo + "  " + response.cert);
                     if (response.anexo) { $("#DocuAnex").removeAttr("hidden") };
                     if (response.cert) { $("#DocuCert").removeAttr("hidden") };
                     $("[type='file']").val("")
                     break;
                     default:
-                    };
-                    };
+            };
+        };
 
-                    //en caso de que la llamada al controlador no haya sido exitosa
-                    function Falla(response) {
-                    $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
-                    };
+        //en caso de que la llamada al controlador no haya sido exitosa
+        function Falla(response) {
+            $.Anuncio("Error Inesperado!!! Recarga la pagina e intentelo de nuevo.");
+        };
 
     </script>
 

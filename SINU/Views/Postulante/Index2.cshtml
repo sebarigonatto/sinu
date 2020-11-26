@@ -713,7 +713,7 @@
             $.BloqueaPantallasPrincipales();
 
             //bloqueo los tabs de las etapas por las que no pase
-            $("#TabGeneral li").each(function () {
+            $("#TABPrincipal a").each(function () {
                 idTAB = $(this).attr("id");
                 //alert(IDETP.indexOf(idTAB));
                 if (IDETP.indexOf(idTAB) == -1) {

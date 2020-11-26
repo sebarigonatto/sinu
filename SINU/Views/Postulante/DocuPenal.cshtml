@@ -29,7 +29,7 @@
                     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
                 </p>
                 <div class="BTAcciones">
-                    @Html.ActionLink("Descargar Formulario", "GetAnexo2", "Postulante", new { @class = "btn btn-primary ", @target = "_blank" })
+                    @Html.ActionLink("Descargar Formulario", "GetFile", "Postulante", new { @class = "btn btn-primary ", @target = "_blank" })
 
                 </div>
                 <div class="w-100"></div>
@@ -50,14 +50,7 @@
 
                 </div>
                 <div class="col col col-md-12 p-0 ">
-                    @if (Model.PathFormularioAanexo2 == null)
-                    {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Anexo2" }, new { @class = "btn btn-primary hidden", @target = "_blank", @hidden = "hidden", @id = "DocuAnex" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Anexo2" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuAnex" })
-                    }
+                    <a href="@Url.Action("GetFile","Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Anexo2" })" class="btn btn-primary" target="_blank" id="DocuAnex" @(Model.PathFormularioAanexo2 == null? "hidden='hidden'":"")>Ver Archivo</a>
                 </div>
 
             </div>
@@ -87,15 +80,7 @@
                     @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
                 </div>
                 <div class="col col col-md-12 pl-0">
-                    @if (Model.PathConstanciaAntcPenales == null)
-                    {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Certificado" }, new { @class = "btn btn-primary hidden", @target = "_blank", @hidden = "hidden", @id = "DocuCert" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Ver Archivo", "GetAnexo2", "Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Certificado" }, new { @class = "btn btn-primary ", @target = "_blank", @id = "DocuCert" })
-                    }
-
+                    <a href="@Url.Action("GetFile","Postulante", new { IdPersona = Model.IdPersona.ToString(), docu = "Certificado" })" class="btn btn-primary" target="_blank" id="DocuCert" @(Model.PathConstanciaAntcPenales == null ? "hidden='hidden'" : "")>Ver Archivo</a>
                 </div>
                 <br />
                 <div class=" col col-sm-12 BTAcciones pl-0 ">
