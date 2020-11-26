@@ -798,11 +798,10 @@ namespace SINU.Controllers
 
             return Json(new { success = false, msg = "Error en el Modelo Recibido" });
         }
-        [HttpGet]
-        public ActionResult DocumentosNecesarios(int IdPostulante)
-        {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == IdPostulante);
-            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
+        public ActionResult DocumentosNecesarios(int ID_persona)
+         {
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m=>m.IdTipoDocPresentado).ToList();
             ViewBag.Idinscripto = inscrip.IdInscripcion;
             DocuNecesaria datos = new DocuNecesaria()
             {
@@ -812,19 +811,17 @@ namespace SINU.Controllers
             var listDocu = DocuNecesarios.ToList();
             return PartialView(datos);
         }
+
         [HttpPost]
-        public ActionResult DocumentosNecesarios(string[]select,int? IdInscripto)
+        public JsonResult DocuNecesarios(string[]select,int? IdInscripto)
         {
             try
             {
-                if (select==null)
+                if (select==null || IdInscripto == null)
                 {
-                  return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                  return Json(new { success = false, msg = "Error en los datos recibidos" });
                 }
-                if (IdInscripto==null)
-                {
-                    return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
-                }
+                
                 // TODO: Add insert logic here
                 foreach (var item in select)
                 {
@@ -832,21 +829,21 @@ namespace SINU.Controllers
                     db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto,x,null);
 
                 }
-                return RedirectToAction("Index");
+                return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
             }
 
 
             catch (System.Exception ex)
             {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+                throw;
             }
         }
-        public ActionResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
+        public JsonResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
         {
             try
             {
                 db.spDocumentoInscripto(esInser, Idinscripto, idtipodoc, null);
-                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "eliminaDocu",url_Tabla= "DocumentosNecesarios",url_Controller="Delegacion" });
+                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "ActualizaDocuNec", url_Tabla= "DocumentosNecesarios",url_Controller="Delegacion" });
             }
             catch (Exception)
             {

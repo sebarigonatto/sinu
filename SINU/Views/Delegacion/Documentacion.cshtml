@@ -436,7 +436,7 @@
 
                     <div class="collapse tab-pane fade nav-tab pt-4">
                         <div id="DocumentosNecesariosNAV">
-                            @Html.Action("DocumentosNecesarios", "Delegacion", new { IdPostulante = Model.ID_PER })
+                            @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
                         </div>
                         <br />
                         <hr />
@@ -697,7 +697,7 @@
                         $("#" + response.url_Tabla + response.IdPantalla + " select").selectpicker();
                     });
                     break;
-                case "eliminaDocu":
+                case "ActualizaDocuNec":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     break;
                 default:
