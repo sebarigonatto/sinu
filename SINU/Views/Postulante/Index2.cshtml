@@ -691,7 +691,7 @@
             $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
             $("a[target='_blank']").each(function (index, item) {
                 //alert($(item).attr("id"));
-                if ($(item).hasClass("hidden") && IDPantalla =="#Documentacion") $(item).closest("div").append("<h5 style='color:yellow'>No hay archivos subido</h5>");
+                if ($(item).hasClass("hidden") && IDPantalla == "#Documentacion") $(item).removeClass("hidden").closest("div").append("<h5 style='color:yellow'>No hay archivos subido</h5>");
             })
         };
 
