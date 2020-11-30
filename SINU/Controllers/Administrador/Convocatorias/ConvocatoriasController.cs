@@ -98,7 +98,19 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
             ViewBag.FechaFinProc = convocatoria.Fecha_Fin_Proceso;
             ViewBag.fechaInscripcion = convocatoria.IdPeriodoInscripcion;
-            ViewBag.lst = convocatoria.PeriodosInscripciones.FechaInicio + "/" + convocatoria.PeriodosInscripciones.FechaFinal;/*db.PeriodosInscripciones.Where(x => x.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion).*/
+            /* generando una selectlist con el detalle de los periodos de inscripcion de id periodo, fecha de inicio y fin */
+            IList<PeriodosInscripciones> periodoinscripcion = db.PeriodosInscripciones.ToList();
+            IEnumerable<SelectListItem> selectListPeriodosInscripcion =
+                   from p in periodoinscripcion
+                   select new SelectListItem
+                   {
+                       Selected = (p.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion),
+                       Text = p.IdPeriodoInscripcion.ToString() + ": " + p.FechaInicio.Date.ToShortDateString() + " - "+ p.FechaFinal.Date.ToShortDateString() ,
+                       Value = p.IdPeriodoInscripcion.ToString()
+                   };
+            
+            ViewBag.IdPeriodoInscripcion = selectListPeriodosInscripcion;
+
             return View(convocatoria);
         }
 
