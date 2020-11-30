@@ -128,7 +128,7 @@ namespace SINU.ViewModels
         public int IdPersona { get; set; }
         [DisplayName("Nombre")]
         public string Nombre { get; set; }
-        [DisplayName("Apellido:")]
+        [DisplayName("Apellido")]
         public string Apellido { get; set; }
         [DisplayName("Numero de Inscripcion:")]
         public int ID_Inscripcion { get; set; }

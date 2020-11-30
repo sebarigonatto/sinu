@@ -5233,11 +5233,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdPantalla" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vGruposYCarreras" EntityType="SINUModel.vGruposYCarreras" />
-          <FunctionImport Name="spRestriccionesParaEstePostulante" ReturnType="Collection(SINUModel.spRestriccionesParaEstePostulante_Result2)">
-            <Parameter Name="IdPostulantePersona" Mode="In" Type="Int32" />
-            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
-            <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="sp_vPersona_Familiar" ReturnType="Collection(SINUModel.sp_vPersona_Familiar_Result)">
           <Parameter Name="IdPersonaPostulante" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -5275,6 +5270,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
             <Parameter Name="FechaRindeExamen" Mode="In" Type="DateTime" />
             <Parameter Name="IdEstablecimientoRindeExamen" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spRestriccionesParaEstePostulante" ReturnType="Collection(SINUModel.spRestriccionesParaEstePostulante_Result)">
+            <Parameter Name="IdPostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
+            <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -5915,19 +5915,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IMC_max" Type="Int32" />
           <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
-        <ComplexType Name="spRestriccionesParaEstePostulante_Result">
-          <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
-          <Property Type="DateTime" Name="FFinalPeriodo" Nullable="false" />
-          <Property Type="Int32" Name="IdInstitucion" Nullable="false" />
-          <Property Type="String" Name="IdGrupoCarrOficio" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Mensaje" Nullable="true" MaxLength="48" />
-          <Property Type="Int32" Name="EdadMinCAutoriz" Nullable="false" />
-          <Property Type="Int32" Name="EdadMin" Nullable="false" />
-          <Property Type="Int32" Name="EdadMax" Nullable="false" />
-          <Property Type="DateTime" Name="Edad_a_fecha" Nullable="true" />
-          <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
-          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
-        </ComplexType>
         <EntityType Name="vInstitucionesConvocadasYCarrerasAsociadas">
           <Key>
             <PropertyRef Name="IdInstitucion" />
@@ -5944,23 +5931,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdCarreraOficio" Type="Int32" Nullable="false" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
         </EntityType>
-        <ComplexType Name="spRestriccionesParaEstePostulante_Result1">
-          <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
-          <Property Type="DateTime" Name="FFinalPeriodo" Nullable="false" />
-          <Property Type="Int32" Name="IdInstitucion" Nullable="false" />
-          <Property Type="String" Name="NombreInst" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="IdGrupoCarrOficio" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Mensaje" Nullable="true" MaxLength="48" />
-          <Property Type="Int32" Name="PresentarMensaje" Nullable="false" />
-          <Property Type="Int32" Name="EdadActual" Nullable="true" />
-          <Property Type="Int32" Name="EdadEnFechaLimite" Nullable="true" />
-          <Property Type="Int32" Name="EdadMinCAutoriz" Nullable="false" />
-          <Property Type="Int32" Name="EdadMin" Nullable="false" />
-          <Property Type="Int32" Name="EdadMax" Nullable="false" />
-          <Property Type="DateTime" Name="Edad_a_fecha" Nullable="true" />
-          <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
-          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
-        </ComplexType>
         <EntityType Name="ConsultaProgramada">
           <Key>
             <PropertyRef Name="IdConsulta" />
@@ -6191,27 +6161,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="EstadoCivil" Type="String" Nullable="false" MaxLength="112" FixedLength="false" Unicode="false" />
           <Property Name="IdResGrupo" Type="Int32" />
         </EntityType>
-        <ComplexType Name="spRestriccionesParaEstePostulante_Result2">
-          <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
-          <Property Type="DateTime" Name="FFinalPeriodo" Nullable="false" />
-          <Property Type="Int32" Name="IdInstitucion" Nullable="false" />
-          <Property Type="String" Name="NombreInst" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="IdGrupoCarrOficio" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Mensaje" Nullable="true" MaxLength="48" />
-          <Property Type="Int32" Name="PresentarMensaje" Nullable="false" />
-          <Property Type="Int32" Name="EdadActual" Nullable="true" />
-          <Property Type="Int32" Name="EdadEnFechaLimite" Nullable="true" />
-          <Property Type="Int32" Name="EdadMinCAutoriz" Nullable="false" />
-          <Property Type="Int32" Name="EdadMin" Nullable="false" />
-          <Property Type="Int32" Name="EdadMax" Nullable="false" />
-          <Property Type="DateTime" Name="Edad_a_fecha" Nullable="true" />
-          <Property Type="Int32" Name="AlturaMinF" Nullable="true" />
-          <Property Type="Int32" Name="AlturaMinM" Nullable="true" />
-          <Property Type="Int32" Name="IMC_min" Nullable="true" />
-          <Property Type="Int32" Name="IMC_max" Nullable="true" />
-          <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
-          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="sp_vPersona_Familiar_Result">
           <Property Type="String" Name="Email" Nullable="true" MaxLength="256" />
           <Property Type="Int32" Name="IdFamiliar" Nullable="true" />
@@ -6428,6 +6377,28 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
           <Property Name="IdEstablecimientoRindeExamen" Type="Int32" />
         </EntityType>
+        <ComplexType Name="spRestriccionesParaEstePostulante_Result">
+          <Property Type="DateTime" Name="FInicioPeriodo" Nullable="false" />
+          <Property Type="DateTime" Name="FFinalPeriodo" Nullable="false" />
+          <Property Type="Int32" Name="IdInstitucion" Nullable="false" />
+          <Property Type="String" Name="NombreInst" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="IdModalidad" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="IdGrupoCarrOficio" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Mensaje" Nullable="true" MaxLength="48" />
+          <Property Type="Int32" Name="PresentarMensaje" Nullable="false" />
+          <Property Type="Int32" Name="EdadActual" Nullable="true" />
+          <Property Type="Int32" Name="EdadEnFechaLimite" Nullable="true" />
+          <Property Type="Int32" Name="EdadMinCAutoriz" Nullable="false" />
+          <Property Type="Int32" Name="EdadMin" Nullable="false" />
+          <Property Type="Int32" Name="EdadMax" Nullable="false" />
+          <Property Type="DateTime" Name="Edad_a_fecha" Nullable="true" />
+          <Property Type="Int32" Name="AlturaMinF" Nullable="true" />
+          <Property Type="Int32" Name="AlturaMinM" Nullable="true" />
+          <Property Type="Int32" Name="IMC_min" Nullable="true" />
+          <Property Type="Int32" Name="IMC_max" Nullable="true" />
+          <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
+          <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7855,31 +7826,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spRestriccionesParaEstePostulante" FunctionName="SINUModel.Store.spRestriccionesParaEstePostulante">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="SINUModel.spRestriccionesParaEstePostulante_Result2">
-                <ScalarProperty Name="FInicioPeriodo" ColumnName="FInicioPeriodo" />
-                <ScalarProperty Name="FFinalPeriodo" ColumnName="FFinalPeriodo" />
-                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
-                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
-                <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
-                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
-                <ScalarProperty Name="PresentarMensaje" ColumnName="PresentarMensaje" />
-                <ScalarProperty Name="EdadActual" ColumnName="EdadActual" />
-                <ScalarProperty Name="EdadEnFechaLimite" ColumnName="EdadEnFechaLimite" />
-                <ScalarProperty Name="EdadMinCAutoriz" ColumnName="EdadMinCAutoriz" />
-                <ScalarProperty Name="EdadMin" ColumnName="EdadMin" />
-                <ScalarProperty Name="EdadMax" ColumnName="EdadMax" />
-                <ScalarProperty Name="Edad_a_fecha" ColumnName="Edad_a_fecha" />
-                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
-                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
-                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
-                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_vPersona_Familiar" FunctionName="SINUModel.Store.sp_vPersona_Familiar">
             <ResultMapping>
               <ComplexTypeMapping TypeName="SINUModel.sp_vPersona_Familiar_Result">
@@ -8045,6 +7991,32 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spExamenParaEsteInscripto" FunctionName="SINUModel.Store.spExamenParaEsteInscripto" />
+          <FunctionImportMapping FunctionImportName="spRestriccionesParaEstePostulante" FunctionName="SINUModel.Store.spRestriccionesParaEstePostulante">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.spRestriccionesParaEstePostulante_Result">
+                <ScalarProperty Name="FInicioPeriodo" ColumnName="FInicioPeriodo" />
+                <ScalarProperty Name="FFinalPeriodo" ColumnName="FFinalPeriodo" />
+                <ScalarProperty Name="IdInstitucion" ColumnName="IdInstitucion" />
+                <ScalarProperty Name="NombreInst" ColumnName="NombreInst" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdGrupoCarrOficio" ColumnName="IdGrupoCarrOficio" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="PresentarMensaje" ColumnName="PresentarMensaje" />
+                <ScalarProperty Name="EdadActual" ColumnName="EdadActual" />
+                <ScalarProperty Name="EdadEnFechaLimite" ColumnName="EdadEnFechaLimite" />
+                <ScalarProperty Name="EdadMinCAutoriz" ColumnName="EdadMinCAutoriz" />
+                <ScalarProperty Name="EdadMin" ColumnName="EdadMin" />
+                <ScalarProperty Name="EdadMax" ColumnName="EdadMax" />
+                <ScalarProperty Name="Edad_a_fecha" ColumnName="Edad_a_fecha" />
+                <ScalarProperty Name="AlturaMinF" ColumnName="AlturaMinF" />
+                <ScalarProperty Name="AlturaMinM" ColumnName="AlturaMinM" />
+                <ScalarProperty Name="IMC_min" ColumnName="IMC_min" />
+                <ScalarProperty Name="IMC_max" ColumnName="IMC_max" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
