@@ -126,11 +126,17 @@ namespace SINU.ViewModels
 
     public class Presentacion {
         public int IdPersona { get; set; }
+        [DisplayName("Nombre")]
         public string Nombre { get; set; }
+        [DisplayName("Apellido")]
         public string Apellido { get; set; }
+        [DisplayName("Numero de Inscripcion:")]
         public int ID_Inscripcion { get; set; }
+        [DisplayName("Fecha de Presentacion")]
         public DateTime FechaPresentacion { get; set; }
+        [DisplayName("Lugar de Presentacion")]
         public string DomicilioExamenNombre { get; set; }
+        [DisplayName("Direccion")]
         public string DomicilioExamen { get; set; }
 
     }

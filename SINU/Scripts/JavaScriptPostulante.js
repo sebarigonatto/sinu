@@ -449,7 +449,7 @@ $(document).ready(function () {
             cache: false,
             type: "GET",
             url: "/" + url_Controller + "/" + url_CUD,
-            data: { ID: id_registro, ID_persona: id_persona },
+            data: { ID_persona: id_persona, ID: id_registro  },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
                

@@ -503,7 +503,7 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public FileContentResult GetFile(int? IdPersona, string? docu)
+        public FileContentResult GetFile(int? ID_persona, string? docu)
         {
             string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -518,7 +518,7 @@ namespace SINU.Controllers
             {
           
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string[] archivos = Directory.GetFiles(Ubicacionfile, IdPersona + "&" + docu + "*");
+                string[] archivos = Directory.GetFiles(Ubicacionfile, ID_persona + "&" + docu + "*");
                 byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
                 string app = "";
                 switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
@@ -727,7 +727,7 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult EstudiosCUD(int? ID, int ID_persona)
+        public ActionResult EstudiosCUD(int ID_persona, int? ID)
         {
             try
             {
@@ -985,7 +985,7 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult IdiomaCUD(int? ID, int? ID_persona)
+        public ActionResult IdiomaCUD(int? ID_persona, int? ID )
         {
             try
             {
@@ -1078,7 +1078,7 @@ namespace SINU.Controllers
 
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult ActMilitarCUD(int? ID, int ID_persona)
+        public ActionResult ActMilitarCUD(int ID_persona, int? ID)
         {
             try
             {
@@ -1476,7 +1476,7 @@ namespace SINU.Controllers
                     //si ya tiene una relacion conel postulante la persona a agragr como familiar lo notifico
                     string msgs, resps;
 
-                    msgs = (rela != null) ? string.Format("La persona con Dni: {0}, ya esta cargado como familiar. Redirigiendo...", DNI) : string.Format("La persona con Dni: {0} que desea agregar como familiar ya existe, ¿Desea agregarlo?", DNI);
+                    msgs = (rela != null) ? $"La persona con Dni: {DNI}, ya esta cargado como familiar. Redirigiendo..." : $"La persona con Dni: {DNI} que desea agregar como familiar ya existe, ¿Desea agregarlo?";
                     resps = (rela != null) ? "son_familiares" : "existe";
 
                     return Json(new { resp = resps, msg = msgs, ID_PER = Id_Persona, ID_perPOST = ID }, JsonRequestBehavior.AllowGet);
@@ -1570,7 +1570,8 @@ namespace SINU.Controllers
                     };
                 };
                 var IDPREFE = db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == persona.IdInscripcion).IdPreferencia;
-                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First();
+                //de los registros traidos por 'spRestriccionesParaEstePostulante', eligo al cual corresponda al postulante
+                var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First(m=>m.IdInstitucion==IDPREFE);
                 if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
@@ -1629,11 +1630,11 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult ProblemasPantalla(int IDPostulante, int IdPantalla)
+        public ActionResult ProblemasPantalla(int ID_persona, int IdPantalla)
         {
             try
             {
-                return PartialView(db.vDataProblemaEncontrado.Where(p => p.IdPostulantePersona == IDPostulante).Where(m => m.IdPantalla == IdPantalla).ToList());
+                return PartialView(db.vDataProblemaEncontrado.Where(p => p.IdPostulantePersona == ID_persona).Where(m => m.IdPantalla == IdPantalla).ToList());
             }
             catch (Exception)
             {
