@@ -7,93 +7,120 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Asignar fecha de Entrevista</h4>
-    <hr />
+    @*<div class="form justify-content-xl-center" style="align-content:center;">*@
+        <h4 class="font-weight-bold" style="text-align:center">Asignar fecha de Presentacion</h4>
 
 
-
-    @*@Html.LabelFor(m => m.DetalleInscripcion.IdInscripcion)
-    @Html.HiddenFor(m => m.DetalleInscripcion.IdInscripcion)*@
-        <input type="hidden" name="Id" value="@Model.DetalleInscripcion.IdInscripcion" />
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DetalleInscripcion.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DetalleInscripcion.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Apellido, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DetalleInscripcion.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DetalleInscripcion.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Nombres, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
-            @*<input name="fecha" type="text" id="datetimepicker" />*@
-            <input type="text" class="form-control" id="datetimepicker" name="Fecha" />
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <label for="recipient-name" class="col-form-label">
-                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
-            </label>
-        </div>
-    </div>
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        <div class="card" style=" text-align: -webkit-center;">
+            <div class="card-header">
+                <h5 class="font-weight-bold" style="text-align:left"><u>N° de pre-inscripcion:@Model.DetalleInscripcion.IdInscripcion</u></h5>
             </div>
-        </div>*@
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <div class="card-body">
+                <br />
+                <input type="hidden" name="Id" value="@Model.DetalleInscripcion.IdInscripcion" />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.DetalleInscripcion.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Apellido, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col">
+                            @Html.EditorFor(model => model.DetalleInscripcion.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Nombres, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.Genero, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DetalleInscripcion.Genero, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Genero, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.DNI, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DetalleInscripcion.DNI, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.DNI, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.Celular, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DetalleInscripcion.Celular, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Celular, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.LabelFor(model => model.DetalleInscripcion.Preferencia, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DetalleInscripcion.Preferencia, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                            @Html.ValidationMessageFor(model => model.DetalleInscripcion.Preferencia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="col-md-10">
+                            <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
+                            <input type="text" class="form-control" id="datetimepicker" name="Fecha" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-warning mt-4">
+                            <h6 class="font-weight-bold">Asigne una fecha de presntacion al postulante</h6>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="col-md-10">
+                            <label for="recipient-name" class="col-form-label">
+                                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-warning mt-4">
+                            <h6 class="font-weight-bold">Asignele una fecha de Entrevista al Postulante</h6>
+                        </div>
+                    </div>
+                </div>
+                    
+                
+                <br />
+                <div class="form-group">
+                    <div id="DatosDelegacion" class="form-group control-label" hidden>
+                        <h4 class="text-center">Datos del Lugar</h4>
+                        @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
+                        <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+                        @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
+                        <p id="Telefono" class="control-label col"><b>asdasda</b></p>
+                        @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
+                        <p id="Celular" class="control-label col"><b>asdasda</b></p>
+                    </div>
+                </div>
+            </div><!--Aqui termina el bodycard-->
+            <div class="card-footer">
+                <div class="container">
+                    <div class="col-md-12 clearfix">
+                        @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg float-right w-20 ml-2" })
+                        <input type="submit" value="Asignar Fecha" class="btn btn-success btn-lg float-right w-20 " />
+                    </div>
+                </div>
             </div>
-        </div>*@
-    @* Campo para asignar la fecha*@
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.FechaRindeExamen, htmlAttributes: new { @class = "control-label col-md-2" })a asignar
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.FechaRindeExamen, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })
-                @Html.ValidationMessageFor(model => model.FechaRindeExamen, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-    <br />
-    <div class="form-group">
-        <div id="DatosDelegacion" class="form-group control-label" hidden>
-            <h4 class="text-center">Datos del Lugar</h4>
-            @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
-            <p id="Direccion" class="control-label col"><b>asdasda</b></p>
-            @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
-            <p id="Telefono" class="control-label col"><b>asdasda</b></p>
-            @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
-            <p id="Celular" class="control-label col"><b>asdasda</b></p>
-        </div>
-    </div>
-    <div class="ml-md-0 row ">
-
-        <div class="col-md-2">
-            @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
-        </div>
-        <div class="col-md-2">
-            <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
-        </div>
-    </div>
-
-</div>
+        </div><!--termina la card-->
+    @*</div>*@
 
 }
 @section Scripts {
@@ -129,13 +156,6 @@
                     $("#DatosDelegacion").attr("hidden", true);
                 }
             })
-            //$(".datepicker").datepicker({
-            //    format: "dd/mm/yyyy",
-            //    language: "es",
-            //    autoclose: true,
-            //    startView: "days",
-            //    startDate: "Today"
-            //});
         });
 
     </script>

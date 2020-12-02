@@ -6,69 +6,99 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Asignar fecha de Entrevista</h4>
-        <hr />
+    <h4 class="font-weight-bold" style="text-align:center">Asignar fecha de Presentacion</h4>
 
-
-
-
-        @Html.HiddenFor(m => m.IdPersona)
-        @Html.HiddenFor(m => m.IdInscripcion)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
-            </div>
+    <div class="card" style=" text-align: -webkit-center;">
+        <div class=" card-header">
+            <h5 class="font-weight-bold" style="text-align:left"><u>N° de pre-inscripcion:@Model.IdInscripcion</u></h5>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        <div class="card-body">
+            @Html.HiddenFor(m => m.IdPersona)
+            @Html.HiddenFor(m => m.IdInscripcion)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>*@
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @* Campo para asignar la fecha*@
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Celular, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="form-row">
+                <div class="form-grop col-md-6">
+                    @* Campo para asignar la fecha*@
+                    @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col">
+                        <input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly />
+                        @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="alert alert-warning mt-4">
+                        <h6 class="font-weight-bold">Asignele una fecha de Entrevista al Postulante</h6>
+                    </div>
+                </div>
+
+            </div>
+
+            @*<div class="ml-md-0 row ">
+
+                    <div class="col-md-2">
+                        @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
+                    </div>
+                </div>*@
+
+        </div><!--Termina la card Body-->
+        <div class="card-footer">
+            <div class="container">
+                <div class="col-md-12 clearfix">
+                    @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg float-right w-20 ml-2" })
+                    <input type="submit" value="Asignar Fecha" class="btn btn-success btn-lg float-right w-20 " />
+                </div>
             </div>
         </div>
-        @* Campo para asignar la fecha*@
-        <div class="form-group">
-            @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
-            <div class="col-md-10">
-                <input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly/>
-                @*@Html.TextBoxFor(model => model.FechaEntrevista, "{0:dd/MM/yyyy}", new { @class = "form-control datepicker", @readonly = true, @style = "background-color: white !important", @placeholder = " dd/mm/yyyy" })*@
-                @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <br />
-        <div class="ml-md-0 row ">
+    </div><!--Termina la clase de card-->
 
-            <div class="col-md-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark w-100" })
-            </div>
-            <div class="col-md-2">
-                <input type="submit" value="Asignar Fecha" class="btn btn-success w-100" />
-            </div>
-        </div>
-
-    </div>
 
 }
 @section Scripts {
