@@ -398,7 +398,7 @@
                                             <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[0])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 1 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 1 })
                                                 }
                                                 @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -416,7 +416,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 2 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 2 })
                                                 }
                                                 @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -436,7 +436,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[2])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 3 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 3 })
                                                 }
                                                 @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
 
@@ -457,7 +457,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 4 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 4 })
                                                 }
                                                 @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
 
@@ -479,7 +479,7 @@
                                             <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 5 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 5 })
                                                 }
                                                 @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -498,7 +498,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 6 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 6 })
                                                 }
                                                 @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -517,7 +517,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 7 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 7 })
                                                 }
                                                 @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -536,7 +536,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 8 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 8 })
                                                 }
                                                 @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -555,7 +555,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[8])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 9 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 9 })
                                                 }
                                                 @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
                                             </div>
@@ -573,7 +573,7 @@
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DocuAnexoNAV">
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[9])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
-                                                    @Html.Action("ProblemasPantalla", "Postulante", new { IDPostulante = Model.ID_PER, IdPantalla = 10 })
+                                                    @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 10 })
                                                 }
                                                 @Html.Action("DocumentacionAnexo", "Postulante", new { IdPersona = Model.ID_PER })
                                             </div>
@@ -789,22 +789,19 @@
                }
 
 
+
             //scroll automatico al selecionar un nav, solo en vista mobil
-            $("#myTab2Content button[aria-label='Toggle navigation']").on('click', function () {
-                bt = $(this).attr("id");
-                $.topp = $(this).closest('.ocultnav').offset().top;
+            $("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
 
+                $.topp = $(this).attr("id");
                 setTimeout(function () {
-                
-                        if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
-                            $('body').animate({ scrollTop: $.topp }, 800);
-                        };
-
-                }, 100);
+                    //alert($("#" + bt).closest('nav').next('div').hasClass('show'));
+                    if ($("#" + $.topp).closest('nav').next('div').hasClass('show')) {
+                        $('html, body').animate({ scrollTop: $("#" + $.topp).offset().top -10 }, 500);
+                    }
+                }, 50);
 
             });
-
-
 
         });
 

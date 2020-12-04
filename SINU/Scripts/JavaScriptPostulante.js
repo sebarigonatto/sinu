@@ -421,7 +421,7 @@ $(document).ready(function () {
     });
 
     $("#ModalEIA").on('hide.bs.modal', function () {
-        $('html,body').animate({ scrollTop: $.topp }, 200);
+        $('html,body').animate({ scrollTop: $("#" + $.topp).offset().top }, 500);
     });
 
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION

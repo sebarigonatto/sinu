@@ -217,7 +217,7 @@ namespace SINU.Controllers
             }
             vInscripcion = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
             ViewBag.Estado = vInscripcion.Estado;
-            return View(InscripcionElegida.ToList()[0]);
+            return View(InscripcionElegida.First());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
