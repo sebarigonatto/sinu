@@ -80,6 +80,7 @@ namespace SINU
                     foreach (var item in message.Correos)
                     {
                         mensage.To.Add(new MailAddress(item));
+                        //mensage.Bcc
                     }
                 }
 

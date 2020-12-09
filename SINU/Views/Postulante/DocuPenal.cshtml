@@ -17,7 +17,7 @@
     <h2>Antecedetes Penales</h2>
     
     <div class="form-group">
-        <div class="jumbotron mb-0 p-3 row" style="background-color: #08495f; color:white">
+        <div class="jumbotron mb-0 p-3 pl-5 pr-5 pt-4" style="background-color: #08495f; color:white">
             @Html.HiddenFor(m => m.IdPersona)
 
             @Html.HiddenFor(m => m.PathConstanciaAntcPenales)
@@ -37,14 +37,14 @@
                 <div class="BTAcciones custom-file col col-md-6 mb-2">
 
                     @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input" })
-                    <label class="custom-file-label" for="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile" style="overflow:hidden">
                         @if (Model.PathFormularioAanexo2 != null)
                         {
                             <b>@Model.PathFormularioAanexo2.Substring(Model.PathFormularioAanexo2.LastIndexOf("&") + 1)</b>
 
                         }
                         else
-                        { <o>Seleccione archivo...</o>}
+                        { <b>Seleccione archivo...</b>}
                     </label>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
 
@@ -68,14 +68,14 @@
 
                     @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input" })
                     @*<input type="button" name="name" value="" />*@
-                    <label class="custom-file-label" for="exampleInputFile">
+                    <label class="custom-file-label" for="exampleInputFile" style="overflow:hidden">
                         @if (Model.PathConstanciaAntcPenales != null)
                         {
                             <b>@Model.PathConstanciaAntcPenales.Substring(Model.PathConstanciaAntcPenales.LastIndexOf("&") + 1)</b>
 
                         }
                         else
-                        { <o>Seleccione archivo...</o>}
+                        { <b>Seleccione archivo...</b>}
                     </label>
                     @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
                 </div>

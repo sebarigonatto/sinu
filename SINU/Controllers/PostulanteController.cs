@@ -24,7 +24,7 @@ namespace SINU.Controllers
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
         //ver este atributo de autorizacion si corresponde o no
         //[Authorize(Roles = "Postulante")]
-        public ActionResult Index(int? ID_Postulante)
+        public ActionResult Index2(int? ID_Postulante)
         {
             //error cdo existe uno registrado antes de los cambios de secuencia
             try
@@ -95,7 +95,7 @@ namespace SINU.Controllers
         }
 
    
-        public ActionResult Index2(int? ID_Postulante)
+        public ActionResult Index(int? ID_Postulante)
         {
             try
             {
@@ -126,14 +126,17 @@ namespace SINU.Controllers
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
                 //ver como mostrar esta pantalla de si fue 
-                if (pers.NoPostulado) ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
-                ;
+                if (pers.NoPostulado)
+                {
+                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
+                    ;
+                }
                 pers.ProcesoInterrumpido = (Secuencias[0] == 24);
 
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
-                ViewBag.ValidacionEnCurso = (Secuencias[0] == 14) || (Secuencias[0] == 24);
+                ViewBag.ValidacionEnCurso = (Secuencias[0] == 14) /*|| (Secuencias[0] == 24)*/;
                 //Boolenao de si paso por validacion
-                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && ((Secuencias[0] == 13) || (Secuencias[0] == 24));
+                Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13 || Secuencias[0] == 24);
 
                 //Cargo listado con las solapas de documentacion "abiertas o cerradas"
                 var PantallasEstadoProblemas = new List<Array>();
@@ -147,7 +150,10 @@ namespace SINU.Controllers
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
                     var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
-                    ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
+                    if (!ViewBag.ValidacionEnCurso) {
+                        ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
+                    }
+                    
                 }
 
                 return View(pers);
@@ -1335,7 +1341,7 @@ namespace SINU.Controllers
         public ActionResult FamiliaCUD(int ID_persona, int  idPersonaFamilia )
         {
             Session["FamiTable"] = true;
-            if (db.Familiares.Where(m => m.IdPostulantePersona == ID_persona && m.IdPersona==idPersonaFamilia).FirstOrDefault()==null)
+            if (db.Familiares.Where(m => m.IdPostulantePersona == ID_persona && m.IdPersona==idPersonaFamilia).FirstOrDefault()==null && ID_persona !=0)
             {
                 return View("Error", Func.ConstruyeError("Relacion Familinar inexistente", "Postulante", "FamiliaCUD"));
             };

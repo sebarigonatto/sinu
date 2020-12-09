@@ -1210,7 +1210,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
     <Content Include="Views\Postulante\DatosBasicos.cshtml" />
-    <Content Include="Views\Postulante\Index.cshtml" />
+    <Content Include="Views\Postulante\Index2.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
@@ -1292,7 +1292,7 @@
     <Content Include="Views\Convocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\_Docupenal.cshtml" />
     <Content Include="Views\Delegacion\PresentacionAsignaFecha.cshtml" />
-    <Content Include="Views\Postulante\Index2.cshtml" />
+    <Content Include="Views\Postulante\Index.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Create.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Delete.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Details.cshtml" />

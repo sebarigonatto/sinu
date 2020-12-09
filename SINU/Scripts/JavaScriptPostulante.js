@@ -420,9 +420,9 @@ $(document).ready(function () {
         ModalEIACUD(null, id_persona, id_Tabla);
     });
 
-    $("#ModalEIA").on('hide.bs.modal', function () {
-        $('html,body').animate({ scrollTop: $("#" + $.topp).offset().top }, 500);
-    });
+    //$("#ModalEIA").on('hide.bs.modal', function () {
+    //    $('html,body').animate({ scrollTop: $("#" + $.topp).offset().top }, 500);
+    //});
 
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla;

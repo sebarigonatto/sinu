@@ -43,7 +43,7 @@ namespace SINU.Authorize
 
             }
             //verifico los datos a mostrar a un ususario Postulante sea los suyos y no de otro
-            else if (Funcion == "ListarRP" && httpContext.User.IsInRole("Postulante") && httpContext.Request.QueryString.Count > 0)
+            else if (Funcion == "ListarRP" && httpContext.User.IsInRole("Postulante") && httpContext.Request.QueryString.Count > 0 && httpContext.Request.QueryString[0]!= "0")
             {
                 if (httpContext.Request.QueryString.ToString().Contains("ID_persona"))
                 {
