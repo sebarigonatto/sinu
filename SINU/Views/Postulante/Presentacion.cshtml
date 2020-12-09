@@ -10,9 +10,7 @@
     {
         <h5>Se le informara via correo cuando le hayan asignado una fecha para la presentacion, solicitamos este atento.</h5>
         <h5>Por Consultas comunicarse con la Delegacion seleccionada. </h5>
-        @* <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-            <h5>Direccion: <b>@Model.Direccion</b></h5>
-             <h5>Telefono: <b>@Model.Telefono</b></h5>*@
+
     }
     else
     {
@@ -21,7 +19,7 @@
         <h5>@Html.DisplayNameFor(m => m.DomicilioExamen): <b>@Model.DomicilioExamen</b></h5>
 
         <br /> //<h5> @ViewBag.QRCodeImageLink</h5>
-        <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCodeImage))" width="140" height="140" style="border-radius:3px;border:1px solid black" class="align-items-center" />
+        <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.Qr))" width="140" height="140" style="border-radius:3px;border:1px solid black" class="align-items-center" />
         <hr style="border:0px" />
         <div id="btpresentacion">
             <button onclick="Imprimir()" class="btn btn-success">Imprimir</button>

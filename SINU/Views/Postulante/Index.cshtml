@@ -621,12 +621,17 @@
 
             //scroll automatico al selecionar un nav, solo en vista mobil
             $("#myTab2Content button[aria-label='Toggle navigation']").on('click', function () {
-                bt = $(this).attr("id");
-                $.topp = $(this).closest('.ocultnav').offset().top;
+                
+                $.topp = $(this).attr("id");
+                setTimeout(function () {
+                    //alert($("#" + bt).closest('nav').next('div').hasClass('show'));
+                    if ($("#" + $.topp).closest('nav').next('div').hasClass('show')) {
+                       
+                        $('html, body').animate({ scrollTop: $("#" + $.topp).offset().top}, 500);
 
-                        if ($("#" + bt).closest('nav').next('div').hasClass('show')) {
-                            $('body').animate({ scrollTop: $.topp }, 800);
-                        };
+                    }
+                }, 50);
+                        
 
             });
 

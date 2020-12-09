@@ -33,7 +33,7 @@ namespace SINU.Authorize
             var fun = new[] { "CreaEditaDatosP", "EliminarDatosP", "ModificarSecuenciaP" };
             if (fun.Contains(Funcion))
             {
-                var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
+                var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.First().IdPersona;
                 var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? int.Parse(httpContext.Request.Form[1]) : int.Parse(httpContext.Request.QueryString[0]);
                 if (IDpersonaActual != IDpersonaDatos)
                 {
@@ -47,7 +47,7 @@ namespace SINU.Authorize
             {
                 if (httpContext.Request.QueryString.ToString().Contains("ID_persona"))
                 {
-                    var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.ToList()[0].IdPersona;
+                    var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.First().IdPersona;
 
                     if (int.Parse(httpContext.Request.QueryString[0]) != IDpersonaActual)
                     {

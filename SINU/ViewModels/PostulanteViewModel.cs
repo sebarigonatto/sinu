@@ -138,7 +138,7 @@ namespace SINU.ViewModels
         public string DomicilioExamenNombre { get; set; }
         [DisplayName("Direccion")]
         public string DomicilioExamen { get; set; }
-
+        public byte[] Qr { get; set; }
     }
 
     public class DocuPenalVM

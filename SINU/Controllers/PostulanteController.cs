@@ -89,7 +89,6 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "Index"));
             }
 
@@ -1518,17 +1517,17 @@ namespace SINU.Controllers
 
         public ActionResult DocumentacionAnexo(int IdPersona)
         {
-            DocuAnexoVM asd = new DocuAnexoVM()
+            DocuAnexoVM docu = new DocuAnexoVM()
             {
                 IdPersona = IdPersona
 
             };
             int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.First().IdInscripcion;
-            asd.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
+            docu.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
             var secus = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList();
             //verifico que ya haya tenido una respuesta de validacion departe de la delegacion
             ViewBag.secucu = secus[0].IdSecuencia == 13 && secus.FirstOrDefault(m => m.IdSecuencia == 14) != null;
-            return PartialView("DocumentacionAnexo", asd);
+            return PartialView("DocumentacionAnexo", docu);
         }
 
 
@@ -1670,7 +1669,7 @@ namespace SINU.Controllers
                 prese.DomicilioExamen = lugarExamen.Jurisdiccion + ", " + lugarExamen.Localidad + ", " + lugarExamen.Direccion;
                 prese.FechaPresentacion = (DateTime)Inscrip.FechaRindeExamen;
                 string url = "http://" + HttpContext.Request.Url.Host + Url.Action("Index", "Postulante", new { ID_Postulante = ID_persona });
-                ViewBag.QRCodeImage = generarQR(url);
+                prese.Qr = generarQR(url);
                 ViewBag.QRCodeImageLink = url;
             };
             return PartialView(prese);

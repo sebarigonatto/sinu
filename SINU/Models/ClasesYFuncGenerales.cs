@@ -133,7 +133,7 @@ namespace SINU.Models
                 }
                 else if (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser) != null && ID_Delegacion == null)
                 {
-                    idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser).IdPersona).IdInscripcion;
+                    idInscrip = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser).Inscripcion.First().IdInscripcion;
                 }
 
                 ////ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine

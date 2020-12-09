@@ -208,10 +208,10 @@ namespace SINU.Controllers
             regi.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
 
             idInstitucion = (idInstitucion == 0) ? 1 : idInstitucion;
-
+            ViewBag.Inst = "";
             if (idInstitucion != 0)
             {
-                ViewBag.Inst = (idInstitucion == 1) ? null : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+                ViewBag.Inst = (idInstitucion == 1) ? "" : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
             };
 
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
@@ -356,7 +356,7 @@ namespace SINU.Controllers
                         Apellido="",
                         Apellido_P = persona.Apellido,
                         Dni_P = persona.DNI,
-                        IdInscripcion_P = persona.Postulante.Inscripcion.ToList()[0].IdInscripcion,
+                        IdInscripcion_P = persona.Postulante.Inscripcion.First().IdInscripcion,
                         Nombre_P = persona.Nombres,
                         url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme),
                         Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
