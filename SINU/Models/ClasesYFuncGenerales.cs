@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using System.Threading.Tasks;
-using System.IO;
+using Microsoft.Ajax.Utilities;
 using SINU.ViewModels;
 using System.Windows.Media.Imaging;
 using Microsoft.AspNet.Identity;
@@ -119,24 +119,74 @@ namespace SINU.Models
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <param name="ID_Delegacion">Id de la Delegacion que se enviara el mail.</param>
         /// <returns></returns>
-        public static async Task<bool> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion)
+        public static async Task<bool> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion, List<string>? mails)
         {
             try
             {
                 ID_AspNetUser ??= "";
+                ID_Persona ??= 0;
                 int idInscrip = 0;
-                //Para delegacion
-                if (ID_AspNetUser == "" && ID_Delegacion == null)
+                List<string> correos = new List<string>();
+
+                DatosResponsable datos= new DatosResponsable();
+                string Rol="Postulante",Modo="To";
+                                
+                Postulante postulante = db.Postulante.FirstOrDefault(m => m.IdPersona == ID_Persona || m.IdAspNetUser == ID_AspNetUser);
+                if (postulante != null)
                 {
-                    ID_AspNetUser = db.Postulante.First(m => m.IdPersona == ID_Persona).IdAspNetUser;
-                    idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_Persona).IdInscripcion;
+                    ID_AspNetUser = postulante.IdAspNetUser;
+                    idInscrip = postulante.Inscripcion.First().IdInscripcion;
+
                 }
-                else if (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser) != null && ID_Delegacion == null)
+                else if (ID_Delegacion != null)
                 {
-                    idInscrip = db.Postulante.FirstOrDefault(m => m.IdAspNetUser == ID_AspNetUser).Inscripcion.First().IdInscripcion;
+                    var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
+
+                    foreach (vUsuariosAdministrativos dele in mailDelegacion)
+                    {
+                        correos.Add(dele.Email);
+                    }
+                    Rol = "Delegacion";
+                }
+                else
+                {
+                    foreach (var item in mails)
+                    {
+                        correos.Add(item);
+                    }
+                    string correo = correos[0];
+                    var id_per = db.Persona.FirstOrDefault(m => m.Email == correo).IdPersona;
+                    postulante = db.Postulante.Find(id_per);
+                    
+                    Modo = "Bcc";
                 }
 
-                ////ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
+                //cargo los datos del pie del correo
+                switch (Rol)
+                {
+                    case "Delegacion":
+                        datos = new DatosResponsable()
+                        {
+                            Apellido = ModeloPlantilla.Apellido,
+                            ResponsableMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableMail").ValorDato,
+                            ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
+                            ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+                        };
+                        break;
+                    case "Postulante":
+                        var OfiDeleg =  db.OficinasYDelegaciones.Find(postulante.Inscripcion.First().IdDelegacionOficinaIngresoInscribio);
+                        datos = new DatosResponsable()
+                        {
+                            Apellido = ModeloPlantilla.Apellido.ToUpper(),
+                            ResponsableMail = OfiDeleg.Email1,
+                            ResponsablePisoOfic = OfiDeleg.Provincia + ", " + OfiDeleg.Localidad + ", " + OfiDeleg.Direccion,
+                            ResponsableTelefonoEinterno = OfiDeleg.Telefono,
+                            ResponsableCelular = OfiDeleg.Celular
+                        };
+                        break;
+                }
+
+                //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
                 var configuracion = new TemplateServiceConfiguration
                 {
                     TemplateManager = new ResolvePathTemplateManager(new[] { "Plantillas" }),
@@ -147,51 +197,20 @@ namespace SINU.Models
 
                 string Carpeta = AppDomain.CurrentDomain.BaseDirectory;
                 string LayautCarpeta = $"{Carpeta}Plantillas\\LayoutPlantillaMail.cshtml";
-                DatosResponsable datos;
-                if (idInscrip > 0)
-                {
-                    var id_OfiDeleg = db.Inscripcion.Find(idInscrip).IdDelegacionOficinaIngresoInscribio;
-                    var OfiDeleg = db.OficinasYDelegaciones.Find(id_OfiDeleg);
-                    datos = new DatosResponsable()
-                    {
-                        Apellido = ModeloPlantilla.Apellido.ToUpper(),
-                        ResponsableMail = OfiDeleg.Email1,
-                        ResponsablePisoOfic = OfiDeleg.Provincia + ", " + OfiDeleg.Localidad + ", " + OfiDeleg.Direccion,
-                        ResponsableTelefonoEinterno = OfiDeleg.Telefono,
-                        ResponsableCelular = OfiDeleg.Celular
-                    };
-                }
-                else
-                {
-                    datos = new DatosResponsable()
-                    {
-                        Apellido = ModeloPlantilla.Apellido,
-                        ResponsableMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableMail").ValorDato,
-                        ResponsablePisoOfic = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsablePisoOfic").ValorDato,
-                        ResponsableTelefonoEinterno = db.Configuracion.FirstOrDefault(m => m.NombreDato == "ResponsableTelefonoEinterno").ValorDato
-                    };
-                }
+                //preparo el layout del correo
                 string HtmlLayout = Engine.Razor.RunCompile(LayautCarpeta, null, datos);
-
+                //preparo el cuerpo del correo
                 string cuerpoMail = Engine.Razor.RunCompile($"{Carpeta}Plantillas\\" + Plantilla + ".cshtml", null, ModeloPlantilla);
                 //var templateHtml = templateService.Parse(template, ModeloPlantilla, null, null);
                 var finalHtml = HtmlLayout.Replace("Mail_CUERPO", cuerpoMail);
 
-
+                //cargo el asunto desde la base de datos
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
-                List<string> correos = new List<string>();
-                if (ID_Delegacion != null)
-                {
-                    var mailDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
 
-                    foreach (vUsuariosAdministrativos dele in mailDelegacion)
-                    {
-                        correos.Add(dele.Email);
-                    }
-                }
+                
 
-                EmailService.SendEmail(ID_AspNetUser, asunto, finalHtml, correos);
-
+                EmailService.SendEmail(ID_AspNetUser, asunto, finalHtml, correos,Modo);
+                 
                 return true;
             }
             catch (Exception x)

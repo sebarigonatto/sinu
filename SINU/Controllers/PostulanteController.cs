@@ -291,7 +291,7 @@ namespace SINU.Controllers
                 var grupoDelegacion = db.vUsuariosAdministrativos.Where(m => m.IdOficinasYDelegaciones == ID_Delegacion).ToList();
 
 
-                Func.EnvioDeMail(datosMail, "PlantillaMailSolicitudEntrevista", null, null, "MailAsunto8", ID_Delegacion);
+                Func.EnvioDeMail(datosMail, "PlantillaMailSolicitudEntrevista", null, null, "MailAsunto8", ID_Delegacion,null);
 
 
                 return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
@@ -1621,7 +1621,7 @@ namespace SINU.Controllers
                     url = Url.Action("Documentacion", "Delegacion", new { id = ID_persona }, protocol: Request.Url.Scheme)
                 };
 
-                Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", null, null, "MailAsunto7", ID_Delegacion);
+                Func.EnvioDeMail(datosMail, "PlantillaInicioValidacionParaDelegacion", null, null, "MailAsunto7", ID_Delegacion,null);
 
 
                 //ver esto solo disponible si se encuntra en la secuencia 13 "inicio De Carga/DOCUMENTACION"

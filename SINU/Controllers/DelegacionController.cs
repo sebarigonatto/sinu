@@ -97,13 +97,13 @@ namespace SINU.Controllers
                     db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
 
 
-                    MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
-                    {
-                        Apellido = datos.Apellido,
-                        FechaEntrevista = datos.FechaEntrevista
-                    };
-                    //verificar el llamado de una funcion asyncronica desde un metodo sincronico
-                    var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4",null);
+                MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
+                {
+                    Apellido = datos.Apellido,
+                    FechaEntrevista = datos.FechaEntrevista
+                };
+                //verificar el llamado de una funcion asyncronica desde un metodo sincronico
+                var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4", null, null);
 
                     InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
@@ -263,11 +263,11 @@ namespace SINU.Controllers
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
-                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2",null);
+                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null,null);
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
                         break;
                     case "No Postulado":
-                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2",null);
+                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null,null);
                         break;
                 }
             }
@@ -323,11 +323,11 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4",null);
+                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4", null,null);
                     db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
                     return Json(new { View = "Index" });
                 };
-                return Json(new { success = true, msg = "Hay Pantallas no validadas"});
+                return Json(new { success = true, msg = "Hay Pantallas no validadas" });
             }
             catch (System.Exception ex)
             {
@@ -340,7 +340,7 @@ namespace SINU.Controllers
 
      #region Volver Etapa Anterior - Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
 
-      public async Task<ActionResult> VolverEtapa(int? ID_persona)
+        public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
             Configuracion configuracion;
@@ -362,13 +362,13 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null,null);
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
-                    return Json(new { View ="Index" });
+                    return Json(new { View = "Index" });
 
                 }
-                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" },JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" }, JsonRequestBehavior.AllowGet);
             }
             catch (System.Exception ex)
             {
@@ -403,7 +403,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null,null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
                     return Json(new { View = "Index" });
 
@@ -418,7 +418,7 @@ namespace SINU.Controllers
 
         #endregion
 
-     #region La accion permite restaurar un postulante al proceso de inscripcion
+        #region La accion permite restaurar un postulante al proceso de inscripcion
         /// <summary>
         /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
         /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
@@ -469,24 +469,24 @@ namespace SINU.Controllers
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string[] archivos = Directory.GetFiles(Ubicacionfile, id + "&" + docu + "*");
-                if (archivos.Count()==0)
+                if (archivos.Count() == 0)
                 {
                     return View("Error");
                 }
                 byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
-                    string app = "";
-                    switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
-                    {
-                        case "jpg":
-                            app = "image/jpeg";
-                            break;
-                        case "pdf":
-                            app = "application/pdf";
-                            break;
-                        default:
-                            break;
-                    };
-                    return File(FileBytes, app);
+                string app = "";
+                switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
+                {
+                    case "jpg":
+                        app = "image/jpeg";
+                        break;
+                    case "pdf":
+                        app = "application/pdf";
+                        break;
+                    default:
+                        break;
+                };
+                return File(FileBytes, app);
             }
             catch (System.Exception ex)
             {
@@ -537,7 +537,7 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult PresentacionAsignaFecha( int Id,DateTime Fecha,int LugarPresentacion)
+        public ActionResult PresentacionAsignaFecha(int Id, DateTime Fecha, int LugarPresentacion)
         {
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
             vInscripcionDetalle Inscripto;
@@ -551,14 +551,14 @@ namespace SINU.Controllers
                 var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = Id }, protocol: Request.Url.Scheme);
                 var modelPlanti = new ViewModels.MailPresentacion
                 {
-                    Apellido=Inscripto.Apellido,
-                    establecimiento=establecExamens,
-                    Link=callbackUrl,
-                    MailCuerpo=configuracion.ValorDato,
-                    fecha=Fecha.ToString("dd/MM/yyyy hh:mm")
+                    Apellido = Inscripto.Apellido,
+                    establecimiento = establecExamens,
+                    Link = callbackUrl,
+                    MailCuerpo = configuracion.ValorDato,
+                    fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
                 };
-                var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null);
-                db.spProximaSecuenciaEtapaEstado(null,Id, false, 0, "", "");
+                var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null,null);
+                db.spProximaSecuenciaEtapaEstado(null, Id, false, 0, "", "");
                 return RedirectToAction("Index");
             }
             catch (Exception)
@@ -567,9 +567,9 @@ namespace SINU.Controllers
                 throw;
             }
         }
-        public ActionResult ListaProblema(int ID_persona,int IdPanatlla)
+        public ActionResult ListaProblema(int ID_persona, int IdPanatlla)
         {
-            List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).Where(m=>m.IdPantalla== IdPanatlla).ToList();
+            List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).Where(m => m.IdPantalla == IdPanatlla).ToList();
 
 
             return View(problema);
@@ -582,7 +582,7 @@ namespace SINU.Controllers
             {
                 ProblemaEcontradoVM problema = new ProblemaEcontradoVM
                 {
-                    ListDataVerificacionVM = new SelectList(db.DataVerificacion.Where(m=>m.IdPantalla==10).ToList(), "IdDataVerificacion", "Descripcion")
+                    ListDataVerificacionVM = new SelectList(db.DataVerificacion.Where(m => m.IdPantalla == 10).ToList(), "IdDataVerificacion", "Descripcion")
                 };
                 var postu = db.Persona.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (ID == null)
@@ -690,7 +690,7 @@ namespace SINU.Controllers
             var abierto = db.spTildarPantallaParaPostulate(datos.DataProblemaEncontradoVM.IdPostulantePersona).FirstOrDefault(m => m.IdPantalla == Idpantalla);
             try
             {
-                if (abierto.Abierta==false)
+                if (abierto.Abierta == false)
                 {
                     return Json(new { success = true, msg = "La pantalla se encuentra validada y no se puede agregar problemas" });
                 }
@@ -700,10 +700,10 @@ namespace SINU.Controllers
                     if (ProblemaExiste == null)///en este IF se utiliza la variable ProblemaExiste para probar si ya existe un problema con el mismo id en la misma pantalla(si es el valor es verdadero lo deja agregar/caso contrario avisa al usuario que hay un problema ya existente en la panatlla)
                     {
                         var data = datos.DataProblemaEncontradoVM;
-                            db.DataProblemaEncontrado.Add(data);
-                            db.SaveChanges();
-                            //int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
-                            return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
+                        db.DataProblemaEncontrado.Add(data);
+                        db.SaveChanges();
+                        //int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
+                        return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
                     }
                     return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
                 }
@@ -742,7 +742,7 @@ namespace SINU.Controllers
         /// <param name="AoC">AoC Abierto o Cerrar, se necesita enviar un booleano para saber que accion necesita realizar el controlador si abrir o cerra una pantalla</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CerrarPantalla(int id, int IdPanatlla,int AoC)
+        public ActionResult CerrarPantalla(int id, int IdPanatlla, int AoC)
         {
             var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
             var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
@@ -753,13 +753,13 @@ namespace SINU.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                  if (IdPanatlla == 10 && EntregTodo != null && AoC==1)
+                    if (IdPanatlla == 10 && EntregTodo != null && AoC == 1)
                     {
                         return Json(new { success = false, msg = "Para validar esta pantalla debe estar toda la documentacion presentada" });
                     }
                     if (Abierto.Abierta == true)
                     {
-                        if (TieneProblema.ToList().First() == true && AoC==1)//cerrar la pantalla con problemas cargados
+                        if (TieneProblema.ToList().First() == true && AoC == 1)//cerrar la pantalla con problemas cargados
                         {
                             return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
                         }
@@ -771,7 +771,7 @@ namespace SINU.Controllers
                         {
                             return Json(new { success = false, msg = "Esta pantalla ya se encuentra abierta para agregar problemas" });
                         }
-                        if (AoC==1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
+                        if (AoC == 1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
                         {
                             db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se valido Correctamente los datos" });
@@ -779,11 +779,11 @@ namespace SINU.Controllers
                     }
                     else
                     {
-                        if (AoC==0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
-                            {
-                                db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
-                                return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
-                            }
+                        if (AoC == 0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
+                        {
+                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                            return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
+                        }
                         return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
                     }
                 }
@@ -797,9 +797,9 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Error en el Modelo Recibido" });
         }
         public ActionResult DocumentosNecesarios(int ID_persona)
-         {
+        {
             var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
-            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m=>m.IdTipoDocPresentado).ToList();
+            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
             ViewBag.Idinscripto = inscrip.IdInscripcion;
             DocuNecesaria datos = new DocuNecesaria()
             {
@@ -811,20 +811,20 @@ namespace SINU.Controllers
         }
 
         [HttpPost]
-        public JsonResult DocuNecesarios(string[]select,int? IdInscripto)
+        public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
         {
             try
             {
-                if (select==null || IdInscripto == null)
+                if (select == null || IdInscripto == null)
                 {
-                  return Json(new { success = false, msg = "Error en los datos recibidos" });
+                    return Json(new { success = false, msg = "Error en los datos recibidos" });
                 }
-                
+
                 // TODO: Add insert logic here
                 foreach (var item in select)
                 {
                     int x = Convert.ToInt32(item);
-                    db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto,x,null);
+                    db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto, x, null);
 
                 }
                 return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
@@ -841,7 +841,7 @@ namespace SINU.Controllers
             try
             {
                 db.spDocumentoInscripto(esInser, Idinscripto, idtipodoc, null);
-                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "ActualizaDocuNec", url_Tabla= "DocumentosNecesarios",url_Controller="Delegacion" });
+                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
             }
             catch (Exception)
             {
@@ -860,9 +860,9 @@ namespace SINU.Controllers
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    LugarPresentacion= new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m=>m.IdOficinasYDelegaciones==UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO==true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
-                   FechaPresentacion=DateTime.Now
-                    };
+                    LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO == true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
+                    FechaPresentacion = DateTime.Now
+                };
 
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
@@ -872,26 +872,26 @@ namespace SINU.Controllers
                 listadoPostulanteAsignarFecha.DatosLugar = JsonConvert.SerializeObject(DatosdelLugar);
 
 
-                return View("AsignarFechaVarios",listadoPostulanteAsignarFecha);
+                return View("AsignarFechaVarios", listadoPostulanteAsignarFecha);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            
-            
+
+
         }
         #endregion
-       
-        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha,int LugarPresentacion)
+
+        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
             vInscripcionDetalle Inscripto;
             Configuracion configuracion;
             if (select == null)
             {
-                return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes"});
+                return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes" });
             }
             try
             {
@@ -914,7 +914,7 @@ namespace SINU.Controllers
                         MailCuerpo = configuracion.ValorDato,
                         fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
                     };
-                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null);
+                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null,null);
                     db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
 
                     db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "", "");
@@ -948,45 +948,45 @@ namespace SINU.Controllers
 
         }
         [HttpPost]
-        public ActionResult AsignarFechaVariosEntrevista(DateTime Fecha,string[] select)
+        public ActionResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
         {
             try
             {
-                vInscripcionDetalle InscripcionElegida;
                 vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+                MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
+                {
+                    Apellido = "",
+                    FechaEntrevista = Fecha
+                };
+
+                List<string> correos = new List<string>();
                 foreach (var item in select)
                 {
                     int x = Convert.ToInt32(item);
 
-                    InscripcionElegida = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == x);
-                    var da = db.Inscripcion.Find(x);
-                    da.FechaEntrevista = Fecha;
+                    var inscrip = db.Inscripcion.Find(x);
+                    inscrip.FechaEntrevista = Fecha;
                     db.SaveChanges();
                     db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
 
-                    MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
-                    {
-                        Apellido = InscripcionElegida.Apellido,
-                        FechaEntrevista = Fecha
-                    };
-                    var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, InscripcionElegida.IdPersona, "MailAsunto4", null);
-
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == x);
-
 
                     if (vInscripcionEtapas.Estado == "Asignada")
                     {
                         db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
                     }
+                    //lista de mail de los postulantes
+                    correos.Add(inscrip.Postulante.Persona.Email);
                 }
-                    return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
+
+                _=Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, null, "MailAsunto4", null,correos);
+                return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
 
                 //List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
 
             }
             catch (Exception)
             {
-
                 throw;
             }
 
