@@ -294,7 +294,7 @@ namespace SINU.Controllers
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null);
+                        await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
 
                         return RedirectToAction("Login");
                     }
@@ -361,8 +361,8 @@ namespace SINU.Controllers
                         url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme),
                         Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
                     };
-                   
-                    Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", null, null, "MailAsunto6", ID_Delegacion);
+
+                    Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", null, null, "MailAsunto6", ID_Delegacion, null);
                 }
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {
@@ -427,7 +427,7 @@ namespace SINU.Controllers
                     LinkConfirmacion = callbackUrl
                 };
 
-                Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
+                Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null,null);
 
                 ViewBag.Title = "Cambio de Contraseña";
                 ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
@@ -677,7 +677,7 @@ namespace SINU.Controllers
                         LinkConfirmacion = callbackUrl
                     };
 
-                    Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null);
+                    Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null,null);
 
                     return View("ForgotPasswordConfirmation");
 

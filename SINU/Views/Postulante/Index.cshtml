@@ -842,7 +842,6 @@
 
             $.Anuncio(response.msg);
 
-
            // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
@@ -853,7 +852,7 @@
                     IDETP.push(3);
                     $.BloqueaPantallasPrincipales();
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
-                    $("#3 a").tab("show");
+                    $("a[href='#entrevista']").tab("show");
                     break;
                 case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
