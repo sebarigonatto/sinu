@@ -89,12 +89,12 @@ namespace SINU.Controllers
             //HttpContext.Request.Form
             try
             {
-                // TODO: Add insert logic here
-
-                var da = db.Inscripcion.Find(datos.IdInscripcion);
-                da.FechaEntrevista = datos.FechaEntrevista;
-                db.SaveChanges();
-                db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                if (ModelState.IsValid)
+                {
+                    var da = db.Inscripcion.Find(datos.IdInscripcion);
+                    da.FechaEntrevista = datos.FechaEntrevista;
+                    db.SaveChanges();
+                    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
 
 
                 MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
@@ -105,18 +105,18 @@ namespace SINU.Controllers
                 //verificar el llamado de una funcion asyncronica desde un metodo sincronico
                 var Result = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, datos.IdPersona, "MailAsunto4", null, null);
 
-                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
-                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
+                    InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == datos.IdInscripcion).ToList();
+                    vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == datos.IdInscripcion);
 
-                if (vInscripcionEtapas.Estado == "Asignada")
-                {
-                    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
-                }
-
+                    if (vInscripcionEtapas.Estado == "Asignada")
+                    {
+                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                    }
                 return RedirectToAction("Index");
+
+                }
+                return View(datos);
             }
-
-
             catch (System.Exception ex)
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
@@ -298,7 +298,7 @@ namespace SINU.Controllers
 
             return View(personaVM);
         }
-        #region Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
+     #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
         [HttpPost]
         public ActionResult Documentacion(int? id)
@@ -338,7 +338,7 @@ namespace SINU.Controllers
 
         #endregion
 
-        #region Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
+     #region Volver Etapa Anterior - Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
 
         public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
@@ -378,7 +378,7 @@ namespace SINU.Controllers
 
         #endregion
 
-        #region Esta accion le permite al usuario(delegacion) interrumpir el proceso de inscripcion del postulante tambien se le envia un mail de notificacion al postulante
+     #region Interrumpir Proceso - Esta accion le permite al usuario(delegacion) interrumpir el proceso de inscripcion del postulante tambien se le envia un mail de notificacion al postulante
 
         [HttpPost]
         public async Task<ActionResult> InterrumpirProceso(int? ID_persona)
@@ -493,29 +493,27 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
             }
         }
-
-
-        public ActionResult GetAnexo2Pdf(int id)
-        {
-            try
-            {
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string NombreArchivo = id + "_Anexo2.pdf";
-                string Descargar = CarpetaDeGuardado + NombreArchivo;
-                bool file = System.IO.File.Exists(Descargar);
-                if (file == false)
-                {
-                    return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
-                }
-                byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-                return File(FileBytes, "application/pdf", NombreArchivo);
-            }
-            catch (System.Exception ex)
-            {
-                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
-            }
-        }
+        //public ActionResult GetAnexo2Pdf(int id)
+        //{
+        //    try
+        //    {
+        //        string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+        //        string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+        //        string NombreArchivo = id + "_Anexo2.pdf";
+        //        string Descargar = CarpetaDeGuardado + NombreArchivo;
+        //        bool file = System.IO.File.Exists(Descargar);
+        //        if (file == false)
+        //        {
+        //            return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
+        //        }
+        //        byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
+        //        return File(FileBytes, "application/pdf", NombreArchivo);
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
+        //    }
+        //}
         public ActionResult PresentacionAsignaFecha(int id)
         {
             try
@@ -694,7 +692,7 @@ namespace SINU.Controllers
             {
                 if (abierto.Abierta == false)
                 {
-                    return Json(new { success = true, msg = "La pantalla se encuentra validada y no se puede agrgar problemas" });
+                    return Json(new { success = true, msg = "La pantalla se encuentra validada y no se puede agregar problemas" });
                 }
 
                 if (Comentario != null)///se utiliza la variable para verificar si agregaron un comentario(Si agregaron un comentarios lo deja avanzar/ en caso contrario le pedira al usuario agregar un comentario)

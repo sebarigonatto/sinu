@@ -130,19 +130,19 @@
                 <div class="form-group row mb-0">
                     <div class="col-md-3">
                         <div class="m-1">
-                            @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg w-75" })
+                            @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-lg w-75" })
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div class="row float-right">
-                            <div class="m-1 col-xl-3" id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
-                                <button type="button" class="btn btn-success btn-lg w-20 ml-4 mr-4">Postular</button>
+                            <div id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
+                                <button type="button" class="btn btn-success btn-lg m-1">Volver a Etapa anterior</button>
                             </div>
-                            <div class="m-1 col-xl-3" id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
-                                <button type="button" class="btn btn-success btn-lg w-20 ml-4 mr-4">No Postular</button>
+                            <div id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
+                                <button type="button" class="btn btn-danger btn-lg m-1">No Postular</button>
                             </div>
-                            <div class="m-1 col-xl-3" id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
-                                <button type="button" class="btn btn-success btn-lg w-20 ml-4 mr-4">Volver a Etapa anterior</button>
+                            <div id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
+                                <button type="button" class="btn btn-success btn-lg m-1">Postular</button>
                             </div>
                         </div>
                         
@@ -152,22 +152,6 @@
         </div>
     </div><!--Aqui finaliza la class "card"-->
     <br />
-    @*<div class="container-fluid">
-        <div class="form-group row">
-            <div class="col-sm-4 col-lg-2">
-                @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg w-100 float-right" })
-            </div>
-            <div class="col-sm-3 col-lg-2" id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
-                <button type="button" class="btn btn-success btn-lg w-100 float-right">Postular</button>
-            </div>
-            <div class="col-sm-3 col-lg-2" id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
-                <button type="button" class="btn btn-success btn-lg w-100 float-right">No Postular</button>
-            </div>
-            <div class="col-sm-3 col-lg-2" id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
-                <button type="button" class="btn btn-success btn-lg w-100 float-right">Volver</button>
-            </div>
-        </div>
-    </div>*@
     <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -182,8 +166,8 @@
                     @Model.Apellido @Model.Nombres
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" value="Postular" name="botonPostular">Confirmar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -202,8 +186,8 @@
                     @Model.Apellido @Model.Nombres
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" value="No Postular" name="botonPostular">Confirmar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" value="No Postular" name="botonPostular">Confirmar</button>
                 </div>
             </div>
         </div>
@@ -222,8 +206,8 @@
                     @Model.Apellido @Model.Nombres
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" value="Volver" name="botonPostular">Confirmar</button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" value="Volver" name="botonPostular">Confirmar</button>
                 </div>
             </div>
         </div>
