@@ -310,7 +310,7 @@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
     <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
         <div class="modal-content" id="ModalEIACuerpo">
-
+            
             <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
         </div>
@@ -318,57 +318,9 @@
 </div>
 
 
-<div class="modal fade" id="ModalCampos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Mensaje</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Hay Campos que modifico y no los guardo. Verifique los mismos.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+@Html.Hidden("idper", null)
+@Html.Hidden("idfami", null)
 
-
-@*////////////////////////////////////////////////////////////////////////////////////////////*@
-@*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
-<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content " id="ModalEIACuerpo">
-
-            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
-
-        </div>
-    </div>
-</div>
-
-
-<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalCenterTitle">@* Titulo del modal *@</h5>
-                
-            </div>
-            <div class="modal-body">
-                <p id="TextModal">@* mensaje del Modal *@</p>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                <button type="button" class="btn btn-primary" id="OK">Guardar de todas formas</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
@@ -394,11 +346,11 @@
             }
             //array de la etapa del postulante
             //alert("@ViewBag.ValidacionEnCurso");
-            if ('@Model.IDETAPA.ToString()'!="") {
+            if ('@Model.IDETAPA.ToString()' != "") {
                 IDETP = '@Model.IDETAPA.ToString()'.split(',');
                 //elimino el ultimo elemnto de array, por que es un string vacio
                 IDETP.splice(IDETP.length - 1);
-                var bloqueo_vistas = "@ViewBag.ValidacionEnCurso"=="True";
+                var bloqueo_vistas = "@ViewBag.ValidacionEnCurso" == "True";
                 $.BloqueoPantalla = bloqueo_vistas;
                 if (bloqueo_vistas) {
                     $(".BTAcciones").html("");
@@ -415,9 +367,9 @@
 
 
             //en caso de ser postulante solo muestro la informacion y deshabilito la edicion de los datos
-            if ('@Model.postulante' == "True" ) {
+            if ('@Model.postulante' == "True") {
 
-                if ("@ViewBag.ValidacionEnCurso" != "True") { $("#OK").hide();$.Anuncio("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!") };
+                if ("@ViewBag.ValidacionEnCurso" != "True") { $("#OK").hide(); $.Anuncio("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!") };
 
                 //alert("es un postulante");
                 //Deshabilito los input de los formularios
@@ -431,55 +383,56 @@
 
             var ID;
 
-            $("#GuarFami").on("click", function (e, dt, type, index)  {
+            $("#GuarFami").on("click", function (e, dt, type, index) {
                 //alert("20310195481");
                 var valido = $("#BeginFormFamiliar").valid();
-                 if (!valido) {
-                     $("#BeginFormFamiliar").submit();
-                 } else {
+                if (!valido) {
+                    $("#BeginFormFamiliar").submit();
+                } else {
                     //alert("asd");
                     var dni = $("#DNI_FAMI").val();
-                     $.get("VerificarDNI", { DNI: dni , ID: '@Model.vPersona_FamiliarVM.IdPersonaPostulante' },
-                         function (response) {
-                             switch (response.resp) {
-                                 case "existe":
-                                     ID = response.ID_PER;
-                                     //alert(response.msg + "  " + response.ID_PER);
-                                     $("#ModalCenterTitle").html("Persona Existente");
-                                     $("#TextModal").html(response.msg);
-                                     $("#BTNModal").text("Cancelar");
-                                     $("#OK").html("Si, agregarlo");
-                                     $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
-                                     break;
-                                 case "son_familiares":
-                                     var url = window.location.href.toString().search("Familia=0")
-                                     if (url != -1) {
-                                         ID = response.ID_PER;
-                                         //alert(response.msg + "  " + response.ID_PER);
-                                         $("#ModalCenterTitle").html("Persona Existente");
-                                         $("#TextModal").html(response.msg);
-                                         $("#BTNModal").hide();
-                                         $("#OK").hide();
-                                         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
-                                         window.setTimeout(redirige, 2000);
-                                     } else {
-                                         $("#BeginFormFamiliar").submit();
-                                     }
+                    $.get("VerificarDNI", { DNI: dni, ID: '@Model.vPersona_FamiliarVM.IdPersonaPostulante' },
+                        function (response) {
+                            switch (response.resp) {
+                                case "existe":
+                                    ID = response.ID_PER;
+                                    //alert(response.msg + "  " + response.ID_PER);
+                                    $("#ModalCenterTitle").html("Persona Existente");
+                                    $("#TextModal").html(response.msg);
+                                    $("#BTNModal").text("Cancelar");
+                                    $("#OK").html("Si, agregarlo");
+                                    $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+                                    break;
+                                case "son_familiares":
+                                    var url = window.location.href.toString().search("Familia=0")
+                                    if (url != -1) {
+                                        ID = response.ID_PER;
+                                        //alert(response.msg + "  " + response.ID_PER);
+                                        $("#ModalCenterTitle").html("Persona Existente");
+                                        $("#TextModal").html(response.msg);
+                                        $("#BTNModal").hide();
+                                        $("#OK").hide();
+                                        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+                                        $("[name='idfami']").val(response.IDperFAMI);
+                                        $("[name='idper']").val(response.IDperPOST);
+                                        window.setTimeout(redirige, 2000);
+                                    } else {
+                                        $("#BeginFormFamiliar").submit();
+                                    }
 
-                                     function redirige () {
-                                         window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.ID_PER + "&idPostulante=" + response.ID_perPOST;
-                                     }
+                                    function redirige() {
+                                        window.location.href = "/Postulante/FamiliaCUD?ID_persona=" + $("[name='idper']").val() + "&idPersonaFamilia=" + $("[name='idfami']").val();
+                                    }
 
-                                     break;
-                                 case "no_existe":
-                                     $("#BeginFormFamiliar").submit();
-                                     break;
+                                    break;
+                                case "no_existe":
+                                    $("#BeginFormFamiliar").submit();
+                                    break;
 
-                             }
+                            }
 
-                         })
-
-                 }
+                        })
+                }
 
             });
 
@@ -504,12 +457,15 @@
             $("#ModalCenterTitle").html("SINU:");
             $("#TextModal").html(response.msg);
             $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
-
+            $("[name='idfami']").val(response.IDperFAMI);
+            $("[name='idper']").val(response.IDperPOST);
             if (response.IDperFAMI > 0) {
                 window.setTimeout(redirige, 2000);
+
                 function redirige() {
-                    window.location.href = "/Postulante/FamiliaCUD?idPersonaFamilia=" + response.IDperFAMI + "&idPostulante=" + response.IDperPOST;
+                    window.location.href = "/Postulante/FamiliaCUD?ID_persona=" + $("[name='idper']").val() + "&idPersonaFamilia=" + $("[name='idfami']").val();
                 }
+
             }
             switch (response.form) {
                  case "Elimina":

@@ -40,7 +40,7 @@
                 <td class="oculto">@Html.Label(item.Completo ? "Si" : "No")</td>
                 <td class="row justify-content-center align-items-center">
                     <div class="BTMuestraTable">
-                        <button class="Edita btn btn-success fas fa-edit" data-ID="@item.IdEstudio"></button>
+                        <button class="Edita btn btn-success fas fa-edit load-submit" data-ID="@item.IdEstudio"></button>
                     </div>  
                     <div class="BTAcciones d-inline">
                         &ensp; |&ensp;
@@ -61,7 +61,7 @@
         </table>
     <div class="BTAcciones">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaEstudio">
+        <button type="button" class="btn btn-primary Nuevo_REG load-submit" data-IdTabla="TablaEstudio">
             Agregar
         </button>
     </div>

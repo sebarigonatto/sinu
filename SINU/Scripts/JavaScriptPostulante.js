@@ -416,6 +416,7 @@ $(document).ready(function () {
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
     $(".Nuevo_REG").on("click", function () {
+        
         var id_Tabla = $(this).attr("data-IdTabla");
         ModalEIACUD(null, id_persona, id_Tabla);
     });
@@ -452,9 +453,13 @@ $(document).ready(function () {
             data: { ID_persona: id_persona, ID: id_registro  },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
-               
-                $('#ModalEIACuerpo').html(response);
 
+                $("#ModalAnuncios").modal('hide');
+
+                $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
+
+                $('#ModalEIACuerpo').html(response);
+               
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
                 $('#ModalEIACuerpo').removeData("validator");
                 $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
@@ -548,6 +553,7 @@ $(document).ready(function () {
                     var form_actual = "#" + this.getAttribute("data-form");
                     //alert(form_actual);
                     var valido = $(form_actual).valid();
+                    //alert(valido);
                     if (valido) {
                         $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
