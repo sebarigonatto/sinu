@@ -35,10 +35,12 @@ namespace SINU.Authorize
             {
                 var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.First().IdPersona;
                 var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? int.Parse(httpContext.Request.Form[1]) : int.Parse(httpContext.Request.QueryString[0]);
+                
                 if (IDpersonaActual != IDpersonaDatos)
                 {
-                    if ((db.Postulante.Find(IDpersonaDatos) != null) ? db.Postulante.Find(IDpersonaDatos).FechaRegistro.Date.Year == System.DateTime.Now.Year : false) return false;
-                    if (db.Persona.FirstOrDefault(m => m.IdPersona == IDpersonaDatos).Familiares.ToList().FirstOrDefault(m => m.IdPostulantePersona == IDpersonaActual) == null) return false;
+                    //if ((db.Postulante.FirstOrDefault(m=>m.IdPersona==IDpersonaDatos) != null) ? db.Postulante.Find(IDpersonaDatos).FechaRegistro.Date.Year == System.DateTime.Now.Year : false) return false;
+                    //verifico si son familiares
+                    if (db.Familiares.Where(m => m.IdPersona == IDpersonaDatos && m.IdPostulantePersona == IDpersonaActual).ToList().Count() == 0) return false;
                 }
 
             }

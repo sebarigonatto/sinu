@@ -213,7 +213,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal">@* TExto de Boton *@</button>
-                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
+                    <button type="button" class="btn btn-primary" id="OK">Guardar de todas formas</button>
                 </div>
             </div>
         </div>
@@ -248,7 +248,7 @@
         $("#ModalAnuncios").hide();
         $("#ModalAnuncios .modal-body").addClass("text-center");
         $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
-        $("#GuardarDTF").css("display", "none");
+        $("#OK").css("display", "none");
         $("#ModalAnuncios .modal-header,#ModalAnuncios .modal-footer").hide();
         $("#TextModal").html("<img src='../Imagenes/loader.gif' style='width:30vh;border-radius: 5px'/>");
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
