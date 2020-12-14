@@ -157,7 +157,7 @@
             font-weight: 600;
             color: #08495f !important;
         }
-
+      
     #TABPrincipal p {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
         font-size: 1rem !important;
@@ -278,6 +278,15 @@
         padding-left: 5px !important;
         padding-right: 5px !important
     }
+
+    #TabSecundario a.TABValida {
+        color: yellow !important;
+        font-size:larger;
+    }
+        #TabSecundario a.TABValida.active {
+            color: #08495f !important;
+            font-size: larger;
+        }
 </style>
 <div class="row">
     <div class="col col-sm-6">
@@ -381,7 +390,7 @@
                                     <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentacion</a>
                                     @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido)
                                     {
-                                        <a class="nav-item nav-link" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
+                                        <a class="nav-item nav-link TABValida" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
                                     }
                                     <br />
                                 </div>
@@ -601,7 +610,7 @@
                                             @* Validar Datos*@
                                             <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
                                                 <nav class="navbar navbar-dark bg-dark ">
-                                                    <a class="navbar-brand" href="#">Validar Datos</a>
+                                                    <a class="navbar-brand" style="color:yellow !important;font-size:larger !important" href="#">Validar Datos</a>
                                                     <button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                         <span class="icon-bar"></span>
                                                         <span class="icon-bar"></span>
@@ -707,7 +716,7 @@
             $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
             $("a[target='_blank']").each(function (index, item) {
                 //alert($(item).attr("id"));
-                if ($(item).hasClass("hidden") && IDPantalla == "#Documentacion") $(item).removeClass("hidden").closest("div").append("<h5 style='color:yellow'>No hay archivos subido</h5>");
+                if ($(item).hasClass("hidden") && IDPantalla == "#Documentacion") $(item).removeClass("hidden").closest("div").append("<h5 style='color:yellow'>No hay archivo subido</h5>");
             })
         };
 
