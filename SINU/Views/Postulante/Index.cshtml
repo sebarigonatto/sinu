@@ -714,7 +714,6 @@
         //funcion para habilitar el TAB indicado.
         function HabilitarTAb(idtab) {
             $("#"+idtab)
-                .removeClass('Tabdesabilitado')
                 .css("color", "white")
                 .removeAttr("data-toggle", "tooltip")
                 .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
@@ -734,7 +733,6 @@
                 //alert(IDETP.indexOf(idTAB));
                 if (IDETP.indexOf(idTAB) == -1) {
                     $(this)
-                        .addClass('Tabdesabilitado')
                         .css("color", "gray")
                         .attr("data-toggle", "tooltip")
                         .attr("title", "Opcion deshabilitada hasta que avance de secuencia")

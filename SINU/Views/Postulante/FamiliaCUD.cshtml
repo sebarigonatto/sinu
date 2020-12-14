@@ -6,8 +6,283 @@
 @*@section MenuPerfil{
         @Html.Partial("_MenuPerfilPostu")
     }*@
-<link href="~/Content/CssPostulante.css" rel="stylesheet" />
+@*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
+<style>
 
+    input: -internal-autofill-selected {
+        background-color: #f5f5f5 !important
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        cursor: no-drop;
+    }
+
+    .text-danger {
+        font-size: 80%;
+    }
+
+    .bootstrap-select > select.mobile-device:focus + .dropdown-toggle, .bootstrap-select .dropdown-toggle:focus {
+        outline: thin dotted #333333 !important;
+        outline: 0px auto -webkit-focus-ring-color !important;
+        outline-offset: 0px;
+    }
+
+    button[role="combobox"].BTNotValid {
+        border: 0px !important;
+        border-bottom: 2px solid #dc3545 !important;
+    }
+
+    button[role="combobox"].BTValid {
+        border: 0px !important;
+        border-bottom: 2px solid #28a745 !important;
+    }
+
+    button[role="combobox"] {
+        border-top: 1px solid #e4e4e4 !important;
+        border-left: 1px solid #e4e4e4 !important;
+        border-right: 1px solid #e4e4e4 !important;
+        border-bottom: 2px solid #08495f !important;
+        background-color: #f4f7f9 !important
+    }
+
+    .form-control {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #f4f7f9;
+        background-clip: padding-box;
+        /* border: 1px solid #ced4da; */
+        /* border-radius: 0.25rem; */
+        border: 1px solid #e4e4e4;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        border-bottom: 2px solid #08495f;
+    }
+
+    .tab-pane {
+        padding: 1px 0px 0px 0px;
+    }
+
+    #ContieneTabs {
+        box-shadow: 0px 4px 4px 1px #00000036;
+    }
+
+        #ContieneTabs .container {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+        
+    #TABPrincipal .nav-tabs a.bloqueado:hover {
+        background-color: #08495f !important;
+    }
+
+    #TABPrincipal .nav-tabs a.active,
+    #TABPrincipal .nav-tabs a.active:hover {
+        padding-top: 0.6rem !important;
+        margin-top: -5px !important;
+        color: #08495f !important;
+        border-top: 0.4rem solid #08495f;
+        font-size: large;
+        background-color: #fff;
+        border-left: 2px solid #08495f;
+        border-right: 2px solid #08495f;
+    }
+
+        #TABPrincipal .nav-tabs a.active p {
+            font-size: 1.3rem !important
+        }
+
+    #TABPrincipal .nav-tabs a:hover:not([data-toggle='tooltip']):not(.active) {
+        background-color: #2b82ad
+    }
+
+    #TABPrincipal .nav-fill .nav-item {
+        background-color: #08495f;
+        padding: 0.7rem 1.2rem;
+        color: #ffffff;
+        border: 1px solid #fff;
+    }
+
+    #TABPrincipal .tab-content {
+        padding: 10px 5px 10px 5px;
+    }
+
+    #TabSecundarioContent nav {
+        background-color: #08495f !important;
+        border-radius: 3px
+    }
+    /*------------------------------------*/
+    .nav .nav-tabs .left-tabs {
+        border-right: 2px solid #08495f
+    }
+
+
+    .left-tabs.nav-tabs, .right-tabs.nav-tabs {
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .left-tabs.nav-tabs {
+        border-right: 2px solid #08495f;
+        border-bottom: none;
+    }
+
+    .left-tabs .nav-link {
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        margin-right: -2px;
+        text-align: left;
+        border-right: 2px solid #08495f;
+        background-color: #08495f;
+        color: #fff !important;
+        border-bottom: 1px solid #fff;
+        border-top: 1px solid #fff;
+        margin-bottom: 0.3px
+    }
+
+        .left-tabs .nav-link:hover {
+            border-color: #fff;
+            border-right: #fff;
+            background-color: #2b82ad
+        }
+
+        .left-tabs .nav-link.active {
+            border-top: 2px solid #08495f;
+            border-right: 2px solid transparent;
+            border-bottom: 2px solid #08495f;
+            border-left: 8px solid #08495f;
+            background-color: #fff;
+            margin-left: -8px;
+            /*font-size: 1.3rem;*/
+            font-weight: 600;
+            color: #08495f !important;
+        }
+
+    #TABPrincipal p {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        display: inline !important;
+    }
+
+    /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
+    @@media screen and (max-width: 576px) {
+
+        #TABPrincipal p {
+            display: none !important
+        }
+
+        #TABPrincipal .nav-tabs a.active p,
+        #TABPrincipal .nav-tabs a.active:hover p {
+            display: inline-block !important;
+            margin-bottom: 1px
+        }
+
+        #TABPrincipal .nav-tabs a.active p {
+            font-size: 1rem !important
+        }
+
+        #TabSecundario {
+            display: none !important
+        }
+
+        .tab-nav {
+            display: block !important;
+            opacity: 100 !important
+        }
+
+        .navbar-brand {
+            font-size: 1rem !important
+        }
+
+        #TabSecundarioContent, .nav-tab {
+            padding: 0rem 1rem 0rem 1rem !important;
+        }
+
+        .oculto {
+            display: none !important
+        }
+    }
+
+    @@media screen and (min-width: 576px) {
+        #TabSecundarioContent nav.navbar {
+            display: none !important;
+        }
+
+        div.TABMovil > div.pos-f-t > div.nav-tab > br:first-child {
+            display: none !important;
+        }
+
+        .nav-tab {
+            display: block !important;
+            opacity: 100 !important
+        }
+    }
+
+    /* nav version mobil*/
+    .navbar-toggler {
+        background: none;
+        border: none;
+    }
+
+        .navbar-toggler:active,
+        .navbar-toggler:focus {
+            outline: 0;
+        }
+
+        .navbar-toggler .icon-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 1px;
+            margin: 4px 0 4px 0;
+            transition: all 0.3s;
+        }
+
+    .navbar-dark .navbar-toggler .icon-bar {
+        background: #ffffff;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(1) {
+        transform: translate3d(1px,0,0) rotate(-45deg);
+        transform-origin: center center;
+        width: 11px;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(2) {
+        transform: rotate(-90deg);
+        transform-origin: center center;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(3) {
+        transform: translate3d(0px,-14px,0) rotate(-135deg);
+        transform-origin: right top;
+        width: 11px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(1) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(2) {
+        transform: translate3d(0,0,0) rotate(0deg);
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(3) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+
+    .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important
+    }
+</style>
 <div class="row pr-3">
     <h2 class="col-8">Familiar</h2>
     <a href="/Postulante" class="btn btn-info text-center col-4 " id="BTvolver">Volver atras</a>
@@ -15,319 +290,236 @@
 <br />
 <div class="p-1 bg-white rounded shadow mb-1 " style="padding:0px !important" id="TabFamilia">
 
-    <ul id="TabGeneral" role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center oculto" style="padding-bottom:0.2rem">
+    <nav id="TABPrincipal">
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active fa fa-address-card" id="Documentacion-tab" data-toggle="tab" href="#Familia" role="tab" aria-controls="Familia" aria-selected="true"><p>&ensp;1° Datos Basicos</p> </a>
+            <a class="nav-item nav-link fa fa-map-marked TABCondicional Tabdesabilitado" id="Domicilio-tab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false"> <p>&ensp;2° Domicilio</p></a>
+            <a class="nav-item nav-link fa fa-graduation-cap TABCondicional Tabdesabilitado" id="Estudios-tab" data-toggle="tab" href="#EstudiosNAV" role="tab" aria-controls="Estudios" aria-selected="false"><p>&ensp;3° Estudios</p>  </a>
+            <a class="nav-item nav-link fa fa-id-card-alt TABCondicional Tabdesabilitado" id="ActMilitar-tab" data-toggle="tab" href="#ActMilitarNAV" role="tab" aria-controls="ActMilitar" aria-selected="false"><p>&ensp;4° Actividad Militar</p> </a>
+        </div>
+    </nav>
+    <div class="tab-content" id="TABPrincipalContent">
+        <div class="tab-pane fade show active px-3 py-3" id="Familia" role="tabpanel" aria-labelledby="Familia-tab">
+            @using (Ajax.BeginForm("FamiliaCUD", "Postulante", null,
+                           new AjaxOptions
+                           {
+                               HttpMethod = "POST",
+                               OnSuccess = "Exito(data,status,xhr)",
+                               OnFailure = "Falla",
+                               //LoadingElementId="carga",
+                               //LoadingElementDuration=1000,
+                               //UpdateTargetId = "resultTarget"
+                           },
+                           new { id = "BeginFormFamiliar" }))
+            {
+                @Html.AntiForgeryToken()
 
-        @* PERSONA DATOS BASICOS *@
-        <li class="nav-item flex-sm-fill " id="5">
-            <a id="Documentacion-tab " data-toggle="tab" href="#Familia" role="tab" aria-controls="Familia" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 active atab">
-                1° Datos Basicos
-            </a>
-        </li>
+                <div class="form-group">
 
-        @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
-        <li class="nav-item TABCondicional Tabdesabilitado flex-sm-fill" id="9">
-            <a id="Domicilio-tab" data-toggle="tab" href="#Domicilio" role="tab" aria-controls="Domicilio" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                2° Domicilio
-            </a>
-        </li>
 
-        @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
-        <li class="nav-item TABCondicional Tabdesabilitado flex-sm-fill" id="11">
-            <a id="Estudios-tab" data-toggle="tab" href="#Estudios" role="tab" aria-controls="Estudios" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                3° Estudios
-            </a>
-        </li>
-
-        @* DIA Y HORA DE ENTREVISTA EN LA DELEGACION *@
-        <li class="nav-item TABCondicional Tabdesabilitado flex-sm-fill" id="15">
-            <a id="ActMilitar-tab" data-toggle="tab" href="#ActMilitar" role="tab" aria-controls="ActMilitar" aria-selected="false" class="nav-link text-uppercase font-weight-bold rounded-0 atab">
-                4° Actividad Militar
-            </a>
-        </li>
-
-    </ul>
-
-    <div id="myTab2Content" class="tab-content TABMovil">
-
-        @* VISTA DE DATO PERSONAL DEL FAMILIAR *@
-        <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="Familia">
-            <nav class="navbar navbar-dark bg-dark ocultnav">
-                <a class="navbar-brand" href="#">1° Datos Basicos</a>
-                <button id="BTFamiliaNAV" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </nav>
-            <div class="collapse tab-pane fade show active nav-tab p-4" id="FamiliaNAV">
-
-                @using (Ajax.BeginForm("FamiliaCUD", "Postulante", null,
-                    new AjaxOptions
-                    {
-                        HttpMethod = "POST",
-                        OnSuccess = "Exito(data,status,xhr)",
-                        OnFailure = "Falla",
-                            //LoadingElementId="carga",
-                            //LoadingElementDuration=1000,
-                            //UpdateTargetId = "resultTarget"
-                        },
-                    new { id = "BeginFormFamiliar" }))
-                {
-                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                     <div class="form-group">
+                        <div class="form-group row ">
 
+                            <div class="col-sm-6">
+                                @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdPersonaPostulante)
+                                @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdPersonaFamiliar, new { @id = "vPersona_DatosBasicosVM_IdPersona" })
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdFamiliar)
 
-                        <div class="form-group">
-                            <div class="form-group row ">
-
-                                <div class="col-sm-6">
-                                    @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdPersonaPostulante)
-                                    @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdPersonaFamiliar, new { @id = "vPersona_DatosBasicosVM_IdPersona" })
-
-                                    @Html.HiddenFor(model => model.vPersona_FamiliarVM.IdFamiliar)
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
-                                        <div class="col-md-12">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.Apellido, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Apellido, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Nombres, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.Nombres, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Nombres, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id = "DNI_FAMI" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.DNI, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.CUIL, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.CUIL, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.CUIL, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker", @readonly = true })
-
-                                            @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idParentesco, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idParentesco, Model.vParentecoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idParentesco, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.Vive, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.Vive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Vive, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.ConVive, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.ConVive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.ConVive, "", new { @class = "text-danger" })
-                                        </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Apellido, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Apellido, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdSexo, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdSexo, Model.SexoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdSexo, "", new { @class = "text-danger" })
-                                        </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.Nombres, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Nombres, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Nombres, "", new { @class = "text-danger" })
                                     </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Telefono, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Telefono" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Telefono, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Celular, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Celular" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Celular, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.Mail, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.vPersona_FamiliarVM.Mail, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Mail, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "EstadoCivil" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group d-none" id="FechaCasamiento">
-                                        @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaCasamiento, htmlAttributes: new { @class = "control-label col-md-10" })
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
-                                            @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.IdReligion, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdReligion, Model.ReligionVM, null, new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdReligion, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(m => m.vPersona_FamiliarVM.idTipoNacionalidad, new { @class = "col-md-10 control-label" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, Model.TipoDeNacionalidadVm, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
-                                            <div class="h-100"></div>
-                                            @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
                                 </div>
-                                <br />
-                            </div>
-                            <div class="form-group row ml-3  BTAcciones">
-                                <input type="button" value="Guadar Datos" class="btn btn-success m-1" id="GuarFami" />
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.DNI, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.DNI, new { htmlAttributes = new { @class = "form-control", @id = "DNI_FAMI" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.DNI, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.CUIL, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.CUIL, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.CUIL, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker", @readonly = true })
+
+                                        @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.idParentesco, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idParentesco, Model.vParentecoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idParentesco, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.Vive, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.Vive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Vive, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.ConVive, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.ConVive, new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text", Model), "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.ConVive, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
 
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.IdSexo, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdSexo, Model.SexoVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdSexo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.Telefono, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Telefono, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Telefono" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Telefono, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
 
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.Celular, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "El codigo de area sin 0", @id = "Celular" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Celular, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.Mail, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Mail, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Mail, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.IdEstadoCivil, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, Model.vEstCivilVM, "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "EstadoCivil" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdEstadoCivil, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group d-none" id="FechaCasamiento">
+                                    @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaCasamiento, htmlAttributes: new { @class = "control-label col-md-10" })
+                                    <div class="col-md-10">
+                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
+                                        @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.IdReligion, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.IdReligion, Model.ReligionVM, null, new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.IdReligion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.vPersona_FamiliarVM.idTipoNacionalidad, new { @class = "col-md-10 control-label" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownListFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, Model.TipoDeNacionalidadVm, "Seleccione una Opcion...", new { @class = "form-control selectpicker" })
+                                        <div class="h-100"></div>
+                                        @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.idTipoNacionalidad, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
                         </div>
+                        <div class="form-group row ml-3  BTAcciones">
+                            <input type="button" value="Guadar Datos" class="btn btn-success m-1" id="GuarFami" />
+                        </div>
+
+
                     </div>
-                }
-            </div>
-
+                </div>
+            }
         </div>
-
-
-        @* VISTA DE DOMICILIO *@
-        <div class="pos-f-t TABCondicional Tabdesabilitado collapse tab-pane fade tab-nav" id="Domicilio">
-            <nav class="navbar navbar-dark bg-dark ocultnav">
-                <a class="navbar-brand" href="#">2° Domicilio</a>
-                <button id="BTDomicilioNAV" class="navbar-toggler collapsed" hidden type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </nav>
-            <div class="collapse tab-pane fade nav-tab p-4" id="DomicilioNAV">
-                @if (Model.ID_PER != 0)
-                {
-                    @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
-
-                }
-            </div>
-
+        <div class="tab-pane fade px-3 py-3" id="Domicilio" role="tabpanel" aria-labelledby="Domicilio-tab">
+            @if (Model.ID_PER != 0)
+            {
+                @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
+            }
         </div>
-
-        @* VISTA DE Estudios *@
-        <div class="pos-f-t TABCondicional Tabdesabilitado collapse tab-pane fade tab-nav" id="Estudios">
-            <nav class="navbar navbar-dark bg-dark ocultnav">
-                <a class="navbar-brand" href="#">3° Estudios</a>
-                <button id="BTEstudiosNAV" class="navbar-toggler collapsed" hidden type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </nav>
-            <div class="collapse tab-pane fade nav-tab p-4" id="EstudiosNAV">
-                @if (Model.ID_PER != 0)
-                {
-                    @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
-                }
-            </div>
-
+        <div class="tab-pane fade px-3 py-3" id="EstudiosNAV" role="tabpanel" aria-labelledby="Estudios-tab">
+            @if (Model.ID_PER != 0)
+            {
+                @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
+            }
         </div>
-
-
-        @* VISTA DE ActMilitar *@
-        <div class="pos-f-t TABCondicional Tabdesabilitado collapse tab-pane fade tab-nav" id="ActMilitar">
-            <nav class="navbar navbar-dark bg-dark ocultnav">
-                <a class="navbar-brand" href="#">4° Actividad Militar</a>
-                <button id="BTActMilitarNAV" class="navbar-toggler collapsed" hidden type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </nav>
-            <div class="collapse tab-pane fade nav-tab p-4" id="ActMilitarNAV">
-                @if (Model.ID_PER != 0)
-                {
-                    @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
-                }
-            </div>
-
+        <div class="tab-pane fade px-3 py-3" id="ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitar-tab">
+            @if (Model.ID_PER != 0)
+            {
+                @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
+            }
         </div>
-
-        @*<div id="ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitar-tab" class="tab-pane fade px-4 py-3  ">
-                @if (Model.ID_PER != 0)
-                {
-                    @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
-                }
-            </div>*@
     </div>
+
+
 </div>
 
 
-@*////////////////////////////////////////////////////////////////////////////////////////////*@
-@*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
-<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content" id="ModalEIACuerpo">
-            
-            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+        @*////////////////////////////////////////////////////////////////////////////////////////////*@
+        @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
+        <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+            <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+                <div class="modal-content" id="ModalEIACuerpo">
 
+                    <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 
-@Html.Hidden("idper", null)
-@Html.Hidden("idfami", null)
+        @Html.Hidden("idper", null)
+        @Html.Hidden("idfami", null)
 
 
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/JavaScriptPostulante.js"></script>
-    <script type="text/javascript">
+        @section Scripts{
+            @Scripts.Render("~/bundles/jqueryval")
+            <script src="~/Scripts/JavaScriptPostulante.js"></script>
+            <script type="text/javascript">
         (function () {
-            $(".TABCondicional").attr("title","Debe Completar los Datos Basicos.")
+            $(".TABCondicional").css("color", "gray")
+                .attr("data-toggle", "tooltip")
+                .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
                 .tooltip('enable');
         }());
 
@@ -361,7 +553,10 @@
 
 
             if (@Model.vPersona_FamiliarVM.IdPersonaFamiliar!= 0) {
-                $(".TABCondicional").tooltip("disable").removeClass("Tabdesabilitado");
+                $(".TABCondicional").css("color", "white")
+                    .attr("data-toggle", "tab")
+                    .removeAttr("title")
+                    .tooltip('disable');
                 $(".TABCondicional .navbar-toggler").removeAttr("hidden");
             };
 
@@ -453,10 +648,7 @@
                 $("#BTNModal").html("Cerrar").show();
             } else { $("#BTNModal").hide(); }
 
-            $("#OK").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+            $.Anuncio(response.msg);
             $("[name='idfami']").val(response.IDperFAMI);
             $("[name='idper']").val(response.IDperPOST);
             if (response.IDperFAMI > 0) {
@@ -479,5 +671,5 @@
         function Falla(response) {
             alert("Error occured.");
         };
-    </script>
-}
+            </script>
+        }

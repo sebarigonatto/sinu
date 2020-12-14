@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Documents;
 /*
 * EN LAS PARTIAL CLASSES SE AGREGAN CAMPOS QUE SE NECESITAN PERO QUE NO ESTÁN EN LA TABLA/VISTA/ENTIDAD ORIGINAL
@@ -133,6 +134,11 @@ namespace SINU.Models
     public partial class Convocatoria
     {
         public string ff { get; set; }
+
+        internal static object ToList()
+        {
+            throw new NotImplementedException();
+        }
     }
     
 [MetadataType(typeof(CarrerauOficioMetadata))]

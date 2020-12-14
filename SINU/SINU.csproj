@@ -863,6 +863,7 @@
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
     <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />
@@ -1322,7 +1323,6 @@
     <Content Include="Views\PeriodosConvocatorias\Edit.cshtml" />
     <Content Include="Views\PeriodosConvocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\DocumentosNecesarios.cshtml" />
-    <Content Include="Views\CallConsulta\TotalizarPorModalidadyEntrevista.cshtml" />
     <Content Include="Views\Delegacion\AsignarFechaVarios.cshtml" />
     <Content Include="Views\Account\RecuperarCuenta.cshtml" />
     <Content Include="Views\Postulante\InscripConvo.cshtml" />
