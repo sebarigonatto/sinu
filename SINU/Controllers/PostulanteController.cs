@@ -220,7 +220,7 @@ namespace SINU.Controllers
 
                     int result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
 
-                    return Json((success: true, msg: "Se guardaron los datos correctamente datos basicos", form: "datosbasicos"));
+                    return Json(new { success= true, msg= "Se guardaron los datos correctamente datos basicos", form= "datosbasicos" });
                 }
                 catch (Exception ex)
                 {
@@ -1484,7 +1484,7 @@ namespace SINU.Controllers
                     msgs = (rela != null) ? $"La persona con Dni: {DNI}, ya esta cargado como familiar. Redirigiendo..." : $"La persona con Dni: {DNI} que desea agregar como familiar ya existe, ¿Desea agregarlo?";
                     resps = (rela != null) ? "son_familiares" : "existe";
 
-                    return Json(new { resp = resps, msg = msgs, ID_PER = Id_Persona, ID_perPOST = ID }, JsonRequestBehavior.AllowGet);
+                    return Json(new { resp = resps, msg = msgs, IDperFAMI = Id_Persona, IDperPOST = ID }, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(new { resp = "no_existe" }, JsonRequestBehavior.AllowGet);

@@ -49,7 +49,8 @@ namespace SINU.Authorize
                 {
                     var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.First().IdPersona;
 
-                    if (int.Parse(httpContext.Request.QueryString[0]) != IDpersonaActual)
+                    int id = int.Parse(httpContext.Request.QueryString[0]);
+                    if ((id != IDpersonaActual) && (db.Familiares.Where(m => m.IdPersona == id && m.IdPostulantePersona == IDpersonaActual).ToList().Count() < 1))
                     {
                         return false;
                     }
