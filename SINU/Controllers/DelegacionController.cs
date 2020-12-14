@@ -296,7 +296,42 @@ namespace SINU.Controllers
             personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
             ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
+
+
+            //////////////////Verifico si se encuentra cargado el documento//////////////
+            bool cert;
+            bool anex;
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+            string[] anexo = Directory.GetFiles(Ubicacionfile, id + "&" + "Anexo2" + "*");
+            string[] Certificado = Directory.GetFiles(Ubicacionfile, id + "&" + "Certificado" + "*");
+
+            if (anexo.Count() == 1)
+            {
+                anex = true;
+                personaVM.anexo2 = anex;
+            }
+            if (Certificado.Count() == 1)
+            {
+                cert = true;
+                personaVM.certificado = cert;
+            }
+            /////////////////////////fin del cofigo////////////////////////////////////////
+
+
+
+            ///////////////////////Codigo para generar la lista de problemas al final de la documentacion////////////////////////
+
+            personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
+
+
+
+
+            /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
+
+
             return View(personaVM);
+
         }
      #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
@@ -349,7 +384,7 @@ namespace SINU.Controllers
             try
             {
                 vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
-                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionConErrores");
                 cuerpo = configuracion.ValorDato.ToString();
                 data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
                 var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
