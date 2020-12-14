@@ -1,7 +1,7 @@
-﻿ <!--
-     Aqui se decide si se coloca "Iniciar Sesión" o  "Cerrar Sesión" dependiendo si está conectado o no al sistema el usuario activo 
-     la ubicacion es al extremo derecho
- -->
+﻿<!--
+    Aqui se decide si se coloca "Iniciar Sesión" o  "Cerrar Sesión" dependiendo si está conectado o no al sistema el usuario activo
+    la ubicacion es al extremo derecho
+-->
 
 @using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
@@ -26,8 +26,10 @@ else
             {
                 <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
             }
+            if (!HttpContext.Current.Request.Path.Contains("Login"))
+            {
+                <li>@Html.ActionLink("Iniciar Sesión", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path.ToString() }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+            }
         }
-        <li>@Html.ActionLink("Iniciar Sesión", "Login", "Account", routeValues: new { returnurl = HttpContext.Current.Request.Path.ToString() }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
-
     </ul>
 }

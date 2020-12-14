@@ -18,12 +18,13 @@ using System.Web;
 namespace SINU
 {
     //clase para que se pueda enviar un correo a un listado de correos
-    public  class messageMAil 
+    public class messageMAil
     {
         public List<string> Correos { get; set; }
         public string Body { get; set; }
         public string Subject { get; set; }
-        public string Destination { get; set; }
+        public string Destinatario { get; set; }
+        public string Modo { get; set; }
     }
 
     //public interface IIdentityMessageService
@@ -31,17 +32,19 @@ namespace SINU
     //    public Task SendMessage(messageMAil message);
     //// define methods for other message types that you want to send
     //}
-    public  class EmailService 
+    public class EmailService
     {
         private static SINUEntities db = new SINUEntities();
 
-        public static Task SendEmail(string iD_AspNetUser, string asunto,string html, List<string> mails)
+        public static Task SendEmail(string iD_AspNetUser, string asunto, string html, List<string> mails,string modo)
         {
-            messageMAil message = new messageMAil { 
-                Correos= mails,
-                Subject= asunto,
-                Body= html,
-                Destination= iD_AspNetUser
+            messageMAil message = new messageMAil
+            {
+                Correos = mails,
+                Subject = asunto,
+                Body = html,
+                Destinatario = iD_AspNetUser,
+                Modo=modo
             };
             return Task.Factory.StartNew(() =>
             {
@@ -50,8 +53,8 @@ namespace SINU
 
         }
 
-         static void SendMail(messageMAil message)
-         {
+        static void SendMail(messageMAil message)
+        {
             //LEVANTO LOS DATOS DE LA TABLA CONFIGURACION
 
             try
@@ -69,19 +72,28 @@ namespace SINU
                 string MailAplicacionDisplay = db.Configuracion.FirstOrDefault(b => b.NombreDato == "MailAplicacionDisp").ValorDato;
 
                 mensage.From = new MailAddress(MailAplicacion, MailAplicacionDisplay);
-                message.Destination = message.Destination!=""? db.AspNetUsers.FirstOrDefault(m=>m.Id== message.Destination).Email : "";
-                if (message.Destination!="")
+                message.Destinatario = message.Destinatario != "" ? db.AspNetUsers.FirstOrDefault(m => m.Id == message.Destinatario).Email : "";
+                if (message.Destinatario != "")
                 {
-                    mensage.To.Add(new MailAddress(message.Destination));
+                    mensage.To.Add(new MailAddress(message.Destinatario));
                 }
                 else
                 {
                     foreach (var item in message.Correos)
                     {
-                        mensage.To.Add(new MailAddress(item));
+                        if (message.Modo == "Bcc")
+                        {
+                            mensage.Bcc.Add(new MailAddress(item));
+                        }
+                        else
+                        {
+                            mensage.To.Add(new MailAddress(item));
+                        }
+                       
+                        //mensage.Bcc
                     }
                 }
-                
+
                 BuscarAdjuntos(message, mensage);
 
                 mensage.Subject = message.Subject;
@@ -117,7 +129,7 @@ namespace SINU
                 throw;
                 //if (Ex.HResult==-2146233088) //error de correo inaccesible tal vez xq esta mal escrito o la cuenta esta bloqueada
             }
-            
+
         }
 
         /// <summary>PROCESO que Busca el nro de paso que se esta haciendo, ejemplos: (1) registracion (2) datos personales,
@@ -161,7 +173,7 @@ namespace SINU
             return;
         }
 
-   
+
     }
 
     public class SmsService : IIdentityMessageService

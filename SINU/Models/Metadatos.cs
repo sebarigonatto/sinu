@@ -387,6 +387,7 @@ namespace SINU.Models
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Celular { get; set; }
+        [Required(ErrorMessage ="Elemento Vacio")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")] public Nullable<System.DateTime> FechaEntrevista { get; set; }
         public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
@@ -497,7 +498,6 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convive")]
         public Nullable<bool> ConVive { get; set; }
-         [Required]
         [Display(Name = "Religion")]
         public string IdReligion { get; set; }
         [Required]
@@ -635,6 +635,10 @@ namespace SINU.Models
         [Display(Name = "Modalidad")]
         public string Idmodalidad { get; set; }
     }
-
-
+    //public partial class vEntrevistaLugarFechaMetadata
+    //{
+    //    [Required(ErrorMessage = "Campo Obligatorio")]
+    //    public System.DateTime FechaEntrevista { get; set; }
+    //}
+     
 }

@@ -8,8 +8,12 @@
     Empleo Público Nacional Nº 25.164.
 </p>
 
-<div class="container text-center">
-    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER, docu = "Anexo2" }, new { @class = "btn btn-primary w-100 ", @target = "_blank" })
+<div class="container text-center" id="HabilAnex" hidden>
+    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER, docu = "Anexo2" }, new { @class = "btn btn-primary w-100 desabilitar", @target = "_blank", @id = "btnanex" })
+</div>
+@*<h3 id="TextNoAnex" hidden>El postulante no cargo el certificado de anexo2</h3>*@
+<div class="alert alert-danger text-center" role="alert" hidden id="TextNoAnex">
+    El postulante no cargo el certificado de anexo2
 </div>
 
 <h5>2°- AUTORIZACIÓN PARA REQUERIR ANTECEDENTES PENALES (Judiciales y/o Policiales).</h5>
@@ -17,9 +21,14 @@
     Debera descargar el formulario e imprimirlo, rellenar con los datos que se solicitan en el mismo, firmar y aclarar.
     Para cargar el formulario, puede ser un archivo escaneado o una foto del mismo.
 </p>
-<div class="container text-center">
-    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER,docu = "Certificado"  }, new { @class = "btn btn-primary w-100 ", @target = "_blank"  })
+<div class="container text-center" id="HabilCert" hidden>
+    @Html.ActionLink("Ver Formulario", "DocPenal", "Delegacion", new { id = Model.ID_PER, docu = "Certificado" }, new { @class = "btn btn-primary w-100 desabilitar", @target = "_blank", @id = "btncert" })
 </div>
+@*<h3 hidden id="TextNoCert">el Postulante no cargo el certificado de antecentes penales</h3>*@
+<div class="alert alert-danger text-center" role="alert" hidden id="TextNoCert">
+    El Postulante no cargo el certificado de antecentes penales
+</div>
+@*<label hidden id="1labelprue" class="habil">@Model.certificado certificado</label>
 <br />
-<br />
-
+<label hidden id="2labelprue" class="habil">@Model.anexo2  anexo2</label>
+<br />*@

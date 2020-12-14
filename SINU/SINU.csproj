@@ -433,12 +433,6 @@
     <Compile Include="Models\spRestriccionesParaEstePostulante_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\spRestriccionesParaEstePostulante_Result1.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\spRestriccionesParaEstePostulante_Result2.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\spTildarPantallaParaPostulate_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -942,6 +936,8 @@
     <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Plantillas\PlantillaMailForgotPassword.cshtml" />
+    <Content Include="Plantillas\PlantillaMailExitoModificacion.cshtml" />
+    <Content Include="Plantillas\MailFechaPresentacion.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1215,7 +1211,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
     <Content Include="Views\Postulante\DatosBasicos.cshtml" />
-    <Content Include="Views\Postulante\Index.cshtml" />
+    <Content Include="Views\Postulante\Index2.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />
@@ -1297,7 +1293,7 @@
     <Content Include="Views\Convocatorias\Index.cshtml" />
     <Content Include="Views\Delegacion\_Docupenal.cshtml" />
     <Content Include="Views\Delegacion\PresentacionAsignaFecha.cshtml" />
-    <Content Include="Views\Postulante\Index2.cshtml" />
+    <Content Include="Views\Postulante\Index.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Create.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Delete.cshtml" />
     <Content Include="Views\ConsultaProgramadas\Details.cshtml" />
@@ -1332,6 +1328,7 @@
     <Content Include="Views\Postulante\InscripConvo.cshtml" />
     <Content Include="Views\Account\RecuperacionCuenta.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Delegacion\AsignarFechaVariosEntrevista.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

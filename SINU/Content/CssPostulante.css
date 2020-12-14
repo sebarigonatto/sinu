@@ -1,11 +1,12 @@
-﻿@media (min-width: 576px) {
+﻿
+@media (min-width: 576px) {
     .rounded-nav {
         border-radius: 50rem !important;
     }
 
-        .rounded-nav .nav-link {
-            border-radius: 50rem !important;
-        }
+    .rounded-nav .nav-link {
+        border-radius: 50rem !important;
+    }
 
     .ocultnav {
         display: none !important
@@ -15,6 +16,8 @@
         display: block !important;
         opacity: 100 !important
     }
+
+ 
 }
 
 @media screen and (max-width: 576px) {
@@ -26,6 +29,9 @@
         border-left: 0px none !important;
         padding-left: 15px !important;
     }
+
+    
+
 
     .oculto {
         display: none !important
@@ -212,9 +218,9 @@ button[role="combobox"].BTValid {
 }
 
 button[role="combobox"] {
-    border-top: 0px !important;
-    border-left: 0px !important;
-    border-right: 0px !important;
+    border-top: 1px solid #e4e4e4 !important;
+    border-left: 1px solid #e4e4e4 !important;
+    border-right: 1px solid #e4e4e4 !important;
     border-bottom: 2px solid #08495f !important;
     background-color: #f4f7f9 !important
 }
@@ -230,7 +236,7 @@ button[role="combobox"] {
     background-clip: padding-box;
     /* border: 1px solid #ced4da; */
     /* border-radius: 0.25rem; */
-    border: 0px;
+    border: 1px solid #e4e4e4;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     border-bottom: 2px solid #08495f;
 }
@@ -242,9 +248,11 @@ button[role="combobox"] {
         outline: 0;
         box-shadow: 0 0 0 0.2rem rgb(255 255 255 / 25%);
     }
+
 button[role="combobox"]:focus {
     background-color: #e5edf3 !important;
 }
+
 .field-validation-error span {
     float: left !important;
     margin-bottom: 0.5rem;

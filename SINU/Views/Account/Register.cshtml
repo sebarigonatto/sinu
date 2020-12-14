@@ -1,119 +1,176 @@
 ﻿@model SINU.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Registrarse";
+    ViewBag.Title = "Registro";
 
 }
+<style>
+    .form-control {
+        border-bottom: 2px solid #00bfff !important;
+    }
+</style>
+<div class="text-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div class="row text-center">
 
-<h2>@ViewBag.Title</h2>
+    <div class="col-md-6 offset-md-3 card shadow-sm   pl-5 pr-5 pt-2">
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
-{
-    @Html.AntiForgeryToken()
+        <section id="registerForm">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                if (ViewBag.Inst != "")
+                {
+                    <h4>@ViewBag.Inst</h4>
+                    <hr />
+                }
 
-    <h4>@ViewBag.Inst</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group has-error">
+                    <b>@Html.LabelFor(m => m.Apellido, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                            <i class="fa fa-align-justify "></i>
+                            </span>
+                        </div>
+
+                        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+                    </div>
+                   
+                    @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
 
 
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.Nombre, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                                <i class="fa fa-align-justify "></i>
+                            </span>
+                        </div>
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group has-error">
-        @Html.LabelFor(m => m.Apellido, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+                    </div>
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
-        </div>
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.DNI, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white;background-color: #00bfff; padding: 9px;">
+                                <i style="font-size:0.7rem">123</i>
+                            </span>
+                        </div>         
+                        @Html.TextBoxFor(m => m.DNI, new { @class = "form-control" })
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.DNI, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                                <i class="fa fa-envelope "></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                  
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;"><i class="fa fa-key"></i></span>
+                        </div>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "Contraseña" })
+                    </div>
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                    
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;"><i class="fa fa-key"></i></span>
+                        </div>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.IdInstituto, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                            <i class="fa fa-list"></i></span>
+                        </div>
+                        @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "Seleccione Modalidad a incribirse", htmlAttributes: new { @class = "form-control selectpicker " })
+                        
+                    </div>
+                    <div class="h-100"></div>
+                    @Html.ValidationMessageFor(model => model.IdInstituto, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                                <i class="fa fa-list"></i>
+                            </span>
+                        </div>
+                        @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker", @id = "DelegacionOfi" })
+                    </div>
+                    <div class="h-100"></div>
+                    @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
+
+                </div>
+                <div id="DatosDelegacion" class="form-group control-label" hidden>
+                    @Html.Label("Direccion", new { @class = "col-md-2 control-label" })
+                    <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+                    @Html.Label("Telefono", new { @class = "col-md-2 control-label" })
+                    <p id="Telefono" class="control-label col"><b>asdasda</b></p>
+                    @Html.Label("Celular", new { @class = "col-md-2 control-label" })
+                    <p id="Celular" class="control-label col"><b>asdasda</b></p>
+                </div>
+                <br />
+
+                @*<div class="form-group">
+                @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>*@
+
+                //parametro enviado oculto al controlador para almacenar la preferencia
+
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="submit" value="Registrarse" class="btn" style="color:white;background-color: #00bfff;" />
+                    </div>
+                </div>
+            }
+
+        </section>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.DNI, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DNI, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.DNI, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "Contraseña" })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.IdInstituto, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "Seleccione Modalidad a incribirse", htmlAttributes: new { @class = "form-control selectpicker " })
-            <div class="h-100"></div>
-            @Html.ValidationMessageFor(model => model.IdInstituto, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.idOficinaYDelegacion, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker", @id = "DelegacionOfi" })
-            <div class="h-100"></div>
-
-            @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div id="DatosDelegacion" class="form-group control-label" hidden>
-        @Html.Label("Direccion", new { @class = "col-md-2 control-label" })
-        <p id="Direccion" class="control-label col"><b>asdasda</b></p>
-        @Html.Label("Telefono", new { @class = "col-md-2 control-label" })
-        <p id="Telefono" class="control-label col"><b>asdasda</b></p>
-        @Html.Label("Celular", new { @class = "col-md-2 control-label" })
-        <p id="Celular" class="control-label col"><b>asdasda</b></p>
-    </div>
-    <br />
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
-            </div>
-        </div>*@
-
-    //parametro enviado oculto al controlador para almacenar la preferencia
+</div>
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-success " value="Registrarse" />
-        </div>
-    </div>
-}
 
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+                <script>
         $(".selectpicker").selectpicker({
             size: 7,
             noneSelectedText: 'Ninguna Opcion Seleccionada'
@@ -138,7 +195,7 @@
                     $.each(jsonDatosDelegacion, function (index, item) {
                         DeleOfi = (item[0] == value) ? item : DeleOfi;
                         if (DeleOfi != "") {
-                            return false;
+                            return false
                         }
                     });
                     $("#Direccion b").text(DeleOfi[1]);
@@ -152,10 +209,10 @@
 
             $('form').on('submit', async function (e) {
                 if ($(this).valid()) {
-                  
+
                     $.Cargando();
                 }
             });
         });
-    </script>
-}
+                </script>
+            }

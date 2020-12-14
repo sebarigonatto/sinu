@@ -43,5 +43,13 @@ namespace SINU.ViewModels
         public List<vInscripcionEtapaEstadoUltimoEstado> AsignarFechaVM { get; set; }
         public SelectList LugarPresentacion { get; set; }
         public DateTime FechaPresentacion { get; set; }
+        public string DatosLugar { get; set; }
+    }
+    public class PresentaciondelPostulante
+    {
+        public vInscripcionDetalle DetalleInscripcion { get; set; }
+        public string DatosLugar { get; set; }
+        public SelectList LugarPresentacion { get; set; }
+
     }
 }

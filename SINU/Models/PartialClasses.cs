@@ -144,5 +144,8 @@ namespace SINU.Models
 [MetadataType(typeof(CarrerauOficioMetadata))]
     public partial class CarreraOficio
     { }
+    [MetadataType(typeof(vEntrevistaLugarFechaMetadata))]
+    public partial class vEntrevistaLugarFecha
+    {}
 } 
 

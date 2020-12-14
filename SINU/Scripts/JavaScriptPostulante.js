@@ -89,7 +89,7 @@ $(document).ready(function () {
     //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
     $(".combobox").selectpicker({
         liveSearch: true,
-        size: 5,
+        size: 4.2,
         liveSearchPlaceholder: "Ingrese su busqueda",
         liveSearchStyle: 'contains',//'startsWith'
         noneResultsText: 'No se Encuantran Resultados',
@@ -308,9 +308,7 @@ $(document).ready(function () {
     PAIS("ListaPaisR", 0);
     PAIS("ListaPaisE", 0);
 
-
-
-    ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
+    //si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
     function PAIS(Combo, PRI) {
 
         //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
@@ -326,6 +324,7 @@ $(document).ready(function () {
         } else {
             $(Comboelemt[0]).hide();
             $(Comboelemt[1]).show();
+            //si se selecciono la Ciudad Autonoma de Buenos Aires habilito el campo de CP
             if ($(Comboelemt[3]).val()== '20819') {
                 $(Comboelemt[2]).removeAttr("readonly");
             }
@@ -417,13 +416,14 @@ $(document).ready(function () {
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
     $(".Nuevo_REG").on("click", function () {
+        
         var id_Tabla = $(this).attr("data-IdTabla");
         ModalEIACUD(null, id_persona, id_Tabla);
     });
 
-    $("#ModalEIA").on('hide.bs.modal', function () {
-        $('html,body').animate({ scrollTop: $.topp }, 200);
-    });
+    //$("#ModalEIA").on('hide.bs.modal', function () {
+    //    $('html,body').animate({ scrollTop: $("#" + $.topp).offset().top }, 500);
+    //});
 
     //VARIABLES PARA LAS DIRECCIONES DE LA VISTA PARCIAL, PARA ELIMINAR O ENVIAR LA MODIFICACION
     var url_Tabla;
@@ -450,12 +450,16 @@ $(document).ready(function () {
             cache: false,
             type: "GET",
             url: "/" + url_Controller + "/" + url_CUD,
-            data: { ID: id_registro, ID_persona: id_persona },
+            data: { ID_persona: id_persona, ID: id_registro  },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
-               
-                $('#ModalEIACuerpo').html(response);
 
+                $("#ModalAnuncios").modal('hide');
+
+                $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
+
+                $('#ModalEIACuerpo').html(response);
+               
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
                 $('#ModalEIACuerpo').removeData("validator");
                 $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
@@ -465,7 +469,7 @@ $(document).ready(function () {
                 /* https://developer.snapappointments.com/bootstrap-select/ */
                 $(".combobox").selectpicker({
                     liveSearch: true,
-                    size: 6,
+                    size: 5,
                     liveSearchPlaceholder: "Ingrese su busqueda",
                     liveSearchStyle: 'contains',//'startsWith'
                     noneResultsText: 'No se Encuantran Resultados',
@@ -549,6 +553,7 @@ $(document).ready(function () {
                     var form_actual = "#" + this.getAttribute("data-form");
                     //alert(form_actual);
                     var valido = $(form_actual).valid();
+                    //alert(valido);
                     if (valido) {
                         $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
@@ -561,11 +566,10 @@ $(document).ready(function () {
                     };
 
                 });
-
-                $("select").on("changed.bs.select", function () {
-                    proloc
-                    $(this).valid();
-                });
+                //$("select").on("changed.bs.select", function () {
+                //    proloc
+                //    $(this).valid();
+                //});
 
                 $(":input").on('change', function (e) {
                     ValidInput($(this).attr('name'));
@@ -874,11 +878,6 @@ $(document).ready(function () {
 
         });
     });
-
-
-
-
-
 
 
     //ver esto y unificar con las del MOdal
