@@ -964,20 +964,6 @@ $(document).ready(function () {
         } else
             return true;
     });
-    //FUNCIONES VARIAS
-    $.Anuncio = function (texto) {
-        $("#BTNModal").show().html("Cerrar");
-        $("#ModalAnuncios .modal-body").removeClass("text-center");
-        $("#ModalAnuncios .modal-content").css("background-color", "white").css("border-color", "white");
-        $("#OK").css("display", "none");
-        $(".modal-header,.modal-footer").show();
-        $("#ModalCenterTitle").html("SINU:");
-        $("#TextModal").html(texto);
-        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
-    };
-
-
-
 
 });
 
