@@ -352,9 +352,9 @@ namespace SINU.Controllers
             var PantallasEstadoProblemas = new List<Array>();
             db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
             //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
-            ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
+            var PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-            return Json(new { estado=PantallasEstadoProblemas });
+            return Json(new { estado= PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
         }
      
      #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada

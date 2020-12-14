@@ -639,6 +639,8 @@
         $.NoEjecutar = true;
 
         $(document).ready(function () {
+            ActICO();
+
             //////////Muestra en la Documentacion Penal muestra enabled a los botones que si estan cargados la documentacion///////////
             var cert = '@Model.certificado'
             var anex = '@Model.anexo2'
@@ -655,13 +657,12 @@
 
                 $("#HabilCert").removeAttr("hidden");
             }
-            else
-            {
+            else {
                 $("#TextNoCert").removeAttr("hidden");
             }
-            
+
             ////////////////////////////////////////////// fin del codigo de Documentacion Penal/////////////////////////////////
-            
+
 
             $.BloqueoPantalla = true;
             $(".BTAcciones").html("");
@@ -670,7 +671,7 @@
             $(".habil").removeAttr("disabled");
             $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").not("[role='combobox']").removeClass("fa-edit").addClass("fa-eye");
             var bloqueoSUBMIT = false;
-            
+
             $(".Agrega").on("click", function () {
                 bloqueoSUBMIT = true;
             })
@@ -681,20 +682,12 @@
                 bloqueoSUBMIT = false;
                 // tu codigo aqui
             });
-                        //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla
-                var Problemas = '@Html.Raw(ViewBag.PantallasEstadoProblemas2)';
-                var jsonProblemas = JSON.parse(Problemas);
-                $.each(jsonProblemas, function (index, item) {
-                    //alert(item[1]);
-                    if (!item[1]) {
-                        //alert("cerrado");
-                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
-                    } else if (item[2]=="0") {
-                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
-                    } else {
-                        $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>"+item[2]+"</i>");
-                    }
-                });
+
+
+
+            //Funcion para actualizar los iconos del TAB de las pantallas(pantalla cerrada, pantalla en edicion y cant de problemas de la pantalla)
+
+            
 
             var tabla = $("#TListadoProblema").DataTable({
                 retrieve: true,
@@ -796,16 +789,35 @@
             //    })
             //}
         })
+        function ActICO() {
+            //id de la persona que se cargaran el estado de cada pantalla
+            id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
+
+            $.get("/Delegacion/ActualizaIcon", { id_persona: id_per },
+
+                function (data) {
+                    var jsonProblemas = JSON.parse(data.estado);
+                    $.each(jsonProblemas, function (index, item) {
+                        $("#TABDocumentacion a[aria-controls='" + item[0] + "'] i").remove();
+                        //alert(item[1]);
+                        if (!item[1]) {
+                            //alert("cerrado");
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>")
+                        } else if (item[2] == "0") {
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
+                        } else {
+                            $("#TABDocumentacion a[aria-controls='" + item[0] + "']").prepend("<i class='fa fa-fw fa-' style='color: #ff0018; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
+                        };
+                    });
+                });
+        }
+
         function Exito(response) {
             if (response.View == "Index") {
                 window.location.href = "/Delegacion/Index"
-            }
-
-            $("#BTNModal").html("Cerrar");
-            $("#GuardarDTF").css("display", "none");
-            $("#ModalCenterTitle").html("SINU:");
-            $("#TextModal").html(response.msg);
-            $("#ModalAnuncios").modal();
+            };
+            ActICO();
+            $.Anuncio(response.msg);
             switch (response.form) {
                 case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
