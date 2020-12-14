@@ -931,14 +931,14 @@ namespace SINU.Controllers
         }
         #endregion
 
-        public ActionResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
+        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
             vInscripcionDetalle Inscripto;
             Configuracion configuracion;
             if (select == null)
             {
-                return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes" });
+                return Json(new { success = false , msg = "Por favor seleccione a uno o varios postulantes" });
             }
             try
             {
@@ -961,10 +961,13 @@ namespace SINU.Controllers
                         MailCuerpo = configuracion.ValorDato,
                         fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
                     };
-                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null,null);
+                    db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "PRESENTACION", "Asignada");
                     db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
 
-                    db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "", "");
+                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null,null);
+
+
+                    
                 }
                 return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
             }

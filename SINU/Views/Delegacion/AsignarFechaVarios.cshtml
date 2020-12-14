@@ -104,6 +104,12 @@
                     <div class="row">
                         <div class="container text-right">
                             <input type="submit" value="Asignar" class="btn btn-primary btn-lg w-25" />
+                            @*@Ajax.ActionLink(" Asignar Fecha Varios", "AsignarFechaVarios", null, new AjaxOptions
+                                                        {
+                                                          HttpMethod = "POST",
+                                                          OnSuccess = "Exito(data,status,xhr)",
+                                                          OnFailure = "Falla"
+                                                        }, new { @id = "BTValidar", @class = "btn btn-success" })*@
                         </div>
                     </div>
                 </div>
@@ -158,6 +164,10 @@
             if (data.success) {
                 location.reload(true);
             }
+            if (data.success == false) {
+                $.Anuncio(data.msg)
+            }
+            //$.Anuncion(Response.msg)
         }
     </script>
 }
