@@ -21,6 +21,9 @@ namespace SINU.ViewModels
         public List<Array> ListProblemaCantPantalla { get; set; }
         public bool DocuPenal { get; set; }
         public OficinasYDelegaciones OfiDele { get; set; }
+        public bool anexo2 { get; set; }
+        public bool certificado { get; set; }
+        public List<vDataProblemaEncontrado> vDataProblemaEncontradosVmDocu { get; set; }
     }
 
     public class PersonaFamiliaVM

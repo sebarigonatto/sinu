@@ -4,130 +4,119 @@
 @*<h2>Desea restaurar al postulante al proceso de Inscripcion</h2>*@
 @Html.AntiForgeryToken()
 
-    <div class="container">
-        @*<h4>@Model.IdInscripcion</h4>*@
+<div class="container">
+    @*<h4>@Model.IdInscripcion</h4>*@
 
 
 
-        @Html.HiddenFor(m => m.vInscripcionDetallesVM[0].IdInscripcion)
-        @*@Html.HiddenFor(m => m.IdInscripcion)*@
-        <h4 class="font-weight-bold" style="text-align:center">Restaurar Postulante</h4>
-        <div class="card" style=" text-align: -webkit-center;">
-            <div class="card-header">
-                @*<h5 class="font-weight-bold" style="text-align:left">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</h5>*@
-                <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
+    @Html.HiddenFor(m => m.vInscripcionDetallesVM[0].IdInscripcion)
+    @*@Html.HiddenFor(m => m.IdInscripcion)*@
+    <h4 class="font-weight-bold" style="text-align:center">Restaurar Postulante</h4>
+    <div class="card" style=" text-align: -webkit-center;">
+        <div class="card-header">
+            @*<h5 class="font-weight-bold" style="text-align:left">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</h5>*@
+            <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Apellido, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Nombres, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col">
-                            @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Apellido, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col">
-                            @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Nombres, "", new { @class = "text-danger" })
-                        </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].DNI, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.vInscripcionDetallesVM[0].DNI, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].DNI, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.vInscripcionDetallesVM[0].DNI, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col">
-                            @Html.EditorFor(model => model.vInscripcionDetallesVM[0].DNI, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].DNI, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col">
+                        @Html.EditorFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
+                        @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group col-md-6">
-                        @Html.LabelFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col">
-                            @Html.EditorFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
-                            @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+                </div>
 
-                </div>
-                <table class="table">
-                    <thead>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Problemas Encontrado
+                        </th>
+                        <th scope="col">
+                            Comentario
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.vDataProblemaEncontradoVM)
+                    {
                         <tr>
-                            <th scope="col">
-                                Problemas Encontrado
-                            </th>
-                            <th scope="col">
-                                Comentario
-                            </th>
+                            <td scope="row">
+                                @Html.DisplayFor(modelitem => item.DataVerificacion)
+                            </td>
+                            <td scope="row">
+                                @Html.DisplayFor(modelitem => item.Comentario)
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.vDataProblemaEncontradoVM)
-                        {
-                            <tr>
-                                <td scope="row">
-                                    @Html.DisplayFor(modelitem => item.DataVerificacion)
-                                </td>
-                                <td scope="row">
-                                    @Html.DisplayFor(modelitem => item.Comentario)
-                                </td>
-                            </tr>
-                            @*<div class="note small bg-light p-2">
-                    <b>* @Html.DisplayFor(modelitem => item.DataVerificacion) :</b> @Html.DisplayFor(modelitem => item.Comentario)
-                </div>*@
-                        }
-                    </tbody>
-                </table>
-               
-            </div><!--Fin de la class body card-->
-            <div class="card-footer">
-                <div class="container">
-                    <div class="col-md-12 clearfix"> </div>
+                        @*<div class="note small bg-light p-2">
+                                <b>* @Html.DisplayFor(modelitem => item.DataVerificacion) :</b> @Html.DisplayFor(modelitem => item.Comentario)
+                            </div>*@
+                    }
+                </tbody>
+            </table>
 
-                </div>
-                @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-dark btn-lg float-right" })
-                @Html.ActionLink("Volver Etapa Anterior", "RestaurarPostulante", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-dark btn-lg float-right" })
-
-            </div>
-        </div><!--Fin de la class card-->
-
-        @*<div class="jumbotron jumbotron-fluid">
+        </div><!--Fin de la class body card-->
+        <div class="card-footer">
             <div class="container">
-                <h1 class="display-4">Restaurar Postulante</h1>
-                <p class="lead">Restaurar al postulante al proceso de inscripcion a continuacion se detallara los datos y los problemas</p>
-                <div class="list-group">
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Apellido)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Apellido)
-                    </div>
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].Nombres)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].Nombres)
-                    </div>
-                    <div class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.vInscripcionDetallesVM[0].DNI)</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].DNI)
-                    </div>
-                    <div class="list-group-item">
-                        <b>N° de preinscripcion</b>:    @Html.DisplayFor(model => model.vInscripcionDetallesVM[0].IdInscripcion)
-                    </div>
-                </div>
-            </div>
-        </div>*@
-        @foreach (var item in Model.vDataProblemaEncontradoVM)
-        {
-            <div class="note small bg-light p-2">
-                <b>* @Html.DisplayFor(modelitem => item.DataVerificacion) :</b> @Html.DisplayFor(modelitem => item.Comentario)
-            </div>
-        }
+                <div class="col-md-12 clearfix"> </div>
 
-    </div>
-            <br />
-            <div class="container-fluid">
-                <div class="form-group row">
-                    <div class="col-sm-2">
-                    </div>
-                    <div class="col-sm-2">
-                    </div>
-                </div>
             </div>
+            <div data-toggle="modal" data-target="#modal1">
+                <button type="button" id="BTValidar" class="btn btn-success btn-lg float-right m-1"> Volver Etapa Anterior</button>
+            </div>
+
+            @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-lg float-right m-1" })
+
+
+        </div>
+    </div><!--Fin de la class card-->
+</div>
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Recuerde esta accion le permitira al postulente avanzar de etapa<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
+                @Html.ActionLink("Volver Etapa Anterior", "RestaurarPostulante", "Delegacion", new { ID_persona = Model.vInscripcionDetallesVM[0].IdPersona }, new { @id = "BTValidar", @class = "btn btn-success" })
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
