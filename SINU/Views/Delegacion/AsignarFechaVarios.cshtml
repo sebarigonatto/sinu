@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
                                 @*<input name="fecha" type="text" id="datetimepicker" />*@
-                                <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly/>
+                                <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly />
                             </div>
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">
@@ -104,24 +104,43 @@
                     <div class="row">
                         <div class="container text-right">
                             <input type="submit" value="Asignar" class="btn btn-primary btn-lg w-25" />
-                            @*@Ajax.ActionLink(" Asignar Fecha Varios", "AsignarFechaVarios", null, new AjaxOptions
-                                                        {
-                                                          HttpMethod = "POST",
-                                                          OnSuccess = "Exito(data,status,xhr)",
-                                                          OnFailure = "Falla"
-                                                        }, new { @id = "BTValidar", @class = "btn btn-success" })*@
                         </div>
                     </div>
                 </div>
             </div>
-       
+
         </div>
     </form>
+    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Esta Seguro que desea realizar la accion sobre el postulante, esto interrumpira el proceso de inscripcion<br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                    @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
+                    @*@Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                    {
+                                      HttpMethod = "POST",
+                                      OnSuccess = "Exito(data,status,xhr)",
+                                      OnFailure = "Falla"
+                                    }, new { @id = "BTValidar", @class = "btn btn-success" })*@
+                </div>
+            </div>
+        </div>
+    </div>
 
 }
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/jquery.js"></script>
+    @*<script src="~/Scripts/jquery.js"></script>*@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -165,7 +184,8 @@
                 location.reload(true);
             }
             if (data.success == false) {
-                $.Anuncio(data.msg)
+                //$("#modal3").modal('show');
+                $.Anuncio(data.msg);
             }
             //$.Anuncion(Response.msg)
         }
