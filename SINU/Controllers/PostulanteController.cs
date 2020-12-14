@@ -1377,10 +1377,11 @@ namespace SINU.Controllers
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
                 //verifico si la persona familiar es postulante
-                if (p != null)
+                if (p != null && p.Inscripcion.First().IdModalidad != null)
                 {
+                    int IDinscrip = p.Inscripcion.First().IdInscripcion;
                     //ver... verifico que sea un postulante que esta en una convocatoria abierta.
-                    pers.postulante = DateTime.Now < db.vInscriptosYConvocatorias.First(m => m.IdInscripcion == p.Inscripcion.First().IdInscripcion).Fecha_Fin_Proceso;
+                    pers.postulante = DateTime.Now < db.vInscriptosYConvocatorias.First(m => m.IdInscripcion == IDinscrip).Fecha_Fin_Proceso;
                     //pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 };
                 var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
