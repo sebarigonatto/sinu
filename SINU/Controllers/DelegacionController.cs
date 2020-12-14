@@ -296,8 +296,6 @@ namespace SINU.Controllers
             personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
             ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-
-
             //////////////////Verifico si se encuentra cargado el documento//////////////
             bool cert;
             bool anex;
@@ -318,21 +316,22 @@ namespace SINU.Controllers
             }
             /////////////////////////fin del cofigo////////////////////////////////////////
 
-
-
             ///////////////////////Codigo para generar la lista de problemas al final de la documentacion////////////////////////
-
             personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
-
-
-
-
             /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
-
-
             return View(personaVM);
-
         }
+        [HttpGet]
+        public JsonResult ActualizaIcon(int id_persona)
+        {
+            var PantallasEstadoProblemas = new List<Array>();
+            db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+            //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
+            ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
+
+            return Json(new { estado=PantallasEstadoProblemas });
+        }
+     
      #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
         [HttpPost]
@@ -453,7 +452,7 @@ namespace SINU.Controllers
 
         #endregion
 
-        #region La accion permite restaurar un postulante al proceso de inscripcion
+     #region La accion permite restaurar un postulante al proceso de inscripcion
         /// <summary>
         /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
         /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
@@ -496,7 +495,8 @@ namespace SINU.Controllers
             }
         }
         #endregion
-        //fin del codigo
+
+     #region Devuelve la Documentacion penal y el certificado de Anexo2
         public ActionResult DocPenal(int id, string docu)
         {
             try
@@ -528,27 +528,9 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
             }
         }
-        //public ActionResult GetAnexo2Pdf(int id)
-        //{
-        //    try
-        //    {
-        //        string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-        //        string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-        //        string NombreArchivo = id + "_Anexo2.pdf";
-        //        string Descargar = CarpetaDeGuardado + NombreArchivo;
-        //        bool file = System.IO.File.Exists(Descargar);
-        //        if (file == false)
-        //        {
-        //            return View("Error", Func.ConstruyeError("Hubo un problema con el postulante N° " + id.ToString() + " No existe documento para dicho postulante", "Delegacion", "Details"));
-        //        }
-        //        byte[] FileBytes = System.IO.File.ReadAllBytes(Descargar);
-        //        return File(FileBytes, "application/pdf", NombreArchivo);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "_Docupenal"));
-        //    }
-        //}
+        #endregion
+
+        #region Fecha de Presentacion(Get) - a un solo postulantes(la accion solo le asigna una fecha de presentacion al postulante)
         public ActionResult PresentacionAsignaFecha(int id)
         {
             try
@@ -571,6 +553,8 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
             }
         }
+        #endregion
+        
         [HttpPost]
         public ActionResult PresentacionAsignaFecha(int Id, DateTime Fecha, int LugarPresentacion)
         {
