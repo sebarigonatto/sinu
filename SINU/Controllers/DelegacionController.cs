@@ -344,18 +344,18 @@ namespace SINU.Controllers
         #endregion
 
         #region Actualizar Iconos de Documentacion (GET) - esto le devuleve una array con los datos de pantallas abirtas y devuleve un result json para que se actualize sim hacer refresh
+         [HttpGet]
+                public JsonResult ActualizaIcon(int id_persona)
+                {
+                    var PantallasEstadoProblemas = new List<Array>();
+                    db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+                    //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
+                    var PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
+                    return Json(new { estado= PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
+                }
         #endregion
-        [HttpGet]
-        public JsonResult ActualizaIcon(int id_persona)
-        {
-            var PantallasEstadoProblemas = new List<Array>();
-            db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
-            //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
-            var PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
-
-            return Json(new { estado= PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
-        }
+       
      
      #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
@@ -730,7 +730,7 @@ namespace SINU.Controllers
         [HttpPost]
         public JsonResult ProblemaPantalla(ProblemaPantallaVM datos)
         {
-            var ProblemaExiste = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == datos.DataProblemaEncontradoVM.IdDataVerificacion && m.IdPostulantePersona == datos.DataProblemaEncontradoVM.IdPostulantePersona);
+            var ProblemaExiste = db.vDataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == datos.DataProblemaEncontradoVM.IdDataVerificacion && m.IdPostulantePersona == datos.DataProblemaEncontradoVM.IdPostulantePersona && m.DataVerificacion != "Otros: Aclare");
             var Comentario = datos.DataProblemaEncontradoVM.Comentario;///guarda en la variable comentario si trae un comentario o no
             var IdDataVerificacion = datos.DataProblemaEncontradoVM.IdDataVerificacion;
             var Idpantalla = db.DataVerificacion.Find(IdDataVerificacion).IdPantalla;
@@ -749,9 +749,9 @@ namespace SINU.Controllers
                         var data = datos.DataProblemaEncontradoVM;
                         db.DataProblemaEncontrado.Add(data);
                         db.SaveChanges();
-                        //int idPantalla = db.DataVerificacion.Find(data.IdDataVerificacion).IdPantalla;
                         return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
                     }
+                    
                     return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
                 }
                 return Json(new { success = true, msg = "Es Importante Agregar comentario" });
@@ -931,7 +931,7 @@ namespace SINU.Controllers
         }
         #endregion
 
-        public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
+        public ActionResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
             vInscripcionDetalle Inscripto;
