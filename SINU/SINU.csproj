@@ -1211,7 +1211,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Vaciar.cshtml" />
     <Content Include="Views\Postulante\DatosBasicos.cshtml" />
-    <Content Include="Views\Postulante\Index2.cshtml" />
     <Content Include="Views\Postulante\Entrevista.cshtml" />
     <Content Include="Views\Delegacion\Index.cshtml" />
     <Content Include="Views\Postulante\DatosPersonales.cshtml" />

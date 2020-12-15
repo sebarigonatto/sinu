@@ -64,6 +64,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                 <div class="h-100"></div>
                                 @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.IdSituacionRevista, "", new { @class = "text-danger" })
                             </div>
+
                         </div>
                         <div class="form-group si ">
                             @Html.LabelFor(model => model.ACTMilitarIDVM.FechaIngreso, htmlAttributes: new { @class = "control-label col-md-12" })
@@ -73,7 +74,7 @@ new { id = "BeginFormActMilitarCUD" }))
                                 @Html.ValidationMessageFor(model => model.ACTMilitarIDVM.FechaIngreso, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group si">
+                        <div class="form-group baja si">
                             @Html.LabelFor(model => model.ACTMilitarIDVM.FechaBaja, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
                                 @Html.TextBoxFor(model => model.ACTMilitarIDVM.FechaBaja, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker", @readonly = true, @placeholder = "dd/mm/yyyy" })
@@ -83,7 +84,7 @@ new { id = "BeginFormActMilitarCUD" }))
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group si">
+                        <div class="form-group baja si">
                             @Html.LabelFor(model => model.ACTMilitarIDVM.IdBaja, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.ACTMilitarIDVM.IdBaja, new SelectList(Model.BajaVM, "IdBaja", "BajaCausa"), "Seleccione Motivo de Baja", htmlAttributes: new { @class = "form-control selectpicker" })
@@ -92,7 +93,7 @@ new { id = "BeginFormActMilitarCUD" }))
                             </div>
                         </div>
 
-                        <div class="form-group si">
+                        <div class="form-group baja si">
                             @Html.LabelFor(model => model.ACTMilitarIDVM.MotivoBaja, htmlAttributes: new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
                                 @Html.EditorFor(model => model.ACTMilitarIDVM.MotivoBaja, new { htmlAttributes = new { @class = "form-control" } })

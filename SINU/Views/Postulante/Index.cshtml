@@ -288,23 +288,33 @@
             font-size: larger;
         }
 </style>
-<div class="row">
-    <div class="col col-sm-6">
-        <h4>Etapas de la Inscripcion</h4>
-    </div>
-
-    <div class="col col-sm-6">
-        @if ((bool)Session["DeleConsul"])
-        {
-
-            <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
-            if (ViewBag.ULTISECU == 8)
+<div class="container">
+    <div class="row">
+        <div class="col col-sm-6 col-12">
+            <h4>Etapas de la Inscripcion</h4>
+            @if (ViewBag.MOD_CAR[0] != "")
             {
-                @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
+                <h5>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h5>
+                <h5>Modalidad: <b>@ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></h5>
             }
-        }
+
+
+        </div>
+
+        <div class="col col-sm-6 col-12 ">
+            @if ((bool)Session["DeleConsul"])
+            {
+
+                <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
+                if (ViewBag.ULTISECU == 8)
+                {
+                    @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
+                }
+            }
+        </div>
     </div>
 </div>
+<br />
 @if (Model.ProcesoInterrumpido)
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
@@ -701,7 +711,7 @@
         //bloquea las patallas principales segun las Etapas en las que esta actualmente.
         $.BloqueaPantallasPrincipales = function () {
             $.each(SolapaPrincipales, function (index, item) {
-                if (IDETP[IDETP.length - 1] != item[0] ||"@ViewBag.ValidacionEnCurso" == "True" ||"@Model.ProcesoInterrumpido" == "True") {
+                if (IDETP[IDETP.length - 1] != item[0] || "@ViewBag.ValidacionEnCurso" == "True" || "@Model.ProcesoInterrumpido" == "True") {
                     BloqueaPantalla(item[1]);
                     if ("@ViewBag.ValidacionEnCurso" == "True") {
                         $.BloqueoPantalla = true;
@@ -794,9 +804,9 @@
                 //$("#TABDocumentacion i").remove();
                 $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
                 //cambio el href del button
-                pageanterior = document.referrer.toString()
+                pageanterior = document.referrer.substring(document.referrer.lastIndexOf('/'));
 
-                $("#BTatras").attr("href", "/Delegacion");
+                $("#BTatras").attr("href", pageanterior);
             }
 
             if ('@Session["FamiTable"]' == 'True') {
