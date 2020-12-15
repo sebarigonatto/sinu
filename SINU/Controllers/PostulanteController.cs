@@ -1066,6 +1066,13 @@ namespace SINU.Controllers
                 if (a.Ingreso == true)
                 {
                     a.CausaMotivoNoingreso = null;
+                    if (a.IdSituacionRevista==2)
+                    {
+                        a.FechaBaja = null;
+                        a.IdBaja = 0;
+                        a.MotivoBaja = "";
+                    }
+
                 }
                 else
                 {

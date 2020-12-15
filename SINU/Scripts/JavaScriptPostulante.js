@@ -545,7 +545,7 @@ $(document).ready(function () {
                 $("#IngresoSINO").on("change", function (e) {
                     IngreSINO();
                 });
-
+                InputBAJA();
                 $("#ACTMilitarIDVM_IdSituacionRevista").on("change", function (e) {
                     InputBAJA();
                 });
@@ -751,8 +751,12 @@ $(document).ready(function () {
 
 
     function InputBAJA() {
-        alert($("ACTMilitarIDVM_IdSituacionRevista").val());
-     
+        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2) {
+            $(".baja input").val("");
+            $(".baja").hide();
+        } else {
+            $(".baja").show();
+        }
     }
     //////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE SITUACION OCUPACIONAL */
