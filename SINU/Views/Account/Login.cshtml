@@ -10,10 +10,10 @@
     .field-validation-error {
         color: #dc3545 !important
     }
+
     .form-control {
         border-bottom: 2px solid #00bfff !important;
     }
-
 </style>
 <div class="text-center">
     <h2>@ViewBag.Title</h2>
@@ -48,7 +48,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="color: white; background-color: #00bfff ;"><i class="fa fa-key"></i></span>
                         </div>
-                        @Html.PasswordFor(m => m.Password, new {@class = "form-control "})
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control " })
                     </div>
                     @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <div class="justify-content-center">
-                        <input type="submit" value="Iniciar sesión" class="btn" style="color:white;background-color: #00bfff;"/>
+                        <input type="submit" value="Iniciar sesión" class="btn" style="color:white;background-color: #00bfff;" />
                     </div>
                 </div>
                 <p style=" margin-bottom: 0px !important;">
@@ -75,66 +75,40 @@
                     @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword", null, new { @class = "ml-3" })
                 </p>
             }
-        <br />
+            <br />
         </section>
     </div>
-    @*<div class="col-md-4">
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
-        </div>*@
+
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
 
-    if ('@ViewBag.logueado' == "True") {
-        $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
 
-        $("#BTNModal").hide();
-        $("#ModalAnuncios .modal-content").css("background-color", "white").css("border-color", "white");
-        $("#GuardarDTF").css("display", "none");
-        $(".modal-header,.modal-footer").show();
-        $("#ModalCenterTitle").html("SINU:");
-        $("#TextModal").html("Usuario logueado, cierra session para iniciar session con otra cuenta.");
-        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+        $(document).ready(function () {
+          if ('@ViewBag.logueado' == "True") {
+            $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
 
-        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false }).delay(4000).queue(function () {
-            window.location.href = "../Home/Index";
-        });
 
-    }
-    $(document).ready(function () {
-        $("#CaptchaInputText").addClass("form-control");
-        $("#CaptchaInputText").next("br").remove();
-        $("a[href='#CaptchaImage']").show();
+              $.Anuncio("Usuario logueado, cierra la sesion actual, para iniciar  con otra cuenta.");
+              $("#BTNModal").hide();
+              $("#CaptchaInputText").val("").delay(4000).queue(function () {
+                  window.location.href = "../Home/Index";
+              });
 
-        $('form').on('submit', async function (e) {
-            if ($(this).valid()) {
+            };
+            $("#CaptchaInputText").addClass("form-control");
+            $("#CaptchaInputText").next("br").remove();
+            $("a[href='#CaptchaImage']").show();
 
-                $.Cargando();
-            }
-        });
+            $('form').on('submit', async function (e) {
+                if ($(this).valid()) {
+
+                    $.Cargando();
+                }
+            });
     })
     </script>
 }
-@*<div class="container h-100">
-        <div class="row justify-content-center h-100">
-            <div class="col-sm-8 align-self-center text-center">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h1>Armada Argentina</h1>
-                        <img src="~/Imagenes/4.png" style="width: 40% !important;" alt="Alternate Text" />
-                        <div style="font-size:24px;" class="text-center">
 
-                            <h2>Confirmacion de Cuenta Exitosa.</h2>
-                        </div>
-                        <p>
-                            Porfavor @Html.ActionLink("haga click sobre este link para Iniciar Sesion", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@

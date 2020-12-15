@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = "Proceso de Inscripcion";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion")? "Detalle del Postulante": "Consulta Postulante" : "Proceso de Inscripcion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
@@ -288,10 +288,11 @@
             font-size: larger;
         }
 </style>
+
 <div class="container">
     <div class="row">
         <div class="col col-sm-6 col-12">
-            <h4>Etapas de la Inscripcion</h4>
+            <h4>@ViewBag.Title</h4>
             @if (ViewBag.MOD_CAR[0] != "")
             {
                 <h5>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h5>
@@ -315,6 +316,7 @@
     </div>
 </div>
 <br />
+
 @if (Model.ProcesoInterrumpido)
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
@@ -337,6 +339,7 @@
     </div>
     <br />
 }
+
 @if (ViewBag.VenceComvocatoria)
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
@@ -791,10 +794,7 @@
 
             };
 
-            //if (jsonProblemas[0][1]) {
-            //    $("#TABDocumentacion a").not("[aria-controls='" + jsonProblemas[0][0] + "']").each(function (index, item) { $(item).closest('li').addClass("Tabdesabilitado"); })
-            //} else { BloqueaPantalla("DatosPersonales");};
-
+        
 
             //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
             if ("@Session["DeleConsul"]" == "True") {
@@ -804,8 +804,7 @@
                 //$("#TABDocumentacion i").remove();
                 $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
                 //cambio el href del button
-                pageanterior = document.referrer.substring(document.referrer.lastIndexOf('/'));
-
+                pageanterior = document.referrer;
                 $("#BTatras").attr("href", pageanterior);
             }
 
