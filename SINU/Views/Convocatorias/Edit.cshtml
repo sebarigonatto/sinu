@@ -35,8 +35,9 @@
             <tbody>
                 <tr >
                     <td>
-                        @*verificar la propiedad select*@
-                        @Html.DropDownListFor(model => model.IdPeriodoInscripcion, (IEnumerable<SelectListItem>)ViewBag.IdPeriodoInscripcion, htmlAttributes: new { @class = "form-control", @id = "ComboInscripcion" })
+                        @*propiedad select ver que un comportamiento inesperado:
+                            cuando su propiedad ViewBag, donde esta el SelectList, si es el mismo nombre de la propiedad donde puso el valor seleccionado. Para evitar esto, simplemente usar otro nombre al nombrar la propiedad que contiene la lista de elementos*@
+                        @Html.DropDownListFor(model => model.IdPeriodoInscripcion, (SelectList)ViewBag.PeriododeInscripcion, htmlAttributes: new { @class = "form-control", @id = "ComboInscripcion" })
                         @Html.ValidationMessageFor(model => model.IdPeriodoInscripcion, "", new { @class = "text-danger" })
                     </td>
                     <td>
