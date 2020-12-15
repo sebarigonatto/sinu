@@ -358,7 +358,7 @@ namespace SINU.Controllers
                         Dni_P = persona.DNI,
                         IdInscripcion_P = persona.Postulante.Inscripcion.First().IdInscripcion,
                         Nombre_P = persona.Nombres,
-                        url = Url.Action("Details", "Delegacion", new { id = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == persona.IdPersona).IdInscripcion }, protocol: Request.Url.Scheme),
+                        url = Url.Action("Index", "Postulante", new { ID_Postulante= persona.IdPersona }, protocol: Request.Url.Scheme),
                         Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
                     };
 

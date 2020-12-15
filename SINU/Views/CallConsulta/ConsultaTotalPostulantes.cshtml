@@ -21,6 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
+            <th>VER DATOS</th>
             @*<th>
                 @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
             </th>*@
@@ -46,6 +47,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
+                <td> @Html.ActionLink("Detalle", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }) </td>
                 @*<td>
                     @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
                 </td>*@

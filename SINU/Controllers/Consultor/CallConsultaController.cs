@@ -61,7 +61,9 @@ namespace SINU.Controllers.Consultor
 
             if (Datos == null)
             {
-                return HttpNotFound();
+                //return HttpNotFound();
+                return View("Error", Func.ConstruyeError("Extraño que no haya registros devueltos por sp_ConsultaInscriptosModalidadGenero", "CallConsulta", "TotalesPorModalidadyGenero"));
+
             }
             return PartialView(Datos);
         }
@@ -92,7 +94,7 @@ namespace SINU.Controllers.Consultor
             }
             return View(Listado);
         }
-        /// <summary>ConsultaTotalPostulantesEs una CONSULTA principal (hasta ahora sin subconsulta)
+        /// <summary>ConsultaTotalPostulantesEs una CONSULTA principal (agregada la subconsulta VerPostulanteElegido)
         /// que muestra un simple listado de los postulantes que se encuentra realmente 
         /// en la etapa de inscripcion más allá de la etapa 5 que equivale a todos aquellos
         /// que pasaron la VALIDACION DEL REGISTRO INCIAL y se encuentra en un estado
@@ -145,7 +147,22 @@ namespace SINU.Controllers.Consultor
 
             return PartialView(convocatoria.ToList());
         }
-
-              
+        /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
+        /// Esta action es una SUBCONSULTA de ConsultaTotalPostulantes
+        /// </summary>
+        /// <param name="IdPostulantePersona"></param>
+        /// <returns></returns>
+        public ActionResult VerPostulanteElegido(int? IdPostulantePersona )
+        {
+            //el 1033 es por conveniencia de OTTINO-- eliminar 10033 y poner 0
+            IdPostulantePersona = (IdPostulantePersona is null) ? 1033 : IdPostulantePersona;
+            Postulante x =  db.Postulante.FirstOrDefault(p => p.IdPersona == IdPostulantePersona);
+           if (x is null)
+            {
+                return View("Error", Func.ConstruyeError("Extraño que no encuentre Postulante: " + IdPostulantePersona.ToString(), "CallConsulta", "VerPostulanteElegido"));
+            }
+            return RedirectToAction( "Index", "Postulante", new { ID_Postulante = IdPostulantePersona });
+        }
+             
     }
 }

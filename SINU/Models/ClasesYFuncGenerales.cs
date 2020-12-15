@@ -129,14 +129,14 @@ namespace SINU.Models
                 List<string> correos = new List<string>();
 
                 DatosResponsable datos= new DatosResponsable();
-                string Rol="Postulante",Modo="To";
+                string Rol= "Delegacion", Modo="To";
                                 
                 Postulante postulante = db.Postulante.FirstOrDefault(m => m.IdPersona == ID_Persona || m.IdAspNetUser == ID_AspNetUser);
                 if (postulante != null)
                 {
                     ID_AspNetUser = postulante.IdAspNetUser;
                     idInscrip = postulante.Inscripcion.First().IdInscripcion;
-
+                    Rol = "Postulante";
                 }
                 else if (ID_Delegacion != null)
                 {
@@ -146,9 +146,9 @@ namespace SINU.Models
                     {
                         correos.Add(dele.Email);
                     }
-                    Rol = "Delegacion";
+                    
                 }
-                else
+                else if(ID_AspNetUser == null)
                 {
                     foreach (var item in mails)
                     {
@@ -157,7 +157,7 @@ namespace SINU.Models
                     string correo = correos[0];
                     var id_per = db.Persona.FirstOrDefault(m => m.Email == correo).IdPersona;
                     postulante = db.Postulante.Find(id_per);
-                    
+                    Rol = "Postulante";
                     Modo = "Bcc";
                 }
 
