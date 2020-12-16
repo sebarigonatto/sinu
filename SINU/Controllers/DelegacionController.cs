@@ -72,18 +72,18 @@ namespace SINU.Controllers
 
         #region Asignar Fecha de Entrevista(GET) - accion que le asigna una fecha de entrevista a un solo postulante
         public ActionResult EntrevistaAsignaFecha(int id)
+        {
+            try
             {
-                try
-                {
-                    vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
+                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
 
-                    return View(Dato);
-                }
-                catch (System.Exception ex)
-                {
-                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
-                }
+                return View(Dato);
             }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Create"));
+            }
+        }
         #endregion
 
         #region Asignar Fecha de Entrevista(POST) - accion que le asigna una fecha de entrevista a un solo postulante
@@ -198,166 +198,168 @@ namespace SINU.Controllers
         }
 
         #region Postular(GET) - muestra los datos del postulante al que van a Postular/No Postular
-         [HttpGet]
-                public ActionResult Postular(int? id)
+        [HttpGet]
+        public ActionResult Postular(int? id)
+        {
+            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcion;
+            try
+            {
+                UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
+                ViewBag.Delegacion = UsuarioDelegacion.Nombre;
+                if (id == null)
                 {
-                    List<vInscripcionDetalle> InscripcionElegida;
-                    vInscripcionEtapaEstadoUltimoEstado vInscripcion;
-                    try
-                    {
-                        UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-                        ViewBag.Delegacion = UsuarioDelegacion.Nombre;
-                        if (id == null)
-                        {
-                            //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
-                            return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
-                        }
-
-                        InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
-
-                        if (InscripcionElegida.Count == 0)
-                        {
-                            //return HttpNotFound("ese numero de ID no se encontro ");
-                            return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
-                    }
-                    vInscripcion = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-                    ViewBag.Estado = vInscripcion.Estado;
-                    return View(InscripcionElegida.First());
+                    //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
+                    return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
                 }
+
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+
+                if (InscripcionElegida.Count == 0)
+                {
+                    //return HttpNotFound("ese numero de ID no se encontro ");
+                    return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Details"));
+            }
+            vInscripcion = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+            ViewBag.Estado = vInscripcion.Estado;
+            return View(InscripcionElegida.First());
+        }
         #endregion
 
         #region Postular(POST) - accion que Postula/No Postula a un postulante y puede seguir avanzando en el proceso de inscripcion
-            [HttpPost]
-            [ValidateAntiForgeryToken]
-            public async Task<ActionResult> Postular(string botonPostular, int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Postular(string botonPostular, int id)
+        {
+            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
+            Configuracion configuracion;
+            bool x = false;
+            string cuerpo = "";
+            try
             {
-                List<vInscripcionDetalle> InscripcionElegida;
-                vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-                Configuracion configuracion;
-                bool x = false;
-                string cuerpo = "";
-                try
+                switch (botonPostular)
                 {
-                    switch (botonPostular)
-                    {
-                        case "Postular":
-                            db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
-                            x = true;
-                            configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4Postulado");
-                            cuerpo = configuracion.ValorDato.ToString();
-                            break;
-                        case "No Postular":
-                            db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
-                            //el texto de respuesta aqui depende de la preferencia que selecciono al moneto de llenar datos basicos
-                            configuracion = (db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == id).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2") : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1");
-                            cuerpo = configuracion.ValorDato.ToString();
-                            break;
-                        case "Volver":
-                            db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
-                            break;
-                    }
-                    InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
-                    vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
-
-                    var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = id }, protocol: Request.Url.Scheme);
-
-                    var modeloPlanti = new ViewModels.MailPostular
-                    {
-                        Apellido = vInscripcionEtapas.Apellido,
-                        MailCuerpo = cuerpo,
-                        LinkConfirmacion = callbackUrl,
-                        Postulado = x
-                    };
-                    switch ((vInscripcionEtapas.Estado).ToString())
-                    {
-                        case "Postulado":
-                            bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
-                            db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
-                            break;
-                        case "No Postulado":
-                            bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
-                            break;
-                    }
+                    case "Postular":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Postulado");
+                        x = true;
+                        configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4Postulado");
+                        cuerpo = configuracion.ValorDato.ToString();
+                        break;
+                    case "No Postular":
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "No Postulado");
+                        //el texto de respuesta aqui depende de la preferencia que selecciono al momento de llenar datos basicos
+                        configuracion = (db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == id).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2") : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1");
+                        cuerpo = configuracion.ValorDato.ToString();
+                        break;
+                    case "Volver":
+                        db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
+                        break;
                 }
-                catch (System.Exception ex)
+                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
+                vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
+
+                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
+
+                var modeloPlanti = new ViewModels.MailPostular
                 {
-                    return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
+                    Apellido = vInscripcionEtapas.Apellido,
+                    MailCuerpo = cuerpo,
+                    LinkConfirmacion = callbackUrl,
+                    Postulado = x
+                };
+                switch ((vInscripcionEtapas.Estado).ToString())
+                {
+                    case "Postulado":
+                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                        break;
+                    case "No Postulado":
+                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
+                        break;
                 }
-                return RedirectToAction("Index");
             }
+            catch (System.Exception ex)
+            {
+                return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
+            }
+            return RedirectToAction("Index");
+        }
         #endregion
 
         #region Documentacion(GET) - accion que le devuleve los datos cargados por el postulante(pantallas reutilizada de postulante)
 
-            /// <summary>
-            /// Recibe el IdPersona del postulante para poder traer toda informacion del postulante
-            /// </summary>
-            /// <param name="id"></param>
-            /// <returns> Devuelve todos los datos del Postulante</returns>
-            [HttpGet]
-            public ActionResult Documentacion(int id)
+        /// <summary>
+        /// Recibe el IdPersona del postulante para poder traer toda informacion del postulante
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> Devuelve todos los datos del Postulante</returns>
+        [HttpGet]
+        public ActionResult Documentacion(int id)
+        {
+            vInscripcionDetalle vdetalle;
+            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+            var NyA = vdetalle.Nombres + " " + vdetalle.Apellido;
+            ViewBag.NInscripcion = vdetalle.IdInscripcion;
+            ViewBag.Modalidad = vdetalle.Modalidad;
+
+            IDPersonaVM personaVM = new IDPersonaVM();
+            personaVM.ID_PER = id;
+            personaVM.NomyApe = NyA;
+
+            var PantallasEstadoProblemas = new List<Array>();
+            db.spTildarPantallaParaPostulate(personaVM.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+            personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
+            ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
+
+            //////////////////Verifico si se encuentra cargado el documento//////////////
+            bool cert;
+            bool anex;
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+            string[] anexo = Directory.GetFiles(Ubicacionfile, id + "&" + "Anexo2" + "*");
+            string[] Certificado = Directory.GetFiles(Ubicacionfile, id + "&" + "Certificado" + "*");
+
+            if (anexo.Count() == 1)
             {
-                vInscripcionDetalle vdetalle;
-                vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
-                var NyA = vdetalle.Nombres + " " + vdetalle.Apellido;
-                ViewBag.NInscripcion = vdetalle.IdInscripcion;
-
-                IDPersonaVM personaVM = new IDPersonaVM();
-                personaVM.ID_PER = id;
-                personaVM.NomyApe = NyA;
-
-                var PantallasEstadoProblemas = new List<Array>();
-                db.spTildarPantallaParaPostulate(personaVM.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
-                personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
-                ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
-
-                //////////////////Verifico si se encuentra cargado el documento//////////////
-                bool cert;
-                bool anex;
-                string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-                string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string[] anexo = Directory.GetFiles(Ubicacionfile, id + "&" + "Anexo2" + "*");
-                string[] Certificado = Directory.GetFiles(Ubicacionfile, id + "&" + "Certificado" + "*");
-
-                if (anexo.Count() == 1)
-                {
-                    anex = true;
-                    personaVM.anexo2 = anex;
-                }
-                if (Certificado.Count() == 1)
-                {
-                    cert = true;
-                    personaVM.certificado = cert;
-                }
-                /////////////////////////fin del cofigo////////////////////////////////////////
-
-                ///////////////////////Codigo para generar la lista de problemas al final de la documentacion////////////////////////
-                personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
-                /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
-                return View(personaVM);
+                anex = true;
+                personaVM.anexo2 = anex;
             }
+            if (Certificado.Count() == 1)
+            {
+                cert = true;
+                personaVM.certificado = cert;
+            }
+            /////////////////////////fin del cofigo////////////////////////////////////////
+
+            ///////////////////////Codigo para generar la lista de problemas al final de la documentacion////////////////////////
+            personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
+            /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
+
+
+            return View(personaVM);
+        }
         #endregion
 
         #region Actualizar Iconos de Documentacion (GET) - esto le devuleve una array con los datos de pantallas abirtas y devuleve un result json para que se actualize sim hacer refresh
-         [HttpGet]
-                public JsonResult ActualizaIcon(int id_persona)
-                {
-                    var PantallasEstadoProblemas = new List<Array>();
-                    db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
-                    //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
-                    var PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
+        [HttpGet]
+        public JsonResult ActualizaIcon(int id_persona)
+        {
+            var PantallasEstadoProblemas = new List<Array>();
+            db.spTildarPantallaParaPostulate(id_persona).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+            //personaVM.ListProblemaCantPantalla = PantallasEstadoProblemas;
+            var PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
 
-                    return Json(new { estado= PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
-                }
+            return Json(new { estado = PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
-       
-     
-     #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
+
+        #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
         [HttpPost]
         public ActionResult Documentacion(int? id)
@@ -382,7 +384,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto4", null,null);
+                    var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto9", null, null);
                     db.spProximaSecuenciaEtapaEstado(id, 0, false, 0, "", "");
                     return Json(new { View = "Index" });
                 };
@@ -397,7 +399,7 @@ namespace SINU.Controllers
 
         #endregion
 
-     #region Volver Etapa Anterior - Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
+        #region Volver Etapa Anterior - Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
 
         public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
@@ -421,7 +423,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null,null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return Json(new { View = "Index" });
@@ -437,7 +439,7 @@ namespace SINU.Controllers
 
         #endregion
 
-     #region Interrumpir Proceso - Esta accion le permite al usuario(delegacion) interrumpir el proceso de inscripcion del postulante tambien se le envia un mail de notificacion al postulante
+        #region Interrumpir Proceso - Esta accion le permite al usuario(delegacion) interrumpir el proceso de inscripcion del postulante tambien se le envia un mail de notificacion al postulante
 
         [HttpPost]
         public async Task<ActionResult> InterrumpirProceso(int? ID_persona)
@@ -462,7 +464,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null,null);
+                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
                     return Json(new { View = "Index" });
 
@@ -477,7 +479,7 @@ namespace SINU.Controllers
 
         #endregion
 
-     #region La accion permite restaurar un postulante al proceso de inscripcion
+        #region La accion permite restaurar un postulante al proceso de inscripcion (GET)
         /// <summary>
         /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
         /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
@@ -521,7 +523,7 @@ namespace SINU.Controllers
         }
         #endregion
 
-     #region accion que devuelve la Documentacion penal y el certificado de Anexo2
+        #region accion que devuelve la Documentacion penal y el certificado de Anexo2
         public ActionResult DocPenal(int id, string docu)
         {
             try
@@ -555,7 +557,7 @@ namespace SINU.Controllers
         }
         #endregion
 
-     #region Fecha de Presentacion(Get) - a un solo postulantes(la accion solo le asigna una fecha de presentacion a un solo postulante)
+        #region Fecha de Presentacion(Get) - a un solo postulantes(la accion solo le asigna una fecha de presentacion a un solo postulante)
         public ActionResult PresentacionAsignaFecha(int id)
         {
             try
@@ -579,8 +581,8 @@ namespace SINU.Controllers
             }
         }
         #endregion
-     
-     #region Fecha de Presentacion (POST) - asigna una fecha de presentacion a un solo postulante
+
+        #region Fecha de Presentacion (POST) - asigna una fecha de presentacion a un solo postulante
         [HttpPost]
         public ActionResult PresentacionAsignaFecha(int Id, DateTime Fecha, int LugarPresentacion)
         {
@@ -751,10 +753,10 @@ namespace SINU.Controllers
                         db.SaveChanges();
                         return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
                     }
-                    
+
                     return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
                 }
-                return Json(new { success = true, msg = "Es Importante Agregar comentario" });
+                return Json(new { success = true, msg = "Es Importante Agregar un comentario" });
             }
             catch (Exception x)
             {
@@ -781,6 +783,7 @@ namespace SINU.Controllers
             }
         }
 
+        #region Acccion que le permite cerrar la pantalla de un postulante(se cierra la pantalla por que no hubo problemas en dicha documentacion)
         /// <summary>
         /// Action en donde permite cerrar la pantalla de un postulante, se cierra cuando un postulante no tiene ningun tipo de problemas en el cargado de datos o se abre cuando se necesita cargar problemas a un postulante
         /// </summary>
@@ -843,20 +846,35 @@ namespace SINU.Controllers
 
             return Json(new { success = false, msg = "Error en el Modelo Recibido" });
         }
-        public ActionResult DocumentosNecesarios(int ID_persona)
-        {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
-            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
-            ViewBag.Idinscripto = inscrip.IdInscripcion;
-            DocuNecesaria datos = new DocuNecesaria()
-            {
-                DocumentosNecesarios = DocuNecesarios,
-                //inscipto=inscrip.IdInscripcion
-            };
-            var listDocu = DocuNecesarios.ToList();
-            return PartialView(datos);
-        }
 
+        #endregion
+
+        #region Documentacion Necesaria para el postulante (Get) - se genera una lista con toda la documentacion a presentar por el postulante
+        public ActionResult DocumentosNecesarios(int ID_persona)
+                {
+                    try
+                    {
+                        var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+                        var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
+                        ViewBag.Idinscripto = inscrip.IdInscripcion;
+                        DocuNecesaria datos = new DocuNecesaria()
+                        {
+                            DocumentosNecesarios = DocuNecesarios,
+                            //inscipto=inscrip.IdInscripcion
+                        };
+                        var listDocu = DocuNecesarios.ToList();
+                        return PartialView(datos);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                }
+        #endregion
+
+        #region Documentacion Necesaria para el postulante (POST) - guarda los registros de que documentacion presento
         [HttpPost]
         public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
         {
@@ -883,6 +901,9 @@ namespace SINU.Controllers
                 throw;
             }
         }
+        #endregion
+
+        #region Elimina registros de la documentacion necesaria del postulante
         public JsonResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
         {
             try
@@ -897,6 +918,8 @@ namespace SINU.Controllers
             }
             //return View("Index");
         }
+        #endregion
+
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
         [HttpGet]
         public ActionResult AsignarFechaVarios()
@@ -910,24 +933,18 @@ namespace SINU.Controllers
                     LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO == true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
                     FechaPresentacion = DateTime.Now
                 };
-
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
                                                                                                m.Jurisdiccion + ", " + m.Localidad + ", " + m.Departamento,
                                                                                                m.Nombre,
                                                                                                m.Direccion+", "+m.Comentario}));
                 listadoPostulanteAsignarFecha.DatosLugar = JsonConvert.SerializeObject(DatosdelLugar);
-
-
                 return View("AsignarFechaVarios", listadoPostulanteAsignarFecha);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
         #endregion
 
@@ -938,7 +955,7 @@ namespace SINU.Controllers
             Configuracion configuracion;
             if (select == null)
             {
-                return Json(new { success = false , msg = "Por favor seleccione a uno o varios postulantes" });
+                return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes" });
             }
             try
             {
@@ -947,12 +964,8 @@ namespace SINU.Controllers
                 foreach (var item in select)
                 {
                     int x = Convert.ToInt32(item);
-
-
                     Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == x);
                     var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = x }, protocol: Request.Url.Scheme);
-
-
                     var modelPlanti = new ViewModels.MailPresentacion
                     {
                         Apellido = Inscripto.Apellido,
@@ -963,45 +976,43 @@ namespace SINU.Controllers
                     };
                     db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "PRESENTACION", "Asignada");
                     db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
-
-                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null,null);
-
-
-                    
+                    var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null, null);
                 }
                 return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
             }
             catch (System.Exception ex)
             {
-
                 return Json(new { success = false, msg = ex.InnerException.Message });
             }
 
         }
+        #region Asignar fecha a varios Postulante(GET) - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
         [HttpGet]
         public ActionResult AsignarFechaVariosEntrevista()
         {
             try
             {
                 List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
-
-
-
                 return View(dato);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
+        #endregion
+
+        #region Asignar fecha a varios postulantes (POST) - en esta accion se le asigna la fecha a un listado seleccionado de postulante y envia el mail a los postulantes 
         [HttpPost]
-        public ActionResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
+        public JsonResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
         {
             try
             {
+                if (select == null)
+                {
+                    return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes" });
+                }
+
                 vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
                 MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
                 {
@@ -1029,7 +1040,7 @@ namespace SINU.Controllers
                     correos.Add(inscrip.Postulante.Persona.Email);
                 }
 
-                _=Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, null, "MailAsunto4", null,correos);
+                _ = Func.EnvioDeMail(Modelo, "MailConfirmacionEntrevista", null, null, "MailAsunto4", null, correos);
                 return Json(new { success = true, msg = "Se Asigno Correctamente la fecha y lugar de examen" });
 
                 //List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
@@ -1039,8 +1050,52 @@ namespace SINU.Controllers
             {
                 throw;
             }
-
-
         }
+        #endregion
+
+        #region Accion que permitira mostrar la cantidad de documentacion no presentado o en condiciones para ser aceptadas
+        /// <summary>
+        /// Sumamente importantes ver como cargar los problemas en dataproblemaencontrado ya que el iddatverificacion tendria que ser otro y seguido de un comentario que diga "Documentacion no presentada"
+        ///
+        /// FALTA MAS CODIGO/ IDEA ES INSERTAR A LA TABLA DIRECTAMENTE PARA MOSTRAR 1 SOLO ERRORE EN LA PANTALLA Y NOTIFICARLO AL POSTULANTE
+        /// </summary>
+        /// <param name="IdInscripto"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult NotiDocumentacion(int IdInscripto)
+        {
+            try
+            {
+                var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
+                bool DocuNoPresnt = DocuNecesarios.Where(m => m.Presentado == false).Any();
+                
+                if (DocuNoPresnt==false)
+                {
+                    
+                ///faltante el codigo para el sP para insertar problemas
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return Json(new { succes = true, msg = "Problemas Agregados sobre la documentacion" });
+        }
+        #endregion
+
+        #region Accion que actualiza la tabla general de Problemas encontrados en un postulante - esta tabla se encuentra al final del validar datos
+        [HttpGet]
+        public JsonResult ActuTabla(int IdPersona)
+        {
+            var Problemas = new List<Array>();
+            db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList().ForEach(m=> Problemas.Add(new[] { m.DataVerificacion,m.Comentario }));
+            var ProblemasJSON = JsonConvert.SerializeObject(Problemas);
+
+            return Json(new { estado = ProblemasJSON }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
     }
 }

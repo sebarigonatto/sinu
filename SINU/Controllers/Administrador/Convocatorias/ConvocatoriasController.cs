@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Net;
+using System.Globalization;
 
 namespace SINU.Controllers.Administrador.Convocatorias
 {
@@ -95,22 +96,17 @@ namespace SINU.Controllers.Administrador.Convocatorias
             }
             ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion", convocatoria.IdGrupoCarrOficio);
             ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion", convocatoria.IdModalidad);
-            ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
+            /* generando una selectlist con el detalle de los periodos de inscripcion de id periodo, fecha de inicio y fin*/
+            ViewBag.PeriododeInscripcion = new SelectList(from p in db.PeriodosInscripciones.ToList()
+                                                          select new SelectListItem
+                                                          {
+                                                              Text = p.IdPeriodoInscripcion.ToString()+ ": " + p.Institucion.NombreInst + " [" + p.FechaInicio.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) + " , " + p.FechaFinal.ToString("dd/MM/yyyy") + " ]",
+                                                              Value = p.IdPeriodoInscripcion.ToString()
+                                                          }, "Value", "Text",convocatoria.IdPeriodoInscripcion);
+
             ViewBag.FechaFinProc = convocatoria.Fecha_Fin_Proceso;
             ViewBag.fechaInscripcion = convocatoria.IdPeriodoInscripcion;
-            /* generando una selectlist con el detalle de los periodos de inscripcion de id periodo, fecha de inicio y fin */
-            IList<PeriodosInscripciones> periodoinscripcion = db.PeriodosInscripciones.ToList();
-            IEnumerable<SelectListItem> selectListPeriodosInscripcion =
-                   from p in periodoinscripcion
-                   select new SelectListItem
-                   {
-                       Selected = (p.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion),
-                       Text = p.IdPeriodoInscripcion.ToString() + ": " + p.FechaInicio.Date.ToShortDateString() + " - "+ p.FechaFinal.Date.ToShortDateString() ,
-                       Value = p.IdPeriodoInscripcion.ToString()
-                   };
-            
-            ViewBag.IdPeriodoInscripcion = selectListPeriodosInscripcion;
-
+           
             return View(convocatoria);
         }
 

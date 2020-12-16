@@ -282,6 +282,9 @@
         padding-left: 5px !important;
         padding-right: 5px !important
     }
+    .form-control:disabled, .form-control[readonly] {
+        cursor:text;
+    }
 </style>
 <div class="row pr-3">
     <h2 class="col-8">Familiar</h2>
@@ -603,11 +606,7 @@
                                     if (url != -1) {
                                         ID = response.ID_PER;
                                         //alert(response.msg + "  " + response.ID_PER);
-                                        $("#ModalCenterTitle").html("Persona Existente");
-                                        $("#TextModal").html(response.msg);
-                                        $("#BTNModal").hide();
-                                        $("#OK").hide();
-                                        $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
+                                        $.Anuncio(response.msg);
                                         $("[name='idfami']").val(response.IDperFAMI);
                                         $("[name='idper']").val(response.IDperPOST);
                                         window.setTimeout(redirige, 2000);
