@@ -1,0 +1,63 @@
+﻿@model SINU.Models.Postulante
+
+    <div>
+        <h4>Postulante</h4>
+        <hr />
+        @Html.ActionLink("x", "Index", "Postulante", new { ID_Postulante =Model.IdPersona }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
+
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ComoSeEntero)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ComoSeEntero)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaRegistro)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FechaRegistro)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Antropometria.IdPostulantePersona)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Antropometria.IdPostulantePersona)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AspNetUsers.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Persona.Apellido)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Persona.Apellido)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ComoSeEntero1.Opcion)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ComoSeEntero1.Opcion)
+            </dd>
+
+        </dl>
+    </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPersona }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

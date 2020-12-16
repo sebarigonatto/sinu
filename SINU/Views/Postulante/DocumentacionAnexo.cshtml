@@ -23,7 +23,7 @@
                 {
                     <div class="row">
                         <div class=" col col-sm-10 offset-sm-1" style="border-bottom:1px solid white">
-                            <h5>
+                            <h6>
                                 <b>@Html.Label(item.Tipo):</b><br />  @if ((bool)item.Presentado)
                                 {
                                     <b style="color:green;">Entregado</b>
@@ -32,8 +32,8 @@
                                 {
                                     <b style="color:red">No Entregado </b>
                                 }
-                            </h5>
-                            <h6> @item.Descripcion</h6>
+                            </h6>
+                            <p> @item.Descripcion</p>
                         </div>
                     </div>
                     <br />

@@ -456,7 +456,7 @@ $(document).ready(function () {
 
                 $("#ModalAnuncios").modal('hide');
 
-                $("#ModalEIA").modal({ backdrop: 'static', keyboard: false });
+                $("#ModalEIA").delay(200).modal({ backdrop: 'static', keyboard: false });
 
                 $('#ModalEIACuerpo').html(response);
                
@@ -540,11 +540,17 @@ $(document).ready(function () {
             
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
-
-                IngreSINO();
+                
+                IngreSINO();InputBAJA();
                 $("#IngresoSINO").on("change", function (e) {
-                    IngreSINO()
+                    IngreSINO();
                 });
+               
+                $("#ACTMilitarIDVM_IdSituacionRevista").on("change", function (e) {
+                    InputBAJA();
+                });
+
+
 
                 /////////////////////////////////GUARDA////////////////////////////////////
                 //al guardar los registros de un formulario de una vista parcial confirmo que la validacion de los campos
@@ -743,6 +749,15 @@ $(document).ready(function () {
         };
     };
 
+
+    function InputBAJA() {
+        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2 || $("#ACTMilitarIDVM_IdSituacionRevista").val() == 1 ) {
+            $(".baja input").val("");
+            $(".baja").hide();
+        } else if ($("#ACTMilitarIDVM_IdSituacionRevista").val() != 2 && $("#ACTMilitarIDVM_IdSituacionRevista").val() != 0) {
+            $(".baja").show();
+        }
+    }
     //////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE SITUACION OCUPACIONAL */
 
