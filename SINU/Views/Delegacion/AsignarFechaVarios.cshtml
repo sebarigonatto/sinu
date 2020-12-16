@@ -149,7 +149,12 @@
             //    noneSelectedText: 'Ninguna Opcion Seleccionada'
 
             //});
-            jQuery('#datetimepicker').datetimepicker();
+              jQuery('#datetimepicker').datetimepicker({
+                minDate: 0,
+                format: 'd/m/y h:m',
+                value: 'd/m/y h:m'
+            });
+            $.datetimepicker.setLocale('es')
 
             var model = '@Html.Raw(Model.DatosLugar)';
             var jsonDatosDelegacion = JSON.parse(model);

@@ -479,7 +479,7 @@ namespace SINU.Controllers
 
         #endregion
 
-        #region La accion permite restaurar un postulante al proceso de inscripcion
+        #region La accion permite restaurar un postulante al proceso de inscripcion (GET)
         /// <summary>
         /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
         /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
@@ -903,6 +903,7 @@ namespace SINU.Controllers
         }
         #endregion
 
+        #region Elimina registros de la documentacion necesaria del postulante
         public JsonResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
         {
             try
@@ -917,6 +918,7 @@ namespace SINU.Controllers
             }
             //return View("Index");
         }
+        #endregion
 
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
         [HttpGet]
@@ -998,10 +1000,15 @@ namespace SINU.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
+        public JsonResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
         {
             try
             {
+                if (select == null)
+                {
+                    return Json(new { success = false, msg = "Por favor seleccione a uno o varios postulantes" });
+                }
+
                 vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
                 MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
                 {

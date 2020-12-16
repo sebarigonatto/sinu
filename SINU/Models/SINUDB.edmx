@@ -2311,6 +2311,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="version" Type="int" Mode="In" />
           <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
         </Function>
+        <Function Name="sp_DataProblemaEncontradoIUD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPostulantePersona" Type="int" Mode="In" />
+          <Parameter Name="IdDataVerificacion" Type="int" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+          <Parameter Name="IdDataProblemaEncontrado" Type="int" Mode="In" />
+          <Parameter Name="Eliminar" Type="bit" Mode="In" />
+        </Function>
         <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -5276,6 +5283,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="FechaNacimiento" Mode="In" Type="DateTime" />
             <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_DataProblemaEncontradoIUD">
+            <Parameter Name="IdPostulantePersona" Mode="In" Type="Int32" />
+            <Parameter Name="IdDataVerificacion" Mode="In" Type="Int32" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+            <Parameter Name="IdDataProblemaEncontrado" Mode="In" Type="Int32" />
+            <Parameter Name="Eliminar" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -8017,6 +8031,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_DataProblemaEncontradoIUD" FunctionName="SINUModel.Store.sp_DataProblemaEncontradoIUD" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

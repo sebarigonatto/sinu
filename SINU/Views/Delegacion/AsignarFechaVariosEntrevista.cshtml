@@ -124,7 +124,12 @@
             //    noneSelectedText: 'Ninguna Opcion Seleccionada'
 
             //});
-            jQuery('#datetimepicker').datetimepicker();
+              jQuery('#datetimepicker').datetimepicker({
+                minDate: 0,
+                format: 'd/m/y h:m',
+                value: 'd/m/y h:m'
+            });
+            $.datetimepicker.setLocale('es')
 
             @*var model = '@Html.Raw(Model.DatosLugar)';
             var jsonDatosDelegacion = JSON.parse(model);
@@ -157,6 +162,10 @@
         function Exito(data,status,xhr) {
             if (data.success) {
                 location.reload(true);
+            }
+            if (data.success == false) {
+                //$("#modal3").modal('show');
+                $.Anuncio(data.msg);
             }
         }
     </script>
