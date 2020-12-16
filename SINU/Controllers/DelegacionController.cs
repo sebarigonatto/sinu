@@ -340,6 +340,8 @@ namespace SINU.Controllers
             ///////////////////////Codigo para generar la lista de problemas al final de la documentacion////////////////////////
             personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
             /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
+
+
             return View(personaVM);
         }
         #endregion
@@ -356,7 +358,6 @@ namespace SINU.Controllers
             return Json(new { estado = PantallasEstadoProblemas2 }, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
 
         #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
@@ -782,6 +783,7 @@ namespace SINU.Controllers
             }
         }
 
+        #region Acccion que le permite cerrar la pantalla de un postulante(se cierra la pantalla por que no hubo problemas en dicha documentacion)
         /// <summary>
         /// Action en donde permite cerrar la pantalla de un postulante, se cierra cuando un postulante no tiene ningun tipo de problemas en el cargado de datos o se abre cuando se necesita cargar problemas a un postulante
         /// </summary>
@@ -844,20 +846,35 @@ namespace SINU.Controllers
 
             return Json(new { success = false, msg = "Error en el Modelo Recibido" });
         }
-        public ActionResult DocumentosNecesarios(int ID_persona)
-        {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
-            var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
-            ViewBag.Idinscripto = inscrip.IdInscripcion;
-            DocuNecesaria datos = new DocuNecesaria()
-            {
-                DocumentosNecesarios = DocuNecesarios,
-                //inscipto=inscrip.IdInscripcion
-            };
-            var listDocu = DocuNecesarios.ToList();
-            return PartialView(datos);
-        }
 
+        #endregion
+
+        #region Documentacion Necesaria para el postulante (Get) - se genera una lista con toda la documentacion a presentar por el postulante
+        public ActionResult DocumentosNecesarios(int ID_persona)
+                {
+                    try
+                    {
+                        var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+                        var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
+                        ViewBag.Idinscripto = inscrip.IdInscripcion;
+                        DocuNecesaria datos = new DocuNecesaria()
+                        {
+                            DocumentosNecesarios = DocuNecesarios,
+                            //inscipto=inscrip.IdInscripcion
+                        };
+                        var listDocu = DocuNecesarios.ToList();
+                        return PartialView(datos);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+                }
+        #endregion
+
+        #region Documentacion Necesaria para el postulante (POST) - guarda los registros de que documentacion presento
         [HttpPost]
         public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
         {
@@ -884,6 +901,8 @@ namespace SINU.Controllers
                 throw;
             }
         }
+        #endregion
+
         public JsonResult DelDocuNecesaria(int Idinscripto, int idtipodoc, Boolean esInser)
         {
             try
@@ -898,6 +917,7 @@ namespace SINU.Controllers
             }
             //return View("Index");
         }
+
         #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
         [HttpGet]
         public ActionResult AsignarFechaVarios()
@@ -1051,6 +1071,19 @@ namespace SINU.Controllers
             }
             return Json(new { succes = true, msg = "Problemas Agregados sobre la documentacion" });
         }
+        #endregion
+
+        #region Accion que actualiza la tabla general de Problemas encontrados en un postulante - esta tabla se encuentra al final del validar datos
+        public JsonResult ActuTabla(int IdPersona)
+        {
+            IDPersonaVM personaVM = new IDPersonaVM();
+
+            personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList();
+
+            return Json(new { estado = personaVM }, JsonRequestBehavior.AllowGet);
+        }
+
+
         #endregion
     }
 }
