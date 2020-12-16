@@ -540,12 +540,12 @@ $(document).ready(function () {
             
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
-
-                IngreSINO();
+                
+                IngreSINO();InputBAJA();
                 $("#IngresoSINO").on("change", function (e) {
                     IngreSINO();
                 });
-                InputBAJA();
+               
                 $("#ACTMilitarIDVM_IdSituacionRevista").on("change", function (e) {
                     InputBAJA();
                 });
@@ -751,10 +751,10 @@ $(document).ready(function () {
 
 
     function InputBAJA() {
-        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2) {
+        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2 || $("#ACTMilitarIDVM_IdSituacionRevista").val() == 1 ) {
             $(".baja input").val("");
             $(".baja").hide();
-        } else {
+        } else if ($("#ACTMilitarIDVM_IdSituacionRevista").val() != 2 && $("#ACTMilitarIDVM_IdSituacionRevista").val() != 0) {
             $(".baja").show();
         }
     }
