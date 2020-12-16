@@ -90,7 +90,7 @@ namespace SINU.Models
     {
         public string Email { get; set; }
         public int IdPersona { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Campo Obligatorio")]
         //[RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
         [RegularExpression(@"\b(20|23|24|27|30|33|34)[0-9]{8}[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
         public string CUIL { get; set; }
