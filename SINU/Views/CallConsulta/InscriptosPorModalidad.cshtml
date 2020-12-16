@@ -20,9 +20,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Delegacion)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Modalidad)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
@@ -43,9 +43,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Delegacion)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Modalidad)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Apellido)
                 </td>
@@ -87,7 +87,34 @@
     <script type="text/javascript">
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
-            $(".table-filters").DataTable({
+            $(".table-filters").DataTable({                
+                 dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf',//'colvis',
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+                    //    extend: 'columnVisibility',
+                    //    text: 'Show secondary',
+                    //    visibility: true,
+                    //    columns: '.secondary'
+                    //},
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+                    //    extend: 'columnVisibility',
+                    //    text: 'Hide secondary',
+                    //    visibility: false,
+                    //    columns: '.secondary'
+                    //},
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        messageTop: 'Armada Argentina'
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'copiar',
+                    }
+
+
+                ],
                 responsive: true,
                 "language":
                 {
