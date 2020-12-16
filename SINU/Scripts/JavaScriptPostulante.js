@@ -15,7 +15,7 @@ $.extend(true, $.fn.dataTable.defaults, {
         "targets": [0]
     }],
     "ordering": false,
-    "dom": 'frt',
+    "dom": 'frtp',
     "language":
     {
         "searchPlaceholder": "Ingrese su Busqueda",
