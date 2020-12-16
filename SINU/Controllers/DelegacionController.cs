@@ -986,6 +986,7 @@ namespace SINU.Controllers
             }
 
         }
+        #region Asignar fecha a varios Postulante(GET) - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
         [HttpGet]
         public ActionResult AsignarFechaVariosEntrevista()
         {
@@ -999,6 +1000,9 @@ namespace SINU.Controllers
                 throw;
             }
         }
+        #endregion
+
+        #region Asignar fecha a varios postulantes (POST) - en esta accion se le asigna la fecha a un listado seleccionado de postulante y envia el mail a los postulantes 
         [HttpPost]
         public JsonResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
         {
@@ -1046,9 +1050,9 @@ namespace SINU.Controllers
             {
                 throw;
             }
-
-
         }
+        #endregion
+
         #region Accion que permitira mostrar la cantidad de documentacion no presentado o en condiciones para ser aceptadas
         /// <summary>
         /// Sumamente importantes ver como cargar los problemas en dataproblemaencontrado ya que el iddatverificacion tendria que ser otro y seguido de un comentario que diga "Documentacion no presentada"
