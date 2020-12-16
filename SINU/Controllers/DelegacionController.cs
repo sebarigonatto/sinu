@@ -1074,13 +1074,14 @@ namespace SINU.Controllers
         #endregion
 
         #region Accion que actualiza la tabla general de Problemas encontrados en un postulante - esta tabla se encuentra al final del validar datos
+        [HttpGet]
         public JsonResult ActuTabla(int IdPersona)
         {
-            IDPersonaVM personaVM = new IDPersonaVM();
+            var Problemas = new List<Array>();
+            db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList().ForEach(m=> Problemas.Add(new[] { m.DataVerificacion,m.Comentario }));
+            var ProblemasJSON = JsonConvert.SerializeObject(Problemas);
 
-            personaVM.vDataProblemaEncontradosVmDocu = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList();
-
-            return Json(new { estado = personaVM }, JsonRequestBehavior.AllowGet);
+            return Json(new { estado = ProblemasJSON }, JsonRequestBehavior.AllowGet);
         }
 
 

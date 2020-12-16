@@ -493,7 +493,7 @@
                     <hr />
                     <div class="container align-content-center">
                         <h3 class="text-center">Problemas Encontrados en el Postulante</h3><br />
-                        <table class="table mx-auto">
+                        <table class="table mx-auto" id="TablaProblemaGeneral">
                             <thead>
                                 <tr>
                                     <th scope="col">
@@ -637,7 +637,8 @@
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
         $.NoEjecutar = true;
-
+        id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
+        TablaProblema;
         $(document).ready(function () {
             ActICO();
 
@@ -734,6 +735,11 @@
                 },
             });
 
+
+
+            TablaProblema = $("#TablaProblemaGeneral").DataTable();
+            
+
             //$(".Agrega").on("click", function () {
             //    id_registro = $(this).attr("data-ID");
             //    id_tabla = id = $(this).closest("table").attr("ID");
@@ -789,9 +795,21 @@
             //    })
             //}
         })
+        function ACT_tablaProblema() {
+            //elimino los registros de la tabla
+            TablaProblema.clear().draw();
+            //llamo a la acction con los datos de la tabla actualizada
+            $.get("/Delegacion/ActuTabla", { IdPersona: id_per }, function (response) {
+                var jsonProblemas = JSON.parse(response.estado);
+                $.each(jsonProblemas, function (index,item) {
+                    TablaProblema.row.add(item);
+                })
+                TablaProblema.draw();
+            })
+        };
         function ActICO() {
             //id de la persona que se cargaran el estado de cada pantalla
-            id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
+           
 
             $.get("/Delegacion/ActualizaIcon", { id_persona: id_per },
 
@@ -817,6 +835,7 @@
                 window.location.href = "/Delegacion/Index"
             };
             ActICO();
+            ACT_tablaProblema();
             $.Anuncio(response.msg);
             switch (response.form) {
                 case "Elimina":
