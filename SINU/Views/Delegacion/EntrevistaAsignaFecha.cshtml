@@ -66,7 +66,7 @@
                     @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @*<input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly />*@
-                        @Html.TextBoxFor(model=>model.FechaEntrevista, new {@class="form-control", @id="datetimepicker", @readonly = true })
+                        @Html.TextBoxFor(model=>model.FechaEntrevista, new {@class="form-control  text-center", @id="datetimepicker", @readonly = true })
                         @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -108,7 +108,12 @@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-            jQuery('#datetimepicker').datetimepicker();
+            jQuery('#datetimepicker').datetimepicker({
+                minDate: 0,
+                format: 'd/m/y h:m',
+                value: 'd/m/y h:m'
+            });
+            $.datetimepicker.setLocale('es')
             //$(".datepicker").datepicker({
             //    format: "dd/mm/yyyy",
             //    language: "es",
@@ -116,7 +121,7 @@
             //    startView: "days",
             //    startDate: "Today"
             //});
-        })
+        });
 
     </script>
 
