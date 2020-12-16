@@ -1341,5 +1341,30 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spRestriccionesParaEstePostulante_Result>("spRestriccionesParaEstePostulante", idPostulantePersonaParameter, fechaNacimientoParameter, idpreferenciaParameter);
         }
+    
+        public virtual int sp_DataProblemaEncontradoIUD(Nullable<int> idPostulantePersona, Nullable<int> idDataVerificacion, string comentario, Nullable<int> idDataProblemaEncontrado, Nullable<bool> eliminar)
+        {
+            var idPostulantePersonaParameter = idPostulantePersona.HasValue ?
+                new ObjectParameter("IdPostulantePersona", idPostulantePersona) :
+                new ObjectParameter("IdPostulantePersona", typeof(int));
+    
+            var idDataVerificacionParameter = idDataVerificacion.HasValue ?
+                new ObjectParameter("IdDataVerificacion", idDataVerificacion) :
+                new ObjectParameter("IdDataVerificacion", typeof(int));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            var idDataProblemaEncontradoParameter = idDataProblemaEncontrado.HasValue ?
+                new ObjectParameter("IdDataProblemaEncontrado", idDataProblemaEncontrado) :
+                new ObjectParameter("IdDataProblemaEncontrado", typeof(int));
+    
+            var eliminarParameter = eliminar.HasValue ?
+                new ObjectParameter("Eliminar", eliminar) :
+                new ObjectParameter("Eliminar", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DataProblemaEncontradoIUD", idPostulantePersonaParameter, idDataVerificacionParameter, comentarioParameter, idDataProblemaEncontradoParameter, eliminarParameter);
+        }
     }
 }
