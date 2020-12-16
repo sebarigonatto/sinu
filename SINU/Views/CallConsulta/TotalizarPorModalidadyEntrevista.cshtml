@@ -9,7 +9,7 @@
         @ViewBag.Title
     </h2>
 
-<table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+<table class="table table-filters table-bordered table-light table-hover  " id="le-filters" style="width:100%">
    @* <table data-CUD="DataProblema" data-URL="ListaProblema" data-ELI="EliminaIDIO" data-Controller="Delegacion" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">*@
         <thead>
             <tr>
@@ -67,6 +67,33 @@
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
+                 dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf',//'colvis',
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+                    //    extend: 'columnVisibility',
+                    //    text: 'Show secondary',
+                    //    visibility: true,
+                    //    columns: '.secondary'
+                    //},
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+                    //    extend: 'columnVisibility',
+                    //    text: 'Hide secondary',
+                    //    visibility: false,
+                    //    columns: '.secondary'
+                    //},
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        messageTop: 'Armada Argentina'
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'copiar',
+                    }
+
+
+                ],
                 responsive: true,
                 "language":
                 {

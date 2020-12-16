@@ -293,12 +293,14 @@
     <div class="row">
         <div class="col col-sm-6 col-12">
             <h4>@ViewBag.Title</h4>
-            @if (ViewBag.MOD_CAR[0] != "" )
+            <t>
+                <h6 >Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
+                <h6>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h6>
+            </t>      
+            @if (ViewBag.MOD_CAR[0] != "")
             {
-                <h5>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h5>
-                <h5>Modalidad: <b>@ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></h5>
+                <h6>Modalidad: <b>@ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></h6>
             }
-
 
         </div>
 
@@ -635,8 +637,8 @@
                                                     <h2>Validar Datos</h2>
                                                     <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                                         <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
-                                                            <h4>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h4>
-                                                            <h4>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h4>
+                                                            <h5>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h5>
+                                                            <h5>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h5>
                                                             <br />
                                                             @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                           {
@@ -647,7 +649,7 @@
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
-                                                            <h4>La validacion se encuentra en Proceso.</h4>
+                                                            <h5>La validacion se encuentra en Proceso.</h5>
                                                             <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
                                                         </div>
 
@@ -883,7 +885,7 @@
                     BloqueaPantalla("#Documentacion");
                     $.BloqueoPantalla = true;
                     $(".jumbotron.problemapantalla, #DatoPermsg").remove();
-                    $("#TabSecundario i").remove();
+                    $("#TabSecundario div a i").remove();
                     $("#ValidaEnCurso").removeAttr("hidden");
                     $("#NOValidaEnCurso").attr("hidden", "true");
                     break;

@@ -2,7 +2,7 @@
 @using SINU.Models;
 
 @{
-    ViewBag.Title = "CONSULTAS";
+    ViewBag.Title = "CONSULTOR:";
 
     //List<ConsultaProgramada> Consulta = (new SINUEntities()).ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList();
     string referencia = "";
@@ -16,7 +16,7 @@
     <div class="row">
 
 
-        <nav class="col-sm-2 mr-3 navbar navbar1 navbar-expand-md  navbar-light ml-3 pl-2 oculto">
+        <nav class="col-sm-2 mr-3 navbar navbar1 navbar-expand-md  navbar-light ml-3 pl-2 oculto" style="display: block !important;">
 
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="TABDocumentacion">
@@ -31,6 +31,7 @@
                             </a>
                         </li>
                     }
+
 
 
                 </ul>
@@ -57,3 +58,74 @@
     </div>
 </div>
 
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+  $(".table-filters").DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf',//'colvis',
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+                    //    extend: 'columnVisibility',
+                    //    text: 'Show secondary',
+                    //    visibility: true,
+                    //    columns: '.secondary'
+                    //},
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+                    //    extend: 'columnVisibility',
+                    //    text: 'Hide secondary',
+                    //    visibility: false,
+                    //    columns: '.secondary'
+                    //},
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        messageTop: 'Armada Argentina'
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'copiar',
+                    }
+
+
+                ],
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+                }]
+
+            });
+        })
+    </script>
+    }
