@@ -664,6 +664,17 @@
 
             ////////////////////////////////////////////// fin del codigo de Documentacion Penal/////////////////////////////////
 
+            ///////////////////////// Disabled/Enabled boton Noitificar////////////////////////////////////////////////////////////
+            var btnNoti = '@ViewBag.Problem'
+            if (btnNoti == "True") {
+                $("#btnNotificar").addClass("disabled");
+                //document.getElementById("btnNotificar").disabled = true;
+            }
+            else {
+                $("#btnNotificar").removeClass("disabled");
+            }
+             
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             $.BloqueoPantalla = true;
             $(".BTAcciones").html("");
@@ -688,7 +699,7 @@
 
             //Funcion para actualizar los iconos del TAB de las pantallas(pantalla cerrada, pantalla en edicion y cant de problemas de la pantalla)
 
-            
+
 
             var tabla = $("#TListadoProblema").DataTable({
                 retrieve: true,
@@ -738,7 +749,7 @@
 
 
             TablaProblema = $("#TablaProblemaGeneral").DataTable();
-            
+
 
             //$(".Agrega").on("click", function () {
             //    id_registro = $(this).attr("data-ID");
@@ -809,7 +820,7 @@
         };
         function ActICO() {
             //id de la persona que se cargaran el estado de cada pantalla
-           
+
 
             $.get("/Delegacion/ActualizaIcon", { id_persona: id_per },
 

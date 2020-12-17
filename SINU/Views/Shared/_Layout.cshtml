@@ -200,7 +200,6 @@
                 <p class="float-right mr-2 mb-1 ">&copy; @DateTime.Now.Year - SINU - Armada Argentina</p>
             </footer>*@
     </div>
-
     <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -262,7 +261,7 @@
         $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
         $("#OK").css("display", "none");
         $("#ModalAnuncios .modal-header,#ModalAnuncios .modal-footer").hide();
-        $("#TextModal").html("<img src='../Imagenes/loader.gif' style='width:30vh;border-radius: 5px'/>");
+        $("#TextModal").html("<img src='/Imagenes/loader.gif' style='width:30vh;border-radius: 5px'/>");
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
 </script>

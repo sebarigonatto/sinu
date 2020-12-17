@@ -66,14 +66,27 @@
         <div class="form-group row">
             <div class="align-content-lg-end">
                 <button type="submit" class="btn btn-primary" name="IdInscripto" value="@ViewBag.Idinscripto">Confirmar</button>
-                @Ajax.ActionLink("Notificar", "NotiDocumentacion", new { IdInscripto=@ViewBag.Idinscripto }, new AjaxOptions
+
+                @Ajax.ActionLink("Notificar", "NotiDocumentacion", new { IdInscripto = @ViewBag.Idinscripto, IdPantalla = 10 }, new AjaxOptions
            {
                HttpMethod = "POST",
                OnSuccess = "Exito(data,status,xhr)",
                OnFailure = "Falla",
-            }, new { @class = "btn btn-primary" })
+            }, new { @class = "btn btn-primary" ,@id="btnNotificar"})
 
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+             var x='@ViewBag.ExistProblema'
+            if (x = true) {
+                $("#btnNotificar").attr("disabled");
+            }
+
+        });
+     </script>
 }

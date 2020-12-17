@@ -86,7 +86,7 @@ namespace SINU.Controllers
                     ViewBag.MOD_CAR =  new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, VISTAinscrip.IdInscripcion.ToString() };
                     
                 }
-
+                pers.NomyApe = db.Persona.Find(pers.ID_PER).Apellido + ", " + db.Persona.Find(pers.ID_PER).Nombres;
                 return View(pers);
             }
             catch (Exception ex)
@@ -151,7 +151,7 @@ namespace SINU.Controllers
 
                     int result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
 
-                    return Json(new { success= true, msg= "Se guardaron los datos correctamente datos basicos", form= "datosbasicos" });
+                    return Json(new { success= true, msg= "Datos Guardados.", form= "datosbasicos" });
                 }
                 catch (Exception ex)
                 {
@@ -160,7 +160,7 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = msgerror });
                 }
             };
-            return Json(new { success = false, msg = "Modelo no VALIDO" });
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
         }
 
 
@@ -225,7 +225,7 @@ namespace SINU.Controllers
                 Func.EnvioDeMail(datosMail, "PlantillaMailSolicitudEntrevista", null, null, "MailAsunto8", ID_Delegacion,null);
 
 
-                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa, se le informara via CORREO la fecha ASIGNADA.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "La Solicitud de Entrevista fue exitosa.", form = "solicitudentrevista" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -342,7 +342,7 @@ namespace SINU.Controllers
                     int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo);
 
-                    return Json(new { success = true, msg = "se guardaron con exito los DATOS PERSONALES", form = "CambiaMOD" });
+                    return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" });
                 }
                 catch (Exception ex)
                 {
@@ -351,7 +351,7 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = msgerror });
                 }
             }
-            return Json(new { success = false, msg = "Modelo no VALIDO" });
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
         }
         //----------------------------------Antecedentes Penales----------------------------------------------------------------------//
 
@@ -428,12 +428,12 @@ namespace SINU.Controllers
                     btcert = true;
                 }
 
-                return Json(new { success = true, form = "DocuPenal", msg = "Se Guardaron correctamnete los archivos seleccionados.", anexo = btanexo, cert = btcert }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, form = "DocuPenal", msg = "Datos Guardados.", anexo = btanexo, cert = btcert }, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -594,7 +594,7 @@ namespace SINU.Controllers
                         p.IdDomicilioActual, p.EventualCalle, p.EventualNumero, p.EventualPiso, p.EventualUnidad, p.EventualIdLocalidad, p.EventualProv_Loc, p.EventualIdPais
                     );
 
-                    return Json(new { success = true, msg = "Se guardaron con Exito datos de DOMICILIO" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Datos Guardados" }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
@@ -604,7 +604,7 @@ namespace SINU.Controllers
                 }
             }
 
-            return Json(new { success = false, msg = "Modelo no VALIDO - " /*+ errors*/ }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
         //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
@@ -829,7 +829,7 @@ namespace SINU.Controllers
                     }
                     db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto, e.CursandoUltimoAnio);
 
-                    return Json(new { success = true, msg = "Se Inserto correctamente el  ESTUDIO" });
+                    return Json(new { success = true, msg = "Estudio agregado correctamente." });
                 }
                 catch (Exception ex)
                 {
@@ -837,7 +837,7 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = ex.InnerException.Message });
                 }
             }
-            return Json(new { success = false, msg = "Error en el Modelo Recibido" });
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
 
         }
 
@@ -854,14 +854,14 @@ namespace SINU.Controllers
                     //msg:mensjae que figurara en el modal
                     //form: se ejecutar un accion en un switch del script de la vista index
                     //url_Tabla: es el nombre de la accion y colocandole el subfijo NAV es el contenedor de la tabla actual
-                    return Json(new { success = true, msg = "Se elimno correctamente el EStudio seleccionado", form = "Elimina", url_Tabla = "Estudios", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "Estudios", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
                 }
                 return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
             }
             catch (Exception ex)
             {
 
-                return Json(new { success = false, msg = ex.InnerException.Message, JsonRequestBehavior.AllowGet });
+                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo.", JsonRequestBehavior.AllowGet });
             }
         }
 
@@ -970,15 +970,15 @@ namespace SINU.Controllers
                 {
                     vPersona_Idioma i = datos.VPersona_IdiomaIdVM;
                     db.spIdiomasIU(i.IdPersonaIdioma, i.IdPersona, i.CodIdioma, i.Habla, i.Lee, i.Escribe);
-                    return Json(new { success = true, msg = "Se Inserto correctamente el Idioma nuevo o se modifico IDIOMA" }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "Idioma guardado correctamente." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception ex)
                 {
 
-                    return Json(new { success = true, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json(new { success = true, msg = "El modelo recibido NO ES VALIDO" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
         [AuthorizacionPermiso("EliminarDatosP")]
@@ -989,12 +989,12 @@ namespace SINU.Controllers
                 var regidioma = db.PersonaIdioma.FirstOrDefault(m => m.IdPersonaIdioma == IDIdio);
                 db.PersonaIdioma.Remove(regidioma);
                 db.SaveChanges();
-                return Json(new { success = true, msg = "Se le elimino correctamente el idioma seleccionado", form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
 
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." });
             }
         }
 
@@ -1062,36 +1062,40 @@ namespace SINU.Controllers
 
             try
             {
-                var a = datos.ACTMilitarIDVM;
-                if (a.Ingreso == true)
+                if (ModelState.IsValid)
                 {
-                    a.CausaMotivoNoingreso = null;
-                    if (a.IdSituacionRevista==2)
+                    var a = datos.ACTMilitarIDVM;
+                    if (a.Ingreso == true)
+                    {
+                        a.CausaMotivoNoingreso = null;
+                        if (a.IdSituacionRevista == 2)
+                        {
+                            a.FechaBaja = null;
+                            a.IdBaja = 0;
+                            a.MotivoBaja = "";
+                        }
+
+                    }
+                    else
                     {
                         a.FechaBaja = null;
+                        a.FechaIngreso = null;
+                        a.MotivoBaja = null;
+                        a.Jerarquia = null;
+                        a.Cargo = null;
+                        a.Destino = null;
+                        a.IdSituacionRevista = 0;
                         a.IdBaja = 0;
-                        a.MotivoBaja = "";
                     }
 
+                    db.spActividadMilitarIU(a.IdActividadMilitar, datos.IDPErsona, a.Ingreso, a.FechaIngreso, a.FechaBaja, a.CausaMotivoNoingreso, a.MotivoBaja, a.Jerarquia, a.Cargo, a.Destino, a.IdSituacionRevista, a.IdFuerza, a.IdBaja);
+                    return Json(new { success = true, msg = "Actividad Militar agregada correctamente." }, JsonRequestBehavior.AllowGet);
                 }
-                else
-                {
-                    a.FechaBaja = null;
-                    a.FechaIngreso = null;
-                    a.MotivoBaja = null;
-                    a.Jerarquia = null;
-                    a.Cargo = null;
-                    a.Destino = null;
-                    a.IdSituacionRevista = 0;
-                    a.IdBaja = 0;
-                }
-
-                db.spActividadMilitarIU(a.IdActividadMilitar, datos.IDPErsona, a.Ingreso, a.FechaIngreso, a.FechaBaja, a.CausaMotivoNoingreso, a.MotivoBaja, a.Jerarquia, a.Cargo, a.Destino, a.IdSituacionRevista, a.IdFuerza, a.IdBaja);
-                return Json(new { success = true, msg = "Se inserto o actualizo correctamente ACTMilitar" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo nuevamente." }, JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -1102,11 +1106,11 @@ namespace SINU.Controllers
             try
             {
                 db.spActividadMilitarEliminar(IDActMil);
-                return Json(new { success = false, msg = "se elimino correctamente el registro", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = true, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1174,14 +1178,14 @@ namespace SINU.Controllers
                         };
                     };
                     db.SaveChanges();
-                    return Json(new { success = true, msg = "exito en guardar la situacion ocupacional" });
+                    return Json(new { success = true, msg = "Datos Guardados" });
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, msg = ex.InnerException.Message });
+                    return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." });
                 }
             }
-            return Json(new { success = false, msg = "Error en el MOdelo" });
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
 
         }
 
@@ -1202,13 +1206,18 @@ namespace SINU.Controllers
         {
             try
             {
-                a.LargoFalda ??= 0;
-                db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
-                return Json(new { success = true, msg = "Se guardaron los DATOS exitosamente." });
+                if (ModelState.IsValid)
+                {
+                    a.LargoFalda ??= 0;
+                    db.spAntropometriaIU(a.IdPersona, a.Altura, a.Peso, a.IMC, a.PerimCabeza, a.PerimTorax, a.PerimCintura, a.PerimCaderas, a.LargoPantalon, a.LargoEntrep, a.LargoFalda, a.Cuello, a.Calzado);
+                    return Json(new { success = true, msg = "Datos Guardados." },JsonRequestBehavior.AllowGet);
+
+                }
+                return Json(new { success = true, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message });
+                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo nuevamente." });
             }
 
         }
@@ -1409,7 +1418,7 @@ namespace SINU.Controllers
 
                 }
             }
-            return Json(new { success = false, msg = "Modelo no valido!!!" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -1599,12 +1608,16 @@ namespace SINU.Controllers
         public ActionResult Presentacion(int ID_persona)
         {
             var per = db.Persona.Find(ID_persona);
+            var modacarr = db.vInscripcionDetalle.First(m => m.IdPersona == per.IdPersona);
             Presentacion prese = new Presentacion
             {
                 IdPersona = per.IdPersona,
                 Apellido = per.Apellido,
                 Nombre = per.Nombres,
-                ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion
+                ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion,
+                Modalidad = modacarr.Modalidad,
+                Carrera= modacarr.CarreraRelacionada
+
 
             };
             ViewBag.Asignado = true;

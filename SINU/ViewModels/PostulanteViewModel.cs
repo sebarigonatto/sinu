@@ -141,6 +141,8 @@ namespace SINU.ViewModels
         public string DomicilioExamenNombre { get; set; }
         [DisplayName("Direccion")]
         public string DomicilioExamen { get; set; }
+        public string Modalidad { get; set; }
+        public string Carrera { get; set; }
         public byte[] Qr { get; set; }
     }
 

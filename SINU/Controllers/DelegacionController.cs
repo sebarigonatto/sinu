@@ -342,6 +342,13 @@ namespace SINU.Controllers
             /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
 
 
+            ///////////////////////////////Boton notificar enabled/disabled/////////////////////////////////////////
+
+            var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == vdetalle.IdPersona && m.IdDataVerificacion == 26).Any();
+            ViewBag.Problem = ExistProblema;
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             return View(personaVM);
         }
         #endregion
@@ -854,7 +861,10 @@ namespace SINU.Controllers
                 {
                     try
                     {
-                        var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+                    //var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona && m.IdDataVerificacion == 26).Any();
+                    //ViewBag.Problem = ExistProblema;
+                    var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+
                         var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderBy(m => m.IdTipoDocPresentado).ToList();
                         ViewBag.Idinscripto = inscrip.IdInscripcion;
                         DocuNecesaria datos = new DocuNecesaria()
@@ -880,19 +890,33 @@ namespace SINU.Controllers
         {
             try
             {
+                var Inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == IdInscripto);
+                var ExistProblema = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Inscrip.IdPersona && m.IdDataVerificacion == 26);
+
+
                 if (select == null || IdInscripto == null)
                 {
-                    return Json(new { success = false, msg = "Error en los datos recibidos" });
+                    return Json(new { success = false, msg = "No se a seleccionado ninguna documentacion" });
                 }
-
-                // TODO: Add insert logic here
                 foreach (var item in select)
                 {
                     int x = Convert.ToInt32(item);
                     db.spDocumentoInscripto(Convert.ToBoolean(1), IdInscripto, x, null);
-
                 }
+
+                var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
+                bool DocuNoPresnt = DocuNecesarios.Where(m => m.Presentado == true).Any();
+
+                if (DocuNoPresnt==true)
+                {
+                    db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
+                    return Json(new { succes = true, msg = " Toda la doucumentacion ha sido entregada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                }
+
+
                 return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                // TODO: Add insert logic here
+
             }
 
 
@@ -986,6 +1010,7 @@ namespace SINU.Controllers
             }
 
         }
+
         #region Asignar fecha a varios Postulante(GET) - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
         [HttpGet]
         public ActionResult AsignarFechaVariosEntrevista()
@@ -1062,25 +1087,33 @@ namespace SINU.Controllers
         /// <param name="IdInscripto"></param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult NotiDocumentacion(int IdInscripto)
+        public JsonResult NotiDocumentacion(int IdInscripto, int IdPantalla)
         {
             try
             {
+                var Postu = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == IdInscripto);
+                var probleExistente = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Postu.IdPersona && m.IdDataVerificacion==26);
+                var Dataverificacion = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == IdPantalla && m.Descripcion == "Otros: Aclare");
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
                 bool DocuNoPresnt = DocuNecesarios.Where(m => m.Presentado == false).Any();
                 
-                if (DocuNoPresnt==false)
+                if (DocuNoPresnt==true && probleExistente ==null)
                 {
-                    
+                    db.sp_DataProblemaEncontradoIUD(Postu.IdPersona, Dataverificacion.IdDataVerificacion, "Documentacion no presentada/Incorrecta",0,false);
+                    return Json(new { succes = true, msg = "Se notificara al postulante que adeuda Documentacion" });
                 ///faltante el codigo para el sP para insertar problemas
                 }
+                else
+                {
+                    return Json(new { succes = true, msg = "Ya se realizo la notificacion al postulante si adeuda documentacion" });
+                }
+                //return Json(new { succes = true, msg = "Toda la documentacion a sido presentada" });
             }
             catch (Exception)
             {
 
                 throw;
             }
-            return Json(new { succes = true, msg = "Problemas Agregados sobre la documentacion" });
         }
         #endregion
 
