@@ -12,9 +12,9 @@
     <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
         con el id de la consulta que deseo se encuentre activa
         cuando arme el menú lateral de consultas-->
-    @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, null)
+    @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
 </div>
-<table class="table table-filters table-bordered table-light " id="le-filters" style="width:100%">
+<table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
     <thead class="thead-dark">
         <tr>
             <th>

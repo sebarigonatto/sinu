@@ -32,7 +32,9 @@ namespace SINU.Controllers.Consultor
             //Si no dan un id asume el que tenga id de consulta en 1, 
             //si no hay ninguno en id 1 simplemente no selecciona ninguno
             ViewBag.ActivarId = id ?? 1;
-            return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
+           //oculta las Consultas que no estan realizadas
+            return View(db.ConsultaProgramada.Where(m => m.Action != "FaltaCrearNuevoAction").OrderBy(m => m.OrdenConsulta).ToList());
+            //return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
 
         /// <summary>FaltaCrearNuevoAction Es una rutina modelo 
