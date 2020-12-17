@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion")? "Detalle del Postulante": "Consulta Postulante" : "Proceso de Inscripcion";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripcion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
@@ -294,13 +294,13 @@
         <div class="col col-sm-6 col-12">
             <h4>@ViewBag.Title</h4>
             <t>
-                <h6 >Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
-                <h6>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h6>
-            </t>      
-            @if (ViewBag.MOD_CAR[0] != "")
-            {
-                <h6>Modalidad: <b>@ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></h6>
-            }
+                <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
+                <h6>
+                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b> <e @(ViewBag.MOD_CAR[0] == ""?"hidden":"")>, Modalidad:<b> @ViewBag.MOD_CAR[0]</b> -Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
+
+                </h6>
+            </t>
+         
 
         </div>
 
@@ -796,7 +796,7 @@
 
             };
 
-        
+
 
             //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
             if ("@Session["DeleConsul"]" == "True") {
@@ -804,10 +804,14 @@
                     BloqueaPantalla(item[1]);
                 });
                 //$("#TABDocumentacion i").remove();
-                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
-                //cambio el href del button
-                pageanterior = document.referrer;
-                $("#BTatras").attr("href", pageanterior);
+                //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
+                var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
+                if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
+                    $("#BTatras").attr("href", link_anterior[1]);
+                } else {
+                    $("#BTatras").attr("href", link_anterior[0]);
+
+                }
             }
 
             if ('@Session["FamiTable"]' == 'True') {
@@ -820,6 +824,7 @@
             }
                @{
                   Session["FamiTable"] = false;
+
                }
 
 
