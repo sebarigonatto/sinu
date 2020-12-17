@@ -905,16 +905,19 @@ namespace SINU.Controllers
                 }
 
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
-                bool DocuNoPresnt = DocuNecesarios.Where(m => m.Presentado == true).Any();
+                var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false);
 
-                if (DocuNoPresnt==true)
+                if (DocuNoPresnt == null)
                 {
                     db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
                     return Json(new { succes = true, msg = " Toda la doucumentacion ha sido entregada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                 }
+                else
+                {
+                    return Json(new { succes = true, msg = "Se agregao correctamente la documentacion", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                }
 
-
-                return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                //return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                 // TODO: Add insert logic here
 
             }
@@ -1095,19 +1098,23 @@ namespace SINU.Controllers
                 var probleExistente = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Postu.IdPersona && m.IdDataVerificacion==26);
                 var Dataverificacion = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == IdPantalla && m.Descripcion == "Otros: Aclare");
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
-                bool DocuNoPresnt = DocuNecesarios.Where(m => m.Presentado == false).Any();
+                var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false);
                 
-                if (DocuNoPresnt==true && probleExistente ==null)
+                if (DocuNoPresnt != null && probleExistente == null)
                 {
                     db.sp_DataProblemaEncontradoIUD(Postu.IdPersona, Dataverificacion.IdDataVerificacion, "Documentacion no presentada/Incorrecta",0,false);
                     return Json(new { succes = true, msg = "Se notificara al postulante que adeuda Documentacion" });
                 ///faltante el codigo para el sP para insertar problemas
                 }
-                else
+                if (probleExistente != null)
                 {
                     return Json(new { succes = true, msg = "Ya se realizo la notificacion al postulante si adeuda documentacion" });
                 }
-                //return Json(new { succes = true, msg = "Toda la documentacion a sido presentada" });
+                else
+                {
+                    return Json(new { succes = true, msg = "Toda la documentacion a sido presentada" });
+                }
+                
             }
             catch (Exception)
             {
