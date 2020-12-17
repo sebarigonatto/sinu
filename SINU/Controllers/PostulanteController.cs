@@ -72,7 +72,7 @@ namespace SINU.Controllers
                 db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
-                ViewBag.MOD_CAR = new[] { "" };
+                ViewBag.MOD_CAR = new[] { "","", idInscri.IdInscripcion.ToString() };
                 ViewBag.VenceComvocatoria = false;
                 if (idInscri.IdModalidad != null)
                 {
@@ -83,7 +83,7 @@ namespace SINU.Controllers
                         ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
                     }
                     var VISTAinscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion);
-                    ViewBag.MOD_CAR =  new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, VISTAinscrip.IdInscripcion.ToString() };
+                    ViewBag.MOD_CAR =  new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, idInscri.IdInscripcion.ToString() };
                     
                 }
                 pers.NomyApe = db.Persona.Find(pers.ID_PER).Apellido + ", " + db.Persona.Find(pers.ID_PER).Nombres;

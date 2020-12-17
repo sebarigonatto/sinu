@@ -602,9 +602,10 @@ namespace SINU.Controllers
                 Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == Id);
                 establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
                 configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
-                var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = Id }, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("Index", "Postulante",null, protocol: Request.Url.Scheme);
                 var modelPlanti = new ViewModels.MailPresentacion
                 {
+
                     Apellido = Inscripto.Apellido,
                     establecimiento = establecExamens,
                     Link = callbackUrl,
@@ -992,7 +993,7 @@ namespace SINU.Controllers
                 {
                     int x = Convert.ToInt32(item);
                     Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == x);
-                    var callbackUrl = Url.Action("Index", "Postulante", new { ID_Postulante = x }, protocol: Request.Url.Scheme);
+                    var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
                     var modelPlanti = new ViewModels.MailPresentacion
                     {
                         Apellido = Inscripto.Apellido,
@@ -1046,6 +1047,7 @@ namespace SINU.Controllers
                 {
                     Apellido = "",
                     FechaEntrevista = Fecha
+                    
                 };
 
                 List<string> correos = new List<string>();
@@ -1057,6 +1059,7 @@ namespace SINU.Controllers
                     inscrip.FechaEntrevista = Fecha;
                     db.SaveChanges();
                     db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
+
 
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == x);
 
