@@ -178,7 +178,7 @@ namespace SINU.Models
     }
 
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true,Inherited =true)]
 
     public class RequiredIfAttribute : ValidationAttribute, IClientValidatable
     {
@@ -209,11 +209,11 @@ namespace SINU.Models
         {
             try
             {
+                
+          
                 object result = null;
                 var otrocampo = validationContext.ObjectType.GetProperty(CampoComparar);
                 var valueCampoComparar = otrocampo.GetValue(validationContext.ObjectInstance, null);
-               
-
 
                 if (!TextComparar.IsNullOrWhiteSpace())
                 { 
@@ -248,9 +248,20 @@ namespace SINU.Models
             }
 
         }
+
+        private object _typeId = new object();
+        public override object TypeId
+        {
+            get
+            {
+                return this._typeId;
+            }
+        }
         //agregué el método GetClientValidationRules() que devuelve las reglas de validación del cliente para esta clase.
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+           
         {
+
             ModelClientValidationRule mvr = new ModelClientValidationRule();
             mvr.ErrorMessage = ErrorMessage;
             //nombre de la validadcion que usara para agregar a los metodos de validacion discreta

@@ -725,7 +725,7 @@
             })
         };
 
-        function BloqueaPantalla(IDPantalla) {
+        function BloqueaPantalla(IDPantalla) {//ver como eliminar los botones al ser un usuario delegacion o que el postulante haya solicitado la entrevista o bueno los demas casos
             $(IDPantalla + " .BTAcciones").remove();
             $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search'],.navbar-toggler").attr("disabled", "true");
             $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
@@ -769,30 +769,28 @@
             //alert("@Session["ValidoUnaVez"]");
             if ("@Session["ValidoUnaVez"]"=="True" && "@Session["DeleConsul"]" != "True" && "@ViewBag.ValidacionEnCurso" == "False") {
 
-                //verifico que la pantalla Datos Personles este cerrada, si lo esta habilito las demas pantallas
 
-                    $.each(jsonProblemas, function (index, item) {
+                $.each(jsonProblemas, function (index, item) {
 
-                        //alert(item[1]);
-                        //si la pantalla esta cerrada
-                        if (!item[1] && "@Model.ProcesoInterrumpido" != "True") {
-                            //alert("cerrado");
+                    //alert(item[1]);
+                    //si la pantalla esta cerrada
+                    if (!item[1] && "@Model.ProcesoInterrumpido" != "True") {
+                        //alert("cerrado");
 
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>");
-                            //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
-                            $("#" + item[0] + "NAV .BTAcciones").remove();
-                            $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
-                            $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>");
+                        //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
+                        $("#" + item[0] + "NAV .BTAcciones").remove();
+                        $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
+                        $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
 
-                        } else if (item[2] == "0" && "@Model.ProcesoInterrumpido" != "True") {
-                            //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
-                        } else if (item[2] >0)
-                        {
-                            //SI LA PANTALLA ESTA CON PROBLEMAS LE INDICO CUANTOS POSEE
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-' style='color: #ff4343; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
-                        }
-                    });
+                    } else if (item[2] == "0" && "@Model.ProcesoInterrumpido" != "True") {
+                        //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
+                    } else if (item[2] > 0) {
+                        //SI LA PANTALLA ESTA CON PROBLEMAS LE INDICO CUANTOS POSEE
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-' style='color: #ff4343; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
+                    }
+                });
 
             };
 

@@ -677,7 +677,7 @@
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             $.BloqueoPantalla = true;
-            $(".BTAcciones").html("");
+            $(".BTAcciones").remove();
             $("#TABBloqueo :input,#TABBloqueo input").not(".dataTables_wrapper input[type='search'],[type='checkbox'],[type='submit']").attr("disabled", "true");
 
             $(".habil").removeAttr("disabled");
