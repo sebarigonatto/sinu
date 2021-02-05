@@ -635,17 +635,21 @@
                                                 <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
                                                     <br/>
                                                     <h2>Validar Datos</h2>
-                                                    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                                    <div class="jumbotron mb-0 " style="background-color: #08495f; color:white">
                                                         <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
-                                                            <h5>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h5>
-                                                            <h5>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h5>
+                                                            @Html.Raw(ViewBag.TextDeclaracionJurada)
+                                                           
+                                                            <br >
                                                             <br />
+                                                            @Html.CheckBox("asd", false, new { @class= "form-control d-inline w-auto", @id="check_validacion" }) (SE REQUIERE QUE TILDE EL CUADRO)
+                                                        <br />
+                                                        <br />
                                                             @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                           {
                                                               HttpMethod = "POST",
                                                               OnSuccess = "Exito(data,status,xhr)",
                                                               OnFailure = "Falla"
-                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit" })
+                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled" })
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -747,6 +751,15 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
+
+            $("#check_validacion").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#BTValidar").removeClass("disabled");
+
+                } else {
+                    $("#BTValidar").addClass("disabled");
+                };
+            });
 
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
