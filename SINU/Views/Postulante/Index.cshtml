@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion")? "Detalle del Postulante": "Consulta Postulante" : "Proceso de Inscripcion";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripcion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
@@ -294,13 +294,13 @@
         <div class="col col-sm-6 col-12">
             <h4>@ViewBag.Title</h4>
             <t>
-                <h6 >Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
-                <h6>Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b></h6>
-            </t>      
-            @if (ViewBag.MOD_CAR[0] != "")
-            {
-                <h6>Modalidad: <b>@ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></h6>
-            }
+                <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
+                <h6>
+                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b> <e @(ViewBag.MOD_CAR[0] == ""?"hidden":"")>, Modalidad:<b> @ViewBag.MOD_CAR[0]</b> -Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
+
+                </h6>
+            </t>
+         
 
         </div>
 
@@ -635,17 +635,21 @@
                                                 <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
                                                     <br/>
                                                     <h2>Validar Datos</h2>
-                                                    <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                                    <div class="jumbotron mb-0 " style="background-color: #08495f; color:white">
                                                         <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
-                                                            <h5>Antes de enviar a Validar los Datos cargados verifique los mismos, para no entorpecer el Proceso de Inscripcion.</h5>
-                                                            <h5>Recuerde que los datos cargados en los distintos Formularios son Tomados como una <b><u>Declaracion Jurada.</u></b></h5>
+                                                            @Html.Raw(ViewBag.TextDeclaracionJurada)
+                                                           
+                                                            <br >
                                                             <br />
+                                                            @Html.CheckBox("asd", false, new { @class= "form-control d-inline w-auto", @id="check_validacion" }) (SE REQUIERE QUE TILDE EL CUADRO)
+                                                        <br />
+                                                        <br />
                                                             @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                           {
                                                               HttpMethod = "POST",
                                                               OnSuccess = "Exito(data,status,xhr)",
                                                               OnFailure = "Falla"
-                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit" })
+                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled" })
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -725,7 +729,7 @@
             })
         };
 
-        function BloqueaPantalla(IDPantalla) {
+        function BloqueaPantalla(IDPantalla) {//ver como eliminar los botones al ser un usuario delegacion o que el postulante haya solicitado la entrevista o bueno los demas casos
             $(IDPantalla + " .BTAcciones").remove();
             $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search'],.navbar-toggler").attr("disabled", "true");
             $(IDPantalla + " .Edita").removeClass("fa-edit").addClass("fa-eye");
@@ -748,6 +752,15 @@
         //ver esto
         $(document).ready(function () {
 
+            $("#check_validacion").change(function () {
+                if ($(this).is(":checked")) {
+                    $("#BTValidar").removeClass("disabled");
+
+                } else {
+                    $("#BTValidar").addClass("disabled");
+                };
+            });
+
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
 
@@ -769,34 +782,32 @@
             //alert("@Session["ValidoUnaVez"]");
             if ("@Session["ValidoUnaVez"]"=="True" && "@Session["DeleConsul"]" != "True" && "@ViewBag.ValidacionEnCurso" == "False") {
 
-                //verifico que la pantalla Datos Personles este cerrada, si lo esta habilito las demas pantallas
 
-                    $.each(jsonProblemas, function (index, item) {
+                $.each(jsonProblemas, function (index, item) {
 
-                        //alert(item[1]);
-                        //si la pantalla esta cerrada
-                        if (!item[1] && "@Model.ProcesoInterrumpido" != "True") {
-                            //alert("cerrado");
+                    //alert(item[1]);
+                    //si la pantalla esta cerrada
+                    if (!item[1] && "@Model.ProcesoInterrumpido" != "True") {
+                        //alert("cerrado");
 
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>");
-                            //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
-                            $("#" + item[0] + "NAV .BTAcciones").remove();
-                            $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
-                            $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>");
+                        //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
+                        $("#" + item[0] + "NAV .BTAcciones").remove();
+                        $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
+                        $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
 
-                        } else if (item[2] == "0" && "@Model.ProcesoInterrumpido" != "True") {
-                            //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
-                        } else if (item[2] >0)
-                        {
-                            //SI LA PANTALLA ESTA CON PROBLEMAS LE INDICO CUANTOS POSEE
-                            $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-' style='color: #ff4343; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
-                        }
-                    });
+                    } else if (item[2] == "0" && "@Model.ProcesoInterrumpido" != "True") {
+                        //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
+                    } else if (item[2] > 0) {
+                        //SI LA PANTALLA ESTA CON PROBLEMAS LE INDICO CUANTOS POSEE
+                        $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-' style='color: #ff4343; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
+                    }
+                });
 
             };
 
-        
+
 
             //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
             if ("@Session["DeleConsul"]" == "True") {
@@ -804,10 +815,14 @@
                     BloqueaPantalla(item[1]);
                 });
                 //$("#TABDocumentacion i").remove();
-                $("#ValidarTAB, #ValidarDatos,#MensajedeConsideraciones").remove();
-                //cambio el href del button
-                pageanterior = document.referrer;
-                $("#BTatras").attr("href", pageanterior);
+                //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
+                var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
+                if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
+                    $("#BTatras").attr("href", link_anterior[1]);
+                } else {
+                    $("#BTatras").attr("href", link_anterior[0]);
+
+                }
             }
 
             if ('@Session["FamiTable"]' == 'True') {
@@ -820,6 +835,7 @@
             }
                @{
                   Session["FamiTable"] = false;
+
                }
 
 

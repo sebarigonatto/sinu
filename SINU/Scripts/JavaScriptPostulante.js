@@ -313,8 +313,8 @@ $(document).ready(function () {
 
         //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
         var Comboelemt = (Combo == "ListaPaisR") ?
-            [".Real", ".RealAR", "#CPR","#ComboLocalidadR"]
-            : [".Eventual", ".EventualAR", "#CPE","#ComboLocalidadE"];
+            [".Real", ".RealAR", "#CPR", "#ComboLocalidadR"]
+            : [".Eventual", ".EventualAR", "#CPE", "#ComboLocalidadE"];
 
         //alert($("#" + Combo).val());
         if ($("#" + Combo).val() != "AR") {
@@ -325,7 +325,7 @@ $(document).ready(function () {
             $(Comboelemt[0]).hide();
             $(Comboelemt[1]).show();
             //si se selecciono la Ciudad Autonoma de Buenos Aires habilito el campo de CP
-            if ($(Comboelemt[3]).val()== '20819') {
+            if ($(Comboelemt[3]).val() == '20819') {
                 $(Comboelemt[2]).removeAttr("readonly");
             }
         };
@@ -342,14 +342,14 @@ $(document).ready(function () {
         var ValP = $("#" + Combo).val();
         if (ValP != "") {
             //alert(Combo + " " + ValP);
-            var ComboLocalidad = (Combo == "ComboProvinciaR") ? ["#ComboLocalidadR", "#CPR"] : ["#ComboLocalidadE","#CPE"];
+            var ComboLocalidad = (Combo == "ComboProvinciaR") ? ["#ComboLocalidadR", "#CPR"] : ["#ComboLocalidadE", "#CPE"];
             //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
             $(ComboLocalidad[0]).empty();
-            $(ComboLocalidad[0]+", "+ ComboLocalidad[1]).val("");
-            if (ValP=="CAPITAL FEDERAL") {
+            $(ComboLocalidad[0] + ", " + ComboLocalidad[1]).val("");
+            if (ValP == "CAPITAL FEDERAL") {
                 $(ComboLocalidad[1]).removeAttr("readonly");
             } else {
-                $(ComboLocalidad[1]).attr("readonly",true);
+                $(ComboLocalidad[1]).attr("readonly", true);
             }
 
             //llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
@@ -374,8 +374,8 @@ $(document).ready(function () {
         //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
         var valCP = $("#" + comboid).val();
 
-        if (valCP!= 20819) {
-        
+        if (valCP != 20819) {
+
             $.getJSON('/Postulante/DropEnCascadaDomicilio', {
                 Localidad: valCP,
             },
@@ -389,11 +389,64 @@ $(document).ready(function () {
                 });
         }
     };
+    SHVIajeExt();
+    //radio button de viajes al exterior
+    $("#RadioBTViajes input:radio").change(function () {
+        SHVIajeExt();
+    });
+    //para mostrar/ocultar el listado de viajes al exterior
+    function SHVIajeExt() {
+        if ($("#RadioBTViajes input:checked").val() == "si") {
+            $(".ViajeExt").show();
+        } else {
+            $(".ViajeExt").hide();
 
+            $.each($("#listaviajes li").not("#livacio"), function (index, item) {
+                $.post("/Postulante/ViajesPostulante", { idviaje: $(this).closest("li").attr("idviaje") });
+                $("#listaviajes").empty().append("<li class='list-group-item p-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
+            });
+        };
+    };
+    //Viajes al exterior
+    $("#GuardarExtViaje").on("click", function () {
+        if ($("#IDpais").val() == "" || $("#FechaViaje").val() == "") {
+            $.Anuncio("Debe seleccionar un Pais o fecha de viaje.")
+        } else {
+            $.post("/Postulante/ViajesPostulante", { idper: id_persona, idpais: $("#IDpais").val(), fechaviaje: $("#FechaViaje").val() }, function (response) {
+                //alert(response.resp);
+                $("#livacio").remove();
+                $("#listaviajes").append("<li class='list-group-item p-0' id='item1' style='border:0px solid !important' idviaje='" + response.value + "'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> " + response.text + " <button type='button' class='BTAcciones extviaje eliminaviaje fa fa-times btn pr-0' style='color: red; cursor:pointer; background-color: #fff0; padding-bottom: 7px;'></button></li>");
+                $("#IDpais").val("").selectpicker("refresh");
+                $("#FechaViaje").val("");
+            }, "json");
+        };
+
+    });
+
+    $("#listaviajes").on("click", ".eliminaviaje", function () {
+        //alert($(this).closest("li").attr("idviaje"));
+        li = $(this).closest("li");
+        $.post("/Postulante/ViajesPostulante", { idviaje: $(this).closest("li").attr("idviaje") }, function (response) {
+            if (response.eli) {
+                li.remove();
+                if ($("#listaviajes li").length == 0) {
+                    $("#listaviajes").append("<li class='list-group-item p-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
+                }
+
+            };
+        });
+    });
+
+    $("#BeginFormDomicilio input:submit").on("click", function () {
+        if ($("#listaviajes li").first().attr("id") =='livacio' ) {
+            $("input:radio").last().prop('checked', 'checked');
+            SHVIajeExt();
+        };
+    });
     //////////////////////////////////////////////////////////////////////////////
 
     //aplico DATATABLES a las tablas de ESTUDIO, IDIOMA Y ACTIVIDAD MILITAR
-    TablasEIA()
+    TablasEIA();
 
     //funcion para aplicar datatable a la tabla estudio en la primera carga y actualizar la vista parcial de estudio
     function TablasEIA() {
@@ -416,7 +469,7 @@ $(document).ready(function () {
 
     //se llama al modal para cargar un nuevo registro dependiendo la tabla  a acualizar
     $(".Nuevo_REG").on("click", function () {
-        
+
         var id_Tabla = $(this).attr("data-IdTabla");
         ModalEIACUD(null, id_persona, id_Tabla);
     });
@@ -450,7 +503,7 @@ $(document).ready(function () {
             cache: false,
             type: "GET",
             url: "/" + url_Controller + "/" + url_CUD,
-            data: { ID_persona: id_persona, ID: id_registro  },
+            data: { ID_persona: id_persona, ID: id_registro },
             //si no surge error al redireccionar se reemplaza el contenido de la div
             success: function (response) {
 
@@ -459,7 +512,7 @@ $(document).ready(function () {
                 $("#ModalEIA").delay(200).modal({ backdrop: 'static', keyboard: false });
 
                 $('#ModalEIACuerpo').html(response);
-               
+
                 //con esto  funciona la validacion del lado del cliente con la vista parcial
                 $('#ModalEIACuerpo').removeData("validator");
                 $('#ModalEIACuerpo').removeData("unobtrusiveValidation");
@@ -501,15 +554,15 @@ $(document).ready(function () {
                     comboid = $(this).attr("id");
                     valcombo = $('#' + comboid + ' option:selected').html();
                     ComboCascada(comboid, valcombo);
-                  
+
                 });
 
                 $("#ComboIdInstEST").on('changed.bs.select', function () {
                     //alert($(this).val());
-                    if ($(this).val()==0) {
+                    if ($(this).val() == 0) {
                         $("#nanualnombre").removeAttr("hidden").focus();
                     } else {
-                        $("#nanualnombre").attr("hidden","hidden").val(null);
+                        $("#nanualnombre").attr("hidden", "hidden").val(null);
                     }
                 });
                 //lamo la funcion INSTEXT y mando cero por que esla primera carga
@@ -537,15 +590,15 @@ $(document).ready(function () {
                 $("#UltimoAño").on("changed.bs.select", function () {
                     UltimoAñoSINO();
                 });
-            
+
 
                 /////////////////////////ACTIVIDAD MILITAR//////////////////////////////////
-                
-                IngreSINO();InputBAJA();
+
+                IngreSINO(); InputBAJA();
                 $("#IngresoSINO").on("change", function (e) {
                     IngreSINO();
                 });
-               
+
                 $("#ACTMilitarIDVM_IdSituacionRevista").on("change", function (e) {
                     InputBAJA();
                 });
@@ -644,15 +697,15 @@ $(document).ready(function () {
             $("label[for='Provincia']").text("Provincia/Juridiccion");
             $(".INSAR").show();
             //alert($("#ComboIdInstEST").val());
-            if ($("#ComboIdInstEST").val() == 0 && $("#ComboIdInstEST").val() !="") {
+            if ($("#ComboIdInstEST").val() == 0 && $("#ComboIdInstEST").val() != "") {
                 $("#nanualnombre").removeAttr("hidden");
-               
+
             };
 
-            if ($("#ComboIdInstEST").val() !="") {
+            if ($("#ComboIdInstEST").val() != "") {
                 $("#ComboLocaliEST, #ComboIdInstEST").removeAttr("disabled").selectpicker("refresh");
             }
-            
+
         };
         if (pri != 0) {
             $("#JuriEST,#IdInstEST").val("");
@@ -683,7 +736,7 @@ $(document).ready(function () {
         }
     }
 
- 
+
 
 
     //funcion que arma los combos en cascada de la vista parcial Estudios
@@ -694,11 +747,11 @@ $(document).ready(function () {
             OPC = 0;
             $("#ComboLocaliEST, #ComboIdInstEST").empty().val(null).attr('disabled', 'disabled');
             $("#ComboLocaliEST, #ComboIdInstEST").selectpicker('refresh');
-            
+
             //cuando el combobox seleccionado es de la localidad
         } else {
             valprov = $("#ComboJuriEST").val();
-            ValC = valprov + "-" + ValC;    
+            ValC = valprov + "-" + ValC;
             OPC = 1;
             $("#ComboIdInstEST").html("");
             $("#proloc").val("").val($("#ComboJuriEST").val() + "-" + $("#ComboLocaliEST option:selected").html());
@@ -714,8 +767,8 @@ $(document).ready(function () {
                 } else {
                     combocas = "#ComboIdInstEST";
                     $(combocas).append("<option value='0' >Otro</option>");
-                };                
-              
+                };
+
                 //alert(combocas);
                 $.each(data, function () {
                     $(combocas).append("<option value=" + this.Value + " >" + this.Text + "</option>");
@@ -751,7 +804,7 @@ $(document).ready(function () {
 
 
     function InputBAJA() {
-        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2 || $("#ACTMilitarIDVM_IdSituacionRevista").val() == 1 ) {
+        if ($("#ACTMilitarIDVM_IdSituacionRevista").val() == 2 || $("#ACTMilitarIDVM_IdSituacionRevista").val() == 1) {
             $(".baja input").val("");
             $(".baja").hide();
         } else if ($("#ACTMilitarIDVM_IdSituacionRevista").val() != 2 && $("#ACTMilitarIDVM_IdSituacionRevista").val() != 0) {
@@ -791,6 +844,7 @@ $(document).ready(function () {
         noneSelectedText: 'Ninguna Opcion Seleccionada',
         header: 'Cerrrar'
     });
+
 
     /////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE ANTROPOMETRIA */
@@ -918,7 +972,7 @@ $(document).ready(function () {
     function ValidForm(idForm) {
         list = $(idForm + " :input").not("[type='hidden']").serializeArray();
         if ($(idForm).valid()) {
-            $(idForm + " :input").not(".selecpicker, .combobox, [type='submit']").css("border-bottom", "2px solid #08495f");
+            $(idForm + " :input").not(".selecpicker, .combobox, [type='submit'], .extviaje").css("border-bottom", "2px solid #08495f");
             $(idForm + " :input").next("button[role='combobox']").removeClass("BTNotValid BTValid");
         } else {
             $.each(list, function (index, item) {

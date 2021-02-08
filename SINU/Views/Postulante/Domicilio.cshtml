@@ -1,9 +1,9 @@
 ﻿@model SINU.ViewModels.DomicilioVM
 
 @*@{
-    ViewBag.Title = "Domicilio";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
+        ViewBag.Title = "Domicilio";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }*@
 
 @using (Ajax.BeginForm("Domicilio", "Postulante", null,
     new AjaxOptions
@@ -28,26 +28,22 @@
             <h2>Domicilio que figura en el DNI:</h2>
             <br />
             <div class="form-group row">
-                @Html.HiddenFor(m=>m.vPersona_DomicilioVM.IdPersona)
+                @Html.HiddenFor(m => m.vPersona_DomicilioVM.IdPersona)
                 @Html.HiddenFor(model => model.vPersona_DomicilioVM.IdDomicilioDNI)
                 @Html.HiddenFor(model => model.vPersona_DomicilioVM.IdDomicilioActual)
 
                 <div class="col-md-6">
 
-
-
-
-
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DomicilioVM.Calle, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DomicilioVM.Calle, new { htmlAttributes = new { @class = "form-control ", @autocomplete = "off"} })
+                            @Html.EditorFor(model => model.vPersona_DomicilioVM.Calle, new { htmlAttributes = new { @class = "form-control ", @autocomplete = "off" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Calle, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.vPersona_DomicilioVM.Numero, htmlAttributes: new { @class = "control-label col-md-12"  })
+                        @Html.LabelFor(model => model.vPersona_DomicilioVM.Numero, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.vPersona_DomicilioVM.Numero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })
@@ -202,6 +198,71 @@
                 </div>
                 <br />
             </div>
+            @{ bool viajo = Model.PostulanteViajeListaVM.Count > 0; }
+
+            <h2 class="d-inline-flex">
+                Viajes al Exterior:
+            </h2>
+            <div class="form-group d-inline-flex">
+                <div class="col-md-12" id="RadioBTViajes">
+
+                    <h5 class="d-inline-flex">Si</h5> <input @(viajo ? "checked='checked'" : "" ) id="Viaje" name="Viaje" type="radio" value="si" />&ensp;
+
+                    <h5 class="d-inline-flex">No</h5> <input @(!viajo ? "checked='checked'" : "" ) name="Viaje" type="radio" value="no" id="noext" />
+
+                </div>
+            </div>
+
+            <h6 class="BTAcciones">En caso de haber realizado viaje/s al exterior, debera informar los mismos.</h6>
+            
+            <div class="form-group row">
+                <div class="col-md-6 BTAcciones">
+
+
+                    <div class="form-group ViajeExt">
+                        @Html.Label("Pais", new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownList("PaisViaje", (SelectList)ViewBag.Paises1, "Seleccione un Pais", htmlAttributes: new { @class = "combobox form-control", @id = "IDpais" })
+                        </div>
+                    </div>
+                    <div class="form-group row ViajeExt">
+                        <div class="col-8 col-md-6 ">
+                            @Html.Label("Fecha de Viaje", new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.TextBox("{0:dd/MM/yyyy}", null, new { @class = "form-control datepicker ", @readonly = true, @placeholder = " dd/mm/aaaa", @id = "FechaViaje" })
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-2 row align-content-center">
+                            <div class=" col-12 h-50">   </div>
+                            <input type="button" name="agregar" value="Agregar" class="btn btn-success d-block extviaje " id="GuardarExtViaje" />
+                        </div>
+                    </div>
+
+
+                   
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <div class="form-group ViajeExt">
+
+
+                        <ul class="list-group col-md-8" id="listaviajes">
+                            @if (Model.PostulanteViajeListaVM.Count == 0)
+                            {
+                                <li class="list-group-item p-0" id="livacio" style="border:0px solid !important"><i class="fa fa-map-marker-alt" style='color:#007bff;'></i> ------------------- </li>
+                            }
+
+
+                            @foreach (var viaje in Model.PostulanteViajeListaVM)
+                            {
+                                <li class="list-group-item p-0" style="border:0px solid !important" idviaje="@viaje.Value"><i class="fa fa-map-marker-alt"  style='color:#007bff;'></i> @viaje.Text <button type="button" class="BTAcciones eliminaviaje extviaje fa fa-times btn pr-0" style="  color: red;cursor: pointer;background-color: #fff0; padding-bottom: 7px;"></button></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
             <div class="form-group pl-3 BTAcciones">
                 <input type="submit" value="Guadar Datos" class="btn btn-success" placeholder="" />
             </div>
@@ -211,121 +272,3 @@
     </div>
 }
 
-
-@section Scripts {
-
-
-
-    @*<script type="text/javascript">
-
-
-            $(document).ready(function () {
-
-                //se aplicael selecpicker a alos conbo/s con autocomplete
-                /* https://developer.snapappointments.com/bootstrap-select/ */
-                    $(".combobox").selectpicker({
-                        liveSearch: true,
-                        size: 6,
-                        width: "40vh",
-                        liveSearchPlaceholder: "Ingrese su busqueda",
-                        liveSearchStyle: 'contains',//'startsWith'
-                        noneResultsText:'No se Encuantran Resultados'
-                    });
-
-                $("select").on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
-                    comboid = $(this).attr("id");
-                    //alert(comboid);
-                    switch (comboid) {
-                            case "ListaPaisR":
-                            case "ListaPaisE":
-                                PAIS(comboid, 1)
-                                break;
-                            case "ComboProvinciaR":
-                            case "ComboProvinciaE":
-                                PROVINCIA(comboid);
-                                break;
-                            case "ComboLocalidadR":
-                            case "ComboLocalidadE":
-                                LOCALIDAD(comboid);
-                                break;
-                            default:
-                    }
-                });
-
-                //al crgar la pagina se verifica si el pais del domiciolio REAL es AR
-                PAIS("ListaPaisR", 0);
-                PAIS("ListaPaisE", 0);
-
-
-
-                ////si se recibe 0 es carga inicial de la pagina y nose se limpian los campos, si es 1 se limpia los campos
-                function PAIS(Combo, PRI) {
-                    var Comboelemt = (Combo == "ListaPaisR") ? [".Real", ".RealAR", "#CPR"]
-                                                             : [".Eventual", ".EventualAR", "#CPE"];
-                    //alert($("#" + Combo).val());
-                    if ($("#" + Combo).val() != "AR") {
-                        $(Comboelemt[0]).show();
-                        $(Comboelemt[1]).hide();
-                        $(Comboelemt[2]).attr("readonly", false);
-                    } else {
-                        $(Comboelemt[0]).hide();
-                        $(Comboelemt[1]).show();
-                        $(Comboelemt[2]).attr("readonly", true);
-                    };
-                    if (PRI == 1) {
-                        $(Comboelemt[0] + "," + Comboelemt[2]).val("");
-                        $('.selectpicker').selectpicker('title', '');
-                    }
-                };
-
-                //Funcion de Provincia que actualiza los combobox de localidad
-                function PROVINCIA(Combo) {
-
-                    var ValP = $("#" + Combo).val();
-                    //alert(Combo + " " + ValP);
-                    var ComboLocalidad = (Combo == "ComboProvinciaR") ? "#ComboLocalidadR" : "#ComboLocalidadE";
-                    $(ComboLocalidad).empty();
-                    //llamo al JsonResult '/Postulante/EnCascada' y le envio la provincia seleccionada
-                    $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-                        Provincia: ValP,
-                    },
-                        function (data) {
-                            //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
-                            $.each(data, function () {
-                                $(ComboLocalidad).append('<option value=' +
-                                    this.Value + '>' + this.Text + '</option>');
-                            });
-                            //para actualizar el combobox
-                            $(ComboLocalidad).selectpicker('refresh');
-                        });
-                };
-
-                //se actualiaz el codigo postal deacuerdo a la localidad seleccionada
-                function LOCALIDAD(Combo) {
-                    var ComboCP = (Combo == "ComboLocalidadR") ? "#CPR" : "#CPE";
-                    //llamo al JsonResult '/Postulante/EnCascada' y le envio la localidad seleccionada
-                    var valCP = $("#"+comboid).val();
-                    $.getJSON('/Postulante/DropEnCascadaDomicilio', {
-                        Localidad: valCP,
-                    },
-                        function (data) {
-                            //agrego al dropboxlist la etiqueta option con cada localidad que le corresponde a la provincia seleccionada
-                            $(ComboCP).val(data.Text);
-                        });
-                    ////para actualizar el combobox
-                };
-            });
-
-            //Si lallamada POST tuvo exito
-            function Exito(response, status, xhr) {
-                alert("success: " + response.success + " " + response.msg);
-            };
-
-            //Si lallamada POST tuvo error
-            function Falla(response) {
-                alert("Error occured.");
-            };
-
-        </script>*@
-
-}

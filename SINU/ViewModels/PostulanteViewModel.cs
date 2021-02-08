@@ -75,6 +75,9 @@ namespace SINU.ViewModels
         public List<SelectListItem> provincias { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadREALVM { get; set; }
         public List<vProvincia_Depto_Localidad> vProvincia_Depto_LocalidadEVENTUALVM { get; set; }
+
+        public List<SelectListItem> PostulanteViajeListaVM { get; set; }
+
     }
 
     public class EstudiosVM
@@ -113,8 +116,8 @@ namespace SINU.ViewModels
         public vPersona_SituacionOcupacional VPersona_SituacionOcupacionalVM { get; set; }
         public SelectList EstadoDescripcionVM { get; set; }
         public List<SelectListItem> InteresesVM { get; set; }
-        //[Required]
         public List<string> IdInteres { get; set; }
+ 
 
     }
 

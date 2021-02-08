@@ -25,7 +25,7 @@
         <div class="col-md-5 text-center align-content-center">
             @if (ViewBag.Asignado)
             {
-                <h6>Escanee el QR o imprima esta pantalla</h6>
+            <h6>Escaneé el QR o imprímalo</h6>
                 <br />
                 <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.Qr))" width="140" height="140" style="border-radius:3px;border:1px solid black" class="align-items-center" />
                 <hr style="border:0px" />

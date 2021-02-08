@@ -42,6 +42,8 @@ namespace SINU.Controllers
                 {
                     return RedirectToAction("AccionNoAutorizada", "Error");
                 }
+                //texto declaracion jurada
+                ViewBag.TextDeclaracionJurada = db.Configuracion.First(m => m.NombreDato == "TextDeclaracionJurada").ValorDato;
 
                 //cargo los ID de las etapas por las que paso el postulante
                 pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
@@ -72,7 +74,7 @@ namespace SINU.Controllers
                 db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
                 pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
                 ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
-                ViewBag.MOD_CAR = new[] { "" };
+                ViewBag.MOD_CAR = new[] { "","", idInscri.IdInscripcion.ToString() };
                 ViewBag.VenceComvocatoria = false;
                 if (idInscri.IdModalidad != null)
                 {
@@ -83,7 +85,7 @@ namespace SINU.Controllers
                         ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
                     }
                     var VISTAinscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion);
-                    ViewBag.MOD_CAR =  new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, VISTAinscrip.IdInscripcion.ToString() };
+                    ViewBag.MOD_CAR =  new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, idInscri.IdInscripcion.ToString() };
                     
                 }
                 pers.NomyApe = db.Persona.Find(pers.ID_PER).Apellido + ", " + db.Persona.Find(pers.ID_PER).Nombres;
@@ -497,8 +499,22 @@ namespace SINU.Controllers
                 {
                     vPersona_DomicilioVM = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
                     sp_vPaises_ResultVM = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).ToList(),
-                    provincias = db.vProvincia_Depto_Localidad.OrderBy(m => m.Provincia).Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList()
+                    provincias = db.vProvincia_Depto_Localidad.OrderBy(m => m.Provincia).Select(m => new SelectListItem { Value = m.Provincia, Text = m.Provincia }).DistinctBy(m => m.Text).ToList(),
+                    PostulanteViajeListaVM = new List<SelectListItem>()
+
                 };
+                //cargo liatado con los viajes del postulante
+                var viajes = db.PostulanteViaje.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+
+                foreach (var viaje in viajes)
+                {
+                    SelectListItem item = new SelectListItem { Text = db.sp_vPaises(viaje.codigovPais).First().DESCRIPCION + ", " + viaje.FechaInicioviaje.Value.ToShortDateString(), Value = viaje.IdPostulanteViaje.ToString() };
+                    datosdomilio.PostulanteViajeListaVM.Add(item);
+                }
+
+                ViewBag.Paises1 = new SelectList(db.sp_vPaises(""), "CODIGO", "DESCRIPCION");
+
+
                 //datosdomilio.vPersona_DomicilioVM.IdpersonaPostu=()
 
                 if (datosdomilio.vPersona_DomicilioVM.IdPais != "AR")
@@ -1062,6 +1078,15 @@ namespace SINU.Controllers
 
             try
             {
+                var situreserva = new[] { 2,1};
+                if (situreserva.Contains( datos.ACTMilitarIDVM.IdSituacionRevista))
+                {
+                    ModelState["ACTMilitarIDVM.FechaBaja"].Errors.Clear();
+                    ModelState["ACTMilitarIDVM.MotivoBaja"].Errors.Clear();
+                    ModelState["ACTMilitarIDVM.IdBaja"].Errors.Clear();
+                }
+               
+
                 if (ModelState.IsValid)
                 {
                     var a = datos.ACTMilitarIDVM;
@@ -1125,12 +1150,15 @@ namespace SINU.Controllers
 
                 SituacionOcupacionalVM SituOcu = new SituacionOcupacionalVM
                 {
-                    EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.Where(m => m.Descripcion != "Jubilado" & m.Descripcion != "Retirado").ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1)
+                    EstadoDescripcionVM = new SelectList(db.EstadoOcupacional.Where(m => m.Descripcion != "Jubilado" & m.Descripcion != "Retirado").ToList(), "Id", "Descripcion", "EstadoOcupacional1", 1),
+                    
                 };
+              
+                
 
                 List<string> InteresesSeleccionados = db.Persona.Find(ID_persona).Interes.Select(m => m.DescInteres).ToList();
                 SituOcu.InteresesVM = db.Interes.Select(c => new SelectListItem { Text = c.DescInteres, Value = c.IdInteres.ToString(), Selected = InteresesSeleccionados.Contains(c.DescInteres) }).ToList();
-
+                
                 var situ = db.vPersona_SituacionOcupacional.FirstOrDefault(m => m.IdPersona == ID_persona);
                 if (situ == null)
                 {
@@ -1152,6 +1180,39 @@ namespace SINU.Controllers
                 return PartialView(ex);
             }
         }
+
+        [HttpPost]
+        //[AuthorizacionPermiso("CreaEditaDatosP")]
+        public ActionResult ViajesPostulante(int? idper,string? idpais, DateTime? fechaviaje, int? idviaje)
+        {
+            try
+            {
+                object resp = new { };
+                if (idviaje == null)
+                {
+                    PostulanteViaje v = new PostulanteViaje { codigovPais = idpais, Comentario = "", IdPostulantePersona = (int)idper, FechaInicioviaje = fechaviaje };
+                    db.PostulanteViaje.Add(v);
+                    db.SaveChanges();
+                    string pais = db.sp_vPaises(idpais).First().DESCRIPCION;
+                    resp = new { text = pais + ", " + ((DateTime)fechaviaje).ToString("dd/MM/yyyy"), value= v.IdPostulanteViaje };
+                }
+                else
+                {
+                    var viaje = db.PostulanteViaje.FirstOrDefault(m => m.IdPostulanteViaje == idviaje);
+                    db.PostulanteViaje.Remove(viaje);
+                    db.SaveChanges();
+                    resp = new { eli = true };
+                }
+               
+                return Json(resp);
+            }
+            catch (Exception ex )
+            {
+                throw;
+            }
+            
+        }
+
 
 
         [HttpPost]

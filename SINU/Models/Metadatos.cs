@@ -311,15 +311,9 @@ namespace SINU.Models
         [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
         [Display(Name = "Fecha de Ingreso")]
         public Nullable<System.DateTime> FechaIngreso { get; set; }
-        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
-        [Display(Name = "Fecha de Baja")]
-        public Nullable<System.DateTime> FechaBaja { get; set; }
         [Display(Name = "Causa/Motivo de no ingreso")]
         [RequiredIf("Ingreso", false, ErrorMessage = "Debe completar este campo")]
         public string CausaMotivoNoingreso { get; set; }
-        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
-        [Display(Name = "Descripcion de la Baja")]
-        public string MotivoBaja { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         public string Jerarquia { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
@@ -333,9 +327,14 @@ namespace SINU.Models
         public int IdFuerza { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Opcion")]
         [Display(Name = "Motivo de Baja")]
-        public int IdBaja { get; set; }
+        public int IdBaja { get; set; } 
+        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
+        [Display(Name = "Fecha de Baja")]
+        public Nullable<System.DateTime> FechaBaja { get; set; }
+        [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
+        [Display(Name = "Descripcion de la Baja")]
+        public string MotivoBaja { get; set; }
         public int IdActividadMilitar { get; set; }
-        [Required]
         public virtual Fuerza Fuerza { get; set; }
     }
 
