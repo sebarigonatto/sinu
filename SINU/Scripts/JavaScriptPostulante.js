@@ -403,7 +403,7 @@ $(document).ready(function () {
 
             $.each($("#listaviajes li").not("#livacio"), function (index, item) {
                 $.post("/Postulante/ViajesPostulante", { idviaje: $(this).closest("li").attr("idviaje") });
-                $("#listaviajes").empty().append("<li class='list-group-item p-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
+                $("#listaviajes").empty().append("<li class='list-group-item pb-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
             });
         };
     };
@@ -415,7 +415,7 @@ $(document).ready(function () {
             $.post("/Postulante/ViajesPostulante", { idper: id_persona, idpais: $("#IDpais").val(), fechaviaje: $("#FechaViaje").val() }, function (response) {
                 //alert(response.resp);
                 $("#livacio").remove();
-                $("#listaviajes").append("<li class='list-group-item p-0' id='item1' style='border:0px solid !important' idviaje='" + response.value + "'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> " + response.text + " <button type='button' class='BTAcciones extviaje eliminaviaje fa fa-times btn pr-0' style='color: red; cursor:pointer; background-color: #fff0; padding-bottom: 7px;'></button></li>");
+                $("#listaviajes").append("<li class='list-group-item pb-0' id='item1' style='border:0px solid !important' idviaje='" + response.value + "'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> " + response.text + " <button type='button' class='BTAcciones extviaje eliminaviaje fa fa-times btn pr-0' style='color: red; cursor:pointer; background-color: #fff0; padding-bottom: 7px;'></button></li>");
                 $("#IDpais").val("").selectpicker("refresh");
                 $("#FechaViaje").val("");
             }, "json");
@@ -430,7 +430,7 @@ $(document).ready(function () {
             if (response.eli) {
                 li.remove();
                 if ($("#listaviajes li").length == 0) {
-                    $("#listaviajes").append("<li class='list-group-item p-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
+                    $("#listaviajes").append("<li class='list-group-item pb-0' id='livacio' style='border: 0px solid!important'><i class='fa fa-map-marker-alt' style='color:#007bff;'></i> ------------------- </li>");
                 }
 
             };
