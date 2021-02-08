@@ -14,15 +14,17 @@ namespace SINU.ViewModels
         public List<vInscripcionEtapaEstadoUltimoEstado> EntrevistaVM { get; set; }
         public List<vInscripcionEtapaEstadoUltimoEstado> DocumentacionVM { get; set; }
         public List<vInscripcionEtapaEstadoUltimoEstado> PresentacionVM { get; set; }
-       
+
     }
+    #region ViewModel Utilizado para enviar datos(Envia una lista con items para un Dropdown - envia un listado con los problemas encontrados en un Postulante) a la vista Dataproblema.cshtml 
     public class ProblemaEcontradoVM
-    {
-        public vDataProblemaEncontrado vListDataProblemasVM { get; set; }
-        public SelectList ListDataVerificacionVM { get; set; }
-        public int ID_PER { get; set; }
-       
-    }
+        {
+            public vDataProblemaEncontrado vListDataProblemasVM { get; set; }
+            public SelectList ListDataVerificacionVM { get; set; }
+            public int ID_PER { get; set; }
+
+        }
+    #endregion
     public class ProblemaPantallaVM
     {
         public List<vDataProblemaEncontrado> ListvDataProblemaEncontradoVM { get; set; }
