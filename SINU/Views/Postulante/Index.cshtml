@@ -9,6 +9,9 @@
         background-color: #f5f5f5 !important
     }
 
+    .dataTables_filter {
+        display:flex !important;
+    }
     .form-control:disabled, .form-control[readonly] {
         cursor: no-drop;
     }
@@ -636,7 +639,7 @@
                                                     <br/>
                                                     <h2>Validar Datos</h2>
                                                     <div class="jumbotron mb-0 " style="background-color: #08495f; color:white">
-                                                        <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
+                                                        <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "") style="text-align: justify;">
                                                             @Html.Raw(ViewBag.TextDeclaracionJurada)
                                                            
                                                             <br >

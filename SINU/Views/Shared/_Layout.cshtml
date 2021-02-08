@@ -1,4 +1,5 @@
-﻿@{ ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
+﻿@{ 
+    ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
 }
 
 
@@ -182,7 +183,7 @@
                 </ul>
 
 
-                <i class="@ViewBag.IconoPerfil" style="color:deepskyblue"></i>
+                
                 <!--Coloca Link de SESION en extremo Derecho     -->
                 @Html.Partial("_LoginPartial")
 

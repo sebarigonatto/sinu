@@ -249,13 +249,13 @@
                         <ul class="list-group col-md-8" id="listaviajes">
                             @if (Model.PostulanteViajeListaVM.Count == 0)
                             {
-                                <li class="list-group-item p-0" id="livacio" style="border:0px solid !important"><i class="fa fa-map-marker-alt" style='color:#007bff;'></i> ------------------- </li>
+                                <li class="list-group-item pb-0" id="livacio" style="border:0px solid !important"><i class="fa fa-map-marker-alt" style='color:#007bff;'></i> ------------------- </li>
                             }
 
 
                             @foreach (var viaje in Model.PostulanteViajeListaVM)
                             {
-                                <li class="list-group-item p-0" style="border:0px solid !important" idviaje="@viaje.Value"><i class="fa fa-map-marker-alt"  style='color:#007bff;'></i> @viaje.Text <button type="button" class="BTAcciones eliminaviaje extviaje fa fa-times btn pr-0" style="  color: red;cursor: pointer;background-color: #fff0; padding-bottom: 7px;"></button></li>
+                                <li class="list-group-item pb-0" style="border:0px solid !important" idviaje="@viaje.Value"><i class="fa fa-map-marker-alt"  style='color:#007bff;'></i> @viaje.Text <button type="button" class="BTAcciones eliminaviaje extviaje fa fa-times btn pr-0" style="  color: red;cursor: pointer;background-color: #fff0; padding-bottom: 7px;"></button></li>
                             }
                         </ul>
                     </div>

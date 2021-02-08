@@ -11,8 +11,8 @@
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink(" " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+            <li class="row">
+                <i class="@ViewBag.IconoPerfil ml-3" style="color: deepskyblue;padding-top: 0.7rem !important"></i>&ensp; @Html.ActionLink(" " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link d-iniline-flex" })
             </li>
             <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesión</a></li>
         </ul>
