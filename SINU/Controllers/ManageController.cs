@@ -216,6 +216,7 @@ namespace SINU.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
+            ViewBag.correo = User.Identity.Name;
             return View();
         }
 
@@ -247,6 +248,7 @@ namespace SINU.Controllers
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
+          
             return View();
         }
 
