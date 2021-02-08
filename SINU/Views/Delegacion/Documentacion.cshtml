@@ -103,7 +103,6 @@
                 @*<div class="mt-4  position-absolute col-md-11">
                         <button class="btn btn-success float-md-left" >Envia a Validar</button>
                     </div>*@
-
                 <div class="tab-content TABMovil" id="TabDocumentacion">
                     @* VISTA DE DATO PERSONAL *@
                     <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="DatosPersonales">
@@ -117,13 +116,26 @@
                         </nav>
                         <div class="collapse tab-pane fade show active nav-tab pt-4 " id="DatosPersonalesNAV">
                             @Html.Action("DatosPersonales", "Postulante", new { ID_persona = Model.ID_PER })
-                            <br />
-                            <hr />
-                            <div id="ProblemaPantalla1" disabled="disabled">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 1 })
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla1" disabled="disabled">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 1 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 1, Aoc = 1 }, new AjaxOptions
                               {
@@ -141,7 +153,6 @@
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE Antecedentes Penales *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
@@ -156,11 +167,26 @@
                             @*@Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })*@
                             @Html.Partial("_Docupenal")
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla2">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 2 })
+                            <div class="accordion" id="accordionExample2">
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample2">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla2">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 2 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 2, Aoc = 1 }, new AjaxOptions
                               {
@@ -177,25 +203,39 @@
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE DOMICILIO *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Domicilio">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Domicilio</a>
-                            @*<button id="BTDomicilioNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTDomicilioNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DomicilioNAV" role="tabpanel" aria-labelledby="DomicilioNAV-tab" aria-controls="DomicilioNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="DomicilioNAV">
                             @Html.Action("Domicilio", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla3">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 3 })
+                            <div class="accordion" id="accordionExample3">
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample3">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla3">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 3 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 3, Aoc = 1 }, new AjaxOptions
                               {
@@ -212,25 +252,39 @@
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE ESTUDIOS *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Estudios">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Estudios</a>
-                            @*<button id="BTEstudiosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTEstudiosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#EstudiosNAV" role="tabpanel" aria-labelledby="EstudiosNAV-tab" aria-controls="EstudiosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
                             @Html.Action("Estudios", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla4">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 4 })
+                            <div class="accordion" id="accordionExample4">
+                                <div class="card">
+                                    <div class="card-header" id="headingFour">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample4">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla4">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 4 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 4, Aoc = 1 }, new AjaxOptions
                               {
@@ -244,65 +298,91 @@
                                    OnSuccess = "Exito(data,status,xhr)",
                                    OnFailure = "Falla"
                                  }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE IDIOMAS *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Idiomas">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Idiomas</a>
-                            @*<button id="BTIdiomasNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTIdiomasNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#IdiomasNAV" role="tabpanel" aria-labelledby="IdiomasNAV-tab" aria-controls="IdiomasNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
                             @Html.Action("Idiomas", "Postulante", new { ID_persona = Model.ID_PER })
-                        </div>
-                        <br />
-                        <hr />
-                        <div id="ProblemaPantalla5">
-                            @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                            @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 5 })
-                        </div>
-                        <div class="container text-center">
-                            @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5, Aoc = 1 }, new AjaxOptions
-                          {
-                            HttpMethod = "POST",
-                            OnSuccess = "Exito(data,status,xhr)",
-                            OnFailure = "Falla"
-                          }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5, Aoc = 0 }, new AjaxOptions
-                                 {
-                                   HttpMethod = "POST",
-                                   OnSuccess = "Exito(data,status,xhr)",
-                                   OnFailure = "Falla"
-                                 }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+                            <br />
+                            <div class="accordion" id="accordionExample5">
+                                <div class="card">
+                                    <div class="card-header" id="headingFive">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample5">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla5">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 5 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="container text-center">
+                                @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5, Aoc = 1 }, new AjaxOptions
+                              {
+                                HttpMethod = "POST",
+                                OnSuccess = "Exito(data,status,xhr)",
+                                OnFailure = "Falla"
+                              }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+                                @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 5, Aoc = 0 }, new AjaxOptions
+                                     {
+                                       HttpMethod = "POST",
+                                       OnSuccess = "Exito(data,status,xhr)",
+                                       OnFailure = "Falla"
+                                     }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+                            </div>
                         </div>
                     </div>
-
-
                     @* VISTA DE ACTIVIDAD MILITAR *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="ActMilitar">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Activiadad Militar</a>
-                            @*<button id="BTActMilitarNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTActMilitarNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ActMilitarNAV" role="tabpanel" aria-labelledby="ActMilitarNAV-tab" aria-controls="ActMilitarNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
                             @Html.Action("ActMilitar", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla6">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 6 })
+                            <div class="accordion" id="accordionExample6">
+                                <div class="card">
+                                    <div class="card-header" id="headingSixe">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseSixe" aria-expanded="true" aria-controls="collapseSixe">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseSixe" class="collapse" aria-labelledby="headingSixe" data-parent="#accordionExample6">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla6">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 6 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 6, Aoc = 1 }, new AjaxOptions
                               {
@@ -319,25 +399,39 @@
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE SITUACION OCUPACIONAL*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Situcion Ocipacional</a>
-                            @*<button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
                             @Html.Action("SituOcupacional", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla7">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 7 })
+                            <div class="accordion" id="accordionExample7">
+                                <div class="card">
+                                    <div class="card-header" id="headingSeven">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample7">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla7">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 7 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 7, Aoc = 1 }, new AjaxOptions
                               {
@@ -354,25 +448,39 @@
                             </div>
                         </div>
                     </div>
-
                     @* VISTA DE ANTROPOMETRIA *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Antropometria">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Medidas y Tallas</a>
-                            @*<button id="BTAntropometriaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTAntropometriaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#AntropometriaNAV" role="tabpanel" aria-labelledby="AntropometriaNAV-tab" aria-controls="AntropometriaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
                             @Html.Action("Antropometria", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla8">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 8 })
+                            <div class="accordion" id="accordionExample8">
+                                <div class="card">
+                                    <div class="card-header" id="headingEight">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample8">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla8">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 8 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 8, Aoc = 1 }, new AjaxOptions
                               {
@@ -387,28 +495,41 @@
                                    OnFailure = "Falla"
                                  }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
                             </div>
-                            <br />
                         </div>
                     </div>
-
                     @* VISTA DE FAMILIA*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Familia</a>
-                            @*<button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </button>*@
+                            <button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="FamiliaNAV">
                             @Html.Action("Familia", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
-                            <hr />
-                            <div id="ProblemaPantalla9">
-                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
-                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 9 })
+                            <div class="accordion" id="accordionExample9">
+                                <div class="card">
+                                    <div class="card-header" id="headingNine">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
+                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample9">
+                                        <div class="card-body">
+                                            <div id="ProblemaPantalla9">
+                                                @* es id del div esta conformado por el nombre de la accion y el id de la pantalla que corresponde *@
+                                                @Html.Action("ProblemaPantalla", "Delegacion", new { IdPostulante = Model.ID_PER, IdPantalla = 9 })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <br />
                             <div class="container text-center">
                                 @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 9, Aoc = 1 }, new AjaxOptions
                               {
@@ -425,14 +546,11 @@
                             </div>
                         </div>
                     </div>
-
-
                     @* VISTA DE Verificacion*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocumentosNecesarios">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Verificacion</a>
                         </nav>
-
                         <div class="collapse tab-pane fade nav-tab pt-4">
                             <div id="DocumentosNecesariosNAV">
                                 @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
@@ -458,178 +576,192 @@
                             </div>
                         </div>
                     </div>
-
-
                     @* Validar Datos*@
-                <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
-                    <nav class="navbar navbar-dark bg-dark ocultnav">
-                        <a class="navbar-brand" href="#">Validar Datos</a>
-                        @*<button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>*@
-                    </nav>
-                    <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
-                        @*<h2>Validar Datos</h2>*@
-                        <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                            <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
-                            <div data-toggle="modal" data-target="#modal1">
-                                <button type="button" id="BTValidar" class="fa fa-check btn btn-success w-25 habil"> Confirmar</button>
-                            </div>
-                            <hr />
-                            <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
-                            <div data-toggle="modal" data-target="#modal2">
-                                <button type="button" id="BTValidar" class="fa fa-reply btn btn-warning w-25 habil"> Volver Etapa Anterior</button>
-                            </div>
-                            <hr />
-                            <p>En el caso que caso que usted considera que el postulanet no es apto para seguir el proceso de inscripcion.</p>
-                            <div data-toggle="modal" data-target="#modal3">
-                                <button type="button" id="BTValidar" class="fa fa-times btn btn-danger w-25 habil"> Interrumpir Proceso</button>
-                            </div>
+                    <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
+                        <nav class="navbar navbar-dark bg-dark ocultnav">
+                            <a class="navbar-brand" href="#">Validar Datos</a>
+                            @*<button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>*@
+                        </nav>
+                        <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
+                            @*<h2>Validar Datos</h2>*@
+                            <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
+                                <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
+                                <div data-toggle="modal" data-target="#modal1">
+                                    <button type="button" id="BTValidar" class="fa fa-check btn btn-success w-25 habil"> Confirmar</button>
+                                </div>
+                                <hr />
+                                <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
+                                <div data-toggle="modal" data-target="#modal2">
+                                    <button type="button" id="BTValidar" class="fa fa-reply btn btn-warning w-25 habil"> Volver Etapa Anterior</button>
+                                </div>
+                                <hr />
+                                <p>En el caso que caso que usted considera que el postulanet no es apto para seguir el proceso de inscripcion.</p>
+                                <div data-toggle="modal" data-target="#modal3">
+                                    <button type="button" id="BTValidar" class="fa fa-times btn btn-danger w-25 habil"> Interrumpir Proceso</button>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div class="container align-content-center">
-                        <h3 class="text-center">Problemas Encontrados en el Postulante</h3><br />
-                        <table class="table mx-auto" id="TablaProblemaGeneral">
-                            <thead>
-                                <tr>
-                                    <th scope="col">
-                                        Problemas Encontrado
-                                    </th>
-                                    <th scope="col">
-                                        Comentario
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @{
-                                    foreach (var item in Model.vDataProblemaEncontradosVmDocu)
-                                    {
-                                        <tr>
-                                            <td scope="row">
-                                                @Html.DisplayFor(modelitem => item.DataVerificacion)
-                                            </td>
-                                            <td scope="row">
-                                                @Html.DisplayFor(modelitem => item.Comentario)
-                                            </td>
-                                        </tr>
+                        <hr />
+                        <div class="container align-content-center">
+                            <h3 class="text-center">Problemas Encontrados en el Postulante</h3><br />
+                            <table class="table mx-auto" id="TablaProblemaGeneral">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">
+                                            Problemas Encontrado
+                                        </th>
+                                        <th scope="col">
+                                            Comentario
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        foreach (var item in Model.vDataProblemaEncontradosVmDocu)
+                                        {
+                                            <tr>
+                                                <td scope="row">
+                                                    @Html.DisplayFor(modelitem => item.DataVerificacion)
+                                                </td>
+                                                <td scope="row">
+                                                    @Html.DisplayFor(modelitem => item.Comentario)
+                                                </td>
+                                            </tr>
+                                        }
                                     }
+                                </tbody>
+                            </table>
+                        </div>
 
-                                }
-                            </tbody>
-                        </table>
                     </div>
-                   
-                </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-            <div class="modal-content " id="ModalEIACuerpo">
+<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content " id="ModalEIACuerpo">
 
-                <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Recuerde esta accion le permitira al postulante avanzar de etapa<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
+                @Ajax.ActionLink("Confirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                {
+                                                HttpMethod = "POST",
+                                                OnSuccess = "Exito(data,status,xhr)",
+                                                OnFailure = "Falla"
+                                                }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+</div>
+<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Recuerde que esta accion le permitira al postulante volverlo a la etapa anterior y poder corregir los errores que fueron encontrados<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
+                @Ajax.ActionLink("Confirmar", "VolverEtapa", "Delegacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                {
+                                                                                HttpMethod = "POST",
+                                                                                OnSuccess = "Exito(data,status,xhr)",
+                                                                                OnFailure = "Falla"
+                                                                              }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Esta Seguro que desea realizar la accion sobre el postulante, esto interrumpira el proceso de inscripcion<br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
+                @Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                {
+                                  HttpMethod = "POST",
+                                  OnSuccess = "Exito(data,status,xhr)",
+                                  OnFailure = "Falla"
+                                }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Recuerde esta accion le permitira al postulante avanzar de etapa<br />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                    @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
-                    @Ajax.ActionLink("Confirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                    {
-                                                    HttpMethod = "POST",
-                                                    OnSuccess = "Exito(data,status,xhr)",
-                                                    OnFailure = "Falla"
-                                                    }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Recuerde que esta accion le permitira al postulante volverlo a la etapa anterior y poder corregir los errores que fueron encontrados<br />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                    @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
-                    @Ajax.ActionLink("Confirmar", "VolverEtapa", "Delegacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                    {
-                                                                                    HttpMethod = "POST",
-                                                                                    OnSuccess = "Exito(data,status,xhr)",
-                                                                                    OnFailure = "Falla"
-                                                                                  }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Esta Seguro que desea realizar la accion sobre el postulante, esto interrumpira el proceso de inscripcion<br />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                    @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
-                    @Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                    {
-                                      HttpMethod = "POST",
-                                      OnSuccess = "Exito(data,status,xhr)",
-                                      OnFailure = "Falla"
-                                    }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
-                </div>
-            </div>
-        </div>
-    </div>
-    @*<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalCenterTitle"> Titulo del modal </h5>
+                    <h5 class="modal-title" id="ModalCenterTitle"> Titulo del modal </h5>
 
-                    </div>
-                    <div class="modal-body">
-                        <p id="TextModal"> mensaje del Modal </p>
-                    </div>
-                    <div class="modal-footer ">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"> TExto de Boton </button>
-                        <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
-                    </div>
+                </div>
+                <div class="modal-body">
+                    <p id="TextModal"> mensaje del Modal </p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"> TExto de Boton </button>
+                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
                 </div>
             </div>
-        </div>*@
+        </div>
+    </div>*@<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalCenterTitle"></h5>
+
+            </div>
+            <div class="modal-body">
+                <p id="TextModal"></p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"></button>
+                <button type="button" class="btn btn-primary" id="GuardarDTF"></button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 @section Scripts {
@@ -673,7 +805,7 @@
             else {
                 $("#btnNotificar").removeClass("disabled");
             }
-             
+
             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             $.BloqueoPantalla = true;
