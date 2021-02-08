@@ -795,25 +795,25 @@ namespace SINU.Controllers
         /// <summary>
         /// Action en donde permite cerrar la pantalla de un postulante, se cierra cuando un postulante no tiene ningun tipo de problemas en el cargado de datos o se abre cuando se necesita cargar problemas a un postulante
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">idPostulante o Idpersona</param>
         /// <param name="IdPanatlla">El Numero de Id de la pantalla de la cual se necesita cerrar</param>
         /// <param name="AoC">AoC Abierto o Cerrar, se necesita enviar un booleano para saber que accion necesita realizar el controlador si abrir o cerra una pantalla</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla, int AoC)
         {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);///realizo una busqueda con el IdPersona y devolverme el IdInscripcion
             var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
             var Abierto = db.spTildarPantallaParaPostulate(id).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
-            var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false);
+            var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false && m.Obligatorio == true);
             try
             {
                 if (ModelState.IsValid)
                 {
                     if (IdPanatlla == 10 && EntregTodo != null && AoC == 1)
                     {
-                        return Json(new { success = false, msg = "Para validar esta pantalla debe estar toda la documentacion presentada" });
+                        return Json(new { success = false, msg = "Para validar esta pantalla debe estar toda la documentacion obligatoria presentada" });
                     }
                     if (Abierto.Abierta == true)
                     {
@@ -821,7 +821,7 @@ namespace SINU.Controllers
                         {
                             return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
                         }
-                        if (TieneProblema.ToList().First() == false && AoC == 0)//abrir la pantalla sin problemas cargadaos ya estando abierta
+                        if (TieneProblema.ToList().First() == false && AoC == 0)//abrir la pantalla sin problemas cargadoos ya estando abierta
                         {
                             return Json(new { success = false, msg = "Esta pantalla ya se encuentra abierta para agregar problemas" });
                         }
@@ -885,7 +885,7 @@ namespace SINU.Controllers
                 }
         #endregion
 
-        #region Documentacion Necesaria para el postulante (POST) - guarda los registros de que documentacion presento
+        #region Documentacion Necesaria para el postulante (POST) boton (Confirmar) Pestaña (Documentacion Presentada)- guarda los registros de que documentacion presento
         [HttpPost]
         public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
         {
@@ -1097,7 +1097,7 @@ namespace SINU.Controllers
         {
             try
             {
-                var Postu = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == IdInscripto);
+                var Postu = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == IdInscripto);///traigo los datos de un postulante
                 var probleExistente = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Postu.IdPersona && m.IdDataVerificacion==26);
                 var Dataverificacion = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == IdPantalla && m.Descripcion == "Otros: Aclare");
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();

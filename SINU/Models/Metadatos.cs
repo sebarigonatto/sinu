@@ -634,10 +634,17 @@ namespace SINU.Models
         [Display(Name = "Modalidad")]
         public string Idmodalidad { get; set; }
     }
-    //public partial class vEntrevistaLugarFechaMetadata
-    //{
-    //    [Required(ErrorMessage = "Campo Obligatorio")]
-    //    public System.DateTime FechaEntrevista { get; set; }
-    //}
-     
+    #region Ver mas a profundidad esta metadata debido a que el display name no funciona en las vistas
+    public partial class DataVerificacionMetadata
+    {
+        [Display(Name = "Problemas Relacionados")]
+        public int IdDataVerificacion { get; set; }
+    }
+    #endregion
+    public partial class vDataProblemaEncontradoMetadata
+    {
+        [Display(Name = "Problema relacionado")]
+        public string DataVerificacion { get; set; }
+    }
+
 }

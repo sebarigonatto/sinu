@@ -141,11 +141,17 @@ namespace SINU.Models
         }
     }
     
-[MetadataType(typeof(CarrerauOficioMetadata))]
+    [MetadataType(typeof(CarrerauOficioMetadata))]
     public partial class CarreraOficio
     { }
     [MetadataType(typeof(vEntrevistaLugarFechaMetadata))]
     public partial class vEntrevistaLugarFecha
-    {}
+    { }
+    [MetadataType(typeof(DataVerificacionMetadata))]
+    public partial class DataVerificacion
+    { }
+    [MetadataType(typeof(vDataProblemaEncontradoMetadata))]
+    public partial class vDataProblemaEncontrado
+    { }
 } 
 

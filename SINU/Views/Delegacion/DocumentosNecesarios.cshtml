@@ -24,6 +24,9 @@
                     @Html.DisplayNameFor(model => model.DocumentosNecesarios[0].Descripcion)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.DocumentosNecesarios[0].Obligatorio)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.DocumentosNecesarios[0].Presentado)
                 </th>
             </tr>
@@ -37,6 +40,18 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td class="text-center">
+                        @{if (item.Obligatorio == true)
+                            {
+                                <p>SI</p>
+                            }
+                            else
+                            {
+                                <p>NO</p>
+                            }
+                          }
+                        @*@Html.DisplayFor(modelItem => item.Obligatorio)*@
                     </td>
                     <td class="text-center">
                         @{if (item.Presentado == false)
@@ -72,7 +87,7 @@
                HttpMethod = "POST",
                OnSuccess = "Exito(data,status,xhr)",
                OnFailure = "Falla",
-            }, new { @class = "btn btn-primary" ,@id="btnNotificar"})
+            }, new { @class = "btn btn-primary", @id = "btnNotificar" })
 
             </div>
         </div>
@@ -88,5 +103,5 @@
             }
 
         });
-     </script>
+    </script>
 }
