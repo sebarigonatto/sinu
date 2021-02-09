@@ -810,6 +810,8 @@ namespace SINU.Controllers
             ModelState["vPersona_Estudioidvm.Jurisdiccion"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.otro_inst"].Errors.Clear();
             ModelState["vPersona_Estudioidvm.Localidad"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.CantidadMateriaAdeudadas"].Errors.Clear();
+            ModelState["vPersona_Estudioidvm.ultimoAnioCursado"].Errors.Clear();
             if (ModelState.Keys.Contains("vPersona_Estudioidvm.IdInstitutos"))
             {
                 ModelState["vPersona_Estudioidvm.IdInstitutos"].Errors.Clear();
@@ -841,7 +843,7 @@ namespace SINU.Controllers
                     if (!e.Completo)
                     {
                         e.Promedio = null;
-                        e.ultimoAnioCursado = null;
+                        //e.ultimoAnioCursado = null;
                     }
                     db.spEstudiosIU(e.IdEstudio, e.IdPersona, e.Titulo, e.Completo, e.IdNiveldEstudio, e.IdInstitutos, e.Promedio, e.CantidadMateriaAdeudadas, e.ultimoAnioCursado, e.NombreYPaisInstituto, e.CursandoUltimoAnio);
 
@@ -1079,12 +1081,14 @@ namespace SINU.Controllers
             try
             {
                 var situreserva = new[] { 2,1};
-                if (situreserva.Contains( datos.ACTMilitarIDVM.IdSituacionRevista))
+                if (situreserva.Contains( datos.ACTMilitarIDVM.IdSituacionRevista) || !(bool)datos.ACTMilitarIDVM.Ingreso)
                 {
                     ModelState["ACTMilitarIDVM.FechaBaja"].Errors.Clear();
                     ModelState["ACTMilitarIDVM.MotivoBaja"].Errors.Clear();
                     ModelState["ACTMilitarIDVM.IdBaja"].Errors.Clear();
+                    ModelState["ACTMilitarIDVM.IdSituacionRevista"].Errors.Clear();
                 }
+
                
 
                 if (ModelState.IsValid)

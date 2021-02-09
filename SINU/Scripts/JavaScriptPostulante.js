@@ -581,6 +581,7 @@ $(document).ready(function () {
                 });
                 //verifico si egreso o no para mostrar/ocultar ciertos campos del formulario
                 EgresoSINO();
+
                 $("#TerminoEST").on("change", function () {
                     EgresoSINO();
                 });
@@ -714,11 +715,12 @@ $(document).ready(function () {
 
     //funcion de si egreso o no para mostrar campos de promedio y ultimo año cursado
     function EgresoSINO() {
+        //alert($("#TerminoEST").val());
         if ($("#TerminoEST").val() == "true") {
             $("#PROMEDIO").show();
             UltimoAñoSINO();
-            $("#CurUltAño,#CANTMATERIA,#ULT_AÑO").hide();
-            $("#CANTMATERIA :input,#ULT_AÑO :input").val("");
+            $("#CurUltAño, #CANTMATERIA, #ULT_AÑO").hide();
+            $("#CANTMATERIA :input, #ULT_AÑO :input").val("");
         } else {
             $("#CurUltAño").show();
             UltimoAñoSINO();
@@ -731,10 +733,10 @@ $(document).ready(function () {
         if ($("#UltimoAño").val() == "true") {
             $("#CANTMATERIA, #ULT_AÑO").hide()
             $("#CANTMATERIA input, #ULT_AÑO input").val("");
-        } else {
+        } else if ($("#TerminoEST").val()=="false") {
             $("#CANTMATERIA, #ULT_AÑO").show();
         }
-    }
+    };
 
 
 
