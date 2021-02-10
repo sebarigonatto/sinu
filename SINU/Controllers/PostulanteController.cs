@@ -1654,10 +1654,14 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult ProblemasPantalla(int ID_persona, int IdPantalla)
+        public ActionResult ProblemasPantalla(int ID_persona, int? IdPantalla, string? Pantalla )
         {
             try
             {
+                if (IdPantalla==null)
+                {
+                    IdPantalla = db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla).IdPantalla;
+                }
                 return PartialView(db.vDataProblemaEncontrado.Where(p => p.IdPostulantePersona == ID_persona).Where(m => m.IdPantalla == IdPantalla).ToList());
             }
             catch (Exception)

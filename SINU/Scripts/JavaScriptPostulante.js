@@ -438,7 +438,7 @@ $(document).ready(function () {
     });
 
     $("#BeginFormDomicilio input:submit").on("click", function () {
-        if ($("#listaviajes li").first().attr("id") =='livacio' ) {
+        if ($("#listaviajes li").first().attr("id") == 'livacio') {
             $("input:radio").last().prop('checked', 'checked');
             SHVIajeExt();
         };
@@ -664,20 +664,70 @@ $(document).ready(function () {
 
     //se se actualiza la vista parcial de la tabla en el caso que se elimine, modifique o se agregue un registro
     function ActualizaTabla() {
-        //alert(id_persona + url_Tabla );
-        $("#" + url_Tabla + "NAV").load("/" + url_Controller + "/" + url_Tabla, { ID_persona: id_persona }, function () {
-            //alert("se recargo la vista de la tabla actual...")
-            //aplico datatable a la tabla de estudio
-            TablasEIA();
-
-            //se llama al modal para cargar un nuevo registrode la tabla actual
-            $(".Nuevo_REG").on("click", function () {
-                var id_Tabla = $(this).attr("data-IdTabla");
-                //alert(id_Tabla)
-                ModalEIACUD(null, id_persona, id_Tabla);
+        htmlProblem = "<br/>";
+        if ($("#" + url_Tabla + "NAV").children("div.problemapantalla ").length > 0 ) {
+            $.ajax({
+                url: "/" + url_Controller + "/url_Tabla",
+                data: { ID_persona: id_persona, Pantalla: url_Tabla },
+                dataType: 'html',
+                async: false,
+                success: function (html) {
+                    htmlProblem = html + htmlProblem;
+                }
             });
-
+        };
+        $.ajax({
+            url: "/" + url_Controller + "/" + url_Tabla,
+            data: { ID_persona: id_persona },
+            dataType: 'html',
+            async: false,
+            success: function (html) {
+                htmlProblem = htmlProblem + html;
+            }
         });
+        $("#" + url_Tabla + "NAV").html(htmlProblem);
+
+        TablasEIA();
+
+        //se llama al modal para cargar un nuevo registrode la tabla actual
+        $(".Nuevo_REG").on("click", function () {
+            var id_Tabla = $(this).attr("data-IdTabla");
+            //alert(id_Tabla)
+            ModalEIACUD(null, id_persona, id_Tabla);
+        });
+
+        //htmlProblem = "";
+        ////alert($("#" + url_Tabla + "NAV").children("div.problemapantalla ").length);
+        //if ($("#" + url_Tabla + "NAV").children("div.problemapantalla ").length > 0) {
+        //    $("#htmlLOAD").load("/Postulante/ProblemasPantalla", { ID_persona: id_persona, Pantalla: url_Tabla }, function (response,status,texterror) {
+        //        htmlProblem = response;
+        //        $("#htmlLOAD").html("");
+        //    });
+        //};
+        ////alert(id_persona + url_Tabla );
+        //$("#" + url_Tabla + "NAV").load("/" + url_Controller + "/" + url_Tabla, { ID_persona: id_persona }, function (response, status) {
+        //    if (htmlProblem != "") {
+        //        $("#" + url_Tabla + "NAV").prepend(htmlProblem);
+        //    };
+        //    $("#" + url_Tabla + "NAV").prepend("<br/>");
+        //      setTimeout(function () {
+              
+        //    }, 1);
+        //    //alert("se recargo la vista de la tabla actual...")
+        //    //aplico datatable a la tabla de estudio
+        //    TablasEIA();
+
+        //    //se llama al modal para cargar un nuevo registrode la tabla actual
+        //    $(".Nuevo_REG").on("click", function () {
+        //        var id_Tabla = $(this).attr("data-IdTabla");
+        //        //alert(id_Tabla)
+        //        ModalEIACUD(null, id_persona, id_Tabla);
+        //    });
+
+           
+
+        //});
+            
     };
 
 

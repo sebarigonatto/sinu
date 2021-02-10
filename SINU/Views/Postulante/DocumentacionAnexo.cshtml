@@ -34,7 +34,9 @@
                             <i style="color:red; padding-top:5px; font-size:1.3rem " class="fa fa-times "></i>
                         }
 
-                        &ensp;<b>@Html.Label(item.Tipo):&ensp;</b>@item.Descripcion
+                        &ensp;<b>@Html.Label(item.Tipo):
+
+                            </b>@item.Descripcion@if (item.Obligatorio) { <b style="color:red;font-size:0.8rem">(obligatorio)</b> }
                         <hr style="border-color: #08495f;width:90%"  />
                     </div>
 

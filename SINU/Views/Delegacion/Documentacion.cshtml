@@ -982,7 +982,6 @@
             $.Anuncio(response.msg);
             switch (response.form) {
                 case "Elimina":
-                    $.ActualizaTabla(response.url_Tabla, response.url_Controller);
                     var idpostulante = $("#vPersona_DatosBasicosVM_IdPersona").val();
                     var idPantalla = response.IdPantalla;
                     $("#" + response.url_Tabla + response.IdPantalla).load("/" + response.url_Controller + "/" + response.url_Tabla + "?", $.param({ IdPostulante: idpostulante, IdPantalla: idPantalla }), function () {
