@@ -12,6 +12,7 @@
     .dataTables_filter {
         display: flex !important;
     }
+
     input: -internal-autofill-selected {
         background-color: #f5f5f5 !important
     }
@@ -76,7 +77,7 @@
             padding-left: 0px !important;
             padding-right: 0px !important;
         }
-        
+
     #TABPrincipal .nav-tabs a.bloqueado:hover {
         background-color: #08495f !important;
     }
@@ -285,8 +286,9 @@
         padding-left: 5px !important;
         padding-right: 5px !important
     }
+
     .form-control:disabled, .form-control[readonly] {
-        cursor:text;
+        cursor: text;
     }
 </style>
 <div class="row pr-3">
@@ -501,27 +503,27 @@
 </div>
 
 
-        @*////////////////////////////////////////////////////////////////////////////////////////////*@
-        @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
-        <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-            <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-                <div class="modal-content" id="ModalEIACuerpo">
+@*////////////////////////////////////////////////////////////////////////////////////////////*@
+@*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
+<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+        <div class="modal-content" id="ModalEIACuerpo">
 
-                    <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
 
-                </div>
-            </div>
         </div>
+    </div>
+</div>
 
 
-        @Html.Hidden("idper", null)
-        @Html.Hidden("idfami", null)
+@Html.Hidden("idper", null)
+@Html.Hidden("idfami", null)
 
 
-        @section Scripts{
-            @Scripts.Render("~/bundles/jqueryval")
-            <script src="~/Scripts/JavaScriptPostulante.js"></script>
-            <script type="text/javascript">
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JavaScriptPostulante.js"></script>
+    <script type="text/javascript">
         (function () {
             $(".TABCondicional").css("color", "gray")
                 .attr("data-toggle", "tooltip")
@@ -531,6 +533,8 @@
 
         $.NoEjecutar = true;
         $(document).ready(function () {
+
+            $(".FormViajeExt").remove();
             var URLanterior = document.referrer.toString();
 
             if (URLanterior.indexOf("Delegacion") > 0) {
@@ -570,7 +574,10 @@
             //en caso de ser postulante solo muestro la informacion y deshabilito la edicion de los datos
             if ('@Model.postulante' == "True") {
 
-                if ("@ViewBag.ValidacionEnCurso" != "True") { $("#OK").hide(); $.Anuncio("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!") };
+                if ("@ViewBag.ValidacionEnCurso" != "True") {
+                    $("#OK").hide();
+                    $.Anuncio("Esta persona  es un POSTULANTE, por lo que no podra editar sus datos.!!!");
+                };
 
                 //alert("es un postulante");
                 //Deshabilito los input de los formularios
@@ -673,5 +680,5 @@
         function Falla(response) {
             alert("Error occured.");
         };
-            </script>
-        }
+    </script>
+}

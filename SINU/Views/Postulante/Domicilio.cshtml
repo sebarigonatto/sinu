@@ -200,10 +200,10 @@
             </div>
             @{ bool viajo = Model.PostulanteViajeListaVM.Count > 0; }
 
-            <h2 class="d-inline-flex">
+            <h2 class="d-inline-flex FormViajeExt">
                 Viajes al Exterior:
             </h2>
-            <div class="form-group d-inline-flex">
+            <div class="form-group d-inline-flex FormViajeExt">
                 <div class="col-md-12" id="RadioBTViajes">
 
                     <h5 class="d-inline-flex">Si</h5> <input @(viajo ? "checked='checked'" : "" ) id="Viaje" name="Viaje" type="radio" value="si" />&ensp;
@@ -213,9 +213,9 @@
                 </div>
             </div>
 
-            <h6 class="BTAcciones">En caso de haber realizado viaje/s al exterior, debera informar los mismos.</h6>
+            <h6 class="BTAcciones FormViajeExt">En caso de haber realizado viaje/s al exterior, debera informar los mismos.</h6>
             
-            <div class="form-group row">
+            <div class="form-group row FormViajeExt" >
                 <div class="col-md-6 BTAcciones">
 
 

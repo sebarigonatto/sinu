@@ -36,7 +36,7 @@
 
                         &ensp;<b>@Html.Label(item.Tipo):
 
-                            </b>@item.Descripcion@if (item.Obligatorio) { <b style="color:red;font-size:0.8rem">(obligatorio)</b> }
+                            </b>@Html.Raw(item.Descripcion)@if (item.Obligatorio) { <b style="color:red;font-size:0.8rem">(obligatorio)</b> }
                         <hr style="border-color: #08495f;width:90%"  />
                     </div>
 
