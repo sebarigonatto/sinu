@@ -39,7 +39,6 @@
                         <li class="nav-item flex-sm-fill bli">
                             <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" data-toggle="tab" href="#DocuPenal" role="tab" aria-controls="DocuPenal" aria-selected="false">
                                 Antedecentes Penales
-                                <span class="fa fa-check-circle" id="CheckVal1" hidden></span>
                             </a>
                         </li>
                         <li class="nav-item flex-md-fill bli">
@@ -107,7 +106,7 @@
                     @* VISTA DE DATO PERSONAL *@
                     <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="DatosPersonales">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Datos Personales</a>
+                            <a class="navbar-brand" href="#DatosPersonales">Datos Personales</a>
                             <button id="BTDatosPersonalesNAV" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DatosPersonalesNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
@@ -546,10 +545,15 @@
                             </div>
                         </div>
                     </div>
-                    @* VISTA DE Verificacion*@
+                    @* VISTA DE Documentacion Presentada*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocumentosNecesarios">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#">Verificacion</a>
+                            <a class="navbar-brand" href="#">Documentacion Presentada</a>
+                            <button id="BTFamiliaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-controls="FamiliaNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4">
                             <div id="DocumentosNecesariosNAV">
@@ -580,11 +584,11 @@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
                             <a class="navbar-brand" href="#">Validar Datos</a>
-                            @*<button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
+                            <button id="BTValidarDatosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#ValidarDatosNAV" role="tabpanel" aria-labelledby="ValidarDatosNAV-tab" aria-controls="ValidarDatosNAV" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
-                                </button>*@
+                                </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
                             @*<h2>Validar Datos</h2>*@
@@ -668,7 +672,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
                 @Ajax.ActionLink("Confirmar", "Documentacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                 {
                                                 HttpMethod = "POST",
@@ -693,7 +696,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
                 @Ajax.ActionLink("Confirmar", "VolverEtapa", "Delegacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
                 {
                                                                                 HttpMethod = "POST",
@@ -718,7 +720,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-                @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@<button type="submit" class="btn btn-success" value="Postular" name="botonPostular"></button>
                 @Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                 {
                                   HttpMethod = "POST",
@@ -729,23 +730,7 @@
         </div>
     </div>
 </div>
-@*<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalCenterTitle"> Titulo del modal </h5>
-
-                </div>
-                <div class="modal-body">
-                    <p id="TextModal"> mensaje del Modal </p>
-                </div>
-                <div class="modal-footer ">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"> TExto de Boton </button>
-                    <button type="button" class="btn btn-primary" id="GuardarDTF">Guardar de todas formas</button>
-                </div>
-            </div>
-        </div>
-    </div>*@<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -757,11 +742,10 @@
             </div>
             <div class="modal-footer ">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"></button>
-                <button type="button" class="btn btn-primary" id="GuardarDTF"></button>
+                @*<button type="button" class="btn btn-primary" id="GuardarDTF"></button>*@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @section Scripts {
