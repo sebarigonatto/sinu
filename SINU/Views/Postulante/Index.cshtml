@@ -378,7 +378,7 @@
                         @if (Model.NoPostulado)
                         {
                             <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-                                <h3> @Html.Raw((string)ViewBag.TextNoAsignado)</h3>
+                                <h4> @Html.Raw((string)ViewBag.TextNoAsignado)</h4>
                             </div>
                         }
                         else
@@ -490,7 +490,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
-                                                <br />
+                                               
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 4 })
@@ -513,7 +513,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
-                                                <br/>
+                                               
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 5 })
@@ -533,7 +533,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
-                                                <br/>
+                                              
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 6 })
@@ -640,18 +640,18 @@
                                                     <div class="jumbotron mb-0 " style="background-color: #08495f; color:white">
                                                         <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "") style="text-align: justify;">
                                                             @Html.Raw(ViewBag.TextDeclaracionJurada)
-                                                           
-                                                            <br >
+
+                                                            <br>
                                                             <br />
-                                                            @Html.CheckBox("asd", false, new { @class= "form-control d-inline w-auto", @id="check_validacion" }) (SE REQUIERE QUE TILDE EL CUADRO)
-                                                        <br />
-                                                        <br />
+                                                            @Html.CheckBox("asd", false, new { @class = "form-control d-inline w-auto BTAcciones", @id = "check_validacion" }) <o class="BTAcciones">(SE REQUIERE QUE TILDE EL CUADRO)</o>
+                                                            <br />
+                                                            <br />
                                                             @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                           {
                                                               HttpMethod = "POST",
                                                               OnSuccess = "Exito(data,status,xhr)",
                                                               OnFailure = "Falla"
-                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled" })
+                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -698,7 +698,7 @@
         </div>
     </div>
 </div>
-
+<div id="htmlLOAD"></div>
 
 
 @section Scripts {

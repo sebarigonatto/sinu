@@ -57,11 +57,7 @@ namespace SINU.Controllers
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
                 //ver como mostrar esta pantalla de si fue 
-                if (pers.NoPostulado)
-                {
-                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
-                    ;
-                }
+              
                 pers.ProcesoInterrumpido = (Secuencias[0] == 24);
 
                 //verifico si la validacion esta en curso o no para el bloqueo de la Pantalla de Documentacion
@@ -89,6 +85,12 @@ namespace SINU.Controllers
                     
                 }
                 pers.NomyApe = db.Persona.Find(pers.ID_PER).Apellido + ", " + db.Persona.Find(pers.ID_PER).Nombres;
+                
+                if (pers.NoPostulado)
+                {
+                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
+                    ViewBag.TextNoAsignado = ViewBag.TextNoAsignado.Replace("$Nombre", pers.NomyApe.ToUpper());
+                }
                 return View(pers);
             }
             catch (Exception ex)
@@ -1548,7 +1550,7 @@ namespace SINU.Controllers
 
             };
             int idinscrip = db.Postulante.Find(IdPersona).Inscripcion.First().IdInscripcion;
-            docu.docus = db.DocumentosNecesariosDelInscripto(idinscrip).ToList();
+            docu.docus = db.DocumentosNecesariosDelInscripto(idinscrip).OrderByDescending(m=>m.Obligatorio).ToList();
             var secus = db.InscripcionEtapaEstado.Where(m => m.IdInscripcionEtapaEstado == idinscrip).OrderByDescending(n => n.Fecha).ToList();
             //verifico que ya haya tenido una respuesta de validacion departe de la delegacion
             ViewBag.secucu = secus[0].IdSecuencia == 13 && secus.FirstOrDefault(m => m.IdSecuencia == 14) != null;
@@ -1654,10 +1656,14 @@ namespace SINU.Controllers
         }
 
         [AuthorizacionPermiso("ListarRP")]
-        public ActionResult ProblemasPantalla(int ID_persona, int IdPantalla)
+        public ActionResult ProblemasPantalla(int ID_persona, int? IdPantalla, string? Pantalla )
         {
             try
             {
+                if (IdPantalla==null)
+                {
+                    IdPantalla = db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla).IdPantalla;
+                }
                 return PartialView(db.vDataProblemaEncontrado.Where(p => p.IdPostulantePersona == ID_persona).Where(m => m.IdPantalla == IdPantalla).ToList());
             }
             catch (Exception)
