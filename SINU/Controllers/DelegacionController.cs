@@ -268,8 +268,8 @@ namespace SINU.Controllers
 
                 var modeloPlanti = new ViewModels.MailPostular
                 {
-                    Apellido = vInscripcionEtapas.Apellido,
-                    MailCuerpo = cuerpo,
+                    Apellido = "",
+                    MailCuerpo = cuerpo.Replace("$Nombre",vInscripcionEtapas.Nombres),/// se remplaza con la variable creada en la base de datos con un nombre del postulante
                     LinkConfirmacion = callbackUrl,
                     Postulado = x
                 };
@@ -467,8 +467,8 @@ namespace SINU.Controllers
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
                         Estado = "No Validado",
-                        MailCuerpo = cuerpo,
-                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        MailCuerpo = cuerpo.Replace("$Nombre",vInscripcionEtapaEstado.Nombres),
+                        Apellido = "",
                         Errores = data
                     };
                     bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
@@ -870,8 +870,7 @@ namespace SINU.Controllers
                         ViewBag.Idinscripto = inscrip.IdInscripcion;
                         DocuNecesaria datos = new DocuNecesaria()
                         {
-                            DocumentosNecesarios = DocuNecesarios,
-                            //inscipto=inscrip.IdInscripcion
+                            DocumentosNecesarios = DocuNecesarios
                         };
                         var listDocu = DocuNecesarios.ToList();
                         return PartialView(datos);
@@ -887,7 +886,7 @@ namespace SINU.Controllers
 
         #region Documentacion Necesaria para el postulante (POST) boton (Confirmar) Pestaña (Documentacion Presentada)- guarda los registros de que documentacion presento
         [HttpPost]
-        public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
+        public JsonResult DocuNecesarios(string[] select, int? IdInscripto, string btnDocu)
         {
             try
             {

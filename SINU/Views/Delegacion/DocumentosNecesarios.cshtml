@@ -50,7 +50,7 @@
                             {
                                 <p>NO</p>
                             }
-                          }
+                        }
                         @*@Html.DisplayFor(modelItem => item.Obligatorio)*@
                     </td>
                     <td class="text-center">
@@ -77,23 +77,25 @@
             }
         </tbody>
     </table>
+    <a type="submit" name="IdInscripto" value="@ViewBag.Idinscripto"></a>
     <div class="container-fluid">
         <div class="form-group row">
             <div class="align-content-lg-end">
-                <button type="submit" class="btn btn-primary" name="IdInscripto" value="@ViewBag.Idinscripto">Confirmar</button>
+                <button type="submit" class="btn btn-primary" name="btnDocu" value="Confirmar">Confirmar</button>
+                <button type="submit" class="btn btn-primary" name="btnDocu" value="Notificar">Confirmar</button>
 
-                @Ajax.ActionLink("Notificar", "NotiDocumentacion", new { IdInscripto = @ViewBag.Idinscripto, IdPantalla = 10 }, new AjaxOptions
-           {
-               HttpMethod = "POST",
-               OnSuccess = "Exito(data,status,xhr)",
-               OnFailure = "Falla",
-            }, new { @class = "btn btn-primary", @id = "btnNotificar" })
+                @*@Ajax.ActionLink("Notificar", "NotiDocumentacion", new { IdInscripto = @ViewBag.Idinscripto, IdPantalla = 10 }, new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnSuccess = "Exito(data,status,xhr)",
+                        OnFailure = "Falla",
+                     }, new { @class = "btn btn-primary", @id = "btnNotificar" })*@
 
             </div>
         </div>
     </div>
 }
-@section Scripts {
+@*@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
@@ -104,4 +106,4 @@
 
         });
     </script>
-}
+}*@
