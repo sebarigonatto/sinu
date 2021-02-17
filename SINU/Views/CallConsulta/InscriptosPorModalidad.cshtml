@@ -21,8 +21,8 @@
                 @Html.DisplayNameFor(model => model.Delegacion)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Modalidad)
-            </th>*@
+            @Html.DisplayNameFor(model => model.Modalidad)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
@@ -32,6 +32,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Email)*@
+                <label>Detalle</label>
+            </th>
 
         </tr>
     </thead>
@@ -39,29 +43,31 @@
         @foreach (var item in Model)
         {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Delegacion)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.Modalidad)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delegacion)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Modalidad)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+            
 
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>*@
-            </tr>
+            @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+        </tr>
         }
     </tbody>
     @*<div>

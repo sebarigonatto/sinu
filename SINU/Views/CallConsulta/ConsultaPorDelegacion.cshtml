@@ -11,9 +11,11 @@
     @ViewBag.Title
 </h2>
 
-<h2 class="font-weight-bold text-warning">
-   @ViewBag.Title2
-</h2>
+<div class="alert alert-dark text-right text-secondary" role="alert">TOTAL: @ViewBag.Title2</div>
+
+@*<h2 class="font-weight-bold text-warning">
+    @ViewBag.Title2
+</h2>*@
 
 <div>
     <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
@@ -40,35 +42,41 @@
                 @Html.DisplayNameFor(model => model.Genero)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Etapa)
-            </th>  
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genero)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Etapa)
-                </td>
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>*@
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+        </tr>
         }
     </tbody>
 </table>
