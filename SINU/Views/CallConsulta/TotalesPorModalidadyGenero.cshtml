@@ -54,7 +54,7 @@
                     @*Nombre,Action, Controlador*@
                     @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
                     @*No se puede tener dos ActionLink con el mismo nombre*@
-                    @Html.ActionLink(" Detalles", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas}, new { @class = "fas fa-bars", @style = "color:#343a40" })
+                    @Html.ActionLink(" ", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas}, new { @class = "fas fa-bars", @style = "color:#343a40" })
                 </td>
             </tr>
         }
