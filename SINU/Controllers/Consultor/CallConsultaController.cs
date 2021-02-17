@@ -141,9 +141,11 @@ namespace SINU.Controllers.Consultor
             return PartialView(ListadoDelegaciones);
 
         }
+
+
         
         //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
-        public ActionResult TotalizarPorModalidadyEntrevista()
+        public ActionResult TotalizarPorConvocatoria()
         {
             var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
 
