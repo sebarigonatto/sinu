@@ -886,7 +886,7 @@ namespace SINU.Controllers
 
         #region Documentacion Necesaria para el postulante (POST) boton (Confirmar) Pestaña (Documentacion Presentada)- guarda los registros de que documentacion presento
         [HttpPost]
-        public JsonResult DocuNecesarios(string[] select, int? IdInscripto, string btnDocu)
+        public JsonResult DocuNecesarios(string[] select, int? IdInscripto)
         {
             try
             {
@@ -906,7 +906,7 @@ namespace SINU.Controllers
 
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
                 var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false);
-
+                ///verificar que cuando se entrega toda la documentacion entra aca y pincha debido a que trata de borrar un problema inexistente
                 if (DocuNoPresnt == null)
                 {
                     //db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
@@ -914,7 +914,7 @@ namespace SINU.Controllers
                 }
                 else
                 {
-                    return Json(new { succes = true, msg = "Se agregao correctamente la documentacion", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                    return Json(new { succes = true, msg = "Se agrego correctamente la documentacion", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                 }
 
                 //return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
@@ -958,7 +958,8 @@ namespace SINU.Controllers
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
                     LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO == true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
-                    FechaPresentacion = DateTime.Now
+                    FechaPresentacion = DateTime.Now,
+                    listado= db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList().Count
                 };
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
@@ -1014,13 +1015,14 @@ namespace SINU.Controllers
 
         }
 
-        #region Asignar fecha a varios Postulante(GET) - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
+        #region Asignar fecha de ENTREVISTA a varios Postulante(GET) ENTREVISTA - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
         [HttpGet]
         public ActionResult AsignarFechaVariosEntrevista()
         {
             try
             {
                 List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
+                ViewBag.Listado= db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
                 return View(dato);
             }
             catch (Exception)
@@ -1030,7 +1032,7 @@ namespace SINU.Controllers
         }
         #endregion
 
-        #region Asignar fecha a varios postulantes (POST) - en esta accion se le asigna la fecha a un listado seleccionado de postulante y envia el mail a los postulantes 
+        #region Asignar fecha de ENTREVISTA a varios postulantes (POST) - en esta accion se le asigna la fecha a un listado seleccionado de postulante y envia el mail a los postulantes 
         [HttpPost]
         public JsonResult AsignarFechaVariosEntrevista(DateTime Fecha, string[] select)
         {

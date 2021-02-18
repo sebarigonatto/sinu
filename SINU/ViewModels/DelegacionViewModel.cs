@@ -46,6 +46,7 @@ namespace SINU.ViewModels
         public SelectList LugarPresentacion { get; set; }
         public DateTime FechaPresentacion { get; set; }
         public string DatosLugar { get; set; }
+        public int listado { get; set; }
     }
     public class PresentaciondelPostulante
     {
