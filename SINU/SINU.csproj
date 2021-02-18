@@ -287,6 +287,9 @@
     <Compile Include="Models\DataVerificacion.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeclaracionJurada.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Delegacion_EstablecExamen.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

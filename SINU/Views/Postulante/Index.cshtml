@@ -5,6 +5,7 @@
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
 <style>
+ 
     input:-internal-autofill-selected {
         background-color: #f5f5f5 !important
     }
@@ -290,6 +291,13 @@
             color: #08495f !important;
             font-size: larger;
         }
+
+    #autoresizing {
+        display: block;
+        overflow: hidden;
+        resize: none;
+        align-content:center;
+    }
 </style>
 
 <div class="container">
@@ -647,11 +655,11 @@
                                                             <br />
                                                             <br />
                                                             @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                          {
-                                                              HttpMethod = "POST",
-                                                              OnSuccess = "Exito(data,status,xhr)",
-                                                              OnFailure = "Falla"
-                                                          }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
+                                                              {
+                                                                  HttpMethod = "POST",
+                                                                  OnSuccess = "Exito(data,status,xhr)",
+                                                                  OnFailure = "Falla"
+                                                              }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -687,6 +695,7 @@
     </div>
 </section>
 
+
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
@@ -699,6 +708,8 @@
     </div>
 </div>
 <div id="htmlLOAD"></div>
+
+@*<button id="" onclick="ejecutarrecorrido()" class="btn btn-danger">asdasd</button>*@
 
 
 @section Scripts {
@@ -863,7 +874,8 @@
             mywindow.document.write('</head><body style="color:black !important">');
             mywindow.document.write('<h1>' + document.title + '</h1>');
             $("#Presentacion .jumbotron").css("color", "black");
-            btn = $("#btpresentacion").html(); $("#btpresentacion").html("");
+            btn = $("#btpresentacion").html();
+            $("#btpresentacion").html("");
             mywindow.document.write($('#Presentacion').html());
             $("#Presentacion .jumbotron").css("color", "white");
             $("#btpresentacion").html(btn);
@@ -920,6 +932,47 @@
         //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
             $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
+        };
+
+        function ejecutarrecorrido() {
+            PantallasError = "";
+            $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
+                if ($(item).find("thead").length == 0) {
+
+                    //alert("form - " + $(item).attr("id"));
+                    saltar = true;
+                    $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
+                        if ($(item2).val() == '') {
+                            id_pant=$(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+                            PantallasError = PantallasError + id_pant + "-";
+                            saltar = false;
+                        };
+                        return saltar;
+                        //alert($(item2).attr("id"));
+                    });
+                } else {
+                    id_pant =$(item).attr("id");
+                    if ($(item).find("tbody tr[role='row']").length == 0) {
+                        PantallasError = PantallasError + id_pant + "-";
+                        //alert("no hay registros");
+                    }; //else {
+                    //    alert("hay registos!!!!");
+                    //};
+                };
+
+            });
+
+            alert(PantallasError);
+            $.ajax({
+                url: "/Postulante/validacion",
+                data: { asd: PantallasError },
+                dataType: 'json',
+                async: false,
+                success: function (resp) {
+                    alert(resp.verdad);
+                }
+            });
+
         };
 
     </script>

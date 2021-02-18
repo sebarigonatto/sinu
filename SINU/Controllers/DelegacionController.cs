@@ -909,7 +909,7 @@ namespace SINU.Controllers
 
                 if (DocuNoPresnt == null)
                 {
-                    db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
+                    //db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
                     return Json(new { succes = true, msg = " Toda la doucumentacion ha sido entregada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                 }
                 else

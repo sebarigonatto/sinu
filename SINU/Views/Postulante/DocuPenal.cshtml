@@ -15,7 +15,7 @@
 {
     @Html.AntiForgeryToken()
     <h2>Antecedetes Penales</h2>
-    
+
     <div class="form-group">
         <div class="jumbotron mb-0 p-3 pl-0 pr-0 pl-md-5 pr-md-5 pt-4" style="background-color: #08495f; color:white">
             @Html.HiddenFor(m => m.IdPersona)
@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="col col col-md-12 p-0 ">
-                    <a href="@Url.Action("GetFile","Postulante", new { ID_persona = Model.IdPersona.ToString(), docu = "Anexo2" })" class="btn btn-primary @(Model.PathFormularioAanexo2 == null? "hidden":"")" target="_blank" id="DocuAnex" @(Model.PathFormularioAanexo2 == null? "hidden='hidden'":"")>Ver Archivo</a>
+                    <a href="@Url.Action("GetFile","Postulante", new { ID_persona = Model.IdPersona.ToString(), docu = "Anexo2" })" class="btn btn-primary @(Model.PathFormularioAanexo2 == null? "hidden":"")" target="_blank" id="DocuAnex" @(Model.PathFormularioAanexo2 == null ? "hidden='hidden'" : "")>Ver Archivo</a>
                 </div>
 
             </div>
@@ -86,6 +86,25 @@
                 <div class=" col col-sm-12 BTAcciones pl-0 ">
                     <input type="submit" class="btn btn-success load-submit" id="btDOCUPENAL" value="Subir Archivos" />
                 </div>
+            </div>
+            <hr style="border-top: 1px solid rgb(158 158 158)!important; width: 90%" />
+            <div class="form-group">
+                <h5>¿Posee antecedentes penales, judiciales o policiales?</h5>
+
+
+                @Html.DropDownList("asd", new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text"), "Selecione una opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })
+                @* @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Numero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+        @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })*@
+                <br /><br />
+                <div class="form-group" id="casosPenales">
+                    @Html.Label("Indicar cuales:", new { @class = "control-label" })
+                    <textarea id="autoresizing" class="form-control" placeholder="Ingrese los antecedentes que posea....."></textarea>
+
+
+                </div>
+                <o class="BTAcciones">No soy adicto a las bebidas alcoholicas ni a otras sustancias </o>@Html.CheckBox("asd", false, new { @class = "form-control d-inline w-auto BTAcciones", @id = "" }) 
+                <br /><br />
+                <button type="submit" class="btn btn-success"> Guardar </button>
             </div>
         </div>
         <br />
