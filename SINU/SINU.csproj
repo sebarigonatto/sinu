@@ -938,6 +938,9 @@
     <Content Include="Plantillas\PlantillaMailForgotPassword.cshtml" />
     <Content Include="Plantillas\PlantillaMailExitoModificacion.cshtml" />
     <Content Include="Plantillas\MailFechaPresentacion.cshtml" />
+    <Content Include="Documentacion\AUTORIZACIÓN PARA LOS POSTULANTES MENORES DE 18 AÑOS.pdf" />
+    <Content Include="Documentacion\AutorizTrasladoMenor.pdf" />
+    <Content Include="Documentacion\Carta Compromiso.pdf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />

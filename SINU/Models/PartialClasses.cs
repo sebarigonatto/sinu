@@ -153,5 +153,8 @@ namespace SINU.Models
     [MetadataType(typeof(vDataProblemaEncontradoMetadata))]
     public partial class vDataProblemaEncontrado
     { }
+    [MetadataType(typeof(vInscripcionDetalleMetadata))]
+    public partial class vInscripcionDetalle
+    { }
 } 
 
