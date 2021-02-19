@@ -198,6 +198,17 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IdPantalla" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="DeclaracionJurada">
+          <Key>
+            <PropertyRef Name="IdDeclaracionJurada" />
+          </Key>
+          <Property Name="IdDeclaracionJurada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PoseeAntecedentes" Type="varchar" MaxLength="2" />
+          <Property Name="Antecedentes_Detalles" Type="varchar" MaxLength="200" />
+          <Property Name="EsAdicto" Type="varchar" MaxLength="2" />
+          <Property Name="Comentario" Type="varchar" MaxLength="200" />
+          <Property Name="IdInscripcion" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Delegacion_EstablecExamen">
           <Key>
             <PropertyRef Name="idDelegacion_EstablecExamen" />
@@ -1722,6 +1733,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vVerificacionPantallasYDatosAVerifi
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DeclaracionJurada_Inscripcion">
+          <End Role="Inscripcion" Type="Self.Inscripcion" Multiplicity="1" />
+          <End Role="DeclaracionJurada" Type="Self.DeclaracionJurada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inscripcion">
+              <PropertyRef Name="IdInscripcion" />
+            </Principal>
+            <Dependent Role="DeclaracionJurada">
+              <PropertyRef Name="IdInscripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen">
           <End Role="EstablecimientoRindeExamen" Type="Self.EstablecimientoRindeExamen" Multiplicity="1" />
           <End Role="Delegacion_EstablecExamen" Type="Self.Delegacion_EstablecExamen" Multiplicity="*" />
@@ -2599,6 +2622,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
           <Parameter Name="eliminandotabla" Type="int" Mode="In" />
         </Function>
+        <Function Name="Vaciar2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
+          <Parameter Name="eliminandotabla" Type="int" Mode="In" />
+        </Function>
         <Function Name="VaciarASPNETUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="correoregistrado" Type="nvarchar" Mode="In" />
           <Parameter Name="eliminar" Type="int" Mode="In" />
@@ -2620,6 +2647,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="Convocatoria" EntityType="Self.Convocatoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataProblemaEncontrado" EntityType="Self.DataProblemaEncontrado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataVerificacion" EntityType="Self.DataVerificacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeclaracionJurada" EntityType="Self.DeclaracionJurada" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Delegacion_EstablecExamen" EntityType="Self.Delegacion_EstablecExamen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocPresentado" EntityType="Self.DocPresentado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Domicilio" EntityType="Self.Domicilio" Schema="dbo" store:Type="Tables" />
@@ -3371,6 +3399,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_DeclaracionJurada_Inscripcion" Association="Self.FK_DeclaracionJurada_Inscripcion">
+            <End Role="Inscripcion" EntitySet="Inscripcion" />
+            <End Role="DeclaracionJurada" EntitySet="DeclaracionJurada" />
+          </AssociationSet>
           <AssociationSet Name="FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen" Association="Self.FK_Delegacion_EstablecExamen_EstablecimientoRindeExamen">
             <End Role="EstablecimientoRindeExamen" EntitySet="EstablecimientoRindeExamen" />
             <End Role="Delegacion_EstablecExamen" EntitySet="Delegacion_EstablecExamen" />
@@ -3728,6 +3760,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <NavigationProperty Name="InscripcionEtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Inscripcion" FromRole="Inscripcion" ToRole="InscripcionEtapaEstado" />
           <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdCarreraOficio" Type="Int32" />
+          <NavigationProperty Name="DeclaracionJurada" Relationship="SINUModel.FK_DeclaracionJurada_Inscripcion" FromRole="Inscripcion" ToRole="DeclaracionJurada" />
         </EntityType>
         <EntityType Name="Institucion">
           <Key>
@@ -5290,6 +5323,15 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdDataProblemaEncontrado" Mode="In" Type="Int32" />
             <Parameter Name="Eliminar" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="Vaciar2" ReturnType="Collection(Int32)">
+            <Parameter Name="valoremail" Mode="In" Type="String" />
+            <Parameter Name="eliminandotabla" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="DeclaracionJurada" EntityType="SINUModel.DeclaracionJurada" />
+          <AssociationSet Name="FK_DeclaracionJurada_Inscripcion" Association="SINUModel.FK_DeclaracionJurada_Inscripcion">
+            <End Role="Inscripcion" EntitySet="Inscripcion" />
+            <End Role="DeclaracionJurada" EntitySet="DeclaracionJurada" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6413,6 +6455,30 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="String" Name="IdEstadoCivil" Nullable="true" MaxLength="8" />
           <Property Type="Int32" Name="IdConvocatoria" Nullable="false" />
         </ComplexType>
+        <EntityType Name="DeclaracionJurada">
+          <Key>
+            <PropertyRef Name="IdDeclaracionJurada" />
+          </Key>
+          <Property Name="IdDeclaracionJurada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoseeAntecedentes" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Antecedentes_Detalles" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="EsAdicto" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Comentario" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inscripcion" Relationship="SINUModel.FK_DeclaracionJurada_Inscripcion" FromRole="DeclaracionJurada" ToRole="Inscripcion" />
+        </EntityType>
+        <Association Name="FK_DeclaracionJurada_Inscripcion">
+          <End Type="SINUModel.Inscripcion" Role="Inscripcion" Multiplicity="1" />
+          <End Type="SINUModel.DeclaracionJurada" Role="DeclaracionJurada" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inscripcion">
+              <PropertyRef Name="IdInscripcion" />
+            </Principal>
+            <Dependent Role="DeclaracionJurada">
+              <PropertyRef Name="IdInscripcion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8032,6 +8098,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_DataProblemaEncontradoIUD" FunctionName="SINUModel.Store.sp_DataProblemaEncontradoIUD" />
+          <FunctionImportMapping FunctionImportName="Vaciar2" FunctionName="SINUModel.Store.Vaciar2" />
+          <EntitySetMapping Name="DeclaracionJurada">
+            <EntityTypeMapping TypeName="SINUModel.DeclaracionJurada">
+              <MappingFragment StoreEntitySet="DeclaracionJurada">
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="EsAdicto" ColumnName="EsAdicto" />
+                <ScalarProperty Name="Antecedentes_Detalles" ColumnName="Antecedentes_Detalles" />
+                <ScalarProperty Name="PoseeAntecedentes" ColumnName="PoseeAntecedentes" />
+                <ScalarProperty Name="IdDeclaracionJurada" ColumnName="IdDeclaracionJurada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
