@@ -76,8 +76,11 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.lstresGrupo = lstResGrupo;
             return View(datosgrupocarroficio);
         }
-        public ActionResult Create()
+
+        static int le;
+        public ActionResult Create(int Length)
         {
+            le = Length;
             GrupoCarrOficiosvm prueba = new GrupoCarrOficiosvm { Carreras2 = db.CarreraOficio.ToList() };
             List <vRestriccionesGrupo> lstResGrupo = db.vRestriccionesGrupo.ToList();
             ViewBag.lstresGrupo = lstResGrupo;
@@ -111,6 +114,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
                 switch (mens)
                 {
                     case string a when a.Contains("Exito"):
+                        if (le == 5) return Redirect("../PeriodosConvocatorias/Create");
                         return RedirectToAction("Index", new { Mensaje = ObjMensaje.Value.ToString() }); //write "<div>Custom Value 1</div>"                            
                 }
                 //aca haria un case of segun lo recibido en el mensaje (supongo)
