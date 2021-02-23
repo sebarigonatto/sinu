@@ -155,6 +155,8 @@
         <EntityTypeShape EntityType="SINUModel.vSecuencia_EtapaEstadoRECHAZADOS" Width="1.5" PointX="29.375" PointY="16.75" />
         <EntityTypeShape EntityType="SINUModel.vInscriptosYConvocatorias" Width="1.5" PointX="29.375" PointY="20.75" />
         <EntityTypeShape EntityType="SINUModel.vOficDeleg_EstablecimientoRindExamen" Width="1.5" PointX="29.375" PointY="24.75" />
+        <EntityTypeShape EntityType="SINUModel.DeclaracionJurada" Width="1.5" PointX="12.75" PointY="31" />
+        <AssociationConnector Association="SINUModel.FK_DeclaracionJurada_Inscripcion" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

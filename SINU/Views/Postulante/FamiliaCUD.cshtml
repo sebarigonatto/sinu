@@ -556,7 +556,7 @@
                 $.BloqueoPantalla = bloqueo_vistas;
                 if (bloqueo_vistas) {
                     $(".BTAcciones").html("");
-                    $("#TabFamilia :input").not(".navbar-toggler").attr("disabled", "true");
+                    $("#TabFamilia :input").not(".navbar-toggler, .dataTables_wrapper input[type='search']").attr("disabled", "true");
                     $(".BTMuestraTable :input").removeAttr("disabled").removeClass("fa-edit").addClass("fa-eye");
                 }
             }

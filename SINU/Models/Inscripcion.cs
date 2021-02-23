@@ -19,6 +19,7 @@ namespace SINU.Models
         {
             this.DocPresentado = new HashSet<DocPresentado>();
             this.InscripcionEtapaEstado = new HashSet<InscripcionEtapaEstado>();
+            this.DeclaracionJurada = new HashSet<DeclaracionJurada>();
         }
     
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
@@ -41,5 +42,7 @@ namespace SINU.Models
         public virtual Postulante Postulante { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InscripcionEtapaEstado> InscripcionEtapaEstado { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeclaracionJurada> DeclaracionJurada { get; set; }
     }
 }

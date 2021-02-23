@@ -22,30 +22,37 @@
                     <label>Descripción </label>
                 </th>
                 <th>
+                    @* @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)*@
+                    <label>Inicio de Inscripcion</label> 
+                </th>
+                <th>
                     @* @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)*@
-                    <label>Fecha_Fin_Inscripcion</label>
+                    <label>Fin de Inscripcion</label>
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
-                    </td>
-                    @*<td class="justify-content-center align-items-center d-md-flex">
-                        @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
-                        @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
-                        @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
-                    </td>*@
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GrupoCarrOficio.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modalidad.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
+                </td>
+                @*<td class="justify-content-center align-items-center d-md-flex">
+            @Html.ActionLink("  ", "Edit", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+            @Html.ActionLink("  ", "Details", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+            @Html.ActionLink("  ", "Delete", new { id = item.IdConvocatoria }, htmlAttributes: new { @class = "fas fa-trash-alt" })
+        </td>*@
+            </tr>
             }
         </tbody>
     </table>

@@ -646,5 +646,20 @@ namespace SINU.Models
         [Display(Name = "Problema relacionado")]
         public string DataVerificacion { get; set; }
     }
+    public partial class vInscripcionDetalleMetadata
+    {
+        [Display(Name = "Como se entero")]
+        public string OpcionSeEnteroPOR { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Registro")]
+        public System.DateTime FechaRegistro { get; set; }
+        [Display(Name ="N° de Preinscripcion")]
+        public int IdInscripcion { get; set; }
+        [Display(Name ="Se Inscribio en")]
+        public string Inscripto_En { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Entrevista")]
+        public System.DateTime FechaEntrevista { get; set; }
+    }
 
 }

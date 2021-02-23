@@ -103,7 +103,7 @@
                     </div>
                     <div class="row">
                         <div class="container text-right">
-                            <input type="submit" value="Asignar" class="btn btn-primary btn-lg w-25" />
+                            <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg w-25" />
                         </div>
                     </div>
                 </div>
@@ -127,11 +127,11 @@
                     <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
                     @*<button type="submit" class="btn btn-success" value="Postular" name="botonPostular">Confirmar</button>*@
                     @*@Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                    {
-                                      HttpMethod = "POST",
-                                      OnSuccess = "Exito(data,status,xhr)",
-                                      OnFailure = "Falla"
-                                    }, new { @id = "BTValidar", @class = "btn btn-success" })*@
+                        {
+                          HttpMethod = "POST",
+                          OnSuccess = "Exito(data,status,xhr)",
+                          OnFailure = "Falla"
+                        }, new { @id = "BTValidar", @class = "btn btn-success" })*@
                 </div>
             </div>
         </div>
@@ -144,11 +144,6 @@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-            //$(".selectpicker").selectpicker({
-            //    size: 7,
-            //    noneSelectedText: 'Ninguna Opcion Seleccionada'
-
-            //});
               jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
                 format: 'd/m/y h:m',
@@ -176,13 +171,14 @@
                     $("#DatosDelegacion").attr("hidden", true);
                 }
             })
-            //$(".datepicker").datepicker({
-            //    format: "dd/mm/yyyy",
-            //    language: "es",
-            //    autoclose: true,
-            //    startView: "days",
-            //    startDate: "Today"
-            //});
+            var ModelListado = '@Html.Raw(Model.listado)';
+            if (ModelListado == 0) {
+                $("#IdAsignar").attr("disabled", true)
+            }
+            else {
+                $("#IdAsignar").attr("disabled", false)
+
+            }
         });
         function Exito(data,status,xhr) {
             if (data.success) {

@@ -2,11 +2,17 @@
 @{
     ViewBag.Title = "Inscriptos Por Delegacion: " + ViewBag.delegacionSeleccionada;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.CantReg = Model.Count();
+    ViewBag.Title2 = "Total de Inscriptos: " + ViewBag.CantReg;
 }
 
 
-<h2 class="font-weight-bold">
+<h2 class="font-weight-bold ">
     @ViewBag.Title
+</h2>
+
+<h2 class="font-weight-bold text-warning">
+   @ViewBag.Title2
 </h2>
 
 <div>

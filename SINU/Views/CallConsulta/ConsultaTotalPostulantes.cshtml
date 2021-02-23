@@ -19,47 +19,53 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Etapa)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>Ver Datos</th>
             @*<th>
-                @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
-            </th>*@
-           @* <th>sdfs</th>*@
+            @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+        </th>*@
+            @* <th>sdfs</th>*@
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdModalidad)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td> @Html.ActionLink("Detalle", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                </td>*@
-                @*<td>
-                    sasd*@
-                    @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                    @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                    @*No se puede tener dos ActionLink con el mismo nombre*@
-                    @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
-                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-               @* </td>*@
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdModalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td> @Html.ActionLink("Detalle", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+        </td>*@
+            @*<td>
+        sasd*@
+            @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+            @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+            @*No se puede tener dos ActionLink con el mismo nombre*@
+            @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
+            @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+            @* </td>*@
+        </tr>
         }
 
     </tbody>

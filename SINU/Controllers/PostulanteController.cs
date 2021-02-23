@@ -167,7 +167,7 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
         }
 
-
+        [AuthorizacionPermiso("ListarRP")]
         public JsonResult EdadInstituto(int? IdPOS, string Fecha)
         {
             try
@@ -365,6 +365,7 @@ namespace SINU.Controllers
         {
             try
             {
+               
                 DocuPenalVM d = new DocuPenalVM()
                 {
                     IdPersona = ID_persona
@@ -483,11 +484,21 @@ namespace SINU.Controllers
             Domiciolio_API domi = new Domiciolio_API()
             {
                 vPersona_Domicilio_API = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == ID_persona),
-                Pais_API = db.sp_vPaises("").Select(m => new SelectListItem { Text = m.DESCRIPCION, Value = m.CODIGO }).ToList(),
+                Pais_API = db.sp_vPaises("").OrderBy(m=>m.DESCRIPCION).Select(m => new SelectListItem { Text = m.DESCRIPCION, Value = m.CODIGO }).ToList(),
                 Provincia_API = new List<SelectListItem>(),
                 Localidad_API = new List<SelectListItem>()
 
             };
+            //cargo liatado con los viajes del postulante
+            var viajes = db.PostulanteViaje.Where(m => m.IdPostulantePersona == ID_persona).ToList();
+            domi.PostulanteViajeListaVM =  new List<SelectListItem>();
+            foreach (var viaje in viajes)
+            {
+                SelectListItem item = new SelectListItem { Text = db.sp_vPaises(viaje.codigovPais).First().DESCRIPCION + ", " + viaje.FechaInicioviaje.Value.ToShortDateString(), Value = viaje.IdPostulanteViaje.ToString() };
+                domi.PostulanteViajeListaVM.Add(item);
+            }
+
+            ViewBag.Paises1 = new SelectList(db.sp_vPaises(""), "CODIGO", "DESCRIPCION");
             return View(domi);
         }
 
@@ -1655,6 +1666,12 @@ namespace SINU.Controllers
             }
         }
 
+        public JsonResult validacion(string asd) {
+
+            var jeja = asd.Split('-');
+            return Json(new { verdad=true });
+        }
+
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ProblemasPantalla(int ID_persona, int? IdPantalla, string? Pantalla )
         {
@@ -1687,7 +1704,7 @@ namespace SINU.Controllers
                 Nombre = per.Nombres,
                 ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion,
                 Modalidad = modacarr.Modalidad,
-                Carrera= modacarr.CarreraRelacionada
+                Carrera= modacarr.CarreraRelacionada.ToString()
 
 
             };
