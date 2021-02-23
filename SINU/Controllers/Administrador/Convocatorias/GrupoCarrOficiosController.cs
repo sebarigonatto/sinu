@@ -77,7 +77,7 @@ namespace SINU.Controllers.Administrador.Convocatorias
             return View(datosgrupocarroficio);
         }
 
-        static int le;
+        public static int le;
         public ActionResult Create(int Length)
         {
             le = Length;

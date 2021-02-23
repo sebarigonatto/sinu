@@ -49,7 +49,7 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
+        public ActionResult Create([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
+        public ActionResult Edit([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
         {
             if (ModelState.IsValid)
             {

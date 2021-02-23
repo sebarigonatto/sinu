@@ -36,8 +36,10 @@ namespace SINU.Controllers.Administrador.Convocatorias
         }
 
         // GET: ResGrupoes/Create
-        public ActionResult Create()
+        static int lent;
+        public ActionResult Create(int Length)
         {
+            lent = Length;
             return View();
         }
 
@@ -52,6 +54,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 db.ResGrupo.Add(resGrupo);
                 db.SaveChanges();
+                if (lent > 1 && GrupoCarrOficiosController.le==5) return Redirect("../GrupoCarrOficios/Create?Length=5");
+                if (lent > 1 && GrupoCarrOficiosController.le == 1) return Redirect("../GrupoCarrOficios/Create?Length=1");
                 return RedirectToAction("Index");
             }
 
