@@ -743,14 +743,16 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vDelegacion_EstablecExamen' no tien
             <PropertyRef Name="IdOficinasYDelegaciones" />
             <PropertyRef Name="idDelegacion_EstablecExamen" />
             <PropertyRef Name="IdEstablecimientoRindeExamen" />
+            <PropertyRef Name="ACTIVO" />
           </Key>
-          <Property Name="Direccion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Jurisdiccion" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="Localidad" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="201" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
           <Property Name="idDelegacion_EstablecExamen" Type="int" Nullable="false" />
           <Property Name="IdEstablecimientoRindeExamen" Type="int" Nullable="false" />
+          <Property Name="ACTIVO" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2792,7 +2794,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vDelegacion_EstablecExamen].[Nombre] AS [Nombre], 
     [vDelegacion_EstablecExamen].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones], 
     [vDelegacion_EstablecExamen].[idDelegacion_EstablecExamen] AS [idDelegacion_EstablecExamen], 
-    [vDelegacion_EstablecExamen].[IdEstablecimientoRindeExamen] AS [IdEstablecimientoRindeExamen]
+    [vDelegacion_EstablecExamen].[IdEstablecimientoRindeExamen] AS [IdEstablecimientoRindeExamen], 
+    [vDelegacion_EstablecExamen].[ACTIVO] AS [ACTIVO]
     FROM [dbo].[vDelegacion_EstablecExamen] AS [vDelegacion_EstablecExamen]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" store:Type="Views" store:Schema="dbo">
@@ -6310,14 +6313,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdOficinasYDelegaciones" />
             <PropertyRef Name="idDelegacion_EstablecExamen" />
             <PropertyRef Name="IdEstablecimientoRindeExamen" />
+            <PropertyRef Name="ACTIVO" />
           </Key>
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Jurisdiccion" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="Localidad" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="201" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
           <Property Name="idDelegacion_EstablecExamen" Type="Int32" Nullable="false" />
           <Property Name="IdEstablecimientoRindeExamen" Type="Int32" Nullable="false" />
+          <Property Name="ACTIVO" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Institucion_Modalidad">
           <End Type="SINUModel.Modalidad" Role="Modalidad" Multiplicity="0..1" />
@@ -7960,6 +7965,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vDelegacion_EstablecExamen">
             <EntityTypeMapping TypeName="SINUModel.vDelegacion_EstablecExamen">
               <MappingFragment StoreEntitySet="vDelegacion_EstablecExamen">
+                <ScalarProperty Name="ACTIVO" ColumnName="ACTIVO" />
                 <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
                 <ScalarProperty Name="idDelegacion_EstablecExamen" ColumnName="idDelegacion_EstablecExamen" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />

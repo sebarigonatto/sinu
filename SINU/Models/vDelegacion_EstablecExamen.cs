@@ -21,5 +21,6 @@ namespace SINU.Models
         public int IdOficinasYDelegaciones { get; set; }
         public int idDelegacion_EstablecExamen { get; set; }
         public int IdEstablecimientoRindeExamen { get; set; }
+        public bool ACTIVO { get; set; }
     }
 }
