@@ -206,6 +206,7 @@
     <Compile Include="Controllers\Administrador\Convocatorias\ConvocatoriasController.cs" />
     <Compile Include="Controllers\Administrador\Convocatorias\GrupoCarrOficiosController.cs" />
     <Compile Include="Controllers\Administrador\Convocatorias\ResGrupoesController.cs" />
+    <Compile Include="Controllers\Administrador\Delegacion_EstablecExamenController.cs" />
     <Compile Include="Controllers\Administrador\EstablecimientoRindeExamenController.cs" />
     <Compile Include="Controllers\Administrador\FuerzasController.cs" />
     <Compile Include="Controllers\Administrador\ModalidadsController.cs" />
@@ -1329,6 +1330,11 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Delegacion\AsignarFechaVariosEntrevista.cshtml" />
     <Content Include="Views\CallConsulta\VerPostulanteElegido.cshtml" />
+    <Content Include="Views\Delegacion_EstablecExamen\Create.cshtml" />
+    <Content Include="Views\Delegacion_EstablecExamen\Delete.cshtml" />
+    <Content Include="Views\Delegacion_EstablecExamen\Details.cshtml" />
+    <Content Include="Views\Delegacion_EstablecExamen\Edit.cshtml" />
+    <Content Include="Views\Delegacion_EstablecExamen\Index.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

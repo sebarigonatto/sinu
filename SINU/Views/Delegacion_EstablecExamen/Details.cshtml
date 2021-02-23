@@ -1,0 +1,35 @@
+﻿@model SINU.Models.Delegacion_EstablecExamen
+
+@{
+    ViewBag.Title = "Details";
+    //Layout = "~/Views/Shared/_MenuPerfilAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Delegacion_EstablecExamen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstablecimientoRindeExamen.Jurisdiccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstablecimientoRindeExamen.Jurisdiccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OficinasYDelegaciones.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OficinasYDelegaciones.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idDelegacion_EstablecExamen }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
