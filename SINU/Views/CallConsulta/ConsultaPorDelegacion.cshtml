@@ -47,6 +47,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Etapa)
             </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Email)*@
+                <label>Detalle</label>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -68,9 +72,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etapa)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Etapa)
+            </th>
+            <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+
             @*<td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
