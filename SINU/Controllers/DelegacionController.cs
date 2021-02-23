@@ -571,9 +571,11 @@ namespace SINU.Controllers
             {
                 ///arreglar el filtrado del dropdown por que duvuelve la cantidad correcta pero el mismo dato repetido
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
-                List<EstablecimientoRindeExamen> EstablecActivo = db.EstablecimientoRindeExamen.Where(m => m.ACTIVO == true).ToList();
+                var IdDeleg = UsuarioDelegacion.IdOficinasYDelegaciones;
+                //List<vDelegacion_EstablecExamen> establecExamens;
+                //establecExamens = db.vDelegacion_EstablecExamen.Select(m => m.idDelegacion_EstablecExamen == IdDeleg).ToList();
                 PresentaciondelPostulante presentaciondel = new PresentaciondelPostulante();
-                presentaciondel.LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
+                presentaciondel.LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO==true).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
 
                 presentaciondel.DetalleInscripcion = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
                 var DatosdelLugar = new List<Array>();

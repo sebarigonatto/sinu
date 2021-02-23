@@ -157,6 +157,7 @@
         <EntityTypeShape EntityType="SINUModel.vOficDeleg_EstablecimientoRindExamen" Width="1.5" PointX="29.375" PointY="24.75" />
         <EntityTypeShape EntityType="SINUModel.DeclaracionJurada" Width="1.5" PointX="12.75" PointY="31" />
         <AssociationConnector Association="SINUModel.FK_DeclaracionJurada_Inscripcion" />
+        <EntityTypeShape EntityType="SINUModel.vInscriptosconTitulosProblemas" Width="1.5" PointX="25.375" PointY="29.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
