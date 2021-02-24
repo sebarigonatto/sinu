@@ -6,213 +6,475 @@
 }
 
 <h2 class="text-center">Domicio_API</h2>
+@*<style>
+    #body {
+        background-color: cadetblue !important;
+    }
+</style>*@
 
-
-@using (Html.BeginForm())
+@using (Ajax.BeginForm("Domicilio", "Postulante", null,
+    new AjaxOptions
+    {
+        HttpMethod = "POST",
+        OnSuccess = "Exito(data,status,xhr)",
+        OnFailure = "Falla",
+//LoadingElementId = "carga",
+//LoadingElementDuration = 1000,
+//UpdateTargetId = "resultTarget"
+},
+    new { id = "BeginFormDomicilio" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>vPersona_Domicilio</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-<div class="row">
-    @Html.HiddenFor(model => model.vPersona_Domicilio_API.IdPersona)
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Calle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.vPersona_Domicilio_API.Calle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Calle, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+    <div class="form-group">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.vPersona_Domicilio_API.Numero, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Numero, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <h2>Domicilio que figura en el DNI:</h2>
+            <br />
+            <div class="form-group row">
+                @Html.HiddenFor(m => m.vPersona_Domicilio_API.IdPersona)
+                @Html.HiddenFor(model => model.vPersona_Domicilio_API.IdDomicilioDNI)
+                @Html.HiddenFor(model => model.vPersona_Domicilio_API.IdDomicilioActual)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Piso, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.vPersona_Domicilio_API.Piso, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Piso, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="col-md-6">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Unidad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.vPersona_Domicilio_API.Unidad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Unidad, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.Calle, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.Calle, new { htmlAttributes = new { @class = "form-control ", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Calle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.Numero, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.Numero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Numero, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.Piso, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.Piso, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Piso, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.Unidad, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.Unidad, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Unidad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.IdPais, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.IdPais, Model.Pais_API, "Seleccione un Pais", htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisR" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.IdPais, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.Provincia, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.TBoxProvincia, new { @class = "form-control Real", @id = "ProvinciaR" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.TBoxProvincia, "", new { @class = "text-danger Real" })
+
+
+                            @* el "DropdownlistFor" se reemplaza por un "TextBoxFor" en el caso de que se eliga un pais distinto a "ARGENTINA" *@
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.Provincia, Model.Provincia_API, "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboProvinciaR" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Provincia, "", new { @class = "text-danger RealAR" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.Localidad, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.Localidad, new { @class = "form-control Real", @id = "LocalidadR" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Localidad, "", new { @class = "text-danger Real" })
+
+                            @* el "DropdownlistFor" se reemplaza por un "TextBoxFor" en el caso de que se eliga un pais distinto a "ARGENTINA" *@
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.IdLocalidad, new SelectList(Model.Localidad_API, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox RealAR", @id = "ComboLocalidadR" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.IdLocalidad, "", new { @class = "text-danger RealAR" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, new { @class = "form-control", @id = "CPR", @readonly = true, @autocomplete = "off" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <br />
             </div>
+            <h2>Domicilio donde vive actualmente:</h2>
+            <br />
+            <div class="form-group row ">
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.EventualCalle, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.EventualCalle, new { htmlAttributes = new { @class = "form-control  ", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualCalle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.EventualNumero, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.EventualNumero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualNumero, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.EventualPiso, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.EventualPiso, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualPiso, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.EventualUnidad, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.vPersona_Domicilio_API.EventualUnidad, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualUnidad, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.EventualPais, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.EventualIdPais, Model.Pais_API, null, htmlAttributes: new { @class = "form-control combobox", @id = "ListaPaisE" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualPais, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.EventualProvincia, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.TBoxEventualProvincia, new { @class = "form-control Eventual", @id = "ProvinciaE" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.TBoxEventualProvincia, "", new { @class = "text-danger Eventual" })
+
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.EventualProvincia, Model.Provincia_API, "Seleccione una Provincia", htmlAttributes: new { @class = "form-control combobox EventualAR", @id = "ComboProvinciaE" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualProvincia, "", new { @class = "text-danger EventualAR" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.vPersona_Domicilio_API.EventualLocalidad, new { @class = "col-md-12 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.EventualLocalidad, new { @class = "form-control Eventual", @id = "LocalidadE" })
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualLocalidad, "", new { @class = "text-danger Eventual" })
+
+                            @Html.DropDownListFor(model => model.vPersona_Domicilio_API.EventualIdLocalidad, new SelectList(Model.Localidad_API, "IdLocalidad", "Localidad"), "Seleccione una Localidad", htmlAttributes: new { @class = "form-control combobox EventualAR", @id = "ComboLocalidadE" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualIdLocalidad, "", new { @class = "text-danger EventualAR" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.vPersona_Domicilio_API.EventualCodigo_Postal, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.vPersona_Domicilio_API.EventualCodigo_Postal, new { @class = "form-control", @id = "CPE", @readonly = true, @autocomplete = "off" })
+                            <div class="h-100"></div>
+                            @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.EventualCodigo_Postal, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+            </div>
+            @{ bool viajo = Model.PostulanteViajeListaVM.Count > 0; }
+
+            <h2 class="d-inline-flex FormViajeExt">
+                Viajes al Exterior:
+            </h2>
+            <div class="form-group d-inline-flex FormViajeExt">
+                <div class="col-md-12" id="RadioBTViajes">
+
+                    <h5 class="d-inline-flex">Si</h5> <input @(viajo ? "checked='checked'" : "" ) id="Viaje" name="Viaje" type="radio" value="si" />&ensp;
+
+                    <h5 class="d-inline-flex">No</h5> <input @(!viajo ? "checked='checked'" : "" ) name="Viaje" type="radio" value="no" id="noext" />
+
+                </div>
+            </div>
+
+            <h6 class="BTAcciones FormViajeExt">En caso de haber realizado viaje/s al exterior, debera informar los mismos.</h6>
+
+            <div class="form-group row FormViajeExt">
+                <div class="col-md-6 BTAcciones">
+
+
+                    <div class="form-group ViajeExt">
+                        @Html.Label("Pais", new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.DropDownList("PaisViaje", (SelectList)ViewBag.Paises1, "Seleccione un Pais", htmlAttributes: new { @class = "combobox form-control", @id = "IDpais" })
+                        </div>
+                    </div>
+                    <div class="form-group row ViajeExt">
+                        <div class="col-8 col-md-6 ">
+                            @Html.Label("Fecha de Viaje", new { @class = "control-label col-md-12" })
+                            <div class="col-md-12">
+                                @Html.TextBox("{0:dd/MM/yyyy}", null, new { @class = "form-control datepicker ", @readonly = true, @placeholder = " dd/mm/aaaa", @id = "FechaViaje" })
+                            </div>
+                        </div>
+                        <div class="col-4 col-md-2 row align-content-center">
+                            <div class=" col-12 h-50">   </div>
+                            <input type="button" name="agregar" value="Agregar" class="btn btn-success d-block extviaje " id="GuardarExtViaje" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-6">
+                    <br />
+                    <div class="form-group ViajeExt">
+
+
+                        <ul class="list-group col-md-8" id="listaviajes">
+                            @if (Model.PostulanteViajeListaVM.Count == 0)
+                            {
+                                <li class="list-group-item pb-0" id="livacio" style="border:0px solid !important"><i class="fa fa-map-marker-alt" style='color:#007bff;'></i> ------------------- </li>
+                            }
+
+
+                            @foreach (var viaje in Model.PostulanteViajeListaVM)
+                            {
+                                <li class="list-group-item pb-0" style="border:0px solid !important" idviaje="@viaje.Value"><i class="fa fa-map-marker-alt" style='color:#007bff;'></i> @viaje.Text <button type="button" class="BTAcciones eliminaviaje extviaje fa fa-times btn pr-0" style="  color: red;cursor: pointer;background-color: #fff0; padding-bottom: 7px;"></button></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group pl-3 BTAcciones">
+                <input type="submit" value="Guadar Datos" class="btn btn-success" placeholder="" />
+            </div>
+
+
         </div>
     </div>
-    <div class="col-md-6">
+}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.IdPais, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.vPersona_Domicilio_API.IdPais,Model.Pais_API, new { @class = "form-control combobox" })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.IdPais, "", new { @class = "text-danger" })
-            </div>
-        </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Provincia, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.vPersona_Domicilio_API.Provincia, Model.Provincia_API, new { @class = "form-control combobox",@id="Provincia" })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Provincia, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.Localidad, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.vPersona_Domicilio_API.Localidad, Model.Localidad_API,  new { @class = "form-control combobox localidad",@id="Localidad" })
 
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.Localidad, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        //http://api.zippopotam.us/#where
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, htmlAttributes: new { @class = "control-label col-md-6" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, new { htmlAttributes = new { @class = "form-control cpostal"} })
-                @Html.ValidationMessageFor(model => model.vPersona_Domicilio_API.CODIGO_POSTAL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
+        //ver consulta Ciudad Autonoma de Buenos aires, non trae resultados
+        var provi = [{ "Text": "Ciudad de Buenos Aires", "Value": "C" },
+        { "Text": "Buenos Aires", "Value": "B" },
+        { "Text": "Catamarca", "Value": "K" },
+        { "Text": "Chaco", "Value": "H" },
+        { "Text": "Chubut", "Value": "U" },
+        { "Text": "Cordoba", "Value": "X" },
+        { "Text": "Corrientes", "Value": "W" },
+        { "Text": "Entre Ríos", "Value": "E" },
+        { "Text": "Formosa", "Value": "P" },
+        { "Text": "Jujuy", "Value": "Y" },
+        { "Text": "La Pampa", "Value": "L" },
+        { "Text": "La Rioja", "Value": "F" },
+        { "Text": "Mendoza", "Value": "M" },
+        { "Text": "Misiones", "Value": "N" },
+        { "Text": "Neuquén", "Value": "Q" },
+        { "Text": "Río Negro", "Value": "R" },
+        { "Text": "Salta", "Value": "A" },
+        { "Text": "San Juan", "Value": "J" },
+        { "Text": "San Luis", "Value": "D" },
+        { "Text": "Santa Cruz", "Value": "Z" },
+        { "Text": "Santa Fe", "Value": "S" },
+        { "Text": "Santiago del Estero", "Value": "G" },
+        { "Text": "Tierra del Fuego", "Value": "V" },
+        { "Text": "Tucuman", "Value": "T" },
+        ];
 
-</div>
-        @Html.HiddenFor(model => model.vPersona_Domicilio_API.EventualIdPais)
+        var prov;
+        (function () {
+            //alert("asdas");
+            $.each(provi, function (i, item) {
+                $("#ComboProvinciaR, #ComboProvinciaE").append("<option value=" + item.Value + ">" + item.Text + "</option>");
+            });
 
-        @Html.HiddenFor(model => model.vPersona_Domicilio_API.IdDomicilioDNI)
+        })();
+   
+        var client = new XMLHttpRequest();
 
-        @Html.HiddenFor(model => model.vPersona_Domicilio_API.IdDomicilioActual)
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-    }
-
-    <div>
-        @Html.ActionLink("Volver a la lista", "Index")
-    </div>
-
-    <style type="text/css">
-        .combobox{
-            max-width: 280px
-        }
-    </style>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script>
-
-           
-
-            //http://api.zippopotam.us/#where
-
-            //ver consulta Ciudad Autonoma de Buenos aires, non trae resultados
-            var provi = [{ "Text": "Ciudad de Buenos Aires", "Value": "C" },
-            { "Text": "Buenos Aires", "Value": "B" },
-            { "Text": "Catamarca", "Value": "K" },
-            { "Text": "Chaco", "Value": "H" },
-            { "Text": "Chubut", "Value": "U" },
-            { "Text": "Cordoba", "Value": "X" },
-            { "Text": "Corrientes", "Value": "W" },
-            { "Text": "Entre Ríos", "Value": "E" },
-            { "Text": "Formosa", "Value": "P" },
-            { "Text": "Jujuy", "Value": "Y" },
-            { "Text": "La Pampa", "Value": "L" },
-            { "Text": "La Rioja", "Value": "F" },
-            { "Text": "Mendoza", "Value": "M" },
-            { "Text": "Misiones", "Value": "N" },
-            { "Text": "Neuquén", "Value": "Q" },
-            { "Text": "Río Negro", "Value": "R" },
-            { "Text": "Salta", "Value": "A" },
-            { "Text": "San Juan", "Value": "J" },
-            { "Text": "San Luis", "Value": "D" },
-            { "Text": "Santa Cruz", "Value": "Z" },
-            { "Text": "Santa Fe", "Value": "S" },
-            { "Text": "Santiago del Estero", "Value": "G" },
-            { "Text": "Tierra del Fuego", "Value": "V" },
-            { "Text": "Tucuman", "Value": "T" },
-            ];
-
-            var prov;
-            (function () {
-                //alert("asdas");
-                $.each(provi, function (i, item) {
-                    $("#Provincia").append("<option value=" + item.Value + ">" + item.Text + "</option>");
-                });
-              
-            })();
+        $(document).ready(function () {
+       
             $(".combobox").selectpicker({
                 liveSearch: true,
-                size: 7,
+                size: 4.2,
                 liveSearchPlaceholder: "Ingrese su busqueda",
                 liveSearchStyle: 'contains',//'startsWith'
                 noneResultsText: 'No se Encuantran Resultados',
                 noneSelectedText: 'Ninguna Opcion Seleccionada'
+
             });
 
-            var client = new XMLHttpRequest();
+            $("#BeginFormDomicilio select").on('change', function (e, clickedIndex, isSelected, previousValue) {
+                comboid = $(this).attr("id");
+                //alert(comboid);
+                if ($(this).val() != "") {
+                    switch (comboid) {
+                        case "ListaPaisR":
+                        case "ListaPaisE":
+                            PAIS(comboid, 1)
+                            break;
+                        case "ComboProvinciaR":
+                        case "ComboProvinciaE":
+                            PROVINCIA(comboid);
+                            break;
+                        case "ComboLocalidadR":
+                        case "ComboLocalidadE":
+                            LOCALIDAD(comboid);
+                            break;
+                        default:
+                    };
+                };
+            });
+            PAIS("ListaPaisR", 0);
+            PAIS("ListaPaisE", 0);
 
-            $(document).ready( function () {
-                //alert("adasfregrgg");
-                $("#Provincia").on('changed.bs.select', function () {
-                    //alert($(this).val());
-                    $("#Localidad").html("");
-                    $("#Localidad").selectpicker('refresh');
-                    prov = $(this).val();
-                });
 
-                $(".localidad").change( function (e, clickedIndex, isSelected, previousValue) {
-                    //alert( $('.localidad option:selected').val());
-                    $(".cpostal").val($('.localidad option:selected').val());
-                });
+            function PAIS(Combo, PRI) {
 
-                $("div.bs-searchbox input").keyup(function () {
-                    //alert($(this).val());
-                    var busqueda = $(this).val();
-                    if (busqueda.length>2) {
+                //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
+                //condicion donde selecciono un pais, se cargan los campos de domiciolio real o eventual segun corresponda
+                var Comboelemt = (Combo == "ListaPaisR") ?
+                    [".Real", ".RealAR", "#CPR", "#ComboLocalidadR"]
+                    : [".Eventual", ".EventualAR", "#CPE", "#ComboLocalidadE"];
 
-                        client.open("GET", "https://api.zippopotam.us/ar/" + prov + "/" + busqueda, true);
-                        
-                        client.onreadystatechange = function () {
-                            if (client.readyState == 4) {
-                                //alert(client.responseText);
-                                cargaLocalidades(client.responseText);
-                            };
-                        };
-                       client.send();
+                //alert($("#" + Combo).val());
+                if ($("#" + Combo).val() != "AR") {
+                    $(Comboelemt[0]).show();
+                    $(Comboelemt[1]).hide();
+                    $(Comboelemt[2]).removeAttr("readonly");
+                } else {
+                    $(Comboelemt[0]).hide();
+                    $(Comboelemt[1]).show();
+                    //si se selecciono la Ciudad Autonoma de Buenos Aires habilito el campo de CP
+                    if ($(Comboelemt[3]).val() == '20819') {
+                        $(Comboelemt[2]).removeAttr("readonly");
                     }
-                });
+                };
+                //limpio los campos de "provincia,localidad,codigopostal" si seselecciona otro pais
+                if (PRI == 1) {
+                    $(Comboelemt[0] + "," + Comboelemt[2]).val("");
+                    $(Comboelemt[1]).selectpicker('val', '');
+                }
+            };
 
+            //Funcion de Provincia que actualiza los combobox de localidad
+            function PROVINCIA(Combo) {
+
+                var ValP = $("#" + Combo).val();
+
+                if (ValP != "") {
+                    //alert(Combo + " " + ValP);
+                    var ComboLocalidad = (Combo == "ComboProvinciaR") ? ["#ComboLocalidadR", "#CPR"] : ["#ComboLocalidadE", "#CPE"];
+                    //limpio el combo de las localidades, para cargar las licalidades de la provincia seleccionada
+                    $(ComboLocalidad[0]).empty();
+                    $(ComboLocalidad[0] + ", " + ComboLocalidad[1]).val("");
+                    if (ValP == "c") {
+                        $(ComboLocalidad[1]).removeAttr("readonly");
+                    } else {
+                        $(ComboLocalidad[1]).attr("readonly", true);
+                    };
+
+
+
+                    ////llamo al JsonResult '/Postulante/DropEnCascadaDomicilio' y le envio la provincia seleccionada
+                    //$.getJSON('/Postulante/DropEnCascadaDomicilio', {
+                    //    Provincia: ValP,
+                    //},
+                    //    function (data) {
+                    //        //agrego al dropboxlist la etiqueta "option" con cada localidad que le corresponde a la provincia seleccionada
+                    //        $(ComboLocalidad[0]).append('<option value="">' + 'Seleccione una Localidad...' + '</option>');
+                    //        $.each(data, function () {
+                    //            $(ComboLocalidad[0]).append('<option value=' + this.Value + '>' + this.Text + '</option>');
+                    //        });
+                    //        //para actualizar el combobox
+                    //        $(ComboLocalidad[0]).selectpicker('refresh');
+                    //    });
+                }
+            };
+
+            ComboLocalidadR
+
+            //alert("adasfregrgg");
+            $("#Provincia").on('changed.bs.select', function () {
+                //alert($(this).val());
+                $("#Localidad").html("");
+                $("#Localidad").selectpicker('refresh');
+                //prov = $(this).val();
             });
 
-            function cargaLocalidades(response) {
-                $("#Localidad").html("");
-                
-                var jsonrespuesta = JSON.parse(response)
-                $.each(jsonrespuesta.places, function (i, item) {
-                    //alert(item["place name"] + item["post code"]);
-                   
-                    $("#Localidad").append("<option value=" + item["post code"] + ">" + item["place name"] + "</option>");
-                    $("#Localidad").selectpicker('refresh');
-                })
-            };
-         
+            $(".localidad").change(function (e, clickedIndex, isSelected, previousValue) {
+                //alert( $('.localidad option:selected').val());
+                $(".cpostal").val($('.localidad option:selected').val());
+            });
 
-           
-           
-        </script>
-    }
+            var id_combo;
+            $("#ComboLocalidadR, #ComboLocalidadE").closest("div.dropdown").find("div.bs-searchbox input").keyup(function (e,x) {
+                
+                id_combo = $(this).closest("div.dropdown").children("select.form-control").attr("id");
+                var busqueda = $(this).val();
+                if (busqueda.length > 2) {
+
+                    client.open("GET", "https://api.zippopotam.us/ar/" + $(this).closest("div.col-md-6").find("select[name*='Provincia']").val() + "/" + busqueda, true);
+
+                    client.onreadystatechange = function () {
+                        if (client.readyState == 4) {
+                            //alert(client.responseText);
+                            //alert(id_combo);
+                            cargaLocalidades(client.responseText, id_combo);
+                        };
+                    };
+                    client.send();
+                }
+            });
+
+        });
+
+        function cargaLocalidades(response, id) {
+            $("#" + id).html("");
+
+            var jsonrespuesta = JSON.parse(response)
+            $.each(jsonrespuesta.places, function (i, item) {
+                //alert(item["place name"] + item["post code"]);
+                $("#" + id).append("<option value=" + item["post code"] + ">" + item["place name"] + "</option>");
+            })
+            $("#" + id).selectpicker('refresh');
+        };
+
+
+
+
+    </script>
+}

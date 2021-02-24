@@ -131,7 +131,7 @@ namespace SINU.Controllers
         {
             try
             {
-                var res = db.Vaciar(email, 1);
+                var res = db.Vaciar2(email, 1);
             }
             catch (Exception ex)
             {

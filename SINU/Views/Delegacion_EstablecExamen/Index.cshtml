@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SINU.Models.Delegacion_EstablecExamen>
+
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_MenuPerfilAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EstablecimientoRindeExamen.Jurisdiccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OficinasYDelegaciones.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstablecimientoRindeExamen.Jurisdiccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OficinasYDelegaciones.Nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idDelegacion_EstablecExamen }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idDelegacion_EstablecExamen }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idDelegacion_EstablecExamen })
+        </td>
+    </tr>
+}
+
+</table>

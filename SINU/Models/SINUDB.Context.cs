@@ -126,6 +126,8 @@ namespace SINU.Models
         public virtual DbSet<vSecuencia_EtapaEstadoRECHAZADOS> vSecuencia_EtapaEstadoRECHAZADOS { get; set; }
         public virtual DbSet<vInscriptosYConvocatorias> vInscriptosYConvocatorias { get; set; }
         public virtual DbSet<vOficDeleg_EstablecimientoRindExamen> vOficDeleg_EstablecimientoRindExamen { get; set; }
+        public virtual DbSet<DeclaracionJurada> DeclaracionJurada { get; set; }
+        public virtual DbSet<vInscriptosconTitulosProblemas> vInscriptosconTitulosProblemas { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1365,6 +1367,19 @@ namespace SINU.Models
                 new ObjectParameter("Eliminar", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DataProblemaEncontradoIUD", idPostulantePersonaParameter, idDataVerificacionParameter, comentarioParameter, idDataProblemaEncontradoParameter, eliminarParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> Vaciar2(string valoremail, Nullable<int> eliminandotabla)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            var eliminandotablaParameter = eliminandotabla.HasValue ?
+                new ObjectParameter("eliminandotabla", eliminandotabla) :
+                new ObjectParameter("eliminandotabla", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Vaciar2", valoremailParameter, eliminandotablaParameter);
         }
     }
 }

@@ -103,7 +103,7 @@
                     </div>
                     <div class="row">
                         <div class="container text-right">
-                            <input type="submit" value="Asignar" class="btn btn-primary btn-lg w-25" />
+                            <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg w-25" />
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,14 @@
                 value: 'd/m/y h:m'
             });
             $.datetimepicker.setLocale('es')
+            var ModelListado = '@ViewBag.Listado';
+            if (ModelListado == 0) {
+                $("#IdAsignar").attr("disabled", true)
+            }
+            else {
+                $("#IdAsignar").attr("disabled", false)
 
+            }
             @*var model = '@Html.Raw(Model.DatosLugar)';
             var jsonDatosDelegacion = JSON.parse(model);
             $("#LugarExamen").on("change", function () {

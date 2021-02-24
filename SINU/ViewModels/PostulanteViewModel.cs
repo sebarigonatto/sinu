@@ -127,6 +127,8 @@ namespace SINU.ViewModels
         public List<SelectListItem> Pais_API { get; set; }
         public List<SelectListItem> Provincia_API { get; set; }
         public List<SelectListItem> Localidad_API { get; set; }
+        public List<SelectListItem> PostulanteViajeListaVM { get; set; }
+
 
     }
 

@@ -12,15 +12,15 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vDelegacion_EstablecExamen
+    public partial class DeclaracionJurada
     {
-        public string Direccion { get; set; }
-        public string Jurisdiccion { get; set; }
-        public string Localidad { get; set; }
-        public string Nombre { get; set; }
-        public int IdOficinasYDelegaciones { get; set; }
-        public int idDelegacion_EstablecExamen { get; set; }
-        public int IdEstablecimientoRindeExamen { get; set; }
-        public bool ACTIVO { get; set; }
+        public int IdDeclaracionJurada { get; set; }
+        public string PoseeAntecedentes { get; set; }
+        public string Antecedentes_Detalles { get; set; }
+        public string EsAdicto { get; set; }
+        public string Comentario { get; set; }
+        public int IdInscripcion { get; set; }
+    
+        public virtual Inscripcion Inscripcion { get; set; }
     }
 }

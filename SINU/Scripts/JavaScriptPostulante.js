@@ -1,5 +1,4 @@
-﻿
-//configuraciones por default de las DataTables
+﻿//configuraciones por default de las DataTables
 $.extend(true, $.fn.dataTable.defaults, {
     responsive:
     {
@@ -180,6 +179,8 @@ $(document).ready(function () {
             $("#IdComentario input").val("");
         }
     };
+
+
     //////////////////////////////////////////////  SULICITUD DE ENTREVISTA  //////////////////////////////////////////////////////////////////////////
 
     //ver esto de donde tomar el dato que ya  realizo un guardado de datos.
@@ -277,7 +278,7 @@ $(document).ready(function () {
     //verifico si la pantalla esta cargada
 
 
-
+  
     /////////////////////////////////////////////////////////////////////////////////
     /*FUNCION DE LA VISTA DE DOMICILIOS */
 
@@ -299,7 +300,7 @@ $(document).ready(function () {
                 case "ComboLocalidadE":
                     LOCALIDAD(comboid);
                     break;
-                default:
+                default:    
             };
         };
     });
@@ -389,6 +390,8 @@ $(document).ready(function () {
                 });
         }
     };
+
+
     SHVIajeExt();
     //radio button de viajes al exterior
     $("#RadioBTViajes input:radio").change(function () {
@@ -1046,6 +1049,29 @@ $(document).ready(function () {
 
         }
     });
+
+
+    $("#autoresizing").on("keypress", function () {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+    });
+
+    comboPenal();
+
+    $("#comboPenal").on("change", function () {
+        comboPenal();
+    });
+
+    function comboPenal() {
+
+        if ($("#comboPenal").val() == "true") {
+            $("#casosPenales").show();
+        } else {
+            $("#casosPenales").hide();
+            $("#casosPenales textarea").val("");
+        };
+
+    };
 
     //se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
     $("#BeginDocuPenal").submit(function () {
