@@ -22,5 +22,7 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
+        public string Nombre { get; set; }
+        public string Modalidad { get; set; }
     }
 }

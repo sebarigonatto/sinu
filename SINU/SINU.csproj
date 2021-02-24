@@ -525,6 +525,12 @@
     <Compile Include="Models\vInscriptosYConvocatorias.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vInscriptosYRestriccionesCheck.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vInscriptosYRestriccionesCount.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vInstitucionesConvocadasYCarrerasAsociadas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
