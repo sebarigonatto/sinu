@@ -519,6 +519,9 @@
     <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vInscriptosCantYTODASConvocatorias.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vInscriptosconTitulosProblemas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
