@@ -1064,7 +1064,7 @@ $(document).ready(function () {
 
     function comboPenal() {
 
-        if ($("#comboPenal").val() == "true") {
+        if ($("#comboPenal").val() == "SI") {
             $("#casosPenales").show();
         } else {
             $("#casosPenales").hide();

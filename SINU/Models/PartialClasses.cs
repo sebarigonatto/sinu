@@ -158,3 +158,9 @@ namespace SINU.Models
     { }
 } 
 
+    [MetadataType(typeof(DeclaracionJuradaMetadata))]
+    public partial class DeclaracionJurada { 
+        public int IdPersona { get; set; }
+    }
+
+}

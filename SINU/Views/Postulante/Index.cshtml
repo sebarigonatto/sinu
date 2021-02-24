@@ -654,12 +654,15 @@
                                                             @Html.CheckBox("asd", false, new { @class = "form-control d-inline w-auto BTAcciones", @id = "check_validacion" }) <o class="BTAcciones">(SE REQUIERE QUE TILDE EL CUADRO)</o>
                                                             <br />
                                                             <br />
-                                                            @Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
+                                                            @*@Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                               {
                                                                   HttpMethod = "POST",
                                                                   OnSuccess = "Exito(data,status,xhr)",
                                                                   OnFailure = "Falla"
                                                               }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
+                                                            <br /><br />*@
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success  disabled BTAcciones" >Solicitar Validacion</button>
+
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
@@ -708,8 +711,6 @@
     </div>
 </div>
 <div id="htmlLOAD"></div>
-
-@*<button id="" onclick="ejecutarrecorrido()" class="btn btn-danger">asdasd</button>*@
 
 
 @section Scripts {
@@ -866,6 +867,51 @@
 
             });
 
+
+            $("#BTValidar").on("click", function () {
+                PantallasError = "";
+                $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
+                    if ($(item).find("thead").length == 0) {
+
+                        //alert("form - " + $(item).attr("id"));
+                        saltar = true;
+                        $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
+                            if ($(item2).val() == '') {
+                                id_pant = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+                                PantallasError = PantallasError + id_pant + "-";
+                                saltar = false;
+                            };
+                            return saltar;
+                            //alert($(item2).attr("id"));
+                        });
+                    } else {
+                        //id_pant = $(item).attr("id");
+                        if ($(item).find("tbody tr[role='row']").length == 0) {
+                            id_pant = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+                            PantallasError = PantallasError + id_pant + "-";
+                            //alert("no hay registros");
+                        }; //else {
+                        //    alert("hay registos!!!!");
+                        //};
+                    };
+
+                });
+
+                $.ajax({
+                    url: "/Postulante/ValidarDatos",
+                    data: {
+
+                        PantallasError: PantallasError,
+                        ID_persona: '@Model.ID_PER'
+                    },
+                    type: "POST",
+                    dataType: 'json',
+                    async: false,
+                    success: function (response) {
+                        Exito(response, status,null);
+                    }
+                });
+            });
         });
 
         function Imprimir() {
@@ -934,46 +980,8 @@
             $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
 
-        function ejecutarrecorrido() {
-            PantallasError = "";
-            $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
-                if ($(item).find("thead").length == 0) {
+       
 
-                    //alert("form - " + $(item).attr("id"));
-                    saltar = true;
-                    $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
-                        if ($(item2).val() == '') {
-                            id_pant=$(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-                            PantallasError = PantallasError + id_pant + "-";
-                            saltar = false;
-                        };
-                        return saltar;
-                        //alert($(item2).attr("id"));
-                    });
-                } else {
-                    id_pant =$(item).attr("id");
-                    if ($(item).find("tbody tr[role='row']").length == 0) {
-                        PantallasError = PantallasError + id_pant + "-";
-                        //alert("no hay registros");
-                    }; //else {
-                    //    alert("hay registos!!!!");
-                    //};
-                };
-
-            });
-
-            alert(PantallasError);
-            $.ajax({
-                url: "/Postulante/validacion",
-                data: { asd: PantallasError },
-                dataType: 'json',
-                async: false,
-                success: function (resp) {
-                    alert(resp.verdad);
-                }
-            });
-
-        };
 
     </script>
 

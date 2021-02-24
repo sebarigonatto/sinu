@@ -47,7 +47,7 @@ namespace SINU.ViewModels
         public List<OficinasYDelegaciones> OficinasYDelegacionesVM { get; set; }
         public List<ComoSeEntero> ComoSeEnteroVM { get; set; }
         public List<vInstitucionesConvocadasYCarrerasAsociadas> GrupoCarrearOficio { get; set; }
-}
+    }
 
     public class DatosPersonalesVM
     {
@@ -106,7 +106,7 @@ namespace SINU.ViewModels
     public class ActividadMIlitarVM
     {
         public int IDPErsona { get; set; }
-        public ActividadMilitar ACTMilitarIDVM { get; set;}
+        public ActividadMilitar ACTMilitarIDVM { get; set; }
         public List<Fuerza> FuerzasVM { get; set; }
         public List<Baja> BajaVM { get; set; }
         public List<SituacionRevista> SituacionRevistaVM { get; set; }
@@ -117,7 +117,7 @@ namespace SINU.ViewModels
         public SelectList EstadoDescripcionVM { get; set; }
         public List<SelectListItem> InteresesVM { get; set; }
         public List<string> IdInteres { get; set; }
- 
+
 
     }
 
@@ -134,6 +134,7 @@ namespace SINU.ViewModels
 
     public class Presentacion {
         public int IdPersona { get; set; }
+
         [DisplayName("Nombre")]
         public string Nombre { get; set; }
         [DisplayName("Apellido")]
@@ -154,12 +155,16 @@ namespace SINU.ViewModels
     public class DocuPenalVM
     {
         public int IdPersona { get; set; }
-        
+
         public HttpPostedFileBase ConstanciaAntcPenales { get; set; }
-        public HttpPostedFileBase FormularioAanexo2  { get; set; }
+        public HttpPostedFileBase FormularioAanexo2 { get; set; }
         public string PathFormularioAanexo2 { get; set; }
         public string PathConstanciaAntcPenales { get; set; }
+
+        public DeclaracionJurada PenalDeclaJurada { get; set; }
+
     }
+
 
     public class DocuAnexoVM
     {

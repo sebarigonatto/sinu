@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     ViewBag.IconoPerfil = SINU.Models.Func.f_BuscaIcono();
 }
 
@@ -183,7 +183,7 @@
                 </ul>
 
 
-                
+
                 <!--Coloca Link de SESION en extremo Derecho     -->
                 @Html.Partial("_LoginPartial")
 
@@ -196,7 +196,7 @@
         <br />
         <!--Aquí se substituye con el contenido de la pagina VIEW que corresponda según la llamada ejecutada desde las Action -->
         @RenderBody()
-    <br />
+        <br />
         @*<footer class="" style="background-color:white;height: 4%;">
                 <p class="float-right mr-2 mb-1 ">&copy; @DateTime.Now.Year - SINU - Armada Argentina</p>
             </footer>*@
@@ -219,20 +219,21 @@
         </div>
     </div>
 
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
+
     @RenderSection("scripts", required: false)
 
 </body>
 </html>
+
 <script>
 
 
     $(window).on('load', function () {
         $("#navMenu li a").each(function (a) {
-            if (window.location.href.indexOf($(this).attr("href"))>-1) {
+            if (window.location.href.indexOf($(this).attr("href")) > -1) {
                 $(this).css("color", "white");
             }
         });
@@ -243,7 +244,7 @@
 
     $(".load-submit").on("click", function () {
         $.Cargando();
-    }); 
+    });
 
     $.Anuncio = function (texto) {
         $("#BTNModal").show().html("Cerrar");
@@ -266,3 +267,5 @@
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
 </script>
+
+

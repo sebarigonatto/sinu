@@ -237,6 +237,18 @@ namespace SINU.Models
         public int IdDomicilioActual { get; set; }
     }
 
+    public partial class DeclaracionJuradaMetadata {
+        public int IdDeclaracionJurada { get; set; }
+        public string PoseeAntecedentes { get; set; }
+        [RequiredIf("PoseeAntecedentes", true, "SI", ErrorMessage = "Debe detallar los antecedentes que posee.")]
+        public string Antecedentes_Detalles { get; set; }
+        
+        public string EsAdicto { get; set; }
+        public string Comentario { get; set; }
+        public int IdInscripcion { get; set; }
+
+
+    }
     public partial class VPersona_EstudioMetadata
     {
         [Required]
