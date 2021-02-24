@@ -130,6 +130,7 @@ namespace SINU.Models
         public virtual DbSet<vInscriptosconTitulosProblemas> vInscriptosconTitulosProblemas { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
+        public virtual DbSet<vInscriptosCantYTODASConvocatorias> vInscriptosCantYTODASConvocatorias { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
