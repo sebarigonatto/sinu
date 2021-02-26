@@ -309,6 +309,9 @@
     <Compile Include="Models\EstablecimientoRindeExamen.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstablecimientoRindeExamenDeOficina_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Estado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -879,7 +882,6 @@
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
     <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Views\CallConsulta\TotalizarPorConvocatoria.cshtml" />
     <Content Include="webfonts\fa-brands-400.svg" />
     <Content Include="webfonts\fa-regular-400.svg" />
     <Content Include="webfonts\fa-solid-900.svg" />
@@ -1353,6 +1355,7 @@
     <Content Include="Views\Delegacion_EstablecExamen\Details.cshtml" />
     <Content Include="Views\Delegacion_EstablecExamen\Edit.cshtml" />
     <Content Include="Views\Delegacion_EstablecExamen\Index.cshtml" />
+    <Content Include="Views\CallConsulta\TotalizarPorConvocatoria.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
