@@ -31,9 +31,9 @@
                 @*  @Html.DisplayNameFor(model => model.CantInscriptos)*@
                  <label>N° de Inscriptos</label>
             </th>
-            @*<th>
-                 <label>Detalle</label>
-            </th>*@
+            <th>
+                 <label>Ver</label>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -59,11 +59,11 @@
                 @Html.DisplayFor(modelItem => item.CantInscriptos)
             </td>
                
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-              </td>*@
+            <td>
+              
+                @Html.ActionLink("+", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }) 
+                
+              </td>
         </tr>
         }
     </tbody>
