@@ -309,6 +309,9 @@
     <Compile Include="Models\EstablecimientoRindeExamen.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstablecimientoRindeExamenDeOficina_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Estado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

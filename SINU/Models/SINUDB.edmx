@@ -2408,6 +2408,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="EstablecimientoRindeExamenDeOficina" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idOficinayDelegacion" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="Establecimiento" Type="varchar" MaxLength="201" />
+                <Property Name="Localidad" Type="varchar" MaxLength="60" />
+                <Property Name="Direccion" Type="varchar" MaxLength="100" />
+                <Property Name="Comentario" Type="varchar" MaxLength="100" />
+                <Property Name="IdEstablecimientoRindeExamen" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="f_codAplicacion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar" />
         <Function Name="f_InteresesPersona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
           <Parameter Name="IdPersona" Type="int" Mode="In" />
@@ -5550,6 +5564,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
           <EntitySet Name="vInscriptosCantYTODASConvocatorias" EntityType="SINUModel.vInscriptosCantYTODASConvocatorias" />
+          <FunctionImport Name="EstablecimientoRindeExamenDeOficina" IsComposable="true" ReturnType="Collection(SINUModel.EstablecimientoRindeExamenDeOficina_Result)">
+            <Parameter Name="idOficinayDelegacion" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6814,6 +6831,13 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdPeriodoInscripcion" Type="Int32" Nullable="false" />
           <Property Name="CantInscriptos" Type="Int32" />
         </EntityType>
+        <ComplexType Name="EstablecimientoRindeExamenDeOficina_Result">
+          <Property Type="String" Name="Establecimiento" Nullable="true" MaxLength="201" />
+          <Property Type="String" Name="Localidad" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comentario" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="IdEstablecimientoRindeExamen" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8543,6 +8567,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EstablecimientoRindeExamenDeOficina" FunctionName="SINUModel.Store.EstablecimientoRindeExamenDeOficina">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.EstablecimientoRindeExamenDeOficina_Result">
+                <ScalarProperty Name="Establecimiento" ColumnName="Establecimiento" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="IdEstablecimientoRindeExamen" ColumnName="IdEstablecimientoRindeExamen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
