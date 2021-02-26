@@ -1384,5 +1384,15 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("Vaciar2", valoremailParameter, eliminandotablaParameter);
         }
+    
+        [DbFunction("SINUEntities", "EstablecimientoRindeExamenDeOficina")]
+        public virtual IQueryable<EstablecimientoRindeExamenDeOficina_Result> EstablecimientoRindeExamenDeOficina(Nullable<int> idOficinayDelegacion)
+        {
+            var idOficinayDelegacionParameter = idOficinayDelegacion.HasValue ?
+                new ObjectParameter("idOficinayDelegacion", idOficinayDelegacion) :
+                new ObjectParameter("idOficinayDelegacion", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EstablecimientoRindeExamenDeOficina_Result>("[SINUEntities].[EstablecimientoRindeExamenDeOficina](@idOficinayDelegacion)", idOficinayDelegacionParameter);
+        }
     }
 }
