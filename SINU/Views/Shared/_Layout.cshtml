@@ -242,7 +242,8 @@
 
     });
 
-    $(".load-submit").on("click", function () {
+    $(".load-submit").click( function () {
+        alert("asdad");
         $.Cargando();
     });
 
@@ -258,7 +259,7 @@
     };
 
     $.Cargando = function () {
-        $("#ModalAnuncios").hide();
+        //$("#ModalAnuncios").hide();
         $("#ModalAnuncios .modal-body").addClass("text-center");
         $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
         $("#OK").css("display", "none");

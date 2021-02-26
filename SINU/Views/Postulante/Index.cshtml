@@ -661,7 +661,7 @@
                                                                   OnFailure = "Falla"
                                                               }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                             <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success  disabled BTAcciones" >Solicitar Validacion</button>
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones" >Solicitar Validacion</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
@@ -869,6 +869,7 @@
 
 
             $("#BTValidar").on("click", function () {
+                $.Cargando();
                 PantallasError = "";
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
                     if ($(item).find("thead").length == 0) {

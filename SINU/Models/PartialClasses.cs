@@ -28,8 +28,10 @@ namespace SINU.Models
     {
         //public string IdpersonaPostu { get; set; }
         [RequiredIf("IdPais", false,"AR")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string TBoxProvincia { get; set; }
         [RequiredIf("EventualIdPais", false, "AR")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string TBoxEventualProvincia { get; set; }
     }
 
@@ -41,7 +43,10 @@ namespace SINU.Models
         [Display(Name = "Instituto en el Exterior?")]
         public bool INST_EXT { get; set; }
         [RequiredIf("IdInstitutos",true,"0",ErrorMessage ="Nombre de Instituto Requerido")]
+        [MaxLength(200, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string otro_inst { get; set; }
+        [MaxLength(500, ErrorMessage = "Dato ingresado supera el limite del campo.")]
+
         public string prov_localidad { get; set; }
 
     }
