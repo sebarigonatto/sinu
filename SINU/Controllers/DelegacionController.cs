@@ -269,7 +269,7 @@ namespace SINU.Controllers
                 var modeloPlanti = new ViewModels.MailPostular
                 {
                     Apellido = "",
-                    MailCuerpo = cuerpo.Replace("$Nombre",vInscripcionEtapas.Nombres),/// se remplaza con la variable creada en la base de datos con un nombre del postulante
+                    MailCuerpo = cuerpo.Replace("$Nombre", vInscripcionEtapas.Nombres),/// se remplaza con la variable creada en la base de datos con un nombre del postulante
                     LinkConfirmacion = callbackUrl,
                     Postulado = x
                 };
@@ -467,7 +467,7 @@ namespace SINU.Controllers
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
                         Estado = "No Validado",
-                        MailCuerpo = cuerpo.Replace("$Nombre",vInscripcionEtapaEstado.Nombres),
+                        MailCuerpo = cuerpo.Replace("$Nombre", vInscripcionEtapaEstado.Nombres),
                         Apellido = "",
                         Errores = data
                     };
@@ -569,13 +569,11 @@ namespace SINU.Controllers
         {
             try
             {
-                ///arreglar el filtrado del dropdown por que duvuelve la cantidad correcta pero el mismo dato repetido
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 var IdDeleg = UsuarioDelegacion.IdOficinasYDelegaciones;
-                //List<vDelegacion_EstablecExamen> establecExamens;
-                //establecExamens = db.vDelegacion_EstablecExamen.Select(m => m.idDelegacion_EstablecExamen == IdDeleg).ToList();
+                //var establecDele = db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
                 PresentaciondelPostulante presentaciondel = new PresentaciondelPostulante();
-                presentaciondel.LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO==true).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
+                presentaciondel.LugarPresentacion = new SelectList(db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
 
                 presentaciondel.DetalleInscripcion = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
                 var DatosdelLugar = new List<Array>();
@@ -606,7 +604,7 @@ namespace SINU.Controllers
                 Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == Id);
                 establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
                 configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
-                var callbackUrl = Url.Action("Index", "Postulante",null, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
                 var modelPlanti = new ViewModels.MailPresentacion
                 {
 
@@ -863,29 +861,29 @@ namespace SINU.Controllers
 
         #region Documentacion Necesaria para el postulante (Get) - se genera una lista con toda la documentacion a presentar por el postulante
         public ActionResult DocumentosNecesarios(int ID_persona)
+        {
+            try
+            {
+                //var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona && m.IdDataVerificacion == 26).Any();
+                //ViewBag.Problem = ExistProblema;
+                var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+
+                var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderByDescending(m => m.Obligatorio).ToList();
+                ViewBag.Idinscripto = inscrip.IdInscripcion;
+                DocuNecesaria datos = new DocuNecesaria()
                 {
-                    try
-                    {
-                    //var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona && m.IdDataVerificacion == 26).Any();
-                    //ViewBag.Problem = ExistProblema;
-                    var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+                    DocumentosNecesarios = DocuNecesarios
+                };
+                var listDocu = DocuNecesarios.ToList();
+                return PartialView(datos);
+            }
+            catch (Exception)
+            {
 
-                        var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderByDescending(m => m.Obligatorio).ToList();
-                        ViewBag.Idinscripto = inscrip.IdInscripcion;
-                        DocuNecesaria datos = new DocuNecesaria()
-                        {
-                            DocumentosNecesarios = DocuNecesarios
-                        };
-                        var listDocu = DocuNecesarios.ToList();
-                        return PartialView(datos);
-                    }
-                    catch (Exception)
-                    {
+                throw;
+            }
 
-                        throw;
-                    }
-
-                }
+        }
         #endregion
 
         #region Documentacion Necesaria para el postulante (POST) boton (Confirmar) Pestaña (Documentacion Presentada)- guarda los registros de que documentacion presento Modificacion 18/02/2021
@@ -911,8 +909,8 @@ namespace SINU.Controllers
                     }
 
                     var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
-                    var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false & m.Obligatorio==true);///utilizo el filtro para que me traiga la documentacion obligatoria y poder ver si adueda
-                    ///verificar que cuando se entrega toda la documentacion entra aca y pincha debido a que trata de borrar un problema inexistente
+                    var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false & m.Obligatorio == true);///utilizo el filtro para que me traiga la documentacion obligatoria y poder ver si adueda
+                                                                                                                         ///verificar que cuando se entrega toda la documentacion entra aca y pincha debido a que trata de borrar un problema inexistente
                     if (DocuNoPresnt == null)///utilizo el filtro anterior para verificar si adeuda documentacion obligatoria si - true solamente agrega la documentacion -false cuando toda la documentacion  
                     {
                         db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
@@ -923,10 +921,10 @@ namespace SINU.Controllers
                         return Json(new { succes = true, msg = "Se agrego correctamente la documentacion", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                     }
                 }
-                
 
 
-                
+
+
                 //return Json(new { success = true, msg = "Operacon exitosa", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
                 // TODO: Add insert logic here
 
@@ -957,7 +955,7 @@ namespace SINU.Controllers
         }
         #endregion
 
-        #region creo una get para mostrar una lista con postulante para que el usuario(Delegacion) puede seleccionar varios y asignarles una fecha
+        #region (GET)Asignar a varios fecha de presentacion - en esta get lleva datos de lugar de establecimiento y los postulantes que estan para asignarle fecha
         [HttpGet]
         public ActionResult AsignarFechaVarios()
         {
@@ -967,9 +965,9 @@ namespace SINU.Controllers
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
                     AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
-                    LugarPresentacion = new SelectList(db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones && m.ACTIVO == true).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
+                    LugarPresentacion = new SelectList(db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
                     FechaPresentacion = DateTime.Now,
-                    listado= db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList().Count
+                    listado = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList().Count
                 };
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
@@ -986,6 +984,7 @@ namespace SINU.Controllers
         }
         #endregion
 
+        #region Asignar a varios una fecha de presentacion -  se seleccion a varios postulantes y se le asignan fechas de presentacion
         public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
             List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
@@ -1024,6 +1023,7 @@ namespace SINU.Controllers
             }
 
         }
+        #endregion
 
         #region Asignar fecha de ENTREVISTA a varios Postulante(GET) ENTREVISTA - en esta accion se genera la lista de postulante a la cual se le puede asignar una fecha de entrevista
         [HttpGet]
@@ -1032,7 +1032,7 @@ namespace SINU.Controllers
             try
             {
                 List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
-                ViewBag.Listado= db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
+                ViewBag.Listado = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
                 return View(dato);
             }
             catch (Exception)
@@ -1058,7 +1058,7 @@ namespace SINU.Controllers
                 {
                     Apellido = "",
                     FechaEntrevista = Fecha
-                    
+
                 };
 
                 List<string> correos = new List<string>();
@@ -1109,14 +1109,14 @@ namespace SINU.Controllers
             try
             {
                 var Postu = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == IdInscripto);///traigo los datos de un postulante
-                var probleExistente = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Postu.IdPersona && m.IdDataVerificacion==26);
+                var probleExistente = db.DataProblemaEncontrado.FirstOrDefault(m => m.IdPostulantePersona == Postu.IdPersona && m.IdDataVerificacion == 26);
                 var Dataverificacion = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == IdPantalla && m.Descripcion == "Otros: Aclare");
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
                 var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false && m.Obligatorio == true);
-                
+
                 if (DocuNoPresnt != null && probleExistente == null)
                 {
-                    db.sp_DataProblemaEncontradoIUD(Postu.IdPersona, Dataverificacion.IdDataVerificacion, "Documentacion no presentada/Incorrecta",0,false);
+                    db.sp_DataProblemaEncontradoIUD(Postu.IdPersona, Dataverificacion.IdDataVerificacion, "Documentacion no presentada/Incorrecta", 0, false);
                     return Json(new { succes = true, msg = "Se notificara al postulante que adeuda Documentacion Obligatoria" });
                 }
                 if (probleExistente != null)
@@ -1127,7 +1127,7 @@ namespace SINU.Controllers
                 {
                     return Json(new { succes = true, msg = "Toda la documentacion Obligatoria a sido presentada" });
                 }
-                
+
             }
             catch (Exception)
             {
@@ -1142,7 +1142,7 @@ namespace SINU.Controllers
         public JsonResult ActuTabla(int IdPersona)
         {
             var Problemas = new List<Array>();
-            db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList().ForEach(m=> Problemas.Add(new[] { m.DataVerificacion,m.Comentario }));
+            db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == IdPersona).ToList().ForEach(m => Problemas.Add(new[] { m.DataVerificacion, m.Comentario }));
             var ProblemasJSON = JsonConvert.SerializeObject(Problemas);
 
             return Json(new { estado = ProblemasJSON }, JsonRequestBehavior.AllowGet);

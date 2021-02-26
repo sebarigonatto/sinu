@@ -164,7 +164,7 @@
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
                             @*@Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })*@
-                            @Html.Partial("_Docupenal")
+                            @Html.Action("DocuPenal", "Postulante", new { ID_persona = Model.ID_PER })
                             <br />
                             <div class="accordion" id="accordionExample2">
                                 <div class="card">
