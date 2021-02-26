@@ -7,6 +7,7 @@ using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -386,6 +387,7 @@ namespace SINU.Controllers
                 }
 
                 var idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+
                 //parte de la declaracion jurada
                 d.PenalDeclaJurada = db.DeclaracionJurada.FirstOrDefault(m => m.IdInscripcion == idInscrip) ?? new DeclaracionJurada { IdInscripcion= idInscrip };
                 d.PenalDeclaJurada.IdPersona = ID_persona;
@@ -457,18 +459,23 @@ namespace SINU.Controllers
             try
             {
 
-                var DeclaJura = d.PenalDeclaJurada;
+                DeclaracionJurada DeclaJura = d.PenalDeclaJurada;
                 DeclaJura.EsAdicto = DeclaJura.EsAdicto=="true" ? "SI" : "NO";
-                if (DeclaJura.IdDeclaracionJurada==0)
+                if (DeclaJura.IdDeclaracionJurada == 0)
                 {
                     db.DeclaracionJurada.Add(DeclaJura);
                 }
                 else
                 {
-                    var DEJU = db.DeclaracionJurada.Find(DeclaJura.IdDeclaracionJurada);
-                    DEJU = DeclaJura;
-                    db.Entry(DEJU).State = System.Data.Entity.EntityState.Modified;
+                    var declaju = new DeclaracionJurada() { IdDeclaracionJurada= DeclaJura.IdDeclaracionJurada};
 
+                    if (TryUpdateModel(DeclaJura, "",
+                       new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
+                    {
+                      
+                            db.Entry(DeclaJura).State = EntityState.Modified;
+                            db.SaveChanges();
+                    }
                 }
                 
                 db.SaveChanges();

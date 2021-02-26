@@ -11,8 +11,10 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public Nullable<int> IdPostulante { get; set; }
         [Required]
+        [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Apellido { get; set; }
         [Required]
+        [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Nombres { get; set; }
         [ScaffoldColumn(false)]
         public string Sexo { get; set; }
@@ -33,8 +35,8 @@ namespace SINU.Models
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un "-", 
         //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "El telefono ingresado, tiene que tener al menos 10 digitos")]
-        //[RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
+        [StringLength(50,MinimumLength = 10, ErrorMessage = "El telefono ingresado, tiene que tener al menos 10 digitos")]
+                //[RegularExpression(@"^\(?([0-9]{2,4})\)?[-]?([0-9]{6,8})$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         [RegularExpression(@"^(\d){10}$", ErrorMessage = "El telefono ingresado NO ES VALIDO")]
         public string Telefono { get; set; }
 
@@ -42,7 +44,7 @@ namespace SINU.Models
         [DataType(DataType.PhoneNumber)]
         //la expresion regular tiene dos partes, que pueden o no estar separada por un " - ", 
         //la primera parte acepta de 2 a 4 numeros  y la segunda de 6 a 8.
-        [StringLength(10, MinimumLength = 10, ErrorMessage = "El celular ingresado, tiene que tener al menos 10 digitos")]
+        [StringLength(15, MinimumLength = 10, ErrorMessage = "El celular ingresado, tiene que tener al menos 10 digitos")]
         [RegularExpression(@"^(\d){10}$", ErrorMessage = "El celular ingresado NO ES VALIDO")]
         public string Celular { get; set; }
         //verificar esto en el caso de ser familiar o postulante si debe ser requiro o no
@@ -55,7 +57,7 @@ namespace SINU.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Comentario")]
-        [MaxLength(40, ErrorMessage = "Limite de caracteres superado!")]
+        [MaxLength(100, ErrorMessage = "Dato ingresado supera el limite del campo")]
         public string ComoSeEntero { get; set; }
         [Required]
         [Display(Name = "Como se entero")]
@@ -93,6 +95,7 @@ namespace SINU.Models
         [Required(ErrorMessage ="Campo Obligatorio")]
         //[RegularExpression(@"\b(20|23|24|27|30|33|34)(\D)?[0-9]{8}(\D)?[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
         [RegularExpression(@"\b(20|23|24|27|30|33|34)[0-9]{8}[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
+        [StringLength(11, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string CUIL { get; set; }
         [Display(Name = "Fecha de Nacimiento")]
         [Required]
@@ -180,9 +183,11 @@ namespace SINU.Models
         [Required]
         public int IdPersona { get; set; }
         [Required]
+        [MaxLength(100,ErrorMessage ="Dato ingresado supera el limite del campo.")]
         public string Calle { get; set; }
         [Required]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
+        [MaxLength(10, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Numero { get; set; }
         //[Required]
         public string Piso { get; set; }
@@ -237,8 +242,10 @@ namespace SINU.Models
         public int IdDomicilioActual { get; set; }
     }
 
-    public partial class DeclaracionJuradaMetadata {
+    public partial class DeclaracionJuradaMetadata 
+    {
         public int IdDeclaracionJurada { get; set; }
+        [Required]
         public string PoseeAntecedentes { get; set; }
         [RequiredIf("PoseeAntecedentes", true, "SI", ErrorMessage = "Debe detallar los antecedentes que posee.")]
         public string Antecedentes_Detalles { get; set; }
@@ -246,8 +253,8 @@ namespace SINU.Models
         public string Comentario { get; set; }
         public int IdInscripcion { get; set; }
 
-
     }
+
     public partial class VPersona_EstudioMetadata
     {
         [Required]

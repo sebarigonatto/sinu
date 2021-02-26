@@ -112,21 +112,26 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 
                 @Html.DropDownListFor(model => model.PenalDeclaJurada.PoseeAntecedentes, new SelectList(new[] { new { Value = "SI", Text = "SI" }, new { Value = "NO", Text = "NO" }, }, "Value", "Text", Model),
                 "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })
+                <div class="h-100"></div>
+                @Html.ValidationMessageFor(m => m.PenalDeclaJurada.PoseeAntecedentes, null, new { @style = "color:yellow" })
+
 
                 @*@Html.DropDownList("asd", new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text"), "Selecione una opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })*@
                 @* @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Numero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })*@
+        @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })*@
                 <br /><br />
-                <div class="form-group" id="casosPenales">
-                    @Html.Label("Indicar cuales:", new { @class = "control-label" })
-                    @*<textarea id="autoresizing" class="form-control" name="@Html.NameFor(m=>m.PenalDeclaJurada.Antecedentes_Detalles)" placeholder="Ingrese los antecedentes que posea....."></textarea>*@
-                    @Html.TextAreaFor(m => m.PenalDeclaJurada.Antecedentes_Detalles, new { @class = "form-control", @placeholder = "Ingrese los antecedentes que posea.....", @id = "autoresizing" })
+                      <div class="form-group" id="casosPenales">
+                          @Html.Label("Indicar cuales:", new { @class = "control-label" })
+                          @*<textarea id="autoresizing" class="form-control" name="@Html.NameFor(m=>m.PenalDeclaJurada.Antecedentes_Detalles)" placeholder="Ingrese los antecedentes que posea....."></textarea>*@
+                          @Html.TextAreaFor(m => m.PenalDeclaJurada.Antecedentes_Detalles, new { @class = "form-control", @placeholder = "Ingrese los antecedentes que posea.....", @id = "autoresizing", @maxlength = "200" })
+                          <div class="h-100"></div>
+                          @Html.ValidationMessageFor(m => m.PenalDeclaJurada.Antecedentes_Detalles, null, new { @style = "color:yellow" })
 
 
-                </div>
-                <o class="BTAcciones">No soy adicto a las bebidas alcoholicas ni a otras sustancias </o>@Html.CheckBox("PenalDeclaJurada.EsAdicto", Model.PenalDeclaJurada.EsAdicto == "SI" ? true : false, new { @class = "form-control d-inline w-auto BTAcciones" })
+                      </div>
+                <o>Soy adicto a las bebidas alcoholicas ni a otras sustancias </o>@Html.CheckBox("PenalDeclaJurada.EsAdicto", Model.PenalDeclaJurada.EsAdicto == "SI" ? true : false, new { @class = "form-control d-inline w-auto" })
                 <br /><br />
-                <button type="button" class="btn btn-success" onclick="$('#BeginDocuPenalDeclaJurada').submit()"> Guardar </button>
+                <button type="button" class="btn btn-success BTAcciones" onclick="$('#BeginDocuPenalDeclaJurada').submit()"> Guardar </button>
             </div>
         }
 
