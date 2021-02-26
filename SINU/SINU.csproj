@@ -1356,6 +1356,7 @@
     <Content Include="Views\Delegacion_EstablecExamen\Edit.cshtml" />
     <Content Include="Views\Delegacion_EstablecExamen\Index.cshtml" />
     <Content Include="Views\CallConsulta\TotalizarPorConvocatoria.cshtml" />
+    <Content Include="Views\CallConsulta\TotalesConvocatoriaDetalle.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

@@ -19,7 +19,7 @@ namespace SINU.Controllers.Consultor
     /// </summary>
     [AuthorizacionPermiso("ListarRP")]
     public class CallConsultaController : Controller
-    { 
+    {
         private SINUEntities db = new SINUEntities();
         /// <summary>Pantalla principal que genera el indice lateral de Consultas
         /// 
@@ -32,7 +32,7 @@ namespace SINU.Controllers.Consultor
             //Si no dan un id asume el que tenga id de consulta en 1, 
             //si no hay ninguno en id 1 simplemente no selecciona ninguno
             ViewBag.ActivarId = id ?? 1;
-           //oculta las Consultas que no estan realizadas
+            //oculta las Consultas que no estan realizadas
             return View(db.ConsultaProgramada.Where(m => m.Action != "FaltaCrearNuevoAction").OrderBy(m => m.OrdenConsulta).ToList());
             //return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
@@ -142,22 +142,22 @@ namespace SINU.Controllers.Consultor
 
         }
 
-        
+
         /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
         /// Esta action es una SUBCONSULTA de ConsultaTotalPostulantes
         /// </summary>
         /// <param name="IdPostulantePersona"></param>
         /// <returns></returns>
-        public ActionResult VerPostulanteElegido(int? IdPostulantePersona )
+        public ActionResult VerPostulanteElegido(int? IdPostulantePersona)
         {
             //el 1033 es por conveniencia de OTTINO-- eliminar 10033 y poner 0
             IdPostulantePersona = (IdPostulantePersona is null) ? 1033 : IdPostulantePersona;
-            Postulante x =  db.Postulante.FirstOrDefault(p => p.IdPersona == IdPostulantePersona);
-           if (x is null)
+            Postulante x = db.Postulante.FirstOrDefault(p => p.IdPersona == IdPostulantePersona);
+            if (x is null)
             {
                 return View("Error", Func.ConstruyeError("Extraño que no encuentre Postulante: " + IdPostulantePersona.ToString(), "CallConsulta", "VerPostulanteElegido"));
             }
-            return RedirectToAction( "Index", "Postulante", new { ID_Postulante = IdPostulantePersona });
+            return RedirectToAction("Index", "Postulante", new { ID_Postulante = IdPostulantePersona });
         }
 
 
@@ -167,13 +167,46 @@ namespace SINU.Controllers.Consultor
         {
             //var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
             //return PartialView(convocatoria.ToList());
-         
+
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
 
             ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
             return PartialView(ListadoConvocatorias);
-        
+
         }
 
+        //Subconsulta de TotalizarPorConvocatoria.
+        //Habiendo elegido una convocatoria en TotalizarPorConvocatoria 
+        //esto muestra el detalle de los postulantes y si cumplen o no las restricciones
+        public ActionResult TotalesConvocatoriaDetalle(int? IdConvocatoria)
+        {
+            IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
+            var Totales = db.vInscriptosYRestriccionesCount.Where(m => m.IdConvocatoria == IdConvocatoria);
+            vInscriptosYRestriccionesCount InscriptosYConvocatoriasCount = (Totales.ToList()).Count == 0 ? new vInscriptosYRestriccionesCount() : (Totales.ToList())[0];
+            List<vInscriptosYRestriccionesCheck> InscriptosYRestriccionesCheck = db.vInscriptosYRestriccionesCheck.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
+
+            ViewBag.InscriptosYConvocatoriasCount = InscriptosYConvocatoriasCount;
+            //busco el id que le corresponde a la consulta original TotalizarPorConvocatoria
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
+
+            return View(InscriptosYRestriccionesCheck);
+        }
+        //Subconsulta de TotalizarPorConvocatoria.
+        //Habiendo elegido una convocatoria en TotalizarPorConvocatoria 
+        //fue a la pantallla de TotalesConvocatoriaDetalle y ahi existe un boton que llama a esta pantalla
+        public ActionResult TotalesConvocatoriaTitulos(int? IdConvocatoria)
+        {
+            IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
+            /* mostrar
+             [IdPostulantePersona]
+       ,[Descripcion]
+      ,[Nombre] Oficina
+    de la vista  [SINU].[dbo].[vInscriptosconTitulosProblemas]
+              */
+            List<vInscriptosconTitulosProblemas> InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
+            //falta crear pantalla            
+            return View(InscriptosconTitulosProblemas);
+
+        }
     }
 }

@@ -1,0 +1,174 @@
+﻿@model IEnumerable<SINU.Models.vInscriptosYRestriccionesCheck>
+@using SINU.Models
+@{
+    ViewBag.Title = "Problemas de Inscriptos en Convocatoria elegida";
+    //tiene 1 registro de la convocatoria elegida con los totales de los count de errores correspondientes
+    vInscriptosYRestriccionesCount InscriptosYConvocatoriasCount = (vInscriptosYRestriccionesCount)(ViewBag.InscriptosYConvocatoriasCount);
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div>
+
+        <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
+    con el id de la consulta que deseo se encuentre activa
+    cuando armé el menú lateral de consultas.
+            se debe cargar el ActivarId en el controller action que llama a esta view 
+            o en este archivo al ppio-->
+        @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+
+
+        <span style="float:right">
+            @Html.ActionLink("VER Problemas de Titulos", "TotalesConvocatoriaTitulos", new { IdConvocatoria = @InscriptosYConvocatoriasCount.IdConvocatoria }, new { @class = "btn btn-primary w-80  btn-dark" })
+        </span>
+    </div>
+<h2>
+    @ViewBag.Title 
+</h2>
+<p>
+    <div class="alert alert-dark text-success" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL Insc.: @InscriptosYConvocatoriasCount.SubTotal_Convoc</span></div>
+</p>
+<!-- tabla con detalles de problemas sumarizados, tiene los count de cada problema-->
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @InscriptosYConvocatoriasCount.IdModalidad
+            </th>
+            <th>
+                Inicio: @InscriptosYConvocatoriasCount.FechaInicio
+            </th>
+            <th>
+                Final: @InscriptosYConvocatoriasCount.FechaFinal
+            </th>
+            <th>
+                Fin Proceso: @InscriptosYConvocatoriasCount.Fecha_Fin_Proceso
+            </th>
+        </tr>
+        <tr>
+            <th scope="col">Campo\Estado</th>
+            <th scope="col" class="table-danger">Problema</th>
+            <th scope="col" class="table-warning">Incomparable</th>
+            <th scope="col" class="table-success">OK</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">ALTURA</th>
+            <td class="table-danger">@InscriptosYConvocatoriasCount.AlturaProblema</td>
+            <td class="table-warning">@InscriptosYConvocatoriasCount.AlturaIncomparable</td>
+            <td class="table-success">@InscriptosYConvocatoriasCount.AlturaOK</td>
+        </tr>
+        <tr>
+            <th scope="row">IMC</th>
+            <td class="table-danger">@InscriptosYConvocatoriasCount.IMCProblema</td>
+            <td class="table-warning">@InscriptosYConvocatoriasCount.IMCIncomparable</td>
+            <td class="table-success">@InscriptosYConvocatoriasCount.IMCOK</td>
+        </tr>
+        <tr>
+            <th scope="row">EDAD</th>
+            <td class="table-danger">@InscriptosYConvocatoriasCount.EdadProblema</td>
+            <td class="table-warning">@InscriptosYConvocatoriasCount.EdadIncomparable</td>
+            <td class="table-success">@InscriptosYConvocatoriasCount.EdadOK</td>
+        </tr>
+        <tr>
+            <th scope="row">Est.Civ.</th>
+            <td class="table-danger">@InscriptosYConvocatoriasCount.EstadoCivilProblema</td>
+            <td class="table-warning">@InscriptosYConvocatoriasCount.EstadoCivilIncomparable</td>
+            <td class="table-success">@InscriptosYConvocatoriasCount.EstadoCivilOK</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
+    dar formato con datatables a esta grilla-->
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdPostulantePersona)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genero)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Altura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlturaCheck)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IMC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IMCCheck)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Edad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EdadCheck)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoCivilId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoCiviCheck)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Oficina)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPostulantePersona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Altura)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlturaCheck)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IMC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IMCCheck)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EdadCheck)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoCivilId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoCiviCheck)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oficina)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
