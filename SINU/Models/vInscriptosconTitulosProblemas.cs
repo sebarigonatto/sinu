@@ -27,5 +27,7 @@ namespace SINU.Models
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFinal { get; set; }
         public int IdConvocatoria { get; set; }
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 }
