@@ -142,15 +142,7 @@ namespace SINU.Controllers.Consultor
 
         }
 
-
         
-        //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
-        public ActionResult TotalizarPorConvocatoria()
-        {
-            var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
-
-            return PartialView(convocatoria.ToList());
-        }
         /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
         /// Esta action es una SUBCONSULTA de ConsultaTotalPostulantes
         /// </summary>
@@ -167,6 +159,21 @@ namespace SINU.Controllers.Consultor
             }
             return RedirectToAction( "Index", "Postulante", new { ID_Postulante = IdPostulantePersona });
         }
-             
+
+
+        //Consulta la Convocatoria que tiene personal de inscriptos
+        //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
+        public ActionResult TotalizarPorConvocatoria()
+        {
+            //var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
+            //return PartialView(convocatoria.ToList());
+         
+            List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
+
+            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+            return PartialView(ListadoConvocatorias);
+        
+        }
+
     }
 }
