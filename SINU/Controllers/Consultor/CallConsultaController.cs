@@ -196,14 +196,9 @@ namespace SINU.Controllers.Consultor
         public ActionResult TotalesConvocatoriaTitulos(int? IdConvocatoria)
         {
             IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
-            /* mostrar
-             [IdPostulantePersona]
-       ,[Descripcion]
-      ,[Nombre] Oficina
-    de la vista  [SINU].[dbo].[vInscriptosconTitulosProblemas]
-              */
+                        
             List<vInscriptosconTitulosProblemas> InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
-            //falta crear pantalla            
+           
             return View(InscriptosconTitulosProblemas);
 
         }

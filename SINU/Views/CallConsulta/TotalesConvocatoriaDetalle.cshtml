@@ -8,22 +8,22 @@
 }
 
 
-    <div>
+<div>
 
-        <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
+    <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
     con el id de la consulta que deseo se encuentre activa
     cuando armé el menú lateral de consultas.
-            se debe cargar el ActivarId en el controller action que llama a esta view 
+            se debe cargar el ActivarId en el controller action que llama a esta view
             o en este archivo al ppio-->
-        @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+    @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
 
 
-        <span style="float:right">
-            @Html.ActionLink("VER Problemas de Titulos", "TotalesConvocatoriaTitulos", new { IdConvocatoria = @InscriptosYConvocatoriasCount.IdConvocatoria }, new { @class = "btn btn-primary w-80  btn-dark" })
-        </span>
-    </div>
+    <span style="float:right">
+        @Html.ActionLink("VER Problemas de Titulos", "TotalesConvocatoriaTitulos", new { IdConvocatoria = @InscriptosYConvocatoriasCount.IdConvocatoria }, new { @class = "btn btn-primary w-80  btn-dark" })
+    </span>
+</div>
 <h2>
-    @ViewBag.Title 
+    @ViewBag.Title
 </h2>
 <p>
     <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @InscriptosYConvocatoriasCount.SubTotal_Convoc</span></div>
@@ -46,7 +46,7 @@
                 Fin Proceso: @InscriptosYConvocatoriasCount.Fecha_Fin_Proceso
             </th>
         </tr>
-       <!--fila con titulos de cada columna-->
+        <!--fila con titulos de cada columna-->
         <tr>
             <th scope="col">Campo\Estado</th>
             <th scope="col" class="table-danger">Problema</th>
@@ -85,96 +85,156 @@
 <!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
     dar formato con datatables a esta grilla-->
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IdPostulantePersona)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FechaInscripcion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genero)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Altura)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AlturaCheck)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IMC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IMCCheck)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Edad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EdadCheck)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstadoCivilId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EstadoCiviCheck)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Oficina)
-        </th>
-        <th>
-            Ver Datos
-        </th>
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
+    <thead class="thead-dark">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPostulantePersona)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInscripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Altura)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AlturaCheck)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IMC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IMCCheck)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Edad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EdadCheck)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoCivilId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoCiviCheck)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Oficina)
-            </td>
-            <td>
-                <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
-                @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" })
-                @*@Html.ActionLink("Texto a mostrar", "Nombre del action", new { /* id=item.PrimaryKey */ })*@
-            </td>
-        </tr>
-    }
+            <th>
+                @Html.DisplayNameFor(model => model.IdPostulantePersona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaInscripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Altura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AlturaCheck)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IMC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IMCCheck)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EdadCheck)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoCivilId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoCiviCheck)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Oficina)
+            </th>
+            <th>
+                Ver Datos
+            </th>
 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPostulantePersona)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Altura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlturaCheck)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IMC)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IMCCheck)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Edad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EdadCheck)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoCivilId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstadoCiviCheck)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Oficina)
+                </td>
+                <td>
+                    <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
+                    @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" })
+                    @*@Html.ActionLink("Texto a mostrar", "Nombre del action", new { /* id=item.PrimaryKey */ })*@
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+
+            });
+
+        });
+    </script>
+}
