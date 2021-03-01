@@ -26,11 +26,12 @@
     @ViewBag.Title 
 </h2>
 <p>
-    <div class="alert alert-dark text-success" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL Insc.: @InscriptosYConvocatoriasCount.SubTotal_Convoc</span></div>
+    <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @InscriptosYConvocatoriasCount.SubTotal_Convoc</span></div>
 </p>
 <!-- tabla con detalles de problemas sumarizados, tiene los count de cada problema-->
 <table class="table table-sm">
     <thead class="thead-dark">
+        <!-- fila con detalle de convocatoria-->
         <tr>
             <th>
                 @InscriptosYConvocatoriasCount.IdModalidad
@@ -45,6 +46,7 @@
                 Fin Proceso: @InscriptosYConvocatoriasCount.Fecha_Fin_Proceso
             </th>
         </tr>
+       <!--fila con titulos de cada columna-->
         <tr>
             <th scope="col">Campo\Estado</th>
             <th scope="col" class="table-danger">Problema</th>
@@ -121,6 +123,10 @@
         <th>
             @Html.DisplayNameFor(model => model.Oficina)
         </th>
+        <th>
+            Ver Datos
+        </th>
+
         <th></th>
     </tr>
 
@@ -164,9 +170,9 @@
                 @Html.DisplayFor(modelItem => item.Oficina)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
+                @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" })
+                @*@Html.ActionLink("Texto a mostrar", "Nombre del action", new { /* id=item.PrimaryKey */ })*@
             </td>
         </tr>
     }

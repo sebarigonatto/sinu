@@ -32,7 +32,7 @@
                  <label>N° de Inscriptos</label>
             </th>
             <th>
-                 <label>Ver</label>
+                 <label>Ver Datos</label>
             </th>
         </tr>
     </thead>
@@ -60,10 +60,9 @@
             </td>
                
             <td>
-              
-                @Html.ActionLink("+", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }) 
-                
-              </td>
+                <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
+                @Html.ActionLink(" ", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }, new { @class = "fas fa-bars", @style = "color:#343a40" })
+            </td>
         </tr>
         }
     </tbody>
