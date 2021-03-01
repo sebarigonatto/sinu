@@ -798,7 +798,11 @@
             $.BloqueoPantalla = true;
             $(".BTAcciones").remove();
             $("#TABBloqueo :input,#TABBloqueo input").not(".dataTables_wrapper input[type='search'],[type='checkbox'],[type='submit']").attr("disabled", "true");
-
+            $("#PenalDeclaJurada_EsAdicto").attr("disabled", "true");
+            $("a[target='_blank']").each(function (index, item) {
+                //alert($(item).attr("id"));
+                if ($(item).hasClass("hidden")) $(item).removeClass("hidden").closest("div").append("<h5 style='color:yellow'>No hay archivo subido</h5>");
+            });
             $(".habil").removeAttr("disabled");
             $(".BTMuestraTable :input,.BTMuestraTable a").removeAttr("disabled").not("[role='combobox']").removeClass("fa-edit").addClass("fa-eye");
             var bloqueoSUBMIT = false;
