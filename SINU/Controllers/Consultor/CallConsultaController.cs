@@ -165,8 +165,6 @@ namespace SINU.Controllers.Consultor
         //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
         public ActionResult TotalizarPorConvocatoria()
         {
-            //var convocatoria = db.Convocatoria.Include(c => c.GrupoCarrOficio).Include(c => c.Modalidad).Include(c => c.PeriodosInscripciones);
-            //return PartialView(convocatoria.ToList());
 
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
 
@@ -180,6 +178,7 @@ namespace SINU.Controllers.Consultor
         //esto muestra el detalle de los postulantes y si cumplen o no las restricciones
         public ActionResult TotalesConvocatoriaDetalle(int? IdConvocatoria)
         {
+            //siempre es conveniente fijarse si me pasa null pues no se ir al where con null en estos casos
             IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
             var Totales = db.vInscriptosYRestriccionesCount.Where(m => m.IdConvocatoria == IdConvocatoria);
             vInscriptosYRestriccionesCount InscriptosYConvocatoriasCount = (Totales.ToList()).Count == 0 ? new vInscriptosYRestriccionesCount() : (Totales.ToList())[0];

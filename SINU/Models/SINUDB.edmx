@@ -6737,7 +6737,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Modalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
