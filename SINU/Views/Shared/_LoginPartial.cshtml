@@ -24,7 +24,7 @@ else
         @{
             if (!HttpContext.Current.Request.Path.Contains("Register"))
             {
-                <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+                @*<li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>*@
             }
             if (!HttpContext.Current.Request.Path.Contains("Login"))
             {

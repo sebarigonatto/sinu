@@ -1723,7 +1723,7 @@ namespace SINU.Controllers
             try
             {
 
-                List<string> ListasPantalla = PantallasError.Remove(PantallasError.Length - 1, 1).Split('-').ToList();
+                List<string> ListasPantalla = PantallasError.Remove(PantallasError.Length - 1, 1).Split('-').Distinct().ToList();
                 List<int> IDPantallaError = new List<int>();
                 int id_Pant, id_otroProblema;
                 var ListaProblemaEncontrado = new List<DataProblemaEncontrado>();
