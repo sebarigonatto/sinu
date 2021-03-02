@@ -197,10 +197,13 @@ namespace SINU.Controllers.Consultor
         public ActionResult TotalesConvocatoriaTitulos(int? IdConvocatoria)
         {
             List<vInscriptosconTitulosProblemas> InscriptosconTitulosProblemas;
-            //IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
+            
             if (IdConvocatoria is null)
             {
-                InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.ToList();
+                //considero que se hizo click en una opcion del menu ppal de consultas
+                //no se filtra por convocatoria pero solo se muestran las activas
+                InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.Fecha_Fin_Proceso > DateTime.Now)
+                                                                                 .ToList();
                 return PartialView(InscriptosconTitulosProblemas);
             }
             else
