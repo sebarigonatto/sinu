@@ -193,13 +193,24 @@ namespace SINU.Controllers.Consultor
         //Subconsulta de TotalizarPorConvocatoria.
         //Habiendo elegido una convocatoria en TotalizarPorConvocatoria 
         //fue a la pantallla de TotalesConvocatoriaDetalle y ahi existe un boton que llama a esta pantalla
+        //o si va por el menu principal me pasa un idconvocatoria en null
         public ActionResult TotalesConvocatoriaTitulos(int? IdConvocatoria)
         {
-            IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
-                        
-            List<vInscriptosconTitulosProblemas> InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
-           
-            return View(InscriptosconTitulosProblemas);
+            List<vInscriptosconTitulosProblemas> InscriptosconTitulosProblemas;
+            //IdConvocatoria = (IdConvocatoria is null) ? 0 : IdConvocatoria;
+            if (IdConvocatoria is null)
+            {
+                InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.ToList();
+                return PartialView(InscriptosconTitulosProblemas);
+            }
+            else
+            {
+                //busco el id que le corresponde a la consulta original TotalizarPorConvocatoria
+                ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
+                InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
+                return View(InscriptosconTitulosProblemas);
+            }
+
 
         }
     }

@@ -166,8 +166,16 @@ namespace SINU.Models
     {
         public int IdPersona { get; set; }
     }
+    [MetadataType(typeof(vInscriptosconTitulosProblemasMetadata))]
+    public partial class vInscriptosconTitulosProblemas
+    {
+        //[Required]
+        //[Display(Name ="xxx")]
+        //public string xxx { get; set; }
+    }
 
-} 
 
-    
+}
+
+
 

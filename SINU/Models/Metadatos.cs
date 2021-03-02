@@ -703,5 +703,36 @@ namespace SINU.Models
         public System.DateTime FechaEntrevista { get; set; }
     }
 
+    public partial class vInscriptosconTitulosProblemasMetadata
+    {
+        [Display(Name = "Enlace Postulante")]
+        public int IdPostulantePersona { get; set; }
+        [Display(Name = "Enlace Problema")]
+        public int IdDataVerificacion { get; set; }
+        [Display(Name = "Enlace Inscripto")]
+        public int IdInscripcion { get; set; }
+        [Display(Name = "Modalidad")]
+        public string IdModalidad { get; set; }
+        [Display(Name = "Enlace Carrera")]
+        public Nullable<int> IdCarreraOficio { get; set; }
+        [Display(Name = "Enlace Oficina")]
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        [Display(Name = "Desc. Probl.")]
+        public string Descripcion { get; set; }
+        [Display(Name = "Inscripción")]
+        public Nullable<System.DateTime> FechaInscripcion { get; set; }
+        [Display(Name = "Ofic.Deleg.")]
+        public string Nombre { get; set; }
+        [Display(Name = "Inicio")]
+        public System.DateTime FechaInicio { get; set; }
+        [Display(Name = "FIN")]
+        public System.DateTime FechaFinal { get; set; }
+        [Display(Name = "Enlace Convocat.")]
+        public int IdConvocatoria { get; set; }
+        [Display(Name = "Inicio Proceso")]
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        [Display(Name = "FIN Proceso")]
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
+    }
 
 }
