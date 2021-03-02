@@ -128,24 +128,30 @@
             <div class="container-fluid">
 
                 <div class="form-group row mb-0">
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-md-pull-9">
                         <div class="m-1">
-                            @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-lg w-75" })
+                            @Html.ActionLink("Cerrar", "Index", null, new { @class = "d-block btn btn-dark" })
                         </div>
                     </div>
-                    <div class="col-md-9">
-                        <div class="row float-right">
-                            <div id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
-                                <button type="button" class="btn btn-success btn-lg m-1">Restaurar</button>
+                    <div class="col-md-9 col-md-push-3">
+                        <div class="row align-cente>
+                            <div class="m-1">
+                                <div id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
+                                    <button type="button" class="d-block btn btn-success">Restaurar</button>
+                                </div>
                             </div>
-                            <div id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
-                                <button type="button" class="btn btn-danger btn-lg m-1">No Postular</button>
+                            <div class="m-1">
+                                <div id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
+                                    <button type="button" class="d-block btn btn-danger ">No Postular</button>
+                                </div>
                             </div>
-                            <div id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
-                                <button type="button" class="btn btn-success btn-lg m-1">Postular</button>
+                            <div class="m-1">
+                                <div id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
+                                    <button type="button" class="d-block btn btn-success">Postular</button>
+                                </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
