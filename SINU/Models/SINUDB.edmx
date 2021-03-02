@@ -595,7 +595,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Key>
             <PropertyRef Name="IdTipoDocPresentado" />
           </Key>
-          <Property Name="Tipo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="150" />
           <Property Name="Obligatorio" Type="bit" Nullable="false" />
           <Property Name="IdTipoDocPresentado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
@@ -919,9 +919,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosconTitulosProblemas' no 
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="FechaInscripcion" Type="date" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" />
-          <Property Name="Modalidad" Type="varchar" MaxLength="10" />
           <Property Name="FechaInicio" Type="date" Nullable="false" />
           <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
@@ -3046,9 +3047,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscriptosconTitulosProblemas].[Descripcion] AS [Descripcion], 
     [vInscriptosconTitulosProblemas].[FechaInscripcion] AS [FechaInscripcion], 
     [vInscriptosconTitulosProblemas].[Nombre] AS [Nombre], 
-    [vInscriptosconTitulosProblemas].[Modalidad] AS [Modalidad], 
     [vInscriptosconTitulosProblemas].[FechaInicio] AS [FechaInicio], 
     [vInscriptosconTitulosProblemas].[FechaFinal] AS [FechaFinal], 
+    [vInscriptosconTitulosProblemas].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
+    [vInscriptosconTitulosProblemas].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
     [vInscriptosconTitulosProblemas].[IdConvocatoria] AS [IdConvocatoria]
     FROM [dbo].[vInscriptosconTitulosProblemas] AS [vInscriptosconTitulosProblemas]</DefiningQuery>
           </EntitySet>
@@ -4204,7 +4206,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Key>
             <PropertyRef Name="IdTipoDocPresentado" />
           </Key>
-          <Property Name="Tipo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Obligatorio" Type="Boolean" Nullable="false" />
           <Property Name="IdTipoDocPresentado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
@@ -5565,7 +5567,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
           <EntitySet Name="vInscriptosCantYTODASConvocatorias" EntityType="SINUModel.vInscriptosCantYTODASConvocatorias" />
           <FunctionImport Name="EstablecimientoRindeExamenDeOficina" IsComposable="true" ReturnType="Collection(SINUModel.EstablecimientoRindeExamenDeOficina_Result)">
-            <Parameter Name="idOficinayDelegacion" Mode="In" Type="Int32" />
+          <Parameter Name="idOficinayDelegacion" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -6735,10 +6737,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Modalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="vInscriptosYRestriccionesCheck">
           <Key>
@@ -8474,10 +8477,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscriptosconTitulosProblemas">
             <EntityTypeMapping TypeName="SINUModel.vInscriptosconTitulosProblemas">
               <MappingFragment StoreEntitySet="vInscriptosconTitulosProblemas">
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
                 <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
                 <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
                 <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />

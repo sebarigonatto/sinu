@@ -117,12 +117,13 @@ namespace SINU.Controllers
                 //se carga los datos basicos del usuario actual y los utilizados para los dropboxlist
                 DatosBasicosVM datosba = new DatosBasicosVM()
                 {
-                    SexoVM = db.Sexo.OrderBy(m => m.Descripcion).Where(m => m.Descripcion != "Seleccione Sexo").ToList(),
-                    vPeriodosInscripsVM = new List<vPeriodosInscrip>(),
-                    OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     vPersona_DatosBasicosVM = db.vPersona_DatosBasicos.FirstOrDefault(b => b.IdPersona == ID_persona),
+                    SexoVM = db.Sexo.OrderBy(m => m.Descripcion).Where(m => m.Descripcion != "Seleccione Sexo").ToList(),
+                    OficinasYDelegacionesVM = db.OficinasYDelegaciones.ToList(),
                     ComoSeEnteroVM = db.ComoSeEntero.Where(n => n.IdComoSeEntero != 1).ToList()
                 };
+
+                datosba.Preferenacia = db.Institucion.FirstOrDefault(m => m.IdInstitucion == datosba.vPersona_DatosBasicosVM.IdPreferencia).NombreInst;
                 //datosba.vPersona_DatosBasicosVM.Edad = 0;
                 //datosba.vPersona_DatosBasicosVM.IdSexo = 0;
                 //agrego la opcion de "Necesito Orientacion" en el combo Inctitucion 
@@ -170,23 +171,23 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
         }
 
-        [AuthorizacionPermiso("ListarRP")]
-        public JsonResult EdadInstituto(int? IdPOS, string Fecha)
-        {
-            try
-            {
-                DateTime fechaNAC = DateTime.Parse(Fecha);
-                var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC, null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
-                institutos.Add(new SelectListItem() { Value = "1", Text = "Necesito Orientacion" });
-                return Json(new { institucion = institutos }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception)
-            {
+        //[AuthorizacionPermiso("ListarRP")]
+        //public JsonResult EdadInstituto(int? IdPOS, string Fecha)
+        //{
+        //    try
+        //    {
+        //        DateTime fechaNAC = DateTime.Parse(Fecha);
+        //        var institutos = db.spRestriccionesParaEstePostulante(IdPOS, fechaNAC, null).DistinctBy(m => m.IdInstitucion).Select(m => new SelectListItem { Value = m.IdInstitucion.ToString(), Text = m.NombreInst }).ToList();
+        //        institutos.Add(new SelectListItem() { Value = "1", Text = "Necesito Orientacion" });
+        //        return Json(new { institucion = institutos }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
+        //        throw;
+        //    }
 
-        }
+        //}
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
         [HttpPost]
@@ -1722,7 +1723,7 @@ namespace SINU.Controllers
             try
             {
 
-                List<string> ListasPantalla = PantallasError.Remove(PantallasError.Length - 1, 1).Split('-').ToList();
+                List<string> ListasPantalla = PantallasError.Remove(PantallasError.Length - 1, 1).Split('-').Distinct().ToList();
                 List<int> IDPantallaError = new List<int>();
                 int id_Pant, id_otroProblema;
                 var ListaProblemaEncontrado = new List<DataProblemaEncontrado>();

@@ -31,9 +31,9 @@
                 @*  @Html.DisplayNameFor(model => model.CantInscriptos)*@
                  <label>N° de Inscriptos</label>
             </th>
-            @*<th>
-                 <label>Detalle</label>
-            </th>*@
+            <th>
+                 <label>Ver Datos</label>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -59,11 +59,10 @@
                 @Html.DisplayFor(modelItem => item.CantInscriptos)
             </td>
                
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-              </td>*@
+            <td>
+                <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
+                @Html.ActionLink(" ", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }, new { @class = "fas fa-bars", @style = "color:#343a40" })
+            </td>
         </tr>
         }
     </tbody>

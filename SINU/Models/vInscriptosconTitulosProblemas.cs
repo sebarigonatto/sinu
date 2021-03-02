@@ -23,9 +23,10 @@ namespace SINU.Models
         public string Descripcion { get; set; }
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
         public string Nombre { get; set; }
-        public string Modalidad { get; set; }
         public System.DateTime FechaInicio { get; set; }
         public System.DateTime FechaFinal { get; set; }
         public int IdConvocatoria { get; set; }
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 }

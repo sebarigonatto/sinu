@@ -7,7 +7,7 @@ namespace SINU.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
     }
@@ -27,10 +27,10 @@ namespace SINU.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         public string Provider { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Código")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
@@ -43,7 +43,7 @@ namespace SINU.Models
 
     public class ForgotViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
     }
@@ -63,18 +63,18 @@ namespace SINU.Models
         [Display(Name = "¿Recordar cuenta?")]
         public bool RememberMe { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         public string CaptchaInputText { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -85,15 +85,15 @@ namespace SINU.Models
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Apellidos")]
         public string Apellido { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Nombres")]
         public string Nombre { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "DNI")]
         [MaxLength(9, ErrorMessage = "DNI debe tener una longintud minima de 9 digitos"), MinLength(8, ErrorMessage = "DNI debe tener una longintud minima de 8 digitos")]
         [RegularExpression("^\\d+$", ErrorMessage = "DNI debe contener sólo números.")]
@@ -103,11 +103,11 @@ namespace SINU.Models
 
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse no sera necesario mostra su valor en la vista Register.cshtml
         //sera requerido al momento de guardar su preferencia en el controlador AccountController.cs
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Modalidad a inscribirse")]
         public int IdInstituto { get; set; }
         //este parametro sera recibido de la vista index al momento de hacer clic en inscribirse
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Delegacion - Oficina")]
         public int idOficinaYDelegacion { get; set; }
 
@@ -119,12 +119,12 @@ namespace SINU.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -140,7 +140,7 @@ namespace SINU.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
@@ -150,7 +150,7 @@ namespace SINU.Models
     public class RecuperarCuenta
     {
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = "Correo electrónico Original")]
         public string Email { get; set; }
@@ -159,23 +159,23 @@ namespace SINU.Models
     public class RecuperacionCuenta
     {
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = "Correo electrónico Original")]
         public string EmailOriginal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña Original")]
         public string PasswordOriginal { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
         [Display(Name = " Nuevo Correo electrónico")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Dato obligatorio.")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva Contraseña")]

@@ -43,7 +43,7 @@ namespace SINU.ViewModels
     {
         public vPersona_DatosBasicos vPersona_DatosBasicosVM { get; set; }
         public List<Sexo> SexoVM { get; set; }
-        public List<vPeriodosInscrip> vPeriodosInscripsVM { get; set; }
+        public string Preferenacia { get; set; }
         public List<OficinasYDelegaciones> OficinasYDelegacionesVM { get; set; }
         public List<ComoSeEntero> ComoSeEnteroVM { get; set; }
         public List<vInstitucionesConvocadasYCarrerasAsociadas> GrupoCarrearOficio { get; set; }

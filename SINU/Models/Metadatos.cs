@@ -67,7 +67,7 @@ namespace SINU.Models
         [ScaffoldColumn(false)]
         public Nullable<System.DateTime> PidioIngresoAlSist { get; set; }
         [Required]
-        [Display(Name = "Modalidad a Inscribirse")]
+        [Display(Name = "Preferencia elegida:")]
         public Nullable<int> IdPreferencia { get; set; }
         [ScaffoldColumn(false)]
         public string NombreInst { get; set; }
@@ -190,16 +190,20 @@ namespace SINU.Models
         [MaxLength(10, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Numero { get; set; }
         //[Required]
+        [MaxLength(3, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Piso { get; set; }
         //[Required]
+        [MaxLength(5, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Unidad { get; set; }
         public string Pais { get; set; }
         [RequiredIf("IdPais",true,"AR",ErrorMessage ="Debe seleccionar un Provincia")]
         public string Provincia { get; set; }
         [RequiredIf("IdPais", false, "AR", ErrorMessage = "Debe Ingresar una Localidad")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Localidad { get; set; }
         [Required]
         [Display(Name = "Codigo Postal")]
+        [MaxLength(20, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string CODIGO_POSTAL { get; set; }
         public string Prov_Loc_CP { get; set; }
         [Display(Name = "Pais")]
@@ -208,16 +212,20 @@ namespace SINU.Models
         public Nullable<int> IdLocalidad { get; set; }
         [Required]
         [Display(Name = "Calle")]
+        [MaxLength(100, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualCalle { get; set; }
         [Required]
         [Display(Name = "Numero")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "Solo se aceptan caracteres numericos")]
+        [MaxLength(10, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualNumero { get; set; }
         //[Required]
         [Display(Name = "Piso")]
+        [MaxLength(3, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualPiso { get; set; }
         //[Required]
         [Display(Name = "Unidad")]
+        [MaxLength(5, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualUnidad { get; set; }
         [Display(Name = "Pais")]
         public string EventualPais { get; set; }
@@ -226,9 +234,11 @@ namespace SINU.Models
         public string EventualProvincia { get; set; }
         [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "Debe Ingresar una Localidad")]
         [Display(Name = "Localidad")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualLocalidad { get; set; }
         [Required]
         [Display(Name = "Codigo Postal")]
+        [MaxLength(20, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualCodigo_Postal { get; set; }
         public string EventualProv_Loc { get; set; }
         [RequiredIf("EventualIdPais", true, "AR", ErrorMessage = "Debe seleccionar una Localidad")]
@@ -285,10 +295,12 @@ namespace SINU.Models
         //[Required]
         public string NombreYPaisInstituto { get; set; }
         [Required]
+        [MaxLength(200, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Jurisdiccion { get; set; }
         //[Required]
         [RequiredIf("INST_EXT", true, ErrorMessage = "El campo Nombre de Instituto es requerido.")]
         [Display(Name = "Nombre del Instituto:")]
+        [MaxLength(200, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Nombre { get; set; }
         [Required]
         public string Localidad { get; set; }
@@ -331,12 +343,16 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaIngreso { get; set; }
         [Display(Name = "Causa/Motivo de no ingreso")]
         [RequiredIf("Ingreso", false, ErrorMessage = "Debe completar este campo")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string CausaMotivoNoingreso { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Jerarquia { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Cargo { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Destino { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Selecciones una Opcion")]
         [Display(Name = "Situacion de Revista")]
@@ -351,6 +367,7 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaBaja { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Descripcion de la Baja")]
+        [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string MotivoBaja { get; set; }
         public int IdActividadMilitar { get; set; }
         public virtual Fuerza Fuerza { get; set; }
@@ -380,15 +397,18 @@ namespace SINU.Models
         public string Descripcion { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Ocupacion Actual")]
+        [MaxLength(60, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string OcupacionActual { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Domiciolio Laboral")]
+        [MaxLength(400, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string DomicilioLaboral { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
         [Display(Name = "Años Trabajados")]
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage ="Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         public Nullable<int> AniosTrabajados { get; set; }
         [Required]
+        [MaxLength(60, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Oficio { get; set; }
         public bool CargaOcupacionActual { get; set; }
         public string Explicacion { get; set; }
@@ -500,8 +520,10 @@ namespace SINU.Models
         [Display(Name = "Estado Civil")]
         public string IdEstadoCivil { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Apellido { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Nombres { get; set; }
         [Required]
         //el dni ingresado debe poseer 8 digitos para ser validado
@@ -522,6 +544,7 @@ namespace SINU.Models
         public Nullable<int> idTipoNacionalidad { get; set; }
         [Required]
         [RegularExpression(@"\b(20|23|24|27|30|33|34)[0-9]{8}[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
+        [MaxLength(11, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string CUIL { get; set; }
     }
     public partial class vInscripcionEtapaEstadoUltimoEstadoMetadata

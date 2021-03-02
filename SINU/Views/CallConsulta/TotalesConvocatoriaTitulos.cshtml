@@ -1,0 +1,151 @@
+﻿@model IEnumerable<SINU.Models.vInscriptosconTitulosProblemas>
+
+@{
+    ViewBag.Title = "Problemas de Titulos";
+
+}
+
+
+<div>
+
+    @*  en esta linea estoy llamando a TotalesConvocatoriaDetalle de ConsultaProgramadas*@
+
+    <span style="float:right">
+        @Html.ActionLink("Atras", "TotalesConvocatoriaDetalle", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+    </span>
+
+</div>
+<h2>
+    @ViewBag.Title
+</h2>
+<p>
+    <div class="alert alert-success text-dark" role="alert">Total De Personal Con Problemas: </div>
+</p>
+
+
+<table class="table table-filters table-bordered table-light table-hover" style="width:100%">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPostulantePersona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IdCarreraOficio)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.FechaInscripcion)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+                </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPostulantePersona)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IdCarreraOficio)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
+                </td>*@
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- ***********************************************************************-->
+<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+<!-- ***********************************************************************-->
+<!--Para establecer Formato de Tabla-->
+<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+<!-- Rodear la tr de las th con <thead> </thead>-->
+<!-- Rodear el contenido de la tabla con <tbody>-->
+@section Scripts {
+    <script type="text/javascript">
+        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+        $(document).ready(function () {
+            $(".table-filters").DataTable({
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+
+                }]
+
+
+            });
+
+        });
+    </script>
+}
