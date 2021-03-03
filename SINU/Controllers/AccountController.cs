@@ -124,7 +124,9 @@ namespace SINU.Controllers
                         // return RedirectToAction("Index","Postulante");
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
-                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Esta cuenta se ha bloqueado, inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.ToString()), "Account", "Login");
+                            DateTime fin = ((DateTime)UserManager.FindByEmail(model.Email).LockoutEndDateUtc).ToLocalTime();
+                            int min =  fin.Minute - DateTime.Now.Minute ;
+                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + min + " minutos."), "Account", "Login"); 
                             return View("Lockout", x);
                         case SignInStatus.RequiresVerification:
                             return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
@@ -139,6 +141,14 @@ namespace SINU.Controllers
             {
                 return RedirectToAction("Register");
             }
+        }
+
+        public ActionResult jaje() {
+
+            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.TotalMinutes + " minutos."), "Account", "Login");
+
+            return View("Lockout", x);  
+
         }
 
         //
