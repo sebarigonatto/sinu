@@ -307,8 +307,10 @@
             <t>
                 <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
                 <h6>
-                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b> <e @(ViewBag.MOD_CAR[0] == ""?"hidden":"")>, Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
-
+                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b>
+                </h6>
+                <h6>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
                 </h6>
             </t>
          
@@ -653,7 +655,7 @@
                                                             <br />
                                                             @Html.CheckBox("asd", false, new { @class = "form-control d-inline w-auto BTAcciones", @id = "check_validacion" }) <o class="BTAcciones">(SE REQUIERE QUE TILDE EL CUADRO)</o>
                                                             <br />
-                                                            <br />
+                                                            <br />  
                                                             @*@Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                                               {
                                                                   HttpMethod = "POST",
@@ -870,6 +872,7 @@
 
             $("#BTValidar").on("click", function () {
                 $.Cargando();
+                
                 PantallasError = "";
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
                     if ($(item).find("thead").length == 0) {
@@ -890,8 +893,7 @@
                                     PantallasError = PantallasError + id_pant + "-";
                                     saltar = false;
                                 }
-                              
-                                                             
+                                                           
                             };
                             return saltar;
                             //alert($(item2).attr("id"));

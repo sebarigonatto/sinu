@@ -274,6 +274,7 @@ namespace SINU.Models
         public Nullable<int> IdNiveldEstudio { get; set; }
         public int IdEstudio { get; set; }
         [Required]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo")]
         public string Titulo { get; set; }
         [Required]
         public bool Completo { get; set; }
