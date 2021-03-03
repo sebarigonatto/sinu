@@ -52,6 +52,7 @@ namespace SINU.Models
     {
         [Required(ErrorMessage ="Debe ingregar un Correo!!!")]
         [Display(Name = "Correo electrónico")]
+        [MaxLength(256, ErrorMessage = "Dato ingresado supera el limite del campo")]
         [EmailAddress]
         public string Email { get; set; }
 
@@ -71,6 +72,7 @@ namespace SINU.Models
     {
         [Required(ErrorMessage ="Dato obligatorio.")]
         [EmailAddress]
+        [MaxLength(256, ErrorMessage = "Dato ingresado supera el limite del campo")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
@@ -87,10 +89,12 @@ namespace SINU.Models
 
         [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Apellidos")]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo")]
         public string Apellido { get; set; }
 
         [Required(ErrorMessage ="Dato obligatorio.")]
         [Display(Name = "Nombres")]
+        [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo")]
         public string Nombre { get; set; }
 
         [Required(ErrorMessage ="Dato obligatorio.")]
