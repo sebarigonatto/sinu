@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="alert alert-warning mt-4">
-                            <h6 class="font-weight-bold">Asigne una fecha de presntacion al postulante</h6>
+                            <h6 class="font-weight-bold">Asigne una fecha de presentacion al postulante</h6>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="alert alert-warning mt-4">
-                            <h6 class="font-weight-bold">Asignele una fecha de Entrevista al Postulante</h6>
+                            <h6 class="font-weight-bold">Asigne un lugar de presentacion al Postulante</h6>
                         </div>
                     </div>
                 </div>
@@ -114,8 +114,8 @@
             <div class="card-footer">
                 <div class="container">
                     <div class="col-md-12 clearfix">
-                        @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark btn-lg float-right w-20 ml-2" })
-                        <input type="submit" value="Asignar Fecha" class="btn btn-success btn-lg float-right w-20 " />
+                        @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
+                        <input type="submit" value="Asignar Fecha" class="btn btn-success " />
                     </div>
                 </div>
             </div>
@@ -129,12 +129,12 @@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-            //$(".selectpicker").selectpicker({
-            //    size: 7,
-            //    noneSelectedText: 'Ninguna Opcion Seleccionada'
-
-            //});
-            jQuery('#datetimepicker').datetimepicker();
+           jQuery('#datetimepicker').datetimepicker({
+                minDate: 0,
+                format: 'd/m/y h:m',
+                value: 'd/m/y h:m'
+            });
+            $.datetimepicker.setLocale('es')
 
             var model = '@Html.Raw(Model.DatosLugar)';
             var jsonDatosDelegacion = JSON.parse(model);

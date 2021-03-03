@@ -78,28 +78,28 @@
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
                                 @*<input name="fecha" type="text" id="datetimepicker" />*@
-                                <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly/>
+                                <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly />
                             </div>
                             @*<div class="form-group">
-                                <label for="recipient-name" class="col-form-label">
-                                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
-                                </label>
+                                    <label for="recipient-name" class="col-form-label">
+                                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
+                                    </label>
 
-                            </div>*@
+                                </div>*@
                         </div>
                         @*<div class="col-md-6 ">
-                            <div class="form-group">
-                                <div id="DatosDelegacion" class="form-group control-label" hidden>
-                                    <h4 class="text-center">Datos del Lugar</h4>
-                                    @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
-                                    <p id="Direccion" class="control-label col"><b>asdasda</b></p>
-                                    @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
-                                    <p id="Telefono" class="control-label col"><b>asdasda</b></p>
-                                    @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
-                                    <p id="Celular" class="control-label col"><b>asdasda</b></p>
+                                <div class="form-group">
+                                    <div id="DatosDelegacion" class="form-group control-label" hidden>
+                                        <h4 class="text-center">Datos del Lugar</h4>
+                                        @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
+                                        <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+                                        @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
+                                        <p id="Telefono" class="control-label col"><b>asdasda</b></p>
+                                        @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
+                                        <p id="Celular" class="control-label col"><b>asdasda</b></p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>*@
+                            </div>*@
                     </div>
                     <div class="row">
                         <div class="container text-right">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-       
+
         </div>
     </form>
 
@@ -119,11 +119,53 @@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-            //$(".selectpicker").selectpicker({
-            //    size: 7,
-            //    noneSelectedText: 'Ninguna Opcion Seleccionada'
+            $(".table-filters").DataTable({
 
-            //});
+                responsive: true,
+                "language":
+                {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "columnDefs": [{
+                    "targets": 'no-sort',
+                    "orderable": false
+                },
+                {
+                    "targets": 'ni-o-ni-bu',
+                    "searchable": false,
+                    "orderable": false
+                }]
+
+            });
+
+            $(".datepicker").datepicker({
+                format: "dd/mm/yyyy",
+                language: "es",
+                autoclose: true,
+                startView: "days",
+                startDate: "Today"
+            });
               jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
                 format: 'd/m/y h:m',
