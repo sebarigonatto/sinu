@@ -81,7 +81,8 @@
             @Html.HiddenFor(model => model.DataProblemaEncontradoVM.IdPostulantePersona)
 
             <div class="form-group col-6">
-                @Html.LabelFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion, htmlAttributes: new { @class = "control-label col-md-6" })
+                <label class="control-label col-md-6">Problema Relacionado</label><!--Lo cambio desde aqui debido que en el metadata no funciona correctamente-->
+                @*@Html.LabelFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion, htmlAttributes: new { @class = "control-label col-md-6" })*@
                 <div class="col-md-12">
                     @Html.DropDownListFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion,new SelectList(Model.DataVerificacionVM,"IdDataVerificacion","Descripcion"),  new { @class = "form-control selectpicker col-12" } )
                     @Html.ValidationMessageFor(model => model.DataProblemaEncontradoVM.IdDataVerificacion, "", new { @class = "text-danger" })

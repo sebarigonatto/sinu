@@ -528,6 +528,9 @@
     <Compile Include="Models\vInscriptosconTitulosProblemas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vInscriptosConTitulosProblemasCount.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vInscriptosYConvocatorias.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
