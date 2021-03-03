@@ -709,6 +709,7 @@
     <Content Include="Imagenes\AnclaQR.png" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
+    <Content Include="Imagenes\usu-bloqueado.png" />
     <Content Include="Models\SINUDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SINUDB.edmx</DependentUpon>

@@ -4,7 +4,54 @@
     ViewBag.Title = "Bloqueado";
 }
 
-    <hgroup class="row justify-content-center">
-        <h1 class="">Bloqueado.</h1>
-        <hr />        <h2 class="text-danger"> @Model.Exception.Message</h2>
-    </hgroup>
+<style>
+
+    @@media screen and (max-width: 600px) {
+        .bordererror {
+            border-right: hidden !important;
+            border-bottom: #67676773 2px solid;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        .bordererror {
+            border-bottom: hidden !important;
+            border-right: #67676773 2px solid;
+        }
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .negro-sub {
+        text-decoration: underline;
+    }
+</style>
+<br />
+<div class="row text-center" style="margin-top:3vw">
+    <div class="col-sm-12 ">
+        <img class="img-fluid " style="width: 20vh; margin-bottom: 1rem" accesskey="" src="~/Imagenes/usu-bloqueado.png" />
+    </div>
+    <div class="col-sm-12 ">
+        <div>
+            <h6 class="text-black-50 text-center" style="font-size:8vh">Cuenta Bloqueda</h6>
+            <p class="text-danger text-center">
+
+
+                @if (Model != null)
+                {
+
+
+                    <h3 class="text-center"> @Model.Exception.Message </h3>
+
+
+                }
+                <a href="~/Home/Index" class="card-link ">Ir a la Pagina Principal</a>
+                <br />
+                <a href="~/Account/Login" class="card-link">Iniciar Sesion</a>
+
+            </p>
+        </div>
+    </div>
+</div>
