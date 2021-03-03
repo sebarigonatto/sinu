@@ -911,6 +911,10 @@ namespace SINU.Controllers
                     var DocuNecesarios = db.DocumentosNecesariosDelInscripto(IdInscripto).OrderBy(m => m.IdTipoDocPresentado).ToList();
                     var DocuNoPresnt = DocuNecesarios.FirstOrDefault(m => m.Presentado == false & m.Obligatorio == true);///utilizo el filtro para que me traiga la documentacion obligatoria y poder ver si adueda
                                                                                                                          ///verificar que cuando se entrega toda la documentacion entra aca y pincha debido a que trata de borrar un problema inexistente
+                    if (DocuNoPresnt==null && ExistProblema==null)
+                    {
+                        return Json(new { succes = true, msg = "Se agrego correctamente toda la documentacion", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                    }
                     if (DocuNoPresnt == null)///utilizo el filtro anterior para verificar si adeuda documentacion obligatoria si - true solamente agrega la documentacion -false cuando toda la documentacion  
                     {
                         db.sp_DataProblemaEncontradoIUD(Inscrip.IdPersona, ExistProblema.IdDataVerificacion, null, ExistProblema.IdDataProblemaEncontrado, true);
