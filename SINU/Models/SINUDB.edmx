@@ -926,6 +926,23 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosconTitulosProblemas' no 
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosConTitulosProblemasCount' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vInscriptosConTitulosProblemasCount">
+          <Key>
+            <PropertyRef Name="Idconvocatoria" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Idconvocatoria" Type="int" Nullable="false" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
+          <Property Name="FechaInicio" Type="date" Nullable="false" />
+          <Property Name="FechaFinal" Type="date" Nullable="false" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CantInscXProblema" Type="int" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosYConvocatorias">
           <Key>
@@ -3053,6 +3070,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscriptosconTitulosProblemas].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
     [vInscriptosconTitulosProblemas].[IdConvocatoria] AS [IdConvocatoria]
     FROM [dbo].[vInscriptosconTitulosProblemas] AS [vInscriptosconTitulosProblemas]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vInscriptosConTitulosProblemasCount" EntityType="Self.vInscriptosConTitulosProblemasCount" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vInscriptosConTitulosProblemasCount].[Idconvocatoria] AS [Idconvocatoria], 
+    [vInscriptosConTitulosProblemasCount].[IdModalidad] AS [IdModalidad], 
+    [vInscriptosConTitulosProblemasCount].[FechaInicio] AS [FechaInicio], 
+    [vInscriptosConTitulosProblemasCount].[FechaFinal] AS [FechaFinal], 
+    [vInscriptosConTitulosProblemasCount].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
+    [vInscriptosConTitulosProblemasCount].[Descripcion] AS [Descripcion], 
+    [vInscriptosConTitulosProblemasCount].[CantInscXProblema] AS [CantInscXProblema]
+    FROM [dbo].[vInscriptosConTitulosProblemasCount] AS [vInscriptosConTitulosProblemasCount]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vInscriptosYConvocatorias" EntityType="Self.vInscriptosYConvocatorias" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5569,6 +5597,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="EstablecimientoRindeExamenDeOficina" IsComposable="true" ReturnType="Collection(SINUModel.EstablecimientoRindeExamenDeOficina_Result)">
           <Parameter Name="idOficinayDelegacion" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="vInscriptosConTitulosProblemasCount" EntityType="SINUModel.vInscriptosConTitulosProblemasCount" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6841,6 +6870,21 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Type="String" Name="Comentario" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="IdEstablecimientoRindeExamen" Nullable="true" />
         </ComplexType>
+        <EntityType Name="vInscriptosConTitulosProblemasCount">
+          <Key>
+            <PropertyRef Name="Idconvocatoria" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="Descripcion" />
+          </Key>
+          <Property Name="Idconvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CantInscXProblema" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8582,6 +8626,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vInscriptosConTitulosProblemasCount">
+            <EntityTypeMapping TypeName="SINUModel.vInscriptosConTitulosProblemasCount">
+              <MappingFragment StoreEntitySet="vInscriptosConTitulosProblemasCount">
+                <ScalarProperty Name="CantInscXProblema" ColumnName="CantInscXProblema" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="Idconvocatoria" ColumnName="Idconvocatoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

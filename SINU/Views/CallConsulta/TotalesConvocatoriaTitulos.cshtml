@@ -5,16 +5,19 @@
 
 }
 
+@if (ViewBag.ActivarId != null )
+{
+    <div>
 
-<div>
+        @*  en esta linea estoy llamando a TotalesConvocatoriaDetalle de ConsultaProgramadas*@
 
-    @*  en esta linea estoy llamando a TotalesConvocatoriaDetalle de ConsultaProgramadas*@
+        <span style="float:right">
+            @Html.ActionLink("Atras", "TotalesConvocatoriaDetalle", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+        </span>
 
-    <span style="float:right">
-        @Html.ActionLink("Atras", "TotalesConvocatoriaDetalle", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
-    </span>
+    </div>
+}
 
-</div>
 <h2>
     @ViewBag.Title
 </h2>
@@ -23,7 +26,7 @@
 </p>
 
 
-<table class="table table-filters table-bordered table-light table-hover" style="width:100%">
+<table class="table table-filters table-bordered table-light table-hover" style="width:100%" id="Listado">
     <thead class="thead-dark">
         <tr>
             <th>
