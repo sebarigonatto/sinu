@@ -1362,6 +1362,7 @@
     <Content Include="Views\CallConsulta\TotalizarPorConvocatoria.cshtml" />
     <Content Include="Views\CallConsulta\TotalesConvocatoriaDetalle.cshtml" />
     <Content Include="Views\CallConsulta\TotalesConvocatoriaTitulos.cshtml" />
+    <Content Include="Views\Postulante\Resultado.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

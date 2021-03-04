@@ -1,0 +1,64 @@
+﻿
+@model SINU.ViewModels.ResultadoVM
+
+<style>
+
+    @@media screen and (max-width: 600px) {
+        .bordererror {
+            border-right: hidden !important;
+            border-bottom: #67676773 2px solid;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        .bordererror {
+            border-bottom: hidden !important;
+            border-right: #67676773 2px solid;
+        }
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .negro-sub {
+        text-decoration: underline;
+    }
+</style>
+
+<br />
+<div class="row text-center" style="margin-top:3vw">
+    <div class="col-sm-12 ">
+        @if (Model.result)
+        {
+            <!---<img class="img-fluid " style="width: 20vh; margin-bottom: 1rem" accesskey="" src="~/Imagenes/usu-bloqueado.png" />-->
+            <h6 class="text-black-50 text-center" style="font-size:8vh">Ingreso</h6> }
+        else
+        {
+            <!---<img class="img-fluid " style="width: 20vh; margin-bottom: 1rem" accesskey="" src="~/Imagenes/usu-bloqueado.png" />-->
+            <h6 class="text-black-50 text-center" style="font-size:8vh">No Ingreso</h6>}
+    </div>
+    <div class="col-sm-12 ">
+        <div>
+            <h3>Resultado</h3>
+            <p class="text-danger text-center">
+
+                <h3 class="text-center"> Numero de Inscripción: <b>@Model.vIncripcion.IdInscripcion</b> </h3>
+                <h3 class="text-center"> @Model.result </h3>
+
+                @*<a href="~/Home/Index" class="card-link ">Ir a la Pagina Principal</a>
+                    <br />
+                    <a href="~/Account/Login" class="card-link">Iniciar Sesion</a>*@
+            </p>
+        </div>
+    </div>
+</div>
+
+<!--
+     $("#6")
+                .css("color", "white")
+                .removeAttr("data-toggle", "tooltip")
+                .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
+                .tooltip('disable');
+    $("#6").tab("show");
+-->

@@ -1980,5 +1980,22 @@ namespace SINU.Controllers
 
             return View();
         }
+
+        //resultado de presentacion a ver.....
+        public ActionResult Resultado(int ID_persona)
+        {
+            ResultadoVM resultado = new ResultadoVM
+            {
+                vIncripcion = db.vInscripcionDetalle.FirstOrDefault(m=>m.IdPersona== ID_persona),
+                result = true
+            };
+            return PartialView(resultado);
+        }
+
+
+
+
+
+
     }
 }

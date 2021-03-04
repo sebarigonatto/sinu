@@ -173,4 +173,12 @@ namespace SINU.ViewModels
         public List<DocumentosNecesariosDelInscripto_Result1> docus { get; set; }
 
     }
+
+    public class ResultadoVM
+    {
+        public vInscripcionDetalle vIncripcion { get; set; }
+
+        public bool result { get; set; }
+    }
+
 }

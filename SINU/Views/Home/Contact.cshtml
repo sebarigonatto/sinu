@@ -7,10 +7,35 @@
 }
 @*@section MenuPerfil{
 
-    @Html.Partial((String)@ViewBag.Menu);
-}*@
+        @Html.Partial((String)@ViewBag.Menu);
+    }*@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+<style>
 
+    @@media screen and (max-width: 600px) {
+        .bordererror {
+            border-right: hidden !important;
+            border-bottom: #67676773 2px solid;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        .bordererror {
+            border-bottom: hidden !important;
+            border-right: #67676773 2px solid;
+        }
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .negro-sub {
+        text-decoration: underline;
+    }
+
+
+</style>
 <div class="jumbotronP">
     <h2 class="font-jumb">
         Contactos
@@ -27,83 +52,70 @@
 </div>
 
 
-
-<table id="tabla1" class="table" border="0">
-
-    <tr>
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Descripcion)
-        </th>
-        <th>
-
-            @Html.DisplayNameFor(m => m.listoficinas[0].Direccion)
-
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Localidad)
-        </th>
-        <th>
-
-            @Html.DisplayNameFor(m => m.listoficinas[0].Provincia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Celular)
-        </th>
-        <th>
-            @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
-        </th>
-
-        <th></th>
-    </tr>
+<div class="row">
     @foreach (var item in Model.listoficinas)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Localidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Provincia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Celular)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email1)
-            </td>
 
-        </tr>
+        <div class="col-sm-4  d-flex mb-3"  >
+            <div class="card " style="        border-radius: 4px;        border: 2px solid #08495f;        width: inherit;">
+                <div class="p-2" style="background-color:#08495f; color:white; height:30% !important">
+                    <h5 class="text-center">@item.Nombre</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title"><b>Dirección: </b>@item.Provincia, @item.Localidad, @item.Direccion</h6>
+                    <h6 class="card-title"><b>Telefono: </b>@item.Telefono</h6>
+                    <h6 class="card-title"><b>Celular: </b>@item.Celular</h6>
+
+                </div>
+            </div>
+        </div>
+
+
     }
-</table>
 
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            $('#tabla1').stacktable();
-        });
-    </script>
+</div>
 
-}
-@*@Scripts.Render("~/bundles/stacktable")*@
 
+
+
+
+
+
+
+
+
+<tr>
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
+    </th>
+
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Descripcion)
+    </th>
+    <th>
+
+        @Html.DisplayNameFor(m => m.listoficinas[0].Direccion)
+
+    </th>
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Localidad)
+    </th>
+    <th>
+
+        @Html.DisplayNameFor(m => m.listoficinas[0].Provincia)
+    </th>
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Telefono)
+    </th>
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Celular)
+    </th>
+    <th>
+        @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
+    </th>
+
+    <th></th>
+</tr>
 
 
 

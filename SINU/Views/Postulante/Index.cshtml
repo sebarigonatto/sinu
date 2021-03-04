@@ -375,6 +375,8 @@
                         <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;2° Entrevista</p></a>
                         <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentacion</p>  </a>
                         <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentacion</p> </a>
+                        @*<a class="nav-item nav-link fa fa-clipboard-check" id="6" data-toggle="tab" href="#Resultado" role="tab" aria-controls="Resultado" aria-selected="false"><p>&ensp;5° Resultado</p> </a>*@
+
                     </div>
                 </nav>
                 <div class="tab-content" id="TABPrincipalContent">
@@ -415,7 +417,7 @@
                                     <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab"> Medidas y Tallas</a>
                                     <a class="nav-item nav-link" href="#Familia" data-toggle="tab"> Familia</a>
                                     <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentacion</a>
-                                    @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido)
+                                    @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido && !ViewBag.VenceComvocatoria)
                                     {
                                         <a class="nav-item nav-link TABValida" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
                                     }
@@ -457,7 +459,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DocuPenalNAV">
-                                                <br  />
+                                                <br />
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[1])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 2 })
@@ -500,7 +502,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="EstudiosNAV">
-                                               
+
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[3])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 4 })
@@ -523,7 +525,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab  pt-4" id="IdiomasNAV">
-                                               
+
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[4])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 5 })
@@ -543,7 +545,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="ActMilitarNAV">
-                                              
+
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[5])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 6 })
@@ -563,7 +565,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="SituOcuNAV">
-                                                <br/>
+                                                <br />
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[6])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 7 })
@@ -583,7 +585,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="AntropometriaNAV">
-                                                <br/>
+                                                <br />
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[7])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 8 })
@@ -622,7 +624,7 @@
                                                 </button>
                                             </nav>
                                             <div class="collapse tab-pane fade nav-tab pt-4" id="DocuAnexoNAV">
-                                                <br  />
+                                                <br />
                                                 @if ((int)((object[])Model.ListProblemaCantPantalla[9])[2] > 0 && (bool)Session["ValidoUnaVez"])
                                                 {
                                                     @Html.Action("ProblemasPantalla", "Postulante", new { ID_persona = Model.ID_PER, IdPantalla = 10 })
@@ -632,7 +634,7 @@
                                         </div>
 
 
-                                        @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido)
+                                        @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido && !ViewBag.VenceComvocatoria)
                                         {
                                             @* Validar Datos*@
                                             <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">
@@ -645,7 +647,7 @@
                                                     </button>
                                                 </nav>
                                                 <div class="collapse tab-pane fade nav-tab pt-4" id="ValidarDatosNAV">
-                                                    <br/>
+                                                    <br />
                                                     <h2>Validar Datos</h2>
                                                     <div class="jumbotron mb-0 " style="background-color: #08495f; color:white">
                                                         <div id='NOValidaEnCurso' @((bool)ViewBag.ValidacionEnCurso ? "hidden" : "") style="text-align: justify;">
@@ -655,15 +657,15 @@
                                                             <br />
                                                             @Html.CheckBox("asd", false, new { @class = "form-control d-inline w-auto BTAcciones", @id = "check_validacion" }) <o class="BTAcciones">(SE REQUIERE QUE TILDE EL CUADRO)</o>
                                                             <br />
-                                                            <br />  
+                                                            <br />
                                                             @*@Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                              {
-                                                                  HttpMethod = "POST",
-                                                                  OnSuccess = "Exito(data,status,xhr)",
-                                                                  OnFailure = "Falla"
-                                                              }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
-                                                            <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones" >Solicitar Validacion</button>
+                                                  {
+                                                      HttpMethod = "POST",
+                                                      OnSuccess = "Exito(data,status,xhr)",
+                                                      OnFailure = "Falla"
+                                                  }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
+                                                <br /><br />*@
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validacion</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
@@ -693,6 +695,14 @@
                         }
 
                     </div>
+
+                    @* VISTA DE RESULTADO CON ID = 6
+                    <div id="Resultado" role="tabpanel" aria-labelledby="Resultado-tab" class="tab-pane fade px-3 py-3" style=" border: 2px solid #08495fd4; border-radius: 7px; padding: 1rem; margin: 0.4rem;">
+
+
+                            @Html.Action("Resultado", "Postulante", new { ID_persona = Model.ID_PER })
+
+                    </div> *@
                 </div>
 
             </div>
