@@ -114,7 +114,7 @@
                             <span class="input-group-text" style="color: white; background-color: #00bfff ;">
                             <i class="fa fa-list"></i></span>
                         </div>
-                        @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "Seleccione Modalidad a incribirse", htmlAttributes: new { @class = "form-control selectpicker " })
+                        @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "Seleccione modalidad a inscribirse", htmlAttributes: new { @class = "form-control selectpicker " })
                         
                     </div>
                     <div class="h-100"></div>
@@ -129,16 +129,16 @@
                                 <i class="fa fa-list"></i>
                             </span>
                         </div>
-                        @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "Seleccione la mas cercana", htmlAttributes: new { @class = "form-control selectpicker", @id = "DelegacionOfi" })
+                        @Html.DropDownListFor(m => m.idOficinaYDelegacion, (SelectList)Model.ListOficinaYDelegacion, "Seleccione la más cercana", htmlAttributes: new { @class = "form-control selectpicker", @id = "DelegacionOfi" })
                     </div>
                     <div class="h-100"></div>
                     @Html.ValidationMessageFor(model => model.idOficinaYDelegacion, "", new { @class = "text-danger" })
 
                 </div>
                 <div id="DatosDelegacion" class="form-group control-label" hidden>
-                    @Html.Label("Direccion", new { @class = "col-md-2 control-label" })
+                    @Html.Label("Dirección", new { @class = "col-md-2 control-label" })
                     <p id="Direccion" class="control-label col"><b>asdasda</b></p>
-                    @Html.Label("Telefono", new { @class = "col-md-2 control-label" })
+                    @Html.Label("Teléfono", new { @class = "col-md-2 control-label" })
                     <p id="Telefono" class="control-label col"><b>asdasda</b></p>
                     @Html.Label("Celular", new { @class = "col-md-2 control-label" })
                     <p id="Celular" class="control-label col"><b>asdasda</b></p>
