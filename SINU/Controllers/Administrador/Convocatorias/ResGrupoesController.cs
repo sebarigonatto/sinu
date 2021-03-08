@@ -54,8 +54,14 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 db.ResGrupo.Add(resGrupo);
                 db.SaveChanges();
-                if (lent > 1 && GrupoCarrOficiosController.le==5) return Redirect("../GrupoCarrOficios/Create?Length=5");
-                if (lent > 1 && GrupoCarrOficiosController.le == 1) return Redirect("../GrupoCarrOficios/Create?Length=1");
+                if (lent == 4 && GrupoCarrOficiosController.le == 5) return Redirect("../GrupoCarrOficios/Create?Length=5");
+                if (lent == 4 && GrupoCarrOficiosController.le == 1) return Redirect("../GrupoCarrOficios/Create?Length=1");
+                if (lent == 2 && GrupoCarrOficiosController.Listint == 1)
+                {
+                    string liid = GrupoCarrOficiosController.Listid;
+                    GrupoCarrOficiosController.Listint = -1;
+                    return Redirect("../GrupoCarrOficios/Edit/" + liid);
+                }
                 return RedirectToAction("Index");
             }
 

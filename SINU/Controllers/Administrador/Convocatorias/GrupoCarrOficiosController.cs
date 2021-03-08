@@ -127,7 +127,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             ViewBag.Mensaje = "No se creó registro. Verifique errores mencionados.";
             return View(grupoCarrOficiovm);
 }
-
+        static public String Listid;
+        static public int Listint;
         // GET: GrupoCarrOficios/Edit/5
         public ActionResult Edit(string id)
         {
@@ -135,6 +136,8 @@ namespace SINU.Controllers.Administrador.Convocatorias
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            Listid = id;
+            Listint++;
             GrupoCarrOficio grupoCarrOficio = db.GrupoCarrOficio.Find(id);
             if (grupoCarrOficio == null)
             {
