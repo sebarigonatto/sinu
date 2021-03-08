@@ -1496,7 +1496,7 @@ namespace SINU.Controllers
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
-        public JsonResult FamiliaCUD(SINU.ViewModels.PersonaFamiliaVM fami)
+        public JsonResult FamiliaCUD(PersonaFamiliaVM fami)
         {
 
 
@@ -1793,8 +1793,6 @@ namespace SINU.Controllers
                     }
                 }
 
-
-
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
                 var problemasPostu = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona);
@@ -1991,11 +1989,6 @@ namespace SINU.Controllers
             };
             return PartialView(resultado);
         }
-
-
-
-
-
 
     }
 }
