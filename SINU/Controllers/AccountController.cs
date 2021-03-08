@@ -125,8 +125,9 @@ namespace SINU.Controllers
                         case SignInStatus.LockedOut:
                             //ver cambio de pantalla de error
                             DateTime fin = ((DateTime)UserManager.FindByEmail(model.Email).LockoutEndDateUtc).ToLocalTime();
-                            int min =  fin.Minute - DateTime.Now.Minute ;
-                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + min + " minutos."), "Account", "Login"); 
+                            var min =  fin - DateTime.Now;
+                           
+                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + min.Minutes + " minutos."), "Account", "Login"); 
                             return View("Lockout", x);
                         case SignInStatus.RequiresVerification:
                             return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
@@ -139,16 +140,9 @@ namespace SINU.Controllers
             }
             else
             {
+                model.Password = "";
                 return RedirectToAction("Register");
             }
-        }
-
-        public ActionResult jaje() {
-
-            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + UserManager.DefaultAccountLockoutTimeSpan.TotalMinutes + " minutos."), "Account", "Login");
-
-            return View("Lockout", x);  
-
         }
 
         //
@@ -263,7 +257,7 @@ namespace SINU.Controllers
 
                     if (result.Succeeded)
                     {
-                        //crea una persona, un postulante y una inscripcion
+                        //si el dni existe en la base de datos se elimina a la cuenta creada de la tabla "AspNetUsers"
                         if (db.Persona.FirstOrDefault(m=>m.DNI==model.DNI)!=null)
                         {
                             db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
@@ -271,7 +265,7 @@ namespace SINU.Controllers
                             AddErrors(IdentityResult.Failed("El Dni ingresado ya Existe"));
                             return View(model);
                         }
-
+                        //crea una persona, un postulante y una inscripcion
                         var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
 
                         //comentado para evitar el inicio de session automatico
@@ -280,10 +274,7 @@ namespace SINU.Controllers
                         //se genera el codigo para lueg oconfirma el email.
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
 
-
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
-
-
 
                         //ENVIO de COREO con plantilla razor (*.cshtml) https://github.com/Antaris/RazorEngine
                         var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
