@@ -33,8 +33,6 @@
     .negro-sub {
         text-decoration: underline;
     }
-
-
 </style>
 <div class="jumbotronP">
     <h2 class="font-jumb">
@@ -52,75 +50,43 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="Card-Contacto">
     @{ int num = 1; }
 
     @foreach (var item in Model.listoficinas)
     {
 
-        <div class="col-sm-4  d-flex mb-3">
+        <div class="col-md-4 col-sm-6  d-flex mb-3">
             <div class="card d-block" style="border-radius: 4px; border: 2px solid #08495f; width: inherit;">
                 <div class="p-2 d-flex flex-column justify-content-center align-items-center" style="background-color:#08495f; color:white; height:30% !important; vertical-align:middle">
                     <h5 class="text-center align-middle"><b style="font-size:1.5rem">#@num </b>@item.Nombre</h5>
                 </div>
                 <div class="card-body">
                     <h6 class="card-title"><b>Dirección:  </b>@item.Provincia, @item.Localidad, @item.Direccion</h6>
-                    <h6 class="card-title"><b>Email:  </b><a href="mailto:@item.Email1">@item.Email1</a> - @Html.Raw(item.Email2==""?"":"<a href = 'mailto:"+@item.Email2+"'> "+@item.Email1+" </a>")</h6>
+                    <h6 class="card-title"><b>Email:  </b><a href="mailto:@item.Email1">@item.Email1</a> - @Html.Raw(item.Email2 == "" ? "" : "<a href = 'mailto:" + @item.Email2 + "'> " + @item.Email1 + " </a>")</h6>
                     <h6 class="card-title"><b>Telefono:  </b>@item.Telefono</h6>
-                    <h6 class="card-title"><b>Celular:  </b>@(item.Celular==""?"  -----":item.Celular)</h6>
+                    <h6 class="card-title"><b>Celular:  </b>@(item.Celular==""?"  -----  ":item.Celular)</h6>
 
 
                 </div>
             </div>
         </div>
-        num= num + 1;
+        num = num + 1;
     }
 
 </div>
 
+@section Scripts {
+    <script type="text/javascript">
 
+        $(document).ready(function () {
 
+            
 
+        });
 
-
-
-
-
-
-<tr>
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Nombre)
-    </th>
-
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Descripcion)
-    </th>
-    <th>
-
-        @Html.DisplayNameFor(m => m.listoficinas[0].Direccion)
-
-    </th>
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Localidad)
-    </th>
-    <th>
-
-        @Html.DisplayNameFor(m => m.listoficinas[0].Provincia)
-    </th>
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Telefono)
-    </th>
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Celular)
-    </th>
-    <th>
-        @Html.DisplayNameFor(m => m.listoficinas[0].Email1)
-    </th>
-
-    <th></th>
-</tr>
-
-
+    </script>
+}
 
 
 
