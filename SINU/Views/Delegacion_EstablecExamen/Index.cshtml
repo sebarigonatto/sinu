@@ -8,12 +8,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.EstablecimientoRindeExamen.Jurisdiccion)
+            @Html.DisplayNameFor(model => model.EstablecimientoRindeExamen.Nombre)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.OficinasYDelegaciones.Nombre)
@@ -24,15 +24,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.EstablecimientoRindeExamen.Jurisdiccion)
+            @Html.DisplayFor(modelItem => item.EstablecimientoRindeExamen.Nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.OficinasYDelegaciones.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idDelegacion_EstablecExamen }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idDelegacion_EstablecExamen }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idDelegacion_EstablecExamen })
+            @Html.ActionLink("Editar", "Edit", new { id=item.idDelegacion_EstablecExamen }) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.idDelegacion_EstablecExamen }) |
+            @Html.ActionLink("Borrar", "Delete", new { id=item.idDelegacion_EstablecExamen })
         </td>
     </tr>
 }

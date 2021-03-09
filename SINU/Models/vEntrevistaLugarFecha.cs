@@ -27,5 +27,7 @@ namespace SINU.Models
         public string Etapa { get; set; }
         public string Estado { get; set; }
         public string Email { get; set; }
+        public string Localidad { get; set; }
+        public string Provincia { get; set; }
     }
 }

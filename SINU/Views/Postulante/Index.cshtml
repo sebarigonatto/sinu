@@ -710,7 +710,6 @@
     </div>
 </section>
 
-
 @*////////////////////////////////////////////////////////////////////////////////////////////*@
 @*MODAL DE LA VISTA ESTUDIO, IDIOMA y ACTIVIDAD MILITAR VER SI SIRVE PARA QUE VISTAS PUEDE SERVIR*@
 <div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
@@ -723,7 +722,6 @@
     </div>
 </div>
 <div id="htmlLOAD"></div>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -880,11 +878,12 @@
             });
 
 
-            $("#BTValidar").on("click", function () {
+            @*$("#BTValidar").on("click", function () {
                 $.Cargando();
-                
+
                 PantallasError = "";
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
+                    //verifico si es tabla o form
                     if ($(item).find("thead").length == 0) {
 
                         //alert("form - " + $(item).attr("id"));
@@ -898,12 +897,12 @@
                                         PantallasError = PantallasError + id_pant + "-";
                                         saltar = false;
                                     }
-                                    
+
                                 } else {
                                     PantallasError = PantallasError + id_pant + "-";
                                     saltar = false;
                                 }
-                                                           
+
                             };
                             return saltar;
                             //alert($(item2).attr("id"));
@@ -927,6 +926,70 @@
 
                         PantallasError: PantallasError,
                         ID_persona: '@Model.ID_PER'
+                    },
+                    type: "POST",
+                    dataType: 'json',
+                    async: false,
+                    success: function (response) {
+                        Exito(response, status,null);
+                    }
+                });
+            });*@
+            $("#BTValidar").on("click", function () {
+                //$.Cargando();
+
+                PantallasError = [];
+
+                $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
+                    //verifico si es tabla o form
+                    IdPantalla = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+                    Pantalla = $("#" + IdPantalla + " nav a").text().trim();
+                    //alert(IdPantalla + "  " + Pantalla);
+                    if ($(item).find("thead").length == 0) {
+
+                        //alert("form - " + $(item).attr("id"));
+                        saltar = true;
+                        $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
+
+                            if ($(item2).val() == '') {
+
+                                if ($(item2).hasClass("custom-file-input")) {
+                                    if ($(item2).next("label").children("b").html() == "Seleccione archivo...") {
+                                        PantallasError.push({ IdPantalla, Pantalla });
+                                        saltar = false;
+                                    };
+
+                                } else {
+                                    PantallasError.push({ IdPantalla, Pantalla });
+
+
+                                    saltar = false;
+                                }
+
+                            };
+                            return saltar;
+                            //alert($(item2).attr("id"));
+                        });
+                    } else {
+                        //id_pant = $(item).attr("id");
+                        if ($(item).find("tbody tr[role='row']").length == 0) {
+
+                            PantallasError.push({ IdPantalla, Pantalla });
+                            //alert("no hay registros");
+                        }; //else {
+                        //    alert("hay registos!!!!");
+                        //};s
+                    };
+
+                });
+               $.ajax({
+                   url: "/Postulante/ValidarDatos",
+                   dataType: 'json',
+                    data: {
+
+                        PantError: JSON.stringify(PantallasError),
+                        ID_persona: '@Model.ID_PER'
+
                     },
                     type: "POST",
                     dataType: 'json',
@@ -1003,8 +1066,6 @@
         function Falla(response) {
             $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
-
-       
 
 
     </script>

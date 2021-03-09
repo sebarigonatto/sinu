@@ -181,4 +181,12 @@ namespace SINU.ViewModels
         public bool result { get; set; }
     }
 
+    public class PantallasError
+    {
+        public string IdPantalla { get; set; }
+        public string Pantalla { get; set; }
+        public int IdPant { get; set; }
+
+    }
+
 }

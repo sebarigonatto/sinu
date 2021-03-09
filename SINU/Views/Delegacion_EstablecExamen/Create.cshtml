@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Create";
     //Layout = "~/Views/Shared/_MenuPerfilAdmin.cshtml";
+    SelectList lst = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "idOficinasYDelegaciones", "Nombre");
+    SelectList lst2 = new SelectList(new SINU.Models.SINUEntities().EstablecimientoRindeExamen.ToList(), "IdEstablecimientoRindeExamen", "Nombre");
 }
 
 <h2>Create</h2>
@@ -18,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.idOficinasYDelegaciones, "idOficinasYDelegaciones", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idOficinasYDelegaciones", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idOficinasYDelegaciones", lst, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idOficinasYDelegaciones, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -26,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IdEstablecimientoRindeExamen, "IdEstablecimientoRindeExamen", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("IdEstablecimientoRindeExamen", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("IdEstablecimientoRindeExamen", lst2, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdEstablecimientoRindeExamen, "", new { @class = "text-danger" })
             </div>
         </div>

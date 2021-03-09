@@ -658,9 +658,11 @@
             } else { $("#BTNModal").hide(); }
 
             $.Anuncio(response.msg);
+            
             $("[name='idfami']").val(response.IDperFAMI);
             $("[name='idper']").val(response.IDperPOST);
             if (response.IDperFAMI > 0) {
+                $("#BTNModal").hide();
                 window.setTimeout(redirige, 2000);
 
                 function redirige() {

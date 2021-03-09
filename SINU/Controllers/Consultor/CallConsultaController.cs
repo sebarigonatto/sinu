@@ -204,13 +204,15 @@ namespace SINU.Controllers.Consultor
                 //no se filtra por convocatoria pero solo se muestran las activas
                 InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.Fecha_Fin_Proceso > DateTime.Now)
                                                                                  .ToList();
+                ViewBag.CantToPers = InscriptosconTitulosProblemas.Select(m => m.IdInscripcion).Distinct().Count();
                 return PartialView(InscriptosconTitulosProblemas);
             }
             else
             {
-                //busco el id que le corresponde a la consulta original TotalizarPorConvocatoria
-                ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
+                //busco el id que le corresponde 
+                ViewBag.ActivarId = IdConvocatoria;
                 InscriptosconTitulosProblemas = db.vInscriptosconTitulosProblemas.Where(m => m.IdConvocatoria == IdConvocatoria).ToList();
+                ViewBag.CantToPers = InscriptosconTitulosProblemas.Select(m => m.IdInscripcion).Distinct().Count();
                 return View(InscriptosconTitulosProblemas);
             }
 
