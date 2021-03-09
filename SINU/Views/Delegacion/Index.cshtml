@@ -163,7 +163,7 @@
                 </div>
                 <div class="tab-pane fade " id="Entrevista" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
-                    <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
+                    <div class="col-sm-3 col-lg-2">
                         @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
                     @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                    <div class="col-sm-3 col-lg-2" id="Ocul1" data-toggle="modal" data-target="#modal1">
+                    <div class="col-sm-3 col-lg-2">
                         @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
                     </div>
                 </div>
@@ -180,6 +180,7 @@
         </div>
     </div>
 </div>
+<!--Prueba de una nueva barra de menu para los postulantes-->
 
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
@@ -259,19 +260,7 @@
                 }]
 
             });
-
-            $(".datepicker").datepicker({
-                format: "dd/mm/yyyy",
-                language: "es",
-                autoclose: true,
-                startView: "days",
-                startDate: "Today"
-            });
         });
-
-
     </script>
-
-
 }
 
