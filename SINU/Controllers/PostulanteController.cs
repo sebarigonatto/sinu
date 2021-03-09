@@ -6,7 +6,6 @@ using SINU.Models;
 using SINU.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Drawing;
 using System.IO;
@@ -14,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
+
 
 namespace SINU.Controllers
 {
@@ -1718,74 +1719,88 @@ namespace SINU.Controllers
          
         [HttpPost]
         [AuthorizacionPermiso("ModificarSecuenciaP")]
-        public JsonResult ValidarDatos(int ID_persona, string PantallasError)
+        public dynamic ValidarDatos(int ID_persona, string PantError)
         {
             try
             {
 
-                List<string> ListasPantalla = PantallasError.Remove(PantallasError.Length - 1, 1).Split('-').Distinct().ToList();
-                List<int> IDPantallaError = new List<int>();
-                int id_Pant, id_otroProblema;
+                int id_otroProblema;
                 var ListaProblemaEncontrado = new List<DataProblemaEncontrado>();
+              
+                var jss = new JavaScriptSerializer();
+                var ListasPantalla = jss.Deserialize<List<PantallasError>>(PantError).DistinctBy(m=>m.IdPantalla);
+
+                
                 foreach (var Pantalla in ListasPantalla)
                 {
+              
                     //cargo un listado con los ID de las pantallas que presentan campos vacios o tablas sin registros.
-                    IDPantallaError.Add(db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla).IdPantalla);
-                    id_Pant = db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla).IdPantalla;
+                    Pantalla.IdPant= db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla.IdPantalla).IdPantalla;
                    
                     //genero un registro de la novedad para cada pantalla que presente las misma
-                    id_otroProblema = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == id_Pant && m.Descripcion == "Otros: Aclare").IdDataVerificacion;
-                    if (db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == id_otroProblema &&  m.IdPostulantePersona == ID_persona) == null)
+                    id_otroProblema = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == Pantalla.IdPant && m.Descripcion == "Otros: Aclare").IdDataVerificacion;
+                    if (db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == id_otroProblema && m.IdPostulantePersona == ID_persona) == null)
                     {
                         ListaProblemaEncontrado.Add(new DataProblemaEncontrado
                         {
                             IdPostulantePersona = ID_persona,
-                            Comentario = "En esta solapa no se han cargado datos o solo se cargo parcialmente, verificar lo mismo.",
+                            Comentario = Pantalla.Pantalla+ ", en esta solapa no se han cargado datos o solo se cargo parcialmente, verificar lo mismo.",
                             IdDataVerificacion = id_otroProblema
                         });
                     }
-                                     
+
                 }
 
                 //verificacion FAMILIARES DATOS VACIOS
-                var familiares = db.vPersona_Familiar.Where(m => m.IdPersonaPostulante == ID_persona).ToList();
-                if (familiares.Count >0)
+                List<vPersona_Familiar> familiares = new List<vPersona_Familiar>();
+
+                db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).ToList().ForEach(
+                    m=> familiares.Add(new vPersona_Familiar() { 
+                        IdPersonaFamiliar = m.IdPersona,
+                        Apellido= m.Persona.Apellido,
+                        Nombres = m.Persona.Nombres,
+
+                    })
+                    );
+              
+
+                if (familiares.Count > 0)
                 {
                     foreach (var familiar in familiares)
                     {
-                        
+
                         //Domicilio
                         var domicilio = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == familiar.IdPersonaFamiliar);
-                        if (!this.TryValidateModel(domicilio) && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion== 43 && m.IdPostulantePersona== ID_persona)== null)
+                        if (!this.TryValidateModel(domicilio) && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion==43 && m.Comentario.Contains(familiar.Apellido.ToUpper() +" " + familiar.Nombres.ToUpper()))==null )
                         {
                             ListaProblemaEncontrado.Add(new DataProblemaEncontrado
                             {
                                 IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido, familiar.Nombres),
+                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
                                 IdDataVerificacion = 43//id problema otro para la pantalla domicilio
                             });
                         }
 
                         //Estudio
-                        if (db.VPersona_Estudio.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 44 && m.IdPostulantePersona == ID_persona) == null)
+                        if (db.VPersona_Estudio.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 44 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
                         {
 
                             ListaProblemaEncontrado.Add(new DataProblemaEncontrado
                             {
                                 IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(),familiar.Nombres.ToUpper()),
+                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
                                 IdDataVerificacion = 44//id problema otro para la pantalla Estudios
                             });
                         }
 
                         //Actividad militar
-                        if (db.vPersona_ActividadMilitar.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 45 && m.IdPostulantePersona == ID_persona) == null)
+                        if (db.vPersona_ActividadMilitar.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 45 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
                         {
 
                             ListaProblemaEncontrado.Add(new DataProblemaEncontrado
                             {
                                 IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido, familiar.Nombres),
+                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
                                 IdDataVerificacion = 45//id problema otro para la pantalla Actividad Miltar
                             });
                         }
@@ -1799,7 +1814,7 @@ namespace SINU.Controllers
 
                 //ALTURA Y IMC
                 // para validadr la pantalla de antropometria veridico que se haya completado el formulario y que la misma este abierta
-                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta && IDPantallaError.Contains(8))
+                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta && ListasPantalla.FirstOrDefault(m=>m.IdPant==8)!=null)
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
@@ -1830,7 +1845,7 @@ namespace SINU.Controllers
                 //ESTADO CIVIL Y TIPO DE NACIONALIDAD
                 //de los registros traidos por 'spRestriccionesParaEstePostulante', eligo al cual corresponda al postulante
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First(m => m.IdInstitucion == IDPREFE);
-                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta && IDPantallaError.Contains(2))
+                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta && ListasPantalla.FirstOrDefault(m => m.IdPant == 2) != null)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado
