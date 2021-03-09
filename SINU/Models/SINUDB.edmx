@@ -770,6 +770,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" />
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
+          <Property Name="Localidad" Type="varchar" MaxLength="100" />
+          <Property Name="Provincia" Type="varchar" MaxLength="100" />
           <Property Name="Telefono" Type="varchar" MaxLength="100" />
           <Property Name="Celular" Type="varchar" MaxLength="100" />
           <Property Name="FechaEntrevista" Type="datetime" />
@@ -2959,6 +2961,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vEntrevistaLugarFecha].[Nombres] AS [Nombres], 
     [vEntrevistaLugarFecha].[Nombre] AS [Nombre], 
     [vEntrevistaLugarFecha].[Direccion] AS [Direccion], 
+    [vEntrevistaLugarFecha].[Localidad] AS [Localidad], 
+    [vEntrevistaLugarFecha].[Provincia] AS [Provincia], 
     [vEntrevistaLugarFecha].[Telefono] AS [Telefono], 
     [vEntrevistaLugarFecha].[Celular] AS [Celular], 
     [vEntrevistaLugarFecha].[FechaEntrevista] AS [FechaEntrevista], 
@@ -4301,6 +4305,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Localidad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Provincia" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vEstCivil">
           <Key>
@@ -7300,6 +7306,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vEntrevistaLugarFecha">
             <EntityTypeMapping TypeName="SINUModel.vEntrevistaLugarFecha">
               <MappingFragment StoreEntitySet="vEntrevistaLugarFecha">
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

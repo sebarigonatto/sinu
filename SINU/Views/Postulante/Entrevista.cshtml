@@ -5,7 +5,7 @@
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
         <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-        <h6>Direccion: <b>@Model.Direccion</b></h6>
+        <h6>Direccion: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
         <h6>Telefono: <b>@Model.Telefono</b></h6>
         @if (Model.Celular != null)
         {
@@ -14,13 +14,13 @@
         <h6> Fecha y Hora: @Model.FechaEntrevista.Value.ToString("dd/MM/yyyy', Hs:' HH:mm") </h6>
         <h5>Estado: <b style="color:yellow">@ViewBag.EstadoEntre </b></h5>
     </div>
+    <hr />
+    <div class="jumbotron" style="background-color: #08495f; color:white" id="MensajedeConsideraciones">
+        <h6><b>@ViewBag.Considere[0]</b></h6>
         <hr />
-        <div class="jumbotron" style="background-color: #08495f; color:white" id="MensajedeConsideraciones">
-            <h6><b>@ViewBag.Considere[0]</b></h6>
-            <hr />
-            <h6>@ViewBag.Considere[1]</h6>
-        </div>
-  
+        <h6>@ViewBag.Considere[1]</h6>
+    </div>
+
 }
 else
 {
@@ -28,7 +28,7 @@ else
         <h6>Se le informara via correo cuando le hayan asignado una fecha de entrevista, solicitamos este atento.</h6>
         <h6>Por Consultas comunicarse con la Delegacion seleccionada. </h6>
         <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-        <h6>Direccion: <b>@Model.Direccion</b></h6>
+        <h6>Direccion: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
         <h6>Telefono: <b>@Model.Telefono</b></h6>
         <h5>Estado: <b style="color:yellow">@ViewBag.EstadoEntre </b></h5>
     </div>
