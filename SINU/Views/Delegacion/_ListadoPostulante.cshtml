@@ -75,16 +75,18 @@
                     {
                     case "A Asignar":
                     @:|&ensp;
-                    @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha" })
+                    @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de entrevista" })
                     @:&ensp;
                     break;
                     case "Pendiente":
                     @:|&ensp;
-                    @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
+                    <a data-toggle="tooltip" data-placement="top" title="tool tip top">
+                        @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
+                    </a>
                     break;
                     case "No Postulado":
                     @:|&ensp;
-                    @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Retroceder al la etapa anterior" })
+                    @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Retroceder a la etapa anterior" })
                     break;
                     }
                     }
@@ -98,7 +100,7 @@
                     break;
                     case "No Validado":
                     @:|&ensp;
-                    @Html.ActionLink(" ", "Details", new { id = item.IdPersona }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Validar la documentacion del postulante" })
+                    @Html.ActionLink(" ", "Details", new { id = item.IdPersona }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Restaurar postulante" })
                     break;
                     }
 
