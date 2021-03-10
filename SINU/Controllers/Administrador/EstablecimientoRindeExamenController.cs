@@ -49,10 +49,11 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
+        public ActionResult Create([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,ACTIVO,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
         {
             if (ModelState.IsValid)
             {
+                if (establecimientoRindeExamen.Comentario == null) { establecimientoRindeExamen.Comentario = ""; }
                 db.EstablecimientoRindeExamen.Add(establecimientoRindeExamen);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,10 +82,11 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
+        public ActionResult Edit([Bind(Include = "Jurisdiccion,Localidad,Departamento,Nombre,Comentario,Direccion,ACTIVO,IdEstablecimientoRindeExamen")] EstablecimientoRindeExamen establecimientoRindeExamen)
         {
             if (ModelState.IsValid)
             {
+                if (establecimientoRindeExamen.Comentario == null) { establecimientoRindeExamen.Comentario = ""; }
                 db.Entry(establecimientoRindeExamen).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
