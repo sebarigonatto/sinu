@@ -2,11 +2,16 @@
 
 @{
     ViewBag.Title = "Inscriptos Por Modalidad: " + ViewBag.modalidadElegida;
+    var TotalINSC = ((List<SINU.Models.vConsultaInscripciones>)Model).Count;
 }
 
 <h2>
     @ViewBag.Title
 </h2>
+
+<p>
+    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">-  <span style="float:right">TOTAL DE INSCRIPTOS: @TotalINSC</span></div>
+</p>
 
 <div>
     <!-- en esta linea estoy llamando al Index de ConsultaProgramadas

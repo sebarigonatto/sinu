@@ -1,8 +1,16 @@
 ﻿@model IEnumerable<SINU.Models.vInscriptosCantYTODASConvocatorias>
 
-    <h2>
-        Totales Por Convocatoria
-    </h2>
+@{ ViewBag.Title = "Totales Por Convocatoria ";
+
+                var TotConvoc = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Count;
+                var TotalINSC = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Sum(m => m.CantInscriptos); }
+
+<h2>
+    @ViewBag.Title
+</h2>
+<p>
+    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">Total de Convocatorias: @TotConvoc  <span style="float:right">TOTAL INSCRIPTOS: @TotalINSC</span></div>
+</p>
 
 <table class="table table-filters table-bordered table-light table-hover  " id="le-filters" style="width:100%">
     <thead class="thead-dark">
@@ -20,49 +28,49 @@
                 <label>Nombre de la Institución</label>
             </th>
             <th>
-              @*  @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)*@
+                @*  @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)*@
                 <label>Inicio de Inscripcion</label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)               
+                @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
             </th>
             <th>
                 @*  @Html.DisplayNameFor(model => model.CantInscriptos)*@
-                 <label>N° de Inscriptos</label>
+                <label>N° de Inscriptos</label>
             </th>
             <th>
-                 <label>Ver Datos</label>
+                <label>Ver Datos</label>
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdConvocatoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdModalidad)
-            </td>              
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreInst)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CantInscriptos)
-            </td>
-               
-            <td>
-                <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
-                @Html.ActionLink(" ", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }, new { @class = "fas fa-bars", @style = "color:#343a40" })
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdConvocatoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdModalidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreInst)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CantInscriptos)
+                </td>
+
+                <td>
+                    <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
+                    @Html.ActionLink(" ", "TotalesConvocatoriaDetalle", new { IdConvocatoria = item.IdConvocatoria }, new { @class = "fas fa-bars", @style = "color:#343a40" })
+                </td>
+            </tr>
         }
     </tbody>
 </table>
