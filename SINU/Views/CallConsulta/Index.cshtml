@@ -21,6 +21,9 @@
         color:white !important;
 
     }
+    .dataTables_length {
+        float: left !important;
+    }
 </style>
 <br />
 <div class="container p-0 ">
@@ -72,7 +75,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
   $(".table-filters").DataTable({
-                dom: 'Bfrtip',
+                'dom':'Bfrtlpi',
                 buttons: [
                     'excel', 'pdf',//'colvis',
                     //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
@@ -133,7 +136,8 @@
                     "targets": 'ni-o-ni-bu',
                     "searchable": false,
                     "orderable": false
-                }]
+          }],
+                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
             });
         })
