@@ -255,10 +255,11 @@ namespace SINU.Models
     public partial class DeclaracionJuradaMetadata 
     {
         public int IdDeclaracionJurada { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Debe seleccionar una opcion.")]
         public string PoseeAntecedentes { get; set; }
         [RequiredIf("PoseeAntecedentes", true, "SI", ErrorMessage = "Debe detallar los antecedentes que posee.")]
         public string Antecedentes_Detalles { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar una opcion.")]
         public string EsAdicto { get; set; }
         public string Comentario { get; set; }
         public int IdInscripcion { get; set; }

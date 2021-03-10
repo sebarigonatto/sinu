@@ -462,7 +462,6 @@ namespace SINU.Controllers
             {
 
                 DeclaracionJurada DeclaJura = d.PenalDeclaJurada;
-                DeclaJura.EsAdicto = DeclaJura.EsAdicto=="true" ? "SI" : "NO";
                 if (DeclaJura.IdDeclaracionJurada == 0)
                 {
                     db.DeclaracionJurada.Add(DeclaJura);
