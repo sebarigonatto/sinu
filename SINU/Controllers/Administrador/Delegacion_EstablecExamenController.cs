@@ -75,8 +75,10 @@ namespace SINU.Controllers.Administrador
             {
                 return HttpNotFound();
             }
-            ViewBag.IdEstablecimientoRindeExamen = new SelectList(db.EstablecimientoRindeExamen, "IdEstablecimientoRindeExamen", "Jurisdiccion", delegacion_EstablecExamen.IdEstablecimientoRindeExamen);
-            ViewBag.idOficinasYDelegaciones = new SelectList(db.OficinasYDelegaciones, "IdOficinasYDelegaciones", "Nombre", delegacion_EstablecExamen.idOficinasYDelegaciones);
+            //ViewBag.IdEstablecimientoRindeExamen = new SelectList(db.EstablecimientoRindeExamen, "IdEstablecimientoRindeExamen", "Jurisdiccion", delegacion_EstablecExamen.IdEstablecimientoRindeExamen);
+            //ViewBag.idOficinasYDelegaciones = new SelectList(db.OficinasYDelegaciones, "IdOficinasYDelegaciones", "Nombre", delegacion_EstablecExamen.idOficinasYDelegaciones);
+            ViewBag.ListaEstablecimientoRindeExamen = new SelectList(db.EstablecimientoRindeExamen, "IdEstablecimientoRindeExamen", "Nombre", delegacion_EstablecExamen.IdEstablecimientoRindeExamen);
+            ViewBag.ListaOficinasYDelegaciones = new SelectList(db.OficinasYDelegaciones, "IdOficinasYDelegaciones", "Nombre", delegacion_EstablecExamen.idOficinasYDelegaciones);
             return View(delegacion_EstablecExamen);
         }
 
