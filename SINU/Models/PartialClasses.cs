@@ -173,8 +173,11 @@ namespace SINU.Models
         //[Display(Name ="xxx")]
         //public string xxx { get; set; }
     }
+    [MetadataType(typeof(EstablecimientoRindeExamenMetadata))]
+    public partial class EstablecimientoRindeExamen
+    {
 
-
+    }
 }
 
 

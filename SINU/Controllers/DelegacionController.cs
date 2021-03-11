@@ -1033,9 +1033,10 @@ namespace SINU.Controllers
         [HttpGet]
         public ActionResult AsignarFechaVariosEntrevista()
         {
+            UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
             try
             {
-                List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList();
+                List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar" && m.Nombre == UsuarioDelegacion.Nombre).ToList();
                 ViewBag.Listado = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
                 return View(dato);
             }

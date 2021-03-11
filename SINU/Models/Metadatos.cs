@@ -255,10 +255,11 @@ namespace SINU.Models
     public partial class DeclaracionJuradaMetadata 
     {
         public int IdDeclaracionJurada { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Debe seleccionar una opcion.")]
         public string PoseeAntecedentes { get; set; }
         [RequiredIf("PoseeAntecedentes", true, "SI", ErrorMessage = "Debe detallar los antecedentes que posee.")]
         public string Antecedentes_Detalles { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar una opcion.")]
         public string EsAdicto { get; set; }
         public string Comentario { get; set; }
         public int IdInscripcion { get; set; }
@@ -736,4 +737,20 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 
+    public partial class EstablecimientoRindeExamenMetadata
+    {
+        [Required]
+        public string Jurisdiccion { get; set; }
+        [Required]
+        public string Localidad { get; set; }
+        [Required]
+        public string Departamento { get; set; }
+        [Required]
+        public string Nombre { get; set; }
+        public string Comentario { get; set; }
+        public int IdEstablecimientoRindeExamen { get; set; }
+        [Required]
+        public string Direccion { get; set; }
+        public bool ACTIVO { get; set; }
+    }
 }

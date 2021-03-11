@@ -840,7 +840,8 @@
                 });
                 //$("#TABDocumentacion i").remove();
                 //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
-                var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
+                //var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
+
                 if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
                     $("#BTatras").attr("href", link_anterior[1]);
                 } else {

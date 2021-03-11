@@ -71,8 +71,8 @@
         <div class="card" style="background-color:gainsboro">
             <div class="card-body">
                 <div class="container">
-                    <h1 class="display-4">Asignar fecha a varios Postulante</h1>
-                    <p class="lead">Selecciones varios postulantes y asigenela una fecha y un lugar para rendir examenes</p><br />
+                    <h1 class="display-4">Asignar fecha a varios postulantes</h1>
+                    <p class="lead">Selecciones varios postulantes, asigene una fecha y un lugar para rendir examenes</p><br />
                     <div class="row">
                         <div class="col-md-6 ">
                             <div class="form-group">
@@ -81,9 +81,10 @@
                                 <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly />
                             </div>
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">
-                                    lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
-                                </label>
+                                <label for="recipient-name" class="col-form-label">Lugar de Presentacion:</label><br />
+                                <div>
+                                    @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
+                                </div>
 
                             </div>
                         </div>
@@ -103,7 +104,7 @@
                     </div>
                     <div class="row">
                         <div class="container text-right">
-                            <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg w-25" />
+                            <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg" />
                         </div>
                     </div>
                 </div>
