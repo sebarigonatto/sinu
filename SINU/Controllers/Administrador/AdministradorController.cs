@@ -225,11 +225,13 @@ namespace SINU.Controllers.Administrador
                             //return RedirectToAction("Index");
                         }
                     //llamar a proceso de borrado
-                    return View("Error", Func.ConstruyeError("Se inicia proceso borrado que NO ESTA HECHO "+Email, "Administrador", "Delete"));
+                    ///return View("Error", Func.ConstruyeError("Se inicia proceso borrado que NO ESTA HECHO "+Email, "Administrador", "Delete"));
                     //db.vUsuariosAdministrativos.Remove(db.vUsuariosAdministrativos.First(m => m.Email == Email));
                     //db.Usuario_OficyDeleg.Remove(db.Usuario_OficyDeleg.First(m => m.Email == Email));
                     //db.SaveChanges();
                     //return RedirectToAction("Index");
+                    db.spUsuariosAdministrativosELIMINAR(Email, usuario.codGrupo, usuario.IdOficinasYDelegaciones);
+                    return RedirectToAction("Index");
                 }
                     //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);               
                     return View("Error", Func.ConstruyeError("Falta el Email que desea buscar entre los Usuarios", "Administrador", "Delete"));
