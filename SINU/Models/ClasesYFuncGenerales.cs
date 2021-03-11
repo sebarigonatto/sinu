@@ -148,7 +148,7 @@ namespace SINU.Models
                     }
                     
                 }
-                else if(ID_AspNetUser == null && ID_Delegacion == null)
+                else if(ID_AspNetUser == "" && ID_Delegacion == null)
                 {
                     foreach (var item in mails)
                     {
