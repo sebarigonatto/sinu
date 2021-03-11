@@ -1727,7 +1727,7 @@ namespace SINU.Controllers
                 var ListaProblemaEncontrado = new List<DataProblemaEncontrado>();
               
                 var jss = new JavaScriptSerializer();
-                var ListasPantalla = jss.Deserialize<List<PantallasError>>(PantError).DistinctBy(m=>m.IdPantalla);
+                var ListasPantalla = jss.Deserialize<List<PantallasError>>(PantError).DistinctBy(m=>m.IdPantalla).ToList();
 
                 
                 foreach (var Pantalla in ListasPantalla)
@@ -1813,7 +1813,7 @@ namespace SINU.Controllers
 
                 //ALTURA Y IMC
                 // para validadr la pantalla de antropometria veridico que se haya completado el formulario y que la misma este abierta
-                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta && ListasPantalla.FirstOrDefault(m=>m.IdPant==8)!=null)
+                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta && ListasPantalla.FirstOrDefault(m=>m.IdPant==8)==null)
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
@@ -1844,7 +1844,7 @@ namespace SINU.Controllers
                 //ESTADO CIVIL Y TIPO DE NACIONALIDAD
                 //de los registros traidos por 'spRestriccionesParaEstePostulante', eligo al cual corresponda al postulante
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First(m => m.IdInstitucion == IDPREFE);
-                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta && ListasPantalla.FirstOrDefault(m => m.IdPant == 2) != null)
+                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta && ListasPantalla.FirstOrDefault(m => m.IdPant == 2) == null)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado
