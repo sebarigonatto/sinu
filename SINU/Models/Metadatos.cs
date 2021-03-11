@@ -737,4 +737,20 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 
+    public partial class EstablecimientoRindeExamenMetadata
+    {
+        [Required]
+        public string Jurisdiccion { get; set; }
+        [Required]
+        public string Localidad { get; set; }
+        [Required]
+        public string Departamento { get; set; }
+        [Required]
+        public string Nombre { get; set; }
+        public string Comentario { get; set; }
+        public int IdEstablecimientoRindeExamen { get; set; }
+        [Required]
+        public string Direccion { get; set; }
+        public bool ACTIVO { get; set; }
+    }
 }
