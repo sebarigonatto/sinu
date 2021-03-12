@@ -1844,7 +1844,8 @@ namespace SINU.Controllers
                 //ESTADO CIVIL Y TIPO DE NACIONALIDAD
                 //de los registros traidos por 'spRestriccionesParaEstePostulante', eligo al cual corresponda al postulante
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First(m => m.IdInstitucion == IDPREFE);
-                if (persona.IdModalidad != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta && ListasPantalla.FirstOrDefault(m => m.IdPant == 2) == null)
+                bool PantallaDatospersonales = (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta;
+                if (persona.IdModalidad != null && PantallaDatospersonales && ListasPantalla.FirstOrDefault(m => m.IdPant == 1) == null)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado

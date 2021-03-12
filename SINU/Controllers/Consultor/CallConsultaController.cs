@@ -124,7 +124,8 @@ namespace SINU.Controllers.Consultor
         ///<summary>Consulta por todas las Delegaciones o solamente una 
         public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
         {
-            //ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaPorDelegacion").Select(m => m.IdConsulta).FirstOrDefault();
+            //busco el id que le corresponde a la consulta original Consulta por Delegacion
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
             DelegacionSeleccionada = DelegacionSeleccionada ?? "TODAS";
             List<vConsultaInscripciones> ListadoDelegaciones;
 
