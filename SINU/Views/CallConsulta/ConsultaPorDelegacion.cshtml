@@ -42,10 +42,10 @@
                 @Html.DisplayNameFor(model => model.Genero)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Estado)
+                @Html.DisplayNameFor(model => model.Etapa)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Etapa)
+                @Html.DisplayNameFor(model => model.Estado)
             </th>
             <th>
                 @*@Html.DisplayNameFor(model => model.Email)*@
@@ -70,10 +70,10 @@
                 @Html.DisplayFor(modelItem => item.Genero)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Estado)
+                @Html.DisplayFor(modelItem => item.Etapa)
             </td>
             <td>
-                @Html.DisplayNameFor(model => model.Etapa)
+                @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
 

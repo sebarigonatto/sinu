@@ -805,12 +805,8 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCambiaSecuencia", id_PersonaParameter, num_SecuenciaParameter);
         }
     
-        public virtual int spRelacionFamiliarIU(Nullable<int> idFamiliar, Nullable<int> idPostulante, Nullable<int> idPersona, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
+        public virtual int spRelacionFamiliarIU(ObjectParameter idFamiliar, Nullable<int> idPostulante, Nullable<int> idPersona, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)
         {
-            var idFamiliarParameter = idFamiliar.HasValue ?
-                new ObjectParameter("IdFamiliar", idFamiliar) :
-                new ObjectParameter("IdFamiliar", typeof(int));
-    
             var idPostulanteParameter = idPostulante.HasValue ?
                 new ObjectParameter("IdPostulante", idPostulante) :
                 new ObjectParameter("IdPostulante", typeof(int));
@@ -831,7 +827,7 @@ namespace SINU.Models
                 new ObjectParameter("ConVive", conVive) :
                 new ObjectParameter("ConVive", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarIU", idFamiliarParameter, idPostulanteParameter, idPersonaParameter, idParentescoParameter, viveParameter, conViveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spRelacionFamiliarIU", idFamiliar, idPostulanteParameter, idPersonaParameter, idParentescoParameter, viveParameter, conViveParameter);
         }
     
         public virtual int spPERSONAFamiliarIU(Nullable<int> idpersona, Nullable<int> idPostulante, string email, string apellido, string nombres, Nullable<int> idSexo, Nullable<System.DateTime> fechaNacimiento, string dNI, string cUIL, string idReligion, string idEstadoCivil, Nullable<System.DateTime> fechaCasamiento, string telefono, string celular, string mailPersona, Nullable<int> idTipoNacionalidad, Nullable<int> idLugarNacimientoLocalidad, Nullable<int> idParentesco, Nullable<bool> vive, Nullable<bool> conVive)

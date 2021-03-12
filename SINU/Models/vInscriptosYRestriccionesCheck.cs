@@ -41,5 +41,7 @@ namespace SINU.Models
         public string EstadoCiviCheck { get; set; }
         public string Oficina { get; set; }
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        public string Apellido { get; set; }
+        public string Nombres { get; set; }
     }
 }

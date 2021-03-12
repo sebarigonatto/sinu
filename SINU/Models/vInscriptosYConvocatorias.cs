@@ -25,5 +25,8 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
         public Nullable<int> IdCarreraOficio { get; set; }
         public int IdConvocatoria { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
+        public Nullable<int> IdPostulantePersona { get; set; }
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
     }
 }
