@@ -2736,7 +2736,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdFamiliar" Type="int" Mode="In" />
         </Function>
         <Function Name="spRelacionFamiliarIU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IdFamiliar" Type="int" Mode="InOut" />
+          <Parameter Name="IdFamiliar" Type="int" Mode="In" />
           <Parameter Name="IdPostulante" Type="int" Mode="In" />
           <Parameter Name="IdPersona" Type="int" Mode="In" />
           <Parameter Name="idParentesco" Type="int" Mode="In" />
@@ -5334,7 +5334,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </FunctionImport>
           <EntitySet Name="vPostulanteEtapaEstado" EntityType="SINUModel.vPostulanteEtapaEstado" />
           <FunctionImport Name="spRelacionFamiliarIU">
-            <Parameter Name="IdFamiliar" Mode="InOut" Type="Int32" />
+            <Parameter Name="IdFamiliar" Mode="In" Type="Int32" />
             <Parameter Name="IdPostulante" Mode="In" Type="Int32" />
             <Parameter Name="IdPersona" Mode="In" Type="Int32" />
             <Parameter Name="idParentesco" Mode="In" Type="Int32" />
