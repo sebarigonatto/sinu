@@ -99,30 +99,36 @@
 <table class="table table-filters table-bordered table-light table-hover" style="width:100%" id="Listado">
     <thead class="thead-dark">
         <tr>
+            @*<th>
+            @Html.DisplayNameFor(model => model.IdPostulantePersona)
+        </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.IdPostulantePersona)
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombres)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.IdCarreraOficio)
-                </th>*@
+            @Html.DisplayNameFor(model => model.IdCarreraOficio)
+        </th>*@
             @*<th>
-                    @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
-                </th>*@
+            @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
+        </th>*@
             @*<th>
-                    @Html.DisplayNameFor(model => model.FechaInscripcion)
-                </th>*@
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
-                </th>*@
+            @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
+        </th>*@
             @*<th>
-                    @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
-                </th>*@
+            @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+        </th>*@
             <th>
                 Ver Datos
             </th>
@@ -131,38 +137,44 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPostulantePersona)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IdCarreraOficio)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.FechaInscripcion)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
-                    </td>*@
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
-                    </td>*@
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>*@
-            </tr>
+        <tr>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.IdPostulantePersona)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.IdCarreraOficio)
+        </td>*@
+            @*<td>
+            @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+        </td>*@
+            @*<td>
+            @Html.DisplayFor(modelItem => item.FechaInscripcion)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Fecha_Inicio_Proceso)
+        </td>*@
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Fecha_Fin_Proceso)
+        </td>*@
+            @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+        </tr>
         }
     </tbody>
 </table>
