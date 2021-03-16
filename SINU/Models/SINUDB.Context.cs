@@ -128,10 +128,10 @@ namespace SINU.Models
         public virtual DbSet<vOficDeleg_EstablecimientoRindExamen> vOficDeleg_EstablecimientoRindExamen { get; set; }
         public virtual DbSet<DeclaracionJurada> DeclaracionJurada { get; set; }
         public virtual DbSet<vInscriptosconTitulosProblemas> vInscriptosconTitulosProblemas { get; set; }
-        public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
-        public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
         public virtual DbSet<vInscriptosCantYTODASConvocatorias> vInscriptosCantYTODASConvocatorias { get; set; }
         public virtual DbSet<vInscriptosConTitulosProblemasCount> vInscriptosConTitulosProblemasCount { get; set; }
+        public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
+        public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

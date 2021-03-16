@@ -21,19 +21,19 @@ namespace SINU.Models
         public int IdConvocatoria { get; set; }
         public Nullable<int> SubTotal_Convoc { get; set; }
         public Nullable<int> AlturaProblema { get; set; }
-        public Nullable<int> AlturaIncomparable { get; set; }
+        public Nullable<int> AlturaSinCargar { get; set; }
         public Nullable<int> AlturaOK { get; set; }
         public string Alturacheck { get; set; }
         public Nullable<int> IMCProblema { get; set; }
-        public Nullable<int> IMCIncomparable { get; set; }
+        public Nullable<int> IMCSinCargar { get; set; }
         public Nullable<int> IMCOK { get; set; }
         public string IMCCheck { get; set; }
         public Nullable<int> EdadProblema { get; set; }
-        public Nullable<int> EdadIncomparable { get; set; }
+        public Nullable<int> EdadSinCargar { get; set; }
         public Nullable<int> EdadOK { get; set; }
         public string EdadCheck { get; set; }
         public Nullable<int> EstadoCivilProblema { get; set; }
-        public Nullable<int> EstadoCivilIncomparable { get; set; }
+        public Nullable<int> EstadoCivilSinCargar { get; set; }
         public Nullable<int> EstadoCivilOK { get; set; }
         public string EstadoCivilCheck { get; set; }
     }

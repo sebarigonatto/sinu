@@ -14,6 +14,8 @@ namespace SINU.Models
     
     public partial class vInscriptosYRestriccionesCheck
     {
+        public string Apellido { get; set; }
+        public string Nombres { get; set; }
         public int IdInscripcion { get; set; }
         public Nullable<int> IdPostulantePersona { get; set; }
         public string IdModalidad { get; set; }
@@ -41,7 +43,5 @@ namespace SINU.Models
         public string EstadoCiviCheck { get; set; }
         public string Oficina { get; set; }
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
-        public string Apellido { get; set; }
-        public string Nombres { get; set; }
     }
 }
