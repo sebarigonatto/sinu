@@ -16,6 +16,7 @@ namespace SINU.Models
     {
         public string Apellido { get; set; }
         public string Nombres { get; set; }
+        public string EstadoCivil { get; set; }
         public int IdInscripcion { get; set; }
         public Nullable<int> IdPostulantePersona { get; set; }
         public string IdModalidad { get; set; }

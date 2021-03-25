@@ -753,4 +753,19 @@ namespace SINU.Models
         public string Direccion { get; set; }
         public bool ACTIVO { get; set; }
     }
+    public partial class vInscriptosCantYTODASConvocatoriasMetaData
+    {
+        public string IdModalidad { get; set; }
+        public string IdGrupoCarrOficio { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public System.DateTime FechaFinal { get; set; }
+        public string NombreInst { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
+        public int IdConvocatoria { get; set; }
+        public int IdPeriodoInscripcion { get; set; }
+        public Nullable<int> CantInscriptos { get; set; }
+    }
 }
