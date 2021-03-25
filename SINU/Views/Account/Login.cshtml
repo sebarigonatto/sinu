@@ -10,6 +10,7 @@
     .field-validation-error {
         color: #dc3545 !important
     }
+
         .field-validation-error span {
             float: none !important;
         }
@@ -20,7 +21,6 @@
 </style>
 <div class="text-center">
     <h2>@ViewBag.Title</h2>
-    <h2>@ViewBag.aviso</h2>
 </div>
 <div class="row text-center">
 
@@ -30,8 +30,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                
-                <hr />
+
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <b>@Html.LabelFor(m => m.Email, new { @class = "col-md-12 control-label" })</b>
@@ -86,32 +85,36 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
-        $(document).ready(function () {
-          if ('@ViewBag.logueado' == "True") {
+    $(document).ready(function () {
+        if ('@ViewBag.logueado' == "True") {
             $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
 
 
-              $.Anuncio("Usuario logueado, cierra la sesion actual, para iniciar  con otra cuenta.");
-              $("#BTNModal").hide();
-              $("#CaptchaInputText").val("").delay(4000).queue(function () {
-                  window.location.href = "../Home/Index";
-              });
-
-            };
-            $("#CaptchaInputText").addClass("form-control");
-            $("#CaptchaInputText").next("br").remove();
-            $("a[href='#CaptchaImage']").show();
-
-            $('form').on('submit', async function (e) {
-                if ($(this).valid()) {
-
-                    $.Cargando();
-                }
+            $.Anuncio("Usuario logueado, cierra la sesion actual, para iniciar  con otra cuenta.");
+            $("#BTNModal").hide();
+            $("#CaptchaInputText").val("").delay(4000).queue(function () {
+                window.location.href = "../Home/Index";
             });
-    })
-    </script>
+
+        };
+        $("#CaptchaInputText").addClass("form-control");
+        $("#CaptchaInputText").next("br").remove();
+        $("a[href='#CaptchaImage']").show();
+
+        $('form').on('submit', async function (e) {
+            if ($(this).valid()) {
+
+                $.Cargando();
+            }
+        });
+        if ('@ViewBag.mensaje' != "") {
+            $.Anuncio('@ViewBag.mensaje');
+        };
+
+    });
+</script>
 }
 

@@ -54,6 +54,12 @@ namespace SINU.Controllers
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //busco el IDinscripcion del postulante logueado
                 var idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
+                //control del error al no existir el postulante
+                if (idInscri == null)
+                {
+                    Response.StatusCode = 404;
+                    return RedirectToAction("NotFound", "Error");
+                }
                 //creo array con las secuecias por las que el Postulante
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri.IdInscripcion).Select(m => m.IdSecuencia).ToList();
                 ViewBag.ULTISECU = Secuencias[0];
@@ -78,7 +84,9 @@ namespace SINU.Controllers
                 if (idInscri.IdModalidad != null)
                 {
                     //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
-                    var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
+
+                    var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= idInscri.FechaInscripcion && m.Fecha_Fin_Proceso > idInscri.FechaInscripcion && m.IdInstitucion == idInscri.IdPreferencia && m.IdModalidad == idInscri.IdModalidad).Fecha_Fin_Proceso;
+                    //var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                     ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
                     if (!ViewBag.ValidacionEnCurso)
                     {
@@ -348,7 +356,7 @@ namespace SINU.Controllers
                     //Si el id religion en NULL le envio "" corresponde a la religion NINGUNA
                     p.IdReligion ??= "";
                     //busco el nuevo id preferencia para la modalidad seleccionada
-                    int IDpreNuevo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
+                    int IDpreNuevo = db.vInstitucionModalidad.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo);
 
                     return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" });
