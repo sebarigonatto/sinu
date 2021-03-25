@@ -105,7 +105,7 @@ namespace SINU.Controllers
 
                     MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
                     {
-                        Apellido = datos.Apellido,
+                        Apellido = datos.Apellido, ///cambiar por nombre!!
                         FechaEntrevista = datos.FechaEntrevista
                     };
                     //verificar el llamado de una funcion asyncronica desde un metodo sincronico
@@ -268,7 +268,7 @@ namespace SINU.Controllers
 
                 var modeloPlanti = new ViewModels.MailPostular
                 {
-                    Apellido = "",
+                    Apellido = "",/// cambiar por nombre !!!
                     MailCuerpo = cuerpo.Replace("$Nombre", vInscripcionEtapas.Nombres),/// se remplaza con la variable creada en la base de datos con un nombre del postulante
                     LinkConfirmacion = callbackUrl,
                     Postulado = x
@@ -388,7 +388,7 @@ namespace SINU.Controllers
                     {
                         Estado = "Validado",
                         MailCuerpo = cuerpo,
-                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Apellido = vInscripcionEtapaEstado.Apellido,///Cambiar por nombre
                         Errores = data
                     };
                     var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto9", null, null);
@@ -427,7 +427,7 @@ namespace SINU.Controllers
                     {
                         Estado = "Volver Etapa",
                         MailCuerpo = cuerpo,
-                        Apellido = vInscripcionEtapaEstado.Apellido,
+                        Apellido = vInscripcionEtapaEstado.Apellido,/// cambiar por nombre
                         Errores = data
                     };
                     bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
@@ -468,7 +468,7 @@ namespace SINU.Controllers
                     {
                         Estado = "No Validado",
                         MailCuerpo = cuerpo.Replace("$Nombre", vInscripcionEtapaEstado.Nombres),
-                        Apellido = "",
+                        Apellido = "",///Cambiar a Nnombre
                         Errores = data
                     };
                     bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
@@ -608,11 +608,11 @@ namespace SINU.Controllers
                 var modelPlanti = new ViewModels.MailPresentacion
                 {
 
-                    Apellido = Inscripto.Apellido,
+                    Apellido = Inscripto.Apellido,///Cambiar a Nombre
                     establecimiento = establecExamens,
                     Link = callbackUrl,
                     MailCuerpo = configuracion.ValorDato,
-                    fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
+                    fecha = Fecha.ToString("dd/MM/yyyy a las hh:mm")
                 };
                 var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null, null);
                 db.spProximaSecuenciaEtapaEstado(null, Id, false, 0, "", "");
@@ -1009,11 +1009,11 @@ namespace SINU.Controllers
                     var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
                     var modelPlanti = new ViewModels.MailPresentacion
                     {
-                        Apellido = Inscripto.Apellido,
+                        Apellido = Inscripto.Apellido,/// cambiar a nombre
                         establecimiento = establecExamens,
                         Link = callbackUrl,
                         MailCuerpo = configuracion.ValorDato,
-                        fecha = Fecha.ToString("dd/MM/yyyy hh:mm")
+                        fecha = Fecha.ToString("dd/MM/yyyy a las hh:mm")
                     };
                     db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "PRESENTACION", "Asignada");
                     db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
@@ -1061,7 +1061,7 @@ namespace SINU.Controllers
                 vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
                 MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
                 {
-                    Apellido = "",
+                    Apellido = "",/// Cambiar por nombre
                     FechaEntrevista = Fecha
 
                 };

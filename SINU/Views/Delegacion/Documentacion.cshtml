@@ -146,7 +146,7 @@
                     @* VISTA DE Antecedentes Penales *@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuPenal">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#" aria-controls="DocuPenal" > Antecedentes Penales</a>
+                            <a class="navbar-brand" href="#" aria-controls="DocuPenal"> Antecedentes Penales</a>
                             <button id="BTDocuPenalNAV" class="navbar-toggler collapsed habil" type="button" data-toggle="collapse" data-target="#DocuPenalNAV" role="tabpanel" aria-labelledby="DocuPenalNAV-tab" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
@@ -490,7 +490,7 @@
                     @* VISTA DE FAMILIA*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="Familia">
                         <nav class="navbar navbar-dark bg-dark ocultnav">
-                            <a class="navbar-brand" href="#"  aria-controls="Familia">Familia</a>
+                            <a class="navbar-brand" href="#" aria-controls="Familia">Familia</a>
                             <button id="BTFamiliaNAV" class="navbar-toggler collapsed habil" type="button" data-toggle="collapse" data-target="#FamiliaNAV" role="tabpanel" aria-labelledby="FamiliaNAV-tab" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
@@ -547,25 +547,26 @@
                             </button>
                         </nav>
                         <div class="collapse tab-pane fade nav-tab pt-4" id="DocumentosNecesariosNAV">
-                                @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
+                            @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
                             <br />
                             @*@Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER, IdPanatlla = 10 })*@
                             @*@Html.Partial("ListaProblema")*@
                             @*<br />*@
-                            <div class="container text-center">
-                                @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
-                              {
-                                HttpMethod = "POST",
-                                OnSuccess = "Exito(data,status,xhr)",
-                                OnFailure = "Falla"
-                              }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                                @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
-                                 {
-                                   HttpMethod = "POST",
-                                   OnSuccess = "Exito(data,status,xhr)",
-                                   OnFailure = "Falla"
-                                 }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            </div>
+
+                        </div>
+                        <div class="container text-center">
+                            @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla"
+                          }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+                            @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
+                             {
+                               HttpMethod = "POST",
+                               OnSuccess = "Exito(data,status,xhr)",
+                               OnFailure = "Falla"
+                             }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
                         </div>
                     </div>
                     @* Validar Datos*@
