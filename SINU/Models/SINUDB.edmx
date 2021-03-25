@@ -995,6 +995,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYRestriccionesCheck' no 
           </Key>
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EstadoCivil" Type="varchar" MaxLength="112" />
           <Property Name="IdInscripcion" Type="int" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="int" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
@@ -3122,6 +3123,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <DefiningQuery>SELECT 
     [vInscriptosYRestriccionesCheck].[Apellido] AS [Apellido], 
     [vInscriptosYRestriccionesCheck].[Nombres] AS [Nombres], 
+    [vInscriptosYRestriccionesCheck].[EstadoCivil] AS [EstadoCivil], 
     [vInscriptosYRestriccionesCheck].[IdInscripcion] AS [IdInscripcion], 
     [vInscriptosYRestriccionesCheck].[IdPostulantePersona] AS [IdPostulantePersona], 
     [vInscriptosYRestriccionesCheck].[IdModalidad] AS [IdModalidad], 
@@ -5621,8 +5623,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="idOficinayDelegacion" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="vInscriptosConTitulosProblemasCount" EntityType="SINUModel.vInscriptosConTitulosProblemasCount" />
-          <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
+          <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6846,53 +6848,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CantInscXProblema" Type="Int32" />
         </EntityType>
-        <EntityType Name="vInscriptosYRestriccionesCheck">
-          <Key>
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="IdInscripcion" />
-            <PropertyRef Name="FechaInicio" />
-            <PropertyRef Name="FechaFinal" />
-            <PropertyRef Name="IdConvocatoria" />
-            <PropertyRef Name="Genero" />
-            <PropertyRef Name="AlturaCheck" />
-            <PropertyRef Name="IMCCheck" />
-            <PropertyRef Name="EdadMinCAutoriz" />
-            <PropertyRef Name="EdadMax" />
-            <PropertyRef Name="EdadCheck" />
-            <PropertyRef Name="EstadoCivilId" />
-            <PropertyRef Name="EstadoCiviCheck" />
-          </Key>
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
-          <Property Name="IdPostulantePersona" Type="Int32" />
-          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
-          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
-          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
-          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
-          <Property Name="Genero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Altura" Type="Int32" />
-          <Property Name="AlturaMinF" Type="Int32" />
-          <Property Name="AlturaMinM" Type="Int32" />
-          <Property Name="AlturaCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="IMC" Type="Decimal" Precision="4" Scale="1" />
-          <Property Name="IMC_min" Type="Int32" />
-          <Property Name="IMC_max" Type="Int32" />
-          <Property Name="IMCCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="Edad" Type="Int32" />
-          <Property Name="EdadMinCAutoriz" Type="Int32" Nullable="false" />
-          <Property Name="EdadMax" Type="Int32" Nullable="false" />
-          <Property Name="EdadCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoCivilId" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="EstadoCiviCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="Oficina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
-        </EntityType>
         <EntityType Name="vInscriptosYRestriccionesCount">
           <Key>
             <PropertyRef Name="FechaInicio" />
@@ -6921,6 +6876,54 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="EstadoCivilSinCargar" Type="Int32" />
           <Property Name="EstadoCivilOK" Type="Int32" />
           <Property Name="EstadoCivilCheck" Type="String" MaxLength="35" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vInscriptosYRestriccionesCheck">
+          <Key>
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="FechaInicio" />
+            <PropertyRef Name="FechaFinal" />
+            <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="Genero" />
+            <PropertyRef Name="AlturaCheck" />
+            <PropertyRef Name="IMCCheck" />
+            <PropertyRef Name="EdadMinCAutoriz" />
+            <PropertyRef Name="EdadMax" />
+            <PropertyRef Name="EdadCheck" />
+            <PropertyRef Name="EstadoCivilId" />
+            <PropertyRef Name="EstadoCiviCheck" />
+          </Key>
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="IdPostulantePersona" Type="Int32" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaFinal" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="Genero" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Altura" Type="Int32" />
+          <Property Name="AlturaMinF" Type="Int32" />
+          <Property Name="AlturaMinM" Type="Int32" />
+          <Property Name="AlturaCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="IMC" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="IMC_min" Type="Int32" />
+          <Property Name="IMC_max" Type="Int32" />
+          <Property Name="IMCCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Edad" Type="Int32" />
+          <Property Name="EdadMinCAutoriz" Type="Int32" Nullable="false" />
+          <Property Name="EdadMax" Type="Int32" Nullable="false" />
+          <Property Name="EdadCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="IdEstadoCivil" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCivilId" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCiviCheck" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Oficina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -8622,6 +8625,34 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vInscriptosYRestriccionesCount">
+            <EntityTypeMapping TypeName="SINUModel.vInscriptosYRestriccionesCount">
+              <MappingFragment StoreEntitySet="vInscriptosYRestriccionesCount">
+                <ScalarProperty Name="EstadoCivilCheck" ColumnName="EstadoCivilCheck" />
+                <ScalarProperty Name="EstadoCivilOK" ColumnName="EstadoCivilOK" />
+                <ScalarProperty Name="EstadoCivilSinCargar" ColumnName="EstadoCivilSinCargar" />
+                <ScalarProperty Name="EstadoCivilProblema" ColumnName="EstadoCivilProblema" />
+                <ScalarProperty Name="EdadCheck" ColumnName="EdadCheck" />
+                <ScalarProperty Name="EdadOK" ColumnName="EdadOK" />
+                <ScalarProperty Name="EdadSinCargar" ColumnName="EdadSinCargar" />
+                <ScalarProperty Name="EdadProblema" ColumnName="EdadProblema" />
+                <ScalarProperty Name="IMCCheck" ColumnName="IMCCheck" />
+                <ScalarProperty Name="IMCOK" ColumnName="IMCOK" />
+                <ScalarProperty Name="IMCSinCargar" ColumnName="IMCSinCargar" />
+                <ScalarProperty Name="IMCProblema" ColumnName="IMCProblema" />
+                <ScalarProperty Name="Alturacheck" ColumnName="Alturacheck" />
+                <ScalarProperty Name="AlturaOK" ColumnName="AlturaOK" />
+                <ScalarProperty Name="AlturaSinCargar" ColumnName="AlturaSinCargar" />
+                <ScalarProperty Name="AlturaProblema" ColumnName="AlturaProblema" />
+                <ScalarProperty Name="SubTotal_Convoc" ColumnName="SubTotal_Convoc" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="vInscriptosYRestriccionesCheck">
             <EntityTypeMapping TypeName="SINUModel.vInscriptosYRestriccionesCheck">
               <MappingFragment StoreEntitySet="vInscriptosYRestriccionesCheck">
@@ -8652,36 +8683,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
                 <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vInscriptosYRestriccionesCount">
-            <EntityTypeMapping TypeName="SINUModel.vInscriptosYRestriccionesCount">
-              <MappingFragment StoreEntitySet="vInscriptosYRestriccionesCount">
-                <ScalarProperty Name="EstadoCivilCheck" ColumnName="EstadoCivilCheck" />
-                <ScalarProperty Name="EstadoCivilOK" ColumnName="EstadoCivilOK" />
-                <ScalarProperty Name="EstadoCivilSinCargar" ColumnName="EstadoCivilSinCargar" />
-                <ScalarProperty Name="EstadoCivilProblema" ColumnName="EstadoCivilProblema" />
-                <ScalarProperty Name="EdadCheck" ColumnName="EdadCheck" />
-                <ScalarProperty Name="EdadOK" ColumnName="EdadOK" />
-                <ScalarProperty Name="EdadSinCargar" ColumnName="EdadSinCargar" />
-                <ScalarProperty Name="EdadProblema" ColumnName="EdadProblema" />
-                <ScalarProperty Name="IMCCheck" ColumnName="IMCCheck" />
-                <ScalarProperty Name="IMCOK" ColumnName="IMCOK" />
-                <ScalarProperty Name="IMCSinCargar" ColumnName="IMCSinCargar" />
-                <ScalarProperty Name="IMCProblema" ColumnName="IMCProblema" />
-                <ScalarProperty Name="Alturacheck" ColumnName="Alturacheck" />
-                <ScalarProperty Name="AlturaOK" ColumnName="AlturaOK" />
-                <ScalarProperty Name="AlturaSinCargar" ColumnName="AlturaSinCargar" />
-                <ScalarProperty Name="AlturaProblema" ColumnName="AlturaProblema" />
-                <ScalarProperty Name="SubTotal_Convoc" ColumnName="SubTotal_Convoc" />
-                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
-                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
-                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
-                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
-                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

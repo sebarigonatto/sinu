@@ -170,7 +170,9 @@ namespace SINU.Controllers.Consultor
 
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
 
-            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+            //ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.ToList();
+
             return PartialView(ListadoConvocatorias);
 
         }

@@ -178,6 +178,11 @@ namespace SINU.Models
     {
 
     }
+    [MetadataType(typeof(vInscriptosCantYTODASConvocatoriasMetaData))]
+    public partial class vInscriptosCantYTODASConvocatorias
+    {
+
+    }
 }
 
 
