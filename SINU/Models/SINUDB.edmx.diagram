@@ -158,10 +158,10 @@
         <EntityTypeShape EntityType="SINUModel.DeclaracionJurada" Width="1.5" PointX="12.75" PointY="31" />
         <AssociationConnector Association="SINUModel.FK_DeclaracionJurada_Inscripcion" />
         <EntityTypeShape EntityType="SINUModel.vInscriptosconTitulosProblemas" Width="1.5" PointX="25.375" PointY="29.75" />
-        <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCheck" Width="1.5" PointX="27.375" PointY="29.75" />
-        <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCount" Width="1.5" PointX="29.375" PointY="28.75" />
         <EntityTypeShape EntityType="SINUModel.vInscriptosCantYTODASConvocatorias" Width="1.5" PointX="30.375" PointY="7.75" />
         <EntityTypeShape EntityType="SINUModel.vInscriptosConTitulosProblemasCount" Width="1.5" PointX="22.375" PointY="30.75" />
+        <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCount" Width="1.5" PointX="29.375" PointY="28.875" />
+        <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCheck" Width="1.5" PointX="31.375" PointY="11.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

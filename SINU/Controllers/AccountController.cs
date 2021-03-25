@@ -78,7 +78,7 @@ namespace SINU.Controllers
         [CaptchaMvc.Attributes.CaptchaVerify("Captcha is not valid")]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-         
+            ViewBag.mensaje = "";
             if (!ModelState.IsValid)
             {
                 AddErrors(IdentityResult.Failed("Respuesta de Capcha incorrecto"));
@@ -92,7 +92,7 @@ namespace SINU.Controllers
                 if (!usuario.EmailConfirmed)
 
                 {
-                    ViewBag.aviso = "Correo no validado.";
+                    ViewBag.mensaje = "Correo no validado, revise su bandeja de entrada para validar su cuenta.";
                     //revisar la logica de si el token expiro
                     return View();
                 }
@@ -267,7 +267,7 @@ namespace SINU.Controllers
                         }
                         //crea una persona, un postulante y una inscripcion
                         var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
-
+                      
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
@@ -296,8 +296,8 @@ namespace SINU.Controllers
                             MODALIDAD = "CPESNM-CPESSA";
                         }
                         await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
-
-                        return RedirectToAction("Login");
+                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su ceunta.";
+                        return View("Login");
                     }
                     AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
                 }

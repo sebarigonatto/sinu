@@ -5,7 +5,9 @@
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
 <style>
- 
+   
+    
+    
     input:-internal-autofill-selected {
         background-color: #f5f5f5 !important
     }
@@ -172,6 +174,39 @@
     /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
     @@media screen and (max-width: 576px) {
 
+        .modal-body {
+            overflow: auto;
+            height: 30rem;
+        }
+
+            .modal-body::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
+
+                .modal-body::-webkit-scrollbar:vertical {
+                    width: 10px;
+                }
+
+            .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            .modal-body::-webkit-scrollbar:horizontal {
+                height: 10px;
+            }
+
+            .modal-body::-webkit-scrollbar-thumb {
+                background-color: #797979;
+                border-radius: 20px;
+                border: 2px solid #f1f2f3;
+            }
+
+            .modal-body::-webkit-scrollbar-track {
+                border-radius: 10px;
+            }    
+
+
+
         #TABPrincipal p {
             display: none !important
         }
@@ -320,7 +355,7 @@
             @if ((bool)Session["DeleConsul"])
             {
 
-                <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" href="#" id="BTatras"><b>Atras</b></a>
+                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem"  onclick="window.history.back()"  id=""><b>Atras</b></button>
                 if (ViewBag.ULTISECU == 8)
                 {
                     @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
@@ -866,76 +901,16 @@
 
 
             //scroll automatico al selecionar un nav, solo en vista mobil
-            $("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
+            //    alert("sda");
+            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
+            //});
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").is('collapsed', function () {
+            //    alert("sda");
+            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
+            //});
 
-                $.topp = $(this).attr("id");
-                setTimeout(function () {
-                    //alert($("#" + bt).closest('nav').next('div').hasClass('show'));
-                    if ($("#" + $.topp).closest('nav').next('div').hasClass('show')) {
-                        $('html, body').animate({ scrollTop: $("#" + $.topp).offset().top -10 }, 500);
-                    }
-                }, 50);
-
-            });
-
-
-            @*$("#BTValidar").on("click", function () {
-                $.Cargando();
-
-                PantallasError = "";
-                $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
-                    //verifico si es tabla o form
-                    if ($(item).find("thead").length == 0) {
-
-                        //alert("form - " + $(item).attr("id"));
-                        saltar = true;
-                        $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
-
-                            if ($(item2).val() == '') {
-                                id_pant = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-                                if ($(item2).hasClass("custom-file-input")) {
-                                    if ($(item2).next("label").children("b").html() == "Seleccione archivo...") {
-                                        PantallasError = PantallasError + id_pant + "-";
-                                        saltar = false;
-                                    }
-
-                                } else {
-                                    PantallasError = PantallasError + id_pant + "-";
-                                    saltar = false;
-                                }
-
-                            };
-                            return saltar;
-                            //alert($(item2).attr("id"));
-                        });
-                    } else {
-                        //id_pant = $(item).attr("id");
-                        if ($(item).find("tbody tr[role='row']").length == 0) {
-                            id_pant = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-                            PantallasError = PantallasError + id_pant + "-";
-                            //alert("no hay registros");
-                        }; //else {
-                        //    alert("hay registos!!!!");
-                        //};
-                    };
-
-                });
-
-                $.ajax({
-                    url: "/Postulante/ValidarDatos",
-                    data: {
-
-                        PantallasError: PantallasError,
-                        ID_persona: '@Model.ID_PER'
-                    },
-                    type: "POST",
-                    dataType: 'json',
-                    async: false,
-                    success: function (response) {
-                        Exito(response, status,null);
-                    }
-                });
-            });*@
+  
             $("#BTValidar").on("click", function () {
                 //$.Cargando();
 

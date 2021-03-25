@@ -7,6 +7,7 @@ using SINU.Models;
 using SINU.Authorize;
 using System.Data.Entity;
 
+
 namespace SINU.Controllers.Consultor
 {
     /// <summary>Este Controlador CallConsulta depende de las Consultas Principales
@@ -17,7 +18,7 @@ namespace SINU.Controllers.Consultor
     /// que se encuentre en este Controller y si aun no se creo su ACTION
     /// se colocara el action por DEFUALT: FaltaCrearNuevoAction
     /// </summary>
-    [AuthorizacionPermiso("ListarRP")]
+    [AuthorizacionPermiso("ListaConsultaGeneral")]
     public class CallConsultaController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -169,7 +170,9 @@ namespace SINU.Controllers.Consultor
 
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
 
-            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+            //ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.ToList();
+
             return PartialView(ListadoConvocatorias);
 
         }

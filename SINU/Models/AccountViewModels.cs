@@ -53,7 +53,7 @@ namespace SINU.Models
         [Required(ErrorMessage ="Debe ingregar un Correo!!!")]
         [Display(Name = "Correo electrónico")]
         [MaxLength(256, ErrorMessage = "Dato ingresado supera el limite del campo")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage ="Debe igresar una Contraseña")]
@@ -71,7 +71,7 @@ namespace SINU.Models
     public class RegisterViewModel
     {
         [Required(ErrorMessage ="Dato obligatorio.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage ="Correo electronico ingresado no valido.")]
         [MaxLength(256, ErrorMessage = "Dato ingresado supera el limite del campo")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
@@ -124,7 +124,7 @@ namespace SINU.Models
     public class ResetPasswordViewModel
     {
         [Required(ErrorMessage ="Dato obligatorio.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
@@ -145,7 +145,7 @@ namespace SINU.Models
     public class ForgotPasswordViewModel
     {
         [Required(ErrorMessage ="Dato obligatorio.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
@@ -155,7 +155,7 @@ namespace SINU.Models
     {
 
         [Required(ErrorMessage ="Dato obligatorio.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         [Display(Name = "Correo electrónico Original")]
         public string Email { get; set; }
     }
@@ -175,7 +175,7 @@ namespace SINU.Models
         public string PasswordOriginal { get; set; }
 
         [Required(ErrorMessage ="Dato obligatorio.")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         [Display(Name = " Nuevo Correo electrónico")]
         public string Email { get; set; }
 
