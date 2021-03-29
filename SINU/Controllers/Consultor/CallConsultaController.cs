@@ -165,17 +165,37 @@ namespace SINU.Controllers.Consultor
 
         //Consulta la Convocatoria que tiene personal de inscriptos
         //Es una Consulta Principal Consulta la Convocatoria. Tendrá subconsultas
+        //public ActionResult TotalizarPorConvocatoria()
+        //{
+
+        //    List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
+
+        //    //ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
+        //    ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.ToList();
+
+        //    return PartialView(ListadoConvocatorias);
+
+        //}
+
+
         public ActionResult TotalizarPorConvocatoria()
         {
-
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
-
-            //ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.CantInscriptos > 0).ToList();
             ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.ToList();
-
+            ViewBag.Activas = 0;
             return PartialView(ListadoConvocatorias);
-
         }
+
+        public ActionResult TotalizarPorConvocatoriaActivas()
+        {
+            List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
+            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.Fecha_Fin_Proceso > DateTime.Today).ToList();
+            ViewBag.Activas = 1;
+            return PartialView("TotalizarPorConvocatoria",ListadoConvocatorias);
+        }
+
+     
+
 
         //Subconsulta de TotalizarPorConvocatoria.
         //Habiendo elegido una convocatoria en TotalizarPorConvocatoria 
