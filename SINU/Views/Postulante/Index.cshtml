@@ -174,34 +174,34 @@
     /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
     @@media screen and (max-width: 576px) {
 
-        .modal-body {
+        #ModalEIA .modal-body {
             overflow: auto;
             height: 30rem;
         }
 
-            .modal-body::-webkit-scrollbar {
+            #ModalEIA .modal-body::-webkit-scrollbar {
                 -webkit-appearance: none;
             }
 
-                .modal-body::-webkit-scrollbar:vertical {
+                #ModalEIA .modal-body::-webkit-scrollbar:vertical {
                     width: 10px;
                 }
 
-            .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
+            #ModalEIA .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
                 display: none;
             }
 
-            .modal-body::-webkit-scrollbar:horizontal {
+            #ModalEIA .modal-body::-webkit-scrollbar:horizontal {
                 height: 10px;
             }
 
-            .modal-body::-webkit-scrollbar-thumb {
+            #ModalEIA .modal-body::-webkit-scrollbar-thumb {
                 background-color: #797979;
                 border-radius: 20px;
                 border: 2px solid #f1f2f3;
             }
 
-            .modal-body::-webkit-scrollbar-track {
+            #ModalEIA .modal-body::-webkit-scrollbar-track {
                 border-radius: 10px;
             }    
 
@@ -345,7 +345,7 @@
                     Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1]!=null?ViewBag.MOD_CAR[1]:Html.Raw("&emsp;----  "))</b></e>
                 </h6>
             </t>
          
@@ -873,16 +873,7 @@
                 $.each(SolapaPrincipales, function (index, item) {
                     BloqueaPantalla(item[1]);
                 });
-                //$("#TABDocumentacion i").remove();
-                //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
-                //var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
-
-                if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
-                    $("#BTatras").attr("href", link_anterior[1]);
-                } else {
-                    $("#BTatras").attr("href", link_anterior[0]);
-
-                }
+               
             }
 
             if ('@Session["FamiTable"]' == 'True') {
@@ -900,17 +891,18 @@
 
 
 
-            //scroll automatico al selecionar un nav, solo en vista mobil
-            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
-            //    alert("sda");
-            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
+            ////scroll automatico al selecionar un nav, solo en vista mobil
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
+            //    if ($(this).hasClass("collapsed")) {
+            //          //alert("asda");
+            //        var id = $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+            //        var target = document.getElementById(id);
+            //        target.parentNode.scrollTop = target.offsetTop;
+            //    //$("#"+ id)[0].scrollIntoView();
+            //    }
+              
             //});
-            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").is('collapsed', function () {
-            //    alert("sda");
-            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
-            //});
-
-  
+      
             $("#BTValidar").on("click", function () {
                 //$.Cargando();
 
