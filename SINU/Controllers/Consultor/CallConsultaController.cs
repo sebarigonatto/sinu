@@ -183,6 +183,8 @@ namespace SINU.Controllers.Consultor
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
             ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.ToList();
             ViewBag.Activas = 0;
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
+
             return PartialView(ListadoConvocatorias);
         }
 
@@ -191,6 +193,8 @@ namespace SINU.Controllers.Consultor
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
             ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.Fecha_Fin_Proceso > DateTime.Today).ToList();
             ViewBag.Activas = 1;
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
+
             return PartialView("TotalizarPorConvocatoria",ListadoConvocatorias);
         }
 
