@@ -1,128 +1,131 @@
 ﻿@model List<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
     @*@using (Html.BeginForm())
     {*@
-    <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
-        <thead>
-            <tr>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].Fecha)
-                </th>
-                <th class="secondary" hidden>
-                    @Html.DisplayNameFor(model => model[0].Email)
-                </th>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].Nombres)
-                </th>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].Apellido)
-                </th>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].IdModalidad)
-                </th>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].Etapa)
-                </th>
-                <th class="secondary">
-                    @Html.DisplayNameFor(model => model[0].Estado)
-                </th>
-                <th class="ni-o-ni-bu">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td hidden>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @if (item.IdModalidad == "")
-                    {
-                    <p class="text-center m-0"> - </p>
-                    }
-                    else
-                    {
-                    <p class="text-center m-0"> @Html.DisplayFor(modelItem => item.IdModalidad)</p>
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Etapa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td class="align-content-md-center">
-                    @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
-                    &ensp;
-                    @Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = item.IdPersona }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
+    <div class="table-responsive">
+        <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].Fecha)
+                    </th>
+                    <th class="secondary" hidden>
+                        @Html.DisplayNameFor(model => model[0].Email)
+                    </th>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].Nombres)
+                    </th>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].Apellido)
+                    </th>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].IdModalidad)
+                    </th>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].Etapa)
+                    </th>
+                    <th class="secondary">
+                        @Html.DisplayNameFor(model => model[0].Estado)
+                    </th>
+                    <th class="ni-o-ni-bu">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                        <td hidden>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombres)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido)
+                        </td>
+                        <td>
+                            @if (item.IdModalidad == "")
+                            {
+                                <p class="text-center m-0"> - </p>
+                            }
+                            else
+                            {
+                                <p class="text-center m-0"> @Html.DisplayFor(modelItem => item.IdModalidad)</p>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Etapa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        <td class="align-content-md-center">
+                            @*@Html.ActionLink("  ", "Edit", new { /* id=item.PrimaryKey */ }, new { @class = "far fa-edit", @style = "color:#0072ff", @title = "Editar" })&ensp;|&ensp;*@
+                            &ensp;
+                            @Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = item.IdPersona }, new { @class = "far fa-list-alt", @style = "color:#0072ff", @title = "Detalles" })
 
-                    &ensp;
+                            &ensp;
 
-                    @* Cambiar codigo que no muestre con el Idsecuencia -- Sino que busque por etapa y estado *@
-                    @{
-                    if (item.Etapa == "ENTREVISTA")
-                    {
-                    switch (item.Estado)
-                    {
-                    case "A Asignar":
-                    @:|&ensp;
-                    @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de entrevista" })
-                    @:&ensp;
-                    break;
-                    case "Pendiente":
-                    @:|&ensp;
-                    <a data-toggle="tooltip" data-placement="top" title="tool tip top">
-                        @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
-                    </a>
-                    break;
-                    case "No Postulado":
-                    @:|&ensp;
-                    @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Retroceder a la etapa anterior" })
-                    break;
-                    }
-                    }
-                    if (item.Etapa == "DOCUMENTACION")
-                    {
-                    switch (item.Estado)
-                    {
-                    case "A Validar":
-                    @:|&ensp;
-                    @Html.ActionLink(" ", "Documentacion", new { id = item.IdPersona }, new { @class = "fa fa-check-circle", @style = "color:#0072ff", @title = "Validar la documentacion del postulante" })
-                    break;
-                    case "No Validado":
-                    @:|&ensp;
-                    @Html.ActionLink(" ", "Details", new { id = item.IdPersona }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Restaurar postulante" })
-                    break;
-                    }
+                            @* Cambiar codigo que no muestre con el Idsecuencia -- Sino que busque por etapa y estado *@
+                            @{
+                                if (item.Etapa == "ENTREVISTA")
+                                {
+                                    switch (item.Estado)
+                                    {
+                                        case "A Asignar":
+                                            @:|&ensp;
+                                            @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de entrevista" })
+                                            @:&ensp;
+                                            break;
+                                        case "Pendiente":
+                                            @:|&ensp;
+                                            <a data-toggle="tooltip" data-placement="top" title="tool tip top">
+                                                @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
+                                            </a>
+                                            break;
+                                        case "No Postulado":
+                                            @:|&ensp;
+                                            @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Retroceder a la etapa anterior" })
+                                            break;
+                                    }
+                                }
+                                if (item.Etapa == "DOCUMENTACION")
+                                {
+                                    switch (item.Estado)
+                                    {
+                                        case "A Validar":
+                                            @:|&ensp;
+                                            @Html.ActionLink(" ", "Documentacion", new { id = item.IdPersona }, new { @class = "fa fa-check-circle", @style = "color:#0072ff", @title = "Validar la documentacion del postulante" })
+                                            break;
+                                        case "No Validado":
+                                            @:|&ensp;
+                                            @Html.ActionLink(" ", "Details", new { id = item.IdPersona }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Restaurar postulante" })
+                                            break;
+                                    }
 
-                    }
-                    if (item.Etapa == "PRESENTACION")
-                    {
-                    switch (item.Estado)
-                    {
-                    case "A Asignar":
-                    @:|&ensp;
-                    @*<input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />*@
-                    @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })
-                    @*@Html.CheckBox("Select",false ,new {id=item.IdPersona })*@
-                    break;
-                    }
+                                }
+                                if (item.Etapa == "PRESENTACION")
+                                {
+                                    switch (item.Estado)
+                                    {
+                                        case "A Asignar":
+                                            @:|&ensp;
+                                            @*<input name="Select" type="checkbox" value="@item.IdPersona" id="myCheck" onclick="myFunction()" />*@
+                                            @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })
+                                            @*@Html.CheckBox("Select",false ,new {id=item.IdPersona })*@
+                                            break;
+                                    }
 
-                    }
+                                }
 
-                    }
-                </td>
-            </tr>
-            }
-        </tbody>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
 
-    </table>
+        </table>
+    </div>
+    

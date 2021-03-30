@@ -116,10 +116,10 @@
 </style>
 <h2 class="text-center ">@ViewBag.Delegacion</h2>
 <br />
-<div class="container h-75">
+<div class="container d-none d-lg-block">
     <div class="row">
-        <div class="col-md-2 mr-2  bd-sidebar ">
-            <ul class="nav nav-tabs with-arrow lined  flex-md-column text-center tabb mb-1" id="myTab" role="tablist" style="border-bottom:0px solid; color:white">
+        <div class="col-md-2 mr-2  bd-sidebar">
+            <ul class="nav nav-tabs with-arrow lined  flex-md-column text-center tabb mb-1 d-none d-md-block d-lg-block" id="myTab" role="tablist" style="border-bottom:0px solid; color:white">
 
                 <li class="nav-item flex-sm-fill bli">
                     <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
@@ -148,8 +148,8 @@
                     </a>
                 </li>
                 @*<li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                </li>*@
+                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                    </li>*@
             </ul>
         </div>
         <div class="col-sm-9 borderdiv1">
@@ -181,7 +181,84 @@
     </div>
 </div>
 <!--Prueba de una nueva barra de menu para los postulantes-->
-
+<div class="accordion d-lg-none d-xl-none" id="accordionExample">
+    <div class="card">
+        <div class="card-header" id="headingInscriptos">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseInscriptos" aria-expanded="true" aria-controls="collapseInscriptos">
+                    Inscriptos - Todos
+                </button>
+            </h2>
+        </div>
+        <div id="collapseInscriptos" class="collapse show" aria-labelledby="headingInscriptos" data-parent="#accordionInscriptos">
+            <div class="card-body">
+                @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingDatos">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos" onclick="ActuTabla()">
+                    Datos Basicos
+                </button>
+            </h2>
+        </div>
+        <div id="collapseDatos" class="collapse" aria-labelledby="headingDatos" data-parent="#accordionDatos">
+            <div class="card-body" id="MyTableRefresh">
+                @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingEntrevista">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseEntrevista" aria-expanded="false" aria-controls="collapseEntrevista">
+                    Entrevista
+                </button>
+            </h2>
+        </div>
+        <div id="collapseEntrevista" class="collapse" aria-labelledby="headingEntrevista" data-parent="#accordionEntrevista">
+            <div class="card-body">
+                @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
+                <div class="col-sm-3 col-lg-2">
+                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingDocumentacion">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDocumentacion" aria-expanded="false" aria-controls="collapseDocumentacion">
+                    Documentacion
+                </button>
+            </h2>
+        </div>
+        <div id="collapseDocumentacion" class="collapse" aria-labelledby="headingDocumentacion" data-parent="#accordionDocumentacion">
+            <div class="card-body">
+                @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingPresentacion">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
+                    Presentacion
+                </button>
+            </h2>
+        </div>
+        <div id="collapsePresentacion" class="collapse" aria-labelledby="headingPresentacion" data-parent="#accordionPresentacion">
+            <div class="card-body">
+                @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
+                <div class="col-sm-3 col-lg-2">
+                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
 <!-- ***********************************************************************-->
@@ -193,6 +270,20 @@
 <!-- Rodear el contenido de la tabla con <tbody>-->
 @section Scripts {
     <script type="text/javascript">
+        function ActuTabla() {
+            $('#le-filters').DataTable().ajax.reload();
+            alert("Entro")
+            @*$.ajax{
+                async: false,
+                    URL:"/Delegacion/Index",
+data:'@Model.cargadatosbasicosVM'
+            }*@
+         @*var table = $('#MyTableRefresh').DataTable( {
+    ajax: "data.json"
+} );
+            table.ajax.reload();
+           $("MyTableRefresh").load('@Url.Action("_ListadoPostulante",Model.cargadatosbasicosVM)')*@
+        };
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
@@ -230,8 +321,8 @@
                     "sLengthMenu": "Mostrar _MENU_ registros",
                     "sZeroRecords": "No se encontraron resultados",
                     "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
                     "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
                     "sInfoPostFix": "",
                     "sSearch": "Buscar:",
@@ -261,6 +352,7 @@
 
             });
         });
+
     </script>
 }
 

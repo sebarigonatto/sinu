@@ -44,7 +44,7 @@
         Direccion:@Model.Configuracion.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato <br />
         @Model.Configuracion.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato<br />
         Piso: @Model.Configuracion.First(p => p.NombreDato == "ResponsablePisoOfic").ValorDato<br />
-        Telefono: @Model.Configuracion.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+        Teléfono: @Model.Configuracion.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
 
     </address>
 </div>
@@ -64,7 +64,7 @@
                 <div class="card-body">
                     <h6 class="card-title"><b>Dirección:  </b>@item.Provincia, @item.Localidad, @item.Direccion</h6>
                     <h6 class="card-title"><b>Email:  </b><a href="mailto:@item.Email1">@item.Email1</a> - @Html.Raw(item.Email2 == "" ? "" : "<a href = 'mailto:" + @item.Email2 + "'> " + @item.Email1 + " </a>")</h6>
-                    <h6 class="card-title"><b>Telefono:  </b>@item.Telefono</h6>
+                    <h6 class="card-title"><b>Teléfono:  </b>@item.Telefono</h6>
                     <h6 class="card-title"><b>Celular:  </b>@(item.Celular==""?"  -----  ":item.Celular)</h6>
 
 

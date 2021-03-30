@@ -175,14 +175,13 @@ namespace SINU.Models
     }
     [MetadataType(typeof(EstablecimientoRindeExamenMetadata))]
     public partial class EstablecimientoRindeExamen
-    {
-
-    }
+    { }
     [MetadataType(typeof(vInscriptosCantYTODASConvocatoriasMetaData))]
     public partial class vInscriptosCantYTODASConvocatorias
-    {
-
-    }
+    { }
+    [MetadataType(typeof(OficinasyDelegacionesMetadata))]
+    public partial class OficinasYDelegaciones
+    { }
 }
 
 
