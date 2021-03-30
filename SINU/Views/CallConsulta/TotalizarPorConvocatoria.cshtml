@@ -3,12 +3,31 @@
 
 @{ ViewBag.Title = "Totales Por Convocatoria ";
 
-                var TotConvoc = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Count;
-                var TotalINSC = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Sum(m => m.CantInscriptos); }
+    var TotConvoc = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Count;
+    var TotalINSC = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Sum(m => m.CantInscriptos);
+
+}
+
+
+
+@if (ViewBag.ACTIVAS == 0)
+{
+
+    <span style="float:right">
+        @Html.ActionLink("SOLO ACTIVAS", "TotalizarPorConvocatoriaActivas", "CallConsulta", new { @class = "btn btn-primary w-80  btn-dark" })
+    </span>
+    
+}
+else
+{
+    @Html.ActionLink("TODAS Las CONVOCATORIAS", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+
+}
 
 <h2>
     @ViewBag.Title
 </h2>
+
 <p>
     <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">Total de Convocatorias: @TotConvoc  <span style="float:right">TOTAL INSCRIPTOS: @TotalINSC</span></div>
 </p>

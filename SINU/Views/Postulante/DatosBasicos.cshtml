@@ -101,7 +101,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Celular, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "codigo de area sin 0 y el nuemro sin 15", @id = "Celular" } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Celular, new { htmlAttributes = new { @class = "form-control", @placeholder = "codigo de area sin 0 y el numero sin 15", @id = "Celular" } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Celular, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -165,6 +165,5 @@
             </div>
         </div>
     </div>
-
 
 }

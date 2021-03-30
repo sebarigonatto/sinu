@@ -7,7 +7,7 @@
             <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h5>
             <h5>@Html.Label("Numero de Inscripcion"): <b>@Html.DisplayFor(m => m.ID_Inscripcion).ToString().ToUpper()</b></h5>
             <h5>Modalidad: <b>@Html.DisplayFor(m => m.Modalidad).ToString().ToUpper()</b></h5>
-            <h5>Carrera: <b>@Html.DisplayFor(m => m.Carrera).ToString().ToUpper()</b></h5>
+            <h5>Carrera: <b>@Html.Raw(Model.Carrera)</b></h5>
             @Html.Hidden("presentacion", ViewBag.Asignado ? true : false)
             @if (!ViewBag.Asignado)
             {
