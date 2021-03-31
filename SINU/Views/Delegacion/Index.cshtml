@@ -199,7 +199,7 @@
     <div class="card">
         <div class="card-header" id="headingDatos">
             <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos" onclick="ActuTabla()">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos">
                     Datos Basicos
                 </button>
             </h2>
@@ -270,20 +270,6 @@
 <!-- Rodear el contenido de la tabla con <tbody>-->
 @section Scripts {
     <script type="text/javascript">
-        function ActuTabla() {
-            $('#le-filters').DataTable().ajax.reload();
-            alert("Entro")
-            @*$.ajax{
-                async: false,
-                    URL:"/Delegacion/Index",
-data:'@Model.cargadatosbasicosVM'
-            }*@
-         @*var table = $('#MyTableRefresh').DataTable( {
-    ajax: "data.json"
-} );
-            table.ajax.reload();
-           $("MyTableRefresh").load('@Url.Action("_ListadoPostulante",Model.cargadatosbasicosVM)')*@
-        };
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
