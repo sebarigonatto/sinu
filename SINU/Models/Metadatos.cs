@@ -768,4 +768,9 @@ namespace SINU.Models
         public int IdPeriodoInscripcion { get; set; }
         public Nullable<int> CantInscriptos { get; set; }
     }
+    public partial class OficinasyDelegacionesMetadata
+    {
+        [Display(Name ="Teléfono")]
+        public string Telefono { get; set; }
+    }
 }
