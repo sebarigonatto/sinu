@@ -10,7 +10,7 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right" >
+        <ul class="nav navbar-nav navbar-right navMenu" >
             <li class="row pb-0" style="margin-bottom: -27px !important;">
                 <i class="@ViewBag.IconoPerfil ml-3" style="color: deepskyblue; padding-top: 0.7rem !important;"></i>&ensp; @Html.ActionLink(" " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link d-iniline-flex" })
             </li> &ensp;

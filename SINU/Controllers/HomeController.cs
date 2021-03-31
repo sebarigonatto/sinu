@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Collections.Generic;
 
 namespace SINU.Controllers
 {
@@ -116,7 +117,15 @@ namespace SINU.Controllers
         public ActionResult Contact()
         {
             vContacto myModel = new vContacto();
-            myModel.Configuracion = db.Configuracion.ToList();
+            var confi = db.Configuracion.ToList();
+            myModel.DPTOincorporacion = new OficinasYDelegaciones
+            {
+                Email1 = confi.First(p => p.NombreDato == "ResponsableMail").ValorDato,
+                Direccion = confi.First(p => p.NombreDato == "ResponsableNombreEdificio").ValorDato + ", " + confi.First(p => p.NombreDato == "ResponsableCalleYnro").ValorDato ,
+                Localidad = confi.First(p => p.NombreDato == "ResponsablePisoOfic").ValorDato,
+                Telefono = confi.First(p => p.NombreDato == "ResponsableTelefonoEinterno").ValorDato
+
+            };
             myModel.listoficinas = db.OficinasYDelegaciones.ToList();
             return View(myModel);
         }
