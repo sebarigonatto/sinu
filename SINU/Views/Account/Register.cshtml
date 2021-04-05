@@ -31,13 +31,13 @@
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="color: white; background-color: #00bfff ;">
-                            <i class="fa fa-align-justify "></i>
+                                <i class="fa fa-align-justify "></i>
                             </span>
                         </div>
 
                         @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
                     </div>
-                   
+
                     @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
 
 
@@ -53,7 +53,7 @@
 
                         @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
                     </div>
-                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="form-group">
@@ -63,7 +63,7 @@
                             <span class="input-group-text" style="color: white;background-color: #00bfff; padding: 9px;">
                                 <i style="font-size:0.7rem">123</i>
                             </span>
-                        </div>         
+                        </div>
                         @Html.TextBoxFor(m => m.DNI, new { @class = "form-control" })
                     </div>
 
@@ -80,9 +80,9 @@
                         </div>
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                     </div>
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
-                  
+
                 </div>
                 <div class="form-group">
                     <b>@Html.LabelFor(m => m.Password, new { @class = "col-md-12 control-label" })</b>
@@ -92,9 +92,9 @@
                         </div>
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "Contraseña" })
                     </div>
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
 
-                    
+
                 </div>
                 <div class="form-group">
                     <b>@Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-12 control-label" })</b>
@@ -112,10 +112,11 @@
                     <div class="input-group justify-content-center">
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="color: white; background-color: #00bfff ;">
-                            <i class="fa fa-list"></i></span>
+                                <i class="fa fa-list"></i>
+                            </span>
                         </div>
                         @Html.DropDownListFor(m => m.IdInstituto, (SelectList)Model.ListIntitutos, "Seleccione modalidad a inscribirse", htmlAttributes: new { @class = "form-control selectpicker " })
-                        
+
                     </div>
                     <div class="h-100"></div>
                     @Html.ValidationMessageFor(model => model.IdInstituto, "", new { @class = "text-danger" })
@@ -146,11 +147,11 @@
                 <br />
 
                 @*<div class="form-group">
-                @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>*@
+                        @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>*@
 
                 //parametro enviado oculto al controlador para almacenar la preferencia
 
@@ -168,9 +169,9 @@
 
 
 
-            @section Scripts {
-                @Scripts.Render("~/bundles/jqueryval")
-                <script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
         $(".selectpicker").selectpicker({
             size: 7,
             noneSelectedText: 'Ninguna Opcion Seleccionada'
@@ -214,5 +215,5 @@
                 }
             });
         });
-                </script>
-            }
+    </script>
+}
