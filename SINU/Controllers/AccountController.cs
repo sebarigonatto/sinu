@@ -127,7 +127,9 @@ namespace SINU.Controllers
                             DateTime fin = ((DateTime)UserManager.FindByEmail(model.Email).LockoutEndDateUtc).ToLocalTime();
                             var min =  fin - DateTime.Now;
                            
-                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + min.Minutes + " minutos."), "Account", "Login"); 
+                            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Inténtelo de nuevo en " + min.Minutes + " minutos."), "Account", "Login");
+                            ViewBag.Title = "Cuenta Bloqueada";
+
                             return View("Lockout", x);
                         case SignInStatus.RequiresVerification:
                             return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
@@ -296,7 +298,7 @@ namespace SINU.Controllers
                             MODALIDAD = "CPESNM-CPESSA";
                         }
                         await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
-                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su ceunta.";
+                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta dentro de las 24HS.";
                         return View("Login");
                     }
                     AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
@@ -327,11 +329,13 @@ namespace SINU.Controllers
                     var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmacion expirado. Intente la registración nuevamente. "), "Account", "Confirmacion de mail");
                     return View("Lockout", x);
                 }
-                //ver cuando se quiere confiramr mail de un usuario eliminado
-                //if (UserManager.FindById(userId)!=null)
-                //{
-
-                //}
+                //cuando se quiere confiramr mail de un usuario eliminado
+                if (UserManager.FindById(userId) == null)
+                {
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Tiempo de confirmación expirado. Inscribase nuevamente. "), "Account", "Confirmacion de mail");
+                    ViewBag.Title = "Confirmación de Cuenta";
+                    return View("Lockout", x);
+                }
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
@@ -373,7 +377,8 @@ namespace SINU.Controllers
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {
                     //Revisar En vez de usar Session["funcion"] = "Expiro token para la confirmacio de correo!!"; se debe generar un objeto que es usado por la view como modelo.
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el LINK para la confirmación de correo!! Intente la registración nuevamente. "), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para la confirmación de correo. Intente la registración nuevamente."), "Account", "Confirmacion de mail");
+                    ViewBag.Title = "Token Vencido";
                     return View("Lockout", x);
                 };
 

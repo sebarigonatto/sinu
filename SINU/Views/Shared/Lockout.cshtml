@@ -1,9 +1,5 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
-@{
-    ViewBag.Title = "Bloqueado";
-}
-
 <style>
 
     @@media screen and (max-width: 600px) {
@@ -35,7 +31,7 @@
     </div>
     <div class="col-sm-12 ">
         <div>
-            <h6 class="text-black-50 text-center" style="font-size:8vh">Cuenta Bloqueda</h6>
+            <h6 class="text-black-50 text-center" style="font-size:8vh">@ViewBag.Title</h6>
             <p class="text-danger text-center">
 
 
@@ -47,9 +43,9 @@
 
 
                 }
-                <a href="~/Home/Index" class="card-link ">Ir a la Pagina Principal</a>
+                <a href="~/Home/Index" class="card-link" style="font-size: 1.3rem;">Ir a la Pagina Principal</a>
                 <br />
-                <a href="~/Account/Login" class="card-link">Iniciar Sesion</a>
+                <a href="~/Account/Login" class="card-link" style="font-size: 1.3rem;">Iniciar Sesion</a>
 
             </p>
         </div>
