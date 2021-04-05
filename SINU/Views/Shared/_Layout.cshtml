@@ -30,6 +30,8 @@
     </div>
     <style type="text/css">
 
+     
+
         .loader,
         .loader:before,
         .loader:after {
@@ -43,12 +45,24 @@
         }
 
         .lodaer-img {
-            width: 40%
+            width: 65%
         }
+        #logo{
+            width:16rem;
+            padding:0px;
+            padding-right:1rem;
 
+        }
         @@media screen and (max-width: 601px) {
+            #logo {
+                width: 15rem;
+            }
+            #navbarSupportedContent {
+                margin-left: 0rem !important;
+            }
             .lodaer-img {
-                width: 35% !important
+                width: 55% !important;
+
             }
 
             .loader {
@@ -151,19 +165,20 @@
         <div class="container">
             <div class="navbar-header">
                 @*muestro el icono como de un barco de frente delante del primer item del MENU*@
-                <p class="nav navbar-text navbar-left ">
+                @*<p class="nav navbar-text navbar-left ">
                     <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
-                </p>
+                </p>*@
 
-                @Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })
+                @*@Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })*@
+                <a href="/"><img src="~/Imagenes/logo.png" alt="Alternate Text" class="img-fluid" id="logo" /></a>
 
 
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="navMenu">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left:-4rem">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 navMenu">
 
                     <!--Armado de los link standard para todos los perfiles/grupos     -->
                     @*<li class="nav-item">@Html.ActionLink("texto a mostrar", "accion", "controlador", null, htmlAttributes: new { @class = "nav-link" })</li>*@
@@ -194,13 +209,15 @@
     <!-- aqui TERMINA el menú Principal -->
 
     <div id="body" class="container body-content h-100">
-        <br />
+        <br /><br />
         <!--Aquí se substituye con el contenido de la pagina VIEW que corresponda según la llamada ejecutada desde las Action -->
         @RenderBody()
         <br />
-        @*<footer class="" style="background-color:white;height: 4%;">
-                <p class="float-right mr-2 mb-1 ">&copy; @DateTime.Now.Year - SINU - Armada Argentina</p>
-            </footer>*@
+        <footer class="" style="background-color:white;height: 4%;">
+            <p class="float-right mr-2 mb-1 ">
+                &copy;@DateTime.Now.Year - SINU - Servicio de Informatica de la Armada - Dpto: Desarrollo de Sistemas
+            </p>
+        </footer>
     </div>
     <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -233,9 +250,15 @@
 
 
     $(window).on('load', function () {
-        $("#navMenu li a").each(function (a) {
+        $(".navMenu li a").each(function (a) {
             if (window.location.href.indexOf($(this).attr("href")) > -1) {
-                $(this).css("color", "white");
+                if ($(this).hasClass("dropdown-item")) {
+                   
+                    $(this).addClass(" bg-dark text-white").closest(".nav-item.dropdown").children("a").addClass("text-white");
+                } else {
+                    $(this).css("color", "white");
+                }
+                
             }
         });
         $('#loader').delay(300).fadeOut('fast');

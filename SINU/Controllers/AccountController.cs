@@ -327,6 +327,11 @@ namespace SINU.Controllers
                     var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmacion expirado. Intente la registración nuevamente. "), "Account", "Confirmacion de mail");
                     return View("Lockout", x);
                 }
+                //ver cuando se quiere confiramr mail de un usuario eliminado
+                //if (UserManager.FindById(userId)!=null)
+                //{
+
+                //}
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
