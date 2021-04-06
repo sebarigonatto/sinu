@@ -14,6 +14,7 @@
                  new { id = "BeginDocumentosNecesarios" }))
 {
     @Html.AntiForgeryToken()
+<div class="table-responsive">
     <table id="TablaProblema" data-CUD="DataProblema" data-URL="ListaProblema" data-ELI="EliminaIDIO" data-Controller="Delegacion" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
         <thead>
             <tr>
@@ -77,6 +78,8 @@
             }
         </tbody>
     </table>
+
+</div>
     @*<a type="submit" name="IdInscripto" value="@ViewBag.Idinscripto"></a>*@
     <div class="container-fluid">
         <div class="form-group row">
@@ -96,16 +99,18 @@
     </div>
     <div class="alert alert-warning fa fa-exclamation-circle" role="alert"> RECUERDE PARA VAILDAR ESTA PANTALLA DEBE TENER TODA LA DOCUMENTACION OBLIGATORIA PRESENTADA</div>
     <div class="alert alert-danger fa fa-exclamation-circle" role="alert"> SI NO TIENE TODA LA DOCUMENTACION OBLIGATORIA PRESENTADA DEBE NOTIFICAR AL POSTULANTE</div>
+    <div class="container text-center">
+        @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = @ViewBag.Idinscripto, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
+                                      {
+                                        HttpMethod = "POST",
+                                        OnSuccess = "Exito(data,status,xhr)",
+                                        OnFailure = "Falla"
+                                      }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+        @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = @ViewBag.Idinscripto, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
+                                     {
+                                       HttpMethod = "POST",
+                                       OnSuccess = "Exito(data,status,xhr)",
+                                       OnFailure = "Falla"
+                                     }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
+    </div>
 }
-@*@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        $(document).ready(function () {
-             var x='@ViewBag.ExistProblema'
-            if (x = true) {
-                $("#btnNotificar").attr("disabled");
-            }
-
-        });
-    </script>
-}*@

@@ -549,25 +549,9 @@
                         <div class="collapse tab-pane fade nav-tab pt-4" id="DocumentosNecesariosNAV">
                             @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
                             <br />
-                            @*@Html.Action("ListaProblema", "Delegacion", new { ID_persona = Model.ID_PER, IdPanatlla = 10 })*@
-                            @*@Html.Partial("ListaProblema")*@
-                            @*<br />*@
+                        </div>
+                      @* Se envia los botones de Validar y Abrir esta en DocumentosNecesarios.cshtml *@
 
-                        </div>
-                        <div class="container text-center">
-                            @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
-                          {
-                            HttpMethod = "POST",
-                            OnSuccess = "Exito(data,status,xhr)",
-                            OnFailure = "Falla"
-                          }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                            @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = Model.ID_PER, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
-                             {
-                               HttpMethod = "POST",
-                               OnSuccess = "Exito(data,status,xhr)",
-                               OnFailure = "Falla"
-                             }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-                        </div>
                     </div>
                     @* Validar Datos*@
                     <div class="pos-f-t collapse tab-pane fade tab-nav" id="ValidarDatos">

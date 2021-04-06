@@ -71,13 +71,19 @@ namespace SINU.Controllers
         #endregion
 
         #region Asignar Fecha de Entrevista(GET) - accion que le asigna una fecha de entrevista a un solo postulante
-        public ActionResult EntrevistaAsignaFecha(int id)
+        /// <summary>
+        /// Accion de tipo GET esta accion tiene que devolver los datos segun el parametro que lo pasaron
+        /// recibe como parametro el IdPersona
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Devuelve los datos de la persona a la cual recibe el Id</returns>
+        public ActionResult EntrevistaAsignaFecha(int id)///Recibe el IdPersona
         {
             try
             {
-                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);
+                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);///en la variable "Dato" guardo la informacion de la persona con idPersona igual que hay en la tabla
 
-                return View(Dato);
+                return View(Dato);///devuelvo a la vista el modelo "Dato" es donde contiene toda la informacion de la persona
             }
             catch (System.Exception ex)
             {
@@ -87,12 +93,17 @@ namespace SINU.Controllers
         #endregion
 
         #region Asignar Fecha de Entrevista(POST) - accion que le asigna una fecha de entrevista a un solo postulante
+        /// <summary>
+        /// Accion de tipo POST: lo que va a realizar esta accion es guardar el tabla inscripcion la fecha que se le fue otorgada por una delegacion
+        /// recibe como parametros "datos"(que es una collecion de input enviados por)
+        /// </summary>
+        /// <param name="datos"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EntrevistaAsignaFecha(vEntrevistaLugarFecha datos)
         {
             List<vInscripcionDetalle> InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-            //HttpContext.Request.Form
             try
             {
                 if (ModelState.IsValid)
@@ -629,8 +640,6 @@ namespace SINU.Controllers
         public ActionResult ListaProblema(int ID_persona, int IdPanatlla)
         {
             List<vDataProblemaEncontrado> problema = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).Where(m => m.IdPantalla == IdPanatlla).ToList();
-
-
             return View(problema);
 
         }
@@ -652,7 +661,6 @@ namespace SINU.Controllers
                         Apellido_Y_Nombres = postu.Apellido + ", " + postu.Nombres,
                         DNI = postu.DNI
                     };
-
                 }
                 else
                 {
@@ -804,18 +812,27 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla, int AoC)
         {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);///realizo una busqueda con el IdPersona y devolverme el IdInscripcion
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id || m.IdInscripcion == id);/// 06/04/2021 debido a que se envia los botones de validar y abrir a la vista DocumentosNecesarios.cshtml se 
+                                                                                                                 ///cambia aqui para que reciba parametro idPersona o IdInscripcion
             var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
-            var Abierto = db.spTildarPantallaParaPostulate(id).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
+            var Abierto = db.spTildarPantallaParaPostulate(inscrip.IdPersona).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
-            var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false && m.Obligatorio == true);
+            var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false && m.Obligatorio == true);/// esta linea de condigo verifica si hay un documento obligatorio no presentado
+                                                                                                                ///si es que hay uno te trae que documento Obligatorio falta
+            
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (IdPanatlla == 10 && EntregTodo != null && AoC == 1)
+                    if (IdPanatlla == 10 && EntregTodo != null && AoC == 1)/// el if pregunta si la pantalla es 10 el entregatodo no tiene documentacion obligatoria y el AoC=1(Cerrar o validar)
+                                                                           ///esta tratando de validar la pantalla 
                     {
                         return Json(new { success = false, msg = "Para validar esta pantalla debe estar toda la documentacion obligatoria presentada" });
+                    }
+                    if (inscrip.CarreraRelacionada == null && IdPanatlla == 1 && AoC == 1)/// ver la parte de las condiciones debido a que si intenta abrir la pantalla que ya esta abierta y no tiene una carrera relacionada va a devolver el return mostrando un mensaje incorrecto
+                    {
+                        return Json(new { success = false, msg = "Para validar esta pantalla el postulante debe tener una carrera relacionada" });
+
                     }
                     if (Abierto.Abierta == true)
                     {
@@ -833,7 +850,7 @@ namespace SINU.Controllers
                         }
                         if (AoC == 1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
                         {
-                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                            db.spCierraPantallaDePostulante(IdPanatlla, inscrip.IdPersona, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se valido Correctamente los datos" });
                         }
                     }
@@ -841,11 +858,12 @@ namespace SINU.Controllers
                     {
                         if (AoC == 0)// si AoC(Abierto o Cerrado) es false=0 se abre la pantalla para que el usuario(Delegacion) pueda serguir agregando problemas a un Postulante 
                         {
-                            db.spCierraPantallaDePostulante(IdPanatlla, id, Convert.ToBoolean(AoC));
+                            db.spCierraPantallaDePostulante(IdPanatlla, inscrip.IdPersona, Convert.ToBoolean(AoC));
                             return Json(new { success = true, msg = "Se abrio la pantalla para agregar problemas" });
                         }
                         return Json(new { success = true, msg = "La pantalla ya se encuentra validada, siga validando las siguientes" });
                     }
+
                 }
 
             }
