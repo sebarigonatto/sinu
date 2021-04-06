@@ -33,6 +33,17 @@
     </div>
 }
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#CaptchaInputText").addClass("form-control");
+            $("#CaptchaInputText").next("br").remove();
+            $("a[href='#CaptchaImage']").show();
+        })
+
+    </script>
+
 }

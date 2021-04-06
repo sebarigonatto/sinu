@@ -2579,6 +2579,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Cuello" Type="int" Mode="In" />
           <Parameter Name="Calzado" Type="int" Mode="In" />
         </Function>
+        <Function Name="spAspNetUserYPostulanteEliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="spCarrerasDelGrupo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdGrupoCarrOficio" Type="varchar" Mode="In" />
           <Parameter Name="Personal" Type="varchar" Mode="In" />
@@ -5625,6 +5628,9 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscriptosConTitulosProblemasCount" EntityType="SINUModel.vInscriptosConTitulosProblemasCount" />
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
           <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
+          <FunctionImport Name="spAspNetUserYPostulanteEliminar">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -8689,6 +8695,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spAspNetUserYPostulanteEliminar" FunctionName="SINUModel.Store.spAspNetUserYPostulanteEliminar" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -238,7 +238,7 @@ namespace SINU
             var passTokenProvider = options.DataProtectionProvider;
 
             //ver Hora de duracion del token para la  confirmacion de mail
-            double horavidaToken = double.Parse(db.Configuracion.FirstOrDefault(b => b.NombreDato == "TokenConfMailVida").ValorDato);
+            double horavidaToken =double.Parse(db.Configuracion.FirstOrDefault(b => b.NombreDato == "TokenConfMailVida").ValorDato);
 
             if (dataProtectionProvider != null)
             {
