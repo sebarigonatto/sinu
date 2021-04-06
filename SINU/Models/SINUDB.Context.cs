@@ -1395,5 +1395,14 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<EstablecimientoRindeExamenDeOficina_Result>("[SINUEntities].[EstablecimientoRindeExamenDeOficina](@idOficinayDelegacion)", idOficinayDelegacionParameter);
         }
+    
+        public virtual int spAspNetUserYPostulanteEliminar(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAspNetUserYPostulanteEliminar", emailParameter);
+        }
     }
 }

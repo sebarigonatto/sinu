@@ -238,6 +238,7 @@ namespace SINU.Controllers
                                                                                                m.Provincia + ", " + m.Localidad + ", " + m.Direccion,
                                                                                                m.Telefono,
                                                                                                m.Celular}));
+
             model.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
                 
             if (ModelState.IsValid)
@@ -246,7 +247,6 @@ namespace SINU.Controllers
                 {
 
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-
 
                     var result = await UserManager.CreateAsync(user, model.Password);
                     
@@ -264,7 +264,7 @@ namespace SINU.Controllers
                         {
                             db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
                             db.SaveChanges();
-                            AddErrors(IdentityResult.Failed("El Dni ingresado ya Existe"));
+                            AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una "));
                             return View(model);
                         }
                         //crea una persona, un postulante y una inscripcion
@@ -298,7 +298,7 @@ namespace SINU.Controllers
                             MODALIDAD = "CPESNM-CPESSA";
                         }
                         await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
-                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta dentro de las 24HS.";
+                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
                         return View("Login");
                     }
                     AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
@@ -326,30 +326,33 @@ namespace SINU.Controllers
                 if (userId == null || code == null)
                 {
                     //Revisar no usamos return View("Error"); y usamos una pantalla de error generalizada
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmacion expirado. Intente la registración nuevamente. "), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmacion expirado. Intente la registración nuevamente."), "Account", "Confirmacion de mail");
                     return View("Lockout", x);
                 }
                 //cuando se quiere confiramr mail de un usuario eliminado
                 if (UserManager.FindById(userId) == null)
                 {
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Tiempo de confirmación expirado. Inscribase nuevamente. "), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Tiempo de confirmación expirado. Inscribase nuevamente."), "Account", "Confirmacion de mail");
                     ViewBag.Title = "Confirmación de Cuenta";
                     return View("Lockout", x);
+                }
+                //verifico que el usuario ya alla confirmado
+
+              
+                var Email = UserManager.FindById(userId).UserName;
+                var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
+
+                ViewBag.YAconfirmo = false;
+                bool YAconfirmo = persona.Postulante.AspNetUsers.EmailConfirmed;
+                if (YAconfirmo)
+                {
+                    ViewBag.YAconfirmo = YAconfirmo;
+                    return View();
                 }
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
-                    var Email = UserManager.FindById(userId).UserName;
-                    var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
-
-                    //verifico que el usuario ya alla confirmado
-                    ViewBag.YAconfirmo = false;
-                    bool YAconfirmo = db.vSeguridad_Usuarios.FirstOrDefault(m => m.codUsuario == Email) != null;
-                    if (YAconfirmo)
-                    {
-                        ViewBag.YAconfirmo = YAconfirmo;
-                        return View();
-                    }
+                   
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
 
@@ -377,8 +380,11 @@ namespace SINU.Controllers
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {
                     //Revisar En vez de usar Session["funcion"] = "Expiro token para la confirmacio de correo!!"; se debe generar un objeto que es usado por la view como modelo.
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para la confirmación de correo. Intente la registración nuevamente."), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para la confirmación de correo. Intente registresarse nuevamente."), "Account", "Confirmacion de mail");
                     ViewBag.Title = "Token Vencido";
+                    //ejecutar el script de eliminacion de cuenta con el token vencido
+                    db.spAspNetUserYPostulanteEliminar(Email);
+
                     return View("Lockout", x);
                 };
 
@@ -406,6 +412,8 @@ namespace SINU.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
+            ViewBag.Title = "Cambio de Contraseña";
+            ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso de cambio de contraseña.";
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
@@ -440,8 +448,7 @@ namespace SINU.Controllers
 
                 Func.EnvioDeMail(datosMail, "PlantillaMailForgotPassword", user.Id, null, "MailAsunto6", null,null);
 
-                ViewBag.Title = "Cambio de Contraseña";
-                ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
+              
                 return View("ForgotPasswordConfirmation");
             }
 
@@ -474,9 +481,9 @@ namespace SINU.Controllers
             {
                 return View();
             }
-            Session["funcion"] = "Expiro token para el reestablecimiento de Contraseña!!";
+            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para el cambio de contraseña. Intentelo nuevamente."), "Account", "Confirmacion de mail");
             //revisar logica para cuando expiro el token de reestablesimiento de contraseña
-            return View("Error");
+            return View("Lockout", x);
         }
 
         //
@@ -659,7 +666,7 @@ namespace SINU.Controllers
                 {
                     var user = UserManager.FindByEmail(recu.Email);
                     ViewBag.Title = "Recuperacion De Cuenta";
-                    ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con el proceso";
+                    ViewBag.Parrafo = "Se envio un mail a su correo, por favor  verifique el mismo para continuar con la recuperacion de la cuenta.";
                     if (user == null || !( UserManager.IsEmailConfirmed(user.Id)))
                     {
                         // No revelar que el usuario no existe o que no está confirmado
@@ -684,7 +691,7 @@ namespace SINU.Controllers
                     ViewModels.PlantillaMailConfirmacion datosMail = new ViewModels.PlantillaMailConfirmacion
                     {
                         Apellido = apellido,
-                        CuerpoMail = "Se inicio el Proceso para la recuperacion de la Cuenta, desde la opciones de Inicio de Sesion.",
+                        CuerpoMail = "Se inicio el Proceso para la Recuperacion de la Cuenta, desde la opciones de Inicio de Sesion.",
                         LinkConfirmacion = callbackUrl
                     };
 
@@ -692,11 +699,9 @@ namespace SINU.Controllers
 
                     return View("ForgotPasswordConfirmation");
 
-
                 }
                 catch (Exception ex)
                 {
-
                     throw;
                 }
             }
@@ -713,13 +718,15 @@ namespace SINU.Controllers
             var user = UserManager.FindById(userId);
             DateTime FechaGeneToken = DateTime.Parse(user.FechaToken.ToString());
             var horatrascurridas = (DateTime.Now - FechaGeneToken).TotalHours;
+
             if (horatrascurridas <= horaexpiToken && UserManager.VerifyUserToken(user.Id, "ResetPassword", code))
             {
                 return View();
             }
-            Session["funcion"] = "Expiro token para el reestablecimiento de Contraseña!!";
+
+            var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para realizar la recuperacion de la cuenta. Intentelo nuevamente."), "Account", "Confirmacion de mail");
             //revisar logica para cuando expiro el token de reestablesimiento de contraseña
-            return View("Error");
+            return View("Lockout", x);
         }
 
         [HttpPost]

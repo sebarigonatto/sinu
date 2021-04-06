@@ -34,16 +34,16 @@
         text-decoration: underline;
     }
 </style>
-<div class="jumbotronP">
+<div class="jumbotronP" style="background-color:#08495f; color:white;">
     <h2 class="font-jumb">
         Contactos
     </h2>
     <br />
     <address style="font-size:large">
-        Mail de Contacto: @Model.DPTOincorporacion.Email1 <br />
-        Direccion: @Model.DPTOincorporacion.Direccion <br />
-        Piso: @Model.DPTOincorporacion.Localidad<br />
-        Telefono: @Model.DPTOincorporacion.Telefono
+        <b>Mail de Contacto:</b> @Model.DPTOincorporacion.Email1 <br />
+        <b>Direccion:</b> @Model.DPTOincorporacion.Direccion <br />
+        <b>Piso:</b> @Model.DPTOincorporacion.Localidad<br />
+        <b>Telefono:</b> @Model.DPTOincorporacion.Telefono
 
     </address>
 </div>
@@ -62,9 +62,9 @@
                 </div>
                 <div class="card-body">
                     <h6 class="card-title"><b>Dirección:  </b>@item.Provincia, @item.Localidad, @item.Direccion</h6>
-                    <h6 class="card-title"><b>Email:  </b><a href="mailto:@item.Email1">@item.Email1</a> - @Html.Raw(item.Email2 == "" ? "" : "<a href = 'mailto:" + @item.Email2 + "'> " + @item.Email1 + " </a>")</h6>
+                    <h6 class="card-title"><b>Email:  </b><a href="mailto:@item.Email1">@item.Email1</a> - @Html.Raw(item.Email2 == "" ? "" : "<a href = 'mailto:" + @item.Email2 + "'> " + @item.Email2 + " </a>")</h6>
                     <h6 class="card-title"><b>Teléfono:  </b>@item.Telefono</h6>
-                    <h6 class="card-title"><b>Celular:  </b>@(item.Celular==""?"  -----  ":item.Celular)</h6>
+                    <h6 class="card-title"><b>Celular:  </b>@(item.Celular=="" ?"  -----  ":item.Celular)</h6>
 
 
                 </div>
@@ -74,18 +74,6 @@
     }
 
 </div>
-
-@section Scripts {
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            
-
-        });
-
-    </script>
-}
 
 
 
