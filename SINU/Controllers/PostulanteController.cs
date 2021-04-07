@@ -1430,7 +1430,9 @@ namespace SINU.Controllers
             Session["FamiTable"] = true;
             if (db.Familiares.Where(m => m.IdPostulantePersona == ID_persona && m.IdPersona == idPersonaFamilia).FirstOrDefault() == null && ID_persona != 0)
             {
-                return View("Error", Func.ConstruyeError("Relacion Familinar inexistente", "Postulante", "FamiliaCUD"));
+                var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Relacion familiar inexistente."), "Account", "FamiliaCUD");
+                //revisar logica para cuando expiro el token de reestablesimiento de contraseña
+                return View("Lockout", x);
             };
             //verificar que al crear un postulante llenar con los datos completos, si no es asi el familiar no se mostrara en vPersona_Familiar
             //viewmodel creado para la creacion de un familiar
@@ -1461,27 +1463,41 @@ namespace SINU.Controllers
                 };
 
                 pers.ID_PER = idPersonaFamilia;
+                //////////////////////////////////////
+                
+
                 pers.vPersona_FamiliarVM = db.vPersona_Familiar.FirstOrDefault(m => m.IdPersonaFamiliar == idPersonaFamilia);
                 var p = db.Postulante.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
+                Inscripcion inscripFami;
                 //verifico si la persona familiar es postulante
                 if (p != null && p.Inscripcion.First().IdModalidad != null)
                 {
-                    int IDinscrip = p.Inscripcion.First().IdInscripcion;
+                    inscripFami = p.Inscripcion.ToList()[0];
                     //ver... verifico que sea un postulante que esta en una convocatoria abierta.
-                    pers.postulante = DateTime.Now < db.vInscriptosYConvocatorias.First(m => m.IdInscripcion == IDinscrip).Fecha_Fin_Proceso;
+                    var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= inscripFami.FechaInscripcion 
+                                                                                && m.Fecha_Fin_Proceso > inscripFami.FechaInscripcion 
+                                                                                && m.IdInstitucion == inscripFami.IdPreferencia 
+                                                                                && m.IdModalidad == inscripFami.IdModalidad).Fecha_Fin_Proceso;
+
+                    pers.postulante = DateTime.Now < FechaFinConvo;
                     //pers.postulante = (p.FechaRegistro.Date.Year == DateTime.Now.Year);
                 };
                 var inscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
                 int secu = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == inscrip.IdInscripcion).Select(m => m.IdSecuencia).First();
                 int[] secublock = { 14, 24, 16, 20 };
+                //verifico si la validadcion de los datos del postulante actual estan siendo validados
                 ViewBag.ValidacionEnCurso = secublock.Contains(secu);
                 //verifico si la convocatoria del postulante vencio para bloquera los formularios
                 if (inscrip.IdModalidad != null)
                 {
-                    ViewBag.ValidacionEnCurso = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == inscrip.IdInscripcion).Fecha_Fin_Proceso < DateTime.Now ? true : ViewBag.ValidacionEnCurso;
+                    var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= inscrip.FechaInscripcion
+                                                                                && m.Fecha_Fin_Proceso > inscrip.FechaInscripcion
+                                                                                && m.IdInstitucion == inscrip.IdPreferencia
+                                                                                && m.IdModalidad == inscrip.IdModalidad).Fecha_Fin_Proceso;
+                    ViewBag.ValidacionEnCurso = FechaFinConvo < DateTime.Now ? true : ViewBag.ValidacionEnCurso;
                 }
 
-                //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejor el anterior valor
+                //en caso de ser delegacion modifico el valor de ValdacionENcusrso a true para bloquear las vistas, si es postulante dejo el anterior valor
                 ViewBag.ValidacionEnCurso = (db.Postulante.FirstOrDefault(m => m.IdAspNetUser == db.AspNetUsers.FirstOrDefault(n => n.UserName == HttpContext.User.Identity.Name).Id) != null) ? ViewBag.ValidacionEnCurso : true;
                 //Si la pantalla de familiar esta cerrada bloqueo los controles en la vista
                 ViewBag.ValidacionEnCurso = (db.VerificacionPantallasCerradas.FirstOrDefault(m => m.IdPantalla == 9 && m.IdPostulantePersona == ID_persona) != null) ? true : ViewBag.ValidacionEnCurso;
@@ -1510,11 +1526,14 @@ namespace SINU.Controllers
 
             if (ModelState.IsValid)
             {
+                //datos del familiar a crear 
                 var datos = fami.vPersona_FamiliarVM;
                 int? idpersonafamiliar = 0;
                 try
                 {
+                    //guardo la persona familiar
                     var per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
+                    //guardo el id del postulante actual
                     var IDPOSTULANTE = datos.IdPersonaPostulante;
                     Familiares rela = null;
                     string msgs;
@@ -1535,15 +1554,16 @@ namespace SINU.Controllers
                         db.spPERSONAFamiliarIU(datos.IdPersonaFamiliar, datos.IdPersonaPostulante, datos.Mail, datos.Apellido, datos.Nombres, datos.IdSexo, datos.FechaNacimiento, datos.DNI, datos.CUIL,
                         datos.IdReligion, datos.IdEstadoCivil, datos.FechaCasamiento, datos.Telefono, datos.Celular, datos.Mail, datos.idTipoNacionalidad, 0, datos.idParentesco, datos.Vive, datos.ConVive);
                         idpersonafamiliar = (per == null) ? db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI).IdPersonaFamiliar : 0;
-
                     }
                     else if (rela == null)
                     {
                         db.spRelacionFamiliarIU(0, datos.IdPersonaPostulante, per.IdPersona, datos.idParentesco, datos.Vive, datos.ConVive);
                         datos.IdPersonaFamiliar = per.IdPersona;
+
                         idpersonafamiliar = db.vPersona_Familiar.FirstOrDefault(d => d.DNI == datos.DNI.ToString()).IdPersonaFamiliar;
 
                     }
+                    per = db.Persona.FirstOrDefault(d => d.DNI == datos.DNI);
                     return Json(new { success = true, msg = msgs, IDperFAMI = idpersonafamiliar, IDperPOST = IDPOSTULANTE }, JsonRequestBehavior.AllowGet);
 
                 }
@@ -1593,13 +1613,16 @@ namespace SINU.Controllers
 
                 int filas = db.Familiares.Where(p => p.IdPersona == ID_per).Count();
                 bool postulante = db.Postulante.Find(ID_per) != null;
+                //si el familiar es un postulante solo elimino la relacion_familiar con el postulante actual
                 if (postulante || filas > 1)
                 {
                     db.spRelacionFamiliarEliminar(ID_fami);
-                    //return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    db.spFamiliarEliminar(ID_fami, ID_per);
                 }
 
-                db.spFamiliarEliminar(ID_fami, ID_per);
                 return Json(new { success = true, msg = "Se elimino correctamente el Familiar", form = "Elimina", url_Tabla = "Familia", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
 
             }

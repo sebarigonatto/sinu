@@ -1,18 +1,18 @@
 ﻿@model SINU.ViewModels.Presentacion
-<h4>Fecha y lugar de Presentacion:</h4>
+<h4>Fecha y lugar de Presentación:</h4>
 <div class="jumbotron pl-md-5" style="background-color: #08495f; color:white">
     <div class="row">
         <div class="col-md-7">
             <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h5>
             <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h5>
-            <h5>@Html.Label("Numero de Inscripcion"): <b>@Html.DisplayFor(m => m.ID_Inscripcion).ToString().ToUpper()</b></h5>
+            <h5>@Html.Label("Numero de Inscripción"): <b>@Html.DisplayFor(m => m.ID_Inscripcion).ToString().ToUpper()</b></h5>
             <h5>Modalidad: <b>@Html.DisplayFor(m => m.Modalidad).ToString().ToUpper()</b></h5>
             <h5>Carrera: <b>@Html.Raw(Model.Carrera)</b></h5>
             @Html.Hidden("presentacion", ViewBag.Asignado ? true : false)
             @if (!ViewBag.Asignado)
             {
-                <h5>Se le informara via correo cuando le hayan asignado una fecha para la presentacion, solicitamos este atento.</h5>
-                <h5>Por Consultas comunicarse con la Delegacion seleccionada. </h5>
+                <h5>Se le informara via correo cuando le hayan asignado una fecha para la presentación, solicitamos este atento.</h5>
+                <h5>Por consultas comunicarse con la Delegación seleccionada. </h5>
             }
             else
             {

@@ -107,6 +107,11 @@ namespace SINU.Controllers
             ////}
             ////;
             ViewBag.TextoPAGINAPRINCIPAL = db.Configuracion.FirstOrDefault(b => b.NombreDato == "TextoPAGINAPRINCIPAL").ValorDato;
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            var imagenes = new List<string>();
+
+            Directory.GetFiles($"{ubicacion}Imagenes\\", "carrucel*").ToList().ForEach(m=>imagenes.Add(m.Split('\\').Last()));
+            ViewBag.listaimg = imagenes;
             return View(db.vPeriodosInscrip.ToList());
         }
         public ActionResult About()

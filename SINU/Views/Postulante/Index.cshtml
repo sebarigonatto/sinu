@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripcion";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
@@ -342,7 +342,7 @@
             <t>
                 <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
                 <h6>
-                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b>
+                    Numero de Pre-Inscripción: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
                     <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1]!=null?ViewBag.MOD_CAR[1]:Html.Raw("&emsp;----  "))</b></e>
@@ -370,8 +370,8 @@
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
 
-        <h4>Proceso de Inscripcion Interrupido.</h4>
-        <h5>Ante Consultas comunicarse con la Delegacion/Oficiana Corespondiente.</h5>
+        <h4>Proceso de Inscripción Interrupido.</h4>
+        <h5>Ante consultas comunicarse con la Delegación/Oficina Corespondiente.</h5>
         <h5>
             Nombre: <b>@Model.OfiDele.Nombre</b>
         </h5>
@@ -408,8 +408,8 @@
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;1° Datos Basicos</p> </a>
                         <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;2° Entrevista</p></a>
-                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentacion</p>  </a>
-                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentacion</p> </a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentación</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentación</p> </a>
                         @*<a class="nav-item nav-link fa fa-clipboard-check" id="6" data-toggle="tab" href="#Resultado" role="tab" aria-controls="Resultado" aria-selected="false"><p>&ensp;5° Resultado</p> </a>*@
 
                     </div>
@@ -448,10 +448,10 @@
                                     <a class="nav-item nav-link" href="#Estudios" data-toggle="tab"> Estudios</a>
                                     <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab"> Idiomas</a>
                                     <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab"> Actividad Militar</a>
-                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situacion Ocupacional</a>
+                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situación Ocupacional</a>
                                     <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab"> Medidas y Tallas</a>
                                     <a class="nav-item nav-link" href="#Familia" data-toggle="tab"> Familia</a>
-                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentacion</a>
+                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentación</a>
                                     @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido && !ViewBag.VenceComvocatoria)
                                     {
                                         <a class="nav-item nav-link TABValida" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
@@ -592,7 +592,7 @@
                                         @* VISTA DE SITUACION OCUPACIONAL*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Situcion Ocipacional</a>
+                                                <a class="navbar-brand" href="#"> Situción Ocipacional</a>
                                                 <button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -651,7 +651,7 @@
                                         @* VISTA DE Documentacion Extra*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuAnexo">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Documentacion</a>
+                                                <a class="navbar-brand" href="#"> Documentación</a>
                                                 <button id="BTDocuAnexoNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuAnexoNAV" role="tabpanel" aria-labelledby="DocuAnexoNAV-tab" aria-controls="DocuAnexoNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -700,13 +700,13 @@
                                                       OnFailure = "Falla"
                                                   }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                 <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validacion</button>
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validación</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
-                                                            <h5>La validacion se encuentra en Proceso.</h5>
-                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
+                                                            <h5>La validación se encuentra en Proceso.</h5>
+                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validación realizada.</h5>
                                                         </div>
 
                                                     </div>

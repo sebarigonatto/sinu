@@ -5629,7 +5629,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
           <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
           <FunctionImport Name="spAspNetUserYPostulanteEliminar">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">

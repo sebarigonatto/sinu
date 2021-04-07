@@ -923,9 +923,12 @@ $(document).ready(function () {
         }
     }
 
-
+    casados();
     $("#EstadoCivil").on("change", function () {
-        var estci = $(this).val();
+      casados()
+    });
+    function casados() {
+        var estci = $("#EstadoCivil").val();
         if (estci.indexOf("C") > -1) {
             $("#FechaCasamiento").removeClass("d-none");
         } else {
@@ -933,7 +936,8 @@ $(document).ready(function () {
             $("#FechaCasamiento input").val("");
 
         };
-    });
+    };
+
 
     /////////////////////////////////////////////////////////////////////////////
     /* FUNCION DE LA VISTA DE FAMILIA */
