@@ -30,7 +30,7 @@
     </div>
     <style type="text/css">
 
-     
+
 
         .loader,
         .loader:before,
@@ -47,22 +47,24 @@
         .lodaer-img {
             width: 65%
         }
-        #logo{
-            width:16rem;
-            padding:0px;
-            padding-right:1rem;
 
+        #logo {
+            width: 16rem;
+            padding: 0px;
+            padding-right: 1rem;
         }
+
         @@media screen and (max-width: 601px) {
             #logo {
                 width: 15rem;
             }
+
             #navbarSupportedContent {
                 margin-left: 0rem !important;
             }
+
             .lodaer-img {
                 width: 55% !important;
-
             }
 
             .loader {
@@ -166,8 +168,8 @@
             <div class="navbar-header">
                 @*muestro el icono como de un barco de frente delante del primer item del MENU*@
                 @*<p class="nav navbar-text navbar-left ">
-                    <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
-                </p>*@
+                        <i class="fas fa-ship" style="color:deepskyblue"> </i>&ensp;
+                    </p>*@
 
                 @*@Html.ActionLink("SINU", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "font-size:25px" })*@
                 <a href="/"><img src="~/Imagenes/logo.png" alt="Alternate Text" class="img-fluid" id="logo" /></a>
@@ -208,17 +210,18 @@
     </div>
     <!-- aqui TERMINA el menú Principal -->
 
-    <div id="body" class="container body-content h-100">
+    <div id="body" class="container body-content">
         <br /><br />
         <!--Aquí se substituye con el contenido de la pagina VIEW que corresponda según la llamada ejecutada desde las Action -->
         @RenderBody()
         <br />
-        <footer class="" style="background-color:white;height: 4%;font-size: 0.9rem;">
-            <p class="text-center mr-2 mb-1 " >
-                &copy;@DateTime.Now.Year - SINU - Servicio de Informatica de la Armada - Dpto: Desarrollo de Sistemas
-            </p>
-        </footer>
+
     </div>
+    <footer class="" style="background-color:white;height: 4%;font-size: 0.9rem;">
+        <p class="text-center mr-2 mb-1 ">
+            &copy;@DateTime.Now.Year - SINU - Servicio de Informatica de la Armada - Dpto: Desarrollo de Sistemas
+        </p>
+    </footer>
     <div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

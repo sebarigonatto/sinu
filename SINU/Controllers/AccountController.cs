@@ -197,8 +197,19 @@ namespace SINU.Controllers
         {
             if (Request.IsAuthenticated)
             {
+
                 return RedirectToAction("Index", "Home");
             }
+            ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+
+            //verifico si la convocatoria a la que quiere inscribir esta abierta
+            var hoy = DateTime.Now.Date;
+            var per = db.PeriodosInscripciones.Where(m => m.FechaInicio <= hoy && m.FechaFinal >= hoy).FirstOrDefault(m=>m.IdInstitucion==idInstitucion);
+            if(per==null)
+            {
+                return View("ConvocatoriaNoAbierta");
+            }
+
             RegisterViewModel regi = new RegisterViewModel
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
                 ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre"),
@@ -213,12 +224,8 @@ namespace SINU.Controllers
                                                                                                m.Celular}));
             regi.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
 
-            idInstitucion = (idInstitucion == 0) ? 1 : idInstitucion;
-            ViewBag.Inst = "";
-            if (idInstitucion != 0)
-            {
-                ViewBag.Inst = (idInstitucion == 1) ? "" : db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
-            };
+            
+            
 
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
             return View(regi);
