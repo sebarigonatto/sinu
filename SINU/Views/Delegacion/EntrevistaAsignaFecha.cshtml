@@ -79,14 +79,18 @@
             </div>
         </div><!--Termina la card Body-->
         <div class="card-footer">
-            <div class="container">
-                <div class="col-md-12">
-                    @*<input type="submit" value="Asignar Fecha" class="btn btn-success btn-lg float-right w-20 ml-2" />*@
-                    <button type="button" class="btn btn-success float-lg-right float-md-none m-1" data-toggle="modal" data-target="#ModalConfirmar">
-                        Asignar Fecha
-                    </button>
-                    @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark float-lg-right float-md-none m-1" })
+            <div class="form-row">
+
+                <div class="col-md-9">
+                    @*este div lo utilizo para poder poner los botones para el lado derecho*@
                 </div>
+                <div class="col-md-1">
+                    @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-block m-1 p-1" })
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-success d btn-block m-1 p-1" data-toggle="modal" data-target="#ModalConfirmar">Asignar Fecha</button>
+                </div>
+
             </div>
         </div>
     </div><!--Termina la clase de card-->

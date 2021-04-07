@@ -1121,6 +1121,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\common.scss" />
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\mixins.scss" />
+    <Content Include="Documentacion\DECLARACION JURADA DE SALUD.pdf" />
     <None Include="Properties\PublishProfiles\www.TESTWEB.pubxml" />
     <None Include="Properties\PublishProfiles\wwwSINU.pubxml" />
     <None Include="Properties\Settings.settings">

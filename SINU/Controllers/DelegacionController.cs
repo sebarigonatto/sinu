@@ -769,12 +769,12 @@ namespace SINU.Controllers
                         var data = datos.DataProblemaEncontradoVM;
                         db.DataProblemaEncontrado.Add(data);
                         db.SaveChanges();
-                        return Json(new { success = true, form = "Elimina", msg = "Problema Agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, form = "Elimina", msg = "Problema agregado", url_Tabla = "ProblemaPantalla", url_Controller = "Delegacion", IdPantalla = Idpantalla }, JsonRequestBehavior.AllowGet);
                     }
 
                     return Json(new { success = true, msg = "El problema que desea agregar ya existe" });
                 }
-                return Json(new { success = true, msg = "Es Importante Agregar un comentario" });
+                return Json(new { success = true, msg = "Es importante agregar un comentario" });
             }
             catch (Exception x)
             {
@@ -838,7 +838,7 @@ namespace SINU.Controllers
                     {
                         if (TieneProblema.ToList().First() == true && AoC == 1)//cerrar la pantalla con problemas cargados
                         {
-                            return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene Problemas cargados" });
+                            return Json(new { success = false, msg = "No se puede cerrar la ventana por que tiene problemas cargados" });
                         }
                         if (TieneProblema.ToList().First() == false && AoC == 0)//abrir la pantalla sin problemas cargadoos ya estando abierta
                         {
@@ -851,7 +851,7 @@ namespace SINU.Controllers
                         if (AoC == 1)// si AoC(Abierto o Cerrado) es True=1 se valida la pantalla(Quiere decir que la pantalla se cierra) y el Usuario(Delegacion) no va a poder agregar Problemas a un Postulante
                         {
                             db.spCierraPantallaDePostulante(IdPanatlla, inscrip.IdPersona, Convert.ToBoolean(AoC));
-                            return Json(new { success = true, msg = "Se valido Correctamente los datos" });
+                            return Json(new { success = true, msg = "Se valido correctamente los datos" });
                         }
                     }
                     else
@@ -966,7 +966,7 @@ namespace SINU.Controllers
             try
             {
                 db.spDocumentoInscripto(esInser, Idinscripto, idtipodoc, null);
-                return Json(new { success = true, msg = "Se elimino la documentacion Presentada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
+                return Json(new { success = true, msg = "Se elimino la documentacion presentada", form = "ActualizaDocuNec", url_Tabla = "DocumentosNecesarios", url_Controller = "Delegacion" });
             }
             catch (Exception)
             {
