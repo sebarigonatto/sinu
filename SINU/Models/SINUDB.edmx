@@ -666,6 +666,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene de
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdConvocatoria" />
           </Key>
           <Property Name="Delegacion" Type="varchar" MaxLength="100" />
           <Property Name="Modalidad_Siglas" Type="varchar" MaxLength="10" Nullable="false" />
@@ -673,6 +674,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene de
           <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdPreferencia" Type="int" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
@@ -681,6 +683,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene de
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
+          <Property Name="IdConvocatoria" Type="int" Nullable="false" />
+          <Property Name="FechaInscripcion" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -2920,6 +2926,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConsultaInscripciones].[Genero] AS [Genero], 
     [vConsultaInscripciones].[Apellido] AS [Apellido], 
     [vConsultaInscripciones].[Nombres] AS [Nombres], 
+    [vConsultaInscripciones].[IdPreferencia] AS [IdPreferencia], 
     [vConsultaInscripciones].[Email] AS [Email], 
     [vConsultaInscripciones].[Etapa] AS [Etapa], 
     [vConsultaInscripciones].[Estado] AS [Estado], 
@@ -2927,7 +2934,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConsultaInscripciones].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
     [vConsultaInscripciones].[IdSecuencia] AS [IdSecuencia], 
     [vConsultaInscripciones].[Fecha] AS [Fecha], 
-    [vConsultaInscripciones].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio]
+    [vConsultaInscripciones].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio], 
+    [vConsultaInscripciones].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
+    [vConsultaInscripciones].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
+    [vConsultaInscripciones].[IdConvocatoria] AS [IdConvocatoria], 
+    [vConsultaInscripciones].[FechaInscripcion] AS [FechaInscripcion]
     FROM [dbo].[vConsultaInscripciones] AS [vConsultaInscripciones]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vConvocatoriaDetalles" EntityType="Self.vConvocatoriaDetalles" store:Type="Views" store:Schema="dbo">
@@ -5629,7 +5640,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscriptosYRestriccionesCount" EntityType="SINUModel.vInscriptosYRestriccionesCount" />
           <EntitySet Name="vInscriptosYRestriccionesCheck" EntityType="SINUModel.vInscriptosYRestriccionesCheck" />
           <FunctionImport Name="spAspNetUserYPostulanteEliminar">
-            <Parameter Name="Email" Mode="In" Type="String" />
+          <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -6311,6 +6322,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="IdConvocatoria" />
           </Key>
           <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Modalidad_Siglas" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
@@ -6326,6 +6338,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+          <Property Name="IdPreferencia" Type="Int32" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
         </EntityType>
         <ComplexType Name="sp_ConsultaInscriptosModalidadGenero_Result">
           <Property Type="Int64" Name="ID" Nullable="true" />
@@ -8214,6 +8231,11 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vConsultaInscripciones">
             <EntityTypeMapping TypeName="SINUModel.vConsultaInscripciones">
               <MappingFragment StoreEntitySet="vConsultaInscripciones">
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
+                <ScalarProperty Name="IdPreferencia" ColumnName="IdPreferencia" />
                 <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
                 <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />

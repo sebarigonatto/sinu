@@ -145,6 +145,7 @@ namespace SINU.Controllers.Consultor
         }
 
 
+
         /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
         /// Esta action es una SUBCONSULTA de ConsultaTotalPostulantes
         /// </summary>
@@ -195,7 +196,7 @@ namespace SINU.Controllers.Consultor
             ViewBag.Activas = 1;
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
 
-            return PartialView("TotalizarPorConvocatoria",ListadoConvocatorias);
+            return View("TotalizarPorConvocatoria",ListadoConvocatorias);
         }
 
      
