@@ -1,28 +1,18 @@
 ﻿<!--    CUERPO DEL CORREO    -->
 
-<p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">
     @if (Model.Estado == "Validado")
     {
-        <p> @Raw(Model.MailCuerpo)</p>
+        <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black"> @Raw(Model.MailCuerpo)</p>
     }
     @if (Model.Estado == "Volver Etapa")
     {
-        <p> @Raw(Model.MailCuerpo)</p>
-        @*<p>Acontinuacion se detalla los problemas que tuvo al momento de cargar o presentar la documentacion </p>*@
+        <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black"> @Raw(Model.MailCuerpo)</p>
         foreach (var item in Model.Errores)
         {
-            <p>@item.DataVerificacion: @item.Comentario </p>
+            <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">&bull; @item.DataVerificacion: @item.Comentario </p>
         }
     }
     @if (Model.Estado == "No Validado")
     {
-        <p> @Raw(Model.MailCuerpo)</p>
+        <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black"> @Raw(Model.MailCuerpo)</p>
     }
-    @*@if (Model.Estado == "Restaurado")
-    {
-        <h1>Restaurado</h1>
-
-        <p> @Model.MailCuerpo</p>
-    }*@
-
-

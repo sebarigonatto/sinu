@@ -27,7 +27,7 @@
     }
 
     .carousel-item {
-        height: 40vh;
+        height: 50vh;
         min-height: 200px;
         background: no-repeat center center scroll;
         -webkit-background-size: cover;
@@ -141,23 +141,37 @@
 
         <div class="carousel-inner" role="listbox" style="display: flex;justify-content: center;align-items: center;">
 
+
             <!-- Slide One - Set the background image for this slide in the line below -->
-            <div class="carousel-item active" style="        background-image: url('../../Imagenes/carrucel1.jpg');">
+            @{
+                    int index = 0;
+                    foreach (var img in ViewBag.listaimg)
+                    {
+
+                    <div class="carousel-item @(index==0?"active":"") " style="background-image: url('../../Imagenes/@img');">
+                        <div class="carousel-caption d-none d-lg-block">
+                        </div>
+                    </div>
+                    index++;
+                }
+            }
+            <!-- Slide One - Set the background image for this slide in the line below -->
+            <!--<div class="carousel-item active" style="        background-image: url('../../Imagenes/carrucel1.jpg');">
                 <div class="carousel-caption d-none d-lg-block">
                 </div>
-            </div>
+            </div>-->
             <!-- Slide Two - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel2.jpg')">
+            <!--<div class="carousel-item" style="background-image: url('../../Imagenes/carrucel2.jpg')">
                 <div class="carousel-caption d-none d-md-block">
 
                 </div>
-            </div>
+            </div>-->
             <!-- Slide Three - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('../../Imagenes/carrucel3.jpg')">
+            <!--<div class="carousel-item" style="background-image: url('../../Imagenes/carrucel3.jpg')">
                 <div class="carousel-caption d-none d-md-block">
 
                 </div>
-            </div>
+            </div>-->
 
 
             <div class="content-title">

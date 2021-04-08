@@ -129,7 +129,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 
 
                 </div>
-                <o>Soy adicto a las bebidas alcoholicas ni a otras sustancias </o>
+                <o>Soy adicto a las bebidas alcoholicas y a otras sustancias </o>
                 <br />
                 @Html.DropDownListFor(model => model.PenalDeclaJurada.EsAdicto, new SelectList(new[] { new { Value = "SI", Text = "SI" }, new { Value = "NO", Text = "NO" }, }, "Value", "Text", Model),
                "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })

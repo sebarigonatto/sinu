@@ -124,33 +124,25 @@
                 </div>
             </div>
         </div><!--Aqui finaliza la card body-->
-        <div class="card-footer clearfix">
-            <div class="container-fluid">
-
-                <div class="form-group row mb-0">
-                    <div class="col-md-3 col-md-pull-9">
-                        <div class="m-1">
-                            @Html.ActionLink("Cerrar", "Index", null, new { @class = "d-block btn btn-dark" })
-                        </div>
+        <div class="card-footer">
+            <div class="form-row"> 
+                <div class="col-md-2 p-1">
+                    @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-block" })
+                </div>
+                <div class="col-md-6 p-1">
+                    @*Utilizo esta col para poder dividir los botones para que luego para que se adapte de forma responsive*@
+                </div>
+                <div class="col-md-2 p-1">
+                    <div id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
+                        <button type="button" class="btn btn-danger btn-block">No Postular</button>
                     </div>
-                    <div class="col-md-9 col-md-push-3">
-                        <div class="row float-xl-right float-md-right">
-                            <div class="m-1">
-                                <div id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
-                                    <button type="button" class="d-block btn btn-success">Restaurar</button>
-                                </div>
-                            </div>
-                            <div class="m-1">
-                                <div id="Ocul2" hidden data-toggle="modal" data-target="#modal2">
-                                    <button type="button" class="d-block btn btn-danger">No Postular</button>
-                                </div>
-                            </div>
-                            <div class="m-1">
-                                <div id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
-                                    <button type="button" class="d-block btn btn-success">Postular</button>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="col-md-2 p-1">
+                    <div id="Ocul1" hidden data-toggle="modal" data-target="#modal1">
+                        <button type="button" class="btn btn-success btn-block">Postular</button>
+                    </div>
+                    <div id="Ocul3" hidden data-toggle="modal" data-target="#modal3">
+                        <button type="button" class="btn btn-success btn-block">Restaurar</button>
                     </div>
                 </div>
             </div>

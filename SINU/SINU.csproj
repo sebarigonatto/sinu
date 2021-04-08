@@ -1121,6 +1121,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\common.scss" />
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\mixins.scss" />
+    <Content Include="Documentacion\DECLARACION JURADA DE SALUD.pdf" />
     <None Include="Properties\PublishProfiles\www.TESTWEB.pubxml" />
     <None Include="Properties\PublishProfiles\wwwSINU.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -1365,6 +1366,7 @@
     <Content Include="Views\CallConsulta\TotalesConvocatoriaDetalle.cshtml" />
     <Content Include="Views\CallConsulta\TotalesConvocatoriaTitulos.cshtml" />
     <Content Include="Views\Postulante\Resultado.cshtml" />
+    <Content Include="Views\Account\ConvocatoriaNoAbierta.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>

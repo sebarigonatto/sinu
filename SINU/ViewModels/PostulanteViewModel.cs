@@ -139,13 +139,13 @@ namespace SINU.ViewModels
         public string Nombre { get; set; }
         [DisplayName("Apellido")]
         public string Apellido { get; set; }
-        [DisplayName("Numero de Inscripcion:")]
+        [DisplayName("Numero de Inscripción:")]
         public int ID_Inscripcion { get; set; }
-        [DisplayName("Fecha de Presentacion")]
+        [DisplayName("Fecha de Presentación")]
         public DateTime FechaPresentacion { get; set; }
-        [DisplayName("Lugar de Presentacion")]
+        [DisplayName("Lugar de Presentación")]
         public string DomicilioExamenNombre { get; set; }
-        [DisplayName("Direccion")]
+        [DisplayName("Dirección")]
         public string DomicilioExamen { get; set; }
         public string Modalidad { get; set; }
         public string Carrera { get; set; }

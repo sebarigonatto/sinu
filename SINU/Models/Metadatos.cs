@@ -108,7 +108,7 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Estado Civil")]
         public string IdEstadoCivil { get; set; }
-        [Display(Name = "Religion")]
+        [Display(Name = "Religión")]
         public string IdReligion { get; set; }
         [Display(Name = "Tipo de Nacionalidad")]
         [Required]
@@ -152,7 +152,7 @@ namespace SINU.Models
         public Nullable<int> PerimCintura { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
-        [Display(Name = "4° Largo de Pantalon (en cm)")]
+        [Display(Name = "4° Largo de Pantalón (en cm)")]
         public Nullable<int> LargoPantalon { get; set; }
         [RegularExpression(pattern: "^[1-9]\\d*$", ErrorMessage = "Dato no valido")]//ver aqui el tema de los años si permitir mas de 0
         [Required]
@@ -297,6 +297,7 @@ namespace SINU.Models
         //[Required]
         public string NombreYPaisInstituto { get; set; }
         [Required]
+        [Display(Name = "Jurisdicción")]
         [MaxLength(200, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Jurisdiccion { get; set; }
         //[Required]
@@ -330,8 +331,11 @@ namespace SINU.Models
         [Required(ErrorMessage = "Debe seleccionar una Idioma.")]
         [Display(Name = "Idioma")]
         public string CodIdioma { get; set; }
+        [Display(Name = "Habla")]
         public string NivelHabla { get; set; }
+        [Display(Name = "Escritura")]
         public string NivelEscribe { get; set; }
+        [Display(Name = "Lectura")]
         public string NivelLee { get; set; }
         public int IdPersonaIdioma { get; set; }
     }
@@ -349,6 +353,7 @@ namespace SINU.Models
         public string CausaMotivoNoingreso { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
+        [Display(Name = "Jerarquía")]
         public string Jerarquia { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
@@ -356,19 +361,19 @@ namespace SINU.Models
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
         [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Destino { get; set; }
-        [RequiredIf("Ingreso", true, ErrorMessage = "Selecciones una Opcion")]
-        [Display(Name = "Situacion de Revista")]
+        [RequiredIf("Ingreso", true, ErrorMessage = "Selecciones una Opción")]
+        [Display(Name = "Situación de Revista")]
         public int IdSituacionRevista { get; set; }
         [Required(ErrorMessage = "Debe Seleccionar un Fuerza")]
         public int IdFuerza { get; set; }
-        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Opcion")]
+        [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Opción")]
         [Display(Name = "Motivo de Baja")]
         public int IdBaja { get; set; } 
         [RequiredIf("Ingreso", true, ErrorMessage = "Seleccione una Fecha")]
         [Display(Name = "Fecha de Baja")]
         public Nullable<System.DateTime> FechaBaja { get; set; }
         [RequiredIf("Ingreso", true, ErrorMessage = "Debe completar este campo")]
-        [Display(Name = "Descripcion de la Baja")]
+        [Display(Name = "Descripción de la Baja")]
         [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string MotivoBaja { get; set; }
         public int IdActividadMilitar { get; set; }
@@ -398,11 +403,11 @@ namespace SINU.Models
         public string EstadoOcupacional { get; set; }
         public string Descripcion { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
-        [Display(Name = "Ocupacion Actual")]
+        [Display(Name = "Ocupación Actual")]
         [MaxLength(60, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string OcupacionActual { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
-        [Display(Name = "Domiciolio Laboral")]
+        [Display(Name = "Domicilio Laboral")]
         [MaxLength(400, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string DomicilioLaboral { get; set; }
         [RequiredIf("IdEstadoOcupacional", false, "1|4|9", ErrorMessage = "Debe completar este campo")]
@@ -539,7 +544,7 @@ namespace SINU.Models
         [Required]
         [Display(Name = "Convive")]
         public Nullable<bool> ConVive { get; set; }
-        [Display(Name = "Religion")]
+        [Display(Name = "Religión")]
         public string IdReligion { get; set; }
         [Required]
         [Display(Name = "Tipo Nacionalidad")]
@@ -773,4 +778,6 @@ namespace SINU.Models
         [Display(Name ="Teléfono")]
         public string Telefono { get; set; }
     }
+
+
 }
