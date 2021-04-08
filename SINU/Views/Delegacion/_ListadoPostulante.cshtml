@@ -1,4 +1,4 @@
-﻿@model List<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
+﻿@model List<SINU.Models.vConsultaInscripciones>
     @*@using (Html.BeginForm())
     {*@
     <div class="table-responsive">
@@ -18,7 +18,7 @@
                         @Html.DisplayNameFor(model => model[0].Apellido)
                     </th>
                     <th class="secondary">
-                        @Html.DisplayNameFor(model => model[0].IdModalidad)
+                        @Html.DisplayNameFor(model => model[0].Modalidad_Siglas)
                     </th>
                     <th class="secondary">
                         @Html.DisplayNameFor(model => model[0].Etapa)
@@ -46,13 +46,13 @@
                             @Html.DisplayFor(modelItem => item.Apellido)
                         </td>
                         <td>
-                            @if (item.IdModalidad == "")
+                            @if (item.Modalidad_Siglas == "")
                             {
                                 <p class="text-center m-0"> - </p>
                             }
                             else
                             {
-                                <p class="text-center m-0"> @Html.DisplayFor(modelItem => item.IdModalidad)</p>
+                                <p class="text-center m-0"> @Html.DisplayFor(modelItem => item.Modalidad_Siglas)</p>
                             }
                         </td>
                         <td>
