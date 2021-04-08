@@ -123,27 +123,36 @@ namespace SINU.Controllers.Consultor
         }
 
         ///<summary>Consulta por todas las Delegaciones o solamente una 
+        //public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
+        //{
+        //    //busco el id que le corresponde a la consulta original Consulta por Delegacion
+        //    ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
+        //    DelegacionSeleccionada = DelegacionSeleccionada ?? "TODAS";
+        //    List<vConsultaInscripciones> ListadoDelegaciones;
+
+        //    if (DelegacionSeleccionada == "TODAS")
+        //    {
+        //        ListadoDelegaciones = db.vConsultaInscripciones.ToList();
+        //        ViewBag.DelegacionSeleccionada = "Todas las Delegaciones";
+        //    }
+        //    else
+        //    {
+        //        ListadoDelegaciones = db.vConsultaInscripciones.Where(d => d.Delegacion == DelegacionSeleccionada).ToList();
+        //        ViewBag.delegacionSeleccionada = DelegacionSeleccionada;
+        //    }
+        //    return PartialView(ListadoDelegaciones);
+
+        //}
+
         public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
-        {
-            //busco el id que le corresponde a la consulta original Consulta por Delegacion
-            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
-            DelegacionSeleccionada = DelegacionSeleccionada ?? "TODAS";
+        {           
             List<vConsultaInscripciones> ListadoDelegaciones;
+            ListadoDelegaciones = db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();         
+            ViewBag.delegacionSeleccionada = DelegacionSeleccionada;         
+            ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
 
-            if (DelegacionSeleccionada == "TODAS")
-            {
-                ListadoDelegaciones = db.vConsultaInscripciones.ToList();
-                ViewBag.DelegacionSeleccionada = "Todas las Delegaciones";
-            }
-            else
-            {
-                ListadoDelegaciones = db.vConsultaInscripciones.Where(d => d.Delegacion == DelegacionSeleccionada).ToList();
-                ViewBag.delegacionSeleccionada = DelegacionSeleccionada;
-            }
-            return PartialView(ListadoDelegaciones);
-
+            return View(ListadoDelegaciones);
         }
-
 
 
         /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
