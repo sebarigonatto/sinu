@@ -36,5 +36,7 @@ namespace SINU.Models
         public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 }

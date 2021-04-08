@@ -712,6 +712,7 @@
     <Content Include="Imagenes\AnclaQR.png" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\LogoARA.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
     <Content Include="Imagenes\usu-bloqueado.png" />
     <Content Include="Models\SINUDB.Context.tt">
