@@ -855,6 +855,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
           <Property Name="FechaEntrevista" Type="datetime" />
           <Property Name="FechaRindeExamen" Type="datetime" />
           <Property Name="Numero" Type="varchar" MaxLength="15" />
+          <Property Name="Fecha_Inicio_Proceso" Type="date" />
+          <Property Name="Fecha_Fin_Proceso" Type="date" />
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="IdInscripcion" Type="int" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
@@ -3049,6 +3051,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionDetalle].[FechaEntrevista] AS [FechaEntrevista], 
     [vInscripcionDetalle].[FechaRindeExamen] AS [FechaRindeExamen], 
     [vInscripcionDetalle].[Numero] AS [Numero], 
+    [vInscripcionDetalle].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
+    [vInscripcionDetalle].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
     [vInscripcionDetalle].[IdPersona] AS [IdPersona], 
     [vInscripcionDetalle].[IdInscripcion] AS [IdInscripcion], 
     [vInscripcionDetalle].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones]
@@ -6224,6 +6228,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
         </EntityType>
         <ComplexType Name="spCarrerasParaEsteInscripto_Result1">
           <Property Type="String" Name="CarreraUoficio" Nullable="false" MaxLength="100" />
@@ -8112,6 +8118,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionDetalle">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionDetalle">
               <MappingFragment StoreEntitySet="vInscripcionDetalle">
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />

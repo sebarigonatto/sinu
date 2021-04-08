@@ -9,11 +9,11 @@ namespace SINU.ViewModels
 {
     public class DelegacionPostulanteVM
     {
-        public List<vInscripcionEtapaEstadoUltimoEstado> cargadatosbasicosVM { get; set; }
-        public List<vInscripcionEtapaEstadoUltimoEstado> PostulantesIncriptosVM { get; set; }
-        public List<vInscripcionEtapaEstadoUltimoEstado> EntrevistaVM { get; set; }
-        public List<vInscripcionEtapaEstadoUltimoEstado> DocumentacionVM { get; set; }
-        public List<vInscripcionEtapaEstadoUltimoEstado> PresentacionVM { get; set; }
+        public List<vConsultaInscripciones> cargadatosbasicosVM { get; set; }
+        public List<vConsultaInscripciones> PostulantesIncriptosVM { get; set; }
+        public List<vConsultaInscripciones> EntrevistaVM { get; set; }
+        public List<vConsultaInscripciones> DocumentacionVM { get; set; }
+        public List<vConsultaInscripciones> PresentacionVM { get; set; }
 
     }
     #region ViewModel Utilizado para enviar datos(Envia una lista con items para un Dropdown - envia un listado con los problemas encontrados en un Postulante) a la vista Dataproblema.cshtml 

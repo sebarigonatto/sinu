@@ -5,24 +5,60 @@
     ViewBag.Menu = SINU.Models.Func.CorrespondeMenu();
 }
 @*@section MenuPerfil{
-    @Html.Partial((String)@ViewBag.Menu);
-}*@   
+        @Html.Partial((String)@ViewBag.Menu);
+    }*@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
-<h1>@ViewBag.Title.</h1>
-<h2> SINU - Sistema de Inscripcion Unificado</h2><br />
-<div class="row">
-    <div class="col-md-6" style="background-color:red">
-        <div class="align-content-center">
-            <img src="~/Imagenes/loader.png" class="d-block" alt="Ancla Armada Argentina" />
+@*<h1>@ViewBag.Title.</h1>*@
+<body>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <div class="text-center">
+                <h2> SINU - Sistema de Inscripcion Unificado</h2>
+                <img src="~/Imagenes/LogoARA.jpg" class="text-center" alt="Ancla Armada Argentina" />
+            </div>
+        </div>
+        <div class="col col-md-6 text-justify">
+            <br />
+            <table style="height:100%">
+                <tbody>
+                    <tr>
+                        <td class="align-middle">
+                            <p class="h5 align-text-bottom">
+                                El sistema denominado SINU (Sistema de Inscripción Unificado), brinda la posibilidad de establecer un vínculo vía internet entre los postulantes y la institución de la Armada Argentina
+                            </p>
+                            <p class="h5 align-text-bottom">
+                                A su vez permitirá la unificación y centralización de datos de los postulantes
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="col col-md-6"style="background-color:green">
-            <p class="h4">El sistema de Inscripcion unificado, un sistema echo para solucionar la problematica de los gastos y costo te papeles</p>
-            <p class="h4">esto es gracia que la inscripcion se va ha realizar de forma online y tambien debido al contexto de pandemia evitar  el movimiento de personas en las delegaciones</p>
+    <hr />
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="h4 font-weight-bold">Equipo de desarrollo</p>
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <p class="h5 font-weight-bold">Lider de proyecto:</p>
+            <p>TNCPIN Rigonatto Sebastian</p>
+            <p>AGCV Ottino Laura</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <p class="h5 font-weight-bold">Desarrolladores:</p>
+            <p>CPIN Morales Johanna</p>
+            <p>CSIN Velasquez Emanuel</p>
+            <p>CSIN Cayampi Cisneros Exequiel</p>
+            <p>AGCV Van Houten German</p>
+        </div>
+    </div>
+</body>
 
-<h3>@ViewBag.Message</h3>
+
+@*<h3>@ViewBag.Message</h3>*@
 
 
 

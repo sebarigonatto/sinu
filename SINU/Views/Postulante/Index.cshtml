@@ -832,10 +832,10 @@
                         .css("color", "gray")
                         .attr("data-toggle", "tooltip")
                         .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
-                        .tooltip('enable');
+                        .tooltip('enable').attr("href","javascript:void(0)");
                 };
             });
-
+            
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
             //alert("@Session["ValidoUnaVez"]");

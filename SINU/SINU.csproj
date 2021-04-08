@@ -704,6 +704,7 @@
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Seguridad_Validar.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\RECREACION DE LOGIN Y USUARIOS.sql" />
     <Content Include="Imagenes\4.png" />
+    <Content Include="Imagenes\carrucel1.jpg" />
     <Content Include="Imagenes\flechaazul.jpg" />
     <Content Include="Imagenes\loader.gif" />
     <Content Include="Imagenes\loader.png" />
@@ -712,6 +713,7 @@
     <Content Include="Imagenes\AnclaQR.png" />
     <Content Include="Imagenes\hombremedidas.jpg" />
     <Content Include="Imagenes\logo.png" />
+    <Content Include="Imagenes\LogoARA.jpg" />
     <Content Include="Imagenes\monitor_error.png" />
     <Content Include="Imagenes\usu-bloqueado.png" />
     <Content Include="Models\SINUDB.Context.tt">
@@ -905,7 +907,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Imagenes\favicon.ico" />
     <Content Include="Imagenes\ara.png" />
-    <Content Include="Imagenes\carrucel1.jpg" />
     <Content Include="Imagenes\carrucel2.jpg" />
     <Content Include="Imagenes\carrucel3.jpg" />
     <Content Include="Imagenes\escudo4.png" />
