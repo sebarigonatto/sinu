@@ -135,25 +135,25 @@ namespace SINU.Controllers
             return View(myModel);
         }
 
-        public ActionResult Vaciar()
-        {
-            return View();
-        }
+        //public ActionResult Vaciar()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public ActionResult Vaciar(string email)
-        {
-            try
-            {
-                var res = db.Vaciar2(email, 1);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.vaciar = ex;
-                return View();
-            }
-            ViewBag.vaciar = "Exito, en la eliminacion de los registros del correo:  " + email;
-            return View();
-        }
+        //[HttpPost]
+        //public ActionResult Vaciar(string email)
+        //{
+        //    try
+        //    {
+        //        var res = db.Vaciar2(email, 1);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ViewBag.vaciar = ex;
+        //        return View();
+        //    }
+        //    ViewBag.vaciar = "Exito, en la eliminacion de los registros del correo:  " + email;
+        //    return View();
+        //}
     }
 }

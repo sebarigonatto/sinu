@@ -190,22 +190,25 @@ namespace SINU.Controllers
             }
         }
 
-        //
+        
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register(int idInstitucion = 0)
+        public ActionResult Register(int? idInstitucion)
         {
             if (Request.IsAuthenticated)
             {
 
                 return RedirectToAction("Index", "Home");
             }
+            //si es null lo estableco 1="Necesito Orientacion"
+            idInstitucion??=1;
             ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
 
             //verifico si la convocatoria a la que quiere inscribir esta abierta
             var hoy = DateTime.Now.Date;
-            var per = db.PeriodosInscripciones.Where(m => m.FechaInicio <= hoy && m.FechaFinal >= hoy).FirstOrDefault(m=>m.IdInstitucion==idInstitucion);
-            if(per==null)
+            var periodo = db.vPeriodosInscrip.FirstOrDefault(m=>m.IdInstitucion==idInstitucion);
+            //si no hay ninguna convocatoria abierta y el instituto es distinto a 1
+            if(periodo == null && idInstitucion!=1)
             {
                 return View("ConvocatoriaNoAbierta");
             }
@@ -214,7 +217,7 @@ namespace SINU.Controllers
             {   //creando la lista para la vista register lista de las oficinas de ingreso y delegaciones y de las institucions ccon periodos disponibles
                 ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre"),
                 ListIntitutos = new SelectList(db.vPeriodosInscrip.DistinctBy(mbox=>mbox.IdInstitucion).OrderBy(m => m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst"),
-                IdInstituto = idInstitucion
+                IdInstituto = (int)idInstitucion
             };
         
             var DatosDelegacion2 = new List<Array>();
@@ -225,13 +228,11 @@ namespace SINU.Controllers
             regi.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
 
             
-            
-
             //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
             return View(regi);
         }
 
-        //
+        
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -239,7 +240,7 @@ namespace SINU.Controllers
         public async Task<ActionResult> Register(RegisterViewModel model)
         {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
             model.ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre");
-            model.ListIntitutos = new SelectList(db.vPeriodosInscrip.ToList(), "IdInstitucion", "NombreInst");
+            model.ListIntitutos = new SelectList(db.vPeriodosInscrip.DistinctBy(mbox => mbox.IdInstitucion).OrderBy(m => m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst");
             var DatosDelegacion2 = new List<Array>();
             db.OficinasYDelegaciones.ToList().ForEach(m => DatosDelegacion2.Add(new object[] { m.IdOficinasYDelegaciones,
                                                                                                m.Provincia + ", " + m.Localidad + ", " + m.Direccion,
