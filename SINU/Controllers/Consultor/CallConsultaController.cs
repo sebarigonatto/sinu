@@ -108,7 +108,7 @@ namespace SINU.Controllers.Consultor
         {
             List<vInscripcionEtapaEstadoUltimoEstado> Todos;
 
-            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdSecuencia >= 5).ToList();
+            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where( m => m.IdSecuencia >= 5).ToList();
             return PartialView(Todos);
 
         }
@@ -147,7 +147,7 @@ namespace SINU.Controllers.Consultor
         public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
         {           
             List<vConsultaInscripciones> ListadoDelegaciones;
-            ListadoDelegaciones = db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();         
+            ListadoDelegaciones = db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today && m.Delegacion == DelegacionSeleccionada).ToList();         
             ViewBag.delegacionSeleccionada = DelegacionSeleccionada;         
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
 
