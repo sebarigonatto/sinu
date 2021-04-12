@@ -60,12 +60,12 @@ namespace SINU.Controllers
                     Response.StatusCode = 404;
                     return RedirectToAction("NotFound", "Error");
                 }
-                //creo array con las secuecias por las que el Postulante
+                //creo array con las secuecias por las que el Postulante transito
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri.IdInscripcion).Select(m => m.IdSecuencia).ToList();
                 ViewBag.ULTISECU = Secuencias[0];
                 //verifico si se lo postulo o no en la entrevista
                 pers.NoPostulado = (Secuencias[0] == 12);
-                //ver como mostrar esta pantalla de si fue 
+                //ver como mostrar esta pantalla de si su documentacion fue rechazada
 
                 pers.ProcesoInterrumpido = (Secuencias[0] == 24);
 
@@ -96,7 +96,7 @@ namespace SINU.Controllers
                     ViewBag.MOD_CAR = new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, idInscri.IdInscripcion.ToString() };
 
                 }
-                pers.NomyApe = db.Persona.Find(pers.ID_PER).Apellido + ", " + db.Persona.Find(pers.ID_PER).Nombres;
+                pers.NomyApe = idInscri.Postulante.Persona.Apellido + ", " + idInscri.Postulante.Persona.Nombres;
 
                 if (pers.NoPostulado)
                 {
