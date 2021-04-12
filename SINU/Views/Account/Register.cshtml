@@ -178,6 +178,9 @@
 
         });
         $(document).ready(function () {
+
+            //si el dni eciste anuncio que el mismo corresponde a una cuenta existente 
+
             if ($("#IdInstituto").val() != "") {
                 $("#IdInstituto").next("button[data-id='IdInstituto']").attr('disabled', 'true').children().css('color', 'black !important');
 

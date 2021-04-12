@@ -228,7 +228,6 @@ namespace SINU.Controllers
             regi.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
 
             
-            //Creamos el objeto RegisterviewModel inicializado con la preferencia del Postulante
             return View(regi);
         }
 
@@ -258,21 +257,23 @@ namespace SINU.Controllers
 
                     var result = await UserManager.CreateAsync(user, model.Password);
                     
-                    //var personareg = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
-                    //if (personareg != null)
-                    //{
-                    //    personareg.Postulante;
-                    //}
-
-
+               
                     if (result.Succeeded)
                     {
+                        ViewBag.DNI = false;
                         //si el dni existe en la base de datos se elimina a la cuenta creada de la tabla "AspNetUsers"
-                        if (db.Persona.FirstOrDefault(m=>m.DNI==model.DNI)!=null)
+                        var per = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
+                        if (per !=null)
                         {
+                            //debo verificar si se trata de un postulante o simplemente una persona
+                            bool ESpostulante = per.Postulante!= null;
+                            //ver en caso de de ser y no se postulante
+
+
                             db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
                             db.SaveChanges();
-                            AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una "));
+                            ViewBag.DNI = true;
+                            AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
                             return View(model);
                         }
                         //crea una persona, un postulante y una inscripcion

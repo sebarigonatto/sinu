@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<SINU.Models.Delegacion_EstablecExamen>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Extablecimientos de Examen y Oficinas/Delegaciónes";
     //Layout = "~/Views/Shared/_MenuPerfilAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Extablecimientos de Examen y Oficinas/Delegaciónes</h2>
 
 <p>
-    @Html.ActionLink("Crear Nuevo", "Create")
+    @Html.ActionLink("Crear Nuevo", "Create",null, new { @class="btn btn-success" })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.EstablecimientoRindeExamen.Nombre)
+            @Html.Label("Establecimiento de Examen")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OficinasYDelegaciones.Nombre)
+            @Html.Label("Oficina y Delegación")
         </th>
         <th></th>
     </tr>
@@ -30,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.OficinasYDelegaciones.Nombre)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.idDelegacion_EstablecExamen }) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.idDelegacion_EstablecExamen }) |
-            @Html.ActionLink("Borrar", "Delete", new { id=item.idDelegacion_EstablecExamen })
+            @Html.ActionLink(" Editar", "Edit", new { id = item.idDelegacion_EstablecExamen }, htmlAttributes: new { @class = "fas fa-edit" })&ensp;|&ensp;
+            @Html.ActionLink(" Detalle", "Details", new { id = item.idDelegacion_EstablecExamen }, htmlAttributes: new { @class = "fas fa-list" })&ensp;|&ensp;
+            @Html.ActionLink(" Eliminar", "Delete", new { id = item.idDelegacion_EstablecExamen }, htmlAttributes: new { @class = "fas fa-trash-alt" })
         </td>
     </tr>
 }

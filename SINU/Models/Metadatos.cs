@@ -776,7 +776,34 @@ namespace SINU.Models
     public partial class OficinasyDelegacionesMetadata
     {
         [Display(Name ="Teléfono")]
+        [Required(ErrorMessage ="Campo requerido")]
         public string Telefono { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Nombre { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string Descripcion { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string Direccion { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string Localidad { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string Provincia { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string CP { get; set; }
+
+        public string Celular { get; set; }
+        [Required(ErrorMessage = "Campo requerido")]
+
+        public string Email1 { get; set; }
+
+
+        public string Email2 { get; set; }
+        public int IdOficinasYDelegaciones { get; set; }
     }
 
 
