@@ -1,4 +1,5 @@
 ﻿@model SINU.ViewModels.AdministradorVm
+<link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
 @{
     ViewBag.Title = "Período de Inscripción";
 }
@@ -23,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicio", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
+                @Html.TextBoxFor(m => m.PeriodosInscripcionesVm.FechaInicio, new { @class = "form-control  text-left", @id = "datetimepicker1", @type = "text", @readOnly = true })
                 @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaInicio, "", new { @class = "text-danger" })*@
             </div>
         </div>
@@ -31,7 +32,7 @@
         <div class="form-group">
             @Html.LabelFor(m => m.PeriodosInscripcionesVm.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFinal", @type = "text", placeholder = "DD/MM/YYYY", @readOnly = true } })
+                @Html.TextBoxFor(m => m.PeriodosInscripcionesVm.FechaFinal, new { @class = "form-control  text-left", @id = "datetimepicker2", @type = "text", @readOnly = true })
                 @*@Html.ValidationMessageFor(m => m.PeriodosInscripcionesVm.FechaFinal,"", new { @class = "text-danger" })*@
             </div>
         </div>
@@ -58,15 +59,33 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-
+    <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script type="text/javascript">
         //alterala validacion de la fechas
         //jQuery.validator.methods["date"] = function (value, element) { return true; };
-        var date = new Date();
-        date.setDate(date.getDate() - 1);
-        $('.datepicker').datepicker({
-            autoclose: true,
-            startDate: date,
+        //var date = new Date();
+        //date.setDate(date.getDate() - 1);
+        //$('.datepicker').datepicker({
+        //    autoclose: true,
+        //    startDate: date,
+        //});
+        $(document).ready(function () {
+            jQuery('#datetimepicker1').datetimepicker({
+                timepicker:false,
+                minDate: 0,
+                format: 'd/m/Y',
+                value: 'd/m/Y',
+                mask:true
+            });
+            jQuery('#datetimepicker2').datetimepicker({
+                timepicker:false,
+                minDate: 0,
+                format: 'd/m/Y',
+                value: 'd/m/Y',
+                mask:true
+            });
+            $.datetimepicker.setLocale('es')
+
         });
     </script>
 
