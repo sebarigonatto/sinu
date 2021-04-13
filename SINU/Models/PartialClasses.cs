@@ -182,9 +182,6 @@ namespace SINU.Models
     [MetadataType(typeof(OficinasyDelegacionesMetadata))]
     public partial class OficinasYDelegaciones
     { }
-    [MetadataType(typeof(vConsultaInscripcionesMetadata))]
-    public partial class vConsultaInscripciones
-    { }
 }
 
 

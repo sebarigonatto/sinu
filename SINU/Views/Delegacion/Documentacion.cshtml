@@ -650,7 +650,7 @@
                                                 HttpMethod = "POST",
                                                 OnSuccess = "Exito(data,status,xhr)",
                                                 OnFailure = "Falla"
-                                                }, new { @id = "BtnConfirmar", @class = "load-submit btn btn-success" })
+                                                }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
             </div>
         </div>
     </div>
@@ -674,7 +674,7 @@
                                                                                 HttpMethod = "POST",
                                                                                 OnSuccess = "Exito(data,status,xhr)",
                                                                                 OnFailure = "Falla"
-                                                                              }, new { @id = "BtnVolverEtapa", @class = "load-submit btn btn-success" })
+                                                                              }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
             </div>
         </div>
     </div>
@@ -692,13 +692,13 @@
                 Esta Seguro que desea realizar la accion sobre el postulante, esto interrumpira el proceso de inscripcion<br />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-dismiss="modal" >Cerrar</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
                 @Ajax.ActionLink(" Interrumpir Proceso", "InterrumpirProceso", new { ID_persona = Model.ID_PER }, new AjaxOptions
                                 {
                                   HttpMethod = "POST",
                                   OnSuccess = "Exito(data,status,xhr)",
                                   OnFailure = "Falla"
-                                }, new { @id = "BtnInterrumpirProceso", @class = "load-submit btn btn-success" ,@OnClick="Desaparecer()"})
+                                }, new { @id = "BTValidar", @class = "load-submit btn btn-success" })
             </div>
         </div>
     </div>
@@ -728,24 +728,6 @@
         $.NoEjecutar = true;
         id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
         TablaProblema;
-        /////////////////////////////ocultar el modal cuando se acepte realizar alguna accion sobre el postulante///////////////////////
-document.getElementById("BtnConfirmar").onclick = function () { OculModal1() };
-        function OculModal1() {
-            //alert('exito entro')
-            $('#modal1').modal('hide')
-        }
-        document.getElementById("BtnVolverEtapa").onclick = function () { OculModal2() };
-        function OculModal2() {
-            //alert('exito entro')
-            $('#modal2').modal('hide')
-        }
-         
-         document.getElementById("BtnInterrumpirProceso").onclick = function () { OculModal3() };
-        function OculModal3() {
-            //alert('exito entro')
-            $('#modal3').modal('hide')
-        }
-        ////////////////////////////////////////////////////fin de codigo///////////////////////////////////////////////////////////////
         $(document).ready(function () {
             ActICO();
 
