@@ -56,13 +56,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Email1)
             </td>
+            @*<td>
+            @{ViewBag.Postulantes = db.vConsultaInscripciones.Where(d => d.Delegacion == item.Nombre).ToList().Count;}
+            @ViewBag.Postulantes
+        </td>*@
             <td>
-                @{ViewBag.Postulantes = db.vConsultaInscripciones.Where(d => d.Delegacion == item.Nombre).ToList().Count;}
+                @{ViewBag.Postulantes = db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today && m.Delegacion == item.Nombre).ToList().Count;}
                 @ViewBag.Postulantes
             </td>
             @*<td>
-            @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
-            </td>*@
+        @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
+        </td>*@
             @*<td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
