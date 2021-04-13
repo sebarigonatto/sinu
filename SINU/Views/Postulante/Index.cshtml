@@ -355,7 +355,7 @@
             @if ((bool)Session["DeleConsul"])
             {
 
-                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem"  onclick="window.history.back()"  id=""><b>Atras</b></button>
+                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem"  onclick="window.history.back()" ><b>Atras</b></button>
                 if (ViewBag.ULTISECU == 8)
                 {
                     @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
