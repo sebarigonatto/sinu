@@ -805,6 +805,13 @@ namespace SINU.Models
         public string Email2 { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
     }
+    public partial class vConsultaInscripcionesMetadata
+    {
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public Nullable<System.DateTime> Fecha { get; set; }
+        [Display(Name = "Modalidad")]
+        public string Modalidad_Siglas { get; set; }
+    }
 
 
 }

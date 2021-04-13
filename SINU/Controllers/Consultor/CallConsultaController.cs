@@ -106,9 +106,12 @@ namespace SINU.Controllers.Consultor
         /// <returns></returns>
         public ActionResult ConsultaTotalPostulantes()
         {
-            List<vInscripcionEtapaEstadoUltimoEstado> Todos;
+            //List<vInscripcionEtapaEstadoUltimoEstado> Todos;
+            //Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where( m => m.IdSecuencia >= 5).ToList();
+            //return PartialView(Todos);
 
-            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where( m => m.IdSecuencia >= 5).ToList();
+            List<vInscripcionEtapaEstadoUltimoEstado> Todos;
+            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();
             return PartialView(Todos);
 
         }
