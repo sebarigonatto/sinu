@@ -1,24 +1,23 @@
 ﻿@model SINU.Models.Delegacion_EstablecExamen
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Asignar Establecimiento a una Oficina/Delegación";
     //Layout = "~/Views/Shared/_MenuPerfilAdmin.cshtml";
     SelectList lst = new SelectList(new SINU.Models.SINUEntities().OficinasYDelegaciones.ToList(), "idOficinasYDelegaciones", "Nombre");
     SelectList lst2 = new SelectList(new SINU.Models.SINUEntities().EstablecimientoRindeExamen.ToList(), "IdEstablecimientoRindeExamen", "Nombre");
 }
 
-<h2>Create</h2>
+<h2>Asignar Establecimiento a una Oficina/Delegación</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Delegacion_EstablecExamen</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.idOficinasYDelegaciones, "idOficinasYDelegaciones", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idOficinasYDelegaciones, "Oficina/Delegación", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("idOficinasYDelegaciones", lst, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idOficinasYDelegaciones, "", new { @class = "text-danger" })
@@ -26,7 +25,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IdEstablecimientoRindeExamen, "IdEstablecimientoRindeExamen", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdEstablecimientoRindeExamen, "Establecimiento de Examen", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("IdEstablecimientoRindeExamen", lst2, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.IdEstablecimientoRindeExamen, "", new { @class = "text-danger" })
@@ -35,12 +34,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Asignar" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a la lista", "Index")
 </div>

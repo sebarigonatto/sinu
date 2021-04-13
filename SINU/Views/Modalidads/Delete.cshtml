@@ -9,8 +9,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>Eliminar Registro</title>
 </head>
-<h2>Eliminar Registro</h2>
 <body>
+    <h2>Eliminar Registro</h2>
+
     <div class="alert alert-warning" role="alert">
         Esta a punto de eliminar un Registro. ¿Está seguro?
     </div>
@@ -41,7 +42,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-actions no-color">
-                <input type="submit" value="Eliminar" class="btn btn-default" /> |
+                <input type="submit" value="Eliminar" class="btn btn-danger" /> |
                 @Html.ActionLink("Volver", "Index")
             </div>
         }
