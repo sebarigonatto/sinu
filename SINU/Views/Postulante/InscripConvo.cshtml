@@ -136,7 +136,7 @@
 
                             <div class="row card-footer lead justify-content-center">
 
-                                @Html.ActionLink("Inscribirse", "InscripNueva", "Postulante", new { id_periodo = item2.IdInstitucion@*, ID_postulante= item2.*@ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
+                                @Html.ActionLink("Inscribirse", "InscripNueva", "Postulante", new { id_periodo = item2.IdInstitucion, ID_postulante = ViewBag.idpostu }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
 
                             </div>
 

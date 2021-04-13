@@ -2009,11 +2009,12 @@ namespace SINU.Controllers
 
         }
 
-
-        public ActionResult InscripConvo()
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        public ActionResult InscripConvo(int idpostulante)
         {
-            //ViewBag.idpostu = 
+            ViewBag.idpostu = idpostulante;
             return View(db.vPeriodosInscrip.ToList());
+
         }
 
         [HttpPost]
