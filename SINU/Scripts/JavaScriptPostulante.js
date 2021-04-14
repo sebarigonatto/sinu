@@ -928,12 +928,17 @@ $(document).ready(function () {
       casados()
     });
     function casados() {
+     
         var estci = $("#EstadoCivil").val();
-        if (estci.indexOf("C") > -1) {
-            $("#FechaCasamiento").removeClass("d-none");
-        } else {
-            $("#FechaCasamiento").addClass("d-none");
-            $("#FechaCasamiento input").val("");
+        if (estci != null) {
+
+            if (estci.indexOf("C") > -1) {
+                $("#FechaCasamiento").removeClass("d-none");
+            } else {
+                $("#FechaCasamiento").addClass("d-none");
+                $("#FechaCasamiento input").val("");
+
+            };
 
         };
     };

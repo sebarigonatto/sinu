@@ -1,20 +1,21 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripción";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripcion";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
 <style>
-   
-    
-    
+
+
+
     input:-internal-autofill-selected {
         background-color: #f5f5f5 !important
     }
 
     .dataTables_filter {
-        display:flex !important;
+        display: flex !important;
     }
+
     .form-control:disabled, .form-control[readonly] {
         cursor: no-drop;
     }
@@ -120,7 +121,6 @@
         border-right: 2px solid #08495f
     }
 
-
     .left-tabs.nav-tabs, .right-tabs.nav-tabs {
         height: 100%;
         flex-direction: column;
@@ -163,49 +163,45 @@
             font-weight: 600;
             color: #08495f !important;
         }
-      
+
     #TABPrincipal p {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
         font-size: 1rem !important;
         font-weight: 400 !important;
         display: inline !important;
     }
-
     /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
     @@media screen and (max-width: 576px) {
-
-        #ModalEIA .modal-body {
+        .modal-body {
             overflow: auto;
             height: 30rem;
         }
 
-            #ModalEIA .modal-body::-webkit-scrollbar {
+            .modal-body::-webkit-scrollbar {
                 -webkit-appearance: none;
             }
 
-                #ModalEIA .modal-body::-webkit-scrollbar:vertical {
+                .modal-body::-webkit-scrollbar:vertical {
                     width: 10px;
                 }
 
-            #ModalEIA .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
+            .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
                 display: none;
             }
 
-            #ModalEIA .modal-body::-webkit-scrollbar:horizontal {
+            .modal-body::-webkit-scrollbar:horizontal {
                 height: 10px;
             }
 
-            #ModalEIA .modal-body::-webkit-scrollbar-thumb {
+            .modal-body::-webkit-scrollbar-thumb {
                 background-color: #797979;
                 border-radius: 20px;
                 border: 2px solid #f1f2f3;
             }
 
-            #ModalEIA .modal-body::-webkit-scrollbar-track {
+            .modal-body::-webkit-scrollbar-track {
                 border-radius: 10px;
-            }    
-
-
+            }
 
         #TABPrincipal p {
             display: none !important
@@ -237,10 +233,10 @@
         #TabSecundarioContent, .nav-tab {
             padding: 0rem 1rem 0rem 1rem !important;
         }
+
         .oculto {
             display: none !important
         }
-
     }
 
     @@media screen and (min-width: 576px) {
@@ -249,7 +245,7 @@
         }
 
         div.TABMovil > div.pos-f-t > div.nav-tab > br:first-child {
-            display:none !important;
+            display: none !important;
         }
 
         .nav-tab {
@@ -257,7 +253,6 @@
             opacity: 100 !important
         }
     }
-
     /* nav version mobil*/
     .navbar-toggler {
         background: none;
@@ -320,8 +315,9 @@
 
     #TabSecundario a.TABValida {
         color: yellow !important;
-        font-size:larger;
+        font-size: larger;
     }
+
         #TabSecundario a.TABValida.active {
             color: #08495f !important;
             font-size: larger;
@@ -331,7 +327,7 @@
         display: block;
         overflow: hidden;
         resize: none;
-        align-content:center;
+        align-content: center;
     }
 </style>
 
@@ -342,20 +338,20 @@
             <t>
                 <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
                 <h6>
-                    Numero de Pre-Inscripción: <b>@ViewBag.MOD_CAR[2]</b>
+                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1]!=null?ViewBag.MOD_CAR[1]:Html.Raw("&emsp;----  "))</b></e>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
                 </h6>
             </t>
-         
+
         </div>
 
         <div class="col col-sm-6 col-12 ">
             @if ((bool)Session["DeleConsul"])
             {
 
-                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem"  onclick="window.history.back()" ><b>Atras</b></button>
+                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" onclick="window.history.back()" id=""><b>Atras</b></button>
                 if (ViewBag.ULTISECU == 8)
                 {
                     @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
@@ -370,8 +366,8 @@
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
 
-        <h4>Proceso de Inscripción Interrupido.</h4>
-        <h5>Ante consultas comunicarse con la Delegación/Oficina Corespondiente.</h5>
+        <h4>Proceso de Inscripcion Interrupido.</h4>
+        <h5>Ante Consultas comunicarse con la Delegacion/Oficiana Corespondiente.</h5>
         <h5>
             Nombre: <b>@Model.OfiDele.Nombre</b>
         </h5>
@@ -408,8 +404,8 @@
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;1° Datos Basicos</p> </a>
                         <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;2° Entrevista</p></a>
-                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentación</p>  </a>
-                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentación</p> </a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentacion</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentacion</p> </a>
                         @*<a class="nav-item nav-link fa fa-clipboard-check" id="6" data-toggle="tab" href="#Resultado" role="tab" aria-controls="Resultado" aria-selected="false"><p>&ensp;5° Resultado</p> </a>*@
 
                     </div>
@@ -448,10 +444,10 @@
                                     <a class="nav-item nav-link" href="#Estudios" data-toggle="tab"> Estudios</a>
                                     <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab"> Idiomas</a>
                                     <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab"> Actividad Militar</a>
-                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situación Ocupacional</a>
+                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situacion Ocupacional</a>
                                     <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab"> Medidas y Tallas</a>
                                     <a class="nav-item nav-link" href="#Familia" data-toggle="tab"> Familia</a>
-                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentación</a>
+                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentacion</a>
                                     @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido && !ViewBag.VenceComvocatoria)
                                     {
                                         <a class="nav-item nav-link TABValida" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
@@ -592,7 +588,7 @@
                                         @* VISTA DE SITUACION OCUPACIONAL*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Situción Ocipacional</a>
+                                                <a class="navbar-brand" href="#"> Situcion Ocipacional</a>
                                                 <button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -651,7 +647,7 @@
                                         @* VISTA DE Documentacion Extra*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuAnexo">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Documentación</a>
+                                                <a class="navbar-brand" href="#"> Documentacion</a>
                                                 <button id="BTDocuAnexoNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuAnexoNAV" role="tabpanel" aria-labelledby="DocuAnexoNAV-tab" aria-controls="DocuAnexoNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -694,19 +690,19 @@
                                                             <br />
                                                             <br />
                                                             @*@Ajax.ActionLink("Solicitar Validacion de Datos", "ValidarDatos", new { ID_persona = Model.ID_PER }, new AjaxOptions
-                                                  {
-                                                      HttpMethod = "POST",
-                                                      OnSuccess = "Exito(data,status,xhr)",
-                                                      OnFailure = "Falla"
-                                                  }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
-                                                <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validación</button>
+                                                                  {
+                                                                      HttpMethod = "POST",
+                                                                      OnSuccess = "Exito(data,status,xhr)",
+                                                                      OnFailure = "Falla"
+                                                                  }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
+                                                                <br /><br />*@
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validacion</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
-                                                            <h5>La validación se encuentra en Proceso.</h5>
-                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validación realizada.</h5>
+                                                            <h5>La validacion se encuentra en Proceso.</h5>
+                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
                                                         </div>
 
                                                     </div>
@@ -732,12 +728,9 @@
                     </div>
 
                     @* VISTA DE RESULTADO CON ID = 6
-                    <div id="Resultado" role="tabpanel" aria-labelledby="Resultado-tab" class="tab-pane fade px-3 py-3" style=" border: 2px solid #08495fd4; border-radius: 7px; padding: 1rem; margin: 0.4rem;">
-
-
-                            @Html.Action("Resultado", "Postulante", new { ID_persona = Model.ID_PER })
-
-                    </div> *@
+                        <div id="Resultado" role="tabpanel" aria-labelledby="Resultado-tab" class="tab-pane fade px-3 py-3" style=" border: 2px solid #08495fd4; border-radius: 7px; padding: 1rem; margin: 0.4rem;">
+                                @Html.Action("Resultado", "Postulante", new { ID_persona = Model.ID_PER })
+                        </div> *@
                 </div>
 
             </div>
@@ -762,15 +755,11 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
-
-
         //alert("@ViewBag.ValidacionEnCurso");
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;
-
         //elimino el ultimo elemnto de array, por que es un string vacio
         IDETP.splice(IDETP.length - 1);
-
         //array con los ID de las solapas principales que se bloquearan
         var SolapaPrincipales = [["2", "#datosbasicos"], ["4", "#Documentacion"]];
         //json con info de cada pantalla si estan abiertas o cerradas
@@ -787,7 +776,6 @@
                 }
             })
         };
-
         function BloqueaPantalla(IDPantalla) {//ver como eliminar los botones al ser un usuario delegacion o que el postulante haya solicitado la entrevista o bueno los demas casos
             $(IDPantalla + " .BTAcciones").remove();
             $(IDPantalla + " :input"/*," + item[1] + " input"*/).not(".Edita, .dataTables_wrapper input[type='search'],.navbar-toggler").attr("disabled", "true");
@@ -797,7 +785,6 @@
                 if ($(item).hasClass("hidden") && IDPantalla == "#Documentacion") $(item).removeClass("hidden").closest("div").append("<h5 style='color:yellow'>No hay archivo subido</h5>");
             })
         };
-
         //funcion para habilitar el TAB indicado.
         function HabilitarTAb(idtab) {
             $("#"+idtab)
@@ -806,23 +793,18 @@
                 .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
                 .tooltip('disable');
         };
-
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
                     $("#BTValidar").removeClass("disabled");
-
                 } else {
                     $("#BTValidar").addClass("disabled");
                 };
             });
-
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
             $.BloqueaPantallasPrincipales();
-
             //bloqueo los tabs de las etapas por las que no pase
             $("#TABPrincipal a").each(function () {
                 idTAB = $(this).attr("id");
@@ -832,29 +814,23 @@
                         .css("color", "gray")
                         .attr("data-toggle", "tooltip")
                         .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
-                        .tooltip('enable').attr("href","javascript:void(0)");
+                        .tooltip('enable');
                 };
             });
-            
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
             //alert("@Session["ValidoUnaVez"]");
             if ("@Session["ValidoUnaVez"]"=="True" && "@Session["DeleConsul"]" != "True" && "@ViewBag.ValidacionEnCurso" == "False") {
-
-
                 $.each(jsonProblemas, function (index, item) {
-
                     //alert(item[1]);
                     //si la pantalla esta cerrada
                     if (!item[1] && "@Model.ProcesoInterrumpido" != "True") {
                         //alert("cerrado");
-
                         $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-check-circle' style='color: lawngreen'></i>");
                         //$("#TABDocumentacion a[aria-controls='" + item[0] + "']").closest("li").attr("data-toggle", "tooltip").attr("title", "Opcion deshabilitada hasta que avance de secuencia").tooltip('enable');
                         $("#" + item[0] + "NAV .BTAcciones").remove();
                         $("#" + item[0] + "NAV :input").not(".Edita, .dataTables_wrapper input[type = 'search'],.navbar-toggler").attr("disabled", "true");
                         $("#" + item[0] + "NAV .Edita").removeClass("fa-edit").addClass("fa-eye");
-
                     } else if (item[2] == "0" && "@Model.ProcesoInterrumpido" != "True") {
                         //SI LA PANTALLA NO TIENE PROBLEMAS Y SIGUE ABIERTA
                         $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-file' style='color: #00d1f8fa;'></i>");
@@ -863,19 +839,21 @@
                         $("#TabSecundario a[href='#" + item[0] + "'] , #" + item[0] + " a.navbar-brand").prepend("<i class='fa fa-fw fa-' style='color: #ff4343; border-radius: 100%; border: 2px solid;'>" + item[2] + "</i>");
                     }
                 });
-
             };
-
-
-
             //caso de Delegacion o Consultor bloqueo las vistas y configuro el bonto atras segun Perfil
             if ("@Session["DeleConsul"]" == "True") {
                 $.each(SolapaPrincipales, function (index, item) {
                     BloqueaPantalla(item[1]);
                 });
-               
+                //$("#TABDocumentacion i").remove();
+                //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
+                //var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
+                if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
+                    $("#BTatras").attr("href", link_anterior[1]);
+                } else {
+                    $("#BTatras").attr("href", link_anterior[0]);
+                }
             }
-
             if ('@Session["FamiTable"]' == 'True') {
                 $("#4").tab("show");
                 //$("#5 a").tab("show");
@@ -886,54 +864,39 @@
             }
                @{
                   Session["FamiTable"] = false;
-
                }
-
-
-
-            ////scroll automatico al selecionar un nav, solo en vista mobil
-            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
-            //    if ($(this).hasClass("collapsed")) {
-            //          //alert("asda");
-            //        var id = $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-            //        var target = document.getElementById(id);
-            //        target.parentNode.scrollTop = target.offsetTop;
-            //    //$("#"+ id)[0].scrollIntoView();
-            //    }
-              
+            //scroll automatico al selecionar un nav, solo en vista mobil
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
+            //    alert("sda");
+            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
             //});
-      
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").is('collapsed', function () {
+            //    alert("sda");
+            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
+            //});
+
             $("#BTValidar").on("click", function () {
                 //$.Cargando();
-
                 PantallasError = [];
-
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
                     //verifico si es tabla o form
                     IdPantalla = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
                     Pantalla = $("#" + IdPantalla + " nav a").text().trim();
                     //alert(IdPantalla + "  " + Pantalla);
                     if ($(item).find("thead").length == 0) {
-
                         //alert("form - " + $(item).attr("id"));
                         saltar = true;
                         $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
-
                             if ($(item2).val() == '') {
-
                                 if ($(item2).hasClass("custom-file-input")) {
                                     if ($(item2).next("label").children("b").html() == "Seleccione archivo...") {
                                         PantallasError.push({ IdPantalla, Pantalla });
                                         saltar = false;
                                     };
-
                                 } else {
                                     PantallasError.push({ IdPantalla, Pantalla });
-
-
                                     saltar = false;
                                 }
-
                             };
                             return saltar;
                             //alert($(item2).attr("id"));
@@ -941,23 +904,19 @@
                     } else {
                         //id_pant = $(item).attr("id");
                         if ($(item).find("tbody tr[role='row']").length == 0) {
-
                             PantallasError.push({ IdPantalla, Pantalla });
                             //alert("no hay registros");
                         }; //else {
                         //    alert("hay registos!!!!");
                         //};s
                     };
-
                 });
                $.ajax({
                    url: "/Postulante/ValidarDatos",
                    dataType: 'json',
                     data: {
-
                         PantError: JSON.stringify(PantallasError),
                         ID_persona: '@Model.ID_PER'
-
                     },
                     type: "POST",
                     dataType: 'json',
@@ -968,7 +927,6 @@
                 });
             });
         });
-
         function Imprimir() {
             var mywindow = window.open('', 'PRINT', 'height=800px,width=800px');
             mywindow.document.write('<html><head><title>' + 'Presentacion' + '</title>');
@@ -985,12 +943,9 @@
             mywindow.focus();
             mywindow.print();
         };
-
         //en caso de ser exitosa la llamada al controlador delos distintos POST
         function Exito(response, status, xhr) {
-
             $.Anuncio(response.msg);
-
            // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
@@ -1029,13 +984,10 @@
                 default:
             };
         };
-
         //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
             $.Anuncio("Error Inesperado!!! Recarga la Paguna e Intentalo de Nuevo.");
         };
-
-
     </script>
 
 }
