@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result>
+@using SINU.Models
 @{
+    SINUEntities db = new SINUEntities();
     ViewBag.Title = "Totales Agrupados Por Modalidad y Genero";
     var TotalINSC = ((List<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result>)Model)[0].Total;
+    //ViewBag.ModalidadGenero = 0;
 }
 
 <h2>
@@ -26,8 +29,11 @@
                 @Html.DisplayNameFor(model => model.Cantidad)
             </th>
             <th>
-                    Detalle
-                </th>
+                @Html.DisplayNameFor(model => model.SubTotal)
+            </th>
+            <th>
+                Detalle
+            </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Total)
                 </th>*@
@@ -46,25 +52,30 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Cantidad)
                 </td>
-                @*<td>
+                <td>
                     @Html.DisplayFor(modelItem => item.SubTotal)
-                  </td>*@
+                </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.Total)
-                  </td>*@
+                    @{ViewBag.ModalidadGenero = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == item.Modalidad_Siglas).ToList().Count;}
+                    @ViewBag.ModalidadGenero*@
+
+                @*<td>
+                      @Html.DisplayFor(modelItem => item.Total)
+                    </td>*@
                 <td>
                     @*@Html.ActionLink("Edit", "Edit", new { id=item.ID }) |*@
                     @*@Html.ActionLink("Detalle", "Details", new { id = item.ID }) |*@
                     @*Nombre,Action, Controlador*@
                     @*@Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
                     @*No se puede tener dos ActionLink con el mismo nombre*@
-                    @Html.ActionLink(" ", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas}, new { @class = "fas fa-bars", @style = "color:#343a40" })
+                    @Html.ActionLink(" ", "InscriptosPorModalidad", new { ModalidadElegida = item.Modalidad_Siglas, Genero = item.Genero }, new { @class = "fas fa-bars", @style = "color:#343a40" })
                 </td>
             </tr>
         }
     </tbody>
 
 </table>
+
 
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
@@ -80,33 +91,6 @@
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
-                 dom: 'Bfrtip',
-                buttons: [
-                    'excel', 'pdf',//'colvis',
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                    //    extend: 'columnVisibility',
-                    //    text: 'Show secondary',
-                    //    visibility: true,
-                    //    columns: '.secondary'
-                    //},
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                    //    extend: 'columnVisibility',
-                    //    text: 'Hide secondary',
-                    //    visibility: false,
-                    //    columns: '.secondary'
-                    //},
-                    {
-                        extend: 'print',
-                        text: 'Imprimir',
-                        messageTop: 'Armada Argentina'
-                    },
-                    {
-                        extend: 'copy',
-                        text: 'copiar',
-                    }
-
-
-                ],
                 responsive: true,
                 "language":
                 {
@@ -144,7 +128,7 @@
                     "orderable": false
 
                 }]
-
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
             });
 
