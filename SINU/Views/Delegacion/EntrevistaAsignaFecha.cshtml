@@ -66,13 +66,14 @@
                     @Html.Label("Fecha de Entrevista", htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @*<input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly />*@
+                        @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger", @id = "Aviso" })
                         @Html.TextBoxFor(model => model.FechaEntrevista, new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true })
-                        @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger" })
+
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="alert alert-warning mt-4">
+                <div class="col-md-6" id="AvisoFecha" hidden>
+                    <div class="alert alert-danger mt-4">
                         <h6 class="font-weight-bold">Asigne una fecha de Entrevista al Postulante</h6>
                     </div>
                 </div>
@@ -88,7 +89,7 @@
                     @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-block m-1 p-1" })
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-success d btn-block m-1 p-1" data-toggle="modal" data-target="#ModalConfirmar">Asignar Fecha</button>
+                    <p type="button" class="btn btn-success d btn-block m-1 p-1" onclick="Mifuncion()">Asignar Fecha</p>
                 </div>
 
             </div>
@@ -128,8 +129,8 @@
             jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
                 format: 'd/m/y h:m',
-                value: 'd/m/y h:m'
-            });
+                value: 'd/m/y h:m',
+            }).val("");
             $.datetimepicker.setLocale('es')
             //$(".datepicker").datepicker({
             //    format: "dd/mm/yyyy",
@@ -139,7 +140,14 @@
             //    startDate: "Today"
             //});
         });
-
+        function Mifuncion() {
+            var picker = document.getElementById("datetimepicker").value
+            if (picker != "") {
+                $('#ModalConfirmar').modal('show')
+            } else { 
+                $('#AvisoFecha').removeAttr('hidden')
+            };
+        };
     </script>
 
 }

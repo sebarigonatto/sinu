@@ -81,7 +81,7 @@
                                 Documentacion Presentada
                             </a>
                         </li>
-                        <li class="nav-item flex-md-fill bli" id="ValidarTAB">
+                        <li class="nav-item flex-md-fill bli" id="ValidarTAB" data-toggle="tooltip" data-placement="left" title="En esta solapa usted como usuario delegacion va a poder avanzar/volver o interrumpir el proceso de inscripcion de un postulante">
                             <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#ValidarDatos" role="tab" aria-controls="ValidarDatos" aria-selected="false">
                                 Validar Datos
                             </a>
@@ -111,7 +111,7 @@
                                     <div class="card-header">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -162,7 +162,7 @@
                                     <div class="card-header" id="headingTwo">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -211,7 +211,7 @@
                                     <div class="card-header" id="headingThree">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -260,7 +260,7 @@
                                     <div class="card-header" id="headingFour">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -309,7 +309,7 @@
                                     <div class="card-header" id="headingFive">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -358,7 +358,7 @@
                                     <div class="card-header" id="headingSixe">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseSixe" aria-expanded="true" aria-controls="collapseSixe">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -407,7 +407,7 @@
                                     <div class="card-header" id="headingSeven">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -456,7 +456,7 @@
                                     <div class="card-header" id="headingEight">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -505,7 +505,7 @@
                                     <div class="card-header" id="headingNine">
                                         <h2 class="mb-0">
                                             <button class="btn btn-link habil" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="true" aria-controls="collapseNine">
-                                                <i class="fa fa-plus-circle"></i> Agregar Problema
+                                                <i class="fa fa-plus-circle"></i> Ver/Agregar Problema
                                             </button>
                                         </h2>
                                     </div>
@@ -550,7 +550,7 @@
                             @Html.Action("DocumentosNecesarios", "Delegacion", new { ID_persona = Model.ID_PER })
                             <br />
                         </div>
-                      @* Se envia los botones de Validar y Abrir esta en DocumentosNecesarios.cshtml *@
+                        @* Se envia los botones de Validar y Abrir esta en DocumentosNecesarios.cshtml *@
 
                     </div>
                     @* Validar Datos*@
@@ -567,20 +567,19 @@
                             @*<h2>Validar Datos</h2>*@
                             <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                 <p>En el caso que no se encontraron falencias en los datos cargados por el postulante valide su documentacion.</p>
-                                <div data-toggle="modal" data-target="#modal1" class="col-md-3 col-sm-12">
+                                <div data-toggle="modal" data-target="#modalConfirmar" class="col-md-3 col-sm-12">
                                     <button type="button" id="BTValidar" class="fa fa-check btn btn-success btn-block habil"> Confirmar</button>
                                 </div>
                                 <hr />
                                 <p>Considerando que se han encontrado algunas falencias en la carga de datos del postulante esta opcion podra permitirlo volver a la etapa anterior para poder corregir su errores</p>
-                                <div data-toggle="modal" data-target="#modal2" class="col-md-3 col-sm-12">
+                                <div data-toggle="modal" data-target="#modalVolverEtapa" class="col-md-3 col-sm-12">
                                     <button type="button" id="BTValidar" class="fa fa-reply btn btn-warning btn-block habil"> Volver Etapa Anterior</button>
                                 </div>
                                 <hr />
                                 <p>En el caso que caso que usted considera que el postulanet no es apto para seguir el proceso de inscripcion.</p>
-                                <div data-toggle="modal" data-target="#modal3" class="col-md-3 col-sm-12">
+                                <div data-toggle="modal" data-target="#modalInterrumpir" class="col-md-3 col-sm-12">
                                     <button type="button" id="BTValidar" class="fa fa-times btn btn-danger btn-block habil"> Interrumpir Proceso</button>
                                 </div>
-
                             </div>
                         </div>
                         <hr />
@@ -614,28 +613,28 @@
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
+                    <!--fin de validar datos-->
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
-    <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
-        <div class="modal-content " id="ModalEIACuerpo">
+@*<div class="modal fade " id="ModalEIA" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="position:absolute !important;">
+        <div class="modal-dialog modal-dialog-centered modal-lg " role="document">
+            <div class="modal-content " id="ModalEIACuerpo">
 
-            <!----------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE------------------------------------------------------>
+                --------------------------------------VISTA PARCIAL PARA LA ACTULIZACION Y CREAION DE REGISTRO DE ESTUDIOS DEL POSTULANTE----------------------------------------------------
 
+            </div>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>*@
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog" aria-labelledby="ModaleConfirmar" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <h5 class="modal-title" id="ModaleConfirmar">SINU</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -655,11 +654,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalVolverEtapa" tabindex="-1" role="dialog" aria-labelledby="ModalVolverEtapa" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <h5 class="modal-title" id="ModalVolverEtapa">SINU</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -668,7 +667,7 @@
                 Recuerde que esta accion le permitira al postulante volverlo a la etapa anterior y poder corregir los errores que fueron encontrados<br />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+                <button class="btn btn-dark" data-dismiss="modal">Cerrar</button>
                 @Ajax.ActionLink("Confirmar", "VolverEtapa", "Delegacion", new { ID_persona = Model.ID_PER }, new AjaxOptions
                 {
                                                                                 HttpMethod = "POST",
@@ -679,11 +678,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalInterrumpir" tabindex="-1" role="dialog" aria-labelledby="ModalInterrumpir" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">SINU</h5>
+                <h5 class="modal-title" id="ModalInterrumpir">SINU</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -703,23 +702,23 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalCenterTitle"></h5>
+@*<div class="modal fade" id="ModalAnuncios" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalCenterTitle"></h5>
 
-            </div>
-            <div class="modal-body">
-                <p id="TextModal"></p>
-            </div>
-            <div class="modal-footer ">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"></button>
-                @*<button type="button" class="btn btn-primary" id="GuardarDTF"></button>*@
+                </div>
+                <div class="modal-body">
+                    <p id="TextModal"></p>
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="BTNModal"></button>
+                    <button type="button" class="btn btn-primary" id="GuardarDTF"></button>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -728,29 +727,32 @@
         $.NoEjecutar = true;
         id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
         TablaProblema;
+        $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
                 /////////////////////////////ocultar el modal cuando se acepte realizar alguna accion sobre el postulante///////////////////////
 document.getElementById("BtnConfirmar").onclick = function () { OculModal1() };
         function OculModal1() {
             //alert('exito entro')
-            $('#modal1').modal('hide')
+            $('#modalConfirmar').modal('hide')
         }
         document.getElementById("BtnVolverEtapa").onclick = function () { OculModal2() };
         function OculModal2() {
             //alert('exito entro')
-            $('#modal2').modal('hide')
+            $('#modalVolverEtapa').modal('hide')
         }
-         
+
          document.getElementById("BtnInterrumpirProceso").onclick = function () { OculModal3() };
         function OculModal3() {
             //alert('exito entro')
-            $('#modal3').modal('hide')
+            $('#modalInterrumpir').modal('hide')
         }
         ////////////////////////////////////////////////////fin de codigo///////////////////////////////////////////////////////////////
 
         $(document).ready(function () {
             ActICO();
 
-            //////////Muestra en la Documentacion Penal muestra enabled a los botones que si estan cargados la documentacion///////////
+            @*//////////Muestra en la Documentacion Penal muestra enabled a los botones que si estan cargados la documentacion///////////
             var cert = '@Model.certificado'
             var anex = '@Model.anexo2'
 
@@ -770,7 +772,7 @@ document.getElementById("BtnConfirmar").onclick = function () { OculModal1() };
                 $("#TextNoCert").removeAttr("hidden");
             }
 
-            ////////////////////////////////////////////// fin del codigo de Documentacion Penal/////////////////////////////////
+            ////////////////////////////////////////////// fin del codigo de Documentacion Penal/////////////////////////////////*@
 
             ///////////////////////// Disabled/Enabled boton Noitificar////////////////////////////////////////////////////////////
             @*function exito(response) {

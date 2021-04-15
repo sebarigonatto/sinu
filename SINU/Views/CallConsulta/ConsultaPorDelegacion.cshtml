@@ -14,8 +14,8 @@
 <div class="alert alert-dark text-right text-secondary" role="alert" style="background-color: #346691!important; color:white !important;">TOTAL: @ViewBag.Title2</div>
 
 @*<h2 class="font-weight-bold text-warning">
-    @ViewBag.Title2
-</h2>*@
+        @ViewBag.Title2
+    </h2>*@
 
 <div>
     <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
@@ -56,33 +56,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etapa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Etapa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
 
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>*@
-        </tr>
+                @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
         }
     </tbody>
 </table>
@@ -137,12 +137,10 @@
                     "targets": 'ni-o-ni-bu',
                     "searchable": false,
                     "orderable": false
-
-                }]
-
+          }],
+                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
             });
-
-        });
+        })
     </script>
-}
+    }

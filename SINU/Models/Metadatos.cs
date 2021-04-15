@@ -811,6 +811,12 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha { get; set; }
         [Display(Name = "Modalidad")]
         public string Modalidad_Siglas { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DataType(DataType.Date)]
+        //public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        //[DataType(DataType.Date)]
+        //public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
 
 

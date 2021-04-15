@@ -499,40 +499,16 @@ namespace SINU.Controllers
 
         #region La accion permite restaurar un postulante al proceso de inscripcion (GET)
         /// <summary>
-        /// /Aca se crea un action por que era necesario anteriormente se iba a utilizar un mismo action para 2 acciones que cumplia la misma funcion pero
-        /// en una vista funcionaba correctamente y en la otra no para no tener tanto problema se crea esta accion igual a la la accion VolverEtapa
+        /// se recibe de la vista Detail ID_Persona para que el usuario delegacion pueda volver un postulante a la etapa incion de carga de Documentacion
         /// </summary>
         /// <param name="ID_persona"></param>
         /// <returns></returns>
-        public async Task<ActionResult> RestaurarPostulante(int? ID_persona)
+        public ActionResult RestaurarPostulante(int? ID_persona)
         {
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
-            Configuracion configuracion;
-            List<vDataProblemaEncontrado> data;
-            string cuerpo = "";
             try
             {
-                vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona);
-                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionNoValidado");
-                cuerpo = configuracion.ValorDato.ToString();
-                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona).ToList();
-                var PantallaCerradas = db.spTildarPantallaParaPostulate(ID_persona).Where(m => m.Abierta == true).ToList();
-                if (PantallaCerradas.Count != 0)
-                {
-                    //var modeloPlantilla = new ViewModels.MailDocumentacion
-                    //{
-                    //    Estado = "Restaurado",
-                    //    MailCuerpo = cuerpo,
-                    //    Apellido = vInscripcionEtapaEstado.Apellido,
-                    //    Errores = data
-                    //};
-                    ////bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto4",null);
-
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return RedirectToAction("Index");
-
-                }
-                return Json(new { success = true, msg = "Si el postulante no contiene problemas presione el boton confirmar" }, JsonRequestBehavior.AllowGet);
             }
             catch (System.Exception ex)
             {

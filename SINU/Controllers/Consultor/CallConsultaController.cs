@@ -78,7 +78,7 @@ namespace SINU.Controllers.Consultor
         /// </summary>
         /// <param name="ModalidadElegida">Este parametro es la modalidad por la cual desea ver los datos filtrados</param>
         /// <returns>Devuelve los inscriptos de la vista vConsultaInscripciones pero filtrado por modalidad dada</returns>
-        public ActionResult InscriptosPorModalidad(string ModalidadElegida)
+        public ActionResult InscriptosPorModalidad(string ModalidadElegida, string Genero)
         {
             //busco el id que le corresponde a la consulta original TotalesPorModalidadyGenero
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalesPorModalidadyGenero").Select(m => m.IdConsulta).FirstOrDefault();
@@ -92,11 +92,14 @@ namespace SINU.Controllers.Consultor
             }
             else
             {
-                Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida).ToList();
+                Listado = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == ModalidadElegida && m.Genero == Genero).ToList();
                 ViewBag.modalidadElegida = ModalidadElegida;
+                //ViewBag.Genero = Genero;
             }
             return View(Listado);
         }
+
+
         /// <summary>ConsultaTotalPostulantesEs una CONSULTA principal (agregada la subconsulta VerPostulanteElegido)
         /// que muestra un simple listado de los postulantes que se encuentra realmente 
         /// en la etapa de inscripcion más allá de la etapa 5 que equivale a todos aquellos
@@ -204,7 +207,8 @@ namespace SINU.Controllers.Consultor
         public ActionResult TotalizarPorConvocatoriaActivas()
         {
             List<vInscriptosCantYTODASConvocatorias> ListadoConvocatorias;
-            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.Fecha_Fin_Proceso > DateTime.Today).ToList();
+            //ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.Fecha_Fin_Proceso > DateTime.Today).ToList();
+            ListadoConvocatorias = db.vInscriptosCantYTODASConvocatorias.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();
             ViewBag.Activas = 1;
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalizarPorConvocatoria").Select(m => m.IdConsulta).FirstOrDefault();
 

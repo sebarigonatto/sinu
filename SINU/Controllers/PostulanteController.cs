@@ -1999,6 +1999,7 @@ namespace SINU.Controllers
         public ActionResult Presentacion(int ID_persona)
         {
             var per = db.Persona.Find(ID_persona);
+            var Fechas = db.vConsultaInscripciones.First(m=>m.IdPersona==ID_persona);
             var modacarr = db.vInscripcionDetalle.First(m => m.IdPersona == per.IdPersona);
             Presentacion prese = new Presentacion
             {
@@ -2007,8 +2008,10 @@ namespace SINU.Controllers
                 Nombre = per.Nombres,
                 ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion,
                 Modalidad = modacarr.Modalidad,
-                Carrera = modacarr.CarreraRelacionada.ToString()
-
+                Carrera = modacarr.CarreraRelacionada.ToString(),
+                Fecha_Inicio = Convert.ToDateTime(Fechas.Fecha_Inicio_Proceso),
+                Fecha_Fin=Convert.ToDateTime(Fechas.Fecha_Fin_Proceso)
+                
 
             };
             ViewBag.Asignado = true;
