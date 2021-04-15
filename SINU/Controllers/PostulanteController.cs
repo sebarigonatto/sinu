@@ -1001,7 +1001,8 @@ namespace SINU.Controllers
             {
                 List<vPersona_Idioma> idioma;
                 idioma = db.vPersona_Idioma.Where(m => m.IdPersona == ID_persona).ToList();
-
+                //ver si enviar por viewbag o generar un view model
+                ViewBag.Id = ID_persona;
                 return PartialView(idioma);
             }
             catch (Exception)
@@ -1019,7 +1020,7 @@ namespace SINU.Controllers
                 IdiomasVM idioma = new IdiomasVM()
                 {
                     NivelIdiomaVM = db.NivelIdioma.ToList(),
-                    Sp_VIdiomas_VM = db.sp_vIdiomas("").ToList()
+                    Sp_VIdiomas_VM = db.sp_vIdiomas("").Where(m=>m.CODIGO!= "S/IDIOMA").ToList()
                 };
 
                 if (ID != null)
@@ -1062,10 +1063,29 @@ namespace SINU.Controllers
                 catch (Exception ex)
                 {
 
-                    return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json(new { success = true, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        public JsonResult SinIdioma(int idper)
+        {
+         
+            try
+            {
+                //llamo este sp para indicar el que no maneja otro idioma y le envio el codigo correspondiente al "SIN IDIOMA"
+                db.spIdiomasIU(0, idper, "S/IDIOMA" , 1,1, 1);
+                return Json(new { success = true, msg = "Sin idioma extranjero seleccionado.", form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         [AuthorizacionPermiso("EliminarDatosP")]
@@ -1075,6 +1095,7 @@ namespace SINU.Controllers
             {
                 var regidioma = db.PersonaIdioma.FirstOrDefault(m => m.IdPersonaIdioma == IDIdio);
                 db.PersonaIdioma.Remove(regidioma);
+               
                 db.SaveChanges();
                 return Json(new { success = true, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "Idiomas", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
@@ -1092,6 +1113,7 @@ namespace SINU.Controllers
         {
             try
             {
+                ViewBag.Id = ID_persona;
                 List<vPersona_ActividadMilitar> LISTactividad;
                 LISTactividad = db.vPersona_ActividadMilitar.Where(m => m.IdPersona == ID_persona).ToList();
 
@@ -1111,7 +1133,7 @@ namespace SINU.Controllers
             {
                 ActividadMIlitarVM actividad = new ActividadMIlitarVM()
                 {
-                    FuerzasVM = db.Fuerza.ToList(),
+                    FuerzasVM = db.Fuerza.Where(m => m.IdFuerza != 14).ToList(),
                     IDPErsona = ID_persona,
                     BajaVM = db.Baja.ToList(),
                     SituacionRevistaVM = db.SituacionRevista.ToList()
@@ -1196,6 +1218,24 @@ namespace SINU.Controllers
                 return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo nuevamente." }, JsonRequestBehavior.AllowGet);
             }
 
+        }
+
+        [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        public JsonResult SinActMilitar(int idper)
+        {
+
+            try
+            {
+                //llamo este sp para indicar el que no maneja otro idioma y le envio el codigo correspondiente al "SIN IDIOMA"
+                db.spActividadMilitarIU(0, idper, null, null, null, "", "", "", "", "", 0, 14, null);
+                return Json(new { success = false, msg = "Sin actividad militar seleccionado.", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [AuthorizacionPermiso("EliminarDatosP")]
@@ -1959,6 +1999,7 @@ namespace SINU.Controllers
         public ActionResult Presentacion(int ID_persona)
         {
             var per = db.Persona.Find(ID_persona);
+            var Fechas = db.vConsultaInscripciones.First(m=>m.IdPersona==ID_persona);
             var modacarr = db.vInscripcionDetalle.First(m => m.IdPersona == per.IdPersona);
             Presentacion prese = new Presentacion
             {
@@ -1967,8 +2008,10 @@ namespace SINU.Controllers
                 Nombre = per.Nombres,
                 ID_Inscripcion = per.Postulante.Inscripcion.First().IdInscripcion,
                 Modalidad = modacarr.Modalidad,
-                Carrera = modacarr.CarreraRelacionada.ToString()
-
+                Carrera = modacarr.CarreraRelacionada.ToString(),
+                Fecha_Inicio = Convert.ToDateTime(Fechas.Fecha_Inicio_Proceso),
+                Fecha_Fin=Convert.ToDateTime(Fechas.Fecha_Fin_Proceso)
+                
 
             };
             ViewBag.Asignado = true;

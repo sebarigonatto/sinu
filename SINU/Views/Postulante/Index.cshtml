@@ -1,6 +1,6 @@
 ﻿@model SINU.ViewModels.IDPersonaVM
 @{
-    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripcion";
+    ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripción";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
@@ -172,34 +172,34 @@
     }
     /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
     @@media screen and (max-width: 576px) {
-        .modal-body {
+        #ModalEIA .modal-body {
             overflow: auto;
             height: 30rem;
         }
 
-            .modal-body::-webkit-scrollbar {
+            #ModalEIA .modal-body::-webkit-scrollbar {
                 -webkit-appearance: none;
             }
 
-                .modal-body::-webkit-scrollbar:vertical {
+                #ModalEIA .modal-body::-webkit-scrollbar:vertical {
                     width: 10px;
                 }
 
-            .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
+            #ModalEIA .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
                 display: none;
             }
 
-            .modal-body::-webkit-scrollbar:horizontal {
+            #ModalEIA .modal-body::-webkit-scrollbar:horizontal {
                 height: 10px;
             }
 
-            .modal-body::-webkit-scrollbar-thumb {
+            #ModalEIA .modal-body::-webkit-scrollbar-thumb {
                 background-color: #797979;
                 border-radius: 20px;
                 border: 2px solid #f1f2f3;
             }
 
-            .modal-body::-webkit-scrollbar-track {
+            #ModalEIA .modal-body::-webkit-scrollbar-track {
                 border-radius: 10px;
             }
 
@@ -338,10 +338,10 @@
             <t>
                 <h6>Apellido y Nombre: <b>@Model.NomyApe.ToUpper()</b></h6>
                 <h6>
-                    Numero de Pre-Inscripcion: <b>@ViewBag.MOD_CAR[2]</b>
+                    Numero de Pre-Inscripción: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@ViewBag.MOD_CAR[1]</b></e>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1]!=null?ViewBag.MOD_CAR[1]:Html.Raw("&emsp;----  "))</b></e>
                 </h6>
             </t>
 
@@ -351,7 +351,7 @@
             @if ((bool)Session["DeleConsul"])
             {
 
-                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" onclick="window.history.back()" id=""><b>Atras</b></button>
+                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" onclick="window.history.back()"><b>Atras</b></button>
                 if (ViewBag.ULTISECU == 8)
                 {
                     @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
@@ -366,8 +366,8 @@
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
 
-        <h4>Proceso de Inscripcion Interrupido.</h4>
-        <h5>Ante Consultas comunicarse con la Delegacion/Oficiana Corespondiente.</h5>
+        <h4>Proceso de Inscripción Interrupido.</h4>
+        <h5>Ante consultas comunicarse con la Delegación/Oficina Corespondiente.</h5>
         <h5>
             Nombre: <b>@Model.OfiDele.Nombre</b>
         </h5>
@@ -404,8 +404,8 @@
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active fa fa-address-card" id="2" data-toggle="tab" href="#datosbasicos" role="tab" aria-controls="datosbasicos" aria-selected="true"><p>&ensp;1° Datos Basicos</p> </a>
                         <a class="nav-item nav-link fa fa-handshake" id="3" data-toggle="tab" href="#entrevista" role="tab" aria-controls="entrevista" aria-selected="false"> <p>&ensp;2° Entrevista</p></a>
-                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentacion</p>  </a>
-                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentacion</p> </a>
+                        <a class="nav-item nav-link fa fa-address-book" id="4" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="Documentacion" aria-selected="false"><p>&ensp;3° Documentación</p>  </a>
+                        <a class="nav-item nav-link fa fa-user-tie" id="5" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="Presentacion" aria-selected="false"><p>&ensp;4° Presentación</p> </a>
                         @*<a class="nav-item nav-link fa fa-clipboard-check" id="6" data-toggle="tab" href="#Resultado" role="tab" aria-controls="Resultado" aria-selected="false"><p>&ensp;5° Resultado</p> </a>*@
 
                     </div>
@@ -444,10 +444,10 @@
                                     <a class="nav-item nav-link" href="#Estudios" data-toggle="tab"> Estudios</a>
                                     <a class="nav-item nav-link" href="#Idiomas" data-toggle="tab"> Idiomas</a>
                                     <a class="nav-item nav-link" href="#ActMilitar" data-toggle="tab"> Actividad Militar</a>
-                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situacion Ocupacional</a>
+                                    <a class="nav-item nav-link" href="#SituOcu" data-toggle="tab"> Situación Ocupacional</a>
                                     <a class="nav-item nav-link" href="#Antropometria" data-toggle="tab"> Medidas y Tallas</a>
                                     <a class="nav-item nav-link" href="#Familia" data-toggle="tab"> Familia</a>
-                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentacion</a>
+                                    <a class="nav-item nav-link" href="#DocuAnexo" data-toggle="tab"> Documentación</a>
                                     @if (Model.EtapaTabs[Model.EtapaTabs.ToArray().Length - 1] == 4 && !Model.ProcesoInterrumpido && !ViewBag.VenceComvocatoria)
                                     {
                                         <a class="nav-item nav-link TABValida" href="#ValidarDatos" data-toggle="tab" id="ValidarTAB">Validacion</a>
@@ -588,7 +588,7 @@
                                         @* VISTA DE SITUACION OCUPACIONAL*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="SituOcu">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Situcion Ocipacional</a>
+                                                <a class="navbar-brand" href="#"> Situcion Ocupacional</a>
                                                 <button id="BTSituOcuNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#SituOcuNAV" role="tabpanel" aria-labelledby="SituOcuNAV-tab" aria-controls="SituOcuNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -647,7 +647,7 @@
                                         @* VISTA DE Documentacion Extra*@
                                         <div class="pos-f-t collapse tab-pane fade tab-nav" id="DocuAnexo">
                                             <nav class="navbar navbar-dark bg-dark ">
-                                                <a class="navbar-brand" href="#"> Documentacion</a>
+                                                <a class="navbar-brand" href="#"> Documentación</a>
                                                 <button id="BTDocuAnexoNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#DocuAnexoNAV" role="tabpanel" aria-labelledby="DocuAnexoNAV-tab" aria-controls="DocuAnexoNAV" aria-expanded="false" aria-label="Toggle navigation">
                                                     <span class="icon-bar"></span>
                                                     <span class="icon-bar"></span>
@@ -696,13 +696,13 @@
                                                                       OnFailure = "Falla"
                                                                   }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                                 <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validacion</button>
+                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validación</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
 
-                                                            <h5>La validacion se encuentra en Proceso.</h5>
-                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validacion.</h5>
+                                                            <h5>La validación se encuentra en Proceso.</h5>
+                                                            <h5>Via <b>Mail</b> se le informara las novedades de la validación realizada.</h5>
                                                         </div>
 
                                                     </div>
@@ -755,7 +755,6 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
-        //alert("@ViewBag.ValidacionEnCurso");
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;
         //elimino el ultimo elemnto de array, por que es un string vacio
@@ -793,6 +792,11 @@
                 .removeAttr("title", "Opcion deshabilitada hasta que avance de secuencia")
                 .tooltip('disable');
         };
+        function IdioActMil() {
+            if ($()) {
+
+            }
+        }
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
@@ -814,9 +818,10 @@
                         .css("color", "gray")
                         .attr("data-toggle", "tooltip")
                         .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
-                        .tooltip('enable');
+                        .tooltip('enable').attr("href","javascript:void(0)");
                 };
             });
+
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
             //alert("@Session["ValidoUnaVez"]");
@@ -845,14 +850,7 @@
                 $.each(SolapaPrincipales, function (index, item) {
                     BloqueaPantalla(item[1]);
                 });
-                //$("#TABDocumentacion i").remove();
-                //creo un array para almacenar estos link hasta ver como hacerlo dinamicamnete.
-                //var link_anterior = ["/CallConsulta/Index/9", "/Delegacion"];
-                if ("@HttpContext.Current.User.IsInRole("Delegacion")"=="True") {
-                    $("#BTatras").attr("href", link_anterior[1]);
-                } else {
-                    $("#BTatras").attr("href", link_anterior[0]);
-                }
+
             }
             if ('@Session["FamiTable"]' == 'True') {
                 $("#4").tab("show");
@@ -865,14 +863,16 @@
                @{
                   Session["FamiTable"] = false;
                }
-            //scroll automatico al selecionar un nav, solo en vista mobil
-            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on('click', function () {
-            //    alert("sda");
-            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
-            //});
-            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").is('collapsed', function () {
-            //    alert("sda");
-            //    $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").closest(".pos-f-t.collapse.tab-pane.fade.tab-nav")[0].scrollIntoView();
+            ////scroll automatico al selecionar un nav, solo en vista mobil
+            //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
+            //    if ($(this).hasClass("collapsed")) {
+            //          //alert("asda");
+            //        var id = $(this).closest(".pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
+            //        var target = document.getElementById(id);
+            //        target.parentNode.scrollTop = target.offsetTop;
+            //    //$("#"+ id)[0].scrollIntoView();
+            //    }
+
             //});
 
             $("#BTValidar").on("click", function () {
@@ -952,14 +952,19 @@
                     $("#BTentrevista").removeClass("disabled");
                     break;
                 case "solicitudentrevista":
+                    $("#3").attr("href","#entrevista").bind("click", function () {
+                        $(this).tab("show");
+                    });
                     HabilitarTAb(3);
                     IDETP.push(3);
                     $.BloqueaPantallasPrincipales();
                     $("#entrevista").load('/Postulante/Entrevista', { ID_persona: @Model.ID_PER });
                     $("a[href='#entrevista']").tab("show");
                     break;
+                //cambiar nombre a actializa tabla
                 case "Elimina":
                     $.ActualizaTabla(response.url_Tabla, response.url_Controller);
+                    IdioActMil();
                     break;
                 case "CambiaMOD":
                     id = $("#vPersona_DatosBasicosVM_IdPersona").val();

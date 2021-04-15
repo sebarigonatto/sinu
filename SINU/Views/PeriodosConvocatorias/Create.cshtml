@@ -1,318 +1,255 @@
-﻿@model SINU.ViewModels.PeriodosConvocatorias
+﻿@model SINU.ViewModels.CreacionConvocatoria
 
 @{
     ViewBag.Title = "Nueva Convocatoria";
-    ViewBag.lst = new List<SINU.Models.PeriodosInscripciones>();
+
     //Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
     //este if verifica si el viewdata esta vacio, si no es que el controlador devolvio un error
     //por tanto, le indico un mensaje en pantalla al usuario
     if (ViewData["error"] != null)
     {
-       
+
         <div class="alert alert-warning" role="alert">
             @ViewData["error"]
         </div>
     }
 }
+<style>
+    button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
+        background-color: #ffffff !important;
+    }
 
-@*<h2>Nueva Convocatoria</h2>*@
+    .dropup .dropdown-toggle::after[disabled='disabled'] {
+        border-top: 0em solid;
+    }
+</style>
+<h3 class="text-center">Creación de una Convocatoria</h3>
 
+<div class="col col-12 d-block">
+    @Html.ActionLink("Volver", "Index", "Convocatorias", new { @class = "btn btn-dark" })
+                            <div class="h-100"></div>
+
+
+</div>
+<br />
+@*<div class="nav justify-content-center text-center m-2">
+        <div class="col-6">
+            <h4>Paso 1</h4>
+        </div>
+        <div class="col-6">
+            <h4>Paso 2</h4>
+        </div>
+
+    </div>*@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Nuevo Periodo de Inscripción</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(m => m.IdConvocatoria)
-        @Html.HiddenFor(m => m.IdPeriodoInscripcion)
-        @Html.HiddenFor(m => m.IdModalidad)
-        @*Modelo de tabla vacia*@
-        @*<table>
-            <thead>
-                <tr>
-                    <th>
+<div class="container row m-auto justify-content-cente jumbotron">
+    <div class="col col-12">
+        @Html.ValidationMessageFor(model => model.FechaConvo.FechaInicioPeriodo, "", new { @class = "text-danger" })
+        <div class="h-100"></div>
 
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                    </td>
-                </tr>
-            </tbody>
-        </table>*@
+        @Html.ValidationMessageFor(model => model.FechaConvo.FechaFinPeriodo, "", new { @class = "text-danger" })
 
-        @*Periodo de inscripcion*@
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label col-md-6" })
-                    </th>
-                    <th>
-                        @Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label col-md-6" })
-                    </th>
+    </div>
+    <div class=" col col-md-6 col-sm-12 p-2  d-flex">
+        <div class="m-2">
+            <h5>Modalidad y Grupo Carrera u Oficio</h5>
+            <p class="lead col col-md-10 col-sm-12">Seleccion de Modalidad y Asignacion de Grupo Carrera/Oficio para la convocatoria a crear</p>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        @Html.EditorFor(model => model.FechaInicio, new
-                        {
-                            htmlAttributes = new
-                            {
-                                @class = "form-control datepicker",
-                                @id = "FechaInicio",
-                                @type = "text",
-                                placeholder = "DD/MM/YYYY"@*, @readOnly = true*@ }
-                        })
-                        @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.FechaFinal, new
-                        {
-                            htmlAttributes = new
-                            {
-                                @class = "form-control datepicker",
-                                @id = "FechaFinal",
-                                @type = "text",
-                                placeholder = "DD/MM/YYYY"@*, @readOnly = true*@ }
-                        })
-                        @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdInstitucion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.IdInstitucion, Model.Instituciones, "Seleccione una Opcion", new { @id = "IdInstitucion", @class = "form-control selectpicker", @style = "max-widht: 280px !iimportant"})
-                @Html.ValidationMessageFor(model => model.IdInstitucion, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaConvo.IdModalidad, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.FechaConvo.IdInstitucion, new SelectList(Model.Modalidades, "IdInstitucion", "IdModalidad"), "Seleccione una Modalidad", htmlAttributes: new { @class = "form-control selectpicker bg-white", @id = "modalidad" })
+                    <div class="h-100"></div>
+                    @Html.ValidationMessageFor(model => model.FechaConvo.IdModalidad, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                @Html.Label("Descripcion Modalidad:", htmlAttributes: new { @class = "control-label col-md-12 d-inline" })
+                <div class="col-md-12">
 
-
-        @*<h4>Modalidad</h4>
-        <hr />*@
-        <table>
-            <thead>
-                <tr>
-                    <td>
-                        @*@Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        @*@Html.DropDownList("IdModalidad", null, "Seleccione Modalidad", htmlAttributes: new { @class = "form-control", @id = "Modalidades" })
-        @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })*@
-                        @*@Html.Label("",new { @class = "form-control", @id = "Modalidades" })*@
-                    </td>
-                    <td>
-                        @*@Html.ActionLink(" ", "Create", "Modalidads", null, new
-                   {
-                       @class = "btn btn-success btn-lg btn-xs fas fa-plus font-jumb",
-                       @style = "height:auto"
-                   })*@
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-       
-        <h4>Carrera/Oficio</h4>
-        <hr />
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                @*@Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>                        
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                @Html.DropDownList("IdGrupoCarrOficio", null, "Seleccione Grupo", htmlAttributes: new { @class = "form-control", @id = "GruposyCarreras" })
-                                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
-                            </td>
-                            <td>
-                                @Html.ActionLink(" ", "Create", "GrupoCarrOficios", "Holas", new { @class = "btn btn-success btn-lg btn-xs fas fa-plus font-jumb", @style = "height:auto" })
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-        <h4>Inicio/Fin del proceso</h4>
-        <hr />
-
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        @Html.LabelFor(model => model.Fecha_Inicio_Proceso, htmlAttributes: new { @class = "control-label col-md-12" })
-                    </th>
-                    <th>
-                        @Html.LabelFor(model => model.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-12" })
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        @Html.EditorFor(model => model.Fecha_Inicio_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaInicioProceso", @type = "text", placeholder = "DD/MM/YYYY" } })
-                        @Html.ValidationMessageFor(model => model.Fecha_Inicio_Proceso, "", new { @class = "text-danger" })
-                    </td>
-                    <td>
-                        @Html.EditorFor(model => model.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control datepicker", @id = "FechaFinalProceso", @type = "text", placeholder = "DD/MM/YYYY" } })
-                        @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="form-group">
-
-            <div class="col-md-10">
-
+                    @Html.DropDownList("asd", new SelectList(Model.Modalidades, "IdInstitucion", "Descripcion"), "--------", htmlAttributes: new { @class = "form-control selectpicker bg-white", @disabled = "true", @id = "DESmodalidad" })
+                    <div class="h-100"></div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Grabar Registro" class="btn btn-default" />
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaConvo.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownListFor(model => model.FechaConvo.IdGrupoCarrOficio, Model.GrupoCarrOficio, "Seleccione una Modalidad", htmlAttributes: new { @class = "form-control selectpicker bg-white", @id = "grupocarrera", @disabled = "true" })
+                    <div class="h-100"></div>
+                    @Html.ValidationMessageFor(model => model.FechaConvo.IdGrupoCarrOficio, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Validar Fechas" class="btn btn-info" />
+                    </div>
+                </div>*@
+
+
         </div>
     </div>
-}
+    <div class=" col col-md-6 col-sm-12 p-2  d-flex">
+        <div class="m-2">
+            <h5>Fechas de Convocatoria</h5>
+            <p class="lead col col-md-10 col-sm-12">Ingrese las fechas de <b>Incio/Fin</b> para el Periodo de Inscripcion y la fecha para el <b>Fin</b> de la Convocatoria</p>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaConvo.FechaInicioPeriodo, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FechaConvo.FechaInicioPeriodo, new { htmlAttributes = new { @class = "form-control datepicker bg-white", @readonly = true, @placeholder = " dd/mm/aaaa" } })
 
-<div>
-    @Html.ActionLink("Volver", "Index","Convocatorias")
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaConvo.FechaFinPeriodo, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FechaConvo.FechaFinPeriodo, new { htmlAttributes = new { @class = "form-control datepicker  bg-white", @readonly = true, @placeholder = " dd/mm/aaaa" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FechaConvo.FechaFinProceso, htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FechaConvo.FechaFinProceso, new { htmlAttributes = new { @class = "form-control datepicker bg-white", @readonly = true, @placeholder = " dd/mm/aaaa" } })
+                    @Html.ValidationMessageFor(model => model.FechaConvo.FechaFinProceso, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                    @Html.Label("Personal:", htmlAttributes: new { @class = "control-label col-md-12 d-inline" })<b>@Html.Label(" ------", htmlAttributes: new { @id = "personal" })</b>
+                    <div class="col-md-12">
+                        @Html.DropDownList("asd", Model.DetallerGrupoCarreraOficio, "--------", htmlAttributes: new { @class = "form-control selectpicker bg-white" })
+                        <div class="h-100"></div>
+                    </div>
+                </div>*@
+
+
+        </div>
+
+    </div>
+
+    <div class="form-group justify-content-center">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear Convocatoria" class="btn btn-success" />
+        </div>
+    </div>
 </div>
+}
+    <br />
+    <br />
 
-@*<script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
-<!-- ***********************************************************************-->
-<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
-<!-- ***********************************************************************-->
-<!--Para establecer Formato de Tabla-->
-<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
-<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
-<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
-<!-- Rodear la tr de las th con <thead> </thead>-->
-<!-- Rodear el contenido de la tabla con <tbody>-->
-@section Scripts {
-    <script type="text/javascript">
-        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-        $(document).ready(function () {
-            $(".table-filters").DataTable({
-                responsive: true,
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
+
+
+    @*<script src="~/Scripts/jquery-3.3.1.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@
+    <!-- ***********************************************************************-->
+    <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
+    <!-- ***********************************************************************-->
+    <!--Para establecer Formato de Tabla-->
+    <!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
+    <!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
+    <!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
+    <!-- Rodear la tr de las th con <thead> </thead>-->
+    <!-- Rodear el contenido de la tabla con <tbody>-->
+    @section Scripts {
+        <script type="text/javascript">
+            //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
+            $(document).ready(function () {
+                $(".table-filters").DataTable({
+                    responsive: true,
+                    "language":
+                    {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
                     },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
 
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                },
-                {
-                    "targets": 'ni-o-ni-bu',
-                    "searchable": false,
-                    "orderable": false
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false
+                    },
+                    {
+                        "targets": 'ni-o-ni-bu',
+                        "searchable": false,
+                        "orderable": false
 
-                }]
+                    }]
 
+                });
             });
-        });
 
-        //un comentario bobo
-        //carreras filtradas
-        $(document).ready(function () {
-            //ddlRegions es igual al ID del listado de Personal.
-            $("#IdInstitucion").change(function () {
-                // $("#GruposyCarreras").prop("disabled", true);
-                //alert($("#Modalidades").val());
-                // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
+            //un comentario bobo
+            //carreras filtradas
+            $(document).ready(function () {
 
-                $.get("/PeriodosConvocatorias/FiltrarInstituciones", { InstitucionID: $("#IdInstitucion").val() }, function (data) {
-                    // VACIAMOS EL DropDownList aca hay que poner
-                    //ddlterritories es ID de la lista carreras
-                    //alert("textovaconcomilla");
-                    $("#GruposyCarreras").empty();
 
-                    // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-                    $("#GruposyCarreras").append("<option value>Seleccionar Grupo" + "</option>")
+                //ddlRegions es igual al ID del listado de Personal.
+                $("#modalidad").on("change", function () {
+                    $("#DESmodalidad option[value='" + $("#modalidad").val() + "']").attr("selected", "selected");
+                    $("#DESmodalidad").selectpicker("refresh");
+                    // $("#GruposyCarreras").prop("disabled", true);
+                    //alert($("#Modalidades").val());
+                    // /grupoCarreraOficio /Home/GetTerritoriesList      RegionId es igual a la variable que le paso al controaldor
 
-                    // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-                    $.each(data, function (index, row) {
+                    $.get("/PeriodosConvocatorias/FiltrarInstituciones", { IdInstitucion: $("#modalidad").val() }, function (data) {
+                        // VACIAMOS EL DropDownList aca hay que poner
+                        //ddlterritories es ID de la lista carreras
+                        //alert("textovaconcomilla");
+                        $("#grupocarrera").empty();
 
-                        $("#GruposyCarreras").prop("disabled", false);
-                        $("#GruposyCarreras").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                        // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+                        $("#grupocarrera").append("<option value>Seleccionar Grupo" + "</option>")
+
+                        // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+                        $.each(data, function (index, row) {
+
+
+                            $("#grupocarrera").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
+                        });
+                        $("#grupocarrera").removeAttr("disabled").selectpicker("refresh");
                     });
                 });
             });
-        });
-        $('.datepicker').datepicker({
-            //format: "dd/mm/yyyy",
-            autoclose: true,
-            weekStart: 1,
-            startDate: "today",
-            todayBtn: "linked",
-            clearBtn: true,
-            language: "es",
-            //daysOfWeekDisabled: "0,6",
-            //daysOfWeekHighlighted: "1,2,3,4,5",
-            todayHighlight: true
-        });
-    </script>
-    @*<script type="text/javascript">
-            //alterala validacion de la fechas
-            //jQuery.validator.methods["date"] = function (value, element) { return true; };
-            var date = new Date();
-            date.setDate(date.getDate() +1);
             $('.datepicker').datepicker({
-                dateFormat: 'yyyy/dd/mm',
+                //format: "dd/mm/yyyy",
                 autoclose: true,
-                startDate: date,
+                weekStart: 1,
+                startDate: "today",
+                todayBtn: "linked",
+                clearBtn: true,
+                language: "es",
+                //daysOfWeekDisabled: "0,6",
+                //daysOfWeekHighlighted: "1,2,3,4,5",
+                todayHighlight: true
             });
-        </script>*@
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
 
-}
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
+
+
+    }

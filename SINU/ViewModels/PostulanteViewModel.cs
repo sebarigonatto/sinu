@@ -150,6 +150,10 @@ namespace SINU.ViewModels
         public string Modalidad { get; set; }
         public string Carrera { get; set; }
         public byte[] Qr { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime Fecha_Inicio { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime Fecha_Fin { get; set; }
     }
 
     public class DocuPenalVM

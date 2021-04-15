@@ -40,17 +40,27 @@ namespace SINU.Controllers.Administrador
         // GET: PeriodosConvocatorias/Create
         public ActionResult Create()
         {
-            PeriodosConvocatorias convoca = new PeriodosConvocatorias();
-            ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
-            ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
-            ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
-            convoca.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+           
+            CreacionConvocatoria convoca = new CreacionConvocatoria
+            {
+                Modalidades = db.vInstitucionModalidad.Where(m=>m.IdInstitucion!=1).ToList(),
+                GrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion"),
+            };
+            //PeriodosConvocatorias convoca = new PeriodosConvocatorias();
+            //ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
+            //ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
+            //ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
+            //convoca.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
 
             #region Aclaracion: estis valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
-            convoca.IdConvocatoria = 1;
-            convoca.IdPeriodoInscripcion = 1;
-            convoca.IdModalidad = "x";
+            //convoca.IdConvocatoria = 1;
+            //convoca.IdPeriodoInscripcion = 1;
+            //convoca.IdModalidad = "x";
             #endregion
+
+
+
+
             return View(convoca);
         }
 
@@ -59,8 +69,13 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FechaInicio,FechaFinal,IdInstitucion,IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,Fecha_Inicio_Proceso,Fecha_Fin_Proceso")] PeriodosConvocatorias periodosConvocatorias)
+        public ActionResult Create(CreacionConvocatoria convoca)
         {
+            var idperiodo = 0;
+            var idModalidad = db.vInstitucionModalidad.First(m => m.IdInstitucion == convoca.FechaConvo.IdInstitucion).IdModalidad;
+            convoca.FechaConvo.IdInstitucion = convoca.FechaConvo.IdInstitucion;
+            convoca.Modalidades = db.vInstitucionModalidad.Where(m => m.IdInstitucion != 1).ToList();
+            convoca.GrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
             if (ModelState.IsValid)
             {
                 try
@@ -68,11 +83,12 @@ namespace SINU.Controllers.Administrador
                     //aca grabamos el periodo de inscripcion                    
                     //esta parte es fundamental para obtener el id y poder generar la covocatoria
                     PeriodosInscripciones PeriodoInscrip = new PeriodosInscripciones();                   
-                    PeriodoInscrip.IdInstitucion = periodosConvocatorias.IdInstitucion;
-                    PeriodoInscrip.FechaInicio=periodosConvocatorias.FechaInicio;
-                    PeriodoInscrip.FechaFinal = periodosConvocatorias.FechaFinal;                    
+                    PeriodoInscrip.IdInstitucion = convoca.FechaConvo.IdInstitucion;
+                    PeriodoInscrip.FechaInicio=convoca.FechaConvo.FechaInicioPeriodo;
+                    PeriodoInscrip.FechaFinal = convoca.FechaConvo.FechaFinPeriodo;
                     db.PeriodosInscripciones.Add(PeriodoInscrip);
                     db.SaveChanges();
+                    idperiodo = PeriodoInscrip.IdPeriodoInscripcion;
                 }
                 //27/10/2020 este catch es una prueba de internet, pero creo que no hace mas que caputrar el error
                 //no lo investigue mucho, por lo que vi en el for iria dando mensajes de pantalla pero  talvez no era para mvc
@@ -89,38 +105,39 @@ namespace SINU.Controllers.Administrador
                         }
                     }
                     //vuelvo a cargar los datos seleccionados del usuario y pasarlo a la vista por modelo. falta pasar mensaje dle error                   
-                    ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
-                    ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
-                    ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
-                    periodosConvocatorias.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+                    //ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
+                    //ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
+                    //ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
+                    //periodosConvocatorias.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
 
-                    #region Aclaracion: estos valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
-                    periodosConvocatorias.IdConvocatoria = 1;
-                    periodosConvocatorias.IdPeriodoInscripcion = 1;
-                    #endregion
-                    return View(periodosConvocatorias);
+                    //#region Aclaracion: estos valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
+                    //periodosConvocatorias.IdConvocatoria = 1;
+                    //periodosConvocatorias.IdPeriodoInscripcion = 1;
+                    //#endregion
+                    
+                    return View(convoca);
                 }
 
                 //segunda parte de la pantalla, cuando me da ok el periodo de inscripcion, es decir
                 //lo graba, paso a crear la convocatoria con el periodo de inscripcion nuevo
                 try
                 {
-                            Convocatoria NuevConvocatoria = new Convocatoria();                            
-                            NuevConvocatoria.IdGrupoCarrOficio = periodosConvocatorias.IdGrupoCarrOficio;
-                            //aca cargo en una variable el id del periodo de inscripcion anteriormente grabado
-                            //lo busco por los datos ingresados, asi puedo pasarlo como dato para la nueva CONVOCATORIA
-                            var idNuevoPeriodo = db.PeriodosInscripciones.Where(m => m.IdInstitucion == periodosConvocatorias.IdInstitucion
-                            && m.FechaFinal == periodosConvocatorias.FechaFinal && m.FechaInicio == periodosConvocatorias.FechaInicio).Select(m => m.IdPeriodoInscripcion);                   
-                            NuevConvocatoria.IdPeriodoInscripcion = Convert.ToInt32 (idNuevoPeriodo.FirstOrDefault());
+                    Convocatoria NuevConvocatoria = new Convocatoria();                            
+                    NuevConvocatoria.IdGrupoCarrOficio = convoca.FechaConvo.IdGrupoCarrOficio;
+                    //aca cargo en una variable el id del periodo de inscripcion anteriormente grabado
+                    //lo busco por los datos ingresados, asi puedo pasarlo como dato para la nueva CONVOCATORIA
+
+
+                    NuevConvocatoria.IdPeriodoInscripcion = idperiodo;
 
                     //modalidad
-                    NuevConvocatoria.IdModalidad = db.vInstitucionModalidad.Where(m => m.IdInstitucion == periodosConvocatorias.IdInstitucion).Select(m => m.IdModalidad).FirstOrDefault();
-                            NuevConvocatoria.Fecha_Inicio_Proceso = periodosConvocatorias.Fecha_Inicio_Proceso;
-                            NuevConvocatoria.Fecha_Fin_Proceso = periodosConvocatorias.Fecha_Fin_Proceso;
+                    NuevConvocatoria.IdModalidad = idModalidad;
+                            NuevConvocatoria.Fecha_Inicio_Proceso = convoca.FechaConvo.FechaInicioPeriodo;
+                            NuevConvocatoria.Fecha_Fin_Proceso = convoca.FechaConvo.FechaFinProceso;
                             ViewBag.eliminar = NuevConvocatoria.IdPeriodoInscripcion;
                             db.Convocatoria.Add(NuevConvocatoria);
                             db.SaveChanges();
-                            //return RedirectToAction("Index");
+                            return RedirectToAction("Index", "Convocatorias");
                 }
                 catch (DbEntityValidationException dbEx)
                 {
@@ -132,26 +149,22 @@ namespace SINU.Controllers.Administrador
                             ViewData["error"] = validationError.ErrorMessage.ToString();
                         }
                     }
-                    //vuelvo a cargar los datos seleccionados del usuario y pasarlo a la vista por modelo. falta pasar mensaje dle error                   
-                    ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
-                    ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion");
-                    ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion");
-                    periodosConvocatorias.Instituciones = new SelectList(db.Institucion.Where(m => m.IdInstitucion != 1).ToList(), "IdInstitucion", "NombreInst");
+               
                     //elimino el periodo de inscripcion creado, para poder volver a crearlo nuevamente 
                     //y que  no incurra en error de existencia en este punto
                     PeriodosInscripciones EliminarPerConv = db.PeriodosInscripciones.Find(ViewBag.eliminar);
                     db.PeriodosInscripciones.Remove(EliminarPerConv);
                     db.SaveChanges();
 
-                    #region Aclaracion: estos valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
-                    periodosConvocatorias.IdConvocatoria = 1;
-                    periodosConvocatorias.IdPeriodoInscripcion = 1;
-                    #endregion
-                    return View(periodosConvocatorias);
+                    //#region Aclaracion: estos valores por defectos permiten que el modelo de valido, luego se tiene que verificar los valores correctos para grabar y demas
+                    //periodosConvocatorias.IdConvocatoria = 1;
+                    //periodosConvocatorias.IdPeriodoInscripcion = 1;
+                    //#endregion
+                    return View(convoca);
                 }           
             }
 
-            return RedirectToAction("Index", "Convocatorias");
+            return View(convoca);
         }
 
         // GET: PeriodosConvocatorias/Edit/5
@@ -242,16 +255,12 @@ namespace SINU.Controllers.Administrador
             }
         }
 
-        public JsonResult FiltrarInstituciones(int InstitucionID)
+        public JsonResult FiltrarInstituciones(int IdInstitucion)
         {
 
 
             using (db = new SINUEntities())
-
-
             {
-                if (InstitucionID > 0)
-                {
                     //esta logica era para filtrar desde Institucion a Modalidad, pero ese paso intermedio lo sacamos
                     //y directamente Institucion filtra Carrera Oficio
                     //string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();                    
@@ -260,18 +269,18 @@ namespace SINU.Controllers.Administrador
                     //    Value = x.IdModalidad,
                     //    Text = x.Descripcion
                     //}).ToList();
-                    string y = (db.Institucion.Where(x => x.IdInstitucion == InstitucionID).Select(m => m.IdModalidad).ToList())[0].ToString();
-                    string z = db.Modalidad.Where(x => x.IdModalidad == y).Select(m=>m.Personal).FirstOrDefault();
+                    
+                    string z = db.vInstitucionesConvocadasYCarrerasAsociadas.Where(x => x.IdInstitucion == IdInstitucion).Select(m=>m.Personal).FirstOrDefault();
                     var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == z).Select(m => new SelectListItem
                     {
                         Value = m.IdGrupoCarrOficio,
                         Text = m.Descripcion
                     }).ToList();
                     return Json(grupo_carreras, JsonRequestBehavior.AllowGet);
-                }
-                return Json("", JsonRequestBehavior.AllowGet);
+             }
+             
                 //carrerasFiltradas
-            }
+            
         }
     }
 }
