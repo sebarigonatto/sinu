@@ -323,6 +323,11 @@
             font-size: larger;
         }
 
+   
+    #TabSecundario a.active i.adver {
+        color: #08495f !important;
+        font-size: larger;
+    }
     #autoresizing {
         display: block;
         overflow: hidden;
@@ -696,7 +701,7 @@
                                                                       OnFailure = "Falla"
                                                                   }, new { @id = "BTValidar", @class = "btn btn-lg btn-success load-submit disabled BTAcciones" })
                                                                 <br /><br />*@
-                                                            <button type="button" id="BTValidar" class="btn btn-lg btn-success disabled BTAcciones">Solicitar Validación</button>
+                                                            <button type="button" id="BTValidar" disabled class="btn btn-lg btn-success BTAcciones">Solicitar Validación</button>
 
                                                         </div>
                                                         <div id='ValidaEnCurso' @(!(bool)ViewBag.ValidacionEnCurso ? "hidden" : "")>
@@ -802,9 +807,9 @@
         $(document).ready(function () {
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
-                    $("#BTValidar").removeClass("disabled");
+                    $("#BTValidar").removeAttr("disabled");
                 } else {
-                    $("#BTValidar").addClass("disabled");
+                    $("#BTValidar").attr("disabled", "true");
                 };
             });
             //bloqueo pantallas en caso de no estar en las etapa datos basicos o  datos personales
@@ -876,12 +881,12 @@
             //});
 
             $("#BTValidar").on("click", function () {
-                //$.Cargando();
                 PantallasError = [];
+                validForm = true;
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
                     //verifico si es tabla o form
                     IdPantalla = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-                    Pantalla = $("#" + IdPantalla + " nav a").text().trim();
+                    //Pantalla = $("#" + IdPantalla + " nav a").text().trim().split(' ').splice(1,1);
                     //alert(IdPantalla + "  " + Pantalla);
                     if ($(item).find("thead").length == 0) {
                         //alert("form - " + $(item).attr("id"));
@@ -890,11 +895,13 @@
                             if ($(item2).val() == '') {
                                 if ($(item2).hasClass("custom-file-input")) {
                                     if ($(item2).next("label").children("b").html() == "Seleccione archivo...") {
-                                        PantallasError.push({ IdPantalla, Pantalla });
+                                        validForm = false;
+                                        PantallasError.push({ IdPantalla });
                                         saltar = false;
                                     };
                                 } else {
-                                    PantallasError.push({ IdPantalla, Pantalla });
+                                    PantallasError.push({ IdPantalla });
+                                    validForm = false;
                                     saltar = false;
                                 }
                             };
@@ -904,27 +911,39 @@
                     } else {
                         //id_pant = $(item).attr("id");
                         if ($(item).find("tbody tr[role='row']").length == 0) {
-                            PantallasError.push({ IdPantalla, Pantalla });
+                            PantallasError.push({ IdPantalla });
+                            validForm = false;
+
                             //alert("no hay registros");
                         }; //else {
                         //    alert("hay registos!!!!");
                         //};s
                     };
                 });
-               $.ajax({
-                   url: "/Postulante/ValidarDatos",
-                   dataType: 'json',
-                    data: {
-                        PantError: JSON.stringify(PantallasError),
-                        ID_persona: '@Model.ID_PER'
-                    },
-                    type: "POST",
-                    dataType: 'json',
-                    async: false,
-                    success: function (response) {
-                        Exito(response, status,null);
-                    }
-                });
+                if (validForm) {
+                    $.ajax({
+                        url: "/Postulante/ValidarDatos?ID_persona="+ '@Model.ID_PER',
+                        dataType: 'json',
+                     
+                        type: "POST",
+                        async: false,
+                        success: function (response) {
+                            Exito(response, status, null);
+                        }
+                    });
+                } else {
+                    PantallasError = [...new Map(PantallasError.map(item =>
+                        [item["IdPantalla"], item])).values()];
+                    $("#TabSecundario a i.adver, a.navbar-brand i.adver").remove();
+                    $.each(PantallasError, function (index, item) {
+                        $("#TabSecundario a[href='#" + item['IdPantalla'] +"'] i, #" + item["IdPantalla"] + " a.navbar-brand i").remove();
+                        $("#TabSecundario a[href='#" + item["IdPantalla"] + "'] , #" + item["IdPantalla"] + " a.navbar-brand").prepend("<i class='fa fa-fw adver' style='color: #fffa43; border-radius: 100%; border: 2px solid;'>!</i>");
+                    });
+                    $.Anuncio("Formularios incompletos!!!, verifique que haya completado cada formulario antes de enviar los mismos para su validadición.")
+                    $("#check_validacion").prop('checked', false);
+                    $("#BTValidar").attr("disabled","true");
+                };
+
             });
         });
         function Imprimir() {
