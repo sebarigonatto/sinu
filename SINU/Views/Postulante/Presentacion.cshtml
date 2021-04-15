@@ -6,6 +6,8 @@
             <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h5>
             <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h5>
             <h5>@Html.Label("Numero de Inscripción"): <b>@Html.DisplayFor(m => m.ID_Inscripcion).ToString().ToUpper()</b></h5>
+            <h5>@Html.Label("Fecha de inicio del periodo de inscripcion"): <b>@Html.DisplayFor(m => m.Fecha_Inicio).ToString().ToUpper()</b></h5>
+            <h5>@Html.Label("Fecha de fin del periodo de inscripcion"): <b>@Html.DisplayFor(m => m.Fecha_Fin).ToString().ToUpper()</b></h5>
             <h5>Modalidad: <b>@Html.DisplayFor(m => m.Modalidad).ToString().ToUpper()</b></h5>
             <h5>Carrera: <b>@Html.Raw(Model.Carrera)</b></h5>
             @Html.Hidden("presentacion", ViewBag.Asignado ? true : false)
@@ -20,7 +22,7 @@
                 <h5>@Html.DisplayNameFor(m => m.DomicilioExamenNombre): <b>@Model.DomicilioExamenNombre</b></h5>
                 <h5>@Html.DisplayNameFor(m => m.DomicilioExamen): <b>@Model.DomicilioExamen</b></h5>
             }
-        <br />
+            <br />
         </div>
         <div class="col-md-5 text-center align-content-center">
             @if (ViewBag.Asignado)

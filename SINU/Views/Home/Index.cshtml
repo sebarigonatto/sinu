@@ -144,9 +144,9 @@
 
             <!-- Slide One - Set the background image for this slide in the line below -->
             @{
-                    int index = 0;
-                    foreach (var img in ViewBag.listaimg)
-                    {
+                int index = 0;
+                foreach (var img in ViewBag.listaimg)
+                {
 
                     <div class="carousel-item @(index==0?"active":"") " style="background-image: url('../../Imagenes/@img');">
                         <div class="carousel-caption d-none d-lg-block">
@@ -187,7 +187,7 @@
     <div class="card-deck mb-4 text-center">
         <div class="card mb-4 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 15px 0 rgba(0, 0, 0, 0.17);">
             <div class="card-header" style="color: white;border-radius: 4px 4px 0px 0px;background-color: #052240;">
-                <h2>Modalidades de Inscripción</h2>
+                <h2>Bienvenido</h2>
             </div>
             <div class="card-body">
                 <p class="lead justify-content-center">
@@ -276,18 +276,25 @@
             </div>
         </div>
     }
-<div class="" style="background-color:white;height: 4%;">
-           
-                <div class="col-md-8">
-                    <h4>Redes Sociales</h4>
-                    <ul class="list-inline" style="font-size:2rem">
-                        <li class="list-inline-item"><a class="fab fa-facebook" href="http://www.facebook.com/ArmadaArg" target="_blank"></a></li>
-                        <li class="list-inline-item"><a class="fab fa-youtube" href="http://www.youtube.com/channel/UCn7ifvLLkD0zX818RNGp8EA" target="_blank"></a></li>
-                        <li class="list-inline-item"><a class="fab fa-instagram" href="http://www.instagram.com/armadaargentinaof" target="_blank"></a></li>
-                        <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/armada_arg" target="_blank"></a></li>
-                    </ul>
-                </div>  
-               
-         
+    <div class="" style="background-color:white;height: 4%;">
+
+        <div class="col-md-8">
+            <h4>Redes Sociales</h4>
+            <ul class="list-inline" style="font-size:2rem">
+                <li class="list-inline-item"><a class="fab fa-facebook" href="http://www.facebook.com/ArmadaArg" target="_blank"></a></li>
+                <li class="list-inline-item"><a class="fab fa-youtube" href="http://www.youtube.com/channel/UCn7ifvLLkD0zX818RNGp8EA" target="_blank"></a></li>
+                <li class="list-inline-item"><a class="fab fa-instagram" href="http://www.instagram.com/armadaargentinaof" target="_blank"></a></li>
+                <li class="list-inline-item"><a class="fab fa-twitter" href="https://twitter.com/armada_arg" target="_blank"></a></li>
+            </ul>
         </div>
+
+
+    </div>
 </div>
+@section Scripts {
+    <script type="text/javascript">
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    </script>
+}
