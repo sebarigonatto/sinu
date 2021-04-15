@@ -1,100 +1,101 @@
 ﻿@model IEnumerable<SINU.Models.vInscripcionEtapaEstadoUltimoEstado>
 @{
     ViewBag.CantReg = Model.Count();
-    ViewBag.Title3 = "Total de Inscriptos: " + ViewBag.CantReg;
+    ViewBag.Title3 = "Total: " + ViewBag.CantReg;
 }
 
 @*<h2 class="font-weight-bold ">
-    @ViewBag.Title3
-</h2>*@
+        @ViewBag.Title3
+    </h2>*@
 
-    @*<div class="container">
+@*<div class="container">
         <h1>My First Bootstrap Page</h1>
         <p>This is some text.</p>
     </div>*@
 
-@*alinear el titulo*@
-    <div class="container justify">
-        <h2> CONSULTA TOTAL DE INSCRIPTOS</h2>
-    </div>
 
-        <div class="alert alert-success text-right text-secondary" role="alert" style="background-color: #346691!important; color:white !important;"> @ViewBag.Title3</div>
 
-        <table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
-            <thead class="thead-dark">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IdModalidad)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Apellido)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Nombres)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Etapa)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Estado)
-                    </th>
-                    <th>Ver Datos</th>
-                    @*<th>
+<h2> CONSULTA TOTAL DE INSCRIPTOS</h2>
+
+<p>
+    <div class="alert alert-success text-secondary" role="alert" style="background-color: #346691!important; color:white !important;"> Inscriptos desde Etapa Registro <span style="float:right">@ViewBag.Title3</span></div>
+</p>
+
+    <table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdModalidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Apellido)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombres)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Etapa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>Ver Datos</th>
+                @*<th>
                         @Html.DisplayNameFor(model => model.IdDelegacionOficinaIngresoInscribio)
                     </th>*@
-                    @* <th>sdfs</th>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdModalidad)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Apellido)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nombres)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Etapa)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Estado)
-                        </td>
-                        <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
-                        @*<td>
+                @* <th>sdfs</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdModalidad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombres)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Etapa)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+                    @*<td>
                             @Html.DisplayFor(modelItem => item.IdDelegacionOficinaIngresoInscribio)
                         </td>*@
-                        @*<td>
+                    @*<td>
                         sasd*@
-                        @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-                        @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
-                        @*No se puede tener dos ActionLink con el mismo nombre*@
-                        @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
-                        @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
-                        @* </td>*@
-                    </tr>
-                }
+                    @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
+                    @* @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                    @*No se puede tener dos ActionLink con el mismo nombre*@
+                    @*@Html.ActionLink("Todos Los Inscriptos", "ConsultaTotalPostulantes", "CallConsulta")*@
+                    @*@Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+                    @* </td>*@
+                </tr>
+            }
 
-            </tbody>
+        </tbody>
 
-        </table>
+    </table>
 
-        @*<div class="container text-center">
+    @*<div class="container text-center">
             @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas",null,new {@class="" });
 
         </div>*@
 
-        @*<div class="container text-center">
+    @*<div class="container text-center">
             @Html.ActionLink("Volver al Listado de consultas", "Index", "ConsultaProgramadas", new { @class = "btn btn-primary w-100 " });
 
         </div>*@
