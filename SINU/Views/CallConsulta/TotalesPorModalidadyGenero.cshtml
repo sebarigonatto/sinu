@@ -10,10 +10,12 @@
 <h2>
     @ViewBag.Title
 </h2>
-@Html.ActionLink("VER sin discriminar MODALIDADES", "InscriptosPorModalidad", new { ModalidadElegida = "TODOS" }, new { @class = "btn btn-primary w-80  btn-dark" })
+@Html.ActionLink("Ver Genero sin separar por MODALIDAD", "InscriptosPorModalidad", new { ModalidadElegida = "TODOS" }, new { @class = "btn btn-sucess w-80  btn-success" })
+
 
 <p>
-    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">-  <span style="float:right">TOTAL INSC.: @TotalINSC</span></div>
+    <div class="alert alert-success text-right text-secondary" role="alert" style="background-color: #346691!important; color:white !important;"> Total Inscriptos: @TotalINSC</div>
+
 </p>
 
 <table class="table table-filters table-bordered table-light table-hover  " id="le-filters" style="width:100%">
@@ -21,6 +23,7 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Modalidad_Siglas)
+                <label>Modalidad</label>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genero)
@@ -28,11 +31,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Cantidad)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.SubTotal)
-            </th>
+            </th>*@
             <th>
-                Detalle
+                Ver Datos
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Total)
@@ -52,9 +55,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Cantidad)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.SubTotal)
-                </td>
+                </td>*@
                 @*<td>
                     @{ViewBag.ModalidadGenero = db.vConsultaInscripciones.Where(m => m.Modalidad_Siglas == item.Modalidad_Siglas).ToList().Count;}
                     @ViewBag.ModalidadGenero*@
