@@ -16,7 +16,7 @@ namespace SINU.Controllers.Administrador
         // GET: Fuerzas
         public ActionResult Index()
         {
-            return View(db.Fuerza.ToList());
+            return View(db.Fuerza.Where(m => m.IdFuerza != 14).ToList());
         }
 
         // GET: Fuerzas/Details/5

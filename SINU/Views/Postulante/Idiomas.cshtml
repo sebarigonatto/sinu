@@ -15,8 +15,8 @@
             <tr>
                 <th hidden>IdPersonaIdioma</th>
                 <th hidden>idPersona</th>
-                <th>@Html.DisplayNameFor(m => m.Idioma)</th>
-                <th>@Html.DisplayNameFor(m => m.NivelHabla)</th>
+                <th colspan="1">@Html.DisplayNameFor(m => m.Idioma)</th>
+                <th class="oculto">@Html.DisplayNameFor(m => m.NivelHabla)</th>
                 <th class="oculto">@Html.DisplayNameFor(m => m.NivelEscribe)</th>
                 <th class="oculto">@Html.DisplayNameFor(m => m.NivelLee)</th>
                 <th>
@@ -25,35 +25,44 @@
             </tr>
         </thead>
         <tbody>
+            @{
+                bool ninguna = false;
+                if (Model.Count() > 0)
+                {
+                    ninguna = Model.First().CodIdioma == "S/IDIOMA";
+                }
+            }
             @foreach (var item in Model)
             {
-            <tr>
-                <td hidden>@Html.DisplayFor(modelItem => item.IdPersonaIdioma)</td>
-                <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
-                <td>@Html.DisplayFor(modelItem => item.Idioma)</td>
-                <td>@Html.DisplayFor(modelItem => item.NivelHabla)</td>
-                <td class="oculto">@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
-                <td class="oculto">@Html.DisplayFor(modelItem => item.NivelLee)</td>
-                <td class="row justify-content-center align-items-center">
-                    <div class="BTMuestraTable">
-                        <button class="Edita btn btn-success fas fa-edit" data-ID="@item.IdPersonaIdioma"></button>
-                    </div>
-                    <div class="BTAcciones d-inline">
-                         &ensp; |&ensp;
-                         @Ajax.ActionLink(" ", "EliminaIDIO", new {IdPersona= item.IdPersona, IDIdio = item.IdPersonaIdioma }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @id = "EliminaIDIO", @class = "btn btn-danger fas fa-trash-alt" })
-                    </div>
-                </td>
+                <tr>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersonaIdioma)</td>
+                    <td hidden>@Html.DisplayFor(modelItem => item.IdPersona)</td>
+                    <td class="text-center" colspan="@(ninguna?"100%":"1")">@Html.DisplayFor(modelItem => item.Idioma)</td>
+                    <td class="oculto  @(ninguna?"d-none":"")">@Html.DisplayFor(modelItem => item.NivelHabla)</td>
+                    <td class="oculto  @(ninguna?"d-none":"")">@Html.DisplayFor(modelItem => item.NivelEscribe)</td>
+                    <td class="oculto  @(ninguna?"d-none":"")">@Html.DisplayFor(modelItem => item.NivelLee)</td>
+                    <td class="row justify-content-center align-items-center  @(ninguna?"d-none":"")">
+                        <div class="BTMuestraTable">
+                            <button class="Edita btn btn-success fas fa-edit" data-ID="@item.IdPersonaIdioma"></button>
+                        </div>
+                        <div class="BTAcciones d-inline">
+                            &ensp; |&ensp;
+                            @Ajax.ActionLink(" ", "EliminaIDIO", new { IdPersona = item.IdPersona, IDIdio = item.IdPersonaIdioma }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @id = "EliminaIDIO", @class = "btn btn-danger fas fa-trash-alt" })
+                        </div>
+                    </td>
 
-            </tr>
+                </tr>
             }
         </tbody>
 
     </table>
+    <br />
     <div class="BTAcciones">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary Nuevo_REG " data-IdTabla="TablaIdioma">
             Agregar
         </button>
+        @Ajax.ActionLink("Sin Idioma Extranjero", "SinIdioma", new { idper = (int)ViewBag.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new {  @class = "btn btn-info" })
     </div>
 
 </div>
