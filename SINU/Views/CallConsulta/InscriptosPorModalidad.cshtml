@@ -10,7 +10,9 @@
 </h2>
 
 <p>
-    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">-  <span style="float:right">TOTAL DE INSCRIPTOS: @TotalINSC</span></div>
+    @*<div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">-  <span style="float:right">TOTAL DE INSCRIPTOS: @TotalINSC</span></div>*@
+    <div class="alert alert-success text-right text-secondary" role="alert" style="background-color: #346691!important; color:white !important;"> TOTAL DE INSCRIPTOS: @TotalINSC</div>
+
 </p>
 
 <div>
@@ -25,14 +27,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Delegacion)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Modalidad)
-                </th>*@
+            <th>
+                @*@Html.DisplayNameFor(model => model.Modalidad_Siglas)*@
+                <label>Modalidad</label>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Apellido)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombres)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etapa)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -48,31 +57,37 @@
         @foreach (var item in Model)
         {
 
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Delegacion)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Modalidad)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delegacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modalidad_Siglas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
 
 
-                @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>*@
-            </tr>
+            @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+        </tr>
         }
     </tbody>
     @*<div>
@@ -94,11 +109,38 @@
 <!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
 <!-- Rodear la tr de las th con <thead> </thead>-->
 <!-- Rodear el contenido de la tabla con <tbody>-->
-@section Scripts {
+
+@section Scripts{
     <script type="text/javascript">
-        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
         $(document).ready(function () {
             $(".table-filters").DataTable({
+                'dom': 'Bfrtlpi',
+                buttons: [
+                    'excel', 'pdf',//'colvis',
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+                    //    extend: 'columnVisibility',
+                    //    text: 'Show secondary',
+                    //    visibility: true,
+                    //    columns: '.secondary'
+                    //},
+                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+                    //    extend: 'columnVisibility',
+                    //    text: 'Hide secondary',
+                    //    visibility: false,
+                    //    columns: '.secondary'
+                    //},
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        messageTop: 'Armada Argentina'
+                    },
+                    {
+                        extend: 'copy',
+                        text: 'copiar',
+                    }
+
+
+                ],
                 responsive: true,
                 "language":
                 {
@@ -125,7 +167,6 @@
                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                     }
                 },
-
                 "columnDefs": [{
                     "targets": 'no-sort',
                     "orderable": false
@@ -134,12 +175,10 @@
                     "targets": 'ni-o-ni-bu',
                     "searchable": false,
                     "orderable": false
-
-                }]
-
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
             });
-
-        });
+        })
     </script>
 }

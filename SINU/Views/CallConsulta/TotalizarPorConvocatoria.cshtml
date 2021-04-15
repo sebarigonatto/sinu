@@ -15,13 +15,15 @@
 {
 
     <span style="float:right">
-        @Html.ActionLink("SOLO ACTIVAS", "TotalizarPorConvocatoriaActivas", "CallConsulta", new { @class = "btn btn-primary w-80  btn-dark" })
+        @Html.ActionLink("SOLO ACTIVAS", "TotalizarPorConvocatoriaActivas", "CallConsulta", new { @class = "btn btn-primary w-80  btn-success" })
+    
+    
     </span>
     
 }
 else
 {
-    @Html.ActionLink("TODAS Las CONVOCATORIAS", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+    @Html.ActionLink("ATRAS", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
 
 }
 

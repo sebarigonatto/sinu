@@ -87,7 +87,7 @@ namespace SINU.Controllers.Consultor
             List<vConsultaInscripciones> Listado;
             if (ModalidadElegida == "TODOS")
             {
-                Listado = db.vConsultaInscripciones.ToList();
+                Listado = db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();
                 ViewBag.ModalidadElegida = "Todas las Modalidades";
             }
             else
