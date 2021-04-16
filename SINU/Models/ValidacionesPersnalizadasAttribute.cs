@@ -13,9 +13,13 @@ namespace SINU.Models
     public class VPers_ControlRangoPeriodos_Attribute : ValidationAttribute
     {
         string IdInst;
-        public VPers_ControlRangoPeriodos_Attribute(string idinst)
+        string IdPeriodo;
+
+        public VPers_ControlRangoPeriodos_Attribute(string idinst,string idperiodo)
         {
             this.IdInst = idinst;
+            this.IdPeriodo = idperiodo;
+
         }
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -28,11 +32,12 @@ namespace SINU.Models
                     DateTime fechadada = (DateTime)value;
                     var idinstituto = validationContext.ObjectType.GetProperty(IdInst);
                     var valueid = int.Parse(idinstituto.GetValue(validationContext.ObjectInstance, null).ToString());
+                    var idperiodo = validationContext.ObjectType.GetProperty(IdPeriodo);
+                    var valueid2 = int.Parse(idperiodo.GetValue(validationContext.ObjectInstance, null).ToString());
                     //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
                     //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
                     var db = new SINUEntities();
-                    int idperiodo = db.PeriodosInscripciones.First(m => m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).IdPeriodoInscripcion;
-                    var periodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdPeriodoInscripcion!= idperiodo && m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
+                    var periodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdPeriodoInscripcion != valueid2 && m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
 
                     if (periodosinstitutos.Count > 0)
                     {

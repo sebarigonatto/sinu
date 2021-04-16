@@ -36,6 +36,8 @@
 
     @Html.HiddenFor(m => m.FechaConvo.IDConvo)
     @Html.HiddenFor(m => m.FechaConvo.IdInstitucion)
+    @Html.HiddenFor(m => m.FechaConvo.IdPeriodo)
+
     <div class="row">
 
         <div class=" col col-md-6 col-sm-12 p-2  d-flex">
@@ -51,7 +53,7 @@
                         @Html.ValidationMessageFor(model => model.FechaConvo.IdModalidad, "", new { @class = "text-danger" })
                     </div>
                 </div>
-               
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.FechaConvo.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">

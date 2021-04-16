@@ -52,10 +52,10 @@ namespace SINU.ViewModels
     public class FechaConvocatoria
     {
         [Display(Name ="Fecha Inicio Periodo de Inscripcion:")]
-        [VPers_ControlRangoPeriodos_("IdInstitucion", ErrorMessage = "La fecha de Inicio ingresada esta dentro de otro periodo")]
+        [VPers_ControlRangoPeriodos_("IdInstitucion", "IdPeriodo", ErrorMessage = "La fecha de Inicio ingresada esta dentro de otro periodo")]
         public DateTime FechaInicioPeriodo { get; set; }
         [Display(Name = "Fecha Fin Periodo de Inscripcion:")]
-        [VPers_ControlRangoPeriodos_("IdInstitucion", ErrorMessage = "La fecha de Fin ingresada esta dentro de otro periodo")]
+        [VPers_ControlRangoPeriodos_("IdInstitucion", "IdPeriodo", ErrorMessage = "La fecha de Fin ingresada esta dentro de otro periodo")]
         [VPers_FIMenorFF_("FechaInicioPeriodo", ErrorMessage = "Fecha Final debe ser superior a fecha de Inicio del rango.")]
         public DateTime FechaFinPeriodo { get; set; }
         [Display(Name = "Fecha Fin Proceso de Inscripcion:")]
@@ -66,6 +66,8 @@ namespace SINU.ViewModels
         [Display(Name = "Grupo Carrera/Oficio:")]
         public string IdGrupoCarrOficio { get; set; }
         public int IDConvo { get; set; }
+        public int IdPeriodo { get; set; }
+
 
     }
 

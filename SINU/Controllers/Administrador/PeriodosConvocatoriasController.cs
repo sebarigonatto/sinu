@@ -184,7 +184,8 @@ namespace SINU.Controllers.Administrador
                 IdGrupoCarrOficio= convo.IdGrupoCarrOficio,
                 IdInstitucion= convo.IdInstitucion,
                 IdModalidad= convo.IdModalidad,
-                IDConvo= convo.IdConvocatoria
+                IDConvo= convo.IdConvocatoria,
+                IdPeriodo=convo.IdPeriodoInscripcion
 
             };
 
