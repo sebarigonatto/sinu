@@ -138,8 +138,7 @@ namespace SINU.Models
     [MetadataType(typeof(ConvocatoriaMetadata))]
     public partial class Convocatoria
     {
-        public string ff { get; set; }
-
+        
         internal static object ToList()
         {
             throw new NotImplementedException();

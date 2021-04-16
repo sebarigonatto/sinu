@@ -1,102 +1,152 @@
-﻿@model SINU.ViewModels.PeriodosConvocatorias
+﻿@model SINU.ViewModels.CreacionConvocatoria
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+    ViewBag.Title = "Editar Convocatoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    button[disabled="disabled"].dropdown-toggle, button.dropdown-toggle {
+        background-color: #ffffff !important;
+    }
 
-<h2>Edit</h2>
-
+    .dropup .dropdown-toggle::after[disabled='disabled'] {
+        border-top: 0em solid;
+    }
+</style>
+<h3 class="text-center">Edición de una Convocatoria</h3>
+<br />
+<div class="row justify-content-end">
+    <div class="col col-md-3">
+        @Html.ActionLink("Volver", "Index", "Convocatorias", new { @class = "btn btn-dark d-block" })
+    </div>
+</div>
+<br />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PeriodosConvocatorias</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IdConvocatoria)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+<div class="container row m-auto justify-content-cente jumbotron">
+    <div class="row">
+        <div class="col col-12">
+            @Html.ValidationMessageFor(model => model.FechaConvo.FechaInicioPeriodo, "", new { @class = "text-danger" })<br />
+            @Html.ValidationMessageFor(model => model.FechaConvo.FechaFinPeriodo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @Html.HiddenFor(m => m.FechaConvo.IDConvo)
+    @Html.HiddenFor(m => m.FechaConvo.IdInstitucion)
+    <div class="row">
+
+        <div class=" col col-md-6 col-sm-12 p-2  d-flex">
+            <div class="m-2">
+                <h5>Modalidad y Grupo Carrera u Oficio</h5>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaConvo.IdModalidad, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.FechaConvo.IdModalidad, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control selectpicker bg-white", @id = "modalidad" } })
+                        <div class="h-100"></div>
+                        @Html.ValidationMessageFor(model => model.FechaConvo.IdModalidad, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaConvo.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.FechaConvo.IdGrupoCarrOficio, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control selectpicker bg-white", @id = "modalidad" } })
+                        <div class="h-100"></div>
+                        @Html.ValidationMessageFor(model => model.FechaConvo.IdGrupoCarrOficio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Validar Fechas" class="btn btn-info" />
+                        </div>
+                    </div>*@
             </div>
         </div>
+        <div class=" col col-md-6 col-sm-12 p-2  d-flex">
+            <div class="m-2">
+                <h5>Fechas de Convocatoria</h5>
+                <p class="lead col col-md-10 col-sm-12">Ingrese las fechas de <b>Incio/Fin</b> para el Periodo de Inscripcion y la fecha para el <b>Fin</b> de la Convocatoria</p>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaConvo.FechaInicioPeriodo, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaConvo.FechaInicioPeriodo, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker bg-white ", @readonly = true, @placeholder = " dd/mm/aaaa" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.FechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaFinal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdInstitucion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdInstitucion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdInstitucion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdPeriodoInscripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdPeriodoInscripcion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdPeriodoInscripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdModalidad, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdModalidad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdModalidad, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdGrupoCarrOficio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdGrupoCarrOficio, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fecha_Inicio_Proceso, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Fecha_Inicio_Proceso, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fecha_Inicio_Proceso, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Fecha_Fin_Proceso, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Fecha_Fin_Proceso, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Fecha_Fin_Proceso, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ff, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ff, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ff, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaConvo.FechaFinPeriodo, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaConvo.FechaFinPeriodo, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker bg-white ", @readonly = true, @placeholder = " dd/mm/aaaa" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FechaConvo.FechaFinProceso, htmlAttributes: new { @class = "control-label col-md-12" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.FechaConvo.FechaFinProceso, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker bg-white ", @readonly = true, @placeholder = " dd/mm/aaaa" })
+                        @Html.ValidationMessageFor(model => model.FechaConvo.FechaFinProceso, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.Label("Personal:", htmlAttributes: new { @class = "control-label col-md-12 d-inline" })<b>@Html.Label(" ------", htmlAttributes: new { @id = "personal" })</b>
+                        <div class="col-md-12">
+                            @Html.DropDownList("asd", Model.DetallerGrupoCarreraOficio, "--------", htmlAttributes: new { @class = "form-control selectpicker bg-white" })
+                            <div class="h-100"></div>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-3">
+                <input type="submit" value="Guardar Convocatoria" class="btn btn-success btn-block" />
+            </div>
+        </div>
+    </div>
+
+</div>
+    @*<div class="row">
+            <div class="col-md-12">
+                <input type="submit" value="Crear Convocatoria" class="btn btn-success d-block" />
+            </div>
+        </div>*@
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+@section Scripts {
+    <script type="text/javascript">
+       
+
+        //un comentario bobo
+        //carreras filtradas
+        $(document).ready(function () {
+
+
+            //ddlRegions es igual al ID del listado de Personal.
+            
+        });
+        $('.datepicker').datepicker({
+            //format: "dd/mm/yyyy",
+            autoclose: true,
+            weekStart: 1,
+            startDate: "today",
+            todayBtn: "linked",
+            clearBtn: true,
+            language: "es",
+            //daysOfWeekDisabled: "0,6",
+            //daysOfWeekHighlighted: "1,2,3,4,5",
+            todayHighlight: true
+        });
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+
+
+}

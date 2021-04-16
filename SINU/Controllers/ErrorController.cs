@@ -33,5 +33,10 @@ namespace SINU.Controllers
             Response.StatusCode = 404;  //you may want to set this to 200
             return View("NotFound");
         }
+        public ViewResult Forbidden()
+        {
+            Response.StatusCode = 403;  //you may want to set this to 200
+            return View("Forbidden");
+        }
     }
 }

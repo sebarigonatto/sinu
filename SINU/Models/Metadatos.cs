@@ -663,9 +663,8 @@ namespace SINU.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Final del Proceso")]
         public System.DateTime Fecha_Fin_Proceso { get; set; }
-        //[Required]
-        [Display(Name = "Fecha de finlaización de Proceso")]
-        public string ff { get; set; }
+      
+      
     }
     public partial class CarrerauOficioMetadata
     {

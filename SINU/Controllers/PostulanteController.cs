@@ -1451,6 +1451,7 @@ namespace SINU.Controllers
         {
             try
             {
+                ViewBag.Id = ID_persona;
                 //List<int> id_PER_FAMI = db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).Select(m => m.IdPersona).ToList();
                 List<sp_vPersona_Familiar_Result> FAMILIARES = db.sp_vPersona_Familiar(ID_persona).ToList();
 
@@ -1616,7 +1617,26 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        public JsonResult SinFamiliar(int idper)
+        {
 
+            try
+            {
+                db.spPERSONAFamiliarIU(0, idper, null, null, null, null, null, null, null, null, null, null, null, null,null,null,null,999,null,null);
+                return Json(new { success = true, msg = "Sin familiar seleccionado", form = "Elimina", url_Tabla = "Familia", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+
+                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+
+            }
+
+
+
+        }
         public JsonResult VerificarDNI(int DNI, int ID)
         {
             try

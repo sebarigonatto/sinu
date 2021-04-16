@@ -1,18 +1,18 @@
-﻿@model SINU.ViewModels.PeriodosConvocatorias
+﻿@model SINU.Models.vConvocatoriaDetalles
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_MenuPerfilDeleg.cshtml";
+    ViewBag.Title = "Detalle Convocatoria";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
-    <h4>PeriodosConvocatorias</h4>
+    <h4>Convocatoria</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FechaInicio)
+            @Html.Label("Fecha de Inicio de Periodo de Inscripción")
         </dt>
 
         <dd>
@@ -20,24 +20,24 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FechaFinal)
+            @Html.Label("Fecha de Fin de Periodo de Inscripción")
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.FechaFinal)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.IdInstitucion)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IdInstitucion)
-        </dd>
+        </dd>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdPeriodoInscripcion)
-        </dt>
+    <dt>
+        @Html.Label("Periodo de Inscripción")
+    </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IdPeriodoInscripcion)
@@ -48,44 +48,44 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdModalidad)
+            @Html.DisplayFor(model => model.Modalidad)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.IdGrupoCarrOficio)
+            @Html.Label("Descripcion del Grupo Carrera/Oficio") 
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.IdGrupoCarrOficio)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Fecha_Inicio_Proceso)
-        </dd>
+        </dd>*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
-        </dt>
+    <dt>
+        @Html.Label("Fecha de Fin de Proceso")
+    </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Fecha_Fin_Proceso)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.ff)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ff)
-        </dd>
+        </dd>*@
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdConvocatoria }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdConvocatoria }) |
+    @Html.ActionLink("Volver al Listado", "Index")
 </p>

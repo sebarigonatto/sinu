@@ -46,9 +46,7 @@ namespace SINU.ViewModels
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Final del Proceso")]
         public System.DateTime Fecha_Fin_Proceso { get; set; }
-       
-        //[Display(Name = "Fecha de finlaización de Proceso")]
-        //public string ff { get; set; }
+     
         public SelectList Instituciones { get; set; }
     }
     public class FechaConvocatoria
@@ -67,7 +65,7 @@ namespace SINU.ViewModels
         public int IdInstitucion { get; set; }
         [Display(Name = "Grupo Carrera/Oficio:")]
         public string IdGrupoCarrOficio { get; set; }
-
+        public int IDConvo { get; set; }
 
     }
 

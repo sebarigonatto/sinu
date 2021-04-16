@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "404 | SINU";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+
+    @@media screen and (max-width: 600px) {
+        .bordererror {
+            border-right: hidden !important;
+            border-bottom: #67676773 2px solid;
+        }
+    }
+
+    @@media screen and (min-width: 600px) {
+        .bordererror {
+            border-bottom: hidden !important;
+            border-right: #67676773 2px solid;
+        }
+    }
+
+    .text-center {
+        text-align: center
+    }
+
+    .negro-sub {
+        text-decoration: underline;
+    }
+</style>
+<br />
+<div class="row text-center" style="margin-top:3vw">
+    <div class="col-sm-12 ">
+        <img class="img-fluid " style="width: 22vh; margin-bottom: -3rem" accesskey="" src="~/Imagenes/monitor_error.png" />
+    </div>
+    <div class="col-sm-12 ">
+        <div>
+            <h2 class="text-black-50 text-center" style="font-size:17vh">403</h2>
+            <p class="text-danger text-center">
+
+                <h4 class="text-center">Sin Autorización</h4>
+
+                <a href="~/Home/Index" class="card-link">Ir a la Pagina Principal</a>
+
+            </p>
+        </div>
+    </div>
+</div>

@@ -37,52 +37,61 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            bool ninguna = false;
+            if (Model.Count() > 0)
+            {
+                ninguna = Model.First().Apellido == "SIN RELACION FAMILIAR";
+            }
+        }
         @foreach (var item in Model)
         {
-        <tr>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.IdPersonaFamiliar)
-            </td>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.IdFamiliar)
-            </td>
-            <td hidden>
-                @Html.DisplayFor(modelItem => item.IdPersonaPostulante)
-            </td>
+            <tr>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.IdPersonaFamiliar)
+                </td>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.IdFamiliar)
+                </td>
+                <td hidden>
+                    @Html.DisplayFor(modelItem => item.IdPersonaPostulante)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
-            <td class="oculto">
-                @Html.DisplayFor(modelItem => item.Relacion)
-            </td>
-            <td class="row justify-content-center align-items-center">
-                <div class="BTMuestraTable">
-                    @Html.ActionLink(" ", "FamiliaCUD", new { ID_persona = item.IdPersonaPostulante, idPersonaFamilia = item.IdPersonaFamiliar }, new { @class = "Edita NoModal btn btn-success fas fa-edit", @tooltip = "Editar" })
-                </div>
-                <div class="BTAcciones d-inline">
-                    &ensp;|&ensp;
-                    @Ajax.ActionLink(" ", "EliminaFAMI", new { ID_per = item.IdPersonaFamiliar, ID_fami = item.IdFamiliar }, new AjaxOptions
-                      {
-                        HttpMethod = "POST",
-                        OnSuccess = "Exito(data,status,xhr)",
-                        OnFailure = "Falla",
-                      }, new { @id = "EliminaFAMI", @class = "btn btn-danger fas fa-trash-alt" })
-                </div>
-            </td>
-            @*<td class="oculto">
-            @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
-        </td>*@
-        </tr>
+                <td class="text-center" colspan="@(ninguna?"100%":"1")">
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td class="oculto  @(ninguna?"d-none":"")">
+                    @Html.DisplayFor(modelItem => item.Nombres)
+                </td>
+                <td class="oculto  @(ninguna?"d-none":"")">
+                    @Html.DisplayFor(modelItem => item.Relacion)
+                </td>
+                <td class="row justify-content-center align-items-center  @(ninguna?"d-none":"")">
+                    <div class="BTMuestraTable">
+                        @Html.ActionLink(" ", "FamiliaCUD", new { ID_persona = item.IdPersonaPostulante, idPersonaFamilia = item.IdPersonaFamiliar }, new { @class = "Edita NoModal btn btn-success fas fa-edit", @tooltip = "Editar" })
+                    </div>
+                    <div class="BTAcciones d-inline">
+                        &ensp;|&ensp;
+                        @Ajax.ActionLink(" ", "EliminaFAMI", new { ID_per = item.IdPersonaFamiliar, ID_fami = item.IdFamiliar }, new AjaxOptions
+                          {
+                            HttpMethod = "POST",
+                            OnSuccess = "Exito(data,status,xhr)",
+                            OnFailure = "Falla",
+                          }, new { @id = "EliminaFAMI", @class = "btn btn-danger fas fa-trash-alt" })
+                    </div>
+                </td>
+                @*<td class="oculto">
+                    @Html.Label((item.Vive.ToString() == "True") ? "SI" : "NO")
+                </td>*@
+            </tr>
         }
     </tbody>
 </table>
 <div class="BTAcciones">
     <!-- Button trigger modal -->
     @Html.ActionLink("Agregar", "FamiliaCUD", new { ID_persona = 0, idPersonaFamilia = 0 }, new { @class = "btn btn-primary" })
+    @Ajax.ActionLink("Sin Familiares", "SinFamiliar", new { idper = (int)ViewBag.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @class = "btn btn-info" })
+
 </div>
 <br />
 @*<button type="button" class="btn btn-primary Nuevo_REG" data-toggle="modal" data-target="#ModalEIA" data-IdTabla="TablaFamilia">

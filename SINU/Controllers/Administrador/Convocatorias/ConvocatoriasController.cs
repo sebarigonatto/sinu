@@ -67,18 +67,18 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult Create([Bind(Include = "IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,IdConvocatoria,ff")] Convocatoria convocatoria)
         {
             
-            if (ModelState.IsValid)
-            {
-                convocatoria.Fecha_Inicio_Proceso = DateTime.Today;
-                convocatoria.Fecha_Fin_Proceso = DateTime.Parse(convocatoria.ff);         
-                db.Convocatoria.Add(convocatoria);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    convocatoria.Fecha_Inicio_Proceso = DateTime.Today;
+            //    convocatoria.Fecha_Fin_Proceso = DateTime.Parse(convocatoria.ff);         
+            //    db.Convocatoria.Add(convocatoria);
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
 
-            ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion", convocatoria.IdGrupoCarrOficio);
-            ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion", convocatoria.IdModalidad);
-            ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
+            //ViewBag.IdGrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion", convocatoria.IdGrupoCarrOficio);
+            //ViewBag.IdModalidad = new SelectList(db.Modalidad, "IdModalidad", "Descripcion", convocatoria.IdModalidad);
+            //ViewBag.IdPeriodoInscripcion = new SelectList(db.PeriodosInscripciones, "IdPeriodoInscripcion", "IdPeriodoInscripcion", convocatoria.IdPeriodoInscripcion);
             return View(convocatoria);
         }
 

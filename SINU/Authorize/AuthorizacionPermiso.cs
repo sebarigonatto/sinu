@@ -1,6 +1,7 @@
 ﻿using SINU.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -67,7 +68,9 @@ namespace SINU.Authorize
         {
             if (!filterContext.HttpContext.Request.IsAuthenticated)
             {
-                filterContext.Result = new RedirectResult("~/Account/Login");
+                filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Sin Autorización");
+            
+
             }
             else
             {

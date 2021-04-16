@@ -9,9 +9,12 @@ using System.Web;
 using System.Web.Mvc;
 using SINU.Models;
 using SINU.ViewModels;
+using SINU.Authorize;
+using System.ComponentModel.DataAnnotations;
 
 namespace SINU.Controllers.Administrador
 {
+    [AuthorizacionPermiso("AdminMenu")]
     public class PeriodosConvocatoriasController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -19,7 +22,8 @@ namespace SINU.Controllers.Administrador
         // GET: PeriodosConvocatorias
         public ActionResult Index()
         {
-            return View(db.Convocatoria.ToList());
+            //return View(db.Convocatoria.ToList());
+            return View(db.vConvocatoriaDetalles.ToList());
         }
 
         // GET: PeriodosConvocatorias/Details/5
@@ -28,13 +32,10 @@ namespace SINU.Controllers.Administrador
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }            
+            }
             //PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            //if (periodosConvocatorias == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+           
+            return View(db.vConvocatoriaDetalles.First(m=>m.IdConvocatoria==id));
         }
 
         // GET: PeriodosConvocatorias/Create
@@ -170,16 +171,33 @@ namespace SINU.Controllers.Administrador
         // GET: PeriodosConvocatorias/Edit/5
         public ActionResult Edit(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var convo = db.vConvocatoriaDetalles.First(m => m.IdConvocatoria == id);
+            FechaConvocatoria convocatoria = new FechaConvocatoria
+            {
+                FechaFinPeriodo= convo.FechaFinal,
+                FechaInicioPeriodo= convo.FechaInicio,
+                FechaFinProceso= (DateTime)convo.Fecha_Fin_Proceso,
+                IdGrupoCarrOficio= convo.IdGrupoCarrOficio,
+                IdInstitucion= convo.IdInstitucion,
+                IdModalidad= convo.IdModalidad,
+                IDConvo= convo.IdConvocatoria
+
+            };
+
+            CreacionConvocatoria convoca = new CreacionConvocatoria
+            {
+                Modalidades = db.vInstitucionModalidad.Where(m => m.IdInstitucion != 1).ToList(),
+                GrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion"),
+                FechaConvo= convocatoria
+              
+            };
             ////PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            //if (periodosConvocatorias == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+
+            return View(convoca);
         }
 
         // POST: PeriodosConvocatorias/Edit/5
@@ -187,40 +205,89 @@ namespace SINU.Controllers.Administrador
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdConvocatoria,FechaInicio,FechaFinal,IdInstitucion,IdPeriodoInscripcion,IdModalidad,IdGrupoCarrOficio,Fecha_Inicio_Proceso,Fecha_Fin_Proceso,ff")] PeriodosConvocatorias periodosConvocatorias)
+        public ActionResult Edit(CreacionConvocatoria convoca)
         {
-            if (ModelState.IsValid)
+            var idperiodo = 0;
+            var idModalidad = db.vInstitucionModalidad.First(m => m.IdInstitucion == convoca.FechaConvo.IdInstitucion).IdModalidad;
+            convoca.FechaConvo.IdInstitucion = convoca.FechaConvo.IdInstitucion;
+            convoca.Modalidades = db.vInstitucionModalidad.Where(m => m.IdInstitucion != 1).ToList();
+            convoca.GrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion");
+            var convocatoria = db.vConvocatoriaDetalles.First(m => m.IdConvocatoria == convoca.FechaConvo.IDConvo);
+           
+            try
             {
-                db.Entry(periodosConvocatorias).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    var periodos = db.PeriodosInscripciones.Where(m => m.IdPeriodoInscripcion != convocatoria.IdPeriodoInscripcion && m.IdInstitucion == convoca.FechaConvo.IdInstitucion && (convoca.FechaConvo.FechaInicioPeriodo >= m.FechaInicio) && (convoca.FechaConvo.FechaFinPeriodo <= m.FechaFinal)).ToList();
+                    if (periodos.Count() == 0)
+                    {
+
+                        //if (TryUpdateModel(DeclaJura, "",
+                        // new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
+                        //{
+
+                        //    db.Entry(DeclaJura).State = EntityState.Modified;
+                        //    db.SaveChanges();
+                        //}
+                        //var periodo = db.PeriodosInscripciones.First(m => m.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion);
+                        //periodo.FechaInicio = convoca.FechaConvo.FechaInicioPeriodo;
+                        //periodo.FechaFinal = convoca.FechaConvo.FechaFinPeriodo;
+                        //periodo.IdInstitucion = convoca.FechaConvo.IdInstitucion;
+                        //db.Entry(periodo).State = EntityState.Modified;
+
+
+                        var convo = db.Convocatoria.First(m => m.IdConvocatoria == convocatoria.IdConvocatoria);
+                        convo.Fecha_Inicio_Proceso = convoca.FechaConvo.FechaInicioPeriodo;
+                        convo.Fecha_Inicio_Proceso = convoca.FechaConvo.FechaFinProceso;
+                        convo.IdModalidad = db.Institucion.First(m => m.IdInstitucion == convoca.FechaConvo.IdInstitucion).IdModalidad;
+                        convo.PeriodosInscripciones.FechaInicio = convoca.FechaConvo.FechaInicioPeriodo;
+                        convo.PeriodosInscripciones.FechaFinal = convoca.FechaConvo.FechaFinPeriodo;
+
+
+                        db.Entry(convo).State = EntityState.Modified;
+
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index");
+                    }
+
+                    return View(convoca);
+                }
+               
+                return View(convoca);
             }
-            return View(periodosConvocatorias);
+            catch (Exception ex)
+            {
+
+                return View(convoca);
+            }
+           
+           
         }
 
         // GET: PeriodosConvocatorias/Delete/5
         public ActionResult Delete(int? id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            ////PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            //if (periodosConvocatorias == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
+
+            return View(db.vConvocatoriaDetalles.First(m => m.IdConvocatoria == id));
         }
 
         // POST: PeriodosConvocatorias/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult DeleteConfirmed(int id)
         {
-            //PeriodosConvocatorias periodosConvocatorias = db.PeriodosConvocatorias.Find(id);
-            //db.PeriodosConvocatorias.Remove(periodosConvocatorias);
-            db.SaveChanges();
+            Convocatoria convo = db.Convocatoria.Find(id);
+            if (convo != null)
+            {
+                db.Convocatoria.Remove(convo);
+                db.PeriodosInscripciones.Remove(db.PeriodosInscripciones.First(m => m.IdPeriodoInscripcion == convo.IdPeriodoInscripcion));
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
 

@@ -31,7 +31,8 @@ namespace SINU.Models
                     //ver como solucionar esto, si cuando se vence un ´periodo se lo elimina asi solo abria un solo registro con el cual comparar 
                     //o buscar el que tiene la fecha de finalizacion mas cercana y compararlo con aquel
                     var db = new SINUEntities();
-                    var periodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
+                    int idperiodo = db.PeriodosInscripciones.First(m => m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).IdPeriodoInscripcion;
+                    var periodosinstitutos = db.PeriodosInscripciones.Where(m => m.IdPeriodoInscripcion!= idperiodo && m.IdInstitucion == valueid && (fechadada >= m.FechaInicio) && (fechadada <= m.FechaFinal)).ToList();//.OrderByDescending(m=>m.FechaFinal).ToList();
 
                     if (periodosinstitutos.Count > 0)
                     {
