@@ -19,6 +19,7 @@ namespace SINU.Controllers
         SINUEntities db = new SINUEntities();
         OficinasYDelegaciones UsuarioDelegacion;
         // GET: Delegacion
+        #region Index - aqui se realiza un filtro y que me muestren los postulantes que estan en las convocatorias activas
         public ActionResult Index()
         {
             try
@@ -30,6 +31,7 @@ namespace SINU.Controllers
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
+                    ///PostulantesIncriptosVM-> se utlizan view models para poder filtrar segun la "Etapa" que se encuentran los postulantes 
                     PostulantesIncriptosVM = db.vConsultaInscripciones.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
                     cargadatosbasicosVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
                     EntrevistaVM = db.vConsultaInscripciones.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
@@ -45,6 +47,8 @@ namespace SINU.Controllers
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
         }
+
+        #endregion
         #region Restaurar Postulante(Reutilizo Details) - reutilizo detalles para crear una pantalla para que un postulante pueda ser restaurado al proceso de inscripcion
         /// <summary>
         /// Reutilizo este datails(Modifico la Vista para poder Restaurar un Postulante que en el caso se haya interrumpido su proceso)
@@ -140,7 +144,7 @@ namespace SINU.Controllers
             }
         }
         #endregion
-
+        #region Ninguno de estas acciones funciona son los ACtionResult  por defecto
         [HttpPost]
         // GET: Delegacion/Edit/5
         public ActionResult Edit(int id)
@@ -208,6 +212,8 @@ namespace SINU.Controllers
             }
         }
 
+        #endregion
+
         #region Postular(GET) - muestra los datos del postulante al que van a Postular/No Postular
         [HttpGet]
         public ActionResult Postular(int? id)
@@ -245,12 +251,19 @@ namespace SINU.Controllers
         #region Postular(POST) - accion que Postula/No Postula a un postulante y puede seguir avanzando en el proceso de inscripcion
         [HttpPost]
         [ValidateAntiForgeryToken]
+        /// <summary>
+        /// Accion de metodo POST en donde se va a poder postular/no postular o restaurar a un postulante esta accion recibe 2 parametros de la vista Postular
+        /// </summary>
+        /// <param name="botonPostular">Valor que envia el boton segun lo que presiono el usuario delegacion</param>
+        /// <param name="id">Es un IdPersona o IdPostulante </param>
+        /// <returns></returns>
         public async Task<ActionResult> Postular(string botonPostular, int id)
         {
-            List<vInscripcionDetalle> InscripcionElegida;
-            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;
-            Configuracion configuracion;
-            bool x = false;
+            List<vInscripcionDetalle> InscripcionElegida;///Creo una List para poder traer los datos del postulante
+            vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapas;///Creo esta 2° list para que me traiga la ultima Etapa en la que se encuentra el postulante
+            Configuracion configuracion;///traigo datos de la tabla configuracion para poder armar el mail de notificacion para los postulantes
+            bool x = false;///variable que luego se enviara al postulante para que pueda ver el boton que lo direccione al sistema
+                           ///si esta en false eso quiere decir que no fue postulado
             string cuerpo = "";
             try
             {
@@ -275,9 +288,9 @@ namespace SINU.Controllers
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
                 vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
 
-                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
+                var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);///se crea este link, que luego sera enviado en el mail del postulante para poder acceder al sistema 
 
-                var modeloPlanti = new ViewModels.MailPostular
+                var modeloPlanti = new ViewModels.MailPostular///plantilla que es enviada al cuerpo del mail
                 {
                     Apellido = "",/// cambiar por nombre !!!
                     MailCuerpo = cuerpo.Replace("$Nombre", vInscripcionEtapas.Nombres),/// se remplaza con la variable creada en la base de datos con un nombre del postulante
@@ -353,18 +366,17 @@ namespace SINU.Controllers
             /////////////////////////////////fin del cofigo///////////////////////////////////////////////////////////////
 
 
-            ///////////////////////////////Boton notificar enabled/disabled/////////////////////////////////////////
+            /////////////////////////////////Boton notificar enabled/disabled/////////////////////////////////////////
+            //var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == vdetalle.IdPersona && m.IdDataVerificacion == 26).Any();
+            //ViewBag.Problem = ExistProblema;
 
-            var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == vdetalle.IdPersona && m.IdDataVerificacion == 26).Any();
-            ViewBag.Problem = ExistProblema;
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             return View(personaVM);
         }
         #endregion
 
-        #region Actualizar Iconos de Documentacion (GET) - esto le devuleve una array con los datos de pantallas abirtas y devuleve un result json para que se actualize sim hacer refresh
+        #region Actualizar Iconos de Documentacion (GET) - esto le devuleve una array con los datos de pantallas abirtas y devuleve un result json para que se actualize sin hacer refresh
         [HttpGet]
         public JsonResult ActualizaIcon(int id_persona)
         {
@@ -379,8 +391,13 @@ namespace SINU.Controllers
 
         #region Confirmar - Esta accion le perimte al usuario(Delegacion) poder avanzar al postulante,lo hace avanzar a la etapa Presentacion, y tambien le envia un mail de notificacion donde se comunicara que la documentacion esta validada
 
+        /// <summary>
+        /// En esta accion el usuario delegacion puede enviar un postulantes a la ETAPA de "Presentacion"
+        /// </summary>
+        /// <param name="id">IdInscripcion</param>
+        /// <returns></returns>
         [HttpPost]
-        public ActionResult Documentacion(int? id)
+        public ActionResult Documentacion(int? id)///IdInscripcion
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;
             Configuracion configuracion;
@@ -389,17 +406,17 @@ namespace SINU.Controllers
             try
             {
                 vInscripcionEtapaEstado = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == id);
-                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionValidado");
-                cuerpo = configuracion.ValorDato.ToString();
-                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();
-                var PantallaCerradas = db.spTildarPantallaParaPostulate(id).Where(m => m.Abierta == true).ToList();
-                if (PantallaCerradas.Count == 0)
+                configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpoDocumentacionValidado");///se trae de la tabla configuracion los datos del mail
+                cuerpo = configuracion.ValorDato.ToString();///de la varialble "configuracion"  solo nos interesa el cuerpo del mail que sera enviada por una viewmodel al cuerpo del mail
+                data = db.vDataProblemaEncontrado.Where(m => m.IdPostulantePersona == id).ToList();///listado de los problemas encontrado en el postulante
+                var PantallaCerradas = db.spTildarPantallaParaPostulate(id).Where(m => m.Abierta == true).ToList();/// verifica si hay pantallas abiertas con problemas o no validadas
+                if (PantallaCerradas.Count == 0)///si en pantallascerrad no encuentra problemas se puede validar el postulante para la proxima ETAPA
                 {
                     var modeloPlantilla = new ViewModels.MailDocumentacion
                     {
                         Estado = "Validado",
                         MailCuerpo = cuerpo,
-                        Apellido = vInscripcionEtapaEstado.Apellido,///Cambiar por nombre
+                        Apellido = vInscripcionEtapaEstado.Apellido,
                         Errores = data
                     };
                     var Result = Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, id, "MailAsunto9", null, null);
@@ -419,6 +436,11 @@ namespace SINU.Controllers
 
         #region Volver Etapa Anterior - Esta accion le perimte al usuario(delegacion) poder volver a la etapa anterior para que pueda corregir sus datos tambien se el envia un mail de notificacion para que modifique sus datos
 
+        /// <summary>
+        /// En esta accion se puede volver un postulante a la ETAPA "Documentacion - Incio de carga" donde el postulante podra corregir sus falencias
+        /// </summary>
+        /// <param name="ID_persona"></param>
+        /// <returns></returns>
         public async Task<ActionResult> VolverEtapa(int? ID_persona)
         {
             vInscripcionEtapaEstadoUltimoEstado vInscripcionEtapaEstado;

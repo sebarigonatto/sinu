@@ -704,6 +704,7 @@
     <Content Include="Documentacion\SCRIPTS\dbo.Syn_Seguridad_Validar.Synonym.sql" />
     <Content Include="Documentacion\SCRIPTS\RECREACION DE LOGIN Y USUARIOS.sql" />
     <Content Include="Imagenes\4.png" />
+    <Content Include="Imagenes\11.png" />
     <Content Include="Imagenes\carrucel1.jpg" />
     <Content Include="Imagenes\carrucel4.JPG" />
     <Content Include="Imagenes\flechaazul.jpg" />
