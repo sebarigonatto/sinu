@@ -1,7 +1,7 @@
 ﻿
 @model IEnumerable<SINU.Models.vInscriptosCantYTODASConvocatorias>
 
-@{ ViewBag.Title = "Totales Por Convocatoria ";
+@{ ViewBag.Title = "Todas Las Convocatorias ";
 
     var TotConvoc = ((List<SINU.Models.vInscriptosCantYTODASConvocatorias>)Model).Count;
     //me tira un num que no es la cant de inscriptos     
@@ -32,7 +32,7 @@ else
 </h2>
 
 <p>
-    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">Total de Convocatorias: @TotConvoc  <span style="float:right">TOTAL INSCRIPTOS: @TotalINSC</span></div>
+    <div class="alert alert-success text-dark" role="alert" style="background-color: #346691!important;color: white !important;">Total de Convocatorias: @TotConvoc  <span style="float:right">Inscriptos desde Etapa Documentación(Con Carrera Oficio)  : @TotalINSC</span></div>
 </p>
 
 <table class="table table-filters table-bordered table-light table-hover  " id="le-filters" style="width:100%">
