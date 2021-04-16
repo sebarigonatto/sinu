@@ -270,7 +270,7 @@ namespace SINU.Controllers.Administrador
                     //    Text = x.Descripcion
                     //}).ToList();
                     
-                    string z = db.vInstitucionesConvocadasYCarrerasAsociadas.Where(x => x.IdInstitucion == IdInstitucion).Select(m=>m.Personal).FirstOrDefault();
+                    string z = db.vInstitucionModalidad.Where(x => x.IdInstitucion == IdInstitucion).Select(m=>m.IdPersonal).FirstOrDefault();
                     var grupo_carreras = db.GrupoCarrOficio.Where(x => x.Personal == z).Select(m => new SelectListItem
                     {
                         Value = m.IdGrupoCarrOficio,

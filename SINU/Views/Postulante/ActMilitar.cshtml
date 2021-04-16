@@ -70,7 +70,7 @@
         <button type="button" class="btn btn-primary Nuevo_REG " data-IdTabla="TablaActMilitar">
             Agregar
         </button>
-        @Ajax.ActionLink("Sin actividad militar", "SinActMilitar", new { idper = (int)ViewBag.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @class = "btn btn-info" })
+        @Ajax.ActionLink("Sin actividad militar", "SinActMilitar", new { idper = (int)ViewBag.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "Exito(data,status,xhr)", OnFailure = "Falla", }, new { @class = "btn btn-info",@id="SinACT" })
 
     </div>
 

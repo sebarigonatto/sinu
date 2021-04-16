@@ -1789,94 +1789,94 @@ namespace SINU.Controllers
          
         [HttpPost]
         [AuthorizacionPermiso("ModificarSecuenciaP")]
-        public dynamic ValidarDatos(int ID_persona, string PantError)
+        public dynamic ValidarDatos(int ID_persona)
         {
             try
             {
 
-                int id_otroProblema;
+                //int id_otroProblema;
                 var ListaProblemaEncontrado = new List<DataProblemaEncontrado>();
               
-                var jss = new JavaScriptSerializer();
-                var ListasPantalla = jss.Deserialize<List<PantallasError>>(PantError).DistinctBy(m=>m.IdPantalla).ToList();
+                //var jss = new JavaScriptSerializer();
+                //var ListasPantalla = jss.Deserialize<List<PantallasError>>(PantError).DistinctBy(m=>m.IdPantalla).ToList();
 
                 
-                foreach (var Pantalla in ListasPantalla)
-                {
+                //foreach (var Pantalla in ListasPantalla)
+                //{
               
-                    //cargo un listado con los ID de las pantallas que presentan campos vacios o tablas sin registros.
-                    Pantalla.IdPant= db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla.IdPantalla).IdPantalla;
+                //    //cargo un listado con los ID de las pantallas que presentan campos vacios o tablas sin registros.
+                //    Pantalla.IdPant= db.VerificacionPantallas.FirstOrDefault(m => m.Pantalla == Pantalla.IdPantalla).IdPantalla;
                    
-                    //genero un registro de la novedad para cada pantalla que presente las misma
-                    id_otroProblema = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == Pantalla.IdPant && m.Descripcion == "Otros: Aclare").IdDataVerificacion;
-                    if (db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == id_otroProblema && m.IdPostulantePersona == ID_persona) == null)
-                    {
-                        ListaProblemaEncontrado.Add(new DataProblemaEncontrado
-                        {
-                            IdPostulantePersona = ID_persona,
-                            Comentario = Pantalla.Pantalla+ ", en esta solapa no se han cargado datos o solo se cargo parcialmente, verificar lo mismo.",
-                            IdDataVerificacion = id_otroProblema
-                        });
-                    }
+                //    //genero un registro de la novedad para cada pantalla que presente las misma
+                //    id_otroProblema = db.DataVerificacion.FirstOrDefault(m => m.IdPantalla == Pantalla.IdPant && m.Descripcion == "Otros: Aclare").IdDataVerificacion;
+                //    if (db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == id_otroProblema && m.IdPostulantePersona == ID_persona) == null)
+                //    {
+                //        ListaProblemaEncontrado.Add(new DataProblemaEncontrado
+                //        {
+                //            IdPostulantePersona = ID_persona,
+                //            Comentario = Pantalla.Pantalla+ ", en esta solapa no se han cargado datos o solo se cargo parcialmente, verificar lo mismo.",
+                //            IdDataVerificacion = id_otroProblema
+                //        });
+                //    }
 
-                }
+                //}
 
-                //verificacion FAMILIARES DATOS VACIOS
-                List<vPersona_Familiar> familiares = new List<vPersona_Familiar>();
+                ////verificacion FAMILIARES DATOS VACIOS
+                //List<vPersona_Familiar> familiares = new List<vPersona_Familiar>();
 
-                db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).ToList().ForEach(
-                    m=> familiares.Add(new vPersona_Familiar() { 
-                        IdPersonaFamiliar = m.IdPersona,
-                        Apellido= m.Persona.Apellido,
-                        Nombres = m.Persona.Nombres,
+                //db.Familiares.Where(m => m.IdPostulantePersona == ID_persona).ToList().ForEach(
+                //    m=> familiares.Add(new vPersona_Familiar() { 
+                //        IdPersonaFamiliar = m.IdPersona,
+                //        Apellido= m.Persona.Apellido,
+                //        Nombres = m.Persona.Nombres,
 
-                    })
-                    );
+                //    })
+                //    );
               
 
-                if (familiares.Count > 0)
-                {
-                    foreach (var familiar in familiares)
-                    {
+                //if (familiares.Count > 0)
+                //{
+                //    foreach (var familiar in familiares)
+                //    {
 
-                        //Domicilio
-                        var domicilio = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == familiar.IdPersonaFamiliar);
-                        if (!this.TryValidateModel(domicilio) && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion==43 && m.Comentario.Contains(familiar.Apellido.ToUpper() +" " + familiar.Nombres.ToUpper()))==null )
-                        {
-                            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
-                            {
-                                IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
-                                IdDataVerificacion = 43//id problema otro para la pantalla domicilio
-                            });
-                        }
+                //        //Domicilio
+                //        var domicilio = db.vPersona_Domicilio.FirstOrDefault(m => m.IdPersona == familiar.IdPersonaFamiliar);
+                //        if (!this.TryValidateModel(domicilio) && db.DataProblemaEncontrado.FirstOrDefault(m=>m.IdDataVerificacion==43 && m.Comentario.Contains(familiar.Apellido.ToUpper() +" " + familiar.Nombres.ToUpper()))==null )
+                //        {
+                //            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
+                //            {
+                //                IdPostulantePersona = ID_persona,
+                //                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
+                //                IdDataVerificacion = 43//id problema otro para la pantalla domicilio
+                //            });
+                //        }
 
-                        //Estudio
-                        if (db.VPersona_Estudio.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 44 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
-                        {
+                //        //Estudio
+                //        if (db.VPersona_Estudio.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 44 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
+                //        {
 
-                            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
-                            {
-                                IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
-                                IdDataVerificacion = 44//id problema otro para la pantalla Estudios
-                            });
-                        }
+                //            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
+                //            {
+                //                IdPostulantePersona = ID_persona,
+                //                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
+                //                IdDataVerificacion = 44//id problema otro para la pantalla Estudios
+                //            });
+                //        }
 
-                        //Actividad militar
-                        if (db.vPersona_ActividadMilitar.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 45 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
-                        {
+                //        //Actividad militar
+                //        if (db.vPersona_ActividadMilitar.Where(m => m.IdPersona == familiar.IdPersonaFamiliar).ToList().Count == 0 && db.DataProblemaEncontrado.FirstOrDefault(m => m.IdDataVerificacion == 45 && m.Comentario.Contains(familiar.Apellido.ToUpper() + " " + familiar.Nombres.ToUpper())) == null)
+                //        {
 
-                            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
-                            {
-                                IdPostulantePersona = ID_persona,
-                                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
-                                IdDataVerificacion = 45//id problema otro para la pantalla Actividad Miltar
-                            });
-                        }
+                //            ListaProblemaEncontrado.Add(new DataProblemaEncontrado
+                //            {
+                //                IdPostulantePersona = ID_persona,
+                //                Comentario = String.Format("Para el Familiar, {0} {1}.", familiar.Apellido.ToUpper(), familiar.Nombres.ToUpper()),
+                //                IdDataVerificacion = 45//id problema otro para la pantalla Actividad Miltar
+                //            });
+                //        }
 
-                    }
-                }
+                //    }
+                //}
 
                 var persona = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
                 var antropo = db.Antropometria.FirstOrDefault(m => m.IdPostulantePersona == ID_persona);
@@ -1884,7 +1884,7 @@ namespace SINU.Controllers
 
                 //ALTURA Y IMC
                 // para validadr la pantalla de antropometria veridico que se haya completado el formulario y que la misma este abierta
-                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta && ListasPantalla.FirstOrDefault(m=>m.IdPant==8)==null)
+                if (antropo != null && (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 8).Abierta)
                 {
                     //verificacion de la altura si valida o no en caso de no ser se genera un registro de error para ser revisado por la Delegacion
                     var APLICAAltura = VerificaAltIcm(ID_persona, "altura", antropo.Altura).Data.ToString().Split(',')[0].ToString().Split('=')[1].Trim();
@@ -1916,7 +1916,7 @@ namespace SINU.Controllers
                 //de los registros traidos por 'spRestriccionesParaEstePostulante', eligo al cual corresponda al postulante
                 var restriccionesEstadoCivil = db.spRestriccionesParaEstePostulante(persona.IdPersona, persona.FechaNacimiento, IDPREFE).First(m => m.IdInstitucion == IDPREFE);
                 bool PantallaDatospersonales = (bool)db.spTildarPantallaParaPostulate(ID_persona).FirstOrDefault(m => m.IdPantalla == 1).Abierta;
-                if (persona.IdModalidad != null && PantallaDatospersonales && ListasPantalla.FirstOrDefault(m => m.IdPant == 1) == null)
+                if (persona.IdModalidad != null && PantallaDatospersonales)
                 {
                     //Verifico el estado civil y el tipo de nacionalidad
                     //verifico tipo de nacionalidad en caso de ser "Argentino por Opcion" y tenga modalidad distinta a "SMV", agrego un problema en DataProblemaEncontrado
