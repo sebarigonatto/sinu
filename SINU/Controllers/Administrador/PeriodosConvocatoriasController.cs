@@ -183,16 +183,16 @@ namespace SINU.Controllers.Administrador
                 FechaFinProceso= (DateTime)convo.Fecha_Fin_Proceso,
                 IdGrupoCarrOficio= convo.IdGrupoCarrOficio,
                 IdInstitucion= convo.IdInstitucion,
-                IdModalidad= convo.IdModalidad,
+                IdModalidad= convo.Modalidad,
                 IDConvo= convo.IdConvocatoria,
                 IdPeriodo=convo.IdPeriodoInscripcion
 
             };
-
+            var personal = db.Modalidad.First(m => m.IdModalidad == convo.IdModalidad).Personal;
             CreacionConvocatoria convoca = new CreacionConvocatoria
             {
                 Modalidades = db.vInstitucionModalidad.Where(m => m.IdInstitucion != 1).ToList(),
-                GrupoCarrOficio = new SelectList(db.GrupoCarrOficio, "IdGrupoCarrOficio", "Descripcion"),
+                GrupoCarrOficio = new SelectList(db.GrupoCarrOficio.Where(m=>m.Personal== personal), "IdGrupoCarrOficio", "Descripcion"),
                 FechaConvo= convocatoria
               
             };
@@ -208,7 +208,6 @@ namespace SINU.Controllers.Administrador
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CreacionConvocatoria convoca)
         {
-            var idperiodo = 0;
             var idModalidad = db.vInstitucionModalidad.First(m => m.IdInstitucion == convoca.FechaConvo.IdInstitucion).IdModalidad;
             convoca.FechaConvo.IdInstitucion = convoca.FechaConvo.IdInstitucion;
             convoca.Modalidades = db.vInstitucionModalidad.Where(m => m.IdInstitucion != 1).ToList();
@@ -223,33 +222,19 @@ namespace SINU.Controllers.Administrador
                     if (periodos.Count() == 0)
                     {
 
-                        //if (TryUpdateModel(DeclaJura, "",
-                        // new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
-                        //{
-
-                        //    db.Entry(DeclaJura).State = EntityState.Modified;
-                        //    db.SaveChanges();
-                        //}
-                        //var periodo = db.PeriodosInscripciones.First(m => m.IdPeriodoInscripcion == convocatoria.IdPeriodoInscripcion);
-                        //periodo.FechaInicio = convoca.FechaConvo.FechaInicioPeriodo;
-                        //periodo.FechaFinal = convoca.FechaConvo.FechaFinPeriodo;
-                        //periodo.IdInstitucion = convoca.FechaConvo.IdInstitucion;
-                        //db.Entry(periodo).State = EntityState.Modified;
-
-
                         var convo = db.Convocatoria.First(m => m.IdConvocatoria == convocatoria.IdConvocatoria);
                         convo.Fecha_Inicio_Proceso = convoca.FechaConvo.FechaInicioPeriodo;
-                        convo.Fecha_Inicio_Proceso = convoca.FechaConvo.FechaFinProceso;
+                        convo.Fecha_Fin_Proceso = convoca.FechaConvo.FechaFinProceso;
                         convo.IdModalidad = db.Institucion.First(m => m.IdInstitucion == convoca.FechaConvo.IdInstitucion).IdModalidad;
                         convo.PeriodosInscripciones.FechaInicio = convoca.FechaConvo.FechaInicioPeriodo;
                         convo.PeriodosInscripciones.FechaFinal = convoca.FechaConvo.FechaFinPeriodo;
-
+                        convo.IdGrupoCarrOficio = convoca.FechaConvo.IdGrupoCarrOficio;
 
                         db.Entry(convo).State = EntityState.Modified;
 
                         db.SaveChanges();
 
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Details",new { id= convo.IdConvocatoria });
                     }
 
                     return View(convoca);

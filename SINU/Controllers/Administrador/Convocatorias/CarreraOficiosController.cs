@@ -133,9 +133,29 @@ namespace SINU.Controllers.Administrador.Convocatorias
                     carreraOficio.Personal = "Marineros";
                     break;
             }
+            ViewBag.Mensaje = "";
             if (carreraOficio == null)
             {
                 return HttpNotFound();
+            }
+            if (carreraOficio.GrupoCarrOficio.Count > 0)
+            {
+                switch (carreraOficio.Personal)
+                {
+                    case "O":
+                        carreraOficio.Personal = "Oficiales";
+                        break;
+                    case "S":
+                        carreraOficio.Personal = "Suboficiales";
+                        break;
+                    case "M":
+                        carreraOficio.Personal = "Marineros";
+                        break;
+                }
+                var link = Url.Action("Index", "GrupoCarrOficios",null, protocol: Request.Url.Scheme);
+                
+                ViewBag.Mensaje = "Carrera u Oficio asignado a uno o varios Grupo Carrera/Oficio. Primero elimine la asignacion a dicho/s grupo. Para mas detalle ir al siguiente <a target='_blank' href='"+ link +"'>link</a>" ;
+                
             }
             return View(carreraOficio);
         }
@@ -146,9 +166,20 @@ namespace SINU.Controllers.Administrador.Convocatorias
         public ActionResult DeleteConfirmed(int id)
         {
             CarreraOficio carreraOficio = db.CarreraOficio.Find(id);
-            db.CarreraOficio.Remove(carreraOficio);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.CarreraOficio.Remove(carreraOficio);
+                db.SaveChanges();
+                ViewBag.Mensaje = "Se elimino una Carrera u Oficio correctamente!!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al eliminar la carrera.";
+                return View();
+            }
+          
+           
         }
 
         protected override void Dispose(bool disposing)

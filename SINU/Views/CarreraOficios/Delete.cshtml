@@ -6,10 +6,20 @@
 }
 
 <h2>Eliminar Registro</h2>
+@if (ViewBag.Mensaje != "")
+{
+    <div class="alert alert-danger" role="alert">
+        @Html.Raw(ViewBag.Mensaje)
+    </div>
 
-<div class="alert alert-warning" role="alert">
-    Esta a punto de eliminar un Registro. ¿Está seguro?.
-</div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Esta a punto de eliminar un Registro. ¿Está seguro?.
+    </div>
+
+}
 <div>
     @*<h4>CarreraOficio</h4>*@
     <hr />
@@ -37,7 +47,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            <input type="@( ViewBag.Mensaje != ""?"button":"submit")" value="Eliminar" class="btn btn-danger" @( ViewBag.Mensaje != ""?"disabled":"") /> |
             @Html.ActionLink("Volver", "Index")
         </div>
     }

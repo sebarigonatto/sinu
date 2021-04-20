@@ -21,7 +21,7 @@
                 @Html.AntiForgeryToken()
                 if (Model.IdInstituto != 1)
                 {
-                    <h4>@ViewBag.Inst</h4>
+                    <h4>@Html.Raw(ViewBag.Inst)</h4>
                     <hr />
                 }
 

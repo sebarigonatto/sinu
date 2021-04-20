@@ -582,8 +582,10 @@ namespace SINU.Models
     public partial class vConvocatoriaDetallesMetadata
     {
         [Display(Name = "Inicio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime FechaInicio { get; set; }
         [Display(Name = "Finalización")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime FechaFinal { get; set; }
         [Display(Name = "Modalidad")]
         public string Modalidad { get; set; }
@@ -595,6 +597,10 @@ namespace SINU.Models
         public string IdModalidad { get; set; }
         [Display(Name = "Código Grupo")]
         public string IdGrupoCarrOficio { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
     public partial class InstitucionMetadata
     {

@@ -56,16 +56,9 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.IdGrupoCarrOficio)
+            @Html.DisplayFor(model => model.Desc_Grupo)
         </dd>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fecha_Inicio_Proceso)
-        </dd>*@
 
     <dt>
         @Html.Label("Fecha de Fin de Proceso")
@@ -75,17 +68,11 @@
             @Html.DisplayFor(model => model.Fecha_Fin_Proceso)
         </dd>
 
-        @*<dt>
-            @Html.DisplayNameFor(model => model.ff)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ff)
-        </dd>*@
+    
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.IdConvocatoria }) |
-    @Html.ActionLink("Volver al Listado", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdConvocatoria },new { @class="btn btn-success" }) |
+    @Html.ActionLink("Volver al Listado", "Index",null, new { @class="btn btn-dark"})
 </p>

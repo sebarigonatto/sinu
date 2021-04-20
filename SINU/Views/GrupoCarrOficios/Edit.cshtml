@@ -59,14 +59,17 @@
         </thead>
         <tbody>
             <tr class="row">
-                <td >
+                <td>
                     @Html.ListBoxFor(model => model.SelectedIDs, new MultiSelectList(Model.Carreras2, "IdCarreraOficio", "CarreraUoficio", Model.SelectedIDs), new { @class = "multiselect form-control", @multiple = "multiple", @id = "ddlTerritories" })
                 </td>
-                <td >
+                <td>
                     <div class="alert alert-info">
-                        Presione la tecla "Ctrl" + click para seleccionar más de una carrera.
+                        Presione la tecla "Ctrl" + click para seleccionar más de una carrera.<br />                 @Html.ValidationMessageFor(model => model.SelectedIDs, "", new { @class = "text-danger" })
+
                     </div>
                 </td>
+               
+                    
             </tr>
             <tr>
                 @{ if (Model.ErrorDevuelto != null)
@@ -91,7 +94,7 @@
                 <th>@Html.Label("Edad Máxima")</th>
                 <th>@Html.Label("Edad a fecha")</th>
                 <th>@Html.Label("Estado Civil")</th>
-                <th>@Html.Label("Seleccionar")</th>
+
                 <th>
                     @Html.Label("Altura Mínima Femenina")
                 </th>
@@ -104,6 +107,7 @@
                 <th>
                     @Html.Label("IMC Mínimo")
                 </th>
+                <th>@Html.Label("Seleccionar")</th>
 </thead>
         <tbody>
             @foreach (var item in ViewBag.lstresGrupo as List<SINU.Models.vRestriccionesGrupo>)
@@ -170,7 +174,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Guardar" class="btn btn-default" />
+            <input type="submit" value="Guardar" class="btn btn-success" />
         </div>
     </div>
 </div>
@@ -215,7 +219,7 @@
         $(document).ready(function () {
             //assuming that your variable name from the code behind is bInsertSuccess
             //var bSuccess = "<%= bInsertSuccess %>";
-            if (@Model.ErrorDevuelto !== null) {
+            if ('@Model.ErrorDevuelto' != "") {
                 alert("Successfully Inserted");
             }
         });

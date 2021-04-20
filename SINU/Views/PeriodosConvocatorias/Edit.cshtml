@@ -48,25 +48,24 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.FechaConvo.IdModalidad, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.FechaConvo.IdModalidad, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control selectpicker bg-white", @id = "modalidad" } })
+                        <b>@Html.DisplayFor(model => model.FechaConvo.IdModalidad, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control selectpicker bg-white ", @id = "modalidad" } })</b>
                         <div class="h-100"></div>
-                        @Html.ValidationMessageFor(model => model.FechaConvo.IdModalidad, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.FechaConvo.IdGrupoCarrOficio, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col-md-12">
-                        @Html.EditorFor(model => model.FechaConvo.IdGrupoCarrOficio, new { htmlAttributes = new { @disabled = "disabled", @class = "form-control selectpicker bg-white", @id = "modalidad" } })
+                        @Html.DropDownListFor(model => model.FechaConvo.IdGrupoCarrOficio, Model.GrupoCarrOficio, "Seleccione un Grupo Carrera/Oficio", htmlAttributes: new { @class = "form-control selectpicker bg-white", @id = "grupocarrera" })
                         <div class="h-100"></div>
                         @Html.ValidationMessageFor(model => model.FechaConvo.IdGrupoCarrOficio, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 @*<div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Validar Fechas" class="btn btn-info" />
-                        </div>
-                    </div>*@
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Validar Fechas" class="btn btn-info" />
+            </div>
+        </div>*@
             </div>
         </div>
         <div class=" col col-md-6 col-sm-12 p-2  d-flex">
@@ -129,7 +128,8 @@
         $(document).ready(function () {
 
 
-            //ddlRegions es igual al ID del listado de Personal.
+             //ddlRegions es igual al ID del listado de Personal.
+           
             
         });
         $('.datepicker').datepicker({

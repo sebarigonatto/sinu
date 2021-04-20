@@ -135,6 +135,16 @@
     .nav-link {
         color: white !important;
     }
+    .divcontainer{
+        position:relative;
+    }
+    .divabajo{
+        position:absolute;
+        bottom:5px;
+    }
+    .divarriba{
+        height:8rem;
+    }
 </style>
 <header class="mb-2" style="margin-left: -25%;margin-right: -25%; margin-top:-50px">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -234,17 +244,19 @@
                             @{string imagen1 = item + ".png"; }
                             <img class="card-img imgi" src="~/Imagenes/@imagen1" alt="Card image cap" style="">
                             <div class="card-header container-fluid">
-                                <h3 class="my-0 font-weight-normal ">@inscripINST[0].Titulo @inscripINST[0].NombreInst</h3>
+                                <h3 class="my-0 font-weight-normal ">@inscripINST[0].Titulo</h3><h4 style="color: #969595;">@inscripINST[0].NombreInst</h4>
                             </div>
 
-                            <div class="card-body container-fluid">
+                            <div class="card-body container-fluid divcontainer">
                                 @foreach (var item2 in inscripINST)
-                                {
-                                    <h5>Inicio @item2.FechaInicio.ToString("dd/MM/yyyy")</h5>
-                                    <h5>Cierre @item2.FechaFinal.ToString("dd/MM/yyyy")</h5>
+                                {   <div @(User.Identity.IsAuthenticated?"":"class=divarriba")>
+
+                                        <h5>Inicio @item2.FechaInicio.ToString("dd/MM/yyyy")</h5>
+                                        <h5>Cierre @item2.FechaFinal.ToString("dd/MM/yyyy")</h5>
+                                    </div>
                                     if (!User.Identity.IsAuthenticated)
                                     {
-                                        <div class="row card-footer lead justify-content-center">
+                                        <div class="row card-footer lead justify-content-center divabajo w-100">
                                             @Html.ActionLink("Inscribirse", "Register", "Account", new { idInstitucion = item2.IdInstitucion/*, otroParametro=Valor*/ }, htmlAttributes: new { @class = "btn btn-primary btn-lg" })
 
                                         </div>

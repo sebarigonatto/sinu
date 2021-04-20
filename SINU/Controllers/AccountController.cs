@@ -195,14 +195,14 @@ namespace SINU.Controllers
         [AllowAnonymous]
         public ActionResult Register(int? idInstitucion)
         {
+          
             if (Request.IsAuthenticated)
             {
-
                 return RedirectToAction("Index", "Home");
             }
             //si es null lo estableco 1="Necesito Orientacion"
             idInstitucion??=1;
-            ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + " " + db.Institucion.Find(idInstitucion).NombreInst.ToString();
+            ViewBag.Inst = db.Institucion.Find(idInstitucion).Titulo.ToString() + "  <br/>" + db.Institucion.Find(idInstitucion).NombreInst.ToString();
 
             //verifico si la convocatoria a la que quiere inscribir esta abierta
             var hoy = DateTime.Now.Date;

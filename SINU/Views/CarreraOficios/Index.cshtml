@@ -4,7 +4,12 @@
     ViewBag.Title = "Carrera/Oficio";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@if (ViewBag.Mensaje != null)
+{<div class="alert alert-warning" role="alert">
+        @ViewBag.Mensaje
+    </div>
+    <br />
+}
 
 <table class="table table-filters table-bordered table-light" id="le-filters" style="width:100%">
     <thead>
@@ -19,7 +24,7 @@
                 @Html.Label("Opciones")
             </th>
         </tr>
-</thead>
+    </thead>
     <tbody>
         @foreach (var item in Model)
         {
