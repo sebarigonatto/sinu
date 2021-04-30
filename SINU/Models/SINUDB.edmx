@@ -1141,21 +1141,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vOficDeleg_EstablecimientoRindExame
           <Property Name="IdEstablecimientoRindeExamen" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.VPantalla_Problema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="VPantalla_Problema">
-          <Key>
-            <PropertyRef Name="Pantalla" />
-            <PropertyRef Name="Comentario" />
-            <PropertyRef Name="IdPostulantePersona" />
-            <PropertyRef Name="IdDataProblema" />
-          </Key>
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="Pantalla" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Comentario" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="IdPostulantePersona" Type="int" Nullable="false" />
-          <Property Name="IdDataProblema" Type="int" Nullable="false" />
-        </EntityType>
-        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParam_Grados">
           <Key>
@@ -1172,17 +1157,15 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ni
 advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParentesco">
           <Key>
+            <PropertyRef Name="idParentesco" />
             <PropertyRef Name="Descripcion" />
             <PropertyRef Name="Grado" />
-            <PropertyRef Name="Consanguineo" />
             <PropertyRef Name="Relacion" />
-            <PropertyRef Name="idParentesco" />
           </Key>
+          <Property Name="idParentesco" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Grado" Type="int" Nullable="false" />
-          <Property Name="Consanguineo" Type="bit" Nullable="false" />
           <Property Name="Relacion" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="idParentesco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -1283,6 +1266,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definid
         <EntityType Name="vPersona_DatosPer">
           <Key>
             <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
             <PropertyRef Name="CUIL" />
             <PropertyRef Name="IdEstadoCivil" />
             <PropertyRef Name="IdReligion" />
@@ -1293,6 +1278,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definid
           <Property Name="IdInscripcion" Type="int" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
           <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CUIL" Type="varchar" MaxLength="11" Nullable="false" />
           <Property Name="FechaNacimiento" Type="date" />
           <Property Name="edad" Type="int" />
@@ -2535,9 +2522,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_JobLimpiAspnetUserDiasAntig" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="TopeAntiguedadEnDias" Type="int" Mode="In" />
-        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -2640,6 +2624,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
           <Parameter Name="IdCarreraOficio" Type="int" Mode="In" />
           <Parameter Name="idpreferencia" Type="int" Mode="In" />
+          <Parameter Name="Nombres" Type="varchar" Mode="In" />
+          <Parameter Name="Apellido" Type="varchar" Mode="In" />
         </Function>
         <Function Name="spDocumentoInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EsInsert" Type="bit" Mode="In" />
@@ -3254,15 +3240,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vOficDeleg_EstablecimientoRindExamen].[IdEstablecimientoRindeExamen] AS [IdEstablecimientoRindeExamen]
     FROM [dbo].[vOficDeleg_EstablecimientoRindExamen] AS [vOficDeleg_EstablecimientoRindExamen]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="VPantalla_Problema" EntityType="Self.VPantalla_Problema" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [VPantalla_Problema].[Email] AS [Email], 
-    [VPantalla_Problema].[Pantalla] AS [Pantalla], 
-    [VPantalla_Problema].[Comentario] AS [Comentario], 
-    [VPantalla_Problema].[IdPostulantePersona] AS [IdPostulantePersona], 
-    [VPantalla_Problema].[IdDataProblema] AS [IdDataProblema]
-    FROM [dbo].[VPantalla_Problema] AS [VPantalla_Problema]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vParam_Grados" EntityType="Self.vParam_Grados" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vParam_Grados].[ID] AS [ID], 
@@ -3274,11 +3251,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           </EntitySet>
           <EntitySet Name="vParentesco" EntityType="Self.vParentesco" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
+    [vParentesco].[idParentesco] AS [idParentesco], 
     [vParentesco].[Descripcion] AS [Descripcion], 
     [vParentesco].[Grado] AS [Grado], 
-    [vParentesco].[Consanguineo] AS [Consanguineo], 
-    [vParentesco].[Relacion] AS [Relacion], 
-    [vParentesco].[idParentesco] AS [idParentesco]
+    [vParentesco].[Relacion] AS [Relacion]
     FROM [dbo].[vParentesco] AS [vParentesco]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" store:Type="Views" store:Schema="dbo">
@@ -3359,6 +3335,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_DatosPer].[IdInscripcion] AS [IdInscripcion], 
     [vPersona_DatosPer].[IdModalidad] AS [IdModalidad], 
     [vPersona_DatosPer].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vPersona_DatosPer].[Apellido] AS [Apellido], 
+    [vPersona_DatosPer].[Nombres] AS [Nombres], 
     [vPersona_DatosPer].[CUIL] AS [CUIL], 
     [vPersona_DatosPer].[FechaNacimiento] AS [FechaNacimiento], 
     [vPersona_DatosPer].[edad] AS [edad], 
@@ -4395,20 +4373,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="DESCRIPCION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="IdLocalidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="vParentesco">
-          <Key>
-            <PropertyRef Name="Descripcion" />
-            <PropertyRef Name="Grado" />
-            <PropertyRef Name="Consanguineo" />
-            <PropertyRef Name="Relacion" />
-            <PropertyRef Name="idParentesco" />
-          </Key>
-          <Property Name="Descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Grado" Type="Int32" Nullable="false" />
-          <Property Name="Consanguineo" Type="Boolean" Nullable="false" />
-          <Property Name="Relacion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="idParentesco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-        </EntityType>
         <EntityType Name="vPeriodosInscrip">
           <Key>
             <PropertyRef Name="FechaInicio" />
@@ -4467,6 +4431,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdEstadoCivil" />
             <PropertyRef Name="IdReligion" />
             <PropertyRef Name="idTipoNacionalidad" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
           </Key>
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="IdPersona" Type="Int32" Nullable="false" />
@@ -4482,6 +4448,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="IdCarreraOficio" Type="Int32" />
           <Property Name="IdInscripcion" Type="Int32" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vPersona_Domicilio">
           <Key>
@@ -5023,7 +4991,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" />
           <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="Self.vInscripcionEtapaEstadoUltimoEstado" />
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
-          <EntitySet Name="vParentesco" EntityType="Self.vParentesco" />
           <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" />
           <EntitySet Name="vPersona_ActividadMilitar" EntityType="Self.vPersona_ActividadMilitar" />
           <EntitySet Name="vPersona_Antropometria" EntityType="Self.vPersona_Antropometria" />
@@ -5262,6 +5229,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdModalidad" Mode="In" Type="String" />
             <Parameter Name="IdCarreraOficio" Mode="In" Type="Int32" />
             <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="Apellido" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spDomiciliosU">
             <Parameter Name="IdDomicilioDNI" Mode="In" Type="Int32" />
@@ -5354,7 +5323,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <End Role="Usuario_OficyDeleg" EntitySet="Usuario_OficyDeleg" />
           </AssociationSet>
           <EntitySet Name="VerificacionPantallas" EntityType="SINUModel.VerificacionPantallas" />
-          <EntitySet Name="VPantalla_Problema" EntityType="SINUModel.VPantalla_Problema" />
           <AssociationSet Name="PersonaActividadMilitar" Association="SINUModel.PersonaActividadMilitar">
             <End Role="ActividadMilitar" EntitySet="ActividadMilitar" />
             <End Role="Persona" EntitySet="Persona" />
@@ -5652,6 +5620,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImport Name="spAspNetUserYPostulanteEliminar">
           <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vParentesco" EntityType="SINUModel.vParentesco" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -5790,19 +5759,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Pantalla" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="VerificacionPantallasCerradas" Relationship="SINUModel.FK_VerificacionPantallasCerradas_VerificacionPantallas" FromRole="VerificacionPantallas" ToRole="VerificacionPantallasCerradas" />
           <NavigationProperty Name="DataVerificacion" Relationship="SINUModel.FK_DataVerificacion_VerificacionPantallas" FromRole="VerificacionPantallas" ToRole="DataVerificacion" />
-        </EntityType>
-        <EntityType Name="VPantalla_Problema">
-          <Key>
-            <PropertyRef Name="Pantalla" />
-            <PropertyRef Name="IdDataProblema" />
-            <PropertyRef Name="Comentario" />
-            <PropertyRef Name="IdPostulantePersona" />
-          </Key>
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Pantalla" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdDataProblema" Type="Int32" Nullable="false" />
-          <Property Name="Comentario" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="IdPostulantePersona" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="PersonaActividadMilitar">
           <End Type="SINUModel.ActividadMilitar" Role="ActividadMilitar" Multiplicity="*" />
@@ -6960,6 +6916,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Oficina" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
         </EntityType>
+        <EntityType Name="vParentesco">
+          <Key>
+            <PropertyRef Name="idParentesco" />
+            <PropertyRef Name="Descripcion" />
+            <PropertyRef Name="Grado" />
+            <PropertyRef Name="Relacion" />
+          </Key>
+          <Property Name="idParentesco" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="Grado" Type="Int32" Nullable="false" />
+          <Property Name="Relacion" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7433,17 +7401,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vParentesco">
-            <EntityTypeMapping TypeName="SINUModel.vParentesco">
-              <MappingFragment StoreEntitySet="vParentesco">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Grado" ColumnName="Grado" />
-                <ScalarProperty Name="Consanguineo" ColumnName="Consanguineo" />
-                <ScalarProperty Name="Relacion" ColumnName="Relacion" />
-                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vPeriodosInscrip">
             <EntityTypeMapping TypeName="SINUModel.vPeriodosInscrip">
               <MappingFragment StoreEntitySet="vPeriodosInscrip">
@@ -7496,6 +7453,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPersona_DatosPer">
             <EntityTypeMapping TypeName="SINUModel.vPersona_DatosPer">
               <MappingFragment StoreEntitySet="vPersona_DatosPer">
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
                 <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
                 <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
@@ -7836,17 +7795,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VPantalla_Problema">
-            <EntityTypeMapping TypeName="SINUModel.VPantalla_Problema">
-              <MappingFragment StoreEntitySet="VPantalla_Problema">
-                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
-                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="IdDataProblema" ColumnName="IdDataProblema" />
-                <ScalarProperty Name="Pantalla" ColumnName="Pantalla" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="PersonaActividadMilitar" TypeName="SINUModel.PersonaActividadMilitar" StoreEntitySet="PersonaActividadMilitar">
             <EndProperty Name="Persona">
               <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
@@ -7974,7 +7922,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosELIMINAR" FunctionName="SINUModel.Store.spUsuariosAdministrativosELIMINAR" />
           <FunctionImportMapping FunctionImportName="spUsuariosAdministrativosU" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
           <FunctionImportMapping FunctionImportName="spAdministradorEditar" FunctionName="SINUModel.Store.spUsuariosAdministrativosU" />
-          <FunctionImportMapping FunctionImportName="sp_JobLimpiAspnetUserDiasAntig" FunctionName="SINUModel.Store.sp_JobLimpiAspnetUserDiasAntig" />
           <FunctionImportMapping FunctionImportName="spRelacionFamiliarEliminar" FunctionName="SINUModel.Store.spRelacionFamiliarEliminar" />
           <EntitySetMapping Name="vConvocatoriaDetalles">
             <EntityTypeMapping TypeName="SINUModel.vConvocatoriaDetalles">
@@ -8734,6 +8681,16 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spAspNetUserYPostulanteEliminar" FunctionName="SINUModel.Store.spAspNetUserYPostulanteEliminar" />
+          <EntitySetMapping Name="vParentesco">
+            <EntityTypeMapping TypeName="SINUModel.vParentesco">
+              <MappingFragment StoreEntitySet="vParentesco">
+                <ScalarProperty Name="Relacion" ColumnName="Relacion" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="idParentesco" ColumnName="idParentesco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

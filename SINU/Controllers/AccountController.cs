@@ -364,6 +364,7 @@ namespace SINU.Controllers
                    
                     //Ver aqui de colocar a esta persona si el result succeeded en la seguridad como POSTULANTE y se pone en etapa 5(REGISTRO Validado siguiente  6).
                     var r = db.spIngresaASeguridad(Email, "Postulante", "", "", "", "", "");
+                    
 
                     Task<IdentityResult> resultado = UserManager.AddToRoleAsync(userId, "Postulante");
 

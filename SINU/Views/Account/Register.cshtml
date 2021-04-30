@@ -16,7 +16,7 @@
     <div class="col-md-6 offset-md-3 card shadow-sm   pl-5 pr-5 pt-2">
 
         <section id="registerForm">
-            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", @role = "form" }))
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", @role = "form", @id = "FormRegistro" }))
             {
                 @Html.AntiForgeryToken()
                 if (Model.IdInstituto != 1)
@@ -82,6 +82,19 @@
                     </div>
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
+                </div>
+
+                <div class="form-group">
+                    <b>@Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-12 control-label" })</b>
+                    <div class="input-group justify-content-center">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: white; background-color: #00bfff ;">
+                                <i class="fa fa-envelope "></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="form-group">
@@ -147,18 +160,34 @@
                 <br />
 
                 @*<div class="form-group">
-                        @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>*@
+                @Html.LabelFor(model => model.Zona, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Zona, (SelectList)ViewBag.ListaZonas, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>*@
 
                 //parametro enviado oculto al controlador para almacenar la preferencia
 
 
                 <div class="form-group">
                     <div class="col-md-12">
-                        <input type="submit" value="Registrarse" class="btn" style="color:white;background-color: #00bfff;" />
+                        <input type="button" id="BotonRegistro" value="Registrarse" class="btn" style="color:white;background-color: #00bfff;" />
+                    </div>
+                </div>
+                <div class="modal fade" id="ModalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">SINU:</h5>
+                            </div>
+                            <div class="modal-body">
+                                Te pedimos que pongas especial atención a la carga de los datos solicitados, principalmente escribir en forma correcta el e-mail y eleccion de la delegacion mas cercana, para evitar demoras en proceso de inscripcion.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary" onclick="$('#ModalRegistrar').modal('hide')">Registrarse</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }
@@ -166,7 +195,6 @@
         </section>
     </div>
 </div>
-
 
 
 @section Scripts {
@@ -177,6 +205,12 @@
             noneSelectedText: 'Ninguna Opcion Seleccionada'
 
         });
+        $("#BotonRegistro").on("click", function () {
+            if ($("#FormRegistro").valid()) {
+                $("#ModalRegistrar").modal("show");
+            }; 
+        });
+
         $(document).ready(function () {
 
             //si el dni eciste anuncio que el mismo corresponde a una cuenta existente 

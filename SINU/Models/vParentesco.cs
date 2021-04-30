@@ -14,10 +14,9 @@ namespace SINU.Models
     
     public partial class vParentesco
     {
+        public int idParentesco { get; set; }
         public string Descripcion { get; set; }
         public int Grado { get; set; }
-        public bool Consanguineo { get; set; }
         public string Relacion { get; set; }
-        public int idParentesco { get; set; }
     }
 }

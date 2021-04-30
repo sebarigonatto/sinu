@@ -5,6 +5,7 @@ using Owin;
 using SINU.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 [assembly: OwinStartupAttribute(typeof(SINU.Startup))]
 namespace SINU
@@ -14,11 +15,15 @@ namespace SINU
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            createRoles();
+            Task.Factory.StartNew(() =>
+            {
+                CreateRoles();
+            });
+           
         }
 
      
-        private void createRoles()
+        private void CreateRoles()
         {
             try
             {
@@ -49,8 +54,8 @@ namespace SINU
 
                 foreach (var item in UsuarioYPerfiles)
                 {
-                         user = UserManager.FindByName(item.codUsuario);
-                   if (!UserManager.IsInRole(user.Id,item.codGrupo.Trim()))
+                    user = UserManager.FindByName(item.codUsuario);
+                    if (!UserManager.IsInRole(user.Id, item.codGrupo.Trim()))
                     {
                         //role = roleManager.FindByName(item.codGrupo);
                         var result1 = UserManager.AddToRole(user.Id, item.codGrupo.Trim());

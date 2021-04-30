@@ -66,7 +66,6 @@ namespace SINU.Models
         public virtual DbSet<vEstCivil> vEstCivil { get; set; }
         public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
-        public virtual DbSet<vParentesco> vParentesco { get; set; }
         public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
         public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
         public virtual DbSet<vPersona_Antropometria> vPersona_Antropometria { get; set; }
@@ -87,7 +86,6 @@ namespace SINU.Models
         public virtual DbSet<Usuario_OficyDeleg> Usuario_OficyDeleg { get; set; }
         public virtual DbSet<vUsuariosAdministrativos> vUsuariosAdministrativos { get; set; }
         public virtual DbSet<VerificacionPantallas> VerificacionPantallas { get; set; }
-        public virtual DbSet<VPantalla_Problema> VPantalla_Problema { get; set; }
         public virtual DbSet<vParam_Grados> vParam_Grados { get; set; }
         public virtual DbSet<vPostulanteEtapaEstado> vPostulanteEtapaEstado { get; set; }
         public virtual DbSet<vPersona_Familiar> vPersona_Familiar { get; set; }
@@ -132,6 +130,7 @@ namespace SINU.Models
         public virtual DbSet<vInscriptosConTitulosProblemasCount> vInscriptosConTitulosProblemasCount { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
+        public virtual DbSet<vParentesco> vParentesco { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -481,7 +480,7 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosBasicosUpdate", apellidoParameter, nombresParameter, idSexoParameter, dNIParameter, telefonoParameter, celularParameter, fechaNacimientoParameter, emailParameter, idDelegacionOficinaIngresoInscribioParameter, comoSeEnteroParameter, idComoSeEnteroParameter, idPreferenciaParameter, idPersonaParameter, idPostulanteParameter);
         }
     
-        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, Nullable<int> idInscripcion, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad, string idModalidad, Nullable<int> idCarreraOficio, Nullable<int> idpreferencia)
+        public virtual int spDatosPersonalesUpdate(Nullable<int> idPersona, Nullable<int> idInscripcion, string cUIL, Nullable<System.DateTime> fechaNacimiento, string idEstadoCivil, string idReligion, Nullable<int> idTipoNacionalidad, string idModalidad, Nullable<int> idCarreraOficio, Nullable<int> idpreferencia, string nombres, string apellido)
         {
             var idPersonaParameter = idPersona.HasValue ?
                 new ObjectParameter("IdPersona", idPersona) :
@@ -523,7 +522,15 @@ namespace SINU.Models
                 new ObjectParameter("idpreferencia", idpreferencia) :
                 new ObjectParameter("idpreferencia", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, idInscripcionParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter, idModalidadParameter, idCarreraOficioParameter, idpreferenciaParameter);
+            var nombresParameter = nombres != null ?
+                new ObjectParameter("Nombres", nombres) :
+                new ObjectParameter("Nombres", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("Apellido", apellido) :
+                new ObjectParameter("Apellido", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spDatosPersonalesUpdate", idPersonaParameter, idInscripcionParameter, cUILParameter, fechaNacimientoParameter, idEstadoCivilParameter, idReligionParameter, idTipoNacionalidadParameter, idModalidadParameter, idCarreraOficioParameter, idpreferenciaParameter, nombresParameter, apellidoParameter);
         }
     
         public virtual int spDomiciliosU(Nullable<int> idDomicilioDNI, string calle, string numero, string piso, string unidad, Nullable<int> idLocalidad, string prov_Loc_CP, string idPais, Nullable<int> idDomicilioActual, string eventualCalle, string eventualNumero, string eventualPiso, string eventualUnidad, Nullable<int> eventualIdLocalidad, string eventualProv_Loc_CP, string eventualIdPais)

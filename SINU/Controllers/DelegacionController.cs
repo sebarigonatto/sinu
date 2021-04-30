@@ -13,6 +13,7 @@ using System.Collections;
 
 namespace SINU.Controllers
 {
+    [Authorize]
     [AuthorizacionPermiso("RUDInscripcion")]
     public class DelegacionController : Controller
     {
@@ -115,7 +116,11 @@ namespace SINU.Controllers
                     var da = db.Inscripcion.Find(datos.IdInscripcion);
                     da.FechaEntrevista = datos.FechaEntrevista;
                     db.SaveChanges();
-                    db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                    if (da.InscripcionEtapaEstado.OrderBy(m=>m.Fecha).Last().IdSecuencia!=10)
+                    {
+                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+
+                    }
 
 
                     MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista

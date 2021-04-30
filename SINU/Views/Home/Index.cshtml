@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<SINU.Models.vPeriodosInscrip>
+@{
+    ViewBag.Title = "Sistema Unificado de Inscripción";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 
 <style type="text/css">
@@ -135,15 +139,18 @@
     .nav-link {
         color: white !important;
     }
-    .divcontainer{
-        position:relative;
+
+    .divcontainer {
+        position: relative;
     }
-    .divabajo{
-        position:absolute;
-        bottom:5px;
+
+    .divabajo {
+        position: absolute;
+        bottom: 5px;
     }
-    .divarriba{
-        height:8rem;
+
+    .divarriba {
+        height: 8rem;
     }
 </style>
 <header class="mb-2" style="margin-left: -25%;margin-right: -25%; margin-top:-50px">
@@ -230,7 +237,7 @@
     {
         <div class="card-deck justify-content-center">
             @{
-                int[] ordenID = new[] { 9, 2, 10, 4, 6,11 };
+                int[] ordenID = new[] { 9, 2, 10, 4, 6, 11 };
                 List<SINU.Models.vPeriodosInscrip>
                     Periodos1 = Model.ToList();
 
@@ -249,7 +256,7 @@
 
                             <div class="card-body container-fluid divcontainer">
                                 @foreach (var item2 in inscripINST)
-                                {   <div @(User.Identity.IsAuthenticated?"":"class=divarriba")>
+                                {<div @(User.Identity.IsAuthenticated ? "" : "class=divarriba")>
 
                                         <h5>Inicio @item2.FechaInicio.ToString("dd/MM/yyyy")</h5>
                                         <h5>Cierre @item2.FechaFinal.ToString("dd/MM/yyyy")</h5>

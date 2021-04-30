@@ -62,11 +62,7 @@ $(document).ready(function () {
         //alert(id_persona);
     })();
 
-    //cuando es cargado un documento muestro el nombre del archivo
-    $(document).on('change', '.custom-file-input', function (event) {
-        $(this).next('.custom-file-label').html(event.target.files[0].name);
-    })
-
+    
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
     $(".datepicker").datepicker({
@@ -199,10 +195,11 @@ $(document).ready(function () {
 
     //id de los combos que se veran afectados por el cambio de IDMODALIDAD
     idComboDPer = "#vPersona_DatosPerVM_IdCarreraOficio, #vPersona_DatosPerVM_IdEstadoCivil, #vPersona_DatosPerVM_idTipoNacionalidad";
+    
     $("#vPersona_DatosPerVM_IdCarreraOficio").selectpicker();
     (function () {
         var modalidad = $("#vPersona_DatosPerVM_IdModalidad").val();
-        if (modalidad != "") { $(idComboDPer).removeAttr("disabled") };
+        if (modalidad != "") { $(idComboDPer).removeAttr("disabled").find("option:first").html("Seleccione una Opcion") };
         $("#vPersona_DatosPerVM_IdCarreraOficio option").each(function (index, element) {
 
             if ($(element).attr("modali") == modalidad && $(element).val() != "") {
@@ -1036,17 +1033,32 @@ $(document).ready(function () {
         var extencion = $(this).val().split('.').pop()
         //alert(extencion);
         if (extencion != "jpg" && extencion != "pdf") {
-            $(this).val("");
+            $(this).val(null);
+            $(this).next("label").text("").append("<b>Seleccione archivo...</b>");
             $.Anuncio("Tipo de archivo seleccionado invalido, solo se permite archivos con extencion 'jpg' y 'pdf'!!!")
+            switch ($(this).attr("id")) {
+                case "ConstanciaAntcPenales":
+                    $("#DocuCert").attr("hidden", "hidden");
+                  
+                    break;
+                case "FormularioAanexo2":
+                    $("#DocuAnex").attr("hidden", "hidden");
+                   
+                    break;
+                default:
+            }
         } else {
+            $(this).next('.custom-file-label').html(event.target.files[0].name);
             //en el caso de cambio el documento se oculta el boton para ver el archivo
             switch ($(this).attr("id")) {
 
                 case "ConstanciaAntcPenales":
                     $("#DocuCert").attr("hidden", "hidden");
+                    $("#reqCert").hide();
                     break;
                 case "FormularioAanexo2":
                     $("#DocuAnex").attr("hidden", "hidden");
+                    $("#reqAnexo2").hide()
                     break;
                 default:
             }
@@ -1054,6 +1066,10 @@ $(document).ready(function () {
         }
     });
 
+    ////cuando es cargado un documento muestro el nombre del archivo
+    //$(document).on('change', '.custom-file-input', function (event) {
+      
+    //})
 
     $("#autoresizing").on("keypress", function () {
         this.style.height = 'auto';
@@ -1079,10 +1095,21 @@ $(document).ready(function () {
 
     //se agrega el control de submit del formulario de la vista DocuPenal, en caso de quere guardar y no se seleciono o cambio nigun archivo
     $("#BeginDocuPenal").submit(function () {
-        if ($("#FormularioAanexo2").val() == "" && $("#ConstanciaAntcPenales").val() == "") {
-            $.Anuncio("No selecciono o cambio ningun archivo!!!")
+        if ($("#FormularioAanexo2").next("label").children("b").text() == "Seleccione archivo..." || $("#ConstanciaAntcPenales").next("label").children("b").text() == "Seleccione archivo...") {
+            //$.Anuncio("Debe subir el Anexo 2 o Certificado Penal!!!")
+            if ($("#FormularioAanexo2").next("label").children("b").text() == "Seleccione archivo..." ) {
+                $("#reqAnexo2").show();
+            } else {
+                $("#reqAnexo2").hide();
+            }
+            if ($("#ConstanciaAntcPenales").next("label").children("b").text() == "Seleccione archivo...") {
+                $("#reqCert").show();
+            } else {
+                $("#reqCert").hide();
+            }
             return false;
         } else
+            $("#reqCert, #reqAnexo2").hide();
             return true;
     });
 

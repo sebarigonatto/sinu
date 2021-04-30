@@ -3,8 +3,8 @@
 <div class="jumbotron pl-md-5" style="background-color: #08495f; color:white">
     <div class="row">
         <div class="col-md-7">
-            <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.DisplayFor(m => m.Apellido).ToString().ToUpper()</b></h5>
-            <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.DisplayFor(m => m.Nombre).ToString().ToUpper()</b></h5>
+            <h5>@Html.DisplayNameFor(m => m.Apellido): <b>@Html.Raw(Model.Apellido).ToString().ToUpper()</b></h5>
+            <h5>@Html.DisplayNameFor(m => m.Nombre): <b>@Html.Raw(Model.Nombre).ToString().ToUpper()</b></h5>
             <h5>@Html.Label("Numero de Inscripción"): <b>@Html.DisplayFor(m => m.ID_Inscripcion).ToString().ToUpper()</b></h5>
             <h5>@Html.Label("Fecha de inicio del periodo de inscripcion"): <b>@Html.DisplayFor(m => m.Fecha_Inicio).ToString().ToUpper()</b></h5>
             <h5>@Html.Label("Fecha de fin del periodo de inscripcion"): <b>@Html.DisplayFor(m => m.Fecha_Fin).ToString().ToUpper()</b></h5>
@@ -19,8 +19,8 @@
             else
             {
                 <h5>@Html.DisplayNameFor(m => m.FechaPresentacion): <b>@Model.FechaPresentacion.ToString("dd/MM/yyyy 'Hs:' HH:mm")</b></h5>
-                <h5>@Html.DisplayNameFor(m => m.DomicilioExamenNombre): <b>@Model.DomicilioExamenNombre</b></h5>
-                <h5>@Html.DisplayNameFor(m => m.DomicilioExamen): <b>@Model.DomicilioExamen</b></h5>
+                <h5>@Html.DisplayNameFor(m => m.DomicilioExamenNombre): <b>@Html.Raw(Model.DomicilioExamenNombre)</b></h5>
+                <h5>@Html.DisplayNameFor(m => m.DomicilioExamen): <b>@Html.Raw(Model.DomicilioExamen)</b></h5>
             }
             <br />
         </div>

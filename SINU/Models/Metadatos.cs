@@ -10,10 +10,10 @@ namespace SINU.Models
         public int IdPersona { get; set; }
         [ScaffoldColumn(false)]
         public Nullable<int> IdPostulante { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Obligatorio")]
         [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Apellido { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Obligatorio")]
         [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Nombres { get; set; }
         [ScaffoldColumn(false)]
@@ -90,6 +90,12 @@ namespace SINU.Models
 
     public class vPersona_DatosPerMetadata
     {
+        [Required(ErrorMessage = "Campo Obligatorio")]
+        [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
+        public string Apellido { get; set; }
+        [Required(ErrorMessage = "Campo Obligatorio")]
+        [StringLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
+        public string Nombres { get; set; }
         public string Email { get; set; }
         public int IdPersona { get; set; }
         [Required(ErrorMessage ="Campo Obligatorio")]

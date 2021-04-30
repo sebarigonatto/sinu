@@ -11,6 +11,7 @@ using SINU.Authorize;
 
 namespace Consulta.Controllers
 {
+    [Authorize]
     [AuthorizacionPermiso("ListarRP")]
     public class ConsultaProgramadasController : Controller
     {

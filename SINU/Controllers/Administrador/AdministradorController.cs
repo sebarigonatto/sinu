@@ -17,7 +17,7 @@ using Microsoft.AspNet.Identity;
 namespace SINU.Controllers.Administrador
 {
     [AuthorizacionPermiso("AdminMenu")]
-
+    [Authorize]
     public class AdministradorController : Controller
     {
         private SINUEntities db = new SINUEntities();

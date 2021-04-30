@@ -555,9 +555,6 @@
     <Compile Include="Models\vOficDeleg_EstablecimientoRindExamen.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\VPantalla_Problema.cs">
-      <DependentUpon>SINUDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\vParam_Grados.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -678,8 +675,6 @@
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\CssPostulante.css" />
     <Content Include="Content\jquery.datetimepicker.css" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Anexo2&amp;0482299bf6d0e84b59f3fcc8c2510079.jpg" />
     <Content Include="Imagenes\4.png" />
     <Content Include="Imagenes\11.png" />
     <Content Include="Imagenes\carrucel1.jpg" />
@@ -933,11 +928,6 @@
     <Content Include="Plantillas\PlantillaInicioValidacionParaDelegacion.cshtml" />
     <Content Include="Plantillas\PlantillaMailSolicitudEntrevista.cshtml" />
     <Content Include="Plantillas\MailDocumentacion.cshtml" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1369&amp;Anexo2&amp;ReporteGMV.pdf" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1369&amp;Certificado&amp;ReporteGMV.pdf" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1377&amp;Certificado&amp;ReporteGMV.pdf" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1378&amp;Anexo2&amp;Actividad Analisis de Entradas.pdf" />
-    <Content Include="Documentacion\ArchivosDocuPenal\1381&amp;Certificado&amp;Actividad Analisis de Entradas.pdf" />
     <Content Include="Plantillas\PlantillaMailForgotPassword.cshtml" />
     <Content Include="Plantillas\PlantillaMailExitoModificacion.cshtml" />
     <Content Include="Plantillas\MailFechaPresentacion.cshtml" />
@@ -1102,6 +1092,7 @@
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\common.scss" />
     <Content Include="Scripts\DataTables\Buttons-1.6.1\css\mixins.scss" />
     <Content Include="Documentacion\DECLARACION JURADA DE SALUD.pdf" />
+    <Content Include="Documentacion\ASPECTOS.A.INFORMAR.pdf" />
     <None Include="Properties\PublishProfiles\www.TESTWEB.pubxml" />
     <None Include="Properties\PublishProfiles\wwwSINU.pubxml" />
     <None Include="Properties\Settings.settings">
@@ -1368,6 +1359,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documentacion\ArchivosDocuPenal\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Views\ManejoArchivos\" />
   </ItemGroup>

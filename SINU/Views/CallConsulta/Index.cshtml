@@ -74,8 +74,13 @@
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
-  $(".table-filters").DataTable({
-                'dom':'Bfrtlpi',
+
+            $.get("/Home/Table", { searchBy: "Option 1", searchString: "test" }, function (partialView) {
+                $("#output").html(partialView);
+            });
+
+            $(".table-filters").DataTable({
+                'dom': 'Bfrtlpi',
                 buttons: [
                     'excel', 'pdf',//'colvis',
                     //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
@@ -136,10 +141,10 @@
                     "targets": 'ni-o-ni-bu',
                     "searchable": false,
                     "orderable": false
-          }],
-                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                }],
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
             });
-        })
+        });
     </script>
     }

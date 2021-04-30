@@ -47,7 +47,8 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                         else
                         { <b>Seleccione archivo...</b>}
                     </label>
-                    @Html.ValidationMessageFor(m => m.FormularioAanexo2, null, new { @style = "color:yellow" })
+                    <div class="w-100"></div>
+                    @Html.ValidationMessageFor(m => m.FormularioAanexo2, "Falta Anexo 2", new { @style = "color:yellow; display:none !important",@id="reqAnexo2" })
 
                 </div>
                 <div class="col col col-md-12 p-0 ">
@@ -78,30 +79,32 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                         else
                         { <b>Seleccione archivo...</b>}
                     </label>
-                    @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, null, new { @style = "color:yellow" })
+                    <div class="w-100"></div>
+                    @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, "Falta Certificado de Antecedentes Penal", new { @style = "color:yellow; display:none !important",@id="reqCert" })
                 </div>
                 <div class="col col col-md-12 pl-0">
                     <a href="@Url.Action("GetFile", "Postulante", new { ID_persona = Model.IdPersona.ToString(), docu = "Certificado" })" class="btn btn-primary @(Model.PathConstanciaAntcPenales == null ? "hidden" : "")" target="_blank" id="DocuCert" @(Model.PathConstanciaAntcPenales == null ? "hidden='hidden'" : "")>Ver Archivo</a>
                 </div>
-                <br />
+                @*<br />
                 <div class=" col col-sm-12 BTAcciones pl-0 ">
                     <input type="submit" class="btn btn-success load-submit" id="btDOCUPENAL" value="Subir Archivos" />
-                </div>
+                </div>*@
             </div>
-        }
-        @using (Ajax.BeginForm("DocuPenalDeclaJurada", "Postulante", null,
-        new AjaxOptions
-        {
-            HttpMethod = "POST",
-            OnSuccess = "Exito(data,status,xhr)",
-            OnFailure = "Falla",
-            LoadingElementId = "carga",
-        //LoadingElementDuration = 1000,
-        //UpdateTargetId = "resultTarget"
-    },
-        new { id = "BeginDocuPenalDeclaJurada", enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
+            @*}
+
+            @using (Ajax.BeginForm("DocuPenalDeclaJurada", "Postulante", null,
+                 new AjaxOptions
+                 {
+                     HttpMethod = "POST",
+                     OnSuccess = "Exito(data,status,xhr)",
+                     OnFailure = "Falla",
+                     LoadingElementId = "carga",
+                 //LoadingElementDuration = 1000,
+                 //UpdateTargetId = "resultTarget"
+             },
+             new { id = "BeginDocuPenalDeclaJurada", enctype = "multipart/form-data" }))
+             {
+                 @Html.AntiForgeryToken()*@
             @Html.HiddenFor(m => m.PenalDeclaJurada.IdPersona)
             @Html.HiddenFor(m => m.PenalDeclaJurada.IdInscripcion)
             @Html.HiddenFor(m => m.PenalDeclaJurada.IdDeclaracionJurada)
@@ -118,7 +121,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
 
                 @*@Html.DropDownList("asd", new SelectList(new[] { new { Value = "true", Text = "SI" }, new { Value = "false", Text = "NO" }, }, "Value", "Text"), "Selecione una opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })*@
                 @* @Html.DropDownListFor(model => model.vPersona_DomicilioVM.Numero, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-        @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })*@
+                @Html.ValidationMessageFor(model => model.vPersona_DomicilioVM.Numero, "", new { @class = "text-danger" })*@
                 <br />
                 <div class="form-group" id="casosPenales">
                     @Html.Label("Indicar cuales:", new { @class = "control-label" })
@@ -135,8 +138,8 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                "Seleccione una Opcion...", new { @class = "form-control selectpicker", @id = "comboPenal" })
                 <div class="h-100"></div>
                 @Html.ValidationMessageFor(m => m.PenalDeclaJurada.EsAdicto, null, new { @style = "color:yellow" })
-            <br />
-                <button type="button" class="btn btn-success BTAcciones" onclick="$('#BeginDocuPenalDeclaJurada').submit()"> Guardar </button>
+                <br />
+                <button type="sub" class="btn btn-success BTAcciones"> Guardar </button>
             </div>
         }
 

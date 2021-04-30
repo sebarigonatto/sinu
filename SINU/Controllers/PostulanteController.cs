@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
-
+using System.Web;
 
 namespace SINU.Controllers
 {
@@ -54,6 +54,7 @@ namespace SINU.Controllers
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //busco el IDinscripcion del postulante logueado
                 var idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
+                ViewBag.DelePost = idInscri.OficinasYDelegaciones.Nombre;
                 //control del error al no existir el postulante
                 if (idInscri == null)
                 {
@@ -103,6 +104,7 @@ namespace SINU.Controllers
                     ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
                     ViewBag.TextNoAsignado = ViewBag.TextNoAsignado.Replace("$Nombre", pers.NomyApe.ToUpper());
                 }
+              
                 return View(pers);
             }
             catch (Exception ex)
@@ -246,7 +248,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg=  "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -291,6 +293,8 @@ namespace SINU.Controllers
             try
             {
                 int idInscripcion = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+
+                var asd = db.vPersona_DatosPer.FirstOrDefault(m => m.IdPersona == ID_persona);
 
                 DatosPersonalesVM datosba = new DatosPersonalesVM()
                 {
@@ -357,7 +361,7 @@ namespace SINU.Controllers
                     p.IdReligion ??= "";
                     //busco el nuevo id preferencia para la modalidad seleccionada
                     int IDpreNuevo = db.vInstitucionModalidad.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo);
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo,p.Nombres,p.Apellido);
 
                     return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" });
                 }
@@ -395,7 +399,7 @@ namespace SINU.Controllers
                     if (item.IndexOf("Anexo2") > 0) d.PathFormularioAanexo2 = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1);
                     if (item.IndexOf("Certificado") > 0) d.PathConstanciaAntcPenales = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1);
                 }
-
+             
                 var idInscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
 
                 //parte de la declaracion jurada
@@ -450,7 +454,27 @@ namespace SINU.Controllers
                     data.ConstanciaAntcPenales.SaveAs(guarda);
                     btcert = true;
                 }
+                //Declaracion Jurada
+                DeclaracionJurada DeclaJura = data.PenalDeclaJurada;
+                if (DeclaJura.IdDeclaracionJurada == 0)
+                {
+                    
+                    db.DeclaracionJurada.Add(DeclaJura);
+                }
+                else
+                {
+                    var declaju = new DeclaracionJurada() { IdDeclaracionJurada = DeclaJura.IdDeclaracionJurada };
 
+                    if (TryUpdateModel(DeclaJura, "",
+                       new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
+                    {
+
+                        db.Entry(DeclaJura).State = EntityState.Modified;
+                        
+                    }
+                }
+
+                db.SaveChanges();
                 return Json(new { success = true, form = "DocuPenal", msg = "Datos Guardados.", anexo = btanexo, cert = btcert }, JsonRequestBehavior.AllowGet);
 
             }
@@ -461,43 +485,43 @@ namespace SINU.Controllers
 
         }
 
-        [HttpPost]
-        [AuthorizacionPermiso("CreaEditaDatosP")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DocuPenalDeclaJurada(DocuPenalVM d)
-        {
-            try
-            {
+        //[HttpPost]
+        //[AuthorizacionPermiso("CreaEditaDatosP")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DocuPenalDeclaJurada(DocuPenalVM d)
+        //{
+        //    try
+        //    {
 
-                DeclaracionJurada DeclaJura = d.PenalDeclaJurada;
-                if (DeclaJura.IdDeclaracionJurada == 0)
-                {
-                    db.DeclaracionJurada.Add(DeclaJura);
-                }
-                else
-                {
-                    var declaju = new DeclaracionJurada() { IdDeclaracionJurada= DeclaJura.IdDeclaracionJurada};
+        //        DeclaracionJurada DeclaJura = d.PenalDeclaJurada;
+        //        if (DeclaJura.IdDeclaracionJurada == 0)
+        //        {
+        //            db.DeclaracionJurada.Add(DeclaJura);
+        //        }
+        //        else
+        //        {
+        //            var declaju = new DeclaracionJurada() { IdDeclaracionJurada= DeclaJura.IdDeclaracionJurada};
 
-                    if (TryUpdateModel(DeclaJura, "",
-                       new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
-                    {
+        //            if (TryUpdateModel(DeclaJura, "",
+        //               new string[] { "PoseeAntecedentes", "Antecedentes_Detalles", "EsAdicto", "Comentario", "IdInscripcion" }))
+        //            {
                       
-                            db.Entry(DeclaJura).State = EntityState.Modified;
-                            db.SaveChanges();
-                    }
-                }
+        //                    db.Entry(DeclaJura).State = EntityState.Modified;
+        //                    db.SaveChanges();
+        //            }
+        //        }
                 
-                db.SaveChanges();
+        //        db.SaveChanges();
 
-                return Json(new { success= true , msg= "Datos guardados."});
-            }
-            catch (Exception ex)
-            {
+        //        return Json(new { success= true , msg= "Datos guardados."});
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
-            }
+        //        return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
+        //    }
            
-        }
+        //}
 
         [AuthorizacionPermiso("ListarRP")]
         public FileContentResult GetFile(int? ID_persona, string? docu)
@@ -921,7 +945,7 @@ namespace SINU.Controllers
                 catch (Exception ex)
                 {
                     //revisar como mostrar error en la vista
-                    return Json(new { success = false, msg = ex.InnerException.Message });
+                    return Json(new { success = false, msg="Error en la operacion, intentelo nuevamente" });
                 }
             }
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
@@ -1610,7 +1634,7 @@ namespace SINU.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente." }, JsonRequestBehavior.AllowGet);
 
                 }
             }
@@ -1630,7 +1654,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
 
-                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
 
             }
 
@@ -1661,7 +1685,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { error = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { error = false, msg = "Error en la operacion" }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1688,7 +1712,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = ex.InnerException.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
         /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
@@ -1991,7 +2015,7 @@ namespace SINU.Controllers
                 return Json(new
                 {
                     success = false,
-                    msg = ex.InnerException.Message
+                    msg = "Error en la operacion, intentelo nuevamente"
                 }, JsonRequestBehavior.AllowGet);
             }
         }

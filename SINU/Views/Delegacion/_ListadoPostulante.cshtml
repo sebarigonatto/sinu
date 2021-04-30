@@ -81,6 +81,9 @@
                                             break;
                                         case "Pendiente":
                                             @:|&ensp;
+                                            @Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Reasignar fecha de entrevista" })
+                                            @:&ensp;
+                                            @:|&ensp;
                                             <a data-toggle="tooltip" data-placement="top" title="tool tip top">
                                                 @Html.ActionLink(" ", "Postular", new { id = item.IdInscripcionEtapaEstado }, new { @class = "far fa-user", @style = "color:#0072ff", @title = "Valdiar Postulante" })
                                             </a>

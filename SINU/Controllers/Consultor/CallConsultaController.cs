@@ -18,7 +18,10 @@ namespace SINU.Controllers.Consultor
     /// que se encuentre en este Controller y si aun no se creo su ACTION
     /// se colocara el action por DEFUALT: FaltaCrearNuevoAction
     /// </summary>
+    [Authorize]
+
     [AuthorizacionPermiso("ListaConsultaGeneral")]
+
     public class CallConsultaController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -60,8 +63,9 @@ namespace SINU.Controllers.Consultor
         /// <returns></returns>
         public ActionResult TotalesPorModalidadyGenero()
         {
+            HttpContext.Server.ScriptTimeout = 120000;
             List<sp_ConsultaInscriptosModalidadGenero_Result> Datos = db.sp_ConsultaInscriptosModalidadGenero().ToList();
-
+            
             if (Datos == null)
             {
                 //return HttpNotFound();

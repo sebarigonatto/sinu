@@ -6,7 +6,7 @@
 {
     @Html.AntiForgeryToken()
 
-    <h4 class="font-weight-bold" style="text-align:center">Asignar fecha de Entrevista</h4>
+    <h4 class="font-weight-bold" style="text-align:center">@(Model.FechaEntrevista!=null?"Reasignar fecha de Entrevista":"Asignar fecha de Entrevista")</h4>
 
     <div class="card" style=" text-align: -webkit-center;">
         <div class=" card-header">
@@ -67,7 +67,7 @@
                     <div class="col">
                         @*<input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly />*@
                         @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger", @id = "Aviso" })
-                        @Html.TextBoxFor(model => model.FechaEntrevista, new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true })
+                        @Html.TextBoxFor(model => model.FechaEntrevista,"{0:dd/MM/yyyy hh:mm}", new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true })
 
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-block m-1 p-1" })
                 </div>
                 <div class="col-md-2">
-                    <p type="button" class="btn btn-success d btn-block m-1 p-1" onclick="Mifuncion()">Asignar Fecha</p>
+                    <p type="button" class="btn btn-success d btn-block m-1 p-1" onclick="Mifuncion()">@(Model.FechaEntrevista != null ? "Reasignar fecha" : "Asignar fecha")</p>
                 </div>
 
             </div>
@@ -128,9 +128,10 @@
         $(document).ready(function () {
             jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
-                format: 'd/m/y h:m',
-                value: 'd/m/y h:m',
-            }).val("");
+                format: 'd/m/y H:m',
+                value: 'd/m/y H:m',
+          
+            }).val('@Model.FechaEntrevista');
             $.datetimepicker.setLocale('es')
             //$(".datepicker").datepicker({
             //    format: "dd/mm/yyyy",

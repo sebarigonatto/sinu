@@ -76,6 +76,11 @@ namespace SINU.Models
         [Display(Name = "Correo electrónico")]
         public string Email { get; set; }
 
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
+        [Display(Name = "Confime Correo electrónico")]
+        [System.ComponentModel.DataAnnotations.Compare("Email", ErrorMessage = "Los  e-mails ingresados no coinciden.")]
+        public string ConfirmEmail { get; set; }
+
         [Required(ErrorMessage ="Dato obligatorio.")]
         [StringLength(100, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 6)]
         [DataType(DataType.Password)]

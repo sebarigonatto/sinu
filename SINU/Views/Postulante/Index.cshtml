@@ -2,6 +2,11 @@
 @{
     ViewBag.Title = ((bool)Session["DeleConsul"]) ? HttpContext.Current.User.IsInRole("Delegacion") ? "Detalle del Postulante" : "Consulta Postulante" : "Proceso de Inscripción";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //if (!(bool)Session["FamiTable"])
+    //{
+    //    Session["URLatras"] = HttpContext.Current.Request.UrlReferrer.LocalPath;
+    //}
+
 }
 @*<link href="~/Content/CssPostulante.css" rel="stylesheet" />*@
 <style>
@@ -150,6 +155,9 @@
             border-color: #fff;
             border-right: #fff;
             background-color: #2b82ad
+        }
+        .left-tabs .nav-link.active i{
+            color: #08495f !important;
         }
 
         .left-tabs .nav-link.active {
@@ -327,6 +335,7 @@
     #TabSecundario a.active i.adver {
         color: #08495f !important;
         font-size: larger;
+        display:block !important;
     }
     #autoresizing {
         display: block;
@@ -346,7 +355,10 @@
                     Numero de Pre-Inscripción: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1]!=null?ViewBag.MOD_CAR[1]:Html.Raw("&emsp;----  "))</b></e>
+                    Delegación: <b>@ViewBag.DelePost</b>
+                </h6>
+                <h6>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1] != null ? ViewBag.MOD_CAR[1] : Html.Raw("&emsp;----  "))</b></e>
                 </h6>
             </t>
 
@@ -356,12 +368,16 @@
             @if ((bool)Session["DeleConsul"])
             {
 
-                <button class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" onclick="window.history.back()"><b>Atras</b></button>
-                if (ViewBag.ULTISECU == 8)
-                {
-                    @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
-                }
+                <a class="btn btn-info  float-right" style="width:8rem;margin-left:1rem" id="atras"><b>Atras</b></a>
+               
             }
+
+            @if (User.IsInRole("Delegacion") && ViewBag.ULTISECU == 8 )
+            {
+                @Html.ActionLink("Asignar Entrevista", "EntrevistaAsignaFecha", "Delegacion", new { id = Model.ID_PER }, new { @class = "btn btn-secondary float-right" })
+            }
+            
+            
         </div>
     </div>
 </div>
@@ -460,7 +476,10 @@
                                     <br />
                                 </div>
                             </div>
+                            @if (Model.EtapaTabs.Contains(4))
+                            {
 
+                            
                             <div class="col-md-10 p-2 pl-sm-4 pr-sm-4" id="TabSecundarioContent">
                                 <div>
                                     <div class="tab-content TABMovil">
@@ -719,6 +738,7 @@
                                     </div>
                                 </div>
                             </div>
+}
                         </div>
 
                     </div>
@@ -805,6 +825,11 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
+            if ($("#fechacumpleaños").val()!="") {
+                
+                        $("#BTentrevista").removeClass("disabled");
+              
+            }
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
                     $("#BTValidar").removeAttr("disabled");
@@ -866,8 +891,16 @@
                 $("#" + IDETP[IDETP.length - 1]).tab("show");
             }
                @{
-                  Session["FamiTable"] = false;
+                   bool url = HttpContext.Current.Request.UrlReferrer.LocalPath.Contains("FamiliaCUD");
+                   if (!url)
+                   {
+                       Session["URLatras"] = HttpContext.Current.Request.UrlReferrer.LocalPath;
+                   }
+
+                   Session["FamiTable"] = false;
+
                }
+            $("#atras").attr("href", "@Session["URLatras"]");
             ////scroll automatico al selecionar un nav, solo en vista mobil
             //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
             //    if ($(this).hasClass("collapsed")) {
@@ -881,27 +914,28 @@
             //});
 
             $("#BTValidar").on("click", function () {
-                $.Cargando();
+                //$.Cargando();
                 PantallasError = [];
                 validForm = true;
                 $.each($("#TabSecundarioContent form, #TabSecundarioContent table"), function (index, item) {
                     //verifico si es tabla o form
                     IdPantalla = $(item).closest("div.pos-f-t.collapse.tab-pane.fade.tab-nav").attr("id");
-                    //Pantalla = $("#" + IdPantalla + " nav a").text().trim().split(' ').splice(1,1);
-                    //alert(IdPantalla + "  " + Pantalla);
+                    //alert(IdPantalla);
                     if ($(item).find("thead").length == 0) {
                         //alert("form - " + $(item).attr("id"));
                         saltar = true;
+                        
                         $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
                             if ($(item2).val() == '') {
                                 if ($(item2).hasClass("custom-file-input")) {
                                     if ($(item2).next("label").children("b").html() == "Seleccione archivo...") {
                                         validForm = false;
-                                        PantallasError.push({ IdPantalla });
+                                        PantallasError.push( IdPantalla );
                                         saltar = false;
                                     };
                                 } else {
-                                    PantallasError.push({ IdPantalla });
+                                    
+                                    PantallasError.push( IdPantalla );
                                     validForm = false;
                                     saltar = false;
                                 }
@@ -912,10 +946,10 @@
                     } else {
                         //id_pant = $(item).attr("id");
                         if ($(item).find("tbody tr[role='row']").length == 0) {
-                            PantallasError.push({ IdPantalla });
+                            PantallasError.push(IdPantalla );
                             validForm = false;
 
-                            //alert("no hay registros");
+                            
                         }; //else {
                         //    alert("hay registos!!!!");
                         //};s
@@ -933,12 +967,13 @@
                         }
                     });
                 } else {
-                    PantallasError = [...new Map(PantallasError.map(item =>
-                        [item["IdPantalla"], item])).values()];
-                    $("#TabSecundario a i.adver, a.navbar-brand i.adver").remove();
+
+                    //alert(PantallasError);
+                    $("#TabSecundario a i.ivaio, a.navbar-brand i.ivaio").remove();
                     $.each(PantallasError, function (index, item) {
-                        $("#TabSecundario a[href='#" + item['IdPantalla'] +"'] i, #" + item["IdPantalla"] + " a.navbar-brand i").remove();
-                        $("#TabSecundario a[href='#" + item["IdPantalla"] + "'] , #" + item["IdPantalla"] + " a.navbar-brand").prepend("<i class='fa fa-fw adver' style='color: #fffa43; border-radius: 100%; border: 2px solid;'>!</i>");
+                        //alert(item);
+                        $("#TabSecundario a[href='#" + item + "'] i, #" + item + " a.navbar-brand i").remove();
+                        $("#TabSecundario a[href='#" + item + "'], #" + item + " a.navbar-brand").prepend("<i class='fa fa-fw ivaio' style='color: #fffa43; border-radius: 100%; border: 2px solid;'>!</i>");
                     });
                     $.Anuncio("Formularios incompletos!!!, verifique que haya completado cada formulario antes de enviar los mismos para su validadición.")
                     $("#check_validacion").prop('checked', false);
