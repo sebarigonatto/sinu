@@ -89,6 +89,8 @@
 
 
     $(document).ready(function () {
+
+
         if ('@ViewBag.logueado' == "True") {
             $("#body").css("pointer-events", "none")/*.css("opacity", 0.8)*/;
 
@@ -100,7 +102,7 @@
             });
 
         };
-        $("#CaptchaInputText").addClass("form-control");
+        $("#CaptchaInputText").addClass("form-control").val("");
         $("#CaptchaInputText").next("br").remove();
         $("a[href='#CaptchaImage']").show();
 

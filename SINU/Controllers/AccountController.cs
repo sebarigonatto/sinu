@@ -75,14 +75,14 @@ namespace SINU.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [CaptchaMvc.Attributes.CaptchaVerify("Captcha is not valid")]
+        [CaptchaMvc.Attributes.CaptchaVerify("Captcha no valido")]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             ViewBag.mensaje = "";
             if (!ModelState.IsValid)
             {
                 AddErrors(IdentityResult.Failed("Respuesta de Capcha incorrecto"));
-                return View();
+                return View(model);
             }
             ////validadndo si el email fue validado por el usuarios
 

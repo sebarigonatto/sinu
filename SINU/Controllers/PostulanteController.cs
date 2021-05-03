@@ -54,13 +54,14 @@ namespace SINU.Controllers
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
                 //busco el IDinscripcion del postulante logueado
                 var idInscri = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER);
-                ViewBag.DelePost = idInscri.OficinasYDelegaciones.Nombre;
+               
                 //control del error al no existir el postulante
                 if (idInscri == null)
                 {
                     Response.StatusCode = 404;
                     return RedirectToAction("NotFound", "Error");
                 }
+                ViewBag.DelePost = idInscri.OficinasYDelegaciones.Nombre;
                 //creo array con las secuecias por las que el Postulante transito
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == idInscri.IdInscripcion).Select(m => m.IdSecuencia).ToList();
                 ViewBag.ULTISECU = Secuencias[0];
@@ -76,33 +77,32 @@ namespace SINU.Controllers
                 Session["ValidoUnaVez"] = (Secuencias.IndexOf(14) != -1) && (Secuencias[0] == 13 || Secuencias[0] == 24);
 
                 //Cargo listado con las solapas de documentacion "abiertas o cerradas"
-                var PantallasEstadoProblemas = new List<Array>();
-                db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => PantallasEstadoProblemas.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
-                pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
-                ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(PantallasEstadoProblemas);
-                ViewBag.MOD_CAR = new[] { "", "", idInscri.IdInscripcion.ToString() };
-                ViewBag.VenceComvocatoria = false;
-                if (idInscri.IdModalidad != null)
+                pers.ListProblemaCantPantalla = new List<Array>();
+                
+                db.spTildarPantallaParaPostulate(pers.ID_PER).ForEach(m => pers.ListProblemaCantPantalla.Add(new object[] { m.Pantalla, m.Abierta, m.CantComentarios }));
+                //pers.ListProblemaCantPantalla = PantallasEstadoProblemas;
+                ViewBag.PantallasEstadoProblemas2 = JsonConvert.SerializeObject(pers.ListProblemaCantPantalla);
+                                               
+                //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
+
+                var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= idInscri.FechaInscripcion && m.Fecha_Fin_Proceso >= idInscri.FechaInscripcion && m.IdInstitucion == idInscri.IdPreferencia && m.IdModalidad == idInscri.IdModalidad).Fecha_Fin_Proceso;
+                //var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
+                ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
+                if (!ViewBag.ValidacionEnCurso)
                 {
-                    //var fechar = db.vConvocatoriaDetalles.Where(m=>m.IdModalidad == inscrip.IdModalidad && m.IdPeriodoInscripcion)
-
-                    var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= idInscri.FechaInscripcion && m.Fecha_Fin_Proceso >= idInscri.FechaInscripcion && m.IdInstitucion == idInscri.IdPreferencia && m.IdModalidad == idInscri.IdModalidad).Fecha_Fin_Proceso;
-                    //var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
-                    ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
-                    if (!ViewBag.ValidacionEnCurso)
-                    {
                         ViewBag.ValidacionEnCurso = DateTime.Now > FechaFinConvo;
-                    }
-                    var VISTAinscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion);
-                    ViewBag.MOD_CAR = new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, idInscri.IdInscripcion.ToString() };
-
                 }
+                var VISTAinscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion);
+                ViewBag.MOD_CAR = new[] { VISTAinscrip.Modalidad, VISTAinscrip.CarreraRelacionada, idInscri.IdInscripcion.ToString() };
+
+                
                 pers.NomyApe = idInscri.Postulante.Persona.Apellido + ", " + idInscri.Postulante.Persona.Nombres;
 
                 if (pers.NoPostulado)
                 {
-                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1").ValorDato;
-                    ViewBag.TextNoAsignado = ViewBag.TextNoAsignado.Replace("$Nombre", pers.NomyApe.ToUpper());
+                    ViewBag.TextNoAsignado = (db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == pers.ID_PER).IdPreferencia == 6) ? db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado2").ValorDato : db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo4NoPostulado1")
+                                            .ValorDato.Replace("$Nombre", pers.NomyApe.ToUpper());
+                   
                 }
               
                 return View(pers);
