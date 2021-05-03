@@ -815,9 +815,9 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla, int AoC)
         {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id || m.IdInscripcion == id);/// 06/04/2021 debido a que se envia los botones de validar y abrir a la vista DocumentosNecesarios.cshtml se 
+            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);/// 06/04/2021 debido a que se envia los botones de validar y abrir a la vista DocumentosNecesarios.cshtml se 
                                                                                                                  ///cambia aqui para que reciba parametro idPersona o IdInscripcion
-            var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(id, IdPanatlla).ToList();
+            var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(inscrip.IdPersona, IdPanatlla).ToList();
             var Abierto = db.spTildarPantallaParaPostulate(inscrip.IdPersona).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
             var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).ToList();
             var EntregTodo = DocuNecesarios.FirstOrDefault(m => m.Presentado == false && m.Obligatorio == true);/// esta linea de condigo verifica si hay un documento obligatorio no presentado
@@ -891,6 +891,7 @@ namespace SINU.Controllers
 
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderByDescending(m => m.Obligatorio).ToList();
                 ViewBag.Idinscripto = inscrip.IdInscripcion;
+                ViewBag.IDPOST = inscrip.IdPersona;
                 DocuNecesaria datos = new DocuNecesaria()
                 {
                     DocumentosNecesarios = DocuNecesarios

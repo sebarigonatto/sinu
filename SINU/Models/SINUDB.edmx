@@ -2626,6 +2626,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="idpreferencia" Type="int" Mode="In" />
           <Parameter Name="Nombres" Type="varchar" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
+          <Parameter Name="Msg" Type="varchar" Mode="InOut" />
         </Function>
         <Function Name="spDocumentoInscripto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EsInsert" Type="bit" Mode="In" />
@@ -5231,6 +5232,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="idpreferencia" Mode="In" Type="Int32" />
             <Parameter Name="Nombres" Mode="In" Type="String" />
             <Parameter Name="Apellido" Mode="In" Type="String" />
+            <Parameter Name="Msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="spDomiciliosU">
             <Parameter Name="IdDomicilioDNI" Mode="In" Type="Int32" />

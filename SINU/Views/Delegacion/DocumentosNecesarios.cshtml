@@ -100,13 +100,13 @@
     <div class="alert alert-warning fa fa-exclamation-circle" role="alert"> RECUERDE PARA VAILDAR ESTA PANTALLA DEBE TENER TODA LA DOCUMENTACION OBLIGATORIA PRESENTADA</div>
     <div class="alert alert-danger fa fa-exclamation-circle" role="alert"> SI NO TIENE TODA LA DOCUMENTACION OBLIGATORIA PRESENTADA DEBE NOTIFICAR AL POSTULANTE</div>
     <div class="container text-center">
-        @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = @ViewBag.Idinscripto, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
+        @Ajax.ActionLink("Validar", "CerrarPantalla", new { id = @ViewBag.IDPOST, IdPanatlla = 10, Aoc = 1 }, new AjaxOptions
                                       {
                                         HttpMethod = "POST",
                                         OnSuccess = "Exito(data,status,xhr)",
                                         OnFailure = "Falla"
                                       }, new { @id = "BTValidar", @class = "btn btn-success btn-lg" })
-        @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = @ViewBag.Idinscripto, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
+        @Ajax.ActionLink("Abrir", "CerrarPantalla", new { id = @ViewBag.IDPOST, IdPanatlla = 10, Aoc = 0 }, new AjaxOptions
                                      {
                                        HttpMethod = "POST",
                                        OnSuccess = "Exito(data,status,xhr)",

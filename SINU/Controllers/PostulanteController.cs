@@ -175,8 +175,8 @@ namespace SINU.Controllers
                 catch (Exception ex)
                 {
                     //envio la error  a la vista
-                    string msgerror = ex.Message + " " + ex.InnerException.Message;
-                    return Json(new { success = false, msg = msgerror });
+                    //string msgerror = ex.Message + " " + ex.InnerException.Message;
+                    return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
                 }
             };
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
@@ -361,15 +361,16 @@ namespace SINU.Controllers
                     p.IdReligion ??= "";
                     //busco el nuevo id preferencia para la modalidad seleccionada
                     int IDpreNuevo = db.vInstitucionModalidad.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
-                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo,p.Nombres,p.Apellido);
+                    var msg = new System.Data.Entity.Core.Objects.ObjectParameter("msg","");
+                    var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo,p.Nombres,p.Apellido, msg);
 
                     return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" });
                 }
                 catch (Exception ex)
                 {
                     //envio la error  a la vista
-                    string msgerror = ex.Message + " " + ex.InnerException.Message;
-                    return Json(new { success = false, msg = msgerror });
+                    //string msgerror = ex.Message + " " + ex.InnerException.Message;
+                    return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
                 }
             }
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
@@ -708,8 +709,8 @@ namespace SINU.Controllers
                 catch (Exception ex)
                 {
                     //envio la error  a la vista
-                    string msgerror = ex.Message + " " + ex.InnerException.Message;
-                    return Json(new { success = false, msg = msgerror }, JsonRequestBehavior.AllowGet);
+                    //string msgerror = ex.Message + " " + ex.InnerException.Message;
+                    return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
                 }
             }
 
@@ -967,12 +968,12 @@ namespace SINU.Controllers
                     //url_Tabla: es el nombre de la accion y colocandole el subfijo NAV es el contenedor de la tabla actual
                     return Json(new { success = true, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "Estudios", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
                 }
-                return Json(new { success = false, msg = "Error: no existe el estudio con el id enviado", JsonRequestBehavior.AllowGet });
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente", JsonRequestBehavior.AllowGet });
             }
             catch (Exception ex)
             {
 
-                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo.", JsonRequestBehavior.AllowGet });
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente", JsonRequestBehavior.AllowGet });
             }
         }
 
@@ -1126,7 +1127,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
 
-                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." });
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
             }
         }
 
@@ -1258,7 +1259,7 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
 
-                return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1272,7 +1273,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = true, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -1380,7 +1381,7 @@ namespace SINU.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." });
+                    return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
                 }
             }
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
@@ -1415,7 +1416,7 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo nuevamente." });
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
             }
 
         }
@@ -1460,7 +1461,7 @@ namespace SINU.Controllers
                 }
                 return Json(new { APLICA = Aplica, POPUP = PopUp, ALTIMC = AltIcm }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
