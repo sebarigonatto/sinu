@@ -390,8 +390,12 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAntropometriaIU", idPostulantePersonaParameter, alturaParameter, pesoParameter, iMCParameter, perimCabezaParameter, perimToraxParameter, perimCinturaParameter, perimCaderasParameter, largoPantalonParameter, largoEntrepParameter, largoFaldaParameter, cuelloParameter, calzadoParameter);
         }
     
-        public virtual int spCreaPostulante(string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
+        public virtual int spCreaPostulante(Nullable<int> idPersonaExistente, string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
         {
+            var idPersonaExistenteParameter = idPersonaExistente.HasValue ?
+                new ObjectParameter("IdPersonaExistente", idPersonaExistente) :
+                new ObjectParameter("IdPersonaExistente", typeof(int));
+    
             var apellidoParameter = apellido != null ?
                 new ObjectParameter("Apellido", apellido) :
                 new ObjectParameter("Apellido", typeof(string));
@@ -416,7 +420,7 @@ namespace SINU.Models
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", idDelegacionOficinaIngresoInscribio) :
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", idPersonaExistenteParameter, apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
         }
     
         public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, Nullable<System.DateTime> fechaNacimiento, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idComoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)

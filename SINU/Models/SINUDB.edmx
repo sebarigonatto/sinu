@@ -2590,6 +2590,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="SeCierra" Type="bit" Mode="In" />
         </Function>
         <Function Name="spCreaPostulante" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdPersonaExistente" Type="int" Mode="In" />
           <Parameter Name="Apellido" Type="varchar" Mode="In" />
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="DNI" Type="varchar" Mode="In" />
@@ -5196,6 +5197,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="Calzado" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="spCreaPostulante">
+            <Parameter Name="IdPersonaExistente" Mode="In" Type="Int32" />
             <Parameter Name="Apellido" Mode="In" Type="String" />
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="DNI" Mode="In" Type="String" />

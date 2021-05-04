@@ -255,29 +255,28 @@ namespace SINU.Controllers
 
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    var per = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
                     
-               
-                    if (result.Succeeded)
+                    if (per != null)
                     {
-                        ViewBag.DNI = false;
-                        //si el dni existe en la base de datos se elimina a la cuenta creada de la tabla "AspNetUsers"
-                        var per = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
-                        if (per !=null)
+                        //debo verifsicar si se trata de un postulante o simplemente una persona                        
+
+                        if (per.Postulante != null)
                         {
-                            //debo verificar si se trata de un postulante o simplemente una persona
-                            bool ESpostulante = per.Postulante!= null;
-                            //ver en caso de de ser y no se postulante
-
-
-                            db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
-                            db.SaveChanges();
-                            ViewBag.DNI = true;
                             AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
                             return View(model);
                         }
+                      
+                    }
+
+                    var result = await UserManager.CreateAsync(user, model.Password);
+
+
+                    if (result.Succeeded)
+                    {
+                                              
                         //crea una persona, un postulante y una inscripcion
-                        var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(per!=null?per.IdPersona:0,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
                       
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -347,15 +346,13 @@ namespace SINU.Controllers
                 }
                 //verifico que el usuario ya alla confirmado
 
-              
-                var Email = UserManager.FindById(userId).UserName;
+                var user = UserManager.FindById(userId);
+                var Email = user.UserName;
                 var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
 
-                ViewBag.YAconfirmo = false;
-                bool YAconfirmo = persona.Postulante.AspNetUsers.EmailConfirmed;
-                if (YAconfirmo)
+                ViewBag.YAconfirmo = user.EmailConfirmed;
+                if (ViewBag.YAconfirmo)
                 {
-                    ViewBag.YAconfirmo = YAconfirmo;
                     return View();
                 }
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
