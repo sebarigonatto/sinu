@@ -780,6 +780,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
+
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;
         //elimino el ultimo elemnto de array, por que es un string vacio
@@ -825,11 +826,15 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-            if ($("#fechacumpleaños").val()!="") {
+
+            if ($("#BeginFormDatosBasicos").valid()) {
                 
-                        $("#BTentrevista").removeClass("disabled");
+               $("#BTentrevista").removeClass("disabled");
               
             }
+
+      
+
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
                     $("#BTValidar").removeAttr("disabled");

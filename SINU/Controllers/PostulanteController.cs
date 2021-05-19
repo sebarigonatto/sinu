@@ -262,8 +262,8 @@ namespace SINU.Controllers
             {
                 vEntrevistaLugarFecha entrevistafh = new vEntrevistaLugarFecha();
                 entrevistafh = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == ID_persona);
-                var estado = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).InscripcionEtapaEstado.Where(m => m.IdSecuencia == 8 || m.IdSecuencia == 10 || m.IdSecuencia == 11).OrderBy(m => m.Fecha).ToList();
-                int IDsecu = estado[estado.Count - 1].IdSecuencia;
+                var idinscrip = db.Inscripcion.FirstOrDefault(m => m.IdPostulantePersona == ID_persona).IdInscripcion;
+                var IDsecu = db.InscripcionEtapaEstado.Where(m=>m.IdInscripcionEtapaEstado== idinscrip && m.Secuencia_EtapaEstado.IdEtapa == 3).OrderBy(m=>m.Fecha).ToList().Last().IdSecuencia;
                 //coloco el estado de la entrevista
                 ViewBag.EstadoEntre = (IDsecu == 11) ? "Concretada" : db.vSecuencia_EtapaEstado.FirstOrDefault(m => m.IdSecuencia == IDsecu).Estado;
                 ViewBag.FechaAsisgnada = (entrevistafh.FechaEntrevista != null);

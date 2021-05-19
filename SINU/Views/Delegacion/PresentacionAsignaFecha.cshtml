@@ -1,5 +1,7 @@
 ﻿@model SINU.ViewModels.PresentaciondelPostulante
-
+@{ 
+    ViewBag.Title = Model.DetalleInscripcion.FechaRindeExamen != null ? "Reasignar Fecha de Presentación" : "Asignar Fecha de Presentación";
+}
 
 
 <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
@@ -8,7 +10,7 @@
     @Html.AntiForgeryToken()
 
     @*<div class="form justify-content-xl-center" style="align-content:center;">*@
-        <h4 class="font-weight-bold" style="text-align:center">Asignar fecha de Presentacion</h4>
+        <h4 class="font-weight-bold" style="text-align:center">@(Model.DetalleInscripcion.FechaRindeExamen!=null?"Reasignar Fecha de Presentación":"Asignar Fecha de Presentación" )</h4>
 
 
         <div class="card" style=" text-align: -webkit-center;">
@@ -77,7 +79,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="alert alert-warning mt-4">
-                            <h6 class="font-weight-bold">Asigne una fecha de presentacion al postulante</h6>
+                            <h6 class="font-weight-bold">@(Model.DetalleInscripcion.FechaRindeExamen!=null?"Reasigne una fecha de presentación al postulante":"Asigne una fecha de presentación al postulante") </h6>
                         </div>
                     </div>
                 </div>
@@ -115,7 +117,7 @@
                 <div class="container">
                     <div class="col-md-12 clearfix">
                         @Html.ActionLink("Vista Anterior", "Index", null, new { @class = "btn btn-dark" })
-                        <input type="submit" value="Asignar Fecha" class="btn btn-success " />
+                        <input type="submit" value="@(Model.DetalleInscripcion.FechaRindeExamen!=null?"Reasignar Fecha":"Asignar Fecha")" class="btn btn-success " />
                     </div>
                 </div>
             </div>
@@ -129,7 +131,8 @@
     <script src="~/Scripts/jquery.datetimepicker.full.min.js"></script>
     <script>
         $(document).ready(function () {
-           jQuery('#datetimepicker').datetimepicker({
+            
+            jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
                 format: 'd/m/y h:m',
                 value: 'd/m/y h:m'

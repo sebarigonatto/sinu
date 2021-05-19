@@ -33,11 +33,11 @@ namespace SINU.Controllers
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
                     ///PostulantesIncriptosVM-> se utlizan view models para poder filtrar segun la "Etapa" que se encuentran los postulantes 
-                    PostulantesIncriptosVM = db.vConsultaInscripciones.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
-                    cargadatosbasicosVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
-                    EntrevistaVM = db.vConsultaInscripciones.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
-                    DocumentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
-                    PresentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso < DateTime.Now && m.Fecha_Fin_Proceso > DateTime.Now).ToList(),
+                    PostulantesIncriptosVM = db.vConsultaInscripciones.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
+                    cargadatosbasicosVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
+                    EntrevistaVM = db.vConsultaInscripciones.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
+                    DocumentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
+                    PresentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
                 };
 
                 return View("Index", datos);
@@ -50,6 +50,7 @@ namespace SINU.Controllers
         }
 
         #endregion
+
         #region Restaurar Postulante(Reutilizo Details) - reutilizo detalles para crear una pantalla para que un postulante pueda ser restaurado al proceso de inscripcion
         /// <summary>
         /// Reutilizo este datails(Modifico la Vista para poder Restaurar un Postulante que en el caso se haya interrumpido su proceso)
@@ -115,10 +116,10 @@ namespace SINU.Controllers
                 {
                     var da = db.Inscripcion.Find(datos.IdInscripcion);
                     da.FechaEntrevista = datos.FechaEntrevista;
-                    db.SaveChanges();
+                    db.SaveChanges();                  
                     if (da.InscripcionEtapaEstado.OrderBy(m=>m.Fecha).Last().IdSecuencia!=10)
                     {
-                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "ENTREVISTA", "Asignada");
 
                     }
 
@@ -136,7 +137,7 @@ namespace SINU.Controllers
 
                     if (vInscripcionEtapas.Estado == "Asignada")
                     {
-                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "", "");
+                        db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "ENTREVISTA", "Pendiente");
                     }
                     return RedirectToAction("Index");
 
@@ -302,11 +303,14 @@ namespace SINU.Controllers
                     LinkConfirmacion = callbackUrl,
                     Postulado = x
                 };
+
+                await Task.Delay(1000);
+
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
                         bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
-                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "", "");
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 13, "", "");
                         break;
                     case "No Postulado":
                         bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
@@ -590,6 +594,7 @@ namespace SINU.Controllers
                 presentaciondel.LugarPresentacion = new SelectList(db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
 
                 presentaciondel.DetalleInscripcion = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+                presentaciondel.DetalleInscripcion.Rinde_En = db.Inscripcion.Find(presentaciondel.DetalleInscripcion.IdInscripcion).IdEstablecimientoRindeExamen.ToString();
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
                                                                                                m.Jurisdiccion + ", " + m.Localidad + ", " + m.Departamento,
@@ -629,7 +634,11 @@ namespace SINU.Controllers
                     fecha = Fecha.ToString("dd/MM/yyyy a las hh:mm")
                 };
                 var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null, null);
-                db.spProximaSecuenciaEtapaEstado(null, Id, false, 0, "", "");
+                if (db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m=>m.IdInscripcionEtapaEstado==Inscripto.IdInscripcion).IdSecuencia==16)
+                {
+                        db.spProximaSecuenciaEtapaEstado(null, Id, false, 0, "", "");
+                }
+               
                 return RedirectToAction("Index");
             }
             catch (Exception)
