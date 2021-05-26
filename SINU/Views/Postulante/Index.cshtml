@@ -826,12 +826,14 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-
-            if ($("#BeginFormDatosBasicos").valid()) {
+            if ($("#fechacumpleaños").val()!="") {
+                 if ($("#BeginFormDatosBasicos").valid()) {
                 
-               $("#BTentrevista").removeClass("disabled");
+                     $("#BTentrevista").removeClass("disabled");
               
-            }
+                };
+            };
+           
 
       
 

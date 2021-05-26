@@ -4,16 +4,13 @@
     @Raw(Model.MailCuerpo)
 </p>
 <br />
-<p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Se te asignó fecha y lugar en donde rendiras exámenes:</p><br />
-<p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Fecha y horario: @Model.fecha.ToString("dd/MM/yyyy"+"'a las'"+"hh:mm"+"'HS'")</p>
-@foreach (var item in Model.establecimiento)
-{
-    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Delegacion u oficina: @item.OficinaDelegacion </p>
-    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Localidad: @item.Localidad </p>
-    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Direccion: @item.Direccion </p>
-    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Establecimiento: @item.Establecimiento </p>
-    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Comentario: @item.Comentario </p>
-}
+<p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Fecha y horario: @Model.fecha.ToString("dd/MM/yyyy"+"' a las '"+"hh:mm"+"'HS'")</p>
+
+    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Localidad: @Model.establecimiento.Localidad </p>
+    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Direccion: @Model.establecimiento.Direccion </p>
+    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Establecimiento: @Model.establecimiento.Establecimiento </p>
+    <p class="lead" style="font-family:'Helvetica Neue',Helvetica,Helvetica,Arial,sans-serif;font-size:17px;font-weight:400;line-height:1.6;margin:0;margin-bottom:10px;padding:0;color:black">Comentario: @Model.establecimiento.Comentario </p>
+
 <p style="text-align:center;">
     <a href="@Model.Link" style="background: #0078D4;border: 1px solid #FFF;color: #FFF;font-family: sans-serif;font-size: 15px;line-height: 1; text-align: center;text-decoration: none; width:480px;height:170px ; padding:15px;">
         CONTINUAR

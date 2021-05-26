@@ -18,14 +18,14 @@ namespace SINU.Models
         public string Nombres { get; set; }
         [ScaffoldColumn(false)]
         public string Sexo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         //el dni ingresado debe poseer 8 digitos para ser validado
         [StringLength(8, MinimumLength = 8, ErrorMessage = "El DNI ingresado no es valido")]
         //[RegularExpression(@"^([0-9]{2})([.])?([0-9]{3})([.])?([0-9]{3})$", ErrorMessage = "Caracteres ingresados NO validos")]
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Fecha de Nacimiento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
@@ -55,11 +55,11 @@ namespace SINU.Models
         //ver como modificar el mensaje de error al no ser validado el email
         //[DataType(DataType.EmailAddress,ErrorMessage ="El email ingresado no es valido")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Campo Requerido")]
         [Display(Name = "Comentario")]
         [MaxLength(100, ErrorMessage = "Dato ingresado supera el limite del campo")]
         public string ComoSeEntero { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Como se entero")]
         public Nullable<int> IdComoSeEntero { get; set; }
         [ScaffoldColumn(false)]
@@ -77,7 +77,7 @@ namespace SINU.Models
         public Nullable<int> IdSecuencia { get; set; }
         [ScaffoldColumn(false)]
         public string Etapa_Estado { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Genero")]
         public int IdSexo { get; set; }
         [Required]
@@ -510,7 +510,7 @@ namespace SINU.Models
 
     public partial class vPersona_FamiliarMetadata
     {
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Fecha de Nacimiento")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
@@ -521,39 +521,39 @@ namespace SINU.Models
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> FechaCasamiento { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Parentesco")]
         public Nullable<int> idParentesco { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Genero")]
         public Nullable<int> IdSexo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Estado Civil")]
         public string IdEstadoCivil { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Apellido { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [MaxLength(50, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string Nombres { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         //el dni ingresado debe poseer 8 digitos para ser validado
         [StringLength(8, MinimumLength = 8, ErrorMessage = "El DNI ingresado no es valido")]
         //[RegularExpression(@"^([0-9]{2})([.])?([0-9]{3})([.])?([0-9]{3})$", ErrorMessage = "Caracteres ingresados NO validos")]
         //limito al dni que solo acepte numeros
         [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
         public string DNI { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         public Nullable<bool> Vive { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Convive")]
         public Nullable<bool> ConVive { get; set; }
         [Display(Name = "Religión")]
         public string IdReligion { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [Display(Name = "Tipo Nacionalidad")]
         public Nullable<int> idTipoNacionalidad { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Campo Requerido")]
         [RegularExpression(@"\b(20|23|24|27|30|33|34)[0-9]{8}[0-9]", ErrorMessage = "Debe ingresar un Cuil valido.")]
         [MaxLength(11, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string CUIL { get; set; }

@@ -122,7 +122,7 @@ namespace SINU.Controllers
                         db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "ENTREVISTA", "Asignada");
 
                     }
-
+                        
 
                     MailConfirmacionEntrevista Modelo = new MailConfirmacionEntrevista
                     {
@@ -614,14 +614,15 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult PresentacionAsignaFecha(int Id, DateTime Fecha, int LugarPresentacion)
         {
-            List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
+            vOficDeleg_EstablecimientoRindExamen establecExamens;
             vInscripcionDetalle Inscripto;
             Configuracion configuracion;
             try
             {
                 db.spExamenParaEsteInscripto(Id, Fecha, LugarPresentacion);
                 Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == Id);
-                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
+                int idest = (int)db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == Id).IdEstablecimientoRindeExamen;
+                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.FirstOrDefault(m => m.IdEstablecimientoRindeExamen == idest);
                 configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
                 var callbackUrl = Url.Action("Index", "Postulante", null, protocol: Request.Url.Scheme);
                 var modelPlanti = new ViewModels.MailPresentacion
@@ -631,7 +632,7 @@ namespace SINU.Controllers
                     establecimiento = establecExamens,
                     Link = callbackUrl,
                     MailCuerpo = configuracion.ValorDato,
-                    fecha = Fecha.ToString("dd/MM/yyyy a las hh:mm")
+                    fecha =  Fecha
                 };
                 var Result = Func.EnvioDeMail(modelPlanti, "MailFechaPresentacion", null, Inscripto.IdPersona, "MailAsunto10", null, null);
                 if (db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m=>m.IdInscripcionEtapaEstado==Inscripto.IdInscripcion).IdSecuencia==16)
@@ -1022,7 +1023,7 @@ namespace SINU.Controllers
         #region (POST) Asignar a varios fecha de presentacion -  se seleccion a varios postulantes y se le asignan fechas de presentacion
         public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
-            List<vOficDeleg_EstablecimientoRindExamen> establecExamens;
+            vOficDeleg_EstablecimientoRindExamen establecExamens;
             vInscripcionDetalle Inscripto;
             Configuracion configuracion;
             if (select == null)
@@ -1031,7 +1032,7 @@ namespace SINU.Controllers
             }
             try
             {
-                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.Where(m => m.IdEstablecimientoRindeExamen == LugarPresentacion).ToList();
+                establecExamens = db.vOficDeleg_EstablecimientoRindExamen.FirstOrDefault(m => m.IdEstablecimientoRindeExamen == LugarPresentacion);
                 configuracion = db.Configuracion.FirstOrDefault(m => m.NombreDato == "MailCuerpo10");
                 foreach (var item in select)
                 {
@@ -1044,7 +1045,7 @@ namespace SINU.Controllers
                         establecimiento = establecExamens,
                         Link = callbackUrl,
                         MailCuerpo = configuracion.ValorDato,
-                        fecha = Fecha.ToString("dd/MM/yyyy a las hh:mm")
+                        fecha = Fecha
                     };
                     db.spProximaSecuenciaEtapaEstado(null, Convert.ToInt32(item), null, null, "PRESENTACION", "Asignada");
                     db.spExamenParaEsteInscripto(Convert.ToInt32(item), Fecha, LugarPresentacion);
