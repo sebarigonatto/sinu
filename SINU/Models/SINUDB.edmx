@@ -2522,6 +2522,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_InvestigaDNI" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DNI" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Sp_InvestigarEMAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -5625,6 +5631,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="vParentesco" EntityType="SINUModel.vParentesco" />
+          <FunctionImport Name="sp_InvestigaDNI" ReturnType="Collection(SINUModel.sp_InvestigaDNI_Result)">
+            <Parameter Name="DNI" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Sp_InvestigarEMAIL" ReturnType="Collection(SINUModel.Sp_InvestigarEMAIL_Result)">
+            <Parameter Name="valoremail" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6932,6 +6944,27 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Grado" Type="Int32" Nullable="false" />
           <Property Name="Relacion" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="sp_InvestigaDNI_Result">
+          <Property Type="Boolean" Name="ES_Postulante" Nullable="true" />
+          <Property Type="Boolean" Name="Convocatoria_Activa" Nullable="true" />
+          <Property Type="Int32" Name="IdPersona" Nullable="true" />
+          <Property Type="String" Name="IdAspNetUser" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="EmailPersona" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdConvocatoria" Nullable="true" />
+          <Property Type="Int32" Name="IdSecuencia" Nullable="true" />
+          <Property Type="String" Name="ACCION" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="Sp_InvestigarEMAIL_Result">
+          <Property Type="String" Name="Tabla_SegUsu" Nullable="false" MaxLength="11" />
+          <Property Type="String" Name="codUsuario" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="mr" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Grado" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Destino" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Comentario" Nullable="true" MaxLength="150" />
+          <Property Type="DateTime" Name="FechUltimaAct" Nullable="false" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8695,6 +8728,35 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_InvestigaDNI" FunctionName="SINUModel.Store.sp_InvestigaDNI">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.sp_InvestigaDNI_Result">
+                <ScalarProperty Name="ES_Postulante" ColumnName="ES_Postulante" />
+                <ScalarProperty Name="Convocatoria_Activa" ColumnName="Convocatoria_Activa" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdAspNetUser" ColumnName="IdAspNetUser" />
+                <ScalarProperty Name="EmailPersona" ColumnName="EmailPersona" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+                <ScalarProperty Name="ACCION" ColumnName="ACCION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Sp_InvestigarEMAIL" FunctionName="SINUModel.Store.Sp_InvestigarEMAIL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.Sp_InvestigarEMAIL_Result">
+                <ScalarProperty Name="Tabla_SegUsu" ColumnName="Tabla_SegUsu" />
+                <ScalarProperty Name="codUsuario" ColumnName="codUsuario" />
+                <ScalarProperty Name="mr" ColumnName="mr" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="Destino" ColumnName="Destino" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="FechUltimaAct" ColumnName="FechUltimaAct" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

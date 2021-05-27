@@ -458,6 +458,12 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_InvestigaDNI_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Sp_InvestigarEMAIL_Result.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_vGruposYCarreras_Result.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

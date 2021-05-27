@@ -1415,5 +1415,23 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAspNetUserYPostulanteEliminar", emailParameter);
         }
+    
+        public virtual ObjectResult<sp_InvestigaDNI_Result> sp_InvestigaDNI(string dNI)
+        {
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_InvestigaDNI_Result>("sp_InvestigaDNI", dNIParameter);
+        }
+    
+        public virtual ObjectResult<Sp_InvestigarEMAIL_Result> Sp_InvestigarEMAIL(string valoremail)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_InvestigarEMAIL_Result>("Sp_InvestigarEMAIL", valoremailParameter);
+        }
     }
 }
