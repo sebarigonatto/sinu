@@ -12,7 +12,7 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vInscripcionDetalle
+    public partial class vInscripcionDetalleUltInsc
     {
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
         public string Apellido { get; set; }
@@ -40,6 +40,8 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
         public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
+        public int IdSecuencia { get; set; }
+        public Nullable<System.DateTime> FechaDeSecuencia { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
     }
 }

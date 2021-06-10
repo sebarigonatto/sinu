@@ -51,7 +51,7 @@ namespace SINU.ViewModels
     }
     public class PresentaciondelPostulante
     {
-        public vInscripcionDetalle DetalleInscripcion { get; set; }
+        public vInscripcionDetalleUltInsc DetalleInscripcion { get; set; }
         public string DatosLugar { get; set; }
         [Required(ErrorMessage ="Dato Requerido")]
         public SelectList LugarPresentacion { get; set; }

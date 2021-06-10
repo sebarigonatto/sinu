@@ -87,7 +87,7 @@ namespace SINU.Controllers
         {
             try
             {
-                vEntrevistaLugarFecha Dato = db.vEntrevistaLugarFecha.FirstOrDefault(m => m.IdPersona == id);///en la variable "Dato" guardo la informacion de la persona con idPersona igual que hay en la tabla
+                vEntrevistaLugarFechaUltInscripc Dato = db.vEntrevistaLugarFechaUltInscripc.FirstOrDefault(m => m.IdPersona == id);///en la variable "Dato" guardo la informacion de la persona con idPersona igual que hay en la tabla
 
                 return View(Dato);///devuelvo a la vista el modelo "Dato" es donde contiene toda la informacion de la persona
             }
@@ -224,7 +224,7 @@ namespace SINU.Controllers
         [HttpGet]
         public ActionResult Postular(int? id)
         {
-            List<vInscripcionDetalle> InscripcionElegida;
+            vInscripcionDetalle InscripcionElegida;
             vInscripcionEtapaEstadoUltimoEstado vInscripcion;
             try
             {
@@ -236,9 +236,9 @@ namespace SINU.Controllers
                     return View("Error", Func.ConstruyeError("Falta el Nro de ID que desea buscar en la tabla de INSCRIPTOS", "Delegacion", "Details"));
                 }
 
-                InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id && m.IdOficinasYDelegaciones == UsuarioDelegacion.IdOficinasYDelegaciones).ToList();
+                InscripcionElegida = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == id);
 
-                if (InscripcionElegida.Count == 0)
+                if (InscripcionElegida == null)
                 {
                     //return HttpNotFound("ese numero de ID no se encontro ");
                     return View("Error", Func.ConstruyeError("Incorrecta la llamada a la vista detalle con el id " + id.ToString() + " ==> NO EXISTE o no le corresponde verlo", "Delegacion", "Details"));
@@ -250,7 +250,7 @@ namespace SINU.Controllers
             }
             vInscripcion = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == id);
             ViewBag.Estado = vInscripcion.Estado;
-            return View(InscripcionElegida.First());
+            return View(InscripcionElegida);
         }
         #endregion
 
@@ -288,7 +288,7 @@ namespace SINU.Controllers
                         cuerpo = configuracion.ValorDato.ToString();
                         break;
                     case "Volver":
-                        db.spProximaSecuenciaEtapaEstado(0, id, true, 0, "", "");
+                        db.spProximaSecuenciaEtapaEstado(0, id, false, 0, "ENTREVISTA", "Pendiente");
                         break;
                 }
                 InscripcionElegida = db.vInscripcionDetalle.Where(m => m.IdInscripcion == id).ToList();
@@ -309,11 +309,11 @@ namespace SINU.Controllers
                 switch ((vInscripcionEtapas.Estado).ToString())
                 {
                     case "Postulado":
-                        bool envioP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
+                        Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
                         db.spProximaSecuenciaEtapaEstado(0, id, false, 13, "", "");
                         break;
                     case "No Postulado":
-                        bool envioNP = await Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
+                        Func.EnvioDeMail(modeloPlanti, "MailPostulado", null, vInscripcionEtapas.IdPersona, "MailAsunto2", null, null);
                         break;
                 }
             }
@@ -335,8 +335,7 @@ namespace SINU.Controllers
         [HttpGet]
         public ActionResult Documentacion(int id)
         {
-            vInscripcionDetalle vdetalle;
-            vdetalle = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+            var vdetalle = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == id);
             var NyA = vdetalle.Nombres + " " + vdetalle.Apellido;
             ViewBag.NInscripcion = vdetalle.IdInscripcion;
             ViewBag.Modalidad = vdetalle.Modalidad;
@@ -472,7 +471,7 @@ namespace SINU.Controllers
                         Apellido = vInscripcionEtapaEstado.Apellido,/// cambiar por nombre
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
+                    Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
 
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
                     return Json(new { View = "Index" });
@@ -513,7 +512,7 @@ namespace SINU.Controllers
                         Apellido = "",///Cambiar a Nnombre
                         Errores = data
                     };
-                    bool envioNP = await Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
+                    Func.EnvioDeMail(modeloPlantilla, "MailDocumentacion", null, ID_persona, "MailAsunto9", null, null);
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "No Validado");
                     return Json(new { View = "Index" });
 
@@ -593,7 +592,7 @@ namespace SINU.Controllers
                 PresentaciondelPostulante presentaciondel = new PresentaciondelPostulante();
                 presentaciondel.LugarPresentacion = new SelectList(db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion");
 
-                presentaciondel.DetalleInscripcion = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);
+                presentaciondel.DetalleInscripcion = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == id);
                 presentaciondel.DetalleInscripcion.Rinde_En = db.Inscripcion.Find(presentaciondel.DetalleInscripcion.IdInscripcion).IdEstablecimientoRindeExamen.ToString();
                 var DatosdelLugar = new List<Array>();
                 db.EstablecimientoRindeExamen.ToList().ForEach(m => DatosdelLugar.Add(new object[] { m.IdEstablecimientoRindeExamen,
@@ -825,7 +824,7 @@ namespace SINU.Controllers
         [HttpPost]
         public ActionResult CerrarPantalla(int id, int IdPanatlla, int AoC)
         {
-            var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == id);/// 06/04/2021 debido a que se envia los botones de validar y abrir a la vista DocumentosNecesarios.cshtml se 
+            var inscrip = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == id);/// 06/04/2021 debido a que se envia los botones de validar y abrir a la vista DocumentosNecesarios.cshtml se 
                                                                                                                  ///cambia aqui para que reciba parametro idPersona o IdInscripcion
             var TieneProblema = db.spTieneProblemasEnPantallaEstePostulate(inscrip.IdPersona, IdPanatlla).ToList();
             var Abierto = db.spTildarPantallaParaPostulate(inscrip.IdPersona).FirstOrDefault(m => m.IdPantalla == IdPanatlla);
@@ -897,7 +896,7 @@ namespace SINU.Controllers
             {
                 //var ExistProblema = db.DataProblemaEncontrado.Where(m => m.IdPostulantePersona == ID_persona && m.IdDataVerificacion == 26).Any();
                 //ViewBag.Problem = ExistProblema;
-                var inscrip = db.vInscripcionDetalle.FirstOrDefault(m => m.IdPersona == ID_persona);
+                var inscrip = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == ID_persona);
 
                 var DocuNecesarios = db.DocumentosNecesariosDelInscripto(inscrip.IdInscripcion).OrderByDescending(m => m.Obligatorio).ToList();
                 ViewBag.Idinscripto = inscrip.IdInscripcion;
@@ -1021,6 +1020,7 @@ namespace SINU.Controllers
         #endregion
 
         #region (POST) Asignar a varios fecha de presentacion -  se seleccion a varios postulantes y se le asignan fechas de presentacion
+        [HttpPost]
         public JsonResult AsignarFechaVarios(string[] select, DateTime Fecha, int LugarPresentacion)
         {
             vOficDeleg_EstablecimientoRindExamen establecExamens;
@@ -1068,8 +1068,9 @@ namespace SINU.Controllers
             UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
             try
             {
-                List<vEntrevistaLugarFecha> dato = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar" && m.Nombre == UsuarioDelegacion.Nombre).ToList();
-                ViewBag.Listado = db.vEntrevistaLugarFecha.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
+                List<vEntrevistaLugarFechaUltInscripc> dato = db.vEntrevistaLugarFechaUltInscripc.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar" && m.Nombre == UsuarioDelegacion.Nombre && m.Activa ==true).ToList();
+                //ViewBag.Listado = db.vEntrevistaLugarFechaUltInscripc.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
+                ViewBag.Listado = dato.Count();
                 return View(dato);
             }
             catch (Exception)
@@ -1106,14 +1107,14 @@ namespace SINU.Controllers
                     var inscrip = db.Inscripcion.Find(x);
                     inscrip.FechaEntrevista = Fecha;
                     db.SaveChanges();
-                    db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
+                    db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "ENTREVISTA", "Asignada");
 
 
                     vInscripcionEtapas = db.vInscripcionEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdInscripcionEtapaEstado == x);
 
                     if (vInscripcionEtapas.Estado == "Asignada")
                     {
-                        db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "", "");
+                        db.spProximaSecuenciaEtapaEstado(0, x, false, 0, "ENTREVISTA", "Pendiente");
                     }
                     //lista de mail de los postulantes
                     correos.Add(inscrip.Postulante.Persona.Email);

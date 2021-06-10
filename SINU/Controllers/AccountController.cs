@@ -262,28 +262,25 @@ namespace SINU.Controllers
 
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                    var per = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
+                    var SituacionPersona = db.sp_InvestigaDNI(model.DNI).First();
                     
-                    if (per != null)
+                    //Si el DNI corresponde a un postulante anucio lo mismo en la vista de registro
+                    if ((bool)SituacionPersona.ES_Postulante)
                     {
                         //debo verifsicar si se trata de un postulante o simplemente una persona                        
-
-                        if (per.Postulante != null)
-                        {
-                            AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
-                            return View(model);
-                        }
-                      
+                        AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
+                        return View(model);
+                        
                     }
 
+                    //creo la cuenta con el mail proporcionado
                     var result = await UserManager.CreateAsync(user, model.Password);
-
 
                     if (result.Succeeded)
                     {
                                               
                         //crea una persona, un postulante y una inscripcion
-                        var r = db.spCreaPostulante(per!=null?per.IdPersona:0,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(false,SituacionPersona.IdPersona!=0?SituacionPersona.IdPersona:0,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
                       
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -312,9 +309,22 @@ namespace SINU.Controllers
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
-                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
-                        return View("Login");
+                        var resultado = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
+
+
+                        //Segun si el correo fue enviado o no se lanza un mensaje
+                        if (resultado.Contains("Correo Enviado"))
+                        {
+                            ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
+                            return View("Login");
+                        }
+                        else
+                        {
+                            ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
+                            return View("Login");
+                        }
+
+                        
                     }
                     AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
                 }

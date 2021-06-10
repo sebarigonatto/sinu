@@ -74,7 +74,8 @@
                     <div class="form-group col-md-6">
                         <div class="col-md-10">
                             <label for="recipient-name" class="col-form-label">Fecha de Presentacion:</label><br />
-                            <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly/>
+                            @Html.TextBox("Fecha", "", "{0:dd/MM/yyyy HH:mm }", new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true, @required = "required" })
+
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -134,8 +135,8 @@
             
             jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
-                format: 'd/m/y h:m',
-                value: 'd/m/y h:m'
+                format: 'd/m/y H:m',
+                value: 'd/m/y H:m'
             });
             $.datetimepicker.setLocale('es')
 

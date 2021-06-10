@@ -51,7 +51,7 @@ namespace SINU.ViewModels
 
     public class DatosPersonalesVM
     {
-        public vPersona_DatosPer vPersona_DatosPerVM { get; set; }
+        public vPersona_DatosPer_UltInscripc vPersona_DatosPerVM { get; set; }
         public List<vEstCivil> vEstCivilVM { get; set; }
         public List<vRELIGION> vRELIGIONVM { get; set; }
         public List<TipoNacionalidad> TipoNacionalidadVM { get; set; }

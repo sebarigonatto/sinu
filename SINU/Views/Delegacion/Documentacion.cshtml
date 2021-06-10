@@ -11,7 +11,7 @@
     <ul role="tablist" class="nav nav-tabs nav-pills with-arrow lined bg-dark flex-sm-row text-center" style="padding-bottom:0.2rem">
         <li class="nav-item flex-sm-fill" data-placement="top">
             <a class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 atab">
-                Documentacion de @Model.NomyApe N° de Preinscripcion:@ViewBag.NInscripcion - Modalidad : @ViewBag.Modalidad
+                Documentacion de @Model.NomyApe - N° de Preinscripcion: @ViewBag.NInscripcion - Modalidad : @ViewBag.Modalidad
             </a>
         </li>
     </ul>
@@ -721,10 +721,10 @@
         id_per = $("#vPersona_DatosBasicosVM_IdPersona").val();
         TablaProblema;
         $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+            $('[data-toggle="tooltip"]').tooltip()
+        });
                 /////////////////////////////ocultar el modal cuando se acepte realizar alguna accion sobre el postulante///////////////////////
-document.getElementById("BtnConfirmar").onclick = function () { OculModal1() };
+        document.getElementById("BtnConfirmar").onclick = function () { OculModal1() };
         function OculModal1() {
             //alert('exito entro')
             $('#modalConfirmar').modal('hide')

@@ -126,7 +126,6 @@
         <AssociationConnector Association="SINUModel.AspNetUserRoles" />
         <AssociationConnector Association="SINUModel.AgrupacionCarreraOficio" />
         <AssociationConnector Association="SINUModel.GrupoCarrOficioResGrupo" />
-        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="23.75" PointY="17.75" />
         <EntityTypeShape EntityType="SINUModel.vRestriccionesPorConvYFechaPeriodosInscrip" Width="1.5" PointX="25.375" PointY="23.75" />
         <EntityTypeShape EntityType="SINUModel.vInstitucionesConvocadasYCarrerasAsociadas" Width="1.5" PointX="15.75" PointY="26.75" />
         <EntityTypeShape EntityType="SINUModel.ConsultaProgramada" Width="1.5" PointX="26.75" PointY="16.75" />
@@ -161,6 +160,11 @@
         <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCount" Width="1.5" PointX="29.375" PointY="28.875" />
         <EntityTypeShape EntityType="SINUModel.vInscriptosYRestriccionesCheck" Width="1.5" PointX="31.375" PointY="11.75" />
         <EntityTypeShape EntityType="SINUModel.vParentesco" Width="1.5" PointX="30.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SINUModel.vPostPersonaEtapaEstadoUltimoEstado" Width="1.5" PointX="31.375" PointY="19.75" />
+        <EntityTypeShape EntityType="SINUModel.vEntrevistaLugarFechaUltInscripc" Width="1.5" PointX="31.75" PointY="25.75" />
+        <EntityTypeShape EntityType="SINUModel.vPersona_DatosPer_UltInscripc" Width="1.5" PointX="31.375" PointY="30.75" />
+        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalleUltInsc" Width="1.5" PointX="32.375" PointY="0.875" />
+        <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="9.375" PointY="32.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

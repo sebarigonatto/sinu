@@ -510,6 +510,9 @@
     <Compile Include="Models\vEntrevistaLugarFecha.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vEntrevistaLugarFechaUltInscripc.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VerificacionPantallas.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -523,6 +526,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vInscripcionDetalle.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vInscripcionDetalleUltInsc.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vInscripcionEtapaEstadoUltimoEstado.cs">
@@ -585,6 +591,9 @@
     <Compile Include="Models\vPersona_DatosPer.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vPersona_DatosPer_UltInscripc.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vPersona_Domicilio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
@@ -601,6 +610,9 @@
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPersona_SituacionOcupacional.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vPostPersonaEtapaEstadoUltimoEstado.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vPostulanteEtapaEstado.cs">

@@ -104,7 +104,6 @@ namespace SINU.Models
         public virtual DbSet<DataVerificacion> DataVerificacion { get; set; }
         public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
-        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
@@ -131,6 +130,11 @@ namespace SINU.Models
         public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
+        public virtual DbSet<vPostPersonaEtapaEstadoUltimoEstado> vPostPersonaEtapaEstadoUltimoEstado { get; set; }
+        public virtual DbSet<vEntrevistaLugarFechaUltInscripc> vEntrevistaLugarFechaUltInscripc { get; set; }
+        public virtual DbSet<vPersona_DatosPer_UltInscripc> vPersona_DatosPer_UltInscripc { get; set; }
+        public virtual DbSet<vInscripcionDetalleUltInsc> vInscripcionDetalleUltInsc { get; set; }
+        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -390,8 +394,12 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAntropometriaIU", idPostulantePersonaParameter, alturaParameter, pesoParameter, iMCParameter, perimCabezaParameter, perimToraxParameter, perimCinturaParameter, perimCaderasParameter, largoPantalonParameter, largoEntrepParameter, largoFaldaParameter, cuelloParameter, calzadoParameter);
         }
     
-        public virtual int spCreaPostulante(Nullable<int> idPersonaExistente, string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
+        public virtual int spCreaPostulante(Nullable<bool> reinscripcion, Nullable<int> idPersonaExistente, string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
         {
+            var reinscripcionParameter = reinscripcion.HasValue ?
+                new ObjectParameter("reinscripcion", reinscripcion) :
+                new ObjectParameter("reinscripcion", typeof(bool));
+    
             var idPersonaExistenteParameter = idPersonaExistente.HasValue ?
                 new ObjectParameter("IdPersonaExistente", idPersonaExistente) :
                 new ObjectParameter("IdPersonaExistente", typeof(int));
@@ -420,7 +428,7 @@ namespace SINU.Models
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", idDelegacionOficinaIngresoInscribio) :
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", idPersonaExistenteParameter, apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", reinscripcionParameter, idPersonaExistenteParameter, apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
         }
     
         public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, Nullable<System.DateTime> fechaNacimiento, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idComoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)

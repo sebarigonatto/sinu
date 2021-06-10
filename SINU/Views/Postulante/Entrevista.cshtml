@@ -1,11 +1,11 @@
-﻿@model SINU.Models.vEntrevistaLugarFecha
+﻿@model SINU.Models.vEntrevistaLugarFechaUltInscripc
 <h4>Lugar y Fecha:</h4>
 
 @if (ViewBag.FechaAsisgnada)
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
-        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-        <h6>Direccion: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
+        <p class="text-justify"><h5>Delegación Naval: <b>@Model.Nombre</b> </h5></p>
+        <h6>Dirección: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
         <h6>Telefono: <b>@Model.Telefono</b></h6>
         @if (Model.Celular != null)
         {
@@ -26,9 +26,9 @@ else
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
         <h6>Se le informara via correo cuando le hayan asignado una fecha de entrevista, solicitamos este atento.</h6>
-        <h6>Por Consultas comunicarse con la Delegacion seleccionada. </h6>
-        <p class="text-justify"><h5>Delegacion Naval: <b>@Model.Nombre</b> </h5></p>
-        <h6>Direccion: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
+        <h6>Por Consultas comunicarse con la Delegación seleccionada. </h6>
+        <p class="text-justify"><h5>Delegación Naval: <b>@Model.Nombre</b> </h5></p>
+        <h6>Dirección: <b>@Model.Provincia, @Model.Localidad, @Model.Direccion</b></h6>
         <h6>Telefono: <b>@Model.Telefono</b></h6>
         <h5>Estado de Entrevista: <b style="color:yellow">@ViewBag.EstadoEntre </b></h5>
     </div>

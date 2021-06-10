@@ -51,7 +51,7 @@ namespace SINU.Models
         //o crear un a validacion perzonalizada donde se requiere en el caso de que se el postulante y en caso de ser un familiar no es requerido
         //[Required]
         //valido los correos ingresados
-        [RegularExpression(@"^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$", ErrorMessage = "El correo electronico ingresado no es valido!!!")]
+        [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
         //ver como modificar el mensaje de error al no ser validado el email
         //[DataType(DataType.EmailAddress,ErrorMessage ="El email ingresado no es valido")]
         public string Email { get; set; }
@@ -708,8 +708,8 @@ namespace SINU.Models
         [Display(Name = "Como se entero")]
         public string OpcionSeEnteroPOR { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Fecha de Registro")]
-        public System.DateTime FechaRegistro { get; set; }
+        [Display(Name = "Fecha de Incripcion")]
+        public System.DateTime FechaInscripcion { get; set; }
         [Display(Name ="N° de Preinscripcion")]
         public int IdInscripcion { get; set; }
         [Display(Name ="Se Inscribio en")]
