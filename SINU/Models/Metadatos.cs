@@ -85,6 +85,7 @@ namespace SINU.Models
         public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         [ScaffoldColumn(false)]
         public string Oficina { get; set; }
+        [Range(minimum: 16,maximum:35,ErrorMessage ="Edad no valida, verifique Fecha de Nacimiento")]//verificar esto
         public Nullable<int> Edad { get; set; }
     }
 

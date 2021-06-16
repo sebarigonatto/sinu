@@ -28,5 +28,11 @@ namespace SINU.Models
         public string Delegacion { get; set; }
         public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
+        public Nullable<System.DateTime> FechaRindeExamen { get; set; }
+        public Nullable<System.DateTime> FechaEntrevista { get; set; }
+        public Nullable<System.DateTime> FechaInscripcion { get; set; }
+        public string DomDNI { get; set; }
+        public string DomActual { get; set; }
+        public Nullable<bool> Activa { get; set; }
     }
 }

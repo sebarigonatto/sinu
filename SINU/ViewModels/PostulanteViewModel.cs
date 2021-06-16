@@ -159,6 +159,8 @@ namespace SINU.ViewModels
     public class DocuPenalVM
     {
         public int IdPersona { get; set; }
+
+        public int IdInscrip { get; set; }
         //[Required(ErrorMessage = "Falta Certificado Penal")]
 
         public HttpPostedFileBase ConstanciaAntcPenales { get; set; }

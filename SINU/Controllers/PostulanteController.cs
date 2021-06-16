@@ -51,10 +51,13 @@ namespace SINU.Controllers
 
                 //recurpero la ultima inscripcion de postulante
                 var UltimaInscripcion = db.Inscripcion.Where(m => m.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.FechaInscripcion).ToList().Last();
-                
-                //cargo los ID de las etapas por las que paso el postulante
-                pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
 
+                //cargo los ID de las etapas por las que paso el postulante
+                //pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
+                var etapas = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m=>m.Fecha).ToList();
+                var indexEtapa = etapas.LastIndexOf(etapas.LastOrDefault(m=>m.IdSecuencia==6));
+                etapas.RemoveRange(0, indexEtapa);
+                pers.EtapaTabs = etapas.Select(m => m.IdEtapa).ToList();
                 //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
 
@@ -260,8 +263,10 @@ namespace SINU.Controllers
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTitulo").ValorDato.ToString(),
                     db.Configuracion.FirstOrDefault(m => m.NombreDato == "ConsideracionEntrevTexto").ValorDato.ToString()
                 };
-                ViewBag.Considere = consideraciones;
+                ViewBag.Considere = consideraciones;//mensaje de consideracion a la hora de la entrevista, tabla "Configuraciones"
 
+                //verificar si se encuentra en entrevista para mostrar esta opcion
+                ViewBag.VolverDB = entrevistafh.IdSecuencia < 13;
                 return PartialView(entrevistafh);
             }
             catch (Exception ex)
@@ -270,6 +275,26 @@ namespace SINU.Controllers
                 return PartialView(ex);
             }
 
+        }
+
+        //accion para volver de entrevista a Datos Basicos
+        [AuthorizacionPermiso("CreaEditaDatosP")]
+        public ActionResult VolverDatosBasicos(int idPostulante, int idInscripcion)
+        {
+            try
+            {
+                var result = db.spProximaSecuenciaEtapaEstado(null,idInscripcion,false,null, "DATOS BASICOS", "Inicio De Carga");
+                var inscripcion = db.Inscripcion.Find(idInscripcion);
+                inscripcion.FechaEntrevista = null;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
@@ -381,8 +406,8 @@ namespace SINU.Controllers
                     int IDpreNuevo = db.vInstitucionModalidad.FirstOrDefault(m => m.IdModalidad == p.IdModalidad).IdInstitucion;
                     var msg = new System.Data.Entity.Core.Objects.ObjectParameter("msg","");
                     var result = db.spDatosPersonalesUpdate(p.IdPersona, p.IdInscripcion, p.CUIL, p.FechaNacimiento, p.IdEstadoCivil, p.IdReligion, p.idTipoNacionalidad, p.IdModalidad, p.IdCarreraOficio, IDpreNuevo,p.Nombres,p.Apellido, msg);
-
-                    return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" });
+                    string carreraActual = db.CarreraOficio.FirstOrDefault(m => m.IdCarreraOficio == Datos.vPersona_DatosPerVM.IdCarreraOficio).CarreraUoficio??"---";
+                    return Json(new { success = true, msg = "Datos Guardados.", form = "CambiaMOD" , modalidad= Datos.vPersona_DatosPerVM.IdModalidad, carrera= carreraActual });
                 }
                 catch (Exception ex)
                 {
@@ -404,14 +429,17 @@ namespace SINU.Controllers
 
                 DocuPenalVM d = new DocuPenalVM()
                 {
-                    IdPersona = ID_persona
+                    IdPersona = ID_persona,
+                    IdInscrip= db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == ID_persona).IdInscripcion
 
                 };
 
                 string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
                 string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
                 string carpetaLink = "../Documentacion/ArchivosDocuPenal/";
-                string archivo = ID_persona + "*";
+                //string archivo = $"{ID_persona}*";
+                //ultimo id inscripcion del poos
+                string archivo = $"{ID_persona}-{d.IdInscrip}*";
 
                 //obtengo los archivos (certificado de antecedentes penales y autorizacion para investigacion), correspondiente al postulante
                 string[] archivos = Directory.GetFiles(CarpetaDeGuardado, archivo);
@@ -419,13 +447,10 @@ namespace SINU.Controllers
                 {
                     if (item.IndexOf("Anexo2") > 0) d.PathFormularioAanexo2 = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1);
                     if (item.IndexOf("Certificado") > 0) d.PathConstanciaAntcPenales = carpetaLink + item.Substring(item.LastIndexOf("\\") + 1);
-                }
-                
-                //ultimo id inscripcion del poos
-                var idInscrip = db.vPostPersonaEtapaEstadoUltimoEstado.FirstOrDefault(m => m.IdPersona == ID_persona).IdInscripcionEtapaEstado;
+                }                
 
                 //registro de la declaracion jurada, segun ultima inscripcion
-                d.PenalDeclaJurada = db.DeclaracionJurada.FirstOrDefault(m => m.IdInscripcion == idInscrip) ?? new DeclaracionJurada { IdInscripcion= idInscrip };
+                d.PenalDeclaJurada = db.DeclaracionJurada.FirstOrDefault(m => m.IdInscripcion == d.IdInscrip) ?? new DeclaracionJurada { IdInscripcion= d.IdInscrip };
                 d.PenalDeclaJurada.IdPersona = ID_persona;
                 return PartialView(d);
             }
@@ -450,37 +475,43 @@ namespace SINU.Controllers
                 string anexo = "", cert = "";
                 string NombreArchivo, ExtencioArchivo, guarda;
                 bool btanexo = false, btcert = false;
-                int id = data.IdPersona;
-                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, id + "*");
+                
+                //string[] archivos = Directory.GetFiles(CarpetaDeGuardado, data.IdPersona + "*");
+                //nueva consulta
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, $"{data.IdPersona}-{data.IdInscrip}*");
+
                 foreach (var item in archivos)
                 {
                     if (item.IndexOf("Anexo2") > 0) anexo = item;
                     if (item.IndexOf("Certificado") > 0) cert = item;
                 }
 
-                if (data.FormularioAanexo2 != null)
+                if (data.FormularioAanexo2!=null)
                 {
                     if (anexo != "") System.IO.File.Delete(anexo);
-                    NombreArchivo = id + "&Anexo2";
+                    //NombreArchivo = data.IdPersona + "&Anexo2";
+                    NombreArchivo = $"{data.IdPersona}-{data.IdInscrip}&Anexo2";
                     ExtencioArchivo = Path.GetExtension(data.FormularioAanexo2.FileName);
-                    guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.FormularioAanexo2.FileName;
+                    //guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.FormularioAanexo2.FileName;
+                    guarda = $"{CarpetaDeGuardado}{NombreArchivo}&{data.FormularioAanexo2.FileName}";
                     data.FormularioAanexo2.SaveAs(guarda);
                     btanexo = true;
                 }
                 if (data.ConstanciaAntcPenales != null)
                 {
                     if (cert != "") System.IO.File.Delete(cert);
-                    NombreArchivo = id + "&Certificado";
+                    //NombreArchivo = data.IdPersona + "&Certificado";
+                    NombreArchivo = $"{data.IdPersona}-{data.IdInscrip}&Certificado";
                     ExtencioArchivo = Path.GetExtension(data.ConstanciaAntcPenales.FileName);
-                    guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName;
+                    //guarda = CarpetaDeGuardado + NombreArchivo + "&" + data.ConstanciaAntcPenales.FileName;
+                    guarda = $"{CarpetaDeGuardado}{NombreArchivo}&{data.ConstanciaAntcPenales.FileName}";
                     data.ConstanciaAntcPenales.SaveAs(guarda);
                     btcert = true;
                 }
                 //Declaracion Jurada
                 DeclaracionJurada DeclaJura = data.PenalDeclaJurada;
                 if (DeclaJura.IdDeclaracionJurada == 0)
-                {
-                    
+                {                    
                     db.DeclaracionJurada.Add(DeclaJura);
                 }
                 else
@@ -507,48 +538,45 @@ namespace SINU.Controllers
 
         }
 
+        [AuthorizacionPermiso("AdminMenu")]
+        public bool ModificaNombre(DocuPenalVM data)
+        {
+            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+            string anexo = "", cert = "";
+            string anexoNew = "", certNew = "";
+            string[] archivos;
 
-        //public bool ModificaNombre(DocuPenalVM data)
-        //{
-        //    string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-        //    string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-        //    string anexo = "" , cert = "";
-        //    string anexoNew = "", certNew = "";
+            //levanto los registros de la ultima inscripcion de los postulantes
+            var ListaInscriptos = db.vInscripcionDetalleUltInsc.Select(m => new { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPersona.ToString() });
 
-        //    string NombreArchivo, ExtencioArchivo, guarda, idInscripcion, idPostulante;
-        //    string[] archivos;
+            foreach (var inscripcion in ListaInscriptos)
+            {
+                //busco si el postulante posee registros
+                archivos = Directory.GetFiles(CarpetaDeGuardado, inscripcion.idPostulante + "*");
+                foreach (var item in archivos)
+                {
+                    if (item.IndexOf("Anexo2") > 0)
+                    {
+                        anexo = item;
+                        anexoNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
+                        System.IO.File.Copy(anexo, anexoNew,true);
+                        //System.IO.File.Delete(anexo);
 
-        //    //levanto los registros de la ultima inscripcion de los postulantes
-        //    var ListaInscriptos = db.vInscripcionDetalleUltInsc.Select(m => new  { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPersona.ToString() });
+                    }
+                    if (item.IndexOf("Certificado") > 0)
+                    {
+                        cert = item;
+                        certNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
+                        System.IO.File.Copy(cert, certNew);
+                        //System.IO.File.Delete(cert);
+                    }
+                }
 
-        //    foreach (var inscripcion in ListaInscriptos)
-        //    {
-        //        //busco si el postulante posee registros
-        //        archivos = Directory.GetFiles(CarpetaDeGuardado, inscripcion.idPostulante + "*");
-        //        foreach (var item in archivos)
-        //        {
-        //            if (item.IndexOf("Anexo2") > 0) {
-        //                anexo = item;
-        //                anexoNew = item.Replace(inscripcion.idPostulante, inscripcion.idInscripcion);
-        //                System.IO.File.Move(anexo, anexoNew);
+            }
 
-        //            }
-        //            if (item.IndexOf("Certificado") > 0) {
-        //                cert = item;
-        //                certNew = item.Replace(inscripcion.idPostulante, inscripcion.idInscripcion);
-        //                System.IO.File.Move(cert, certNew);
-
-        //            }
-        //        }
-
-
-
-
-        //    }
-
-          
-        //    return true;
-        //}
+            return true;
+        }
 
         [AuthorizacionPermiso("ListarRP")]
         public FileContentResult GetFile(int? ID_persona, string? docu)
@@ -564,9 +592,11 @@ namespace SINU.Controllers
             }
             else
             {
-
+                int idInscrip = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == ID_persona).IdInscripcion;
                 string Ubicacionfile = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-                string[] archivos = Directory.GetFiles(Ubicacionfile, ID_persona + "&" + docu + "*");
+                //string[] archivos = Directory.GetFiles(Ubicacionfile, ID_persona + "&" + docu + "*");
+                string[] archivos = Directory.GetFiles(Ubicacionfile, $"{ID_persona}-{idInscrip}&{docu}*");
+
                 byte[] FileBytes = System.IO.File.ReadAllBytes(archivos[0]);
                 string app = "";
                 switch (archivos[0].ToString().Substring(archivos[0].ToString().LastIndexOf('.') + 1))
@@ -2031,9 +2061,50 @@ namespace SINU.Controllers
             {
 
                 var postulante = db.Postulante.Find(ID_postulante);
+
+                
                 //mando como true el primer parametro  del 'spCreaPostulante', para indicar que se va a realizar  un reinscripcion
+                //CORREO PARA EL POSTULANTE
                 var result = db.spCreaPostulante(true, postulante.IdPersona, postulante.Persona.Apellido, postulante.Persona.Nombres, postulante.Persona.DNI, 
                                                  postulante.Persona.Email, id_institucion, postulante.Inscripcion.First().IdDelegacionOficinaIngresoInscribio);
+
+
+                var ultimaInscripcion = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == ID_postulante);
+                //envio de mail tanto para el postulante como para la delegacion
+                var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
+                {
+                    Apellido = postulante.Persona.Apellido,
+                    LinkConfirmacion = Url.Action("index", "Postulante"),
+                    CuerpoMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "CuerpoMailRegistro").ValorDato.ToString()
+                };
+
+              
+                //Asusnto de Mail.
+                string MODALIDAD = db.Institucion.Find(id_institucion).IdModalidad;
+                if (MODALIDAD == "CPESNM" || MODALIDAD == "CPESSA" || MODALIDAD == "CUIM")
+                {
+                    MODALIDAD = "CPESNM-CPESSA";
+                }
+                _= Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion",null, ID_postulante, "MailAsunto" + MODALIDAD, null, null);
+
+                //CORREO PARA LA DELEGACION
+                int ID_Delegacion = ultimaInscripcion.IdOficinasYDelegaciones;
+
+                ViewModels.ValidoCorreoPostulante datosMail = new ViewModels.ValidoCorreoPostulante
+                {
+                    Apellido = "",
+                    Apellido_P = postulante.Persona.Apellido,
+                    Dni_P = postulante.Persona.DNI,
+                    IdInscripcion_P = ultimaInscripcion.IdInscripcion,
+                    Nombre_P = postulante.Persona.Nombres,
+                    url = Url.Action("Index", "Postulante", new { ID_Postulante =ID_postulante }, protocol: Request.Url.Scheme),
+                    Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
+                };
+
+                _=Func.EnvioDeMail(datosMail, "PlantillaConfirmoCorreoPostulante", null, null, "MailAsunto6", ID_Delegacion, null);
+
+
+                //anuncion de REINSCRIPCION exitosa
                 Session["IncripcionNueva"] = "Se realizó correctamente la nueva inscripción en la Covocatoria seleccionada.";
                 return RedirectToAction("Index");
             }

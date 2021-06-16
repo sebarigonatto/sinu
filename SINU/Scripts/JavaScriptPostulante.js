@@ -125,14 +125,17 @@ $(document).ready(function () {
     });
 
     function edadMAXMIN(edad) {
+
         if (edad > 35 ) {
             $.Anuncio("Su edad supera las edades maximas permitidas de los distintos Institutos.");
         } else if (edad < 17 ) {
             $.Anuncio("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
-
         }
+
     }
+
     function ACtualizarConboModalidad() {
+
         $.get("/Postulante/EdadModalidad",
             {
                 ID_persona: id_persona,
@@ -200,6 +203,8 @@ $(document).ready(function () {
         }
     });
 
+
+    
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
 
     //id de los combos que se veran afectados por el cambio de IDMODALIDAD

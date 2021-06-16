@@ -244,7 +244,8 @@ namespace SINU.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
-        {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
+        {
+            //el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio            
             model.ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre");
             model.ListIntitutos = new SelectList(db.vPeriodosInscrip.DistinctBy(mbox => mbox.IdInstitucion).OrderBy(m => m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst");
             var DatosDelegacion2 = new List<Array>();
@@ -254,15 +255,14 @@ namespace SINU.Controllers
                                                                                                m.Celular}));
 
             model.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
-                
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                    var SituacionPersona = db.sp_InvestigaDNI(model.DNI).First();
+                    sp_InvestigaDNI_Result SituacionPersona = db.sp_InvestigaDNI(model.DNI).First();
                     
                     //Si el DNI corresponde a un postulante anucio lo mismo en la vista de registro
                     if ((bool)SituacionPersona.ES_Postulante)
@@ -273,6 +273,8 @@ namespace SINU.Controllers
                         
                     }
 
+                    //db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+                    //db.SaveChanges();
                     //creo la cuenta con el mail proporcionado
                     var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -280,7 +282,7 @@ namespace SINU.Controllers
                     {
                                               
                         //crea una persona, un postulante y una inscripcion
-                        var r = db.spCreaPostulante(false,SituacionPersona.IdPersona!=0?SituacionPersona.IdPersona:0,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(false,SituacionPersona.IdPersona,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
                       
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -309,20 +311,20 @@ namespace SINU.Controllers
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        var resultado = await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
+                        var resultado = Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
 
 
-                        //Segun si el correo fue enviado o no se lanza un mensaje
-                        if (resultado.Contains("Correo Enviado"))
-                        {
+                        ////Segun si el correo fue enviado o no se lanza un mensaje
+                        //if (resultado.Contains("Correo Enviado"))
+                        //{
                             ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
                             return View("Login");
-                        }
-                        else
-                        {
-                            ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
-                            return View("Login");
-                        }
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
+                        //    return View("Login");
+                        //}
 
                         
                     }
@@ -338,6 +340,8 @@ namespace SINU.Controllers
                 }
 
             }
+            //db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+            //db.SaveChanges();
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);

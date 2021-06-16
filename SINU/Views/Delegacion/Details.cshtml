@@ -85,7 +85,7 @@
         </div><!--Fin de la class body card-->
         <div class="form-group justify-content-center align-content-center">
             
-            @Html.ActionLink("Ver datos del Postulante","Index","Postulante",new { ID_Postulante= Model.vInscripcionDetallesVM[0].IdPersona},new { @class="btn btn-info btn-lg", @target="_blank"})
+            @Html.ActionLink("Ver datos del Postulante","Index","Postulante",new { ID_Postulante= Model.vInscripcionDetallesVM[0].IdPersona},new { @class="btn btn-info btn-lg"})
         </div>
         <div class="card-footer">
             <div class="container">
@@ -96,7 +96,7 @@
                 <button type="button" id="BTValidar" class="btn btn-success btn-lg float-right m-1"> Volver Etapa Anterior</button>
             </div>
 
-            @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-lg float-right m-1" })
+            @Html.ActionLink("Cerrar", "Index", new { id="Documentacion"}, new { @class = "btn btn-dark btn-lg float-right m-1" })
 
 
         </div>

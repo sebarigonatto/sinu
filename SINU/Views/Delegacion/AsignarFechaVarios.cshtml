@@ -93,10 +93,15 @@
                                     <h6 class="font-weight-bold">Seleccione un Lugar de Presentación!!!</h6>
                                 </div>
                             </div>
+                            <div class="form-group" id="AvisoFecha" hidden>
+                                <div class="alert alert-danger mt-4">
+                                    <h6 class="font-weight-bold">Seleccione una Fecha de Presentación!!!</h6>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group">
-                                <div id="DatosDelegacion" class="form-group control-label" hidden>
+                                <div id="DatosDelegacion" class="forsm-group control-label" hidden>
                                     <h4 class="text-center">Datos del Lugar</h4>
                                     @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
                                     <p id="Direccion" class="control-label col"><b>asdasda</b></p>
@@ -108,9 +113,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="container text-right">
-                            <input type="submit" value="Asignar" class="btn btn-primary btn-lg" />
+                   
+                    <div class="row float-lg-right float-md-right float-sm-none">
+                        <div>
+                            @Html.ActionLink("Cerrar", "Index",null, new { @class = "btn btn-dark  btn-lg " })
+                        </div>
+                        <div class="col-1"></div>
+                        <div>
+                            <input type="submit" value="Asignar"  class="btn btn-primary btn-lg" />
                         </div>
                     </div>
                 </div>
@@ -193,7 +203,7 @@
               jQuery('#datetimepicker').datetimepicker({
                 minDate: 0,
                 format: 'd/m/y H:m',
-                value: 'd/m/y H:m'
+               
             });
             $.datetimepicker.setLocale('es')
 
@@ -201,7 +211,7 @@
             var jsonDatosDelegacion = JSON.parse(model);
             $("#LugarExamen").on("change", function () {
                 if ($(this).val() != "") {
-                    var value = $(this).val();
+                    var value = $(this).val();  
                     var DeleOfi = "";
                     $.each(jsonDatosDelegacion, function (index, item) {
                         DeleOfi = (item[0] == value) ? item : DeleOfi;
@@ -219,12 +229,17 @@
             });
 
             $('#BeginFormAsignarFechaVarios').on('submit', function () {
-
+                Return = true;
                 if (jQuery('#LugarExamen').val() == '') {
-                    jQuery('#LugarExamen').focus();
                     $("#AvisoLugar").removeAttr('hidden');
-                    return false;
+                    Return= false;
                 };
+               
+                if (jQuery('#datetimepicker').val() == '') {
+                    $("#AvisoFecha").removeAttr('hidden');
+                    Return= false;
+                };
+                return Return;
             });
 
         });

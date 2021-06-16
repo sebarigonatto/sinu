@@ -20,6 +20,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.IdPersona)
+            @Html.HiddenFor(m => m.IdInscrip)
 
             @Html.HiddenFor(m => m.PathConstanciaAntcPenales)
             @Html.HiddenFor(m => m.PathFormularioAanexo2)
@@ -84,6 +85,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                 </div>
                 <div class="col col col-md-12 pl-0">
                     <a href="@Url.Action("GetFile", "Postulante", new { ID_persona = Model.IdPersona.ToString(), docu = "Certificado" })" class="btn btn-primary @(Model.PathConstanciaAntcPenales == null ? "hidden" : "")" target="_blank" id="DocuCert" @(Model.PathConstanciaAntcPenales == null ? "hidden='hidden'" : "")>Ver Archivo</a>
+
                 </div>
                 @*<br />
                 <div class=" col col-sm-12 BTAcciones pl-0 ">

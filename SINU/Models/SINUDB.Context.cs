@@ -1441,5 +1441,26 @@ namespace SINU.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_InvestigarEMAIL_Result>("Sp_InvestigarEMAIL", valoremailParameter);
         }
+    
+        public virtual int Sp_PostulanteELIMINAR(string valoremail, Nullable<bool> guardarEliminados, string comentario, string emailUsuarioEliminador)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            var guardarEliminadosParameter = guardarEliminados.HasValue ?
+                new ObjectParameter("GuardarEliminados", guardarEliminados) :
+                new ObjectParameter("GuardarEliminados", typeof(bool));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            var emailUsuarioEliminadorParameter = emailUsuarioEliminador != null ?
+                new ObjectParameter("EmailUsuarioEliminador", emailUsuarioEliminador) :
+                new ObjectParameter("EmailUsuarioEliminador", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_PostulanteELIMINAR", valoremailParameter, guardarEliminadosParameter, comentarioParameter, emailUsuarioEliminadorParameter);
+        }
     }
 }

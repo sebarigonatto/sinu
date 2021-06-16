@@ -21,5 +21,6 @@ namespace SINU.Models
         public string Estado { get; set; }
         public int IdEtapa { get; set; }
         public int IdEstado { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     }
 }

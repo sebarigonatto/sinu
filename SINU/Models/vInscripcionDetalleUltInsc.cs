@@ -43,5 +43,6 @@ namespace SINU.Models
         public int IdSecuencia { get; set; }
         public Nullable<System.DateTime> FechaDeSecuencia { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
+        public string Email { get; set; }
     }
 }

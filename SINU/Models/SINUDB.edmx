@@ -914,6 +914,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalleUltInsc' no tien
             <PropertyRef Name="IdOficinasYDelegaciones" />
           </Key>
           <Property Name="FechaInscripcion" Type="date" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Genero" Type="varchar" MaxLength="50" Nullable="false" />
@@ -951,8 +952,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
             <PropertyRef Name="Etapa" />
             <PropertyRef Name="Estado" />
             <PropertyRef Name="IdInscripcionEtapaEstado" />
-            <PropertyRef Name="IdPersona" />
             <PropertyRef Name="IdModalidad" />
+            <PropertyRef Name="IdPersona" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
           </Key>
@@ -962,12 +963,18 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="Delegacion" Type="varchar" MaxLength="100" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaRindeExamen" Type="datetime" />
+          <Property Name="FechaEntrevista" Type="datetime" />
+          <Property Name="FechaInscripcion" Type="date" />
+          <Property Name="DomDNI" Type="nvarchar" MaxLength="1022" />
+          <Property Name="DomActual" Type="nvarchar" MaxLength="1022" />
+          <Property Name="Activa" Type="bit" />
           <Property Name="Fecha_Inicio_Proceso" Type="date" />
           <Property Name="Fecha_Fin_Proceso" Type="date" />
         </EntityType>
@@ -1621,6 +1628,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene de
           <Property Name="IdInscripcion" Type="int" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="int" />
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
           <Property Name="IdEtapa" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdEstado" Type="int" Nullable="false" />
@@ -2679,6 +2687,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="Sp_InvestigarEMAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="Sp_PostulanteELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
+          <Parameter Name="GuardarEliminados" Type="bit" Mode="In" />
+          <Parameter Name="Comentario" Type="varchar" Mode="In" />
+          <Parameter Name="EmailUsuarioEliminador" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -3232,6 +3246,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vInscripcionDetalleUltInsc" EntityType="Self.vInscripcionDetalleUltInsc" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vInscripcionDetalleUltInsc].[FechaInscripcion] AS [FechaInscripcion], 
+    [vInscripcionDetalleUltInsc].[Email] AS [Email], 
     [vInscripcionDetalleUltInsc].[Apellido] AS [Apellido], 
     [vInscripcionDetalleUltInsc].[Nombres] AS [Nombres], 
     [vInscripcionDetalleUltInsc].[Genero] AS [Genero], 
@@ -3270,12 +3285,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha] AS [Fecha], 
     [vInscripcionEtapaEstadoUltimoEstado].[Email] AS [Email], 
-    [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
     [vInscripcionEtapaEstadoUltimoEstado].[Delegacion] AS [Delegacion], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio], 
     [vInscripcionEtapaEstadoUltimoEstado].[IdModalidad] AS [IdModalidad], 
+    [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
     [vInscripcionEtapaEstadoUltimoEstado].[Apellido] AS [Apellido], 
     [vInscripcionEtapaEstadoUltimoEstado].[Nombres] AS [Nombres], 
+    [vInscripcionEtapaEstadoUltimoEstado].[FechaRindeExamen] AS [FechaRindeExamen], 
+    [vInscripcionEtapaEstadoUltimoEstado].[FechaEntrevista] AS [FechaEntrevista], 
+    [vInscripcionEtapaEstadoUltimoEstado].[FechaInscripcion] AS [FechaInscripcion], 
+    [vInscripcionEtapaEstadoUltimoEstado].[DomDNI] AS [DomDNI], 
+    [vInscripcionEtapaEstadoUltimoEstado].[DomActual] AS [DomActual], 
+    [vInscripcionEtapaEstadoUltimoEstado].[Activa] AS [Activa], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso]
     FROM [dbo].[vInscripcionEtapaEstadoUltimoEstado] AS [vInscripcionEtapaEstadoUltimoEstado]</DefiningQuery>
@@ -3741,6 +3762,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPostulanteEtapaEstado].[IdInscripcion] AS [IdInscripcion], 
     [vPostulanteEtapaEstado].[IdPostulantePersona] AS [IdPostulantePersona], 
     [vPostulanteEtapaEstado].[IdSecuencia] AS [IdSecuencia], 
+    [vPostulanteEtapaEstado].[Fecha] AS [Fecha], 
     [vPostulanteEtapaEstado].[IdEtapa] AS [IdEtapa], 
     [vPostulanteEtapaEstado].[Etapa] AS [Etapa], 
     [vPostulanteEtapaEstado].[IdEstado] AS [IdEstado], 
@@ -4625,6 +4647,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
           <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
+          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="DomDNI" Type="String" MaxLength="1022" FixedLength="false" Unicode="true" />
+          <Property Name="DomActual" Type="String" MaxLength="1022" FixedLength="false" Unicode="true" />
+          <Property Name="Activa" Type="Boolean" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -5897,6 +5925,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vPersona_DatosPer_UltInscripc" EntityType="SINUModel.vPersona_DatosPer_UltInscripc" />
           <EntitySet Name="vInscripcionDetalleUltInsc" EntityType="SINUModel.vInscripcionDetalleUltInsc" />
           <EntitySet Name="vInscripcionDetalle" EntityType="SINUModel.vInscripcionDetalle" />
+          <FunctionImport Name="Sp_PostulanteELIMINAR">
+            <Parameter Name="valoremail" Mode="In" Type="String" />
+            <Parameter Name="GuardarEliminados" Mode="In" Type="Boolean" />
+            <Parameter Name="Comentario" Mode="In" Type="String" />
+            <Parameter Name="EmailUsuarioEliminador" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6066,6 +6100,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="IdEtapa" Type="Int32" Nullable="false" />
           <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="vPersona_Familiar">
           <Key>
@@ -7324,6 +7359,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="FechaDeSecuencia" Type="DateTime" Precision="3" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vInscripcionDetalle">
           <Key>
@@ -7813,6 +7849,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="Activa" ColumnName="Activa" />
+                <ScalarProperty Name="DomActual" ColumnName="DomActual" />
+                <ScalarProperty Name="DomDNI" ColumnName="DomDNI" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
+                <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
                 <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
                 <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
                 <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
@@ -8257,6 +8299,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vPostulanteEtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vPostulanteEtapaEstado">
               <MappingFragment StoreEntitySet="vPostulanteEtapaEstado">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
                 <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
@@ -9206,6 +9249,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionDetalleUltInsc">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionDetalleUltInsc">
               <MappingFragment StoreEntitySet="vInscripcionDetalleUltInsc">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="FechaDeSecuencia" ColumnName="FechaDeSecuencia" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
@@ -9271,6 +9315,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Sp_PostulanteELIMINAR" FunctionName="SINUModel.Store.Sp_PostulanteELIMINAR" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -358,7 +358,7 @@
                     Delegación: <b id="nombreDelegacion">@ViewBag.DelePost</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1] != null ? ViewBag.MOD_CAR[1] : Html.Raw("&emsp;----  "))</b></e>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b id="nombreModalidad"> @ViewBag.MOD_CAR[0]</b> - Carrera: <b id="nombreCarrera">@(ViewBag.MOD_CAR[1] != null ? ViewBag.MOD_CAR[1] : Html.Raw("&emsp;----  "))</b></e>
                 </h6>
             </t>
 
@@ -841,9 +841,7 @@
 
                 };
             };
-
-
-
+                  
 
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
@@ -866,6 +864,10 @@
                         .tooltip('enable').attr("href","javascript:void(0)");
                 };
             });
+            $("#volverDB")
+                .attr("data-toggle", "tooltip")
+                .attr("title", "Editar nuevamente los datos cargados anteriormente.")
+                .tooltip('enable');
 
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
@@ -905,13 +907,14 @@
             } else {
                 $("#" + IDETP[IDETP.length - 1]).tab("show");
             }
+
                @{
                    if (HttpContext.Current.Request.UrlReferrer != null)
                    {
                        bool url = HttpContext.Current.Request.UrlReferrer.LocalPath.Contains("FamiliaCUD");
                        if (!url)
                        {
-                           Session["URLatras"] = HttpContext.Current.Request.UrlReferrer.LocalPath;
+                           Session["URLatras"] = HttpContext.Current.Request.UrlReferrer;
                        }
 
                        Session["FamiTable"] = false;
@@ -919,6 +922,7 @@
 
 
                }
+
             $("#atras").attr("href", "@Session["URLatras"]");
             ////scroll automatico al selecionar un nav, solo en vista mobil
             //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
@@ -1048,6 +1052,8 @@
                     $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
                         $("#BeginDocumentacionAnexo").replaceWith(response);
                     });
+                    $("#nombreModalidad").html(response.modalidad);
+                    $("#nombreCarrera").html(response.carrera);
                     break;
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");

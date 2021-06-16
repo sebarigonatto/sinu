@@ -39,7 +39,6 @@ namespace SINU.Controllers
                     DocumentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
                     PresentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
                 };
-
                 return View("Index", datos);
 
             }
@@ -116,8 +115,9 @@ namespace SINU.Controllers
                 {
                     var da = db.Inscripcion.Find(datos.IdInscripcion);
                     da.FechaEntrevista = datos.FechaEntrevista;
-                    db.SaveChanges();                  
-                    if (da.InscripcionEtapaEstado.OrderBy(m=>m.Fecha).Last().IdSecuencia!=10)
+                    db.SaveChanges();
+                    
+                    if (db.vInscripcionDetalleUltInsc.FirstOrDefault(m=>m.IdInscripcion==da.IdInscripcion).IdSecuencia!=10)
                     {
                         db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "ENTREVISTA", "Asignada");
 
@@ -139,7 +139,7 @@ namespace SINU.Controllers
                     {
                         db.spProximaSecuenciaEtapaEstado(0, datos.IdInscripcion, false, 0, "ENTREVISTA", "Pendiente");
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index",new { id = "Entrevista" });
 
                 }
                 return View(datos);
@@ -321,7 +321,7 @@ namespace SINU.Controllers
             {
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Delegacion", "Index"));
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",new { id= "Entrevista"});
         }
         #endregion
 
@@ -538,7 +538,7 @@ namespace SINU.Controllers
             try
             {
                     db.spProximaSecuenciaEtapaEstado(ID_persona, 0, false, 0, "DOCUMENTACION", "Inicio De Carga");
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index",new { id= "Documentacion" });
             }
             catch (System.Exception ex)
             {
@@ -618,6 +618,7 @@ namespace SINU.Controllers
             Configuracion configuracion;
             try
             {
+                
                 db.spExamenParaEsteInscripto(Id, Fecha, LugarPresentacion);
                 Inscripto = db.vInscripcionDetalle.FirstOrDefault(m => m.IdInscripcion == Id);
                 int idest = (int)db.Inscripcion.FirstOrDefault(m => m.IdInscripcion == Id).IdEstablecimientoRindeExamen;
@@ -639,7 +640,7 @@ namespace SINU.Controllers
                         db.spProximaSecuenciaEtapaEstado(null, Id, false, 0, "", "");
                 }
                
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id="Presentacion"});
             }
             catch (Exception)
             {
@@ -999,7 +1000,9 @@ namespace SINU.Controllers
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ListadoPostulanteAsignarFecha listadoPostulanteAsignarFecha = new ListadoPostulanteAsignarFecha
                 {
-                    AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList(),
+                    AsignarFechaVM = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" 
+                                                                                    && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones
+                                                                                    && (bool)m.Activa).ToList(),
                     LugarPresentacion = new SelectList(db.EstablecimientoRindeExamenDeOficina(UsuarioDelegacion.IdOficinasYDelegaciones).ToList(), "IdEstablecimientoRindeExamen", "Direccion"),
                     FechaPresentacion = DateTime.Now,
                     listado = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Etapa == "Presentacion" && m.Estado == "A Asignar" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones).ToList().Count
@@ -1068,7 +1071,7 @@ namespace SINU.Controllers
             UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
             try
             {
-                List<vEntrevistaLugarFechaUltInscripc> dato = db.vEntrevistaLugarFechaUltInscripc.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar" && m.Nombre == UsuarioDelegacion.Nombre && m.Activa ==true).ToList();
+                List<vEntrevistaLugarFechaUltInscripc> dato = db.vEntrevistaLugarFechaUltInscripc.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar" && m.Nombre == UsuarioDelegacion.Nombre && (bool)m.Activa ).ToList();
                 //ViewBag.Listado = db.vEntrevistaLugarFechaUltInscripc.Where(m => m.Etapa == "ENTREVISTA" && m.Estado == "A Asignar").ToList().Count();/// utilizo un count para saber si me trae un listado con postulante para utlizarlo en la vista
                 ViewBag.Listado = dato.Count();
                 return View(dato);

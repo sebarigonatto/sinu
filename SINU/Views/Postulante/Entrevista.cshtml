@@ -1,5 +1,19 @@
 ﻿@model SINU.Models.vEntrevistaLugarFechaUltInscripc
-<h4>Lugar y Fecha:</h4>
+    <div class=" row col-12" style="padding-left: 0px;padding-right: 0px;margin-right: 0px;margin-left: 0px;right:0px">
+        <div class="col col-md-6 col-sm-12">
+            <h4>Lugar y Fecha:</h4>
+        </div>
+        @{
+            if (ViewBag.VolverDB && HttpContext.Current.User.IsInRole("Postulante"))
+            {
+                <div class="col col-md-6 col-sm-12 align-content-end justify-content-center">
+                    @Html.ActionLink("Volver a la etapa anterior", "VolverDatosBasicos", new { idPostulante = Model.IdPersona, idInscripcion = Model.IdInscripcion }, new { @class = "btn btn-info col-md-6 col-sm-12 float-right", @id = "volverDB" })
+                </div>
+            }
+        }
+
+    </div>
+    <br />
 
 @if (ViewBag.FechaAsisgnada)
 {
@@ -15,7 +29,7 @@
         <h5>Estado de Entrevista: <b style="color:yellow">@ViewBag.EstadoEntre </b></h5>
     </div>
     <hr />
-    <div class="jumbotron" style="background-color: #08495f; color:white" id="MensajedeConsideraciones">
+    <div class="jumbotron " style="background-color: #08495f; color:white" id="MensajedeConsideraciones">
         <h6><b>@ViewBag.Considere[0]</b></h6>
         <hr />
         <h6>@ViewBag.Considere[1]</h6>
