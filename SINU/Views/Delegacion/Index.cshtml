@@ -273,14 +273,18 @@ Prueba de una nueva barra de menu para los postulantes
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
            $("#myTab li").on("click", function () {
                 tab = $(this).children("a").attr("href");
-                localStorage.setItem("tabDelegacion", tab);
+                sessionStorage.tabDelegacion= tab;
             })
         var tablas = {};
 
         $(document).ready(function () {
            
+            if (sessionStorage.tabDelegacion!= undefined) {
+                $(`a[href='${sessionStorage.tabDelegacion}']`).tab("show");
 
-            $(`a[href='${localStorage.getItem("tabDelegacion")}']`).tab("show");
+            } else {
+                sessionStorage.tabDelegacion= "#Total";
+            };
 
             var prefijo = 'tabla';
 

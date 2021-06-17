@@ -15,6 +15,7 @@ using static SINU.Models.ModelDataTable;
 
 namespace SINU.Controllers.Administrador
 {
+    [Authorize(Roles = "Administrador")]
     public class PostulanteEliminarController : Controller
     {
         private SINUEntities db = new SINUEntities();
@@ -67,18 +68,14 @@ namespace SINU.Controllers.Administrador
         }
 
 
-        public static object ConvertList(List<object> value, Type type)
-        {
-            var containedType = type.GenericTypeArguments.First();
-            return value.Select(item => Convert.ChangeType(item, containedType)).ToList();
-        }
+
 
         //CARGA DE TABLA CON AJAX
-        public async Task<JsonResult> CustomServerSideSearchAction(DataTableAjaxPostModel model)
+        public JsonResult CustomServerSideSearchAction(DataTableAjaxPostModel model)
         {
             var filterExtras = JObject.Parse(model.extras);
             var deleValue = ((JValue)filterExtras.SelectToken("delegacion")).Value.ToString();
-            int delegacion = deleValue==""?0: int.Parse(deleValue);
+            int delegacion = deleValue == "" ? 0 : int.Parse(deleValue);
             string modalidad = (string)((JValue)filterExtras.SelectToken("modalidad")).Value<string>();
 
             //obtencion de tabla dinamicamente
@@ -87,20 +84,34 @@ namespace SINU.Controllers.Administrador
             //using (var dbContext = new SINUEntities())
             //{
             //    var tableClassName = $"{tableClassNameSpace}.{tableName}";
-            //    var dynamicTableType = Type.GetType(tableClassName);      // Type
+            //    Type dynamicTableType = Type.GetType(tableClassName);      // Type
             //    var dynamicTable = dbContext.Set(dynamicTableType);      // DbSet
-                                
+
+
             //    var records = await dynamicTable.AsQueryable().ToListAsync();
 
-            //    List<Postulante> listAsInt = records.Cast<Postulante>().ToList();
+            //    var Tablasde = Activator.CreateInstance(dynamicTableType);
 
-            //    var asdasd = listAsInt.Select(m => new { m.IdPersona, m.IdComoSeEntero }).ToList();
+            //    var listAsInt = records.Cast<Activator.CreateInstance(dynamicTableType)> ().ToList();
+            //    //type.GetConstructor(Type.EmptyTypes).Invoke(New Object(){ });
 
-            //}
+            //    var asd = dynamicTableType.GetConstructor(Type.EmptyTypes).Invoke();
+
+            //Type t = typeof(Person);
+            //PropertyInfo prop = t.GetProperty(property);
+            //var asdasd = listAsInt
+            //    .Select(m => new {
+            //        itemIds.con
+            //        m.IdPersona,
+            //        m.IdComoSeEntero
+            //    })
+            //    .ToList();
+
+        //}
 
 
 
-            int filteredResultsCount;
+        int filteredResultsCount;
             int totalResultsCount;
             var res = YourCustomSearchFunc(model, out filteredResultsCount, out totalResultsCount);
 

@@ -11,7 +11,7 @@ namespace SINU.Authorize
 
     public class AuthorizacionPermiso : AuthorizeAttribute
     {
-        private const string Url = "~/Error/AccionNoAutorizada";
+        private const string Url = "~/Error/Forbidden";
         SINUEntities db = new SINUEntities();
 
         public string Funcion { get; set; }
@@ -34,6 +34,11 @@ namespace SINU.Authorize
             var fun = new[] { "CreaEditaDatosP", "EliminarDatosP", "ModificarSecuenciaP" };
             if (fun.Contains(Funcion))
             {
+                if (!httpContext.User.IsInRole("Postulante"))
+                {
+                    return false;
+                }
+
                 var IDpersonaActual = db.AspNetUsers.FirstOrDefault(m => m.Email == httpContext.User.Identity.Name).Postulante.First().IdPersona;
                 var IDpersonaDatos = (httpContext.Request.Form.Count > 1) ? int.Parse(httpContext.Request.Form[1]) : int.Parse(httpContext.Request.QueryString[0]);
                 

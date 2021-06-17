@@ -548,12 +548,12 @@ namespace SINU.Controllers
             string[] archivos;
 
             //levanto los registros de la ultima inscripcion de los postulantes
-            var ListaInscriptos = db.vInscripcionDetalleUltInsc.Select(m => new { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPersona.ToString() });
+            var ListaInscriptos = db.Inscripcion.Select(m => new { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPostulantePersona.ToString() }).DistinctBy(m=>m.idPostulante).ToList();
 
             foreach (var inscripcion in ListaInscriptos)
             {
                 //busco si el postulante posee registros
-                archivos = Directory.GetFiles(CarpetaDeGuardado, inscripcion.idPostulante + "*");
+                archivos = Directory.GetFiles(CarpetaDeGuardado, $"{inscripcion.idPostulante}*");
                 foreach (var item in archivos)
                 {
                     if (item.IndexOf("Anexo2") > 0)
@@ -568,7 +568,7 @@ namespace SINU.Controllers
                     {
                         cert = item;
                         certNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
-                        System.IO.File.Copy(cert, certNew);
+                        System.IO.File.Copy(cert, certNew,true);
                         //System.IO.File.Delete(cert);
                     }
                 }
@@ -2074,7 +2074,7 @@ namespace SINU.Controllers
                 var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
                 {
                     Apellido = postulante.Persona.Apellido,
-                    LinkConfirmacion = Url.Action("index", "Postulante"),
+                    LinkConfirmacion = Url.Action("index", "Postulante",null, protocol: Request.Url.Scheme),
                     CuerpoMail = db.Configuracion.FirstOrDefault(m => m.NombreDato == "CuerpoMailRegistro").ValorDato.ToString()
                 };
 
@@ -2098,6 +2098,7 @@ namespace SINU.Controllers
                     IdInscripcion_P = ultimaInscripcion.IdInscripcion,
                     Nombre_P = postulante.Persona.Nombres,
                     url = Url.Action("Index", "Postulante", new { ID_Postulante =ID_postulante }, protocol: Request.Url.Scheme),
+
                     Delegacion = db.OficinasYDelegaciones.Find(ID_Delegacion).Nombre
                 };
 
