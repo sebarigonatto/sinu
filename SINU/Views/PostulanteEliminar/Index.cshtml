@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Eliminación de Postulante</h2>
+<h2>Postulantes:</h2>
 <hr />
 <div id="opcionesExtras1">
     <div class="col-md-4  col-sm-12 mb-2 p-0 ">
@@ -73,7 +73,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Confirmacion de Eliminación</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmación de Eliminación</h5>
 
             </div>
             @using (Ajax.BeginForm("PostulanteDelete", "PostulanteEliminar", null,
@@ -132,108 +132,112 @@
                             <div class="form-group">
                                 <label class="d-inline-flex"><strong>Comentario</strong>,&ensp;<small class="form-text text-muted"> Opcional</small></label>
 
-                                <textarea class="form-control h-25"  id="comentario" name="comentario" ></textarea>
+                                <textarea class="form-control h-25"  id="comentario" name="comentario" placeholder="" ></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <button type="submit" class="btn btn-danger load-submit ">Eliminar</button>
                 </div>
             }
         </div>
     </div>
 </div>
+
 @section scripts{
 
     <script>
-
+     
         primerCarga = true;
             //tabla
-            var table = $('table').DataTable({
-                "proccessing": true,
-                "serverSide": true,
-                "processing": true,
-                "ajax": {
-                    url: "@Url.Action("CustomServerSideSearchAction", "PostulanteEliminar")",
-                    type: 'POST',
-                    data: function (data) {
-                        if (primerCarga) {
-                            primerCarga = false;
+        var table = $('table').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "processing": true,
+            "ajax": {
+                url: "@Url.Action("CustomServerSideSearchAction", "PostulanteEliminar")",
+                type: 'POST',
+                data: function (data) {
+                    if (primerCarga) {
+                        primerCarga = false;
 
-                            data.search.value = sessionStorage.searchTablaDelPost;
+                        data.search.value = sessionStorage.searchTablaDelPost;
 
-                        };
-                        sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
-                        sessionStorage.dropDelegacionDelPost == undefined ? sessionStorage.dropDelegacionDelPost = "" : null;
-                        sessionStorage.dropModalidadDelPost == undefined ? sessionStorage.dropModalidadDelPost = "" : null;
+                    };
 
-                        data.extras = JSON.stringify({
-                            delegacion:  sessionStorage.dropDelegacionDelPost,
-                            modalidad:  sessionStorage.dropModalidadDelPost
-                        });
-                    },
-                    dataSrc: function (json) {
-                        var botonDetalle = "<a class='btn btn-info fas fa-bars' href='/Postulante?ID_Postulante=$$'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>"
-                        var botonEliminar = "<button type='button' class='btn btn-danger fas fa-trash-alt EliPost' data-toggle='tooltip' data-placement='top' title='Eliminar'></button>"
-                        $.each(json.data, function (index, item) {  
+                    sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
+                    sessionStorage.dropDelegacionDelPost == undefined ? sessionStorage.dropDelegacionDelPost = "" : null;
+                    sessionStorage.dropModalidadDelPost == undefined ? sessionStorage.dropModalidadDelPost = "" : null;
 
-                            item.Opciones = `${botonDetalle.replace("$$", item.IdPersona)} | ${botonEliminar.replace("$$", item.IdPersona)}`;
-
-                        });
-                        return json.data;
-                    }
+                    data.extras = JSON.stringify({
+                        delegacion: sessionStorage.dropDelegacionDelPost,
+                        modalidad: sessionStorage.dropModalidadDelPost
+                    });
                 },
-                dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtras2 container  row">><"col-sm-12"t><"container row"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+                dataSrc: function (json) {
 
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
+                    var botonDetalle = "<a class='btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=$$'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>"
+                    var botonEliminar = "<button type='button' class='btn btn-danger fas fa-trash-alt EliPost' data-toggle='tooltip' data-placement='top' title='Eliminar'></button>"
+                    $.each(json.data, function (index, item) {
+
+                        item.Opciones = `${botonDetalle.replace("$$", item.IdPersona)} | ${botonEliminar.replace("$$", item.IdPersona)}`;
+
+                    });
+                    return json.data;
+                }
+
+            },
+            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtras2 container  row">><"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+
+            "language":
+            {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
                 },
-                "columns": [
-                    { "data": "IdPersona", "visible": false },
-                    { "data": "IdInscripcion" },
-                    { "data": "Nombres", orderable: false },
-                    { "data": "Apellido", orderable: false },
-                    { "data": "DNI", orderable: false },
-                    { "data": "Email", orderable: false },
-                    { "data": "Inscripto_En", "searchable":false  },
-                    { "data": "Modalidad",  "searchable":false},
-                    { "data": "Opciones", orderable: false }
-                ],
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-                responsive: true
-
-            });
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "columns": [
+                { "data": "IdPersona", "visible": false },
+                { "data": "IdInscripcion" },
+                { "data": "Nombres", orderable: false },
+                { "data": "Apellido", orderable: false },
+                { "data": "DNI", orderable: false },
+                { "data": "Email", orderable: false },
+                { "data": "Inscripto_En", "searchable": false },
+                { "data": "Modalidad", "searchable": false },
+                { "data": "Opciones", orderable: false }
+            ],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            responsive: true,
+            
+        });
 
             function limpiar() {
                 sessionStorage.dropDelegacionDelPost = "";
                 sessionStorage.dropModalidadDelPost="";
                 $("select.selectpicker").val("").selectpicker("refresh");
-                 table.search("").draw();
-            };
+                 table.search("").ajax.reload();
+        };
 
         $("#le-filters tbody").on("click", "button.EliPost", function () {
             var data_row = table.row($(this).closest('tr').index()).data();
@@ -282,6 +286,7 @@
 
             //esatblesco en el input la ultima busqueda realizada
             table.on('draw', function () {
+                                 
                 table.search(sessionStorage.searchTablaDelPost);
             });
 
@@ -289,18 +294,21 @@
             $("select").on("change", function () {
                 name = $(this).attr("name");
                 sessionStorage.setItem(name, $(this).val());
-                table.search(sessionStorage.searchTablaDelPost).draw();
-            })
+                table.search(sessionStorage.searchTablaDelPost).ajax.reload();
+            });
+
+            
 
 
         });
 
         function Exito(data, status, xhr) {
+            //oculto el modal de confirmacion de la eliminacion del postulante
             $("#MConfirmacion").modal("hide");
 
             $.Anuncio(data.msg)
             if (data.success) {
-                table.search("").draw()
+                table.search("").ajax.reload();
             }
          
         }

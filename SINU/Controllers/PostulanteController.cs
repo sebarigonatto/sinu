@@ -30,7 +30,7 @@ namespace SINU.Controllers
         public ActionResult Index(int? ID_Postulante)
         {
             try
-            {
+             {
 
                 IDPersonaVM pers = new IDPersonaVM
                 {
@@ -50,7 +50,8 @@ namespace SINU.Controllers
                 ViewBag.TextDeclaracionJurada = db.Configuracion.First(m => m.NombreDato == "TextDeclaracionJurada").ValorDato;
 
                 //recurpero la ultima inscripcion de postulante
-                var UltimaInscripcion = db.Inscripcion.Where(m => m.IdPostulantePersona == pers.ID_PER).OrderBy(m => m.FechaInscripcion).ToList().Last();
+                //int ultimoIdInscripcion = db.vInscripcionDetalleUltInsc
+                var UltimaInscripcion = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == pers.ID_PER);
 
                 //cargo los ID de las etapas por las que paso el postulante
                 //pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
@@ -70,7 +71,7 @@ namespace SINU.Controllers
                 }
 
                 //cargo nombre de la delegacion correspondiente al postulante
-                ViewBag.DelePost = UltimaInscripcion.OficinasYDelegaciones.Nombre;
+                ViewBag.DelePost = UltimaInscripcion.Inscripto_En;
 
                 //creo array con las secuecias por las que el Postulante transito
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == UltimaInscripcion.IdInscripcion).Select(m => m.IdSecuencia).ToList();
@@ -98,16 +99,16 @@ namespace SINU.Controllers
                 //var FechaFinConvo = db.vConvocatoriaDetalles.FirstOrDefault(m => m.Fecha_Inicio_Proceso <= idInscri.FechaInscripcion && m.Fecha_Fin_Proceso >= idInscri.FechaInscripcion && m.IdInstitucion == idInscri.IdPreferencia && m.IdModalidad == idInscri.IdModalidad).Fecha_Fin_Proceso;
                 //var FechaFinConvo = db.vInscriptosYConvocatorias.FirstOrDefault(m => m.IdInscripcion == idInscri.IdInscripcion).Fecha_Fin_Proceso;
                 //ViewBag.VenceComvocatoria = DateTime.Now > FechaFinConvo;
-                ViewBag.VenceComvocatoria = !db.sp_InvestigaDNI(UltimaInscripcion.Postulante.Persona.DNI).First().Convocatoria_Activa;
+                ViewBag.VenceComvocatoria = !db.sp_InvestigaDNI(UltimaInscripcion.DNI).First().Convocatoria_Activa;
                 if (!ViewBag.ValidacionEnCurso)
                 {
                     ViewBag.ValidacionEnCurso = ViewBag.VenceComvocatoria;
                 }
 
-                ViewBag.MOD_CAR = new[] { UltimaInscripcion.IdModalidad, UltimaInscripcion.IdCarreraOficio !=null? db.CarreraOficio.FirstOrDefault(m=>m.IdCarreraOficio== UltimaInscripcion.IdCarreraOficio).CarreraUoficio:null, UltimaInscripcion.IdInscripcion.ToString() };
+                ViewBag.MOD_CAR = new[] { UltimaInscripcion.Modalidad, UltimaInscripcion.IdCarreraOficio !=null? db.CarreraOficio.FirstOrDefault(m=>m.IdCarreraOficio== UltimaInscripcion.IdCarreraOficio).CarreraUoficio:null, UltimaInscripcion.IdInscripcion.ToString() };
 
                 
-                pers.NomyApe = UltimaInscripcion.Postulante.Persona.Apellido + ", " + UltimaInscripcion.Postulante.Persona.Nombres;
+                pers.NomyApe = UltimaInscripcion.Apellido + ", " + UltimaInscripcion.Nombres;
 
                 if (pers.NoPostulado)
                 {
@@ -439,7 +440,7 @@ namespace SINU.Controllers
                 string carpetaLink = "../Documentacion/ArchivosDocuPenal/";
                 //string archivo = $"{ID_persona}*";
                 //ultimo id inscripcion del poos
-                string archivo = $"{ID_persona}-{d.IdInscrip}*";
+                string archivo = $"{ID_persona}-{d.IdInscrip}&*";
 
                 //obtengo los archivos (certificado de antecedentes penales y autorizacion para investigacion), correspondiente al postulante
                 string[] archivos = Directory.GetFiles(CarpetaDeGuardado, archivo);
@@ -478,7 +479,7 @@ namespace SINU.Controllers
                 
                 //string[] archivos = Directory.GetFiles(CarpetaDeGuardado, data.IdPersona + "*");
                 //nueva consulta
-                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, $"{data.IdPersona}-{data.IdInscrip}*");
+                string[] archivos = Directory.GetFiles(CarpetaDeGuardado, $"{data.IdPersona}-{data.IdInscrip}&*");
 
                 foreach (var item in archivos)
                 {
@@ -553,7 +554,7 @@ namespace SINU.Controllers
             foreach (var inscripcion in ListaInscriptos)
             {
                 //busco si el postulante posee registros
-                archivos = Directory.GetFiles(CarpetaDeGuardado, $"{inscripcion.idPostulante}*");
+                archivos = Directory.GetFiles(CarpetaDeGuardado, $"{inscripcion.idPostulante}&*");
                 foreach (var item in archivos)
                 {
                     if (item.IndexOf("Anexo2") > 0)
