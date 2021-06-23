@@ -1,4 +1,4 @@
-﻿@model SINU.Models.vEntrevistaLugarFecha
+﻿@model SINU.Models.vEntrevistaLugarFechaUltInscripc
 <link rel="stylesheet" type="text/css" href="~/Content/jquery.datetimepicker.css" />
 
 
@@ -67,7 +67,7 @@
                     <div class="col">
                         @*<input type="text" class="form-control" id="datetimepicker" name="FechaEntrevista" readonly />*@
                         @Html.ValidationMessageFor(model => model.FechaEntrevista, "", new { @class = "text-danger", @id = "Aviso" })
-                        @Html.TextBoxFor(model => model.FechaEntrevista,"{0:dd/MM/yyyy hh:mm}", new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true })
+                        @Html.TextBoxFor(model => model.FechaEntrevista,"{0:dd/MM/yyyy HH:mm }", new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true })
 
                     </div>
                 </div>

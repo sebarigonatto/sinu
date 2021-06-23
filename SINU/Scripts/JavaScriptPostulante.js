@@ -58,7 +58,7 @@ $(document).ready(function () {
     var id_persona
     (function () {
         id_persona = $("#vPersona_DatosBasicosVM_IdPersona").val();
-        $("#fechacumpleaños").attr("data-date-end-date", "0d");
+        $(".fechacumpleaños").attr("data-date-end-date", "0d");
         //alert(id_persona);
     })();
 
@@ -66,7 +66,7 @@ $(document).ready(function () {
     //ver si  el modo de como ocultar el datepicker al seleccionar la fecha
     /*FUNCION DE LA VISTA DE DATOS PERSONALES */
     $(".datepicker").datepicker({
-        format: "dd-mm-yyyy",
+        format: "dd/mm/yyyy",
         language: "es",
         autoclose: true,
         startView: "years",
@@ -104,8 +104,8 @@ $(document).ready(function () {
     }
 
     //cuando se selecciona una fecha se calcula la edad, la misma se muestra en el campo de EDAD
-    $('#fechacumpleaños').datepicker().on("changeDate", function (e) {
-        var fechanac = $('#fechacumpleaños').datepicker('getDate');
+    $('.fechacumpleaños').datepicker().on("changeDate", function (e) {
+        var fechanac = $(this).datepicker('getDate');
         var fechahoy = new Date();
         var edad = fechahoy.getFullYear() - fechanac.getFullYear();
         //condicion que verefica si cumplio años, si no cumplio aun se le resta un año a edad
@@ -114,48 +114,60 @@ $(document).ready(function () {
                 edad--;
             };
         };
-        $("#edad").val(edad);
-    
+        $(".edad").val(edad);
+        /////////////////////////////////
+        $('.fechacumpleaños').val($(this).val());
         edadMAXMIN(edad);
    
-
+        if ($(this).closest('form').attr('id') =='BeginFormDatosPersonales') {
+            ACtualizarConboModalidad();
+        }
     });
 
     function edadMAXMIN(edad) {
+
         if (edad > 35 ) {
             $.Anuncio("Su edad supera las edades maximas permitidas de los distintos Institutos.");
-        } else if (edad != 0 && edad < 17 ) {
+        } else if (edad < 17 ) {
             $.Anuncio("Su edad es menor a las edades minimas permitidas de los distintos Institutos.");
-
         }
+
     }
-    //function ActualizarINStDatosBasicos() {
-    //    $.get("/Postulante/EdadInstituto",
-    //        {
-    //            IdPOS: $("#vPersona_DatosBasicosVM_IdPersona").val(),
-    //            Fecha: $("#fechacumpleaños").val()
 
-    //        },
-    //        function (data) {
+    function ACtualizarConboModalidad() {
 
-    //            var idselect = $("input[name='IdPrefe']").val();
-    //            $("#InstitutoPref").empty();
-    //            $("#InstitutoPref").append('<option value="">' + 'Seleccione una Opcion' + '</option>');
+        $.get("/Postulante/EdadModalidad",
+            {
+                ID_persona: id_persona,
+                FechaNacimiento: $(".fechacumpleaños").first().val()
 
-    //            $.each(data.institucion, function (index, row) {
-    //                if (row.Value == idselect) {
-    //                    $("#InstitutoPref").append("<option selected='selected' value='" + row.Value + "'>" + row.Text + "</option>")
-    //                } else {
-    //                    $("#InstitutoPref").append("<option value='" + row.Value + "'>" + row.Text + "</option>")
-    //                }
+            },
 
-    //            });
+            function (data) {
+                Modalidad = data.comboModalidad;
+                Carrera = data.comboCarrera;
 
-    //            $("#InstitutoPref").removeAttr("disabled");
-    //            $("#InstitutoPref").selectpicker('refresh');
-    //            $("#BTentrevista").removeClass("disabled");
-    //        })
-    //}
+                //cargo combo Modalidad
+                $("#vPersona_DatosPerVM_IdModalidad").empty().append("<option value=''>Seleccione una Opcion</option>");
+
+                $.each(Modalidad, function (index, item) {
+
+                    $("#vPersona_DatosPerVM_IdModalidad").append("<option value='" + item.IdModalidad + "' civil='" + item.EstCivil + "'>" + item.Modalidad + "</option>");
+                });
+                
+                //cargo combo Carrera
+                $("#vPersona_DatosPerVM_IdCarreraOficio").empty().append("<option value=''>Seleccione una Modalidad</option>");
+
+                $.each(Carrera, function (index, item) {
+
+                    $("#vPersona_DatosPerVM_IdCarreraOficio").append("<option value='" + item.IdCarreraOficio + "' modali='" + item.IdModalidad + "'>" + item.CarreraUoficio + "</option>");
+                });
+
+                ActualizaCombos($("#vPersona_DatosPerVM_IdModalidad").val());
+                $("#vPersona_DatosPerVM_IdModalidad, #vPersona_DatosPerVM_IdCarreraOficio").selectpicker('refresh');
+               
+            })
+    }
 
     ComoSeEntero()
     $('#DROPComoEntero').on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
@@ -191,6 +203,8 @@ $(document).ready(function () {
         }
     });
 
+
+    
     ////////////////////////////DATOS PERSONALES///////////////////////////////////
 
     //id de los combos que se veran afectados por el cambio de IDMODALIDAD
@@ -243,7 +257,7 @@ $(document).ready(function () {
 
         })
 
-        $(idComboDPer).selectpicker('refresh');
+        $(idComboDPer).val('').selectpicker('refresh');
 
     }
 

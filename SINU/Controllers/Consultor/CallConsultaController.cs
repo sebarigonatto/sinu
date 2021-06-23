@@ -118,7 +118,7 @@ namespace SINU.Controllers.Consultor
             //return PartialView(Todos);
 
             List<vInscripcionEtapaEstadoUltimoEstado> Todos;
-            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today).ToList();
+            Todos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => (bool)m.Activa).ToList();
             return PartialView(Todos);
 
         }

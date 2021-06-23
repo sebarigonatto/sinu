@@ -12,15 +12,23 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vPostulanteEtapaEstado
+    public partial class vEntrevistaLugarFechaUltInscripc
     {
+        public string Apellido { get; set; }
+        public string Nombres { get; set; }
+        public string Nombre { get; set; }
+        public string Direccion { get; set; }
+        public string Localidad { get; set; }
+        public string Provincia { get; set; }
+        public string Telefono { get; set; }
+        public string Celular { get; set; }
+        public Nullable<System.DateTime> FechaEntrevista { get; set; }
+        public int IdPersona { get; set; }
         public int IdInscripcion { get; set; }
-        public Nullable<int> IdPostulantePersona { get; set; }
         public int IdSecuencia { get; set; }
         public string Etapa { get; set; }
         public string Estado { get; set; }
-        public int IdEtapa { get; set; }
-        public int IdEstado { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public string Email { get; set; }
+        public Nullable<bool> Activa { get; set; }
     }
 }

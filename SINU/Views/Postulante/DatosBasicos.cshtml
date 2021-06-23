@@ -74,7 +74,7 @@
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
 
-                            @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker ", @readonly = true, @id = "fechacumpleaños", @placeholder = " dd/mm/aaaa" })
+                            @Html.TextBoxFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fechacumple datepicker fechacumpleaños ", @readonly = true, @placeholder = " dd/mm/aaaa" })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.FechaNacimiento, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.vPersona_DatosBasicosVM.Edad, htmlAttributes: new { @class = "control-label col-md-12" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Edad, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @id = "edad", @placeholder = "..." } })
+                            @Html.EditorFor(model => model.vPersona_DatosBasicosVM.Edad, new { htmlAttributes = new { @class = "form-control edad", @readonly = "readonly", @placeholder = "..." } })
                             @Html.ValidationMessageFor(model => model.vPersona_DatosBasicosVM.Edad, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="col-md-10">
                             @Html.Hidden("IdPrefe", Model.vPersona_DatosBasicosVM.IdPreferencia)
 
-                            @Html.EditorFor(model => model.Preferenacia, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly"} })
+                            @Html.EditorFor(model => model.Preferenacia, new { htmlAttributes = new { @class = "form-control ", @readonly = "readonly" } })
 
                             @*@Html.DropDownListFor(model => model.vPersona_DatosBasicosVM.IdPreferencia, new SelectList(Model.vPeriodosInscripsVM, "IdInstitucion", "NombreInst"), "Ingrese Fecha de Nacimiento", htmlAttributes: new { @class = "form-control  selectpicker", @id = "InstitutoPref", @disabled = "disabled" })*@
                             <div class="h-100"></div>

@@ -19,7 +19,7 @@ namespace SINU.Models
     }
 
     [MetadataType(typeof(vPersona_DatosPerMetadata))]
-    public partial class vPersona_DatosPer
+    public partial class vPersona_DatosPer_UltInscripc
     {
     }
 

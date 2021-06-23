@@ -60,8 +60,8 @@ namespace SINU.ViewModels
     }
     public class MailPresentacion : PlantillaMail
     {
-        public string fecha { get; set; }
-        public List<vOficDeleg_EstablecimientoRindExamen> establecimiento { get; set; }
+        public DateTime fecha { get; set; }
+        public vOficDeleg_EstablecimientoRindExamen establecimiento { get; set; }
         public string Link { get; set; }
         public string MailCuerpo { get; set; }
     }

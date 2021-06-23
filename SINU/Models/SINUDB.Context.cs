@@ -104,7 +104,6 @@ namespace SINU.Models
         public virtual DbSet<DataVerificacion> DataVerificacion { get; set; }
         public virtual DbSet<GrupoCarrOficio> GrupoCarrOficio { get; set; }
         public virtual DbSet<ResGrupo> ResGrupo { get; set; }
-        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<vRestriccionesPorConvYFechaPeriodosInscrip> vRestriccionesPorConvYFechaPeriodosInscrip { get; set; }
         public virtual DbSet<vInstitucionesConvocadasYCarrerasAsociadas> vInstitucionesConvocadasYCarrerasAsociadas { get; set; }
         public virtual DbSet<ConsultaProgramada> ConsultaProgramada { get; set; }
@@ -131,6 +130,11 @@ namespace SINU.Models
         public virtual DbSet<vInscriptosYRestriccionesCount> vInscriptosYRestriccionesCount { get; set; }
         public virtual DbSet<vInscriptosYRestriccionesCheck> vInscriptosYRestriccionesCheck { get; set; }
         public virtual DbSet<vParentesco> vParentesco { get; set; }
+        public virtual DbSet<vPostPersonaEtapaEstadoUltimoEstado> vPostPersonaEtapaEstadoUltimoEstado { get; set; }
+        public virtual DbSet<vEntrevistaLugarFechaUltInscripc> vEntrevistaLugarFechaUltInscripc { get; set; }
+        public virtual DbSet<vPersona_DatosPer_UltInscripc> vPersona_DatosPer_UltInscripc { get; set; }
+        public virtual DbSet<vInscripcionDetalleUltInsc> vInscripcionDetalleUltInsc { get; set; }
+        public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -390,8 +394,16 @@ namespace SINU.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAntropometriaIU", idPostulantePersonaParameter, alturaParameter, pesoParameter, iMCParameter, perimCabezaParameter, perimToraxParameter, perimCinturaParameter, perimCaderasParameter, largoPantalonParameter, largoEntrepParameter, largoFaldaParameter, cuelloParameter, calzadoParameter);
         }
     
-        public virtual int spCreaPostulante(string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
+        public virtual int spCreaPostulante(Nullable<bool> reinscripcion, Nullable<int> idPersonaExistente, string apellido, string nombre, string dNI, string email, Nullable<int> idPreferenciaInstituto, Nullable<int> idDelegacionOficinaIngresoInscribio)
         {
+            var reinscripcionParameter = reinscripcion.HasValue ?
+                new ObjectParameter("reinscripcion", reinscripcion) :
+                new ObjectParameter("reinscripcion", typeof(bool));
+    
+            var idPersonaExistenteParameter = idPersonaExistente.HasValue ?
+                new ObjectParameter("IdPersonaExistente", idPersonaExistente) :
+                new ObjectParameter("IdPersonaExistente", typeof(int));
+    
             var apellidoParameter = apellido != null ?
                 new ObjectParameter("Apellido", apellido) :
                 new ObjectParameter("Apellido", typeof(string));
@@ -416,7 +428,7 @@ namespace SINU.Models
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", idDelegacionOficinaIngresoInscribio) :
                 new ObjectParameter("IdDelegacionOficinaIngresoInscribio", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCreaPostulante", reinscripcionParameter, idPersonaExistenteParameter, apellidoParameter, nombreParameter, dNIParameter, emailParameter, idPreferenciaInstitutoParameter, idDelegacionOficinaIngresoInscribioParameter);
         }
     
         public virtual int spDatosBasicosUpdate(string apellido, string nombres, Nullable<int> idSexo, string dNI, string telefono, string celular, Nullable<System.DateTime> fechaNacimiento, string email, Nullable<int> idDelegacionOficinaIngresoInscribio, string comoSeEntero, Nullable<int> idComoSeEntero, Nullable<int> idPreferencia, Nullable<int> idPersona, Nullable<int> idPostulante)
@@ -1410,6 +1422,45 @@ namespace SINU.Models
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spAspNetUserYPostulanteEliminar", emailParameter);
+        }
+    
+        public virtual ObjectResult<sp_InvestigaDNI_Result> sp_InvestigaDNI(string dNI)
+        {
+            var dNIParameter = dNI != null ?
+                new ObjectParameter("DNI", dNI) :
+                new ObjectParameter("DNI", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_InvestigaDNI_Result>("sp_InvestigaDNI", dNIParameter);
+        }
+    
+        public virtual ObjectResult<Sp_InvestigarEMAIL_Result> Sp_InvestigarEMAIL(string valoremail)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_InvestigarEMAIL_Result>("Sp_InvestigarEMAIL", valoremailParameter);
+        }
+    
+        public virtual int Sp_PostulanteELIMINAR(string valoremail, Nullable<bool> guardarEliminados, string comentario, string emailUsuarioEliminador)
+        {
+            var valoremailParameter = valoremail != null ?
+                new ObjectParameter("valoremail", valoremail) :
+                new ObjectParameter("valoremail", typeof(string));
+    
+            var guardarEliminadosParameter = guardarEliminados.HasValue ?
+                new ObjectParameter("GuardarEliminados", guardarEliminados) :
+                new ObjectParameter("GuardarEliminados", typeof(bool));
+    
+            var comentarioParameter = comentario != null ?
+                new ObjectParameter("Comentario", comentario) :
+                new ObjectParameter("Comentario", typeof(string));
+    
+            var emailUsuarioEliminadorParameter = emailUsuarioEliminador != null ?
+                new ObjectParameter("EmailUsuarioEliminador", emailUsuarioEliminador) :
+                new ObjectParameter("EmailUsuarioEliminador", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_PostulanteELIMINAR", valoremailParameter, guardarEliminadosParameter, comentarioParameter, emailUsuarioEliminadorParameter);
         }
     }
 }

@@ -1,0 +1,322 @@
+﻿@model SINU.ViewModels.DelegacionModalidadVm
+
+@{
+    ViewBag.Title = "Eliminación de Postulante";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Postulantes:</h2>
+<hr />
+<div id="opcionesExtras1">
+    <div class="col-md-4  col-sm-12 mb-2 p-0 ">
+        <div class="col-md-12">
+            @Html.DropDownList("dropDelegacionDelPost", Model.Delegaciones, "Seleccione Delegación", new { @class = "form-control selectpicker " })
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12 mb-2 p-0">
+        <div class="col-md-12">
+            @Html.DropDownList("dropModalidadDelPost", Model.Modalidad, "Seleccione Modalidad", new { @class = "form-control selectpicker" })
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12 mb-2 p-0">
+
+        <div class="col-md-12">
+            <button class="btn btn-dark form-control" onclick="limpiar()">Limpiar filtros</button>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
+    <thead class="thead-dark">
+        <tr>
+            <th hidden>
+                IdPersona
+            </th>
+            <th>
+                N° de Pre-Inscripción
+            </th>
+            <th>
+                Nombres
+            </th>
+            <th>
+                Apellido
+            </th>
+            <th>
+                DNI
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Inscripto_En
+            </th>
+
+            <th>
+                Modalidad
+            </th>
+
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        <tr>
+        </tr>
+
+    </tbody>
+
+</table>
+
+
+<div class="modal fade" id="MConfirmacion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmación de Eliminación</h5>
+
+            </div>
+            @using (Ajax.BeginForm("PostulanteDelete", "PostulanteEliminar", null,
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Exito(data,status,xhr)",
+                OnFailure = "Falla",
+
+            },
+            new { id = "BeginFormPostulanteEliminar" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <input class="form-control" name="idPostulante" id="idpostu" hidden>
+
+                            <div class="form-group">
+                                <label>N° de Pre-Inscripción</label>
+                                <label class="form-control" id="idinscripcion"  ></label>
+                            </div>
+                            <div class="form-group">
+                                <label>Nombres</label>
+                                <label class="form-control" id="nombre"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <label class="form-control" id="apellido"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label>DNI</label>
+                                <label class="form-control" id="dni"></label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <label class="form-control" id="email"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Delegación</label>
+                                <label class="form-control" id="delegacion"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Modalidad</label>
+                                <label class="form-control" id="modalidad"></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="d-inline-flex"><strong>Comentario</strong>,&ensp;<small class="form-text text-muted"> Opcional</small></label>
+
+                                <textarea class="form-control h-25"  id="comentario" name="comentario" placeholder="" ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-danger load-submit ">Eliminar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+     
+        primerCarga = true;
+            //tabla
+        var table = $('table').DataTable({
+            "proccessing": true,
+            "serverSide": true,
+            "processing": true,
+            "ajax": {
+                url: "@Url.Action("CustomServerSideSearchAction", "PostulanteEliminar")",
+                type: 'POST',
+                data: function (data) {
+                    if (primerCarga) {
+                        primerCarga = false;
+
+                        data.search.value = sessionStorage.searchTablaDelPost;
+
+                    };
+
+                    sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
+                    sessionStorage.dropDelegacionDelPost == undefined ? sessionStorage.dropDelegacionDelPost = "" : null;
+                    sessionStorage.dropModalidadDelPost == undefined ? sessionStorage.dropModalidadDelPost = "" : null;
+
+                    data.extras = JSON.stringify({
+                        delegacion: sessionStorage.dropDelegacionDelPost,
+                        modalidad: sessionStorage.dropModalidadDelPost
+                    });
+                },
+                dataSrc: function (json) {
+
+                    var botonDetalle = "<a class='btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=$$'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>"
+                    var botonEliminar = "<button type='button' class='btn btn-danger fas fa-trash-alt EliPost' data-toggle='tooltip' data-placement='top' title='Eliminar'></button>"
+                    $.each(json.data, function (index, item) {
+
+                        item.Opciones = `${botonDetalle.replace("$$", item.IdPersona)} | ${botonEliminar.replace("$$", item.IdPersona)}`;
+
+                    });
+                    return json.data;
+                }
+
+            },
+            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtras2 container  row">><"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+
+            "language":
+            {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "columns": [
+                { "data": "IdPersona", "visible": false },
+                { "data": "IdInscripcion" },
+                { "data": "Nombres", orderable: false },
+                { "data": "Apellido", orderable: false },
+                { "data": "DNI", orderable: false },
+                { "data": "Email", orderable: false },
+                { "data": "Inscripto_En", "searchable": false },
+                { "data": "Modalidad", "searchable": false },
+                { "data": "Opciones", orderable: false }
+            ],
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            responsive: true,
+            
+        });
+
+            function limpiar() {
+                sessionStorage.dropDelegacionDelPost = "";
+                sessionStorage.dropModalidadDelPost="";
+                $("select.selectpicker").val("").selectpicker("refresh");
+                 table.search("").ajax.reload();
+        };
+
+        $("#le-filters tbody").on("click", "button.EliPost", function () {
+            var data_row = table.row($(this).closest('tr').index()).data();
+
+            $("#idpostu").val(data_row.IdPersona);
+            $("#idinscripcion").html(data_row.IdInscripcion);
+            $("#nombre").html(data_row.Nombres);
+            $("#apellido").html(data_row.Apellido);
+            $("#idinscripcion").html(data_row.IdInscripcion);
+            $("#dni").html(data_row.DNI);
+            $("#email").html(data_row.Email);
+            $("#delegacion").html(data_row.Inscripto_En);
+            $("#modalidad").html(data_row.Modalidad);
+            $("#comentario").val("");
+
+            $("#MConfirmacion").modal("show");
+        });
+
+        $(document).ready(function () {
+
+            $("button div div div.filter-option-inner-inner").css("color", "black");
+
+            $('#le-filters[data-toggle="tooltip"]').tooltip("enable")
+            jQuery("#opcionesExtras1 div.mb-2")
+                .detach()
+                .appendTo('.opcionesExtras2')
+
+            $("#le-filters_filter label")
+                .addClass("float-md-right")
+                .children("input")
+                .removeClass("form-control-sm").addClass("form-control")
+                .css("width", "225px")
+                .attr("placeholder", "dni, nombre, apellido, email")
+            $("[name='le-filters_length']").css({"width": "180px", "font-size":"100%"}).removeClass("form-control-sm")
+            
+
+            $("#dropDelegacionDelPost").val(sessionStorage.dropDelegacionDelPost).selectpicker("refresh");
+            $("#dropModalidadDelPost").val(sessionStorage.dropModalidadDelPost).selectpicker("refresh");
+            //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
+
+
+            //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+            table.on('search.dt', function () {
+                sessionStorage.searchTablaDelPost = table.search();
+            });
+
+            //esatblesco en el input la ultima busqueda realizada
+            table.on('draw', function () {
+                                 
+                table.search(sessionStorage.searchTablaDelPost);
+            });
+
+            //guarda las seleciones de los combos
+            $("select").on("change", function () {
+                name = $(this).attr("name");
+                sessionStorage.setItem(name, $(this).val());
+                table.search(sessionStorage.searchTablaDelPost).ajax.reload();
+            });
+
+            
+
+
+        });
+
+        function Exito(data, status, xhr) {
+            //oculto el modal de confirmacion de la eliminacion del postulante
+            $("#MConfirmacion").modal("hide");
+
+            $.Anuncio(data.msg)
+            if (data.success) {
+                table.search("").ajax.reload();
+            }
+         
+        }
+
+        function Falla() {
+            $.Anuncio("Error, recargue la pagina.")
+        }
+
+    </script>
+
+}

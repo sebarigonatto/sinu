@@ -10,17 +10,16 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vPostulanteEtapaEstado
+    public partial class sp_InvestigaDNI_Result
     {
-        public int IdInscripcion { get; set; }
-        public Nullable<int> IdPostulantePersona { get; set; }
-        public int IdSecuencia { get; set; }
-        public string Etapa { get; set; }
-        public string Estado { get; set; }
-        public int IdEtapa { get; set; }
-        public int IdEstado { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public Nullable<bool> ES_Postulante { get; set; }
+        public Nullable<bool> Convocatoria_Activa { get; set; }
+        public Nullable<int> IdPersona { get; set; }
+        public string IdAspNetUser { get; set; }
+        public string EmailPersona { get; set; }
+        public Nullable<int> IdConvocatoria { get; set; }
+        public Nullable<int> IdSecuencia { get; set; }
+        public string ACCION { get; set; }
     }
 }

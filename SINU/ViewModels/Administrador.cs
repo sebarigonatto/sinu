@@ -22,5 +22,11 @@ namespace SINU.ViewModels
         [Display(Name = "Mail Usuario:")] 
         public string Email { get; set; }
     }
+    public class DelegacionModalidadVm
+    {
+
+        public List<SelectListItem> Delegaciones { get; set; }
+        public List<SelectListItem> Modalidad { get; set; }
+    }
 
 }

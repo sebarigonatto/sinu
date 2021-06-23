@@ -78,6 +78,13 @@ namespace SINU.Controllers
         [CaptchaMvc.Attributes.CaptchaVerify("Captcha no valido")]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            ViewBag.logueado = false;
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.logueado = true;
+                return View();
+            }
+            
             ViewBag.mensaje = "";
             if (!ModelState.IsValid)
             {
@@ -237,7 +244,8 @@ namespace SINU.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
-        {//el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio
+        {
+            //el objeto model ya tiene la preferencia del instituto = model.IdInstituto , model.idOficinaDelegacion la mas cercana a su domicilio            
             model.ListOficinaYDelegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "IdOficinasYDelegaciones", "NOmbre");
             model.ListIntitutos = new SelectList(db.vPeriodosInscrip.DistinctBy(mbox => mbox.IdInstitucion).OrderBy(m => m.IdInstitucion).ToList(), "IdInstitucion", "NombreInst");
             var DatosDelegacion2 = new List<Array>();
@@ -247,37 +255,34 @@ namespace SINU.Controllers
                                                                                                m.Celular}));
 
             model.DatosDelegacion = JsonConvert.SerializeObject(DatosDelegacion2);
-                
+            
             if (ModelState.IsValid)
             {
                 try
                 {
-
                     var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
-                    var result = await UserManager.CreateAsync(user, model.Password);
+                    sp_InvestigaDNI_Result SituacionPersona = db.sp_InvestigaDNI(model.DNI).First();
                     
-               
+                    //Si el DNI corresponde a un postulante anucio lo mismo en la vista de registro
+                    if ((bool)SituacionPersona.ES_Postulante)
+                    {
+                        //debo verifsicar si se trata de un postulante o simplemente una persona                        
+                        AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
+                        return View(model);
+                        
+                    }
+
+                    //db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+                    //db.SaveChanges();
+                    //creo la cuenta con el mail proporcionado
+                    var result = await UserManager.CreateAsync(user, model.Password);
+
                     if (result.Succeeded)
                     {
-                        ViewBag.DNI = false;
-                        //si el dni existe en la base de datos se elimina a la cuenta creada de la tabla "AspNetUsers"
-                        var per = db.Persona.FirstOrDefault(m => m.DNI == model.DNI);
-                        if (per !=null)
-                        {
-                            //debo verificar si se trata de un postulante o simplemente una persona
-                            bool ESpostulante = per.Postulante!= null;
-                            //ver en caso de de ser y no se postulante
-
-
-                            db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
-                            db.SaveChanges();
-                            ViewBag.DNI = true;
-                            AddErrors(IdentityResult.Failed("El Dni ingresado corresponde a una cuenta existente."));
-                            return View(model);
-                        }
+                                              
                         //crea una persona, un postulante y una inscripcion
-                        var r = db.spCreaPostulante(model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
+                        var r = db.spCreaPostulante(false,SituacionPersona.IdPersona,model.Apellido, model.Nombre, model.DNI, model.Email, model.IdInstituto, model.idOficinaYDelegacion);
                       
                         //comentado para evitar el inicio de session automatico
                         //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -306,9 +311,22 @@ namespace SINU.Controllers
                         {
                             MODALIDAD = "CPESNM-CPESSA";
                         }
-                        await Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
-                        ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
-                        return View("Login");
+                        var resultado = Func.EnvioDeMail(modelPlantilla, "PlantillaMailConfirmacion", user.Id, null, "MailAsunto" + MODALIDAD,null,null);
+
+
+                        ////Segun si el correo fue enviado o no se lanza un mensaje
+                        //if (resultado.Contains("Correo Enviado"))
+                        //{
+                            ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
+                            return View("Login");
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.mensaje = "Registro completado exitosamente, se le enviara un correo para validar su cuenta. Recuerde hacerlo dentro de las 24HS.";
+                        //    return View("Login");
+                        //}
+
+                        
                     }
                     AddErrors(IdentityResult.Failed(result.Errors.ToList()[1]));
                 }
@@ -316,10 +334,14 @@ namespace SINU.Controllers
                 {
                     //HttpContext.Session["funcion"] = ex.Message; //no se debe usar session hay que crear el System.Web.Mvc.HandleErrorInfo
 
+                    db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+                    db.SaveChanges();
                     return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Account", "Register"));
                 }
 
             }
+            //db.AspNetUsers.Remove(db.AspNetUsers.First(m => m.Email == model.Email));
+            //db.SaveChanges();
 
             // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
             return View(model);
@@ -335,7 +357,7 @@ namespace SINU.Controllers
                 if (userId == null || code == null)
                 {
                     //Revisar no usamos return View("Error"); y usamos una pantalla de error generalizada
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmacion expirado. Intente la registración nuevamente."), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Usuario inexistente o tiempo de confirmación expirado. Intente la registrarse nuevamente."), "Account", "Confirmacion de mail");
                     return View("Lockout", x);
                 }
                 //cuando se quiere confiramr mail de un usuario eliminado
@@ -347,17 +369,16 @@ namespace SINU.Controllers
                 }
                 //verifico que el usuario ya alla confirmado
 
-              
-                var Email = UserManager.FindById(userId).UserName;
+                var user = UserManager.FindById(userId);
+                var Email = user.UserName;
                 var persona = db.Persona.FirstOrDefault(m => m.Email == Email);
 
-                ViewBag.YAconfirmo = false;
-                bool YAconfirmo = persona.Postulante.AspNetUsers.EmailConfirmed;
-                if (YAconfirmo)
+                ViewBag.YAconfirmo = user.EmailConfirmed;
+                if (ViewBag.YAconfirmo)
                 {
-                    ViewBag.YAconfirmo = YAconfirmo;
                     return View();
                 }
+
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
@@ -390,7 +411,7 @@ namespace SINU.Controllers
                 else //Revisar (result.Succeeded == false) el booleano nunca se compara!!
                 {
                     //Revisar En vez de usar Session["funcion"] = "Expiro token para la confirmacio de correo!!"; se debe generar un objeto que es usado por la view como modelo.
-                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para la confirmación de correo. Intente registresarse nuevamente."), "Account", "Confirmacion de mail");
+                    var x = new System.Web.Mvc.HandleErrorInfo(new Exception("Expiro el Token para la confirmación de correo. Intente registrarse nuevamente."), "Account", "Confirmacion de mail");
                     ViewBag.Title = "Token Vencido";
                     //ejecutar el script de eliminacion de cuenta con el token vencido
                     db.spAspNetUserYPostulanteEliminar(Email);

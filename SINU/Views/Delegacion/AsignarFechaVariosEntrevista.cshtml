@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SINU.Models.vEntrevistaLugarFecha>
+﻿@model IEnumerable<SINU.Models.vEntrevistaLugarFechaUltInscripc>
 @*@{
         //ViewBag.Title = "AsignarFechaVarios";
 
@@ -59,7 +59,7 @@
                         @Html.DisplayFor(modelitem => item.Estado)
                     </td>
                     <td>
-                        <input name="Select" type="checkbox" value="@item.IdInscripcion" id="myCheck" onclick="myFunction()" />
+                        <input name="Select" type="checkbox" value="@item.IdInscripcion" id="myCheck" />
                     </td>
                 </tr>
             }
@@ -78,34 +78,44 @@
                         <div class="col-md-6 ">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Fecha de Entrevista:</label><br />
-                                @*<input name="fecha" type="text" id="datetimepicker" />*@
-                                <input type="text" class="form-control" id="datetimepicker" name="Fecha" readonly />
+
+                                @Html.TextBox("Fecha", null, "{0:dd/MM/yyyy HH:mm }", new { @class = "form-control  text-center", @id = "datetimepicker", @readonly = true, @required = "required" })
+
                             </div>
                             @*<div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">
-                                        lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
-                                    </label>
+                            <label for="recipient-name" class="col-form-label">
+                                lugar de Presentacion: @Html.DropDownListFor(m => m.LugarPresentacion, Model.LugarPresentacion, "---Seleccione la corresp ---", htmlAttributes: new { @id = "LugarExamen", @class = "form-control selectpicker" })
+                            </label>
 
-                                </div>*@
+                        </div>*@
+                        </div>
+                        <div class="col-md-6" id="AvisoFecha" hidden>
+                            <div class="alert alert-danger mt-4">
+                                <h6 class="font-weight-bold">Asigne una fecha de Entrevista!!!</h6>
+                            </div>
                         </div>
                         @*<div class="col-md-6 ">
-                                <div class="form-group">
-                                    <div id="DatosDelegacion" class="form-group control-label" hidden>
-                                        <h4 class="text-center">Datos del Lugar</h4>
-                                        @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
-                                        <p id="Direccion" class="control-label col"><b>asdasda</b></p>
-                                        @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
-                                        <p id="Telefono" class="control-label col"><b>asdasda</b></p>
-                                        @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
-                                        <p id="Celular" class="control-label col"><b>asdasda</b></p>
-                                    </div>
-                                </div>
-                            </div>*@
+                        <div class="form-group">
+                            <div id="DatosDelegacion" class="form-group control-label" hidden>
+                                <h4 class="text-center">Datos del Lugar</h4>
+                                @Html.Label("Jurisdiccion , localidad y Departamento", new { @class = "col-md-6 control-label" })
+                                <p id="Direccion" class="control-label col"><b>asdasda</b></p>
+                                @Html.Label("Nombre Del Lugar", new { @class = "col-md-6 control-label" })
+                                <p id="Telefono" class="control-label col"><b>asdasda</b></p>
+                                @Html.Label("Direccion", new { @class = "col-md-6 control-label" })
+                                <p id="Celular" class="control-label col"><b>asdasda</b></p>
+                            </div>
+                        </div>
+                    </div>*@
                     </div>
                     <div class="row float-lg-right float-md-right float-sm-none">
-                        <div class="container">
-                            <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg" />
-                        </div>
+                            <div >
+                                @Html.ActionLink("Cerrar", "Index", new { @class = "btn btn-dark  btn-lg " })
+                            </div>
+                            <div class="col-1"></div>
+                            <div >
+                                <input type="submit" value="Asignar" id="IdAsignar" class="btn btn-primary btn-lg" />
+                            </div>
                     </div>
                 </div>
             </div>
@@ -168,9 +178,9 @@
                 startDate: "Today"
             });
               jQuery('#datetimepicker').datetimepicker({
-                minDate: 0,
-                format: 'd/m/y h:m',
-                value: 'd/m/y h:m'
+                 minDate: 0,
+                format: 'd/m/y H:m',
+                value: 'd/m/y H:m',
             });
             $.datetimepicker.setLocale('es')
             var ModelListado = '@ViewBag.Listado';
@@ -181,33 +191,18 @@
                 $("#IdAsignar").attr("disabled", false)
 
             }
-            @*var model = '@Html.Raw(Model.DatosLugar)';
-            var jsonDatosDelegacion = JSON.parse(model);
-            $("#LugarExamen").on("change", function () {
-                if ($(this).val() != "") {
-                    var value = $(this).val();
-                    var DeleOfi = "";
-                    $.each(jsonDatosDelegacion, function (index, item) {
-                        DeleOfi = (item[0] == value) ? item : DeleOfi;
-                        if (DeleOfi != "") {
-                            return false;
-                        }
-                    });
-                    $("#Direccion b").text(DeleOfi[1]);
-                    $("#Telefono b").text(DeleOfi[2]);
-                    $("#Celular b").text(DeleOfi[3] == "" ? "-------" : DeleOfi[3]);
-                    $("#DatosDelegacion").removeAttr("hidden");
-                } else {
-                    $("#DatosDelegacion").attr("hidden", true);
-                }
-            })*@
-            //$(".datepicker").datepicker({
-            //    format: "dd/mm/yyyy",
-            //    language: "es",
-            //    autoclose: true,
-            //    startView: "days",
-            //    startDate: "Today"
-            //});
+            jQuery('#datetimepicker').val("");
+
+
+           
+             $('#BeginFormAsignarFechaVarios').on('submit', function () {
+               
+                if (jQuery('#datetimepicker').val() == '') {
+                    jQuery('#datetimepicker').focus();
+                    $("#AvisoFecha").removeAttr('hidden');
+                    return false;
+                };
+            })
         });
         function Exito(data,status,xhr) {
             if (data.success) {

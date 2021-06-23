@@ -10,17 +10,17 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vPostulanteEtapaEstado
+    public partial class Sp_InvestigarEMAIL_Result
     {
-        public int IdInscripcion { get; set; }
-        public Nullable<int> IdPostulantePersona { get; set; }
-        public int IdSecuencia { get; set; }
-        public string Etapa { get; set; }
-        public string Estado { get; set; }
-        public int IdEtapa { get; set; }
-        public int IdEstado { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
+        public string Tabla_SegUsu { get; set; }
+        public string codUsuario { get; set; }
+        public string mr { get; set; }
+        public string Grado { get; set; }
+        public string Destino { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Comentario { get; set; }
+        public System.DateTime FechUltimaAct { get; set; }
     }
 }

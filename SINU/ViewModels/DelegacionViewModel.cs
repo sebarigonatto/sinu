@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -50,8 +51,9 @@ namespace SINU.ViewModels
     }
     public class PresentaciondelPostulante
     {
-        public vInscripcionDetalle DetalleInscripcion { get; set; }
+        public vInscripcionDetalleUltInsc DetalleInscripcion { get; set; }
         public string DatosLugar { get; set; }
+        [Required(ErrorMessage ="Dato Requerido")]
         public SelectList LugarPresentacion { get; set; }
 
     }

@@ -250,7 +250,10 @@
 </html>
 
 <script>
+    //$(document).ready(function () {
+    //    $(":input").attr("autocomplete","off"); 
 
+    //})
 
     $(window).on('load', function () {
         $(".navMenu li a").each(function (a) {
@@ -269,7 +272,7 @@
 
     });
 
-    $(".load-submit").click( function () {
+    $(document).on("click",".load-submit", function () {
         $.Cargando();
     });
 
@@ -284,7 +287,7 @@
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
 
-    $.Cargando = function () {
+    $.Cargando = function () { 
         $("#ModalAnuncios .modal-body").addClass("text-center");
         $("#ModalAnuncios .modal-content").css("background-color", "transparent").css("border-color", "transparent");
         $("#OK").css("display", "none");
@@ -292,7 +295,7 @@
         $("#TextModal").html("<img src='/Imagenes/loader.gif' style='width:30vh;border-radius: 5px'/>");
         $("#ModalAnuncios").modal({ backdrop: 'static', keyboard: false });
     };
-    
+        
 </script>
 
 

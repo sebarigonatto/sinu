@@ -12,27 +12,28 @@ namespace SINU.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vInscripcionEtapaEstadoUltimoEstado
+    public partial class vPostPersonaEtapaEstadoUltimoEstado
     {
         public int IdSecuencia { get; set; }
-        public int IdInscripcionEtapaEstado { get; set; }
-        public Nullable<System.DateTime> Fecha { get; set; }
-        public string Email { get; set; }
-        public int IdPersona { get; set; }
-        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
         public string Etapa { get; set; }
         public string Estado { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
+        public int IdInscripcionEtapaEstado { get; set; }
+        public Nullable<System.DateTime> FechaInscripcion { get; set; }
+        public string Email { get; set; }
+        public int IdPersona { get; set; }
+        public string Delegacion { get; set; }
+        public Nullable<int> IdDelegacionOficinaIngresoInscribio { get; set; }
+        public Nullable<int> IdPreferencia { get; set; }
+        public string IdModalidad { get; set; }
         public string Apellido { get; set; }
         public string Nombres { get; set; }
-        public string IdModalidad { get; set; }
-        public string Delegacion { get; set; }
+        public int IdConvocatoria { get; set; }
         public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
-        public Nullable<System.DateTime> FechaRindeExamen { get; set; }
+        public System.DateTime FechaInicioINSC { get; set; }
+        public System.DateTime FechaFinalINSC { get; set; }
         public Nullable<System.DateTime> FechaEntrevista { get; set; }
-        public Nullable<System.DateTime> FechaInscripcion { get; set; }
-        public string DomDNI { get; set; }
-        public string DomActual { get; set; }
-        public Nullable<bool> Activa { get; set; }
+        public Nullable<int> IdCarreraOficio { get; set; }
     }
 }

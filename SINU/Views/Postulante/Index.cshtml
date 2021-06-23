@@ -355,10 +355,10 @@
                     Numero de Pre-Inscripción: <b>@ViewBag.MOD_CAR[2]</b>
                 </h6>
                 <h6>
-                    Delegación: <b>@ViewBag.DelePost</b>
+                    Delegación: <b id="nombreDelegacion">@ViewBag.DelePost</b>
                 </h6>
                 <h6>
-                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b> @ViewBag.MOD_CAR[0]</b> - Carrera: <b>@(ViewBag.MOD_CAR[1] != null ? ViewBag.MOD_CAR[1] : Html.Raw("&emsp;----  "))</b></e>
+                    <e @(ViewBag.MOD_CAR[0] == "" ? "hidden" : "")>Modalidad:<b id="nombreModalidad"> @ViewBag.MOD_CAR[0]</b> - Carrera: <b id="nombreCarrera">@(ViewBag.MOD_CAR[1] != null ? ViewBag.MOD_CAR[1] : Html.Raw("&emsp;----  "))</b></e>
                 </h6>
             </t>
 
@@ -410,8 +410,8 @@
 {
     <div class="jumbotron mb-0" style="background-color: #08495f; color:white; padding-bottom:1rem;padding-top:1rem">
 
-        <h4>La convocatoria a la que se inscribio ha finalizado.</h4>
-        <h6>Para inscribirse en otra convocatoria hacer @Html.ActionLink("click aqui", "InscripConvo")</h6>
+        <h4>La convocatoria en la que se inscribió ha finalizado.</h4>
+        <h6>Para inscribirse en otra convocatoria hacer &emsp; @Html.ActionLink("click aqui", "InscripConvo",new { ID_postulante= Model.ID_PER },new { @class="btn btn-info"})</h6>
 
     </div>
     <br />
@@ -780,6 +780,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/JavaScriptPostulante.js"></script>
     <script type="text/javascript">
+
         //armo un array con las etapas que transito el postulante
         var IDETP='@Model.IDETAPA.ToString()'.split(',');;
         //elimino el ultimo elemnto de array, por que es un string vacio
@@ -825,11 +826,23 @@
         /////////////////////////////////////////////////////////////////////////////////
         //ver esto
         $(document).ready(function () {
-            if ($("#fechacumpleaños").val()!="") {
-                
-                        $("#BTentrevista").removeClass("disabled");
-              
-            }
+
+            if ('@Session["IncripcionNueva"]' != '') {
+                $.Anuncio('@Session["IncripcionNueva"]');
+                @{
+                    Session["IncripcionNueva"]="";
+                }
+            };
+
+            if ($(".fechacumpleaños").val()!="") {
+                 if ($("#BeginFormDatosBasicos").valid()) {
+
+                     $("#BTentrevista").removeClass("disabled");
+
+                };
+            };
+                  
+
             $("#check_validacion").change(function () {
                 if ($(this).is(":checked")) {
                     $("#BTValidar").removeAttr("disabled");
@@ -851,6 +864,10 @@
                         .tooltip('enable').attr("href","javascript:void(0)");
                 };
             });
+            $("#volverDB")
+                .attr("data-toggle", "tooltip")
+                .attr("title", "Editar nuevamente los datos cargados anteriormente.")
+                .tooltip('enable');
 
             //Muestro el Tab de la Etapa en la que me encuentro actualmente
             //Bloqueo de pantallas cerradas y muestro Problemas y cant de cada pantalla, session['ValidoUnaVez'] debe ser "True"
@@ -890,16 +907,22 @@
             } else {
                 $("#" + IDETP[IDETP.length - 1]).tab("show");
             }
+
                @{
-                   bool url = HttpContext.Current.Request.UrlReferrer.LocalPath.Contains("FamiliaCUD");
-                   if (!url)
+                   if (HttpContext.Current.Request.UrlReferrer != null)
                    {
-                       Session["URLatras"] = HttpContext.Current.Request.UrlReferrer.LocalPath;
+                       bool url = HttpContext.Current.Request.UrlReferrer.LocalPath.Contains("FamiliaCUD");
+                       if (!url)
+                       {
+                           Session["URLatras"] = HttpContext.Current.Request.UrlReferrer;
+                       }
+
+                       Session["FamiTable"] = false;
                    }
 
-                   Session["FamiTable"] = false;
 
                }
+
             $("#atras").attr("href", "@Session["URLatras"]");
             ////scroll automatico al selecionar un nav, solo en vista mobil
             //$("#TabSecundarioContent button[aria-label='Toggle navigation']").on("click", function () {
@@ -924,7 +947,7 @@
                     if ($(item).find("thead").length == 0) {
                         //alert("form - " + $(item).attr("id"));
                         saltar = true;
-                        
+
                         $.each($(item).find(":input[data-val-required], :input.custom-file-input"), function (index2, item2) {
                             if ($(item2).val() == '') {
                                 if ($(item2).hasClass("custom-file-input")) {
@@ -934,7 +957,7 @@
                                         saltar = false;
                                     };
                                 } else {
-                                    
+
                                     PantallasError.push( IdPantalla );
                                     validForm = false;
                                     saltar = false;
@@ -949,7 +972,7 @@
                             PantallasError.push(IdPantalla );
                             validForm = false;
 
-                            
+
                         }; //else {
                         //    alert("hay registos!!!!");
                         //};s
@@ -959,7 +982,7 @@
                     $.ajax({
                         url: "/Postulante/ValidarDatos?ID_persona="+ '@Model.ID_PER',
                         dataType: 'json',
-                     
+
                         type: "POST",
                         async: false,
                         success: function (response) {
@@ -1004,7 +1027,10 @@
            // alert("success: " + response.success + " - " + response.msg);
             switch (response.form) {
                 case "datosbasicos":
+
+                    $('#nombreDelegacion').html(response.delegacion)
                     $("#BTentrevista").removeClass("disabled");
+
                     break;
                 case "solicitudentrevista":
                     $("#3").attr("href","#entrevista").bind("click", function () {
@@ -1026,6 +1052,8 @@
                     $.get("/Postulante/DocumentacionAnexo", { IdPersona: id }, function (response) {
                         $("#BeginDocumentacionAnexo").replaceWith(response);
                     });
+                    $("#nombreModalidad").html(response.modalidad);
+                    $("#nombreCarrera").html(response.carrera);
                     break;
                 case "ValidarDatos":
                     BloqueaPantalla("#Documentacion");

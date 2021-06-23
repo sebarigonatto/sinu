@@ -119,7 +119,7 @@ namespace SINU.Models
         /// <param name="Asunto">Asunto del Mail, que se obtiene de la Tabla Configuracio</param>
         /// <param name="ID_Delegacion">Id de la Delegacion que se enviara el mail.</param>
         /// <returns></returns>
-        public static async Task<bool> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion, List<string>? mails)
+        public static async Task<string> EnvioDeMail(PlantillaMail ModeloPlantilla, string Plantilla, string? ID_AspNetUser, int? ID_Persona, string Asunto, int? ID_Delegacion, List<string>? mails)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace SINU.Models
                 if (postulante != null)
                 {
                     ID_AspNetUser = postulante.IdAspNetUser;
-                    idInscrip = postulante.Inscripcion.First().IdInscripcion;
+                    idInscrip = db.vPostPersonaEtapaEstadoUltimoEstado.First(m=>m.IdPersona==postulante.IdPersona).IdInscripcionEtapaEstado;
                     Rol = "Postulante";
                 }
                 else if (ID_Delegacion != null)
@@ -157,6 +157,7 @@ namespace SINU.Models
                     string correo = correos[0];
                     var id_per = db.Persona.FirstOrDefault(m => m.Email == correo).IdPersona;
                     postulante = db.Postulante.Find(id_per);
+                    idInscrip = db.vPostPersonaEtapaEstadoUltimoEstado.First(m => m.IdPersona == postulante.IdPersona).IdInscripcionEtapaEstado;
                     Rol = "Postulante";
                     Modo = "Bcc";
                 }
@@ -174,7 +175,7 @@ namespace SINU.Models
                         };
                         break;
                     case "Postulante":
-                        var OfiDeleg =  db.OficinasYDelegaciones.Find(postulante.Inscripcion.First().IdDelegacionOficinaIngresoInscribio);
+                        var OfiDeleg =  db.OficinasYDelegaciones.Find(db.Inscripcion.Find(idInscrip).IdDelegacionOficinaIngresoInscribio);
                         datos = new DatosResponsable()
                         {
                             Apellido = ModeloPlantilla.Apellido.ToUpper(),
@@ -207,11 +208,11 @@ namespace SINU.Models
                 //cargo el asunto desde la base de datos
                 string asunto = db.Configuracion.FirstOrDefault(b => b.NombreDato == Asunto).ValorDato;
 
-                
 
-                EmailService.SendEmail(ID_AspNetUser, asunto, finalHtml, correos,Modo);
+
+                var result = await EmailService.SendEmail(ID_AspNetUser, asunto, finalHtml, correos, Modo);
                  
-                return true;
+                return result;
             }
             catch (Exception x)
             {

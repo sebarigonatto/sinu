@@ -119,6 +119,12 @@
                                             @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Asignar fecha de presentacion" })
                                             @*@Html.CheckBox("Select",false ,new {id=item.IdPersona })*@
                                             break;
+                                        case "Asignada":
+                                            @:|&ensp;
+                                           
+                                            @Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = item.IdPersona }, new { @class = "far fa-calendar-alt", @style = "color:#0072ff", @title = "Reasignar fecha de presentacion" })
+                                           
+                                            break;
                                     }
 
                                 }

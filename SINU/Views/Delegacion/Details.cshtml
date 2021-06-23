@@ -22,14 +22,14 @@
         <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Apellido, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Apellido, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Apellido, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Nombres, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].Nombres, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @Html.EditorFor(model => model.vInscripcionDetallesVM[0].Nombres, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].Nombres, "", new { @class = "text-danger" })
@@ -38,14 +38,14 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].DNI, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].DNI, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @Html.EditorFor(model => model.vInscripcionDetallesVM[0].DNI, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].DNI, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, htmlAttributes: new { @class = "control-label col-md-12" })
                     <div class="col">
                         @Html.EditorFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, new { htmlAttributes = new { @class = "form-control", @readonly = true } })
                         @Html.ValidationMessageFor(model => model.vInscripcionDetallesVM[0].IdInscripcion, "", new { @class = "text-danger" })
@@ -83,6 +83,10 @@
             </table>
 
         </div><!--Fin de la class body card-->
+        <div class="form-group justify-content-center align-content-center">
+            
+            @Html.ActionLink("Ver datos del Postulante","Index","Postulante",new { ID_Postulante= Model.vInscripcionDetallesVM[0].IdPersona},new { @class="btn btn-info btn-lg"})
+        </div>
         <div class="card-footer">
             <div class="container">
                 <div class="col-md-12 clearfix"> </div>
@@ -92,7 +96,7 @@
                 <button type="button" id="BTValidar" class="btn btn-success btn-lg float-right m-1"> Volver Etapa Anterior</button>
             </div>
 
-            @Html.ActionLink("Cerrar", "Index", null, new { @class = "btn btn-dark btn-lg float-right m-1" })
+            @Html.ActionLink("Cerrar", "Index", new { id="Documentacion"}, new { @class = "btn btn-dark btn-lg float-right m-1" })
 
 
         </div>

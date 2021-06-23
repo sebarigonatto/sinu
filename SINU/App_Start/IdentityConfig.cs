@@ -36,7 +36,7 @@ namespace SINU
     {
         private static SINUEntities db = new SINUEntities();
 
-        public static Task SendEmail(string iD_AspNetUser, string asunto, string html, List<string> mails,string modo)
+        public static async Task<string> SendEmail(string iD_AspNetUser, string asunto, string html, List<string> mails,string modo)
         {
             messageMAil message = new messageMAil
             {
@@ -46,14 +46,11 @@ namespace SINU
                 Destinatario = iD_AspNetUser,
                 Modo=modo
             };
-            return Task.Factory.StartNew(() =>
-            {
-                SendMail(message);
-            });
-
+            var result = await Task.Factory.StartNew(() => SendMail(message));
+            return await Task.FromResult(result.Result);
         }
 
-        static void SendMail(messageMAil message)
+        private static Task<string> SendMail(messageMAil message)
         {
             //LEVANTO LOS DATOS DE LA TABLA CONFIGURACION
 
@@ -123,10 +120,13 @@ namespace SINU
                 smtpClient.Send(mensage);
                 smtpClient.Dispose();
 
+                string result = "Correo Enviado";
+                //si todo esta bien se devuelve un mensaje
+                return Task.FromResult(result);
             }
             catch (Exception ex)
             {
-                throw;
+                return Task.FromResult(ex.Message);
                 //if (Ex.HResult==-2146233088) //error de correo inaccesible tal vez xq esta mal escrito o la cuenta esta bloqueada
             }
 

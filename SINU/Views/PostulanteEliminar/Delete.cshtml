@@ -1,0 +1,153 @@
+﻿@model SINU.Models.vInscripcionDetalleUltInsc
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>vInscripcionDetalleUltInsc</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaInscripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaInscripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Celular)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Celular)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComoSeEntero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ComoSeEntero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preferencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preferencia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Modalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Modalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCarreraOficio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdCarreraOficio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarreraRelacionada)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarreraRelacionada)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inscripto_En)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inscripto_En)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inscripto_En_descrip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inscripto_En_descrip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaEntrevista)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaEntrevista)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaRindeExamen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaRindeExamen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Numero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Numero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Inicio_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Inicio_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Fin_Proceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Fin_Proceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaDeSecuencia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaDeSecuencia)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

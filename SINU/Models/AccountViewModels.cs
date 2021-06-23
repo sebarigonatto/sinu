@@ -77,7 +77,7 @@ namespace SINU.Models
         public string Email { get; set; }
 
         [EmailAddress(ErrorMessage = "Correo electronico ingresado no valido.")]
-        [Display(Name = "Confime Correo electrónico")]
+        [Display(Name = "Confirmar Correo electrónico")]
         [System.ComponentModel.DataAnnotations.Compare("Email", ErrorMessage = "Los  e-mails ingresados no coinciden.")]
         public string ConfirmEmail { get; set; }
 
