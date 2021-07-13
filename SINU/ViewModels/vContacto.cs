@@ -10,6 +10,6 @@ namespace SINU.ViewModels
         public OficinasYDelegaciones DPTOincorporacion { get; set; }
 
         [Display(Name = "Lista De Oficinas")]
-        public List<SINU.Models.OficinasYDelegaciones> listoficinas { get; set; }
+        public List<OficinasYDelegaciones> listoficinas { get; set; }
     }
 }

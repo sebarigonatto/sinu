@@ -687,11 +687,7 @@ namespace SINU.Models
         public string Personal { get; set; }
         
     }
-    public partial class vInscripcionEtapaEstadoUltimoEstado
-    {
-        [Display(Name = "Modalidad")]
-        public string Idmodalidad { get; set; }
-    }
+
     #region Ver mas a profundidad esta metadata debido a que el display name no funciona en las vistas
     public partial class DataVerificacionMetadata
     {

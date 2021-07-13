@@ -10,15 +10,16 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vPersona_Purificar
+    public partial class sp_Totales_FullRestricciones_Result
     {
-        public int IdPersona { get; set; }
-        public string Apellido { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> IdFamiliar { get; set; }
-        public string Parentesco { get; set; }
-        public Nullable<int> IdPostulantePersona { get; set; }
+        public string IdModalidad { get; set; }
+        public string Convocatoria { get; set; }
+        public string Estado_IMC { get; set; }
+        public string Estado_Altura { get; set; }
+        public string Estado_Edad { get; set; }
+        public string Estado_Civil { get; set; }
+        public Nullable<int> Cantidad { get; set; }
+        public string Total_Subtotal_Agrupacion { get; set; }
     }
 }

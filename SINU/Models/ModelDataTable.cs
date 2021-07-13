@@ -20,6 +20,7 @@ namespace SINU.Models
         public List<ModelDataTable.Column> Columnas { get; set; }
         public string TablaVista { get; set; }
 
+        public List<SelectListItem> filtrosIniciales { get; set; }
     } 
  
     public static class ExtensionClass

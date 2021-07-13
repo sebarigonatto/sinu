@@ -64,7 +64,6 @@ namespace SINU.Models
         public virtual DbSet<vConfiguracionAdmin> vConfiguracionAdmin { get; set; }
         public virtual DbSet<vEntrevistaLugarFecha> vEntrevistaLugarFecha { get; set; }
         public virtual DbSet<vEstCivil> vEstCivil { get; set; }
-        public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
         public virtual DbSet<vLOCALIDAD> vLOCALIDAD { get; set; }
         public virtual DbSet<vPeriodosInscrip> vPeriodosInscrip { get; set; }
         public virtual DbSet<vPersona_ActividadMilitar> vPersona_ActividadMilitar { get; set; }
@@ -73,7 +72,6 @@ namespace SINU.Models
         public virtual DbSet<vPersona_Domicilio> vPersona_Domicilio { get; set; }
         public virtual DbSet<VPersona_Estudio> VPersona_Estudio { get; set; }
         public virtual DbSet<vPersona_Idioma> vPersona_Idioma { get; set; }
-        public virtual DbSet<vPersona_Purificar> vPersona_Purificar { get; set; }
         public virtual DbSet<vProvincia_Depto_Localidad> vProvincia_Depto_Localidad { get; set; }
         public virtual DbSet<vRELIGION> vRELIGION { get; set; }
         public virtual DbSet<vSecuencia_EtapaEstado> vSecuencia_EtapaEstado { get; set; }
@@ -135,6 +133,7 @@ namespace SINU.Models
         public virtual DbSet<vPersona_DatosPer_UltInscripc> vPersona_DatosPer_UltInscripc { get; set; }
         public virtual DbSet<vInscripcionDetalleUltInsc> vInscripcionDetalleUltInsc { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
+        public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {
@@ -1461,6 +1460,74 @@ namespace SINU.Models
                 new ObjectParameter("EmailUsuarioEliminador", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Sp_PostulanteELIMINAR", valoremailParameter, guardarEliminadosParameter, comentarioParameter, emailUsuarioEliminadorParameter);
+        }
+    
+        public virtual int sp_Totales_1Restriccion(string tipo_Check, string idModalidad, Nullable<int> idConvocatoria)
+        {
+            var tipo_CheckParameter = tipo_Check != null ?
+                new ObjectParameter("Tipo_Check", tipo_Check) :
+                new ObjectParameter("Tipo_Check", typeof(string));
+    
+            var idModalidadParameter = idModalidad != null ?
+                new ObjectParameter("IdModalidad", idModalidad) :
+                new ObjectParameter("IdModalidad", typeof(string));
+    
+            var idConvocatoriaParameter = idConvocatoria.HasValue ?
+                new ObjectParameter("IdConvocatoria", idConvocatoria) :
+                new ObjectParameter("IdConvocatoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Totales_1Restriccion", tipo_CheckParameter, idModalidadParameter, idConvocatoriaParameter);
+        }
+    
+        public virtual ObjectResult<sp_Totales_FullRestricciones_Result> sp_Totales_FullRestricciones(Nullable<int> formato, string idModalidad, Nullable<int> idConvocatoria)
+        {
+            var formatoParameter = formato.HasValue ?
+                new ObjectParameter("formato", formato) :
+                new ObjectParameter("formato", typeof(int));
+    
+            var idModalidadParameter = idModalidad != null ?
+                new ObjectParameter("IdModalidad", idModalidad) :
+                new ObjectParameter("IdModalidad", typeof(string));
+    
+            var idConvocatoriaParameter = idConvocatoria.HasValue ?
+                new ObjectParameter("IdConvocatoria", idConvocatoria) :
+                new ObjectParameter("IdConvocatoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Totales_FullRestricciones_Result>("sp_Totales_FullRestricciones", formatoParameter, idModalidadParameter, idConvocatoriaParameter);
+        }
+    
+        public virtual ObjectResult<sp_Totales_FullRestriccion_Result> sp_Totales_FullRestriccion(string idModalidad, Nullable<int> idConvocatoria)
+        {
+            var idModalidadParameter = idModalidad != null ?
+                new ObjectParameter("IdModalidad", idModalidad) :
+                new ObjectParameter("IdModalidad", typeof(string));
+    
+            var idConvocatoriaParameter = idConvocatoria.HasValue ?
+                new ObjectParameter("IdConvocatoria", idConvocatoria) :
+                new ObjectParameter("IdConvocatoria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Totales_FullRestriccion_Result>("sp_Totales_FullRestriccion", idModalidadParameter, idConvocatoriaParameter);
+        }
+    
+        public virtual int sp_PostulanteCambiarDelegacionYSecuencia(Nullable<int> idInscripcion, Nullable<int> idOficinasYDelegaciones, Nullable<int> idSecuencia, Nullable<bool> anulaFechaEntrevista)
+        {
+            var idInscripcionParameter = idInscripcion.HasValue ?
+                new ObjectParameter("IdInscripcion", idInscripcion) :
+                new ObjectParameter("IdInscripcion", typeof(int));
+    
+            var idOficinasYDelegacionesParameter = idOficinasYDelegaciones.HasValue ?
+                new ObjectParameter("IdOficinasYDelegaciones", idOficinasYDelegaciones) :
+                new ObjectParameter("IdOficinasYDelegaciones", typeof(int));
+    
+            var idSecuenciaParameter = idSecuencia.HasValue ?
+                new ObjectParameter("IdSecuencia", idSecuencia) :
+                new ObjectParameter("IdSecuencia", typeof(int));
+    
+            var anulaFechaEntrevistaParameter = anulaFechaEntrevista.HasValue ?
+                new ObjectParameter("AnulaFechaEntrevista", anulaFechaEntrevista) :
+                new ObjectParameter("AnulaFechaEntrevista", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PostulanteCambiarDelegacionYSecuencia", idInscripcionParameter, idOficinasYDelegacionesParameter, idSecuenciaParameter, anulaFechaEntrevistaParameter);
         }
     }
 }

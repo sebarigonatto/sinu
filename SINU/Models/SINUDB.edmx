@@ -555,6 +555,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="IdEstado" Type="int" Nullable="false" />
           <Property Name="Anterior" Type="int" Nullable="false" />
           <Property Name="Siguiente" Type="int" Nullable="false" />
+          <Property Name="Estacional" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Sexo">
           <Key>
@@ -956,6 +957,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdDomicilioDNI" />
+            <PropertyRef Name="IdDomicilioActual" />
           </Key>
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
@@ -972,8 +975,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="FechaRindeExamen" Type="datetime" />
           <Property Name="FechaEntrevista" Type="datetime" />
           <Property Name="FechaInscripcion" Type="date" />
-          <Property Name="DomDNI" Type="nvarchar" MaxLength="1022" />
-          <Property Name="DomActual" Type="nvarchar" MaxLength="1022" />
+          <Property Name="IdDomicilioDNI" Type="int" Nullable="false" />
+          <Property Name="IdDomicilioActual" Type="int" Nullable="false" />
           <Property Name="Activa" Type="bit" />
           <Property Name="Fecha_Inicio_Proceso" Type="date" />
           <Property Name="Fecha_Fin_Proceso" Type="date" />
@@ -1530,20 +1533,6 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida 
           <Property Name="IdPersonaIdioma" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Purificar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
-        <EntityType Name="vPersona_Purificar">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="Apellido" />
-          </Key>
-          <Property Name="IdPersona" Type="int" Nullable="false" />
-          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="IdFamiliar" Type="int" />
-          <Property Name="Parentesco" Type="varchar" MaxLength="60" />
-          <Property Name="IdPostulantePersona" Type="int" />
-        </EntityType>
-        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_SituacionOcupacional">
           <Key>
@@ -1725,6 +1714,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
         <EntityType Name="vSecuencia_EtapaEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="Estacional" />
             <PropertyRef Name="IdEtapa" />
             <PropertyRef Name="Etapa" />
             <PropertyRef Name="IdEstado" />
@@ -1733,6 +1723,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
             <PropertyRef Name="Siguiente" />
           </Key>
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
+          <Property Name="Estacional" Type="bit" Nullable="false" />
           <Property Name="IdEtapa" Type="int" Nullable="false" />
           <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IdEstado" Type="int" Nullable="false" />
@@ -2687,6 +2678,12 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
         <Function Name="Sp_InvestigarEMAIL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="sp_PostulanteCambiarDelegacionYSecuencia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdInscripcion" Type="int" Mode="In" />
+          <Parameter Name="IdOficinasYDelegaciones" Type="int" Mode="In" />
+          <Parameter Name="IdSecuencia" Type="int" Mode="In" />
+          <Parameter Name="AnulaFechaEntrevista" Type="bit" Mode="In" />
+        </Function>
         <Function Name="Sp_PostulanteELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="valoremail" Type="nvarchar" Mode="In" />
           <Parameter Name="GuardarEliminados" Type="bit" Mode="In" />
@@ -2697,6 +2694,20 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_Totales_1Restriccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Tipo_Check" Type="varchar" Mode="In" />
+          <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
+          <Parameter Name="IdConvocatoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Totales_FullRestriccion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
+          <Parameter Name="IdConvocatoria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_Totales_FullRestricciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="formato" Type="int" Mode="In" />
+          <Parameter Name="IdModalidad" Type="varchar" Mode="In" />
+          <Parameter Name="IdConvocatoria" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_vGruposYCarreras" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -3294,8 +3305,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[FechaRindeExamen] AS [FechaRindeExamen], 
     [vInscripcionEtapaEstadoUltimoEstado].[FechaEntrevista] AS [FechaEntrevista], 
     [vInscripcionEtapaEstadoUltimoEstado].[FechaInscripcion] AS [FechaInscripcion], 
-    [vInscripcionEtapaEstadoUltimoEstado].[DomDNI] AS [DomDNI], 
-    [vInscripcionEtapaEstadoUltimoEstado].[DomActual] AS [DomActual], 
+    [vInscripcionEtapaEstadoUltimoEstado].[IdDomicilioDNI] AS [IdDomicilioDNI], 
+    [vInscripcionEtapaEstadoUltimoEstado].[IdDomicilioActual] AS [IdDomicilioActual], 
     [vInscripcionEtapaEstadoUltimoEstado].[Activa] AS [Activa], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
     [vInscripcionEtapaEstadoUltimoEstado].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso]
@@ -3699,16 +3710,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vPersona_Idioma].[IdPersonaIdioma] AS [IdPersonaIdioma]
     FROM [dbo].[vPersona_Idioma] AS [vPersona_Idioma]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="vPersona_Purificar" EntityType="Self.vPersona_Purificar" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [vPersona_Purificar].[IdPersona] AS [IdPersona], 
-    [vPersona_Purificar].[Apellido] AS [Apellido], 
-    [vPersona_Purificar].[Email] AS [Email], 
-    [vPersona_Purificar].[IdFamiliar] AS [IdFamiliar], 
-    [vPersona_Purificar].[Parentesco] AS [Parentesco], 
-    [vPersona_Purificar].[IdPostulantePersona] AS [IdPostulantePersona]
-    FROM [dbo].[vPersona_Purificar] AS [vPersona_Purificar]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vPersona_SituacionOcupacional" EntityType="Self.vPersona_SituacionOcupacional" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vPersona_SituacionOcupacional].[IdPersona] AS [IdPersona], 
@@ -3829,6 +3830,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vSecuencia_EtapaEstado" EntityType="Self.vSecuencia_EtapaEstado" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vSecuencia_EtapaEstado].[IdSecuencia] AS [IdSecuencia], 
+    [vSecuencia_EtapaEstado].[Estacional] AS [Estacional], 
     [vSecuencia_EtapaEstado].[IdEtapa] AS [IdEtapa], 
     [vSecuencia_EtapaEstado].[Etapa] AS [Etapa], 
     [vSecuencia_EtapaEstado].[IdEstado] AS [IdEstado], 
@@ -4501,6 +4503,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <NavigationProperty Name="Estado" Relationship="Self.FK_Secuencia_Estado" FromRole="Secuencia_EtapaEstado" ToRole="Estado" />
           <NavigationProperty Name="Etapa" Relationship="Self.FK_Secuencia_Etapa" FromRole="Secuencia_EtapaEstado" ToRole="Etapa" />
           <NavigationProperty Name="InscripcionEtapaEstado" Relationship="Self.FK_InscripcionEtapaEstado_Secuencia_EtapaEstado" FromRole="Secuencia_EtapaEstado" ToRole="InscripcionEtapaEstado" />
+          <Property Name="Estacional" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Sexo">
           <Key>
@@ -4621,38 +4624,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Codigo_n" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
-          <Key>
-            <PropertyRef Name="IdSecuencia" />
-            <PropertyRef Name="IdInscripcionEtapaEstado" />
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="Etapa" />
-            <PropertyRef Name="Estado" />
-            <PropertyRef Name="Apellido" />
-            <PropertyRef Name="Nombres" />
-            <PropertyRef Name="IdModalidad" />
-          </Key>
-          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
-          <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
-          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
-          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
-          <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
-          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
-          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
-          <Property Name="DomDNI" Type="String" MaxLength="1022" FixedLength="false" Unicode="true" />
-          <Property Name="DomActual" Type="String" MaxLength="1022" FixedLength="false" Unicode="true" />
-          <Property Name="Activa" Type="Boolean" />
         </EntityType>
         <EntityType Name="vLOCALIDAD">
           <Key>
@@ -4824,18 +4795,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="NivelLee" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdPersonaIdioma" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="vPersona_Purificar">
-          <Key>
-            <PropertyRef Name="IdPersona" />
-            <PropertyRef Name="Apellido" />
-          </Key>
-          <Property Name="IdPersona" Type="Int32" Nullable="false" />
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="IdFamiliar" Type="Int32" />
-          <Property Name="Parentesco" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="IdPostulantePersona" Type="Int32" />
-        </EntityType>
         <EntityType Name="vProvincia_Depto_Localidad">
           <Key>
             <PropertyRef Name="IdLocalidad" />
@@ -4862,6 +4821,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Siguiente" />
             <PropertyRef Name="IdEtapa" />
             <PropertyRef Name="IdEstado" />
+            <PropertyRef Name="Estacional" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -4870,6 +4830,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Siguiente" Type="Int32" Nullable="false" />
           <Property Name="IdEtapa" Type="Int32" Nullable="false" />
           <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <Property Name="Estacional" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="vSeguridad_Grupos">
           <Key>
@@ -5280,7 +5241,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vConfiguracionAdmin" EntityType="Self.vConfiguracionAdmin" />
           <EntitySet Name="vEntrevistaLugarFecha" EntityType="Self.vEntrevistaLugarFecha" />
           <EntitySet Name="vEstCivil" EntityType="Self.vEstCivil" />
-          <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="Self.vInscripcionEtapaEstadoUltimoEstado" />
           <EntitySet Name="vLOCALIDAD" EntityType="Self.vLOCALIDAD" />
           <EntitySet Name="vPeriodosInscrip" EntityType="Self.vPeriodosInscrip" />
           <EntitySet Name="vPersona_ActividadMilitar" EntityType="Self.vPersona_ActividadMilitar" />
@@ -5289,7 +5249,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySet Name="vPersona_Domicilio" EntityType="Self.vPersona_Domicilio" />
           <EntitySet Name="VPersona_Estudio" EntityType="Self.VPersona_Estudio" />
           <EntitySet Name="vPersona_Idioma" EntityType="Self.vPersona_Idioma" />
-          <EntitySet Name="vPersona_Purificar" EntityType="Self.vPersona_Purificar" />
           <EntitySet Name="vProvincia_Depto_Localidad" EntityType="Self.vProvincia_Depto_Localidad" />
           <EntitySet Name="vRELIGION" EntityType="Self.vRELIGION" />
           <EntitySet Name="vSecuencia_EtapaEstado" EntityType="Self.vSecuencia_EtapaEstado" />
@@ -5930,6 +5889,27 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="GuardarEliminados" Mode="In" Type="Boolean" />
             <Parameter Name="Comentario" Mode="In" Type="String" />
             <Parameter Name="EmailUsuarioEliminador" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Totales_1Restriccion">
+            <Parameter Name="Tipo_Check" Mode="In" Type="String" />
+            <Parameter Name="IdModalidad" Mode="In" Type="String" />
+            <Parameter Name="IdConvocatoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Totales_FullRestricciones" ReturnType="Collection(SINUModel.sp_Totales_FullRestricciones_Result)">
+            <Parameter Name="formato" Mode="In" Type="Int32" />
+            <Parameter Name="IdModalidad" Mode="In" Type="String" />
+            <Parameter Name="IdConvocatoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Totales_FullRestriccion" ReturnType="Collection(SINUModel.sp_Totales_FullRestriccion_Result)">
+            <Parameter Name="IdModalidad" Mode="In" Type="String" />
+            <Parameter Name="IdConvocatoria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="vInscripcionEtapaEstadoUltimoEstado" EntityType="SINUModel.vInscripcionEtapaEstadoUltimoEstado" />
+          <FunctionImport Name="sp_PostulanteCambiarDelegacionYSecuencia">
+            <Parameter Name="IdInscripcion" Mode="In" Type="Int32" />
+            <Parameter Name="IdOficinasYDelegaciones" Mode="In" Type="Int32" />
+            <Parameter Name="IdSecuencia" Mode="In" Type="Int32" />
+            <Parameter Name="AnulaFechaEntrevista" Mode="In" Type="Boolean" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
@@ -7404,6 +7384,58 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="sp_Totales_FullRestricciones_Result">
+          <Property Type="String" Name="IdModalidad" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Convocatoria" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Estado_IMC" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Estado_Altura" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Estado_Edad" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Estado_Civil" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="Cantidad" Nullable="true" />
+          <Property Type="String" Name="Total_Subtotal_Agrupacion" Nullable="false" MaxLength="226" />
+        </ComplexType>
+        <ComplexType Name="sp_Totales_FullRestriccion_Result">
+          <Property Type="String" Name="IMC" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ALTURA" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="EDAD" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="EstadoCivil" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Total" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Total_Subtotal_Agrupacion" Nullable="false" MaxLength="226" />
+        </ComplexType>
+        <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
+          <Key>
+            <PropertyRef Name="IdSecuencia" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="Estado" />
+            <PropertyRef Name="IdInscripcionEtapaEstado" />
+            <PropertyRef Name="IdModalidad" />
+            <PropertyRef Name="IdPersona" />
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="IdDomicilioDNI" />
+            <PropertyRef Name="IdDomicilioActual" />
+          </Key>
+          <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="IdInscripcionEtapaEstado" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Delegacion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdDelegacionOficinaIngresoInscribio" Type="Int32" />
+          <Property Name="IdModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaRindeExamen" Type="DateTime" Precision="3" />
+          <Property Name="FechaEntrevista" Type="DateTime" Precision="3" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="IdDomicilioDNI" Type="Int32" Nullable="false" />
+          <Property Name="IdDomicilioActual" Type="Int32" Nullable="false" />
+          <Property Name="Activa" Type="Boolean" />
+          <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7723,6 +7755,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="Secuencia_EtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.Secuencia_EtapaEstado">
               <MappingFragment StoreEntitySet="Secuencia_EtapaEstado">
+                <ScalarProperty Name="Estacional" ColumnName="Estacional" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
                 <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
@@ -7843,32 +7876,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="Codigo_n" ColumnName="Codigo_n" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
-            <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
-              <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
-                <ScalarProperty Name="Activa" ColumnName="Activa" />
-                <ScalarProperty Name="DomActual" ColumnName="DomActual" />
-                <ScalarProperty Name="DomDNI" ColumnName="DomDNI" />
-                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
-                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
-                <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
-                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
-                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
-                <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
-                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
-                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
-                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8024,18 +8031,6 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vPersona_Purificar">
-            <EntityTypeMapping TypeName="SINUModel.vPersona_Purificar">
-              <MappingFragment StoreEntitySet="vPersona_Purificar">
-                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="IdFamiliar" ColumnName="IdFamiliar" />
-                <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
-                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vProvincia_Depto_Localidad">
             <EntityTypeMapping TypeName="SINUModel.vProvincia_Depto_Localidad">
               <MappingFragment StoreEntitySet="vProvincia_Depto_Localidad">
@@ -8058,6 +8053,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vSecuencia_EtapaEstado">
             <EntityTypeMapping TypeName="SINUModel.vSecuencia_EtapaEstado">
               <MappingFragment StoreEntitySet="vSecuencia_EtapaEstado">
+                <ScalarProperty Name="Estacional" ColumnName="Estacional" />
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
                 <ScalarProperty Name="IdEtapa" ColumnName="IdEtapa" />
                 <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
@@ -9316,6 +9312,61 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Sp_PostulanteELIMINAR" FunctionName="SINUModel.Store.Sp_PostulanteELIMINAR" />
+          <FunctionImportMapping FunctionImportName="sp_Totales_1Restriccion" FunctionName="SINUModel.Store.sp_Totales_1Restriccion">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Totales_FullRestricciones" FunctionName="SINUModel.Store.sp_Totales_FullRestricciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.sp_Totales_FullRestricciones_Result">
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="Convocatoria" ColumnName="Convocatoria" />
+                <ScalarProperty Name="Estado_IMC" ColumnName="Estado_IMC" />
+                <ScalarProperty Name="Estado_Altura" ColumnName="Estado_Altura" />
+                <ScalarProperty Name="Estado_Edad" ColumnName="Estado_Edad" />
+                <ScalarProperty Name="Estado_Civil" ColumnName="Estado_Civil" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Total_Subtotal_Agrupacion" ColumnName="Total/Subtotal Agrupacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_Totales_FullRestriccion" FunctionName="SINUModel.Store.sp_Totales_FullRestriccion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SINUModel.sp_Totales_FullRestriccion_Result">
+                <ScalarProperty Name="IMC" ColumnName="IMC" />
+                <ScalarProperty Name="ALTURA" ColumnName="ALTURA" />
+                <ScalarProperty Name="EDAD" ColumnName="EDAD" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Total_Subtotal_Agrupacion" ColumnName="Total/Subtotal Agrupacion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
+            <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
+              <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
+                <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
+                <ScalarProperty Name="Activa" ColumnName="Activa" />
+                <ScalarProperty Name="IdDomicilioActual" ColumnName="IdDomicilioActual" />
+                <ScalarProperty Name="IdDomicilioDNI" ColumnName="IdDomicilioDNI" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="FechaEntrevista" ColumnName="FechaEntrevista" />
+                <ScalarProperty Name="FechaRindeExamen" ColumnName="FechaRindeExamen" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdDelegacionOficinaIngresoInscribio" ColumnName="IdDelegacionOficinaIngresoInscribio" />
+                <ScalarProperty Name="Delegacion" ColumnName="Delegacion" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdInscripcionEtapaEstado" ColumnName="IdInscripcionEtapaEstado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
+                <ScalarProperty Name="IdSecuencia" ColumnName="IdSecuencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_PostulanteCambiarDelegacionYSecuencia" FunctionName="SINUModel.Store.sp_PostulanteCambiarDelegacionYSecuencia" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

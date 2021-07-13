@@ -55,9 +55,9 @@ namespace SINU.Controllers
 
                 //cargo los ID de las etapas por las que paso el postulante
                 //pers.EtapaTabs = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m => m.IdEtapa).DistinctBy(id => id.IdEtapa).Select(id => id.IdEtapa).ToList();
-                var etapas = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m=>m.Fecha).ToList();
-                var indexEtapa = etapas.LastIndexOf(etapas.LastOrDefault(m=>m.IdSecuencia==6));
-                etapas.RemoveRange(0, indexEtapa);
+                var etapas = db.vPostulanteEtapaEstado.Where(id => id.IdInscripcion == UltimaInscripcion.IdInscripcion).OrderBy(m=>m.IdEtapa).ThenBy(m=>m.Fecha).ToList();
+                var indexEtapa = etapas.LastIndexOf(etapas.LastOrDefault(m=>m.IdSecuencia==UltimaInscripcion.IdSecuencia))+1;
+                etapas.RemoveRange(indexEtapa,etapas.Count()-indexEtapa);
                 pers.EtapaTabs = etapas.Select(m => m.IdEtapa).ToList();
                 //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");

@@ -267,14 +267,16 @@
                 
             }
         });
-        $('#loader').delay(300).fadeOut('fast');
-
 
     });
 
     $(document).on("click",".load-submit", function () {
         $.Cargando();
     });
+
+    $(document).ready(function () {
+        $('#loader').delay(300).fadeOut('fast');
+    })
 
     $.Anuncio = function (texto) {
         $("#BTNModal").show().html("Cerrar");

@@ -10,17 +10,14 @@
 namespace SINU.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class vSecuencia_EtapaEstado
+    public partial class sp_Totales_FullRestriccion_Result
     {
-        public int IdSecuencia { get; set; }
-        public string Etapa { get; set; }
-        public string Estado { get; set; }
-        public int Anterior { get; set; }
-        public int Siguiente { get; set; }
-        public int IdEtapa { get; set; }
-        public int IdEstado { get; set; }
-        public bool Estacional { get; set; }
+        public string IMC { get; set; }
+        public string ALTURA { get; set; }
+        public string EDAD { get; set; }
+        public string EstadoCivil { get; set; }
+        public string Total { get; set; }
+        public string Total_Subtotal_Agrupacion { get; set; }
     }
 }

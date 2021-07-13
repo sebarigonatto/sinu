@@ -39,7 +39,7 @@
 <table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
     <thead class="thead-dark">
         <tr>
-            <!--Encabezados generados automaticamente-->
+            <!--Encabezados generados dinamicamente-->
         </tr>
     </thead>
     <tbody>
@@ -146,7 +146,7 @@
             "processing": true,
             searchDelay: 900,
             "ajax": {
-                url: "@Url.Action("CustomServerSideSearchActionAsync", "PostulanteEliminar")",
+                url: "@Url.Action("CustomServerSideSearchActionAsync", "AjaxDataTable")",
                 type: "POST",
                 //async: false,
                 data: function (data) {

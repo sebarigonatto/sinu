@@ -3,7 +3,7 @@
 @{
     SINUEntities db = new SINUEntities();
     ViewBag.Title = "Totales Agrupados Por Modalidad y Genero";
-    var TotalINSC = ((List<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result>)Model)[0].Total;
+    var TotalINSC = Model.Count()==0?0:((List<SINU.Models.sp_ConsultaInscriptosModalidadGenero_Result>)Model)[0].Total;
     //ViewBag.ModalidadGenero = 0;
 
 }
