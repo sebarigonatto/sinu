@@ -244,6 +244,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HtmlExtensions.cs" />
     <Compile Include="Migrations\201911011619467_fechatoken.cs" />
     <Compile Include="Migrations\201911011619467_fechatoken.Designer.cs">
       <DependentUpon>201911011619467_fechatoken.cs</DependentUpon>
@@ -369,7 +370,7 @@
     <Compile Include="Models\Modalidad.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModelDataTable.cs" />
+    <Compile Include="Models\AjaxDataTableModel.cs" />
     <Compile Include="Models\NiveldEstudio.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

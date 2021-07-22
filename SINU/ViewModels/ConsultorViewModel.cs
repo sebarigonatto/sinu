@@ -11,8 +11,7 @@ namespace SINU.ViewModels
     public class IndexConsultorModel : DataTableVM
     {
         public List<ConsultaProgramada> ConsultaProgramadaVm { get; set; }
-        public List<SelectListItem> Etapas { get; set; }
-        public SelectList Estados { get; set; }
+        public SelectList EstadosEtapas { get; set; }
     }
     
     public class ConsultaPorConvocatoria

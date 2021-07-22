@@ -43,6 +43,10 @@
     .disabled {
         pointer-events: none !important;
     }
+    .dropdown-header span {
+        font-weight: bold;
+        font-size: initial;
+    }
 </style>
 <br />
 <div class="container p-0 ">
@@ -81,14 +85,14 @@
                 <div class="pos-f-t collapse tab-pane fade @(((Int32)ViewBag.ActivarId) == 9 ? "show active " : "") tab-nav" id="Consulta9">
                     <!--TABLA DE TOTAL DE POSTULANTES A REVISAR-->
                     <div id="opcionesExtrasDT1">
-                        <div class="col-md-4  col-sm-12 mb-2 p-0 ">
+                        <div class="col-md-4 col-sm-12 mb-2 p-0 text-center pt-1">
                             <div class="col-md-12">
-                                @Html.DropDownList("EtapasPost", Model.Etapas, "Seleccione Etapa", new { @class = "form-control selectpicker" })
+                                <label>Etapa: <b id="ETAPA">----</b></label>
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12 mb-2 p-0">
                             <div class="col-md-12">
-                                @Html.DropDownList("EstadosPost", Model.Estados, "Seleccione Estado", new { @class = "form-control selectpicker" })
+                                @Html.DropDownList("EstadosEtapasPost", Model.EstadosEtapas, "Seleccione Etapa/Estado", new { @class = "form-control selectpicker" })
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-12 mb-2 p-0">
@@ -164,9 +168,9 @@
 
                     };
 
-                    sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
-                    sessionStorage.EtapasPost == undefined ? sessionStorage.EtapasPost = "" : null;
-                    sessionStorage.EstadosPost == undefined ? sessionStorage.EstadosPost = "" : null;
+                    sessionStorage.searchTablaDelPost == "undefined" ? sessionStorage.searchTablaDelPost = "" : null;
+                    sessionStorage.EtapasPost == "undefined" ? sessionStorage.EtapasPost = "" : null;
+                    sessionStorage.EstadosPost == "undefined" ? sessionStorage.EstadosPost = "" : null;
 
                     data.filtrosExtras = [
                         {
@@ -195,7 +199,7 @@
                     return json.data;
                 }
             },
-            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
 
             "language":
             {
@@ -228,9 +232,9 @@
 
         }).on('processing.dt', function (e, settings, processing) {
             if (processing) {
-                $("tbody").addClass("disabled");
+                $(".dataTables_wrapper").addClass("disabled");
             } else {
-                $("tbody").removeClass("disabled");
+                $(".dataTables_wrapper").removeClass("disabled");
             }
             
         });
@@ -239,6 +243,7 @@
                 sessionStorage.EtapasPost = "";
             sessionStorage.EstadosPost = "";
             $("#EstadosPost").find("optgroup").removeAttr("hidden");
+             $("#ETAPA").html("---")
             $("select.selectpicker").val("").selectpicker("refresh");
 
             table.search("").ajax.reload();
@@ -352,9 +357,10 @@
             $("[name='le-filters_length']").css({"width": "180px", "font-size":"100%"}).removeClass("form-control-sm")
 
 
-            $("#EstadosPost").val(sessionStorage.EstadosPost).selectpicker("refresh");
-                   
-            $("#EtapasPost").val(sessionStorage.EtapasPost).selectpicker("refresh");
+            
+            $("#EstadosEtapasPost").find(`optgroup[label="${sessionStorage.EtapasPost}"]`).find(`option[value="${sessionStorage.EstadosPost}"]`).attr("selected", true);
+            $("#EstadosEtapasPost").selectpicker("refresh");
+            $("#ETAPA").html(sessionStorage.EtapasPost=="undefined" || sessionStorage.EtapasPost==""?"---":sessionStorage.EtapasPost);
 
             //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
 
@@ -371,54 +377,20 @@
             });
 
             //guarda las seleciones de los combos
-            $("select").on("change", function () {
-                element = this;
-                name = $(element).attr("name");
-                sessionStorage.setItem(name, $(element).val());
-                table.search(sessionStorage.searchTablaDelPost).ajax.reload();
-
-                if ($(element).prop('id') == 'EtapasPost') {
-                    etapa = $(element).val();
-                    $.each($("#EstadosPost").find("optgroup"), function (index, item) {
-                        if ($(item).attr("label") != etapa) {
-                            $(item).attr("hidden", true);
-                        } else {
-                            $(item).removeAttr("hidden");
-                        }
-                    });
-                    sessionStorage.EstadosPost = ""
-                    $("#EstadosPost").val("").selectpicker("refresh");
-                }// else {
-                //    etapa = $(this).find("option:selected").closest("optgroup").attr("label");
-                //    alert(etapa)
-                //    $(`#EtapasPost option[value='${etapa}']`).attr("selected", "selected");
-                //    $("#EtapasPost").selectpicker("refresh");
-                //}
-                if ($("#EtapasPost").val() == "" && $(element).attr("id") != "EstadosPost") {
-
-                    $("#EstadosPost").find("optgroup").removeAttr("hidden");
-                    sessionStorage.EstadosPost=""
-                    $("#EstadosPost").val(sessionStorage.EstadosPost).selectpicker("refresh");
-
-
+            $("#EstadosEtapasPost").on("change", function () {
+                if ($(this).val()==null) {
+                    alert("null")
                 }
-                $("#EstadosPost").selectpicker("refresh");
-               
+                sessionStorage.EtapasPost = $(this).find("option:selected").closest("optgroup").prop("label");
+                $("#ETAPA").html(sessionStorage.EtapasPost=="undefined"?"---":$(this).find("option:selected").closest("optgroup").prop("label")) 
+                sessionStorage.EstadosPost= $(this).val()
+                table.search(sessionStorage.searchTablaDelPost).ajax.reload();
+                                
             });
 
-            function SelectChange(element) {
-             
-            }
+            
 
-
-        //});
-
-        //$(document).ready(function () {
-
-            //$.get("/Home/Table", { searchBy: "Option 1", searchString: "test" }, function (partialView) {
-            //    $("#output").html(partialView);
-            //});
-
+          
         });
     </script>
     }

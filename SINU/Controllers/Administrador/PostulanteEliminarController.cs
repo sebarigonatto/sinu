@@ -12,7 +12,7 @@ using LinqKit;
 using Newtonsoft.Json.Linq;
 using SINU.Models;
 using SINU.ViewModels;
-using static SINU.Models.ModelDataTable;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Controllers.Administrador
 {
@@ -63,7 +63,7 @@ namespace SINU.Controllers.Administrador
                 string emailResponsable = HttpContext.User.Identity.Name;
                 string emailPostulante = db.Persona.Find(idPostulante).Email;
 
-                //var result = db.Sp_PostulanteELIMINAR(emailPostulante, true, comentario, emailResponsable);
+                var result = db.Sp_PostulanteELIMINAR(emailPostulante, true, comentario, emailResponsable);
                 return Json(new { success = true, msg = "Postulante eliminado correctamente" });
             }
             catch (Exception ex)

@@ -17,32 +17,13 @@ namespace SINU.Models
 
     public class DataTableVM
     {
-        public List<ModelDataTable.Column> Columnas { get; set; }
+        public List<AjaxDataTableModel.Column> Columnas { get; set; }
         public string TablaVista { get; set; }
 
         public List<SelectListItem> filtrosIniciales { get; set; }
     } 
  
-    public static class ExtensionClass
-    {
-        public static IOrderedQueryable<T> OrderByDT<T>(this IQueryable<T> query, string memberName, bool asc)
-        {
-            ParameterExpression[] typeParams = new ParameterExpression[] { Expression.Parameter(typeof(T), "") };
-            System.Reflection.PropertyInfo pi = typeof(T).GetProperty(memberName);
-            var re =  (IOrderedQueryable<T>)query.Provider.CreateQuery(
-                Expression.Call(
-                    typeof(Queryable),
-                    asc ? "OrderBy" : "OrderByDescending",
-                    new Type[] { typeof(T), pi.PropertyType },
-                    query.Expression,
-                    Expression.Lambda(Expression.Property(typeParams[0], pi), typeParams))
-                );
-            return re;
-        }
-
-    }
-
-    public class ModelDataTable
+    public class AjaxDataTableModel
     {
     
 

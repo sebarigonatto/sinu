@@ -4,8 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-
-using static SINU.Models.ModelDataTable;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Models
 {
@@ -151,23 +150,40 @@ namespace SINU.Models
                 }
 
 
-                para.result = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
-                                      .Where(whereDT, searchWhereDT)
-                                      .Where(whereExtras, searchWhereExtras)
-                                      .OrderBy($"{sortBy} {dirSort}")
-                                      .Skip(skip)
-                                      .Take(take)
-                                      .ToListAsync();
+                //para.result = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
+                //                      .Where(whereDT, searchWhereDT)
+                //                      .Where(whereExtras, searchWhereExtras)
+                //                      .OrderBy($"{sortBy} {dirSort}")
+                //                      .Skip(skip)
+                //                      .Take(take)
+                //                      .ToListAsync();
+
+                //para.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
+                //                           .Count();
+
+                //para.filteredResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
+                //                              .Select($"new({selectColumn})")
+                //                              .Where(whereDT, searchWhereDT)
+                //                              .Where(whereExtras, searchWhereExtras)
+                //                              .Count();
+
+                
 
                 para.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
                                            .Count();
 
-                para.filteredResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
-                                              .Select($"new({selectColumn})")
-                                              .Where(whereDT, searchWhereDT)
-                                              .Where(whereExtras, searchWhereExtras)
-                                              .Count();
+                var registrosWhere = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
+                                     .Where(whereDT, searchWhereDT)
+                                     .Where(whereExtras, searchWhereExtras)
+                                     .OrderBy($"{sortBy} {dirSort}")
+                                     .ToListAsync();
+               
 
+                para.filteredResultsCount = registrosWhere.Count();
+
+                para.result = registrosWhere.Skip(skip)
+                                            .Take(take)
+                                            .ToList();
                 return para;
             }
             catch (Exception ex)

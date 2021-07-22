@@ -7,7 +7,7 @@ using SINU.Models;
 using SINU.Authorize;
 using System.Data.Entity;
 using Microsoft.Ajax.Utilities;
-using static SINU.Models.ModelDataTable;
+using static SINU.Models.AjaxDataTableModel;
 using SINU.ViewModels;
 
 namespace SINU.Controllers.Consultor
@@ -44,8 +44,7 @@ namespace SINU.Controllers.Consultor
             IndexConsultorModel data = new IndexConsultorModel
             {
                 ConsultaProgramadaVm = db.ConsultaProgramada.Where(m => m.IdConsulta != 9).OrderBy(m => m.OrdenConsulta).ToList(),
-                Etapas = db.vSecuencia_EtapaEstado.DistinctBy(m => m.Etapa).Select(m => new SelectListItem { Text = m.Etapa, Value = m.Etapa }).ToList(),
-                Estados = new SelectList(db.vSecuencia_EtapaEstado.Where(m=>m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1),// db.vSecuencia_EtapaEstado.Select(m=>new SelectListItem {Text= m.Estado, Value=m.Estado,Group= new SelectListGroup { Name=m.Etapa } }).ToList(),
+                EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m=>m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1),// db.vSecuencia_EtapaEstado.Select(m=>new SelectListItem {Text= m.Estado, Value=m.Estado,Group= new SelectListGroup { Name=m.Etapa } }).ToList(),
                 TablaVista = "vInscripcionEtapaEstadoUltimoEstado",//"vInscripcionDetalleUltInsc",
                 filtrosIniciales = new List<SelectListItem>
                 {
@@ -61,7 +60,6 @@ namespace SINU.Controllers.Consultor
                     new Column { data = "Etapa", searchable = false, name = "string" , title="Etapa" },
                     new Column { data = "Estado", searchable = false, name = "string" , title="Estado" }
                 }
-
             };
             //oculta las Consultas que no estan realizadas
             return View(data);

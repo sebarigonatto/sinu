@@ -6,6 +6,7 @@ columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Op
 var input_filter_value;
 var input_filter_timeout = null;
 primerCarga = true;
+
 //tabla
 var table = $('table').DataTable({
     "serverSide": true,
@@ -20,7 +21,6 @@ var table = $('table').DataTable({
                 primerCarga = false;
 
                 data.search.value = sessionStorage.searchTablaDelPost;
-
             };
 
             sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
@@ -101,21 +101,7 @@ function limpiar() {
     table.search("").ajax.reload();
 };
 
-$("#le-filters tbody").on("click", "button.EliPost", function () {
-    var data_row = table.row($(this).closest('tr').index()).data();
 
-    $("#idpostu").val(data_row.IdPersona);
-    $("#idinscripcion").html(data_row.IdInscripcion);
-    $("#nombre").html(data_row.Nombres);
-    $("#apellido").html(data_row.Apellido);
-    $("#dni").html(data_row.DNI);
-    $("#email").html(data_row.Email);
-    $("#delegacion").html(data_row.Inscripto_En);
-    $("#modalidad").html(data_row.Modalidad);
-    $("#comentario").val("");
-
-    $("#MConfirmacion").modal("show");
-});
 $("div.dataTables_filter input").unbind();
 $("div.dataTables_filter input").keyup(function (e) {
     input_filter_value = this.value;
@@ -128,6 +114,8 @@ $("div.dataTables_filter input").keyup(function (e) {
     //  usertable.search( this.value ).draw();
     // }
 });
+
+
 $(document).ready(function () {
 
     $("table thead tr th").last().width(100);
