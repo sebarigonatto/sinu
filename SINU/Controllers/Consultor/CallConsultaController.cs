@@ -48,17 +48,17 @@ namespace SINU.Controllers.Consultor
                 TablaVista = "vInscripcionEtapaEstadoUltimoEstado",//"vInscripcionDetalleUltInsc",
                 filtrosIniciales = new List<SelectListItem>
                 {
-                    new SelectListItem{Value="1" , Text="Activa"}
+                    new SelectListItem{Text="Activa" ,Value= "true"}
                 },
                 Columnas = new List<Column> {
-                    new Column { data = "IdPersona", visible = false, searchable=false, name = "int", title="idPersona"},
-                    new Column { data = "Activa", searchable = false, visible = false, name = "bool" , title="Activa" },
-                    new Column { data = "IdModalidad", name = "string" , title="Modalidad" },
-                    new Column { data = "Nombres", orderable = false, name = "string" , title="Nombres" },
-                    new Column { data = "Apellido", orderable = false, name = "string" , title="Apellido" },
-                    new Column { data = "Email", orderable = false, name = "string" , title="Email" },
-                    new Column { data = "Etapa", searchable = false, name = "string" , title="Etapa" },
-                    new Column { data = "Estado", searchable = false, name = "string" , title="Estado" }
+                    new Column { data = "IdPersona", visible = false, searchable=false,  title="idPersona"},
+                    new Column { data = "Activa", searchable = false, visible = false, title="Activa" },
+                    new Column { data = "IdModalidad",  title="Modalidad" },
+                    new Column { data = "Nombres", orderable = false,  title="Nombres" },
+                    new Column { data = "Apellido", orderable = false, title="Apellido" },
+                    new Column { data = "Email", orderable = false, title="Email" },
+                    new Column { data = "Etapa", searchable = false, title="Etapa" },
+                    new Column { data = "Estado", searchable = false, title="Estado" }
                 }
             };
             //oculta las Consultas que no estan realizadas

@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web.Mvc;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Models
 {
 
-    public class parametro
+    public class resultAjaxTable
     {
         public int filteredResultsCount { get; set; }
         public int totalResultsCount { get; set; }
 
         public List<object> result { get; set; }
+    }
+
+    public class tipoColumna
+    {
+        public string COLUMN_NAME { get; set; }
+        public string DATA_TYPE { get; set; }
+
     }
 
     public class DataTableVM
@@ -25,7 +33,26 @@ namespace SINU.Models
  
     public class AjaxDataTableModel
     {
-    
+        /// <summary>
+        /// Metodo para crear las columnas de las Tablas a mostrar en la vistas.
+        /// </summary>
+        /// <param name="nombreColumna">Nombre del campo, correspondiente de la Tabla o Vista, en la Base de Datos</param>
+        /// <param name="nombreDisplay">Nombre a mostrar en el encabezado de la Tabla, por defecto es igual a "nombreColumna"</param>
+        /// <param name="searchable">Columna buscable, por defecto es true</param>
+        /// <param name="orderable">Columna ordenable, por defecto es true</param>
+        /// <param name="visible">Columna visible, por defecto es true</param>
+        /// <returns></returns>
+        public static Column ColumnDTAjax(string nombreColumna, string nombreDisplay=null, bool searchable = true, bool orderable = true, bool visible = true)
+        {
+            return new Column
+            {
+                data = nombreColumna,
+                title = nombreDisplay??nombreColumna,
+                searchable = searchable,
+                orderable = orderable,
+                visible = visible
+            };
+        }
 
         public class DataTableAjaxPostModel
         {
@@ -52,7 +79,6 @@ namespace SINU.Models
         public class Column
         {
             public string data { get; set; }
-            public string name { get; set; }
             public string title { get; set; }
             public bool searchable { get; set; } = true;
             public bool orderable { get; set; } = true;

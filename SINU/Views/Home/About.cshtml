@@ -1,4 +1,5 @@
 ﻿<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
+@model IEnumerable<SINU.Models.DataTableVM>
 @{
     ViewBag.Title = "Acerca de SINU";
 
@@ -27,8 +28,8 @@
                                 El sistema denominado SINU (Sistema de Inscripción Unificado), es una plataforma web que brinda al ciudadano, la posbilidad de efectuar On-line los tramites iniciales para la inscripcion a la Armada Argentina en sus diversas modalidades de ingreso, generando durante el proceso, un vinculo via internet entre el postulante y la Delegacion Naval
                             </p>
                             @*<p class="h5 align-text-bottom">
-                                iniciales para la inscripcion a la Armada Argentina en sus diversas modalidades de ingreso, generando durante el proceso, un vinculo via internet entre el postulante y la Delegacion Naval
-                            </p>*@
+                                    iniciales para la inscripcion a la Armada Argentina en sus diversas modalidades de ingreso, generando durante el proceso, un vinculo via internet entre el postulante y la Delegacion Naval
+                                </p>*@
                         </td>
                     </tr>
                 </tbody>
@@ -58,8 +59,15 @@
     </div>
 </body>
 
-
+@Html.TablaHelper(Model.First(m=>m.TablaVista=="Persona"),"dark")
 @*<h3>@ViewBag.Message</h3>*@
 
-
-
+@section Scripts{
+    <script src="~/Scripts/AjaxDataTable.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        const listaTablas = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
+        armadoDeTablas(listaTablas)
+    })
+    </script>
+}

@@ -1,10 +1,31 @@
-﻿//columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Columnas, Newtonsoft.Json.Formatting.Indented));
+﻿//recibo listado de la Clase "DataTableVM", presentados como un listado objetos
+//cada objeto contienen : 
+//"TablaVista": nombre de la tabla/vista
+//"Columnas": array con las columnas para armar la tabla y correspondiente propiedades
+//"filtrosIniciales": pre-filtros sobre los datos a mostrar en la Tabla
 
 
-columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+//funcion para aplicar el plug-in DataTabla a las tablas indicadas
+function armadoDeTablas(tablas) {
 
-var input_filter_value;
-var input_filter_timeout = null;
+    //recorro cada tabla
+    $.each(tablas, function (index, tabla) {
+
+        //agrego a cada tabla una columna para las opciones que pueda tener
+        tabla.Columnas.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+
+        var input_filter_value;
+        var input_filter_timeout = null;
+
+        alert(tabla.TablaVista);          
+
+    })
+}
+
+//columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+
+//var input_filter_value;
+//var input_filter_timeout = null;
 primerCarga = true;
 
 //tabla
@@ -94,73 +115,69 @@ var table = $('table').DataTable({
 
 });
 
-function limpiar() {
-    sessionStorage.dropDelegacionDelPost = "";
-    sessionStorage.dropModalidadDelPost = "";
-    $("select.selectpicker").val("").selectpicker("refresh");
-    table.search("").ajax.reload();
-};
+//function limpiar() {
+//    sessionStorage.dropDelegacionDelPost = "";
+//    sessionStorage.dropModalidadDelPost = "";
+//    $("select.selectpicker").val("").selectpicker("refresh");
+//    table.search("").ajax.reload();
+//};
 
 
-$("div.dataTables_filter input").unbind();
-$("div.dataTables_filter input").keyup(function (e) {
-    input_filter_value = this.value;
-    clearTimeout(input_filter_timeout);
-    input_filter_timeout = setTimeout(function () {
-        table.search(input_filter_value).draw();
-    }, table.context[0].searchDelay);
+//$("div.dataTables_filter input").unbind();
+//$("div.dataTables_filter input").keyup(function (e) {
+//    input_filter_value = this.value;
+//    clearTimeout(input_filter_timeout);
+//    input_filter_timeout = setTimeout(function () {
+//        table.search(input_filter_value).draw();
+//    }, table.context[0].searchDelay);
 
-    // if (e.keyCode == 13) {
-    //  usertable.search( this.value ).draw();
-    // }
-});
-
-
-$(document).ready(function () {
-
-    $("table thead tr th").last().width(100);
-
-    $("button div div div.filter-option-inner-inner").css("color", "black");
-
-    $('#le-filters[data-toggle="tooltip"]').tooltip("enable")
-    jQuery("#opcionesExtrasDT1 div.mb-2")
-        .detach()
-        .appendTo('.opcionesExtrasDT2')
-
-    $("#le-filters_filter label")
-        .addClass("float-md-right")
-        .children("input")
-        .removeClass("form-control-sm").addClass("form-control")
-        .css("width", "225px")
-        .attr("placeholder", "dni, nombre, apellido, email")
-
-    $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
-
-
-    $("#dropDelegacionDelPost").val(sessionStorage.dropDelegacionDelPost).selectpicker("refresh");
-    $("#dropModalidadDelPost").val(sessionStorage.dropModalidadDelPost).selectpicker("refresh");
-    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
-
-
-    //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-    table.on('search.dt', function () {
-        sessionStorage.searchTablaDelPost = table.search();
-    });
-
-    //esatblesco en el input la ultima busqueda realizada
-    table.on('draw', function () {
-
-        table.search(sessionStorage.searchTablaDelPost);
-    });
-
-    //guarda las seleciones de los combos
-    $("select").on("change", function () {
-        name = $(this).attr("name");
-        sessionStorage.setItem(name, $(this).val());
-        table.search(sessionStorage.searchTablaDelPost).ajax.reload();
-    });
+//    // if (e.keyCode == 13) {
+//    //  usertable.search( this.value ).draw();
+//    // }
+//});
 
 
 
+//    $("table thead tr th").last().width(100);
 
-});
+//    $("button div div div.filter-option-inner-inner").css("color", "black");
+
+//    $('#le-filters[data-toggle="tooltip"]').tooltip("enable")
+//    jQuery("#opcionesExtrasDT1 div.mb-2")
+//        .detach()
+//        .appendTo('.opcionesExtrasDT2')
+
+//    $("#le-filters_filter label")
+//        .addClass("float-md-right")
+//        .children("input")
+//        .removeClass("form-control-sm").addClass("form-control")
+//        .css("width", "225px")
+//        .attr("placeholder", "dni, nombre, apellido, email")
+
+//    $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
+
+
+//    $("#dropDelegacionDelPost").val(sessionStorage.dropDelegacionDelPost).selectpicker("refresh");
+//    $("#dropModalidadDelPost").val(sessionStorage.dropModalidadDelPost).selectpicker("refresh");
+//    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
+
+
+//    //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+//    table.on('search.dt', function () {
+//        sessionStorage.searchTablaDelPost = table.search();
+//    });
+
+//    //esatblesco en el input la ultima busqueda realizada
+//    table.on('draw', function () {
+
+//        table.search(sessionStorage.searchTablaDelPost);
+//    });
+
+//    //guarda las seleciones de los combos
+//    $("select").on("change", function () {
+//        name = $(this).attr("name");
+//        sessionStorage.setItem(name, $(this).val());
+//        table.search(sessionStorage.searchTablaDelPost).ajax.reload();
+//    });
+
+    

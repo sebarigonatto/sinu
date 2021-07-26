@@ -42,7 +42,7 @@ namespace SINU.Models
 
 
 
-        public async Task<parametro> YourCustomSearchFuncAsync(DataTableAjaxPostModel model)
+        public async Task<resultAjaxTable> YourCustomSearchFuncAsync(DataTableAjaxPostModel model)
         {
             try
             {
@@ -78,14 +78,18 @@ namespace SINU.Models
 
         }
 
-        public async Task<parametro> GetDataFromDbaseAsync(DataTableAjaxPostModel model, string searchBy, int take, int skip, string sortBy, bool sortDir)
+        public async Task<resultAjaxTable> GetDataFromDbaseAsync(DataTableAjaxPostModel model, string searchBy, int take, int skip, string sortBy, bool sortDir)
         {
             try
             {
 
-                parametro para = new parametro();
+                resultAjaxTable result = new resultAjaxTable();
 
                 string dirSort = sortDir ? "ASC" : "DESC";
+
+
+                //obtengo el tipo de cada columna
+                var columnaTipo = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='{model.tablaVista}'").ToList();
 
                 //armo un string con las columnas requeridad para relizar un select
                 string selectColumn = "";
@@ -95,7 +99,8 @@ namespace SINU.Models
                 foreach (var columna in model.columns)
                 {
                     columnCount++;
-                    selectColumn += (columna.name == "int" ? $"(Int32({columna.data})).ToString() as {columna.data}" :  columna.data) + (columnCount < model.columns.Count() ? "," : "");
+
+                    selectColumn += (columnaTipo.First(c=>c.COLUMN_NAME== columna.data).DATA_TYPE == "int" ? $"(Int32({columna.data})).ToString() as {columna.data}" :  columna.data) + (columnCount < model.columns.Count() ? "," : "");
                 }
 
 
@@ -129,19 +134,22 @@ namespace SINU.Models
                     whereDT = "true";
                 }
 
-                //where si existen filtros extras
+
+                //where si existen filtros extras, como de los dropboxs
                 string[] searchWhereExtras = new string[] { };
                 string whereExtras = "";
-
-                if (model.filtrosExtras.Where(m => m.Value != null).Count() > 0)
+                var filtrosEx = model.filtrosExtras.Where(m => m.Value != null).ToList();
+                if (filtrosEx.Count() > 0)
                 {
-                    searchWhereExtras = model.filtrosExtras.Select(m => m.Value).ToArray();
+
+                    searchWhereExtras = filtrosEx.Select(m => m.Value).ToArray();
                     //clausula where
                     int indexExtras = 0;
-                    foreach (var filtros in model.filtrosExtras)
+                    foreach (var filtros in filtrosEx)
                     {
                         indexExtras++;
-                        whereExtras += (filtros.Value != null ? (model.columns.First(m=>m.data==filtros.Text).name=="string"? $"{filtros.Text}.Contains(@{indexExtras - 1})":$"{filtros.Text}=={(filtros.Value=="1"?"true":"false")}") : "true") + (indexExtras < model.filtrosExtras.Count() ? " and " : "");
+                        whereExtras += (columnaTipo.First(c=>c.COLUMN_NAME== filtros.Text).DATA_TYPE.Contains("char")? $"{filtros.Text}.Contains(@{indexExtras - 1})":$"{filtros.Text}=={filtros.Value}");
+                        whereExtras += (indexExtras < filtrosEx.Count() ? " and " : "");
                     }
                 }
                 else
@@ -149,27 +157,13 @@ namespace SINU.Models
                     whereExtras = "true";
                 }
 
-
-                //para.result = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
-                //                      .Where(whereDT, searchWhereDT)
-                //                      .Where(whereExtras, searchWhereExtras)
-                //                      .OrderBy($"{sortBy} {dirSort}")
-                //                      .Skip(skip)
-                //                      .Take(take)
-                //                      .ToListAsync();
-
-                //para.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
-                //                           .Count();
-
-                //para.filteredResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
-                //                              .Select($"new({selectColumn})")
-                //                              .Where(whereDT, searchWhereDT)
-                //                              .Where(whereExtras, searchWhereExtras)
-                //                              .Count();
-
                 
+                var asdad = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).SqlQuery($"select * from {model.tablaVista} where CAST(Activa AS varchar) LIKE '%1%'").ToListAsync();
 
-                para.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
+
+                //var asdadasd = asdad.Select($"new({selectColumn})");
+
+                result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
                                            .Count();
 
                 var registrosWhere = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
@@ -177,14 +171,14 @@ namespace SINU.Models
                                      .Where(whereExtras, searchWhereExtras)
                                      .OrderBy($"{sortBy} {dirSort}")
                                      .ToListAsync();
-               
 
-                para.filteredResultsCount = registrosWhere.Count();
 
-                para.result = registrosWhere.Skip(skip)
+                result.filteredResultsCount = registrosWhere.Count();
+
+                result.result = registrosWhere.Skip(skip)
                                             .Take(take)
                                             .ToList();
-                return para;
+                return result;
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SINU.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,10 +15,10 @@ namespace SINU.Helpers
         /// <summary>
         /// HtmlHelper personalizado para el armado de un tabla
         /// </summary>
-        /// <param name="idTabla">ID de la tabla para su identificacion durante las busqueda y actualizacion de datos</param>
-        /// <param name="themeHead">Tema para el encabezadp de la tabla. Opciones: primary, secondary, success, etc.</param>
+        /// <param name="model">DataTableVm, recibido en el modelo, correspondiente la tabla a armar</param>
+        /// <param name="themeHead">Tema para el encabezadp de la tabla, por defecto "primary". Opciones: primary, secondary, success,dark etc.</param>
         /// <returns></returns>
-        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, string idTabla, string themeHead)
+        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, DataTableVM model, string themeHead= "primary")
         {
             //etiquetas para el armado de la tabla            
             //TR TD TH
@@ -39,7 +40,7 @@ namespace SINU.Helpers
             //TABLA
             var table = new TagBuilder("table");
             table.AddCssClass("table table-filters table-bordered table-light table-hover");
-            table.Attributes.Add("id", idTabla);
+            table.Attributes.Add("id",$"tabla-{model.TablaVista}" );
             table.InnerHtml = Thead.ToString()+Tbody.ToString();
             
             return MvcHtmlString.Create(table.ToString());

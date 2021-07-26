@@ -1,14 +1,11 @@
 ﻿using SINU.Models;
-using SINU.RefWebCPA;
 using SINU.ViewModels;
 using System;
-using System.Data;
 using System.Linq;
 using System.Web.Mvc;
-using System.Xml;
-using System.Xml.Serialization;
 using System.IO;
 using System.Collections.Generic;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Controllers
 {
@@ -116,11 +113,38 @@ namespace SINU.Controllers
         }
         public ActionResult About()
         {
-            return View();
+            List<DataTableVM> tablas = new List<DataTableVM>
+            {
+                new DataTableVM
+                {
+                    TablaVista="vinscripcionEtapaEstadoUltimoEstado",
+                    Columnas= new List<Column> {
+                           ColumnDTAjax("IdPersona", visible:false),
+                           ColumnDTAjax("Nombre","Nombre"),
+                           ColumnDTAjax("Apellido","Apellido"),
+                           ColumnDTAjax("Delegacion","Nombre de la Delegacion",orderable:false)
+                    }
+                },
+                new DataTableVM
+                {
+                    TablaVista="Persona",
+                    Columnas= new List<Column> {
+                           ColumnDTAjax("IdPersona", visible:false),
+                           ColumnDTAjax("Nombre","Nombre"),
+                           ColumnDTAjax("Apellido","Apellido")
+                    }
+                }
+            };
+            
+            return View(tablas);
         }
-
+        
         public ActionResult Contact()
         {
+            string tableName = "Postulante";
+            var query = "SELECT * FROM " + tableName;
+            //var res = db.ExecuteQuery<dynamic>(query).ToList();
+
             vContacto myModel = new vContacto();
             var confi = db.Configuracion.ToList();
             myModel.DPTOincorporacion = new OficinasYDelegaciones
