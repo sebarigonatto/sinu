@@ -4,6 +4,8 @@
             <h4>Lugar y Fecha:</h4>
         </div>
         @{
+            // ViewBag.VolverDB 
+            // En caso de que ViewBag.VolverDB sea true y el usuario actual sea un Postulante habilito el boton para volver a la carga de datos basicos
             if (ViewBag.VolverDB && HttpContext.Current.User.IsInRole("Postulante"))
             {
                 <div class="col col-md-6 col-sm-12 align-content-end justify-content-center">

@@ -620,10 +620,11 @@ $(document).ready(function () {
                 //si es .valid() es falso, muestro los errores y no cierro el modal
                 $(".Guardar_REG").on("click", function () {
                     var form_actual = "#" + this.getAttribute("data-form");
-                    //alert(form_actual);
                     var valido = $(form_actual).valid();
                     //alert(valido);
                     if (valido) {
+                        //desabilito el boton de guardar para evitar la duplicacion de datos.
+                        $(this).attr("disabled", "disabled")
                         $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
                             ActualizaTabla();

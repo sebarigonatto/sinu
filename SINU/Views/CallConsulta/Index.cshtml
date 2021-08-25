@@ -168,9 +168,9 @@
 
                     };
 
-                    sessionStorage.searchTablaDelPost == "undefined" ? sessionStorage.searchTablaDelPost = "" : null;
-                    sessionStorage.EtapasPost == "undefined" ? sessionStorage.EtapasPost = "" : null;
-                    sessionStorage.EstadosPost == "undefined" ? sessionStorage.EstadosPost = "" : null;
+                    sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
+                    sessionStorage.EtapasPost == undefined ? sessionStorage.EtapasPost = "" : null;
+                    sessionStorage.EstadosPost == undefined ? sessionStorage.EstadosPost = "" : null;
 
                     data.filtrosExtras = [
                         {
@@ -360,7 +360,7 @@
             
             $("#EstadosEtapasPost").find(`optgroup[label="${sessionStorage.EtapasPost}"]`).find(`option[value="${sessionStorage.EstadosPost}"]`).attr("selected", true);
             $("#EstadosEtapasPost").selectpicker("refresh");
-            $("#ETAPA").html(sessionStorage.EtapasPost=="undefined" || sessionStorage.EtapasPost==""?"---":sessionStorage.EtapasPost);
+            $("#ETAPA").html(sessionStorage.EtapasPost== undefined || sessionStorage.EtapasPost==""?"---":sessionStorage.EtapasPost);
 
             //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
 
@@ -382,7 +382,7 @@
                     alert("null")
                 }
                 sessionStorage.EtapasPost = $(this).find("option:selected").closest("optgroup").prop("label");
-                $("#ETAPA").html(sessionStorage.EtapasPost=="undefined"?"---":$(this).find("option:selected").closest("optgroup").prop("label")) 
+                $("#ETAPA").html(sessionStorage.EtapasPost== undefined ?"---":$(this).find("option:selected").closest("optgroup").prop("label")) 
                 sessionStorage.EstadosPost= $(this).val()
                 table.search(sessionStorage.searchTablaDelPost).ajax.reload();
                                 
