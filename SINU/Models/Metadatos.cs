@@ -236,10 +236,10 @@ namespace SINU.Models
         public string EventualUnidad { get; set; }
         [Display(Name = "Pais")]
         public string EventualPais { get; set; }
-        [RequiredIf("EventualIdPais", true, "AR", ErrorMessage = "Debe Seleccionar una Provincia")]
+        [RequiredIf("EventualIdPais", true, "AR", ErrorMessage = "Debe seleccionar una Provincia")]
         [Display(Name = "Provincia")]
         public string EventualProvincia { get; set; }
-        [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "Debe Ingresar una Localidad")]
+        [RequiredIf("EventualIdPais", false, "AR", ErrorMessage = "Debe ingresar una Localidad")]
         [Display(Name = "Localidad")]
         [MaxLength(150, ErrorMessage = "Dato ingresado supera el limite del campo.")]
         public string EventualLocalidad { get; set; }
@@ -541,8 +541,8 @@ namespace SINU.Models
         //el dni ingresado debe poseer 8 digitos para ser validado
         [StringLength(8, MinimumLength = 8, ErrorMessage = "El DNI ingresado no es valido")]
         //[RegularExpression(@"^([0-9]{2})([.])?([0-9]{3})([.])?([0-9]{3})$", ErrorMessage = "Caracteres ingresados NO validos")]
-        //limito al dni que solo acepte numeros
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Caracteres ingresados NO validos")]
+        [MaxLength(9, ErrorMessage = "DNI debe tener una longintud maxima de 9 digitos"), MinLength(8, ErrorMessage = "DNI debe tener una longintud minima de 8 digitos")]
+        [RegularExpression("^\\d+$", ErrorMessage = "DNI debe contener sólo números.")]//limito al dni que solo acepte numeros
         public string DNI { get; set; }
         [Required(ErrorMessage = "Campo Requerido")]
         public Nullable<bool> Vive { get; set; }
@@ -589,10 +589,10 @@ namespace SINU.Models
     public partial class vConvocatoriaDetallesMetadata
     {
         [Display(Name = "Inicio")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime FechaInicio { get; set; }
         [Display(Name = "Finalización")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime FechaFinal { get; set; }
         [Display(Name = "Modalidad")]
         public string Modalidad { get; set; }
@@ -604,9 +604,9 @@ namespace SINU.Models
         public string IdModalidad { get; set; }
         [Display(Name = "Código Grupo")]
         public string IdGrupoCarrOficio { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
     }
     public partial class InstitucionMetadata

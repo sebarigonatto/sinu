@@ -113,30 +113,8 @@ namespace SINU.Controllers
         }
         public ActionResult About()
         {
-            List<DataTableVM> tablas = new List<DataTableVM>
-            {
-                new DataTableVM
-                {
-                    TablaVista="vinscripcionEtapaEstadoUltimoEstado",
-                    Columnas= new List<Column> {
-                           ColumnDTAjax("IdPersona", visible:false),
-                           ColumnDTAjax("Nombre","Nombre"),
-                           ColumnDTAjax("Apellido","Apellido"),
-                           ColumnDTAjax("Delegacion","Nombre de la Delegacion",orderable:false)
-                    }
-                },
-                new DataTableVM
-                {
-                    TablaVista="Persona",
-                    Columnas= new List<Column> {
-                           ColumnDTAjax("IdPersona", visible:false),
-                           ColumnDTAjax("Nombre","Nombre"),
-                           ColumnDTAjax("Apellido","Apellido")
-                    }
-                }
-            };
-            
-            return View(tablas);
+                        
+            return View();
         }
         
         public ActionResult Contact()

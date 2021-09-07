@@ -1,5 +1,4 @@
 ﻿<!-- xxxxxxxxxxxx Debo indicar el TITLE de la pantalla y el MENUPERFIL correspondiente en todas las pantallas xxxxxxxxxxxxxx -->
-@model IEnumerable<SINU.Models.DataTableVM>
 @{
     ViewBag.Title = "Acerca de SINU";
 
@@ -59,14 +58,3 @@
     </div>
 </body>
 
-@*@Html.TablaHelper(Model.First(m=>m.TablaVista=="Persona"),"dark")
-
-@section Scripts{
-    <script src="~/Scripts/AjaxDataTable.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $(document).ready(function () {
-        const listaTablas = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, Newtonsoft.Json.Formatting.Indented));
-        armadoDeTablas(listaTablas)
-    })
-    </script>
-}*@

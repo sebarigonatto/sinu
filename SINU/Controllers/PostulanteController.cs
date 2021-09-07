@@ -23,15 +23,15 @@ namespace SINU.Controllers
     public class PostulanteController : Controller
     {
         SINUEntities db = new SINUEntities();
-
+        
         //----------------------------------PAGINA PRINCIPAL----------------------------------------------------------------------//
-        //ver este atributo de autorizacion si corresponde o no
-        //[Authorize(Roles = "Postulante")]
+        //metodo que carga la pagina principal del Perfil Index
+        //recive como parametro el Id correspondiente al Postulnate que se desea cargar los datos
         public ActionResult Index(int? ID_Postulante)
         {
             try
             {
-
+                
                 IDPersonaVM pers = new IDPersonaVM
                 {
                     //cargo id del postulante - el que se recibe, en caso de que sea una consulta, o el ID que se recupera del Postulante logueado
@@ -61,7 +61,6 @@ namespace SINU.Controllers
                 pers.EtapaTabs = etapas.Select(m => m.IdEtapa).ToList();
                 //cargo esto ID etapas en un string
                 pers.EtapaTabs.ForEach(m => pers.IDETAPA += m + ",");
-
 
                 //control del error al no existir el postulante
                 if (UltimaInscripcion == null)
@@ -121,14 +120,17 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-
                 return View("Error", new System.Web.Mvc.HandleErrorInfo(ex, "Postulante", "Index"));
             }
 
         }
         //----------------------------------DATOS BASICOS----------------------------------------------------------------------//
 
-
+        /// <summary>
+        /// Metodo encargado de devolver la vista con los Datos Basicos del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosBasicos(int ID_persona)
         {
@@ -144,10 +146,7 @@ namespace SINU.Controllers
                 };
 
                 datosba.Preferenacia = db.Institucion.FirstOrDefault(m => m.IdInstitucion == datosba.vPersona_DatosBasicosVM.IdPreferencia).NombreInst;
-                //datosba.vPersona_DatosBasicosVM.Edad = 0;
-                //datosba.vPersona_DatosBasicosVM.IdSexo = 0;
-                //agrego la opcion de "Necesito Orientacion" en el combo Inctitucion 
-                //datosba.vPeriodosInscripsVM.Add(new vPeriodosInscrip() { IdInstitucion= 1,NombreInst="Necesito Orientacion"});
+               
                 return PartialView(datosba);
             }
             catch (Exception ex)
@@ -158,8 +157,10 @@ namespace SINU.Controllers
 
         }
 
-
-        //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS BASICOS"
+        /// <summary>
+        /// Metodo encargado de actualizar los Datos Basicos del Postulante, restringido el uso solamente para el Perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -178,7 +179,6 @@ namespace SINU.Controllers
                     vPersona_DatosBasicos p = Datos.vPersona_DatosBasicosVM;
 
                     int result = db.spDatosBasicosUpdate(p.Apellido, p.Nombres, p.IdSexo, p.DNI, p.Telefono, p.Celular, p.FechaNacimiento, p.Email, p.IdDelegacionOficinaIngresoInscribio, p.ComoSeEntero, p.IdComoSeEntero, p.IdPreferencia, p.IdPersona, p.IdPostulante);
-
                     //envio nombre de la delegacion en caso de que se haya cambiado, para actualizar los detalles en la parte superior de la vista del "Index/Postulante"
                     string nombreDelegacion = db.OficinasYDelegaciones.Find(p.IdDelegacionOficinaIngresoInscribio).Nombre;
                     return Json(new { success = true, msg = "Datos Guardados.", form = "datosbasicos", delegacion = nombreDelegacion });
@@ -190,12 +190,17 @@ namespace SINU.Controllers
                     return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" });
                 }
             };
-            return Json(new { success = false, msg = "Datos no validos, revise los mismos." });
+            return Json(new { success = false, msg = "Datos no validos, revise los mismos" });
         }
 
 
 
         /*--------------------------------------------------------------SOLICITUD DE ENTREVISTA------------------------------------------------------------------------------*/
+        /// <summary>
+        /// Metodo que hace avanzar al Postulante  a la secuencia "Entrevista/A Asignar", restringido el uso solamente para el Perfil "Postulante"
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("ModificarSecuenciaP")]
         public async Task<JsonResult> SolicitudEntrevistaAsync(int ID_persona)
@@ -244,7 +249,11 @@ namespace SINU.Controllers
         }
 
         //----------------------------------ENTREVISTA----------------------------------------------------------------------//
-
+        /// <summary>
+        /// Metodo que devuelve los datos par la vista de la solapa Enrevista
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Entrevista(int ID_persona)
         {
@@ -278,8 +287,13 @@ namespace SINU.Controllers
 
         }
 
-        //accion para volver de entrevista a Datos Basicos
-        [AuthorizacionPermiso("CreaEditaDatosP")]
+        /// <summary>
+        /// Metodo para colocar al Postulante nuevamente en la secuencia "Datos Basicos/Inicio De Carga", restringido el uso solamente para el Perfil "Postulante"
+        /// </summary>
+        /// <param name="idPostulante">Id del Postulante</param>
+        /// <param name="idInscripcion">Id de Incripcion correspondiente al Postulante</param>
+        /// <returns></returns>
+        [Authorize(Roles ="Postulante")]
         public ActionResult VolverDatosBasicos(int idPostulante, int idInscripcion)
         {
             try
@@ -303,7 +317,11 @@ namespace SINU.Controllers
 
         //----------------------------------DATOS PERSONALES----------------------------------------------------------------------//
 
-
+        /// <summary>
+        /// Metodo que Devuelve la vista Datos Personales del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DatosPersonales(int ID_persona)
         {
@@ -337,7 +355,12 @@ namespace SINU.Controllers
         }
 
 
-
+        /// <summary>
+        /// Metodo que devuelve un listado con las modalidades, junto a las carrearas correspondiente, de acuerdo a la edad del Potulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <param name="FechaNacimiento">Fecha de Nacimiento</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public JsonResult EdadModalidad(int? ID_persona, string? FechaNacimiento)
         {
@@ -381,7 +404,10 @@ namespace SINU.Controllers
 
         }
 
-        //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
+        /// <summary>
+        /// Metodo QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES", restringido el uso solamente para el Perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -424,7 +450,11 @@ namespace SINU.Controllers
         }
         //----------------------------------Antecedentes Penales----------------------------------------------------------------------//
 
-
+        /// <summary>
+        /// Metodo que devuelve la vista parcial con los datos y archivos de la Documentacion Penal del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult DocuPenal(int ID_persona)
         {
@@ -466,7 +496,10 @@ namespace SINU.Controllers
 
         }
 
-
+        /// <summary>
+        /// Carga Actualiza los datos y los archivos de la documentacion Penal del Postulante, restringido el uso solamente para el Perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -512,9 +545,10 @@ namespace SINU.Controllers
                     data.ConstanciaAntcPenales.SaveAs(guarda);
                     btcert = true;
                 }
+
                 //Declaracion Jurada
                 DeclaracionJurada DeclaJura = data.PenalDeclaJurada;
-                //verifico si el postulante posee una declaracion juarada para actualizarla
+                //verifico si el postulante posee una declaracion jurada para actualizarla
                 var decla = db.DeclaracionJurada.FirstOrDefault(m => m.IdInscripcion == DeclaJura.IdInscripcion);
                 if (decla == null)
                 {
@@ -528,8 +562,6 @@ namespace SINU.Controllers
                     decla.Antecedentes_Detalles = DeclaJura.Antecedentes_Detalles;
                     decla.Comentario = DeclaJura.Comentario;
                     decla.PoseeAntecedentes = DeclaJura.PoseeAntecedentes;
-
-
                 }
 
                 db.SaveChanges();
@@ -543,46 +575,57 @@ namespace SINU.Controllers
 
         }
 
-        [AuthorizacionPermiso("AdminMenu")]
-        public bool ModificaNombre(DocuPenalVM data)
-        {
-            string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
-            string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
-            string anexo = "", cert = "";
-            string anexoNew = "", certNew = "";
-            string[] archivos;
+        /// <summary>
+        /// Metodo utilizado para la modificacion de los archivos correspodiente a la documentacion Penal, antecedente penal y anexo2, el mismo esta comentado
+        /// </summary>
+        /// <returns></returns>
+        //[AuthorizacionPermiso("AdminMenu")]
+        //public bool ModificaNombre(DocuPenalVM data)
+        //{
+        //    string ubicacion = AppDomain.CurrentDomain.BaseDirectory;
+        //    string CarpetaDeGuardado = $"{ubicacion}Documentacion\\ArchivosDocuPenal\\";
+        //    string anexo = "", cert = "";
+        //    string anexoNew = "", certNew = "";
+        //    string[] archivos;
 
-            //levanto los registros de la ultima inscripcion de los postulantes
-            var ListaInscriptos = db.Inscripcion.Select(m => new { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPostulantePersona.ToString() }).DistinctBy(m => m.idPostulante).ToList();
+        //    //levanto los registros de la ultima inscripcion de los postulantes
+        //    var ListaInscriptos = db.Inscripcion.Select(m => new { idInscripcion = m.IdInscripcion.ToString(), idPostulante = m.IdPostulantePersona.ToString() }).DistinctBy(m => m.idPostulante).ToList();
 
-            foreach (var inscripcion in ListaInscriptos)
-            {
-                //busco si el postulante posee registros
-                archivos = Directory.GetFiles(CarpetaDeGuardado, $"{inscripcion.idPostulante}&*");
-                foreach (var item in archivos)
-                {
-                    if (item.IndexOf("Anexo2") > 0)
-                    {
-                        anexo = item;
-                        anexoNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
-                        System.IO.File.Copy(anexo, anexoNew, true);
-                        //System.IO.File.Delete(anexo);
+        //    foreach (var inscripcion in ListaInscriptos)
+        //    {
+        //        //busco si el postulante posee registros
+        //        archivos = Directory.GetFiles(CarpetaDeGuardado, $"{inscripcion.idPostulante}&*");
+        //        foreach (var item in archivos)
+        //        {
+        //            if (item.IndexOf("Anexo2") > 0)
+        //            {
+        //                anexo = item;
+        //                anexoNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
+        //                System.IO.File.Copy(anexo, anexoNew, true);
+        //                //System.IO.File.Delete(anexo);
 
-                    }
-                    if (item.IndexOf("Certificado") > 0)
-                    {
-                        cert = item;
-                        certNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
-                        System.IO.File.Copy(cert, certNew, true);
-                        //System.IO.File.Delete(cert);
-                    }
-                }
+        //            }
+        //            if (item.IndexOf("Certificado") > 0)
+        //            {
+        //                cert = item;
+        //                certNew = item.Replace(inscripcion.idPostulante, $"{inscripcion.idPostulante}-{inscripcion.idInscripcion}");
+        //                System.IO.File.Copy(cert, certNew, true);
+        //                //System.IO.File.Delete(cert);
+        //            }
+        //        }
 
-            }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
+
+        /// <summary>
+        /// Metodo para obtener un archivo determinado
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <param name="docu">Tipo de documento a obtener</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public FileContentResult GetFile(int? ID_persona, string? docu)
         {
@@ -619,7 +662,7 @@ namespace SINU.Controllers
 
         //----------------------------------Domicilio----------------------------------------------------------------------//
 
-
+        //a prueba aun
         public ActionResult Domicio_API(int ID_persona)
         {
 
@@ -629,8 +672,8 @@ namespace SINU.Controllers
                 Pais_API = db.sp_vPaises("").OrderBy(m => m.DESCRIPCION).Select(m => new SelectListItem { Text = m.DESCRIPCION, Value = m.CODIGO }).ToList(),
                 Provincia_API = new List<SelectListItem>(),
                 Localidad_API = new List<SelectListItem>()
-
             };
+
             //cargo liatado con los viajes del postulante
             var viajes = db.PostulanteViaje.Where(m => m.IdPostulantePersona == ID_persona).ToList();
             domi.PostulanteViajeListaVM = new List<SelectListItem>();
@@ -644,7 +687,11 @@ namespace SINU.Controllers
             return View(domi);
         }
 
-
+        /// <summary>
+        /// Metodo que devuelve la vista parcial con los datos del Domicilio del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Domicilio(int ID_persona)
         {
@@ -713,8 +760,50 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Agrega un viaje al exterior realizado por el Postulante
+        /// </summary>
+        /// <param name="idper">Id del Postualante</param>
+        /// <param name="idpais">Id del Pais</param>
+        /// <param name="fechaviaje">Fecha de Viaje</param>
+        /// <param name="idviaje">Id de viaje, en caso de eliminacion</param>
+        /// <returns></returns>
+        [HttpPost]
+        //[AuthorizacionPermiso("CreaEditaDatosP")]
+        public ActionResult ViajesPostulante(int? idper, string? idpais, DateTime? fechaviaje, int? idviaje)
+        {
+            try
+            {
+                object resp = new { };
+                if (idviaje == null)
+                {
+                    PostulanteViaje v = new PostulanteViaje { codigovPais = idpais, Comentario = "", IdPostulantePersona = (int)idper, FechaInicioviaje = fechaviaje };
+                    db.PostulanteViaje.Add(v);
+                    db.SaveChanges();
+                    string pais = db.sp_vPaises(idpais).First().DESCRIPCION;
+                    resp = new { text = pais + ", " + ((DateTime)fechaviaje).ToString("dd/MM/yyyy"), value = v.IdPostulanteViaje };
+                }
+                else
+                {
+                    var viaje = db.PostulanteViaje.FirstOrDefault(m => m.IdPostulanteViaje == idviaje);
+                    db.PostulanteViaje.Remove(viaje);
+                    db.SaveChanges();
+                    resp = new { eli = true };
+                }
 
-        //ACCION QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES"
+                return Json(resp);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+
+        /// <summary>
+        /// Metodo QUE GUARDA LOS DATOS INGRESADOS EN LA VISTA "DATOS PERSONALES", restringido su uso solamente para el perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -778,7 +867,13 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
-        //Cargo el DropBoxList de localidad,segun Provincia Seleccionado o Cp segun Localidad Seleccionada
+        /// <summary>
+        /// Carga el DropBoxList de localidad segun Provincia seleccionada o Cp segun Localidad seleccionada
+        /// </summary>
+        /// <param name="Provincia">Provincia</param>
+        /// <param name="Localidad">Localidad</param>
+        /// <returns></returns>
+        //
         public JsonResult DropEnCascadaDomicilio(string? Provincia, int? Localidad)
         {
             if (Provincia != null)
@@ -806,6 +901,11 @@ namespace SINU.Controllers
 
         //----------------------------------Estudios----------------------------------------------------------------------//
 
+        /// <summary>
+        /// Metodo que devuelve vista parcial con los datos de Estudios del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Estudios(int ID_persona)
         {
@@ -833,6 +933,12 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Devuelve vista parcial con el formulario de Estudios para su creacion o modificacion
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <param name="ID">Id del Estudio en caso de modificacion</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult EstudiosCUD(int ID_persona, int? ID)
         {
@@ -956,6 +1062,11 @@ namespace SINU.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Agrega/Modifica un Estudio, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1014,6 +1125,12 @@ namespace SINU.Controllers
 
         }
 
+        /// <summary>
+        /// Elimina un Estudio determinado, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <param name="IdPersona">Id del Postulante</param>
+        /// <param name="IDEstudio">Id del Estudio</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaEST(int IdPersona, int IDEstudio)
         {
@@ -1038,7 +1155,12 @@ namespace SINU.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Carga los DropBox, dependiendo de los datos Solicitados.
+        /// </summary>
+        /// <param name="opc">indica si se solicita Localidades o Institutos</param>
+        /// <param name="val">Valor con el que se realiza la consulta</param>
+        /// <returns></returns>
         public JsonResult DropCascadaEST(int opc, string val)
         {
             if (opc == 0)
@@ -1080,6 +1202,11 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------IDIOMAS-------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Devulve vista parcial con listado de Idiomas que maneja el Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Idiomas(int ID_persona)
         {
@@ -1098,6 +1225,12 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Devuelve vista parcial con el formulario para la carga/actulizacion de un Idioma
+        /// </summary>
+        /// <param name="ID_persona">Id del postulante</param>
+        /// <param name="ID">Id del registro de Idioma, opcional</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult IdiomaCUD(int? ID_persona, int? ID)
         {
@@ -1132,7 +1265,10 @@ namespace SINU.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Carga un nuevo registro de Idiomas o lo Actualiza
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1155,6 +1291,11 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Metodo para indicar que el postulante no maneja ningun Idioma, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <param name="idper">Id del Postulante</param>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult SinIdioma(int idper)
@@ -1168,12 +1309,17 @@ namespace SINU.Controllers
             }
             catch (Exception ex)
             {
-
                 return Json(new { success = false, msg = "ERROR, refresque la pagina e intentelo de nuevo." }, JsonRequestBehavior.AllowGet);
             }
 
         }
 
+        /// <summary>
+        /// Eliminar el registro de Idioma indicado, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <param name="IdPersona">Id del Postulante</param>
+        /// <param name="IDIdio">Id del Idioma</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaIDIO(int IdPersona, int IDIdio)
         {
@@ -1194,6 +1340,11 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------ACTIVIDAD MILITAR-------------------------------------------------------------------------------*/
 
+         /// <summary>
+         /// Devuelve vista parcial con listado de actividad militar cargado por el postulante
+         /// </summary>
+         /// <param name="ID_persona">Id del Postulante</param>
+         /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ActMilitar(int ID_persona)
         {
@@ -1211,7 +1362,12 @@ namespace SINU.Controllers
             }
         }
 
-
+        /// <summary>
+        /// devuelve vista parcial con el formilario para la carga/modificacion de una actividad militar
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <param name="ID">Id de la Actividad Militar, opcional</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ActMilitarCUD(int ID_persona, int? ID)
         {
@@ -1248,7 +1404,10 @@ namespace SINU.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Carga/Actualiza una actividad Militar, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1265,9 +1424,7 @@ namespace SINU.Controllers
                     ModelState["ACTMilitarIDVM.IdBaja"].Errors.Clear();
                     ModelState["ACTMilitarIDVM.IdSituacionRevista"].Errors.Clear();
                 }
-
-
-
+                                
                 if (ModelState.IsValid)
                 {
                     var a = datos.ACTMilitarIDVM;
@@ -1280,7 +1437,6 @@ namespace SINU.Controllers
                             a.IdBaja = 0;
                             a.MotivoBaja = "";
                         }
-
                     }
                     else
                     {
@@ -1306,11 +1462,15 @@ namespace SINU.Controllers
 
         }
 
+        /// <summary>
+        /// Indica que un postulante no posee actividad militar, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <param name="idper">Id del Postulante</param>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult SinActMilitar(int idper)
         {
-
             try
             {
                 //llamo este sp para indicar el que no maneja otro idioma y le envio el codigo correspondiente al "SIN IDIOMA"
@@ -1320,27 +1480,37 @@ namespace SINU.Controllers
             catch (Exception ex)
             {
 
-                return Json(new { success = true, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
 
+        /// <summary>
+        /// elimina la actividad militar indicada, restringido su uso solamenta para el perfil "Postulante"
+        /// </summary>
+        /// <param name="IdPersona">Id del Postulante</param>
+        /// <param name="IDActMil">Id de la actividad militar</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaACT(int IdPersona, int IDActMil)
         {
             try
             {
                 db.spActividadMilitarEliminar(IDActMil);
-                return Json(new { success = false, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, msg = "Eliminacion Exitosa.", form = "Elimina", url_Tabla = "ActMilitar", url_Controller = "Postulante" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = true, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, msg = "Error en la operacion, intentelo nuevamente" }, JsonRequestBehavior.AllowGet);
             }
         }
 
         /*--------------------------------------------------------------SITUACION OCUPACIONAL-------------------------------------------------------------------------------*/
 
-
+        /// <summary>
+        /// devuelve vista parcial con la situacion ocupacional del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult SituOcupacional(int ID_persona)
         {
@@ -1375,40 +1545,11 @@ namespace SINU.Controllers
             }
         }
 
-        [HttpPost]
-        //[AuthorizacionPermiso("CreaEditaDatosP")]
-        public ActionResult ViajesPostulante(int? idper, string? idpais, DateTime? fechaviaje, int? idviaje)
-        {
-            try
-            {
-                object resp = new { };
-                if (idviaje == null)
-                {
-                    PostulanteViaje v = new PostulanteViaje { codigovPais = idpais, Comentario = "", IdPostulantePersona = (int)idper, FechaInicioviaje = fechaviaje };
-                    db.PostulanteViaje.Add(v);
-                    db.SaveChanges();
-                    string pais = db.sp_vPaises(idpais).First().DESCRIPCION;
-                    resp = new { text = pais + ", " + ((DateTime)fechaviaje).ToString("dd/MM/yyyy"), value = v.IdPostulanteViaje };
-                }
-                else
-                {
-                    var viaje = db.PostulanteViaje.FirstOrDefault(m => m.IdPostulanteViaje == idviaje);
-                    db.PostulanteViaje.Remove(viaje);
-                    db.SaveChanges();
-                    resp = new { eli = true };
-                }
-
-                return Json(resp);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
-        }
-
-
-
+        
+        /// <summary>
+        /// Carga y actualiza los datos de la sutuacion ocupacional del Postulante, restringido su uso solamente para perfil "Postulante"
+        /// </summary>        
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1448,6 +1589,11 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------Antropometria------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// devuelve vista parcial con los datos de Antropometria del Postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Antropometria(int ID_persona)
         {
@@ -1455,7 +1601,10 @@ namespace SINU.Controllers
             return PartialView(antropo);
         }
 
-
+        /// <summary>
+        /// Actualiza los datos de Antropometria del postulante
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1479,6 +1628,13 @@ namespace SINU.Controllers
 
         }
 
+        /// <summary>
+        /// Metodo que verfica Altura e IMC, devuelve si es valido o no
+        /// </summary>
+        /// <param name="IdPostulante">Id del Postulante</param>
+        /// <param name="AltIcm">tipo de dato recibido</param>
+        /// <param name="num">valor de la altura o IMC</param>
+        /// <returns></returns>
         public JsonResult VerificaAltIcm(int IdPostulante, string AltIcm, float num)
         {
             try
@@ -1529,7 +1685,11 @@ namespace SINU.Controllers
 
         /*--------------------------------------------------------------FAMILIA------------------------------------------------------------------------------*/
 
-
+        /// <summary>
+        /// Devuelve vista parcial con listado de familiares cargados por el postulante
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult Familia(int ID_persona)
         {
@@ -1547,6 +1707,12 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Devuelve Vista con los formularios para la carga o modificacion de los datos de un familiar
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <param name="idPersonaFamilia">Id de persona del familiar, "0"en caso de que sea la carga de un nuevo familiar</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         //recibo el idFamilia, si es 0 creo  una personaFamilia y su relacion.
         public ActionResult FamiliaCUD(int ID_persona, int idPersonaFamilia)
@@ -1633,7 +1799,10 @@ namespace SINU.Controllers
             return View(pers);
         }
 
-
+        /// <summary>
+        /// Carga o actualiza los datos de un familiar
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         [ValidateAntiForgeryToken]
@@ -1693,6 +1862,11 @@ namespace SINU.Controllers
             return Json(new { success = false, msg = "Datos no validos, revise los mismos." }, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Indica que el postulante no posee familiar, restringido su uso solamente para el perfil "Postulante"
+        /// </summary>
+        /// <param name="idper">Id del Postulante</param>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("CreaEditaDatosP")]
         public JsonResult SinFamiliar(int idper)
@@ -1714,8 +1888,12 @@ namespace SINU.Controllers
 
         }
 
-        //DNI, de la persona que a agregar como familiar
-        //ID, IdPersona del postulante actual
+        /// <summary>
+        /// Se verifica la situacion del DNI ingresado
+        /// </summary>
+        /// <param name="DNI">DNI de la persona a agregar como familiar</param>
+        /// <param name="ID">Id del Postulante</param>
+        /// <returns></returns>      
         public JsonResult VerificarDNI(int DNI, int ID)
         {
             try
@@ -1726,7 +1904,7 @@ namespace SINU.Controllers
                 
                 if (SituacionDNI.IdPersona == ID)//VERIFICO QUE LA PERSONA FAMILIAR A AGREGAR NO SEA EL MISMO POSTULANTE
                 {
-                    return Json(new { resp = "misma_persona", msg = "El DNI ingresado le corresponde a usted, debe ingresar uno distinto." }, JsonRequestBehavior.AllowGet);//ver mensaje para ser mas claro
+                    return Json(new { resp = "misma_persona", msg = "No puede registrar sus propios datos dentro del grupo familiar." }, JsonRequestBehavior.AllowGet);//ver mensaje para ser mas claro
                 }
                 else if (SituacionDNI.IdPersona != 0)//EN CASO DE QUE LA PERSONA EXISTA
                 {
@@ -1748,6 +1926,12 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Elimina la relacion familiar o la persona familiar
+        /// </summary>
+        /// <param name="ID_per">Id Persona del Familiar</param>
+        /// <param name="ID_fami">Id Familiar de la relacion a eliminar</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("EliminarDatosP")]
         public JsonResult EliminaFAMI(int ID_per, int ID_fami)
         {
@@ -1776,6 +1960,11 @@ namespace SINU.Controllers
         }
         /*-------------------------------------------------------------Documentacion------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Devuelve vista parcial con el listado de documentos y la situacion actual de cadauna
+        /// </summary>
+        /// <param name="IdPersona">Id del Postulante</param>
+        /// <returns></returns>
         public ActionResult DocumentacionAnexo(int IdPersona)
         {
             DocuAnexoVM docu = new DocuAnexoVM()
@@ -1792,7 +1981,13 @@ namespace SINU.Controllers
             return PartialView("DocumentacionAnexo", docu);
         }
 
-        //------------VALIDAR DATOS--------------------//         
+        //------------VALIDAR DATOS--------------------//
+        
+        /// <summary>
+        /// Realiza la validacion de ciertos campos definidos y pasa al postulante a la Secuencia "Documentacion/A Validar"
+        /// </summary>
+        /// <param name="ID_persona">Id del Postulante</param>
+        /// <returns></returns>
         [HttpPost]
         [AuthorizacionPermiso("ModificarSecuenciaP")]
         public dynamic ValidarDatos(int ID_persona)
@@ -1986,6 +2181,13 @@ namespace SINU.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo para cargar el estado de cada solapa/pantalla de la etapa documentacion "abierta, cerrada o con error"
+        /// </summary>
+        /// <param name="ID_persona">Id del postulante</param>
+        /// <param name="IdPantalla">Id de pantalla</param>
+        /// <param name="Pantalla">""</param>
+        /// <returns></returns>
         [AuthorizacionPermiso("ListarRP")]
         public ActionResult ProblemasPantalla(int ID_persona, int? IdPantalla, string? Pantalla)
         {

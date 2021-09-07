@@ -158,11 +158,6 @@ namespace SINU.Models
                 }
 
                 
-                var asdad = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).SqlQuery($"select * from {model.tablaVista} where CAST(Activa AS varchar) LIKE '%1%'").ToListAsync();
-
-
-                //var asdadasd = asdad.Select($"new({selectColumn})");
-
                 result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
                                            .Count();
 

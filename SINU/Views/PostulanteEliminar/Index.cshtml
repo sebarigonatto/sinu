@@ -172,12 +172,13 @@
                         }];
                     //JSON.stringify({
                     //    delegacion: sessionStorage.dropDelegacionDelPost,
-                    //    modalidad: 
+                    //    modalidad:
                     //});
                     data.tablaVista = '@Model.TablaVista';
 
                     data.columns.pop()
                 },
+
                 dataSrc: function (json) {
 
                     $.each(json.data, function (index, item) {
@@ -225,7 +226,7 @@
             } else {
                 $("tbody").removeClass("disabled");
             }
-            
+
         });
 
         function limpiar() {
