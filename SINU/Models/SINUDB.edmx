@@ -358,10 +358,10 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
           <Key>
             <PropertyRef Name="IdInstitucion" />
           </Key>
-          <Property Name="NombreInst" Type="varchar" MaxLength="60" />
+          <Property Name="NombreInst" Type="varchar" MaxLength="200" />
           <Property Name="Direccion" Type="varchar" MaxLength="150" />
           <Property Name="Titulo" Type="varchar" MaxLength="100" />
-          <Property Name="Tooltip" Type="varchar" MaxLength="100" />
+          <Property Name="Tooltip" Type="varchar" MaxLength="200" />
           <Property Name="CodigoPcia" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="IdInstitucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
@@ -829,6 +829,41 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vExportacionDatosBasicos">
+          <Key>
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="sexo" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="celular_carac" />
+            <PropertyRef Name="||" />
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="ESTADO" />
+          </Key>
+          <Property Name="nroinscripto" Type="varchar" MaxLength="15" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sexo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Deleg" Type="varchar" MaxLength="100" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="fechanac" Type="nvarchar" MaxLength="30" />
+          <Property Name="Telefono" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="celular_carac" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="15" />
+          <Property Name="||" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="IdPostulantePersona" Type="int" />
+          <Property Name="IdInscripcion" Type="int" Nullable="false" />
+          <Property Name="IdConvocatoria" Type="int" Nullable="false" />
+          <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
+          <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="FechaInscripcion" Type="date" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="ESTADO" Type="varchar" MaxLength="7" Nullable="false" />
+        </EntityType>
+        <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vGruposYCarreras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vGruposYCarreras">
           <Key>
@@ -957,6 +992,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
             <PropertyRef Name="IdPersona" />
             <PropertyRef Name="Apellido" />
             <PropertyRef Name="Nombres" />
+            <PropertyRef Name="DNI" />
             <PropertyRef Name="IdDomicilioDNI" />
             <PropertyRef Name="IdDomicilioActual" />
           </Key>
@@ -972,6 +1008,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="IdPersona" Type="int" Nullable="false" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DNI" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="FechaRindeExamen" Type="datetime" />
           <Property Name="FechaEntrevista" Type="datetime" />
           <Property Name="FechaInscripcion" Type="date" />
@@ -3203,6 +3240,30 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vEstCivil].[Descripcion] AS [Descripcion]
     FROM [dbo].[vEstCivil] AS [vEstCivil]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vExportacionDatosBasicos" EntityType="Self.vExportacionDatosBasicos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vExportacionDatosBasicos].[nroinscripto] AS [nroinscripto], 
+    [vExportacionDatosBasicos].[Apellido] AS [Apellido], 
+    [vExportacionDatosBasicos].[Nombres] AS [Nombres], 
+    [vExportacionDatosBasicos].[sexo] AS [sexo], 
+    [vExportacionDatosBasicos].[Deleg] AS [Deleg], 
+    [vExportacionDatosBasicos].[DNI] AS [DNI], 
+    [vExportacionDatosBasicos].[fechanac] AS [fechanac], 
+    [vExportacionDatosBasicos].[Telefono] AS [Telefono], 
+    [vExportacionDatosBasicos].[Email] AS [Email], 
+    [vExportacionDatosBasicos].[celular_carac] AS [celular_carac], 
+    [vExportacionDatosBasicos].[Celular] AS [Celular], 
+    [vExportacionDatosBasicos].[||] AS [||], 
+    [vExportacionDatosBasicos].[IdPostulantePersona] AS [IdPostulantePersona], 
+    [vExportacionDatosBasicos].[IdInscripcion] AS [IdInscripcion], 
+    [vExportacionDatosBasicos].[IdConvocatoria] AS [IdConvocatoria], 
+    [vExportacionDatosBasicos].[IdModalidad] AS [IdModalidad], 
+    [vExportacionDatosBasicos].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vExportacionDatosBasicos].[FechaInscripcion] AS [FechaInscripcion], 
+    [vExportacionDatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
+    [vExportacionDatosBasicos].[ESTADO] AS [ESTADO]
+    FROM [dbo].[vExportacionDatosBasicos] AS [vExportacionDatosBasicos]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vGruposYCarreras" EntityType="Self.vGruposYCarreras" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vGruposYCarreras].[IdGrupoCarrOficio] AS [IdGrupoCarrOficio], 
@@ -3302,6 +3363,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vInscripcionEtapaEstadoUltimoEstado].[IdPersona] AS [IdPersona], 
     [vInscripcionEtapaEstadoUltimoEstado].[Apellido] AS [Apellido], 
     [vInscripcionEtapaEstadoUltimoEstado].[Nombres] AS [Nombres], 
+    [vInscripcionEtapaEstadoUltimoEstado].[DNI] AS [DNI], 
     [vInscripcionEtapaEstadoUltimoEstado].[FechaRindeExamen] AS [FechaRindeExamen], 
     [vInscripcionEtapaEstadoUltimoEstado].[FechaEntrevista] AS [FechaEntrevista], 
     [vInscripcionEtapaEstadoUltimoEstado].[FechaInscripcion] AS [FechaInscripcion], 
@@ -4336,10 +4398,10 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Key>
             <PropertyRef Name="IdInstitucion" />
           </Key>
-          <Property Name="NombreInst" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="NombreInst" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Tooltip" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Tooltip" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CodigoPcia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdInstitucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Inscripcion" Relationship="Self.FK_Inscripcion_Institucion" FromRole="Institucion" ToRole="Inscripcion" />
@@ -5911,6 +5973,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="IdSecuencia" Mode="In" Type="Int32" />
             <Parameter Name="AnulaFechaEntrevista" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="vExportacionDatosBasicos" EntityType="SINUModel.vExportacionDatosBasicos" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -7414,6 +7477,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="Nombres" />
             <PropertyRef Name="IdDomicilioDNI" />
             <PropertyRef Name="IdDomicilioActual" />
+            <PropertyRef Name="DNI" />
           </Key>
           <Property Name="IdSecuencia" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -7435,6 +7499,40 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Activa" Type="Boolean" />
           <Property Name="Fecha_Inicio_Proceso" Type="DateTime" Precision="0" />
           <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
+          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vExportacionDatosBasicos">
+          <Key>
+            <PropertyRef Name="Apellido" />
+            <PropertyRef Name="Nombres" />
+            <PropertyRef Name="sexo" />
+            <PropertyRef Name="DNI" />
+            <PropertyRef Name="celular_carac" />
+            <PropertyRef Name="C__" />
+            <PropertyRef Name="IdInscripcion" />
+            <PropertyRef Name="IdConvocatoria" />
+            <PropertyRef Name="ESTADO" />
+          </Key>
+          <Property Name="nroinscripto" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sexo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Deleg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DNI" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="fechanac" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="celular_carac" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="C__" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="IdPostulantePersona" Type="Int32" />
+          <Property Name="IdInscripcion" Type="Int32" Nullable="false" />
+          <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
+          <Property Name="IdModalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdCarreraOficio" Type="Int32" />
+          <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -9343,6 +9441,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vInscripcionEtapaEstadoUltimoEstado">
             <EntityTypeMapping TypeName="SINUModel.vInscripcionEtapaEstadoUltimoEstado">
               <MappingFragment StoreEntitySet="vInscripcionEtapaEstadoUltimoEstado">
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
                 <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
                 <ScalarProperty Name="Fecha_Inicio_Proceso" ColumnName="Fecha_Inicio_Proceso" />
                 <ScalarProperty Name="Activa" ColumnName="Activa" />
@@ -9367,6 +9466,32 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_PostulanteCambiarDelegacionYSecuencia" FunctionName="SINUModel.Store.sp_PostulanteCambiarDelegacionYSecuencia" />
+          <EntitySetMapping Name="vExportacionDatosBasicos">
+            <EntityTypeMapping TypeName="SINUModel.vExportacionDatosBasicos">
+              <MappingFragment StoreEntitySet="vExportacionDatosBasicos">
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
+                <ScalarProperty Name="IdCarreraOficio" ColumnName="IdCarreraOficio" />
+                <ScalarProperty Name="IdModalidad" ColumnName="IdModalidad" />
+                <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
+                <ScalarProperty Name="IdInscripcion" ColumnName="IdInscripcion" />
+                <ScalarProperty Name="IdPostulantePersona" ColumnName="IdPostulantePersona" />
+                <ScalarProperty Name="C__" ColumnName="||" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="celular_carac" ColumnName="celular_carac" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="fechanac" ColumnName="fechanac" />
+                <ScalarProperty Name="DNI" ColumnName="DNI" />
+                <ScalarProperty Name="Deleg" ColumnName="Deleg" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="nroinscripto" ColumnName="nroinscripto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

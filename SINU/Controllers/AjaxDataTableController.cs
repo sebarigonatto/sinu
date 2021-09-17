@@ -87,7 +87,8 @@ namespace SINU.Models
 
                 string dirSort = sortDir ? "ASC" : "DESC";
 
-
+                var asdasd = new DateTime(961470000000);
+              
                 //obtengo el tipo de cada columna
                 var columnaTipo = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='{model.tablaVista}'").ToList();
 
@@ -99,13 +100,14 @@ namespace SINU.Models
                 foreach (var columna in model.columns)
                 {
                     columnCount++;
-
-                    selectColumn += (columnaTipo.First(c=>c.COLUMN_NAME== columna.data).DATA_TYPE == "int" ? $"(Int32({columna.data})).ToString() as {columna.data}" :  columna.data) + (columnCount < model.columns.Count() ? "," : "");
+                    //tipo de dato
+                    string tipo = columnaTipo.First(c => c.COLUMN_NAME == columna.data).DATA_TYPE;
+                    selectColumn += (tipo == "int" ? $"(Int32({columna.data})).ToString() as {columna.data}" : tipo=="date"? $"(DateTime({columna.data})).ToString() as {columna.data}" : columna.data) + (columnCount < model.columns.Count() ? "," : "");
                 }
 
 
                 //armo el where 
-                string[] searchWhereDT = new string[] { };
+               string[] searchWhereDT = new string[] { };
                 string whereDT = "";
 
                 // where con la variable searchBy
@@ -148,7 +150,7 @@ namespace SINU.Models
                     foreach (var filtros in filtrosEx)
                     {
                         indexExtras++;
-                        whereExtras += (columnaTipo.First(c=>c.COLUMN_NAME== filtros.Text).DATA_TYPE.Contains("char")? $"{filtros.Text}.Contains(@{indexExtras - 1})":$"{filtros.Text}=={filtros.Value}");
+                        whereExtras += (columnaTipo.First(c=>c.COLUMN_NAME== filtros.Text).DATA_TYPE.Contains("char")? $"{filtros.Text}.Contains(@{indexExtras - 1})": columnaTipo.First(c => c.COLUMN_NAME == filtros.Text).DATA_TYPE=="bit"? $"{filtros.Text}=={filtros.Value}" : $"{filtros.Text}==@{indexExtras - 1}");
                         whereExtras += (indexExtras < filtrosEx.Count() ? " and " : "");
                     }
                 }
@@ -158,7 +160,8 @@ namespace SINU.Models
                 }
 
                 
-                result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}"))
+                result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
+                                           .Where(whereExtras, searchWhereExtras)
                                            .Count();
 
                 var registrosWhere = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")

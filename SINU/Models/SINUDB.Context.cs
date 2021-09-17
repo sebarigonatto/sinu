@@ -134,6 +134,7 @@ namespace SINU.Models
         public virtual DbSet<vInscripcionDetalleUltInsc> vInscripcionDetalleUltInsc { get; set; }
         public virtual DbSet<vInscripcionDetalle> vInscripcionDetalle { get; set; }
         public virtual DbSet<vInscripcionEtapaEstadoUltimoEstado> vInscripcionEtapaEstadoUltimoEstado { get; set; }
+        public virtual DbSet<vExportacionDatosBasicos> vExportacionDatosBasicos { get; set; }
     
         public virtual int A_LogicaDelSistema(string logicaDeseada)
         {

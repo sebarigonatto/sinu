@@ -34,5 +34,6 @@ namespace SINU.Models
         public Nullable<bool> Activa { get; set; }
         public Nullable<System.DateTime> Fecha_Inicio_Proceso { get; set; }
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
+        public string DNI { get; set; }
     }
 }

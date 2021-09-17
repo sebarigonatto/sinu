@@ -3,7 +3,7 @@
 //"TablaVista": nombre de la tabla/vista
 //"Columnas": array con las columnas para armar la tabla y correspondiente propiedades
 //"filtrosIniciales": pre-filtros sobre los datos a mostrar en la Tabla
-
+//https://datatables.net/
 
 //funcion para aplicar el plug-in DataTabla a las tablas indicadas
 function armadoDeTablas(tablas) {

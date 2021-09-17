@@ -51,14 +51,15 @@ namespace SINU.Controllers.Consultor
                     new SelectListItem{Text="Activa" ,Value= "true"}
                 },
                 Columnas = new List<Column> {
-                    new Column { data = "IdPersona", visible = false, searchable=false,  title="idPersona"},
-                    new Column { data = "Activa", searchable = false, visible = false, title="Activa" },
-                    new Column { data = "IdModalidad",  title="Modalidad" },
-                    new Column { data = "Nombres", orderable = false,  title="Nombres" },
-                    new Column { data = "Apellido", orderable = false, title="Apellido" },
-                    new Column { data = "Email", orderable = false, title="Email" },
-                    new Column { data = "Etapa", searchable = false, title="Etapa" },
-                    new Column { data = "Estado", searchable = false, title="Estado" }
+                    ColumnDTAjax("IdPersona"),
+                    ColumnDTAjax("Activa"),
+                    ColumnDTAjax( "IdModalidad"),
+                    ColumnDTAjax( "Nombres",visible: true,true),
+                    ColumnDTAjax( "Apellido",visible:true,true),
+                    ColumnDTAjax("DNI",visible:true,true),
+                    ColumnDTAjax("Email",visible: true,true ),
+                    ColumnDTAjax("Etapa",visible:true),
+                    ColumnDTAjax("Estado", visible:true )
                 }
             };
             //oculta las Consultas que no estan realizadas
@@ -265,9 +266,29 @@ namespace SINU.Controllers.Consultor
                 {
                     //siempre es conveniente fijarse si me pasa null pues no se ir al where con null en estos casos
                     idConvocatoria = (IdConvocatoria is null) ? 0 : (int)IdConvocatoria,
-                    inscriptosConvocatoria = db.vInscripcionDetalleUltInsc.Where(m => m.IdConvocatoria == IdConvocatoria && m.IdCarreraOficio != null).ToList(),
                     infoConvocatoria = db.vConvocatoriaDetalles.First(m => m.IdConvocatoria == IdConvocatoria),
-                    restriccionesConvocatoria = db.sp_Totales_FullRestriccion("", (int)IdConvocatoria).ToList()
+                    restriccionesConvocatoria = db.sp_Totales_FullRestriccion("", (int)IdConvocatoria).ToList(),
+                    tablaModel = new DataTableVM
+                    {
+                        TablaVista = "vExportacionDatosBasicos",
+                        Columnas = new List<Column> {
+                            ColumnDTAjax("IdPostulantePersona",noPrint:true),
+                            ColumnDTAjax("IdConvocatoria",noPrint:true),                           
+                            ColumnDTAjax("IdInscripcion",true, nombreDisplay:"Id Inscripción"),                            
+                            ColumnDTAjax( "Apellido",true,true),
+                            ColumnDTAjax( "Nombres", true,true),
+                            ColumnDTAjax("sexo",nombreDisplay:"Sexo"),
+                            ColumnDTAjax("Deleg",nombreDisplay:"Delegación"),
+                            ColumnDTAjax("DNI",true,true),
+                            ColumnDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                            ColumnDTAjax("Telefono"),
+                            ColumnDTAjax("Email",true ,true),
+                            ColumnDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular"),
+                            ColumnDTAjax("Celular")
+                        },
+                        filtrosIniciales= new List<SelectListItem>() { new SelectListItem {Text="IdConvocatoria", Value=IdConvocatoria.ToString() } }
+                    }
+
                 };
                 
                 //busco el id que le corresponde a la consulta original TotalizarPorConvocatoria
@@ -282,6 +303,12 @@ namespace SINU.Controllers.Consultor
             }
 
         }
+
+        private List<Column> Columnas2(string v, object[] ps)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpGet]
         public JsonResult CheckPostulante(int? idPostulante) {
 

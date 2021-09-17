@@ -49,7 +49,7 @@ namespace SINU.Controllers.Administrador
         {
             try
             {
- if (ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     db.Sexo.Add(sexo);
                     db.SaveChanges();

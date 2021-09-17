@@ -164,6 +164,7 @@
         <EntityTypeShape EntityType="SINUModel.vInscripcionDetalleUltInsc" Width="1.5" PointX="32.375" PointY="0.875" />
         <EntityTypeShape EntityType="SINUModel.vInscripcionDetalle" Width="1.5" PointX="9.375" PointY="32.75" />
         <EntityTypeShape EntityType="SINUModel.vInscripcionEtapaEstadoUltimoEstado" Width="1.5" PointX="15.75" PointY="10.75" />
+        <EntityTypeShape EntityType="SINUModel.vExportacionDatosBasicos" Width="1.5" PointX="23.375" PointY="17.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

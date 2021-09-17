@@ -548,6 +548,9 @@
     <Compile Include="Models\vEstCivil.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vExportacionDatosBasicos.cs">
+      <DependentUpon>SINUDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vGruposYCarreras.cs">
       <DependentUpon>SINUDB.tt</DependentUpon>
     </Compile>

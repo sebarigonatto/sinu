@@ -38,15 +38,25 @@ namespace SINU.Controllers.Administrador
 
                 TablaVista = "vInscripcionDetalleUltInsc",
 
-                Columnas = new List<Column> {
-                    new Column { data = "IdPersona", visible = false, title="idPersona"},
-                    new Column { data = "IdInscripcion", title="N° de Pre-Inscripción" },
-                    new Column { data = "Nombres", orderable = false, title="Nombres" },
-                    new Column { data = "Apellido", orderable = false, title="Apellido" },
-                    new Column { data = "DNI", orderable = false, title="DNI" },
-                    new Column { data = "Email", orderable = false, title="Email" },
-                    new Column { data = "Inscripto_En", searchable = false, title="Delegacion" },
-                    new Column { data = "Modalidad", searchable = false, title="Modalidad" },
+                //Columnas = new List<Column> {
+                //    new Column { data = "IdPersona", visible = false, title="idPersona"},
+                //    new Column { data = "IdInscripcion", title="N° de Pre-Inscripción" },
+                //    new Column { data = "Nombres", orderable = false, title="Nombres" },
+                //    new Column { data = "Apellido", orderable = false, title="Apellido" },
+                //    new Column { data = "DNI", orderable = false, title="DNI" },
+                //    new Column { data = "Email", orderable = false, title="Email" },
+                //    new Column { data = "Inscripto_En", searchable = false, title="Delegacion" },
+                //    new Column { data = "Modalidad", searchable = false, title="Modalidad" },
+                //},
+                   Columnas = new List<Column> {
+                    ColumnDTAjax("IdPersona"),
+                    ColumnDTAjax("IdInscripcion"),
+                    ColumnDTAjax( "Nombres",visible: true,true),
+                    ColumnDTAjax( "Apellido",visible: true,true),
+                    ColumnDTAjax("DNI",visible:true,true),
+                    ColumnDTAjax("Email",visible: true ,true),
+                    ColumnDTAjax("Inscripto_En",visible:true, nombreDisplay:"Delegacion"),
+                    ColumnDTAjax("Modalidad", visible:true )
                 }
             };
             return View(DeleYMod);
