@@ -447,8 +447,11 @@
                     <div class="tab-pane fade px-3 py-3" id="entrevista" role="tabpanel" aria-labelledby="entrevista-tab">
                         @if (Model.NoPostulado)
                         {
+                            //Estimado A y N te agradecemos que nos hayas considerado....
                             <div class="jumbotron mb-0" style="background-color: #08495f; color:white">
                                 <h4> @Html.Raw((string)ViewBag.TextNoAsignado)</h4>
+                                <br />
+                                <h4>Fecha de Entrevista: @ViewBag.FechaEntrevista</h4>
                             </div>
                         }
                         else

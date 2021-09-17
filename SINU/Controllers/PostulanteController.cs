@@ -72,6 +72,9 @@ namespace SINU.Controllers
                 //cargo nombre de la delegacion correspondiente al postulante
                 ViewBag.DelePost = UltimaInscripcion.Inscripto_En;
 
+                //Cargo la fecha de la entrevista
+                ViewBag.FechaEntrevista = UltimaInscripcion.FechaEntrevista.Value.ToString("dd/MM/yyyy");
+
                 //creo array con las secuecias por las que el Postulante transito
                 List<int> Secuencias = db.InscripcionEtapaEstado.OrderByDescending(m => m.Fecha).Where(m => m.IdInscripcionEtapaEstado == UltimaInscripcion.IdInscripcion).Select(m => m.IdSecuencia).ToList();
                 ViewBag.ULTISECU = Secuencias[0];
