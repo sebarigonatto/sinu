@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json;
 using System.Web.Mvc;
 using static SINU.Models.AjaxDataTableModel;
 
@@ -28,31 +29,44 @@ namespace SINU.Models
         public List<AjaxDataTableModel.Column> Columnas { get; set; }
         public string TablaVista { get; set; }
 
-        public List<SelectListItem> filtrosIniciales { get; set; }
-    } 
- 
+        public List<SelectListItem> filtrosIniciales { get; set; } = new List<SelectListItem>() { new SelectListItem()};
+    }
+
     public class AjaxDataTableModel
     {
+      
         /// <summary>
         /// Metodo para crear las columnas de las Tablas a mostrar en la vistas.
         /// </summary>
         /// <param name="nombreColumna">Nombre del campo, correspondiente de la Tabla o Vista, en la Base de Datos</param>
-        /// <param name="visible">Columna visible, por defecto es true</param>
+        /// <param name="visible">Columna visible, por defecto es false</param>
+        /// <param name="searchable">Columna buscable, por defecto es false</param>
         /// <param name="nombreDisplay">Nombre a mostrar en el encabezado de la Tabla, por defecto es igual a "nombreColumna"</param>
-        /// <param name="searchable">Columna buscable, por defecto es true</param>
-        /// <param name="orderable">Columna ordenable, por defecto es true</param>
+        /// <param name="noPrint">Indica si la columna sera exportada, ya sea en PDF, EXCEL o para imprimir</param>
+        /// <param name="orderable">Columna ordenable, por defecto es false</param>
         /// <returns></returns>
-        public static Column ColumnDTAjax(string nombreColumna, bool visible = false, bool searchable = false, string nombreDisplay=null, bool noPrint=false, bool orderable = false)
+        public static Column ColumnaDTAjax(string nombreColumna, bool visible = false, bool searchable = false, string nombreDisplay = null, bool noPrint = false, bool orderable = false)
         {
             return new Column
             {
                 data = nombreColumna,
-                title = nombreDisplay??nombreColumna,
+                title = nombreDisplay ?? nombreColumna,
                 searchable = searchable,
                 orderable = orderable,
                 visible = visible,
-                className= noPrint ? "noPrint":""
+                className = noPrint ? "noPrint" : ""
             };
+        }
+
+        public static string TablaDTAjax(string nombreTablaVista, List<Column> columnas, List<SelectListItem> filtrosIniciales)
+        {
+            DataTableVM tabla = new DataTableVM
+            {
+                Columnas = columnas,
+                filtrosIniciales = filtrosIniciales,
+                TablaVista = nombreTablaVista
+            };
+            return JsonSerializer.Serialize(tabla);
         }
              
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.Json;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,10 +16,10 @@ namespace SINU.Helpers
         /// <summary>
         /// HtmlHelper personalizado para el armado de un tabla
         /// </summary>
-        /// <param name="model">DataTableVm, recibido en el modelo, correspondiente la tabla a armar</param>
+        /// <param name="nombreTablaVista">Nombre de la Tabla o Vista para el Id de la Tabla a armar</param>
         /// <param name="themeHead">Tema para el encabezadp de la tabla, por defecto "primary". Opciones: primary, secondary, success,dark etc.</param>
         /// <returns></returns>
-        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, DataTableVM model, string themeHead= "primary")
+        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, string nombreTablaVista, string themeHead= "primary")
         {
             //etiquetas para el armado de la tabla            
             //TR TD TH
@@ -40,10 +41,16 @@ namespace SINU.Helpers
             //TABLA
             var table = new TagBuilder("table");
             table.AddCssClass("table table-filters table-bordered table-light table-hover");
-            table.Attributes.Add("id",$"tabla-{model.TablaVista}" );
+            table.Attributes.Add("id",$"dataTable-{nombreTablaVista}" );
             table.InnerHtml = Thead.ToString()+Tbody.ToString();
             
             return MvcHtmlString.Create(table.ToString());
+        }
+
+        public static MvcHtmlString tablaToJson<TModel>(this HtmlHelper<TModel> htmlHelper, dynamic tabla)
+        {
+            var asda = Newtonsoft.Json.JsonConvert.SerializeObject(tabla, Newtonsoft.Json.Formatting.Indented);
+            return MvcHtmlString.Create(asda);
         }
     }
 }

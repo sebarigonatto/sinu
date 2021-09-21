@@ -1,183 +1,163 @@
-﻿//recibo listado de la Clase "DataTableVM", presentados como un listado objetos
-//cada objeto contienen : 
+﻿/// <reference path="jquery-3.3.1.js" />
+//Recibo listado de la Clase "DataTableVM", presentados como un objeto
+//Contienen: 
 //"TablaVista": nombre de la tabla/vista
 //"Columnas": array con las columnas para armar la tabla y correspondiente propiedades
-//"filtrosIniciales": pre-filtros sobre los datos a mostrar en la Tabla
+//"filtrosIniciales": array con pre-filtros sobre los datos a mostrar en la Tabla
 //https://datatables.net/
 
 //funcion para aplicar el plug-in DataTabla a las tablas indicadas
-function armadoDeTablas(tablas) {
+/**
+ * Armado de Tabla con DATATABLES
+ * @param {any} modeloTabla Tabla o listado de las Tablas a armar, Ej: "@Model.tabla"
+ */
 
-    //recorro cada tabla
-    $.each(tablas, function (index, tabla) {
+function armadoDataTable(modeloTabla) {
 
-        //agrego a cada tabla una columna para las opciones que pueda tener
-        tabla.Columnas.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+    //veo si el objeto recibido es un array de Tablas 
+    if (Array.isArray(modeloTabla)) {
 
-        var input_filter_value;
-        var input_filter_timeout = null;
+        $.each(modeloTabla, function (index, item) {
+            tablaArmado(item)
+        })
 
-        alert(tabla.TablaVista);          
+    } else {
 
-    })
+        tablaArmado(modeloTabla)
+    }
+        
 }
 
-//columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+listadoDataTable = []
 
-//var input_filter_value;
-//var input_filter_timeout = null;
-primerCarga = true;
+//obeto que contiene la columna de opciones que se agregara a la tabla
+const opcionColumna = { data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' }
 
-//tabla
-var table = $('table').DataTable({
-    "serverSide": true,
-    "processing": true,
-    searchDelay: 900,
-    "ajax": {
-        url: "@Url.Action",//("CustomServerSideSearchActionAsync", "PostulanteEliminar")",
-        type: "POST",
-        //async: false,
-        data: function (data) {
-            if (primerCarga) {
-                primerCarga = false;
-
-                data.search.value = sessionStorage.searchTablaDelPost;
-            };
-
-            sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
-            sessionStorage.dropDelegacionDelPost == undefined ? sessionStorage.dropDelegacionDelPost = "" : null;
-            sessionStorage.dropModalidadDelPost == undefined ? sessionStorage.dropModalidadDelPost = "" : null;
-
-            data.filtrosExtras = [
-                {
-                    Text: "Inscripto_En",
-                    Value: sessionStorage.dropDelegacionDelPost
-                },
-                {
-                    Text: "Modalidad",
-                    Value: sessionStorage.dropModalidadDelPost
-                }];
-            //JSON.stringify({
-            //    delegacion: sessionStorage.dropDelegacionDelPost,
-            //    modalidad: 
-            //});
-            data.tablaVista = '@Model.TablaVista';
-
-            data.columns.pop()
-        },
-        dataSrc: function (json) {
-
-            $.each(json.data, function (index, item) {
-                botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
-                botonEliminar = "<button type='button' class='ml-1 btn btn-danger fas fa-trash-alt EliPost' data-toggle='tooltip' data-placement='top' title='Eliminar'></button>";
-                item.Opciones = `<div class="d-flex">${botonDetalle} | ${botonEliminar}</div>`
-            });
-            return json.data;
-        }
-    },
-    dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
-
-    "language":
-    {
-        "sProcessing": "<span class='fa-stack fa-lg'>\n\<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\</span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "No se encontraron resultados",
-        "sEmptyTable": "Ningún dato disponible en esta tabla",
-        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "sInfoThousands": ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Último",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    },
-    "columns": columns,
-    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-    responsive: true,
-
-}).on('processing.dt', function (e, settings, processing) {
-    if (processing) {
-        $("tbody").addClass("disabled");
-    } else {
-        $("tbody").removeClass("disabled");
-    }
-
-});
-
-//function limpiar() {
-//    sessionStorage.dropDelegacionDelPost = "";
-//    sessionStorage.dropModalidadDelPost = "";
-//    $("select.selectpicker").val("").selectpicker("refresh");
-//    table.search("").ajax.reload();
-//};
-
-
-//$("div.dataTables_filter input").unbind();
-//$("div.dataTables_filter input").keyup(function (e) {
-//    input_filter_value = this.value;
-//    clearTimeout(input_filter_timeout);
-//    input_filter_timeout = setTimeout(function () {
-//        table.search(input_filter_value).draw();
-//    }, table.context[0].searchDelay);
-
-//    // if (e.keyCode == 13) {
-//    //  usertable.search( this.value ).draw();
-//    // }
-//});
-
-
-
-//    $("table thead tr th").last().width(100);
-
-//    $("button div div div.filter-option-inner-inner").css("color", "black");
-
-//    $('#le-filters[data-toggle="tooltip"]').tooltip("enable")
-//    jQuery("#opcionesExtrasDT1 div.mb-2")
-//        .detach()
-//        .appendTo('.opcionesExtrasDT2')
-
-//    $("#le-filters_filter label")
-//        .addClass("float-md-right")
-//        .children("input")
-//        .removeClass("form-control-sm").addClass("form-control")
-//        .css("width", "225px")
-//        .attr("placeholder", "dni, nombre, apellido, email")
-
-//    $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
-
-
-//    $("#dropDelegacionDelPost").val(sessionStorage.dropDelegacionDelPost).selectpicker("refresh");
-//    $("#dropModalidadDelPost").val(sessionStorage.dropModalidadDelPost).selectpicker("refresh");
-//    //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
-
-
-//    //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-//    table.on('search.dt', function () {
-//        sessionStorage.searchTablaDelPost = table.search();
-//    });
-
-//    //esatblesco en el input la ultima busqueda realizada
-//    table.on('draw', function () {
-
-//        table.search(sessionStorage.searchTablaDelPost);
-//    });
-
-//    //guarda las seleciones de los combos
-//    $("select").on("change", function () {
-//        name = $(this).attr("name");
-//        sessionStorage.setItem(name, $(this).val());
-//        table.search(sessionStorage.searchTablaDelPost).ajax.reload();
-//    });
+function tablaArmado(tabla) {
 
     
+    titleTable = $(`#dataTable-${tabla.TablaVista}`).prev(':header').html();
+
+    tabla.Columnas.push(opcionColumna)
+    listadoDataTable[`dataTable-${tabla.TablaVista}`] = $(`#dataTable-${tabla.TablaVista}`).DataTable({
+        "serverSide": true,
+        "processing": true,
+        searchDelay: 900,
+        "ajax": {
+            url: "/AjaxDataTable/CustomServerSideSearchActionAsync",
+            type: "POST",
+            //async: false,
+            data: function (data) {
+                //if (primerCarga) {
+                //    primerCarga = false;
+
+                //    data.search.value = sessionStorage.searchTexts;
+
+                //};
+                sessionStorage.searchText == undefined ? sessionStorage.searchText = "" : null;
+                data.filtrosExtras = [];
+                $.each(tabla.filtrosIniciales, function (index, item) {
+                    data.filtrosExtras.push(item);
+                })
+
+                data.tablaVista =tabla.TablaVista;
+                data.columns.pop();
+            },
+            dataSrc: function (json) {
+
+                $.each(json.data, function (index, item) {
+                    botonextra = `<a class='mr-1 btn btn-success d-inline fas fa-eye BotonCheck' style="color:white" id="${item[Object.keys(item)[0]]}" data-toggle="tooltip" data-placement="top" title="Detalles"></a>`
+                    botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item[Object.keys(item)[0]]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
+
+                    item.Opciones = `<div class="d-flex justify-content-around">${botonextra}|${botonDetalle}</div>`
+                });
+
+                return json.data;
+            }
+        },
+        dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"lB><"col-md-6 col-sm-12"f><"container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+        
+        "language":
+        {
+            "sProcessing": "<span class='fa-stack fa-lg'>\n\<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\</span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        buttons: [
+            {
+                extend: 'copyHtml5',
+                text: 'Copiar',
+                exportOptions: {
+                    columns: ':not(.noPrint)'
+                },
+                title: titleTable
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':not(.noPrint)'
+                },
+                title: titleTable
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':not(.noPrint)'
+                },
+                title: titleTable
+            },
+            {
+                extend: 'print',
+                text: 'Imprimir',
+                exportOptions: {
+                    columns: ':not(.noPrint)'
+                },
+                title: titleTable
+            },
+        ],
+        "columns": tabla.Columnas,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+        responsive: true,
+
+    }).on('processing.dt', function (e, settings, processing) {
+        if (processing) {
+            $(".dataTables_wrapper").addClass("disabled");
+        } else {
+            $(".dataTables_wrapper").removeClass("disabled");
+        }
+
+    });
+      
+}
+
+
+//guardo la busqueda en 
+$("div.dataTables_filter input").unbind();
+$("div.dataTables_filter input").keyup(function (e) {
+    input_filter_value = this.value;
+    alert(this.value)
+    clearTimeout(input_filter_timeout);
+    input_filter_timeout = setTimeout(function () {
+        table.search(input_filter_value).draw();
+    }, table.context[0].searchDelay);
+
+});

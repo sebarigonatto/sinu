@@ -48,7 +48,8 @@ namespace SINU.Models
             {
 
                 var searchBy = (model.search != null) ? model.search.value : null;
-                var take = model.length > 0 ? model.length : (await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).ToListAsync()).Count();
+
+                var take = model.length /*> 0 ? model.length : (await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).ToListAsync()).Count()*/;
                 var skip = model.start;
 
                 string sortBy = "";
@@ -82,7 +83,7 @@ namespace SINU.Models
         {
             try
             {
-
+                var asdad = db.Inscripcion.Where(m => m.IdModalidad == "CUINA").Count();
                 resultAjaxTable result = new resultAjaxTable();
 
                 string dirSort = sortDir ? "ASC" : "DESC";
@@ -174,12 +175,12 @@ namespace SINU.Models
                 result.filteredResultsCount = registrosWhere.Count();
 
                 result.result = registrosWhere.Skip(skip)
-                                            .Take(take)
+                                            .Take(take>0?take: result.totalResultsCount)
                                             .ToList();
                 return result;
             }
             catch (Exception ex)
-            {
+             {
 
                 throw;
             }

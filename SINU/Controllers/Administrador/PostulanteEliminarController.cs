@@ -49,14 +49,14 @@ namespace SINU.Controllers.Administrador
                 //    new Column { data = "Modalidad", searchable = false, title="Modalidad" },
                 //},
                    Columnas = new List<Column> {
-                    ColumnDTAjax("IdPersona"),
-                    ColumnDTAjax("IdInscripcion"),
-                    ColumnDTAjax( "Nombres",visible: true,true),
-                    ColumnDTAjax( "Apellido",visible: true,true),
-                    ColumnDTAjax("DNI",visible:true,true),
-                    ColumnDTAjax("Email",visible: true ,true),
-                    ColumnDTAjax("Inscripto_En",visible:true, nombreDisplay:"Delegacion"),
-                    ColumnDTAjax("Modalidad", visible:true )
+                    ColumnaDTAjax("IdPersona"),
+                    ColumnaDTAjax("IdInscripcion"),
+                    ColumnaDTAjax( "Nombres",visible: true,true),
+                    ColumnaDTAjax( "Apellido",visible: true,true),
+                    ColumnaDTAjax("DNI",visible:true,true),
+                    ColumnaDTAjax("Email",visible: true ,true),
+                    ColumnaDTAjax("Inscripto_En",visible:true, nombreDisplay:"Delegacion"),
+                    ColumnaDTAjax("Modalidad", visible:true )
                 }
             };
             return View(DeleYMod);

@@ -1,8 +1,8 @@
-﻿@model IEnumerable<SINU.Models.vConsultaInscripciones>
+﻿@model SINU.Models.DataTableVM
 @{
-    ViewBag.Title = "Inscriptos Por Delegacion: " + ViewBag.delegacionSeleccionada;
+    ViewBag.Title = "Inscriptos Por Delegación: " + ViewBag.delegacionSeleccionada;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.CantReg = Model.Count();
+   
     ViewBag.Title2 = "Total de Inscriptos: " + ViewBag.CantReg;
 }
 
@@ -25,67 +25,7 @@
 
 </div>
 
-<table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-                <label>Correo</label>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Etapa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.Email)*@
-                <label>Detalle</label>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genero)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Etapa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td> @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPersona }, new { @class = "fas fa-bars", @style = "color:#343a40" }) </td>
-
-                @*<td>
-                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>*@
-            </tr>
-        }
-    </tbody>
-</table>
+@Html.TablaHelper(Model.TablaVista,"dark")
 
 
 <!-- ***********************************************************************-->
@@ -99,48 +39,198 @@
 <!-- Rodear el contenido de la tabla con <tbody>-->
 @section Scripts {
     <script type="text/javascript">
-        //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-        $(document).ready(function () {
-            $(".table-filters").DataTable({
-                responsive: true,
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function (e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = -1;
+                dt.one('preDraw', function (e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
                     }
-                },
-
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                },
-                {
-                    "targets": 'ni-o-ni-bu',
-                    "searchable": false,
-                    "orderable": false
-          }],
-                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-
+                    dt.one('preXhr', function (e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
             });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        };
+
+        //datatablesAjax
+        tablaDatos= @Html.tablaToJson(Model)
+
+        idInputSearch = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
+        $(":input[type='search']").on("keyup", async function () {
+            sessionStorage.setItem(idInputSearch, $(this).val());
+        });
+        columns = tablaDatos.Columnas;
+        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
+        filtroInicial = tablaDatos.filtrosIniciales;
+        var input_filter_value;
+        var input_filter_timeout = null;
+        primerCarga = true;
+
+        titleTable = $(`#dataTable-${tablaDatos.TablaVista}`).prev(':header').html();
+
+        var table = $(`#dataTable-${tablaDatos.TablaVista}`).DataTable({
+            "serverSide": true,
+            "processing": true,
+            searchDelay: 900,
+            "ajax": {
+                url: "@Url.Action("CustomServerSideSearchActionAsync", "AjaxDataTable")",
+                type: "POST",
+                //async: false,
+                data: function (data) {
+                    if (primerCarga) {
+                        primerCarga = false;
+
+                        data.search.value = sessionStorage.getItem(idInputSearch);
+
+                    };
+
+                    sessionStorage.getItem(idInputSearch) == undefined ? sessionStorage.setItem(idInputSearch, "") : null;
+                    data.filtrosExtras = [];
+                    $.each(filtroInicial, function (index,item) {
+                        data.filtrosExtras.push(item);
+                    })
+
+                    data.tablaVista = tablaDatos.TablaVista;
+
+                    data.columns.pop()
+                },
+                dataSrc: function (json) {
+
+                    $.each(json.data, function (index, item) {
+
+                        botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPostulantePersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
+
+                        item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
+                    });
+                    return json.data;
+                }
+            },
+            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"lB><"col-md-6 col-sm-12"f><"container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+             buttons: [
+                 {
+                     extend: 'copyHtml5',
+                     text: 'Copiar' ,
+                     exportOptions: {
+
+                         columns: ':not(.noPrint)'
+                     },
+                     title: titleTable,
+                     action: newexportaction
+
+                 },
+                 {
+                     extend: 'excelHtml5',
+                     exportOptions: {
+                         columns: ':not(.noPrint)'
+                     },
+                     title: titleTable,
+                     action: newexportaction
+
+                 },
+                 {
+                     extend: 'pdfHtml5',
+                     exportOptions: {
+                         columns: ':not(.noPrint)'
+                     },
+                     orientation: 'landscape',
+                     title: titleTable,
+                     action: newexportaction
+
+
+                 },
+                 {
+                     extend: 'print',
+                     text: 'Imprimir',
+                     exportOptions: {
+
+                         columns: ':not(.noPrint)'
+                     },
+                     title: titleTable,
+                     action: newexportaction
+
+                 },
+             ],
+            "language":
+            {
+                "sProcessing": "<span class='fa-stack fa-lg'>\n\<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\</span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "columns": columns,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            responsive: true,
+
+        }).on('processing.dt', function (e, settings, processing) {
+            if (processing) {
+                $(".dataTables_wrapper").addClass("disabled");
+            } else {
+                $(".dataTables_wrapper").removeClass("disabled");
+            }
+
+        });
+
+
+        //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+        table.on('search.dt', function () {
+            sessionStorage.setItem(idInputSearch,table.search());
+        });
+        $(document).ready(function () {
+            if (sessionStorage.getItem(idInputSearch) != undefined) {
+                table.search(sessionStorage.getItem(idInputSearch)).draw();
+                if (sessionStorage.getItem(idInputSearch) != "") {
+                    $("#dataTable-vExportacionDatosBasicos_filter input").focus()
+                }
+
+            };
         })
     </script>
     }

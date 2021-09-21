@@ -841,6 +841,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene 
             <PropertyRef Name="IdInscripcion" />
             <PropertyRef Name="IdConvocatoria" />
             <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="IdOficinasYDelegaciones" />
           </Key>
           <Property Name="nroinscripto" Type="varchar" MaxLength="15" />
           <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
@@ -862,6 +863,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene 
           <Property Name="FechaInscripcion" Type="date" />
           <Property Name="FechaNacimiento" Type="date" />
           <Property Name="ESTADO" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU.dbo.vGruposYCarreras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -3261,7 +3263,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacionDatosBasicos].[IdCarreraOficio] AS [IdCarreraOficio], 
     [vExportacionDatosBasicos].[FechaInscripcion] AS [FechaInscripcion], 
     [vExportacionDatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
-    [vExportacionDatosBasicos].[ESTADO] AS [ESTADO]
+    [vExportacionDatosBasicos].[ESTADO] AS [ESTADO], 
+    [vExportacionDatosBasicos].[IdOficinasYDelegaciones] AS [IdOficinasYDelegaciones]
     FROM [dbo].[vExportacionDatosBasicos] AS [vExportacionDatosBasicos]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vGruposYCarreras" EntityType="Self.vGruposYCarreras" store:Type="Views" store:Schema="dbo">
@@ -7512,6 +7515,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdInscripcion" />
             <PropertyRef Name="IdConvocatoria" />
             <PropertyRef Name="ESTADO" />
+            <PropertyRef Name="IdOficinasYDelegaciones" />
           </Key>
           <Property Name="nroinscripto" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -7533,6 +7537,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
           <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
           <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -9469,6 +9474,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vExportacionDatosBasicos">
             <EntityTypeMapping TypeName="SINUModel.vExportacionDatosBasicos">
               <MappingFragment StoreEntitySet="vExportacionDatosBasicos">
+                <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />

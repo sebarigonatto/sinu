@@ -138,11 +138,52 @@
 
 @section Scripts{
     <script type="text/javascript">
+        function newexportaction(e, dt, button, config) {
+            var self = this;
+            var oldStart = dt.settings()[0]._iDisplayStart;
+            dt.one('preXhr', function (e, s, data) {
+                // Just this once, load all data from the server...
+                data.start = 0;
+                data.length = -1;
+                dt.one('preDraw', function (e, settings) {
+                    // Call the original action function
+                    if (button[0].className.indexOf('buttons-copy') >= 0) {
+                        $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                        $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                        $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                        $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                            $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                            $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                    } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                        $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                    }
+                    dt.one('preXhr', function (e, s, data) {
+                        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                        // Set the property to what it was before exporting.
+                        settings._iDisplayStart = oldStart;
+                        data.start = oldStart;
+                    });
+                    // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                    setTimeout(dt.ajax.reload, 0);
+                    // Prevent rendering of the full data to the DOM
+                    return false;
+                });
+            });
+            // Requery the server with the new one-time export settings
+            dt.ajax.reload();
+        };
 
         columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Columnas, Newtonsoft.Json.Formatting.Indented));
 
 
-        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones' });
+        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint'  });
 
         //filtro por defecto
         filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));       
@@ -194,12 +235,12 @@
                     $.each(json.data, function (index, item) {
                         botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
                         
-                        item.Opciones = `<div class="d-flex">${botonDetalle}</div>`
+                        item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
                     });
                     return json.data;
                 }
             },
-            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+            dom: '<"container row justify-content-center m-0"<"col-12 mb-2"B><"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
 
             "language":
             {
@@ -226,6 +267,39 @@
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
             },
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    text: 'Copiar',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles"
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles"
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles"
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                    action: newexportaction
+                },
+            ],
             "columns": columns,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
             responsive: true,

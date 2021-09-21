@@ -26,7 +26,7 @@
     @ViewBag.Title
 </h2>
 <p>
-    <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @(Model.restriccionesConvocatoria.Count() == 0 ? "0 ": Model.restriccionesConvocatoria[1].Total)</span></div>
+    <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @(Model.restriccionesConvocatoria.Count() == 0 || Model.restriccionesConvocatoria.Count()==1 ? "0 ": Model.restriccionesConvocatoria[1].Total)</span></div>
 </p>
 
 <div>
@@ -39,66 +39,78 @@
 </div>
 <!-- tabla con detalles de problemas sumarizados, tiene los count de cada problema-->
 
-<table class="table table-filters table-bordered table-light table-hover " id="tablasRestricciones" style="width:100%">
-    <thead class="thead-dark">
-        <!-- fila con detalle de convocatoria-->
-        <tr>
-            <th>
-                IMC
-            </th>
-            <th>
-                ALTURA
-            </th>
-            <th>
-                EDAD
-            </th>
-            <th>
-                Estado Civil
-            </th>
-            <th>
-                Total
-            </th>
-            <th width="29">
-                Total_Subtotal_Agrupacion
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var item in Model.restriccionesConvocatoria)
-        {
+@if (ViewBag.poseeInscriptos)
+{
+    <table class="table table-filters table-bordered table-light table-hover " id="tablasRestricciones" style="width:100%">
+        <thead class="thead-dark">
+            <!-- fila con detalle de convocatoria-->
             <tr>
-                <td style="background-color:@(item.IMC != "" ? "#ffffff" : "#fff6e3")">
-                    <b>@item.IMC</b>
-                </td>
-                <td style="background-color:@(item.ALTURA != "" ? "#ffffff" : "#fff6e3")">
-                    <b>@item.ALTURA</b>
-                </td>
-                <td style="background-color:@(item.EDAD != "" ? "#ffffff" : "#fff6e3")">
-                    <b>@item.EDAD</b>
-                </td>
-                <td style="background-color:@(item.EstadoCivil != "" ? "#ffffff" : "#fff6e3")">
-                    <b>@item.EstadoCivil</b>
-                </td>
-                <td style="background-color:@(item.Total != "" ? "#ffffff" : "#fff6e3")">
-                    <b>@item.Total</b>
-                </td>
-                <td>
-                    <b>@item.Total_Subtotal_Agrupacion</b>
-                </td>
+                <th>
+                    IMC
+                </th>
+                <th>
+                    ALTURA
+                </th>
+                <th>
+                    EDAD
+                </th>
+                <th>
+                    Estado Civil
+                </th>
+                <th>
+                    Total
+                </th>
+                <th width="29">
+                    Total_Subtotal_Agrupacion
+                </th>
             </tr>
-        }
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.restriccionesConvocatoria)
+            {
+                <tr>
+                    <td style="background-color:@(item.IMC != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.IMC</b>
+                    </td>
+                    <td style="background-color:@(item.ALTURA != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.ALTURA</b>
+                    </td>
+                    <td style="background-color:@(item.EDAD != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.EDAD</b>
+                    </td>
+                    <td style="background-color:@(item.EstadoCivil != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.EstadoCivil</b>
+                    </td>
+                    <td style="background-color:@(item.Total != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.Total</b>
+                    </td>
+                    <td>
+                        <b>@item.Total_Subtotal_Agrupacion</b>
+                    </td>
+                </tr>
+            }
 
 
-    </tbody>
-</table>
-<hr />
-<!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
-    dar formato con datatables a esta grilla-->
-<h3>Postulantes Inscriptos en la Convocatoria</h3>
+        </tbody>
+    </table>
+
+    <hr />
+    <!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
+        dar formato con datatables a esta grilla-->
+    <h3>Postulantes Inscriptos en la Convocatoria</h3>
 
 
-@Html.TablaHelper(Model.tablaModel, "dark")
+    @Html.TablaHelper(Model.tablaModel.TablaVista, "dark")
+
+}
+else
+{
+<div class="d-flex justify-content-center">
+    <h2>La Convocatoria actual no posee Inscriptos.</h2>
+
+</div>
+}
 
 <div class="modal fade" id="MCheck" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -180,11 +192,14 @@
 <!-- Rodear el contenido de la tabla con <tbody>-->
 
 @section Scripts{
+
     <script type="text/javascript">
+
         $("#tablasRestricciones").DataTable({
             dom: "t",
             pageLength: 100
         });
+
         //https://stackoverflow.com/questions/32692618/how-to-export-all-rows-from-datatables-using-ajax
         function newexportaction(e, dt, button, config) {
             var self = this;
@@ -228,23 +243,25 @@
             dt.ajax.reload();
         };
 
+        //datatables ajax
+        tablaDatos= @Html.tablaToJson(Model.tablaModel)
+        idInputSearch = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
+
+
         $(":input[type='search']").on("keyup", async function () {
-            sessionStorage.setItem("searchText", $(this).val());
+            sessionStorage.setItem(idInputSearch, $(this).val());
         });
 
-        //datatables ajax
-        columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.tablaModel.Columnas, Newtonsoft.Json.Formatting.Indented));
-
-        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones',className:'noPrint' });
-
-        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.tablaModel.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));
+        columns = tablaDatos.Columnas;
+        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
+        filtroInicial = tablaDatos.filtrosIniciales;
 
 
         var input_filter_value;
         var input_filter_timeout = null;
         primerCarga = true;
 
-         var table = $(`#tabla-${"@Model.tablaModel.TablaVista"}`).DataTable({
+        var table = $(`#dataTable-${tablaDatos.TablaVista}`).DataTable({
             "serverSide": true,
             "processing": true,
             searchDelay: 900,
@@ -256,17 +273,17 @@
                     if (primerCarga) {
                         primerCarga = false;
 
-                        data.search.value = sessionStorage.searchTexts;
+                        data.search.value = sessionStorage.getItem(idInputSearch);
 
                     };
 
-                    sessionStorage.searchText == undefined ? sessionStorage.searchText = "" : null;
+                    sessionStorage.getItem(idInputSearch) == undefined ? sessionStorage.setItem(idInputSearch, "") : null;
                     data.filtrosExtras = [];
                     $.each(filtroInicial, function (index,item) {
                         data.filtrosExtras.push(item);
                     })
 
-                    data.tablaVista = '@Model.tablaModel.TablaVista';
+                    data.tablaVista = tablaDatos.TablaVista;
 
                     data.columns.pop()
                 },
@@ -363,6 +380,13 @@
 
         });
 
+
+
+        //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+        table.on('search.dt', function () {
+            sessionStorage.setItem(idInputSearch, table.search());
+        });
+
         $("div.dataTables_filter input").unbind();
         $("div.dataTables_filter input").keyup(function (e) {
             input_filter_value = this.value;
@@ -373,15 +397,14 @@
 
         });
 
-        //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-        table.on('search.dt', function () {
-            sessionStorage.searchText = table.search();
-        });
-
         $(document).ready(function () {
 
-            if (sessionStorage.getItem("searchText") != undefined) {
-                table.search(sessionStorage.getItem("searchText")).draw();
+            if (sessionStorage.getItem(idInputSearch) != undefined) {
+                table.search(sessionStorage.getItem(idInputSearch)).draw();
+                if (sessionStorage.getItem(idInputSearch)!="") {
+                    $("#dataTable-vExportacionDatosBasicos_filter input").focus()
+                }
+               
             };
 
             $("tbody").on("click", ".BotonCheck", function () {
