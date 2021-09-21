@@ -343,30 +343,36 @@
                 $(`#Consulta${item.IdConsulta} table.table-filters`).not(".ajaxTabla").DataTable({
                     'dom': 'Bfrtlpi',
                     buttons: [
-                        'excel', 'pdf',//'colvis',
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                        //    extend: 'columnVisibility',
-                        //    text: 'Show secondary',
-                        //    visibility: true,
-                        //    columns: '.secondary'
-                        //},
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                        //    extend: 'columnVisibility',
-                        //    text: 'Hide secondary',
-                        //    visibility: false,
-                        //    columns: '.secondary'
-                        //},
+                        {
+                            extend: 'copyHtml5',
+                            text: 'Copiar',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
                         {
                             extend: 'print',
                             text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles",
                         },
-                        {
-                            extend: 'copy',
-                            text: 'copiar',
-                        }
-
-
                     ],
                     responsive: true,
                     "language":
@@ -402,7 +408,8 @@
                         "targets": 'ni-o-ni-bu',
                         "searchable": false,
                         "orderable": false
-                    }],
+                        }],
+
                     "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
 
                 });
