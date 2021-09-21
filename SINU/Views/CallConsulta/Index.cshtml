@@ -181,9 +181,12 @@
         };
 
         columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Columnas, Newtonsoft.Json.Formatting.Indented));
-
-
-        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint'  });
+     
+        //columns.push({
+        //    data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint', render: function (data, type, row) {
+        //        return `<div class="d-flex justify-content-around"><a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${row.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a></div>`;
+        //    }
+        //});
 
         //filtro por defecto
         filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));       
@@ -197,6 +200,7 @@
             "serverSide": true,
             "processing": true,
             searchDelay: 900,
+
             "ajax": {
                 url: "@Url.Action("CustomServerSideSearchActionAsync", "AjaxDataTable")",
                 type: "POST",
@@ -228,18 +232,15 @@
                     
                     data.tablaVista = '@Model.TablaVista';
 
-                    data.columns.pop()
+                    //data.columns.pop()
                 },
-                dataSrc: function (json) {
+                //dataSrc: function (json) {
 
-                    $.each(json.data, function (index, item) {
-                        botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
-                        
-                        item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
-                    });
-                    return json.data;
-                }
+                //    return json.data;
+                //}
             },
+            "deferRender": true,
+
             dom: '<"container row justify-content-center m-0"<"col-12 mb-2"B><"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
 
             "language":
@@ -274,21 +275,27 @@
                     exportOptions: {
                         columns: ':not(.noPrint)'
                     },
-                    title: "Inscriptos Detalles"
+                    title: "Inscriptos Detalles",
+                    action: newexportaction
+
                 },
                 {
                     extend: 'excelHtml5',
                     exportOptions: {
                         columns: ':not(.noPrint)'
                     },
-                    title: "Inscriptos Detalles"
+                    title: "Inscriptos Detalles",
+                    action: newexportaction
+
                 },
                 {
                     extend: 'pdfHtml5',
                     exportOptions: {
                         columns: ':not(.noPrint)'
                     },
-                    title: "Inscriptos Detalles"
+                    title: "Inscriptos Detalles",
+                    orientation: 'landscape',
+                    action: newexportaction
                 },
                 {
                     extend: 'print',
@@ -300,7 +307,7 @@
                     action: newexportaction
                 },
             ],
-            "columns": columns,
+            "columns":columns,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
             responsive: true,
 

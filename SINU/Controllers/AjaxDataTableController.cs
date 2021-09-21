@@ -21,8 +21,7 @@ namespace SINU.Models
             {
 
                 var result = await YourCustomSearchFuncAsync(model);
-
-                return Json(new
+                var jsonResult = Json(new
                 {
                     // this is what datatables wants sending back
                     draw = model.draw,
@@ -30,6 +29,9 @@ namespace SINU.Models
                     recordsFiltered = result.filteredResultsCount,
                     data = result.result
                 });
+                jsonResult.MaxJsonLength = int.MaxValue;
+
+                return jsonResult;
             }
             catch (Exception ex)
             {
@@ -83,13 +85,12 @@ namespace SINU.Models
         {
             try
             {
-                var asdad = db.Inscripcion.Where(m => m.IdModalidad == "CUINA").Count();
+                
                 resultAjaxTable result = new resultAjaxTable();
 
                 string dirSort = sortDir ? "ASC" : "DESC";
 
-                var asdasd = new DateTime(961470000000);
-              
+                              
                 //obtengo el tipo de cada columna
                 var columnaTipo = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='{model.tablaVista}'").ToList();
 

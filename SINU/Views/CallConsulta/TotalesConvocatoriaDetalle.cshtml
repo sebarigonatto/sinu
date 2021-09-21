@@ -327,7 +327,8 @@ else
                      },
                      orientation: 'landscape',
                      title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
-                     action: newexportaction
+                     action: newexportaction,
+                     pageSize: 'LEGAL'
 
                  },
                  {
@@ -337,6 +338,7 @@ else
 
                          columns: ':not(.noPrint)'
                      },
+                     autoPrint: true,
                      title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
                      action: newexportaction
 
