@@ -2269,7 +2269,7 @@ namespace SINU.Controllers
 
         }
 
-        [AuthorizacionPermiso("CreaEditaDatosP")]
+        [AuthorizacionPermiso("ListarRP")]
         public ActionResult InscripConvo(int ID_postulante)
         {
             ViewBag.idpostu = ID_postulante;
@@ -2294,6 +2294,15 @@ namespace SINU.Controllers
 
                 var ultimaInscripcion = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == ID_postulante);
                 //envio de mail tanto para el postulante como para la delegacion
+
+
+                //se elimina listado de pantallas cerradas, de la etapa DOCUMENTACION del postulante
+                var listaPantallasCerradas = db.VerificacionPantallasCerradas.Where(m => m.IdPostulantePersona == ID_postulante).ToList();
+                db.VerificacionPantallasCerradas.RemoveRange(listaPantallasCerradas);
+
+                db.SaveChanges();
+
+                //armado de los distintos MAIL
                 var modelPlantilla = new ViewModels.PlantillaMailConfirmacion
                 {
                     Apellido = postulante.Persona.Apellido,

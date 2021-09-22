@@ -35,9 +35,7 @@ namespace SINU.Authorize
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             //lista con las secuencias en las cuales el postualante posee control de sus datos
-            var secuenciaPostulante = new[] { 6, 13 };
-
-
+            var secuenciaPostulante = new[] { 6, 13};
             //LOGICA DE VALIDACION segun funcion 
             List<spValidarUsuario_Result> permiso = db.spValidarUsuario(httpContext.User.Identity.Name, Funcion).ToList();
             //esta funciones son solo ejecutadas por los POSTULANTES
@@ -62,11 +60,19 @@ namespace SINU.Authorize
                     if (db.Familiares.Where(m => m.IdPersona == IDpersonaDatos && m.IdPostulantePersona == IDpersonaActual).ToList().Count() == 0) return false;
                 }
 
-                //si se envio el Id de la pantalla es para ver si la misma esta validad/cerrada
-                //en caso de que este cerrada se debe mandar un mensaje de error sin autorizacion
-                int secuenciaActual = db.vInscripcionDetalleUltInsc.FirstOrDefault(m => m.IdPersona == IDpersonaActual).IdSecuencia;
+                //datos del postulante
+                var datos = db.vInscripcionEtapaEstadoUltimoEstado.Where(m => m.IdPersona == IDpersonaActual)
+                                                                  .OrderBy(m=>m.FechaInscripcion)
+                                                                  .ToList().Last();
 
-                if (!secuenciaPostulante.Contains(secuenciaActual))
+                //si veo que es una usuaria con convocatoria vencida, permito que realice la reinscripcion
+                if (!(bool)datos.Activa)
+                {
+                    return true;
+                }
+
+                //verifico que la secuancia en la que esta el postulante sea una en la que cargue o modifique sus datos
+                if (!secuenciaPostulante.Contains(datos.IdSecuencia))
                 {
                     return false;
                 }
