@@ -9,7 +9,12 @@ using System.Windows.Documents;
 * Y ASOCIO LA METADATA CORRESPONDIENTE DENOMINADA vUsuariosAdministrativosMetadata
 * */
 namespace SINU.Models
+
 {
+    public partial class OficinasYDelegaciones
+    {
+        public int Count { get; set; }
+    }
     [MetadataType(typeof(vPersona_DatosBasicosMetadata))]
     public partial class vPersona_DatosBasicos
     {

@@ -369,7 +369,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                     <div class="col-md-10">
-                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker", @readonly = true })
+                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/mm/yyyy", @class = "form-control date", @readonly = true })
 
                                         @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                         @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaNacimiento, "", new { @class = "text-danger" })
@@ -429,7 +429,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.vPersona_FamiliarVM.Mail, htmlAttributes: new { @class = "control-label col-md-10" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Mail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mail distinto al de la cuenta de usuario" } })
+                                        @Html.EditorFor(model => model.vPersona_FamiliarVM.Mail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mail distinto al de la cuenta actual" } })
                                         @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.Mail, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -444,7 +444,7 @@
                                 <div class="form-group d-none" id="FechaCasamiento">
                                     @Html.LabelFor(model => model.vPersona_FamiliarVM.FechaCasamiento, htmlAttributes: new { @class = "control-label col-md-10" })
                                     <div class="col-md-10">
-                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/MM/yyyy", @class = "form-control datepicker ", @readonly = true })
+                                        @Html.TextBoxFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "{0:dd/MM/yyyy}", new { @placeholder = "dd/mm/yyyy", @class = "form-control date ", @readonly = true })
                                         @*@Html.EditorFor(model => model.vPersona_DatosPerVM.FechaNacimiento, "{0:dd/MM/yy}", new { htmlAttributes = new { @class = "form-control", @type = "text", @id = "datepicker", placeholder = "Formato: DD/MM/YYYY" } })*@
                                         @Html.ValidationMessageFor(model => model.vPersona_FamiliarVM.FechaCasamiento, "", new { @class = "text-danger" })
                                     </div>
@@ -530,9 +530,15 @@
                 .attr("title", "Opcion deshabilitada hasta que avance de secuencia")
                 .tooltip('enable');
         }());
+        $('.date').datepicker({
+            endDate: '0d',
+            autoclose: true
+        });
 
         $.NoEjecutar = true;
         $(document).ready(function () {
+            //limito la fecha a ingresar que sean anteriores al dia actual
+           
             $("#SinACT").hide();
 
 
@@ -634,7 +640,11 @@
                                 case "no_existe":
                                     $("#BeginFormFamiliar").submit();
                                     break;
-
+                                case "misma_persona":
+                                    $(":input").not("input[type='button']").val("");
+                                    $("select").selectpicker("refresh");
+                                    $.Anuncio(response.msg);
+                                    break;
                             }
 
                         })

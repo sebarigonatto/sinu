@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SINU.Models.ConsultaProgramada>
+﻿@model SINU.ViewModels.IndexConsultorModel
+
 @using SINU.Models;
 
 @{
@@ -11,18 +12,40 @@
 
 <h2>@ViewBag.Title</h2>
 <style>
+    #divContent {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        width: 200px;
+        margin-left: -100px;
+        margin-top: -26px;
+        text-align: center;
+        padding: 1em 0
+    }
     li.nav-item a {
-        color:black !important;
-
+        color: black !important;
     }
-    li.nav-item a.active {
-        /*background-color: #6c757d !important;*/
-         background-color: #346691!important;
-        color:white !important;
 
-    }
+        li.nav-item a.active {
+            /*background-color: #6c757d !important;*/
+            background-color: #346691 !important;
+            color: white !important;
+        }
+
     .dataTables_length {
         float: left !important;
+    }
+
+    .dataTables_processing {
+        z-index: 1050 !important;
+    }
+
+    .disabled {
+        pointer-events: none !important;
+    }
+    .dropdown-header span {
+        font-weight: bold;
+        font-size: initial;
     }
 </style>
 <br />
@@ -35,7 +58,13 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="TABDocumentacion">
                 <ul class="nav nav-tabs nav-pills with-arrow lined  flex-sm-row text-left" id="myTab" role="tablist" style="border-bottom: 0px solid;">
-                    @foreach (var item in Model)
+                    <li class="nav-item flex-md-fill bli">
+                        <a class="nav-link font-weight-bold rounded-0 @(((Int32)ViewBag.ActivarId) == 9 ? " active " : "") atab" data-toggle="tab" href="#Consulta9" role="tab" aria-controls="XXXXX" aria-selected="false" style="text-transform: capitalize !important;">
+                            Todos Los Postulantes
+                        </a>
+                    </li>
+
+                    @foreach (var item in Model.ConsultaProgramadaVm)
                     {
                         referencia = "#Consulta" + item.IdConsulta.ToString();
                         activar = ((Int32)ViewBag.ActivarId) == item.IdConsulta ? " active " : "";
@@ -46,8 +75,6 @@
                         </li>
                     }
 
-
-
                 </ul>
             </div>
         </nav>
@@ -55,96 +82,403 @@
 
         <div class="col-md-9 borderdiv1">
             <div class="tab-content TABMovil" id="TabDocumentacion">
-                @foreach (var item in Model)
-                {
-                    referencia = "Consulta" + item.IdConsulta.ToString();
-                    activar = ((Int32)ViewBag.ActivarId) == item.IdConsulta ? "show active" : "";
+                <div class="pos-f-t collapse tab-pane fade @(((Int32)ViewBag.ActivarId) == 9 ? "show active " : "") tab-nav" id="Consulta9">
+                    <!--TABLA DE TOTAL DE POSTULANTES A REVISAR-->
+                    <div id="opcionesExtrasDT1">
+                        <div class="col-md-4 col-sm-12 mb-2 p-0 text-center pt-1">
+                            <div class="col-md-12">
+                                <label>Etapa: <b id="ETAPA">----</b></label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 mb-2 p-0">
+                            <div class="col-md-12">
+                                @Html.DropDownList("EstadosEtapasPost", Model.EstadosEtapas, "Seleccione Etapa/Estado", new { @class = "form-control selectpicker" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 mb-2 p-0">
 
-                    <div class="pos-f-t collapse tab-pane fade @activar tab-nav" id="@referencia">
-                        @Html.Action(item.Action, item.Controller, null)
+                            <div class="col-md-12">
+                                <button class="btn btn-dark form-control" onclick="limpiar()">Limpiar filtros</button>
+                            </div>
+                        </div>
                     </div>
-                }
+                    <br />
+                    <table class="table table-filters table-bordered table-light table-hover ajaxTabla" id="PostulanteConsultor" style="width:100%">
+                        <thead class="thead-dark">
+                            <tr>
+                                <!--Encabezados generados dinamicamente-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">Ningún dato disponible en esta tabla</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
+                </div>
+                    @foreach (var item in Model.ConsultaProgramadaVm)
+                    {
+                        referencia = "Consulta" + item.IdConsulta.ToString();
+                        activar = ((Int32)ViewBag.ActivarId) == item.IdConsulta ? "show active" : "";
+
+                        <div class="pos-f-t collapse tab-pane fade  tab-nav justify-content-center align-content-center h-100 w-100 @activar" id="@referencia">
+                            <div id="divContent">
+                                <span class='fa-stack fa-lg'><i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i></span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...
+                            </div>
+                            @*@Html.Action(item.Action, item.Controller, null)*@
+                        </div>
+                    }
+
+                </div>
             </div>
-        </div>
         <!-- /.col-md-8 -->
     </div>
 </div>
 
 @section Scripts{
     <script type="text/javascript">
+        //function newexportaction(e, dt, button, config) {
+        //    var self = this;
+        //    var oldStart = dt.settings()[0]._iDisplayStart;
+        //    dt.one('preXhr', function (e, s, data) {
+        //        // Just this once, load all data from the server...
+        //        data.start = 0;
+        //        data.length = -1;
+        //        dt.one('preDraw', function (e, settings) {
+        //            // Call the original action function
+        //            if (button[0].className.indexOf('buttons-copy') >= 0) {
+        //                $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+        //            } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+        //                $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+        //                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+        //                    $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+        //            } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+        //                $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+        //                    $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+        //                    $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+        //            } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+        //                $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+        //                    $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+        //                    $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+        //            } else if (button[0].className.indexOf('buttons-print') >= 0) {
+        //                $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+        //            }
+        //            dt.one('preXhr', function (e, s, data) {
+        //                // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+        //                // Set the property to what it was before exporting.
+        //                settings._iDisplayStart = oldStart;
+        //                data.start = oldStart;
+        //            });
+        //            // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+        //            setTimeout(dt.ajax.reload, 0);
+        //            // Prevent rendering of the full data to the DOM
+        //            return false;
+        //        });
+        //    });
+        //    // Requery the server with the new one-time export settings
+        //    dt.ajax.reload();
+        //};
+
+        columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Columnas, Newtonsoft.Json.Formatting.Indented));
+     
+        columns.push({
+            data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint', render: function (data, type, row) {
+                return `<div class="d-flex justify-content-around"><a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${row.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a></div>`;
+            }
+        });
+
+        //filtro por defecto
+        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));       
+        
+        
+        var input_filter_value;
+        var input_filter_timeout = null;
+        primerCarga = true;
+            //tabla
+        var table = $('#PostulanteConsultor').DataTable({
+            "serverSide": true,
+            "processing": true,
+            searchDelay: 900,
+
+            "ajax": {
+                url: "@Url.Action("CustomServerSideSearchActionAsync", "AjaxDataTable")",
+                type: "POST",
+                //async: false,
+                data: function (data) {
+                    if (primerCarga) {
+                        primerCarga = false;
+
+                        data.search.value = sessionStorage.searchTablaDelPost;
+
+                    };
+
+                    sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
+                    sessionStorage.EtapasPost == undefined ? sessionStorage.EtapasPost = "" : null;
+                    sessionStorage.EstadosPost == undefined ? sessionStorage.EstadosPost = "" : null;
+
+                    data.filtrosExtras = [
+                        {
+                            Text: "Etapa",
+                            Value: sessionStorage.EtapasPost
+                        },
+                        {
+                            Text: "Estado",
+                            Value: sessionStorage.EstadosPost
+                        }];
+                    $.each(filtroInicial, function (index,item) {
+                        data.filtrosExtras.push(item);
+                    })
+                    
+                    data.tablaVista = '@Model.TablaVista';
+
+                    data.columns.pop()
+                },
+                //dataSrc: function (json) {
+
+                //    return json.data;
+                //}
+            },
+            "deferRender": true,
+
+            dom: '<"container row justify-content-center m-0"<"col-12 mb-2"B><"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+
+            "language":
+            {
+                "sProcessing": "<span class='fa-stack fa-lg'>\n\<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\</span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            buttons: [
+                {
+                    extend: 'copyHtml5',
+                    text: 'Copiar',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                    //action: newexportaction
+
+                },
+                {
+                    extend: 'excelHtml5',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                    //action: newexportaction
+
+                },
+                {
+                    extend: 'pdfHtml5',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                    orientation: 'landscape',
+                //    action: newexportaction
+                },
+                {
+                    extend: 'print',
+                    text: 'Imprimir',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                //    action: newexportaction
+                },
+            ],
+            "columns":columns,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            responsive: true,
+
+        }).on('processing.dt', function (e, settings, processing) {
+            if (processing) {
+                $(".dataTables_wrapper").addClass("disabled");
+            } else {
+                $(".dataTables_wrapper").removeClass("disabled");
+            }
+            
+        });
+
+        function limpiar() {
+                sessionStorage.EtapasPost = "";
+            sessionStorage.EstadosPost = "";
+            $("#EstadosPost").find("optgroup").removeAttr("hidden");
+             $("#ETAPA").html("---")
+            $("select.selectpicker").val("").selectpicker("refresh");
+
+            table.search("").ajax.reload();
+        };
+
+       
+        $("div.dataTables_filter input").unbind();
+        $("div.dataTables_filter input").keyup(function (e) {
+            input_filter_value = this.value;
+            clearTimeout(input_filter_timeout);
+            input_filter_timeout = setTimeout(function () {
+                table.search(input_filter_value).draw();
+            }, table.context[0].searchDelay);
+                      
+        });
+
+        var vistas =  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ConsultaProgramadaVm, Newtonsoft.Json.Formatting.Indented));
+
+        $.each(vistas, async function (index, item) {
+          
+            $(`#Consulta${item.IdConsulta}`).delay(800).load(`\\${item.Controller}\\${item.Action}`, function () {
+
+                $(`#Consulta${item.IdConsulta} table.table-filters`).not(".ajaxTabla").DataTable({
+                    'dom': 'Bfrtlpi',
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            text: 'Copiar',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
+                        {
+                            extend: 'excelHtml5',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
+                        {
+                            extend: 'pdfHtml5',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles"
+                        },
+                        {
+                            extend: 'print',
+                            text: 'Imprimir',
+                            exportOptions: {
+                                columns: ':not(.noPrint)'
+                            },
+                            title: "Inscriptos Detalles",
+                        },
+                    ],
+                    responsive: true,
+                    "language":
+                    {
+                        "sProcessing": "Procesando...",
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix": "",
+                        "sSearch": "Buscar:",
+                        "sUrl": "",
+                        "sInfoThousands": ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst": "Primero",
+                            "sLast": "Último",
+                            "sNext": "Siguiente",
+                            "sPrevious": "Anterior"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    },
+                    "columnDefs": [{
+                        "targets": 'no-sort',
+                        "orderable": false
+                    },
+                    {
+                        "targets": 'ni-o-ni-bu',
+                        "searchable": false,
+                        "orderable": false
+                        }],
+
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+
+                });
+            });
+           
+        });
+
         $(document).ready(function () {
 
-            $.get("/Home/Table", { searchBy: "Option 1", searchString: "test" }, function (partialView) {
-                $("#output").html(partialView);
+            $("table thead tr th").last().width(100);
+
+            $("button div div div.filter-option-inner-inner").css("color", "black");
+
+            $('#PostulanteConsultor[data-toggle="tooltip"]').tooltip("enable")
+            jQuery("#opcionesExtrasDT1 div.mb-2")
+                .detach()
+                .appendTo('.opcionesExtrasDT2')
+
+            $("#le-filters_filter label")
+                .addClass("float-md-right")
+                .children("input")
+                .removeClass("form-control-sm").addClass("form-control")
+                .css("width", "225px")
+                .attr("placeholder", "dni, nombre, apellido, email")
+
+            $("[name='le-filters_length']").css({"width": "180px", "font-size":"100%"}).removeClass("form-control-sm")
+
+
+            
+            $("#EstadosEtapasPost").find(`optgroup[label="${sessionStorage.EtapasPost}"]`).find(`option[value="${sessionStorage.EstadosPost}"]`).attr("selected", true);
+            $("#EstadosEtapasPost").selectpicker("refresh");
+            $("#ETAPA").html(sessionStorage.EtapasPost== undefined || sessionStorage.EtapasPost==""?"---":sessionStorage.EtapasPost);
+
+            //se aplicael selecpicker a alos conbo/s con autocomplete con la opcion de busqueda
+
+
+            //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+            table.on('search.dt', function () {
+                sessionStorage.searchTablaDelPost = table.search();
             });
 
-            $(".table-filters").DataTable({
-                'dom': 'Bfrtlpi',
-                buttons: [
-                    'excel', 'pdf',//'colvis',
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                    //    extend: 'columnVisibility',
-                    //    text: 'Show secondary',
-                    //    visibility: true,
-                    //    columns: '.secondary'
-                    //},
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                    //    extend: 'columnVisibility',
-                    //    text: 'Hide secondary',
-                    //    visibility: false,
-                    //    columns: '.secondary'
-                    //},
-                    {
-                        extend: 'print',
-                        text: 'Imprimir',
-                        messageTop: 'Armada Argentina'
-                    },
-                    {
-                        extend: 'copy',
-                        text: 'copiar',
-                    }
+            //esatblesco en el input la ultima busqueda realizada
+            table.on('draw', function () {
 
-
-                ],
-                responsive: true,
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                },
-                {
-                    "targets": 'ni-o-ni-bu',
-                    "searchable": false,
-                    "orderable": false
-                }],
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-
+                table.search(sessionStorage.searchTablaDelPost);
             });
+
+            //guarda las seleciones de los combos
+            $("#EstadosEtapasPost").on("change", function () {
+                if ($(this).val()==null) {
+                    alert("null")
+                }
+                sessionStorage.EtapasPost = $(this).find("option:selected").closest("optgroup").prop("label");
+                $("#ETAPA").html(sessionStorage.EtapasPost== undefined ?"---":$(this).find("option:selected").closest("optgroup").prop("label")) 
+                sessionStorage.EstadosPost= $(this).val()
+                table.search(sessionStorage.searchTablaDelPost).ajax.reload();
+                                
+            });
+
+            
+
+          
         });
     </script>
     }

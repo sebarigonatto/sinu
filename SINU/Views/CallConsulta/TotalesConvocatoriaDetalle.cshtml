@@ -1,9 +1,8 @@
-﻿@model IEnumerable<SINU.Models.vInscriptosYRestriccionesCheck>
-@using SINU.Models
+﻿@model SINU.ViewModels.ConsultaPorConvocatoria
 @{
     ViewBag.Title = "Problemas de Inscriptos en Convocatoria elegida";
     //tiene 1 registro de la convocatoria elegida con los totales de los count de errores correspondientes
-    vInscriptosYRestriccionesCount InscriptosYConvocatoriasCount = (vInscriptosYRestriccionesCount)(ViewBag.InscriptosYConvocatoriasCount);
+    // vInscriptosYRestriccionesCount InscriptosYConvocatoriasCount = (vInscriptosYRestriccionesCount)(ViewBag.InscriptosYConvocatoriasCount);
     //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,184 +18,168 @@
 
 
     <span style="float:right">
-        @Html.ActionLink("VER Problemas de Titulos", "TotalesConvocatoriaTitulos", new { IdConvocatoria = @InscriptosYConvocatoriasCount.IdConvocatoria }, new { @class = "btn btn-primary w-80  btn-dark" })
+        @Html.ActionLink("VER Problemas de Titulos", "TotalesConvocatoriaTitulos", new { IdConvocatoria = Model.idConvocatoria }, new { @class = "btn btn-primary w-80  btn-dark" })
     </span>
 </div>
+<br />
 <h2>
     @ViewBag.Title
 </h2>
 <p>
-    <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @InscriptosYConvocatoriasCount.SubTotal_Convoc</span></div>
+    <div class="alert alert-success text-dark" role="alert">DETALLES DE LA CONVOCATORIA SELECCIONADA  <span style="float:right">TOTAL INSC.: @(Model.restriccionesConvocatoria.Count() == 0 || Model.restriccionesConvocatoria.Count()==1 ? "0 ": Model.restriccionesConvocatoria[1].Total)</span></div>
 </p>
+
+<div>
+    <p>ID de Convocatoria: <b>@Model.infoConvocatoria.IdConvocatoria</b></p>
+    <p>Modalidad: <b>@Model.infoConvocatoria.Modalidad</b></p>
+    <p>Inicio: <b>@Model.infoConvocatoria.FechaInicio.ToString("dd/MM/yyyy")</b></p>
+    <p>Fin de Inscripción: <b>@Model.infoConvocatoria.FechaFinal.ToString("dd/MM/yyyy")</b></p>
+    <p>Fin Proceso: <b>@(((DateTime)Model.infoConvocatoria.Fecha_Fin_Proceso).ToString("dd/MM/yyyy"))</b></p>
+
+</div>
 <!-- tabla con detalles de problemas sumarizados, tiene los count de cada problema-->
-<table class="table table-sm">
-    <thead class="thead-dark">
-        <!-- fila con detalle de convocatoria-->
-        <tr>
-            <th>
-                @InscriptosYConvocatoriasCount.IdModalidad
-            </th>
-            <th>
-                Inicio: @InscriptosYConvocatoriasCount.FechaInicio
-            </th>
-            <th>
-                Final: @InscriptosYConvocatoriasCount.FechaFinal
-            </th>
-            <th>
-                Fin Proceso: @InscriptosYConvocatoriasCount.Fecha_Fin_Proceso
-            </th>
-        </tr>
-        <!--fila con titulos de cada columna-->
-        <tr>
-            <th scope="col">Campo\Estado</th>
-            <th scope="col" class="table-danger">Problema</th>
-            <th scope="col" class="table-warning">Dato Sin Cargar</th>
-            <th scope="col" class="table-success">Satisfactorio</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">ALTURA</th>
-            <td class="table-danger">@InscriptosYConvocatoriasCount.AlturaProblema</td>
-            <td class="table-warning">@InscriptosYConvocatoriasCount.AlturaSinCargar</td>
-            <td class="table-success">@InscriptosYConvocatoriasCount.AlturaOK</td>
-        </tr>
-        <tr>
-            <th scope="row">IMC</th>
-            <td class="table-danger">@InscriptosYConvocatoriasCount.IMCProblema</td>
-            <td class="table-warning">@InscriptosYConvocatoriasCount.IMCSinCargar</td>
-            <td class="table-success">@InscriptosYConvocatoriasCount.IMCOK</td>
-        </tr>
-        <tr>
-            <th scope="row">EDAD</th>
-            <td class="table-danger">@InscriptosYConvocatoriasCount.EdadProblema</td>
-            <td class="table-warning">@InscriptosYConvocatoriasCount.EdadSinCargar</td>
-            <td class="table-success">@InscriptosYConvocatoriasCount.EdadOK</td>
-        </tr>
-        <tr>
-            <th scope="row">Est.Civ.</th>
-            <td class="table-danger">@InscriptosYConvocatoriasCount.EstadoCivilProblema</td>
-            <td class="table-warning">@InscriptosYConvocatoriasCount.EstadoCivilSinCargar</td>
-            <td class="table-success">@InscriptosYConvocatoriasCount.EstadoCivilOK</td>
-        </tr>
-    </tbody>
-</table>
 
-<!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
-    dar formato con datatables a esta grilla-->
-
-<table class="table table-filters table-bordered table-light table-hover " id="le-filters" style="width:100%">
-    <thead class="thead-dark">
-        <tr>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.IdPostulantePersona)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInscripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genero)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Altura)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.AlturaCheck)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.IMC)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.IMCCheck)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Edad)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.EdadCheck)
-            </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.EstadoCivilId)
-                </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoCivil)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoCiviCheck)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Oficina)
-            </th>
-            <th>
-                Ver Datos
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+@if (ViewBag.poseeInscriptos)
+{
+    <table class="table table-filters table-bordered table-light table-hover " id="tablasRestricciones" style="width:100%">
+        <thead class="thead-dark">
+            <!-- fila con detalle de convocatoria-->
             <tr>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IdPostulantePersona)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.Apellido)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombres)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaInscripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Genero)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Altura)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.AlturaCheck)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.IMC)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.IMCCheck)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Edad)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.EdadCheck)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.EstadoCivilId)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstadoCivil)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EstadoCiviCheck)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Oficina)
-                </td>
-                <td>
-                    <!-- Aqui usmos la Hamburguesa para ver más detalles llamando a otra pantalla-->
-                    @Html.ActionLink(" ", "VerPostulanteElegido", new { IdPostulantePersona = item.IdPostulantePersona }, new { @class = "fas fa-bars", @style = "color:#343a40" })
-                    @*@Html.ActionLink("Texto a mostrar", "Nombre del action", new { /* id=item.PrimaryKey */ })*@
-                </td>
+                <th>
+                    IMC
+                </th>
+                <th>
+                    ALTURA
+                </th>
+                <th>
+                    EDAD
+                </th>
+                <th>
+                    Estado Civil
+                </th>
+                <th>
+                    Total
+                </th>
+                <th width="29">
+                    Total_Subtotal_Agrupacion
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.restriccionesConvocatoria)
+            {
+                <tr>
+                    <td style="background-color:@(item.IMC != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.IMC</b>
+                    </td>
+                    <td style="background-color:@(item.ALTURA != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.ALTURA</b>
+                    </td>
+                    <td style="background-color:@(item.EDAD != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.EDAD</b>
+                    </td>
+                    <td style="background-color:@(item.EstadoCivil != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.EstadoCivil</b>
+                    </td>
+                    <td style="background-color:@(item.Total != "" ? "#ffffff" : "#fff6e3")">
+                        <b>@item.Total</b>
+                    </td>
+                    <td>
+                        <b>@item.Total_Subtotal_Agrupacion</b>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+
+    <hr />
+    <!-- GRILLA CON LOS DETALLES DE CADA INSCRIPTO Y SU PROBLEMA
+        dar formato con datatables a esta grilla-->
+    <h3>Postulantes Inscriptos en la Convocatoria</h3>
+
+
+    @Html.TablaHelper(Model.tablaModel.TablaVista, "dark")
+
+}
+else
+{
+<div class="d-flex justify-content-center">
+    <h2>La Convocatoria actual no posee Inscriptos.</h2>
+
+</div>
+}
+
+<div class="modal fade" id="MCheck" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Confirmación de Eliminación</h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <input class="form-control" name="idPostulante" id="idpostu" hidden>
+
+                        <div class="form-group">
+                            <label>N° de Pre-Inscripción</label>
+                            <label class="form-control" id="idinscripcion"></label>
+                        </div>
+                        <div class="form-group">
+                            <label>Nombres</label>
+                            <label class="form-control" id="nombre"></label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <label class="form-control" id="apellido"></label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Genero</label>
+                            <label class="form-control" id="genero"></label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label>Altura</label>
+                            <label class="form-control" id="altura"></label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>IMC</label>
+                            <label class="form-control" id="imc"></label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Edad</label>
+                            <label class="form-control" id="edad"></label>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Estado Civil</label>
+                            <label class="form-control" id="estadocivil"></label>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="mr-1 btn btn-info d-inline " id="detallePostulante" href="">Datos del Postulante</a>
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
 
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
@@ -209,73 +192,197 @@
 <!-- Rodear el contenido de la tabla con <tbody>-->
 
 @section Scripts{
+
     <script type="text/javascript">
+
+        $("#tablasRestricciones").DataTable({
+            dom: "t",
+            pageLength: 100
+        });
+
+        //https://stackoverflow.com/questions/32692618/how-to-export-all-rows-from-datatables-using-ajax
+      
+
+        //datatables ajax
+        tablaDatos= @Html.tablaToJson(Model.tablaModel)
+        idInputSearch = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
+
+
+        $(":input[type='search']").on("keyup", async function () {
+            sessionStorage.setItem(idInputSearch, $(this).val());
+        });
+
+        columns = tablaDatos.Columnas;
+        columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
+        filtroInicial = tablaDatos.filtrosIniciales;
+
+
+        var input_filter_value;
+        var input_filter_timeout = null;
+        primerCarga = true;
+
+        var table = $(`#dataTable-${tablaDatos.TablaVista}`).DataTable({
+            "serverSide": true,
+            "processing": true,
+            searchDelay: 900,
+            "ajax": {
+                url: "@Url.Action("CustomServerSideSearchActionAsync", "AjaxDataTable")",
+                type: "POST",
+                //async: false,
+                data: function (data) {
+                    if (primerCarga) {
+                        primerCarga = false;
+
+                        data.search.value = sessionStorage.getItem(idInputSearch);
+
+                    };
+
+                    sessionStorage.getItem(idInputSearch) == undefined ? sessionStorage.setItem(idInputSearch, "") : null;
+                    data.filtrosExtras = [];
+                    $.each(filtroInicial, function (index,item) {
+                        data.filtrosExtras.push(item);
+                    })
+
+                    data.tablaVista = tablaDatos.TablaVista;
+
+                    data.columns.pop()
+                },
+                dataSrc: function (json) {
+
+                    $.each(json.data, function (index, item) {
+                        botonextra = `<a class='mr-1 btn btn-success d-inline fas fa-eye BotonCheck' style="color:white" id="${item.IdPostulantePersona}" data-toggle="tooltip" data-placement="top" title="Detalles"></a>`
+                        botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPostulantePersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
+
+                        item.Opciones = `<div class="d-flex justify-content-around">${botonextra}|${botonDetalle}</div>`
+                    });
+                    return json.data;
+                }
+            },
+            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"lB><"col-md-6 col-sm-12"f><"container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+             buttons: [
+                 {
+                     extend: 'copyHtml5',
+                     text: 'Copiar' ,
+                     exportOptions: {
+
+                         columns: ':not(.noPrint)'
+                     },
+                     title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
+
+                 },
+                 {
+                     extend: 'excelHtml5',
+                     exportOptions: {
+                         columns: ':not(.noPrint)'
+                     },
+                     title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
+
+                 },
+                 {
+                     extend: 'pdfHtml5',
+                     exportOptions: {
+                         columns: ':not(.noPrint)'
+                     },
+                     orientation: 'landscape',
+                     title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
+                     pageSize: 'LEGAL'
+
+                 },
+                 {
+                     extend: 'print',
+                     text: 'Imprimir',
+                     exportOptions: {
+
+                         columns: ':not(.noPrint)'
+                     },
+                     title: 'Id Convocatoria: @Model.idConvocatoria - @Html.Raw(Model.infoConvocatoria.Modalidad): detalles de Inscriptos',
+
+                 },
+             ],
+            "language":
+            {
+                "sProcessing": "<span class='fa-stack fa-lg'>\n\<i class='fa fa-spinner fa-spin fa-stack-2x fa-fw'></i>\n\</span>&nbsp;&nbsp;&nbsp;&nbsp;Cargando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "columns": columns,
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            responsive: true,
+
+        }).on('processing.dt', function (e, settings, processing) {
+            if (processing) {
+                $(".dataTables_wrapper").addClass("disabled");
+            } else {
+                $(".dataTables_wrapper").removeClass("disabled");
+            }
+
+        });
+
+
+
+        //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+        table.on('search.dt', function () {
+            sessionStorage.setItem(idInputSearch, table.search());
+        });
+
+        $("div.dataTables_filter input").unbind();
+        $("div.dataTables_filter input").keyup(function (e) {
+            input_filter_value = this.value;
+            clearTimeout(input_filter_timeout);
+            input_filter_timeout = setTimeout(function () {
+                table.search(input_filter_value).draw();
+            }, table.context[0].searchDelay);
+
+        });
+
         $(document).ready(function () {
-            $(".table-filters").DataTable({
-                'dom': 'Bfrtlpi',
-                buttons: [
-                    'excel', 'pdf',//'colvis',
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                    //    extend: 'columnVisibility',
-                    //    text: 'Show secondary',
-                    //    visibility: true,
-                    //    columns: '.secondary'
-                    //},
-                    //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                    //    extend: 'columnVisibility',
-                    //    text: 'Hide secondary',
-                    //    visibility: false,
-                    //    columns: '.secondary'
-                    //},
-                    {
-                        extend: 'print',
-                        text: 'Imprimir',
-                        messageTop: 'Armada Argentina'
-                    },
-                    {
-                        extend: 'copy',
-                        text: 'copiar',
-                    }
 
+            if (sessionStorage.getItem(idInputSearch) != undefined) {
+                table.search(sessionStorage.getItem(idInputSearch)).draw();
+                if (sessionStorage.getItem(idInputSearch)!="") {
+                    $("#dataTable-vExportacionDatosBasicos_filter input").focus()
+                }
+               
+            };
 
-                ],
-                responsive: true,
-                "language":
-                {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-                },
-                "columnDefs": [{
-                    "targets": 'no-sort',
-                    "orderable": false
-                },
-                {
-                    "targets": 'ni-o-ni-bu',
-                    "searchable": false,
-                    "orderable": false
-                }],
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+            $("tbody").on("click", ".BotonCheck", function () {
+                id = $(this).attr("id");
+                $.get("/CallConsulta/CheckPostulante", { idPostulante: id }, function (response) {
+                    $("#idinscripcion").html(response.check.IdInscripcion);
+                    $("#nombre").html(response.check.Nombres);
+                    $("#apellido").html(response.check.Apellido);
+                    $("#genero").html(response.check.Genero);
+                    $("#altura").html(response.check.Altura != null ? `${response.check.Altura} - <b>${response.check.AlturaCheck}</b>` : "<b>Altura sin cargar</b>");
+                    $("#imc").html(response.check.IMC != null ? `${response.check.IMC} - <b>${response.check.IMCCheck}</b>` : "<b>IMC sin cargar</b>");
+                    $("#edad").html(`${response.check.Edad} - <b>${response.check.EdadCheck}</b>`);
+                    $("#estadocivil").html(`${response.check.EstadoCivil} - <b>${response.check.EstadoCiviCheck}</b>`);
+                    $("#detallePostulante").attr("href", `/Postulante?ID_Postulante=${id}`);
+                })
+                $("#MCheck").modal("show");
+            });
 
+            $("#detallePostulante").on("click", function () {
+                $("#MCheck").modal("hide");
+                $.Cargando();
             });
         })
     </script>

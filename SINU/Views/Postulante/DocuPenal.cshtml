@@ -38,7 +38,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                 <br class="BTAcciones" />
                 <div class="BTAcciones custom-file col col-md-6 mb-2">
 
-                    @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input" })
+                    @Html.TextBoxFor(m => m.FormularioAanexo2, new { @type = "file", @class = "custom-file-input", @accept= "image/jpeg, application/pdf" })
                     <label class="custom-file-label" for="exampleInputFile" style="overflow:hidden">
                         @if (Model.PathFormularioAanexo2 != null)
                         {
@@ -48,7 +48,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                         else
                         { <b>Seleccione archivo...</b>}
                     </label>
-                    <div class="w-100"></div>
+                    <div class="w-100">Tamaño maximo de archivo: 3 MB</div>
                     @Html.ValidationMessageFor(m => m.FormularioAanexo2, "Falta Anexo 2", new { @style = "color:yellow; display:none !important",@id="reqAnexo2" })
 
                 </div>
@@ -69,7 +69,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                 </p>
                 <div class="BTAcciones custom-file col col-md-6 mb-2">
 
-                    @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input" })
+                    @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @accept = "image/jpeg, application/pdf"  })
                     @*<input type="button" name="name" value="" />*@
                     <label class="custom-file-label" for="exampleInputFile" style="overflow:hidden">
                         @if (Model.PathConstanciaAntcPenales != null)
@@ -80,7 +80,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                         else
                         { <b>Seleccione archivo...</b>}
                     </label>
-                    <div class="w-100"></div>
+                    <div class="w-100">Tamaño maximo de archivo: 3 MB</div>
                     @Html.ValidationMessageFor(m => m.ConstanciaAntcPenales, "Falta Certificado de Antecedentes Penal", new { @style = "color:yellow; display:none !important",@id="reqCert" })
                 </div>
                 <div class="col col col-md-12 pl-0">
@@ -141,7 +141,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                 <div class="h-100"></div>
                 @Html.ValidationMessageFor(m => m.PenalDeclaJurada.EsAdicto, null, new { @style = "color:yellow" })
                 <br />
-                <button type="sub" class="btn btn-success BTAcciones"> Guardar </button>
+                <button type="submit" class="btn btn-success BTAcciones"> Guardar </button>
             </div>
         }
 

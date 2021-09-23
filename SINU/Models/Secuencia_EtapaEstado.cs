@@ -25,6 +25,7 @@ namespace SINU.Models
         public int IdEstado { get; set; }
         public int Anterior { get; set; }
         public int Siguiente { get; set; }
+        public bool Estacional { get; set; }
     
         public virtual Estado Estado { get; set; }
         public virtual Etapa Etapa { get; set; }

@@ -10,15 +10,15 @@ namespace SINU.ViewModels
     {
         [Display(Name ="Fecha Inicio Periodo de Inscripcion:")]
         [VPers_ControlRangoPeriodos_("IdInstitucion", "IdPeriodo", ErrorMessage = "La fecha de Inicio ingresada esta dentro de otro periodo")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaInicioPeriodo { get; set; }
         [Display(Name = "Fecha Fin Periodo de Inscripcion:")]
         [VPers_ControlRangoPeriodos_("IdInstitucion", "IdPeriodo", ErrorMessage = "La fecha de Fin ingresada esta dentro de otro periodo")]
         [VPers_FIMenorFF_("FechaInicioPeriodo", ErrorMessage = "Fecha Final debe ser superior a fecha de Inicio del rango.")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaFinPeriodo { get; set; }
         [Display(Name = "Fecha Fin Proceso de Inscripcion:")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaFinProceso { get; set; }
         [Display(Name = "Modalidad para la Convocatoria:")]
 

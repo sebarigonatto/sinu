@@ -53,7 +53,7 @@ $.NoEjecutar = false;
 $.topp;
 $(document).ready(function () {
 
-
+  
     //cargo en "id_persona" el id de la persona que se esta llenando los datos
     var id_persona
     (function () {
@@ -416,6 +416,7 @@ $(document).ready(function () {
             });
         };
     };
+
     //Viajes al exterior
     $("#GuardarExtViaje").on("click", function () {
         if ($("#IDpais").val() == "" || $("#FechaViaje").val() == "") {
@@ -620,10 +621,11 @@ $(document).ready(function () {
                 //si es .valid() es falso, muestro los errores y no cierro el modal
                 $(".Guardar_REG").on("click", function () {
                     var form_actual = "#" + this.getAttribute("data-form");
-                    //alert(form_actual);
                     var valido = $(form_actual).valid();
                     //alert(valido);
                     if (valido) {
+                        //desabilito el boton de guardar para evitar la duplicacion de datos.
+                        $(this).attr("disabled", "disabled")
                         $.post($(form_actual).attr("action"), $(form_actual).serialize(), function (response) {
                             $("#ModalEIA").modal("hide");
                             ActualizaTabla();
@@ -1062,6 +1064,13 @@ $(document).ready(function () {
                 default:
             }
         } else {
+            //controlo el tamaño del archivo
+            if (this.files[0].size > 3145728) {
+                $(this).val(null);
+                $(this).next("label").text("").append("<b>Seleccione archivo...</b>");
+                $.Anuncio("El archivo subido supera el tamaño permitido, 3 MB");
+            }
+            
             $(this).next('.custom-file-label').html(event.target.files[0].name);
             //en el caso de cambio el documento se oculta el boton para ver el archivo
             switch ($(this).attr("id")) {
