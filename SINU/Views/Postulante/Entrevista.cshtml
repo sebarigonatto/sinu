@@ -9,7 +9,7 @@
             if (ViewBag.VolverDB && HttpContext.Current.User.IsInRole("Postulante"))
             {
                 <div class="col col-md-6 col-sm-12 align-content-end justify-content-center">
-                    @Html.ActionLink("Volver a la etapa anterior", "VolverDatosBasicos", new { idPostulante = Model.IdPersona, idInscripcion = Model.IdInscripcion }, new { @class = "btn btn-info col-md-6 col-sm-12 float-right", @id = "volverDB" })
+                    @Html.ActionLink("Volver a la etapa anterior", "VolverDatosBasicos", new { idPostulante = Model.IdPersona, idInscripcion = Model.IdInscripcion }, new { @class = "btn btn-info col-md-6 col-sm-12 float-right", @id = "volverDB", @onClick = "$.Cargando()" })
                 </div>
             }
         }

@@ -69,7 +69,7 @@ new { id = "BeginDocuPenal", enctype = "multipart/form-data" }))
                 </p>
                 <div class="BTAcciones custom-file col col-md-6 mb-2">
 
-                    @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input" })
+                    @Html.TextBoxFor(m => m.ConstanciaAntcPenales, new { @type = "file", @class = "custom-file-input", @accept = "image/jpeg, application/pdf"  })
                     @*<input type="button" name="name" value="" />*@
                     <label class="custom-file-label" for="exampleInputFile" style="overflow:hidden">
                         @if (Model.PathConstanciaAntcPenales != null)

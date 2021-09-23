@@ -176,8 +176,8 @@ DataTable.ext.buttons.print = {
 		var autoPrint = function () {
 			if ( config.autoPrint ) {
 				win.print(); // blocking - so close will not
-				win.close(); // execute until this is done
-			}
+				win.onafterprint = function () { mywindow.close() }; // execute until this is done
+			}	
 		};
 
 		if ( navigator.userAgent.match(/Trident\/\d.\d/) ) { // IE needs to call this without a setTimeout

@@ -1029,7 +1029,10 @@
             mywindow.document.write('</body></html>');
             mywindow.document.close();
             mywindow.focus();
-            mywindow.print();
+            mywindow.print()
+            mywindow.onafterprint = function () {
+                mywindow.close();
+            };
         };
         //en caso de ser exitosa la llamada al controlador delos distintos POST
         function Exito(response, status, xhr) {
@@ -1083,6 +1086,12 @@
                     break;
                 default:
             };
+            setTimeout(function () {
+                $(document).find("#volverDB")
+                    .attr("data-toggle", "tooltip")
+                    .attr("title", "Editar nuevamente los datos cargados anteriormente.")
+                    .tooltip('enable');
+            }, 3000)
         };
         //en caso de que la llamada al controlador no haya sido exitosa
         function Falla(response) {
