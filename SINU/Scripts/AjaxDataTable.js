@@ -13,19 +13,16 @@
  */
 
 function armadoDataTable(modeloTabla) {
-
+    //alert(Array.isArray(modeloTabla))
     //veo si el objeto recibido es un array de Tablas 
     if (Array.isArray(modeloTabla)) {
 
-        $.each(modeloTabla, function (index, item) {
-            tablaArmado(item)
-        })
+        $.each(modeloTabla, (index, item) => tablaArmado(item))
 
     } else {
 
         tablaArmado(modeloTabla)
-    }
-        
+    }        
 }
 
 listadoDataTable = []
@@ -35,11 +32,12 @@ const opcionColumna = { data: "Opciones", searchable: false, orderable: false, t
 
 function tablaArmado(tabla) {
 
-    
-    titleTable = $(`#dataTable-${tabla.TablaVista}`).prev(':header').html();
+    var idTabla = tabla.IdTabla ?? tabla.TablaVista;
+
+    titleTable = $(`#dataTable-${idTabla}`).prev(':header').html();
 
     tabla.Columnas.push(opcionColumna)
-    listadoDataTable[`dataTable-${tabla.TablaVista}`] = $(`#dataTable-${tabla.TablaVista}`).DataTable({
+    listadoDataTable[`dataTable-${idTabla}`] = $(`#dataTable-${idTabla}`).DataTable({
         "serverSide": true,
         "processing": true,
         searchDelay: 900,
@@ -54,22 +52,23 @@ function tablaArmado(tabla) {
                 //    data.search.value = sessionStorage.searchTexts;
 
                 //};
+               
                 sessionStorage.searchText == undefined ? sessionStorage.searchText = "" : null;
                 data.filtrosExtras = [];
-                $.each(tabla.filtrosIniciales, function (index, item) {
+                $.each(tabla.filtrosExtras, function (index, item) {
                     data.filtrosExtras.push(item);
                 })
 
-                data.tablaVista =tabla.TablaVista;
+                data.tablaVista = tabla.TablaVista;
                 data.columns.pop();
             },
             dataSrc: function (json) {
-
+               
                 $.each(json.data, function (index, item) {
-                    botonextra = `<a class='mr-1 btn btn-success d-inline fas fa-eye BotonCheck' style="color:white" id="${item[Object.keys(item)[0]]}" data-toggle="tooltip" data-placement="top" title="Detalles"></a>`
+
                     botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item[Object.keys(item)[0]]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
 
-                    item.Opciones = `<div class="d-flex justify-content-around">${botonextra}|${botonDetalle}</div>`
+                    item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
                 });
 
                 return json.data;
@@ -154,7 +153,6 @@ function tablaArmado(tabla) {
 $("div.dataTables_filter input").unbind();
 $("div.dataTables_filter input").keyup(function (e) {
     input_filter_value = this.value;
-    alert(this.value)
     clearTimeout(input_filter_timeout);
     input_filter_timeout = setTimeout(function () {
         table.search(input_filter_value).draw();

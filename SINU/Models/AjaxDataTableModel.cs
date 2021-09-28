@@ -33,9 +33,9 @@ namespace SINU.Models
 
     public class DataTableVM
     {
-        public List<AjaxDataTableModel.Column> Columnas { get; set; }
+        public List<Column> Columnas { get; set; }
         public string TablaVista { get; set; }
-
+        public string IdTabla { get; set; } = "";
         public List<filtroExtra> filtrosExtras { get; set; } = new List<filtroExtra>() { new filtroExtra()};
     }
 

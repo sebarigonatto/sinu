@@ -32,14 +32,13 @@ namespace SINU.Controllers
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
 
-                var tabla = new DataTableVM
+
+                var Columnas = new List<Column>
                 {
-                    TablaVista= "vConsultaInscripciones",
-                    Columnas= new List<Column>
-                    {
                         ColumnaDTAjax("IdPersona",noPrint:true),
                         ColumnaDTAjax("IdInscripcionEtapaEstado",noPrint:true),
                         ColumnaDTAjax("IdDelegacionOficinaIngresoInscribio",noPrint:true),
+                        ColumnaDTAjax("IdSecuencia",noPrint:true),
                         //ColumnaDTAjax("Activa",noPrint:true),
                         ColumnaDTAjax("Fecha",true),
                         ColumnaDTAjax("Email",true),
@@ -48,29 +47,67 @@ namespace SINU.Controllers
                         ColumnaDTAjax("Modalidad_Siglas",true,nombreDisplay:"Modalidad"),
                         ColumnaDTAjax("Etapa",true),
                         ColumnaDTAjax("Estado",true)
-                    }
                 };
 
                 var listaTablas = new List<DataTableVM> {
-                    tabla,
-                    tabla,
-                    tabla,
-                    tabla,
-                    tabla
-                };
-
-                
-
-                DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
-                {
-                    ///PostulantesIncriptosVM-> se utlizan view models para poder filtrar segun la "Etapa" que se encuentran los postulantes 
-                    PostulantesIncriptosVM = db.vConsultaInscripciones.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    cargadatosbasicosVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    EntrevistaVM = db.vConsultaInscripciones.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    DocumentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    PresentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                };
-                return View("Index", datos);
+                    new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=new List<filtroExtra>
+                        {
+                            new filtroExtra{Columna="IdSecuencia",Condicion=">=",Valor="5"},
+                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
+                        },
+                        IdTabla="InscriptosTODOS"
+                    },
+                      new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=new List<filtroExtra>
+                        {
+                            new filtroExtra{Columna="Etapa",Valor="DATOS BASICOS"},
+                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
+                        },
+                        IdTabla="InscriptosDATOSBASICOS"
+                    },
+                        new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=new List<filtroExtra>
+                        {
+                            new filtroExtra{Columna="Etapa",Valor="ENTREVISTA"},
+                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
+                        },
+                        IdTabla="InscriptosENTREVISTA"
+                    },
+                          new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=new List<filtroExtra>
+                        {
+                            new filtroExtra{Columna="Etapa",Valor="DOCUMENTACION"},
+                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
+                        },
+                        IdTabla="InscriptosDOCUMENTACION"
+                    },
+                            new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=new List<filtroExtra>
+                        {
+                            new filtroExtra{Columna="Etapa",Valor="PRESENTACION"},
+                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
+                        },
+                        IdTabla="InscriptosPRESENTACION"
+                    },
+                }; 
+               
+                return View("Index", listaTablas);
 
             }
             catch (System.Exception ex)

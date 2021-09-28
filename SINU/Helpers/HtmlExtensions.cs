@@ -16,10 +16,10 @@ namespace SINU.Helpers
         /// <summary>
         /// HtmlHelper personalizado para el armado de un tabla
         /// </summary>
-        /// <param name="nombreTablaVista">Nombre de la Tabla o Vista para el Id de la Tabla a armar</param>
+        /// <param name="idTablaVista">IdTabla, si es null colocar TablaVista</param>
         /// <param name="themeHead">Tema para el encabezadp de la tabla, por defecto "primary". Opciones: primary, secondary, success,dark etc.</param>
         /// <returns></returns>
-        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, string nombreTablaVista, string themeHead= "primary")
+        public static MvcHtmlString TablaHelper<TModel>(this HtmlHelper<TModel> htmlHelper, string idTablaVista, string themeHead= "primary")
         {
             //etiquetas para el armado de la tabla            
             //TR TD TH
@@ -35,13 +35,14 @@ namespace SINU.Helpers
             var Tbody = new TagBuilder("tbody");
             Td.InnerHtml = "Ningún dato disponible en esta tabla";
             Td.AddCssClass("text-center");
-            Tr.InnerHtml = Td.ToString();
+            Td.Attributes.Add("colspan", "100");
+               Tr.InnerHtml = Td.ToString();
             Tbody.InnerHtml = Tr.ToString();
 
             //TABLA
             var table = new TagBuilder("table");
-            table.AddCssClass("table table-filters table-bordered table-light table-hover");
-            table.Attributes.Add("id",$"dataTable-{nombreTablaVista}" );
+            table.AddCssClass("table table-filters table-bordered table-light table-hover w-100");
+            table.Attributes.Add("id",$"dataTable-{idTablaVista}" );
             table.InnerHtml = Thead.ToString()+Tbody.ToString();
             
             return MvcHtmlString.Create(table.ToString());

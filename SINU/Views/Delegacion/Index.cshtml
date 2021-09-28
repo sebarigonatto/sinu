@@ -1,4 +1,4 @@
-﻿@model SINU.ViewModels.DelegacionPostulanteVM
+﻿@model IList<SINU.Models.DataTableVM>
 
 <!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML
 
@@ -113,6 +113,10 @@
             max-width: 95% !important;
         }
     }
+    .dataTables_processing {
+        z-index: 1050 !important;
+    }
+
 </style>
 <h2 class="text-center ">@ViewBag.Delegacion</h2>
 <br />
@@ -155,23 +159,24 @@
         <div class="col-sm-9 borderdiv1">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active pt-2" id="Total" role="tabpanel" aria-labelledby="profile-tab">
-                    @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
+                    @Html.TablaHelper(Model[0].IdTabla, "dark")
+                
                 </div>
 
                 <div class="tab-pane fade " id="DatoBasico" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
+                    @Html.TablaHelper(Model[1].IdTabla, "dark")
                 </div>
                 <div class="tab-pane fade " id="Entrevista" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
+                    @Html.TablaHelper(Model[2].IdTabla, "dark")
                     <div class="col-sm-3 col-lg-2">
                         @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
                     </div>
                 </div>
                 <div class="tab-pane fade " id="Documentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
+                    @Html.TablaHelper(Model[3].IdTabla, "dark")
                 </div>
                 <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
+                    @Html.TablaHelper(Model[4].IdTabla, "dark")
                     <div class="col-sm-3 col-lg-2">
                         @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
                     </div>
@@ -181,84 +186,84 @@
     </div>
 </div>
 Prueba de una nueva barra de menu para los postulantes
-<div class="accordion d-lg-none d-xl-none" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingInscriptos">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseInscriptos" aria-expanded="true" aria-controls="collapseInscriptos">
-                    Inscriptos - Todos
-                </button>
-            </h2>
-        </div>
-        <div id="collapseInscriptos" class="collapse show" aria-labelledby="headingInscriptos" data-parent="#accordionInscriptos">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
+@*<div class="accordion d-lg-none d-xl-none" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingInscriptos">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseInscriptos" aria-expanded="true" aria-controls="collapseInscriptos">
+                        Inscriptos - Todos
+                    </button>
+                </h2>
             </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingDatos">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos">
-                    Datos Basicos
-                </button>
-            </h2>
-        </div>
-        <div id="collapseDatos" class="collapse" aria-labelledby="headingDatos" data-parent="#accordionDatos">
-            <div class="card-body" id="MyTableRefresh">
-                @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingEntrevista">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseEntrevista" aria-expanded="false" aria-controls="collapseEntrevista">
-                    Entrevista
-                </button>
-            </h2>
-        </div>
-        <div id="collapseEntrevista" class="collapse" aria-labelledby="headingEntrevista" data-parent="#accordionEntrevista">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
-                <div class="col-sm-3 col-lg-2">
-                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
+            <div id="collapseInscriptos" class="collapse show" aria-labelledby="headingInscriptos" data-parent="#accordionInscriptos">
+                <div class="card-body">
+                    @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingDocumentacion">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDocumentacion" aria-expanded="false" aria-controls="collapseDocumentacion">
-                    Documentacion
-                </button>
-            </h2>
-        </div>
-        <div id="collapseDocumentacion" class="collapse" aria-labelledby="headingDocumentacion" data-parent="#accordionDocumentacion">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
+        <div class="card">
+            <div class="card-header" id="headingDatos">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos">
+                        Datos Basicos
+                    </button>
+                </h2>
             </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingPresentacion">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
-                    Presentacion
-                </button>
-            </h2>
-        </div>
-        <div id="collapsePresentacion" class="collapse" aria-labelledby="headingPresentacion" data-parent="#accordionPresentacion">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                <div class="col-sm-3 col-lg-2">
-                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
+            <div id="collapseDatos" class="collapse" aria-labelledby="headingDatos" data-parent="#accordionDatos">
+                <div class="card-body" id="MyTableRefresh">
+                    @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <div class="card">
+            <div class="card-header" id="headingEntrevista">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseEntrevista" aria-expanded="false" aria-controls="collapseEntrevista">
+                        Entrevista
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseEntrevista" class="collapse" aria-labelledby="headingEntrevista" data-parent="#accordionEntrevista">
+                <div class="card-body">
+                    @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
+                    <div class="col-sm-3 col-lg-2">
+                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingDocumentacion">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDocumentacion" aria-expanded="false" aria-controls="collapseDocumentacion">
+                        Documentacion
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseDocumentacion" class="collapse" aria-labelledby="headingDocumentacion" data-parent="#accordionDocumentacion">
+                <div class="card-body">
+                    @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingPresentacion">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
+                        Presentacion
+                    </button>
+                </h2>
+            </div>
+            <div id="collapsePresentacion" class="collapse" aria-labelledby="headingPresentacion" data-parent="#accordionPresentacion">
+                <div class="card-body">
+                    @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
+                    <div class="col-sm-3 col-lg-2">
+                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
 <!-- ***********************************************************************-->
 <!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
 <!-- ***********************************************************************-->
@@ -269,165 +274,170 @@ Prueba de una nueva barra de menu para los postulantes
 <!-- Rodear la tr de las th con <thead> </thead>-->
 <!-- Rodear el contenido de la tabla con <tbody>-->
 @section Scripts {
+    <script src="~/Scripts/AjaxDataTable.js"></script>
     <script type="text/javascript">
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-           $("#myTab li").on("click", function () {
-                tab = $(this).children("a").attr("href");
-                sessionStorage.tabDelegacion= tab;
-            })
+        $("#myTab li").on("click", function () {
+            tab = $(this).children("a").attr("href");
+            sessionStorage.tabDelegacion = tab;
+        })
         var tablas = {};
 
         $(document).ready(function () {
-           
-            if (sessionStorage.tabDelegacion!= undefined) {
+
+            if (sessionStorage.tabDelegacion != undefined) {
                 $(`a[href='${sessionStorage.tabDelegacion}']`).tab("show");
 
             } else {
-                sessionStorage.tabDelegacion= "#Total";
+                sessionStorage.tabDelegacion = "#Total";
             };
 
-            var prefijo = 'tabla';
+            listaTablasJson= @Html.tablaToJson(Model)
 
-            $.each($(".table-filters"), function (index, item) {
+           // armadoDataTable(listaTablasJson)
 
-                id = $(item).closest("div.tab-pane").attr("id");
+            //var prefijo = 'tabla';
 
-                if (id !== undefined || id !== null) {
-                    tablas[prefijo + id] = $(item).DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel', 'pdf',//'colvis',
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                        //    extend: 'columnVisibility',
-                        //    text: 'Show secondary',
-                        //    visibility: true,
-                        //    columns: '.secondary'
-                        //},
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                        //    extend: 'columnVisibility',
-                        //    text: 'Hide secondary',
-                        //    visibility: false,
-                        //    columns: '.secondary'
-                        //},
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
-                        },
-                        {
-                            extend: 'copy',
-                            text: 'copiar',
-                        }
+            //$.each($(".table-filters"), function (index, item) {
 
+            //    id = $(item).closest("div.tab-pane").attr("id");
 
-                    ],
-                    responsive: true,
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false
-                    },
-                    {
-                        "targets": 'ni-o-ni-bu',
-                        "searchable": false,
-                        "orderable": false
-                    }]
-
-                });
-                } else {
-                    $(item).DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel', 'pdf',//'colvis',
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                        //    extend: 'columnVisibility',
-                        //    text: 'Show secondary',
-                        //    visibility: true,
-                        //    columns: '.secondary'
-                        //},
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                        //    extend: 'columnVisibility',
-                        //    text: 'Hide secondary',
-                        //    visibility: false,
-                        //    columns: '.secondary'
-                        //},
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
-                        },
-                        {
-                            extend: 'copy',
-                            text: 'copiar',
-                        }
+            //    if (id !== undefined || id !== null) {
+            //        tablas[prefijo + id] = $(item).DataTable({
+            //        dom: 'Bfrtip',
+            //        buttons: [
+            //            'excel', 'pdf',//'colvis',
+            //            //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+            //            //    extend: 'columnVisibility',
+            //            //    text: 'Show secondary',
+            //            //    visibility: true,
+            //            //    columns: '.secondary'
+            //            //},
+            //            //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+            //            //    extend: 'columnVisibility',
+            //            //    text: 'Hide secondary',
+            //            //    visibility: false,
+            //            //    columns: '.secondary'
+            //            //},
+            //            {
+            //                extend: 'print',
+            //                text: 'Imprimir',
+            //                messageTop: 'Armada Argentina'
+            //            },
+            //            {
+            //                extend: 'copy',
+            //                text: 'copiar',
+            //            }
 
 
-                    ],
-                    responsive: true,
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false
-                    },
-                    {
-                        "targets": 'ni-o-ni-bu',
-                        "searchable": false,
-                        "orderable": false
-                    }]
+            //        ],
+            //        responsive: true,
+            //        "language":
+            //        {
+            //            "sProcessing": "Procesando...",
+            //            "sLengthMenu": "Mostrar _MENU_ registros",
+            //            "sZeroRecords": "No se encontraron resultados",
+            //            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            //            //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            //            //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            //            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            //            "sInfoPostFix": "",
+            //            "sSearch": "Buscar:",
+            //            "sUrl": "",
+            //            "sInfoThousands": ",",
+            //            "sLoadingRecords": "Cargando...",
+            //            "oPaginate": {
+            //                "sFirst": "Primero",
+            //                "sLast": "Último",
+            //                "sNext": "Siguiente",
+            //                "sPrevious": "Anterior"
+            //            },
+            //            "oAria": {
+            //                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            //                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            //            }
+            //        },
+            //        "columnDefs": [{
+            //            "targets": 'no-sort',
+            //            "orderable": false
+            //        },
+            //        {
+            //            "targets": 'ni-o-ni-bu',
+            //            "searchable": false,
+            //            "orderable": false
+            //        }]
 
-                });
-                }
-                
+            //    });
+            //    } else {
+            //        $(item).DataTable({
+            //        dom: 'Bfrtip',
+            //        buttons: [
+            //            'excel', 'pdf',//'colvis',
+            //            //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
+            //            //    extend: 'columnVisibility',
+            //            //    text: 'Show secondary',
+            //            //    visibility: true,
+            //            //    columns: '.secondary'
+            //            //},
+            //            //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
+            //            //    extend: 'columnVisibility',
+            //            //    text: 'Hide secondary',
+            //            //    visibility: false,
+            //            //    columns: '.secondary'
+            //            //},
+            //            {
+            //                extend: 'print',
+            //                text: 'Imprimir',
+            //                messageTop: 'Armada Argentina'
+            //            },
+            //            {
+            //                extend: 'copy',
+            //                text: 'copiar',
+            //            }
 
-            })
+
+            //        ],
+            //        responsive: true,
+            //        "language":
+            //        {
+            //            "sProcessing": "Procesando...",
+            //            "sLengthMenu": "Mostrar _MENU_ registros",
+            //            "sZeroRecords": "No se encontraron resultados",
+            //            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            //            //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            //            //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            //            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            //            "sInfoPostFix": "",
+            //            "sSearch": "Buscar:",
+            //            "sUrl": "",
+            //            "sInfoThousands": ",",
+            //            "sLoadingRecords": "Cargando...",
+            //            "oPaginate": {
+            //                "sFirst": "Primero",
+            //                "sLast": "Último",
+            //                "sNext": "Siguiente",
+            //                "sPrevious": "Anterior"
+            //            },
+            //            "oAria": {
+            //                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            //                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            //            }
+            //        },
+            //        "columnDefs": [{
+            //            "targets": 'no-sort',
+            //            "orderable": false
+            //        },
+            //        {
+            //            "targets": 'ni-o-ni-bu',
+            //            "searchable": false,
+            //            "orderable": false
+            //        }]
+
+            //    });
+            //    }
+
+
+            //})
 
             //$("#le-filters_filter input").on("keyup", function () {
             //    $(this).val("asdasd")
