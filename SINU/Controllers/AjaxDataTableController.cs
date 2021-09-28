@@ -142,17 +142,35 @@ namespace SINU.Models
                 //where si existen filtros extras, como de los dropboxs
                 string[] searchWhereExtras = new string[] { };
                 string whereExtras = "";
-                var filtrosEx = model.filtrosExtras.Where(m => m.Value != null).ToList();
+                var filtrosEx = model.filtrosExtras.Where(m => m.Valor != null).ToList();
                 if (filtrosEx.Count() > 0)
                 {
 
-                    searchWhereExtras = filtrosEx.Select(m => m.Value).ToArray();
+                    searchWhereExtras = filtrosEx.Select(m => m.Valor).ToArray();
                     //clausula where
                     int indexExtras = 0;
+                    string condicion="";
                     foreach (var filtros in filtrosEx)
                     {
                         indexExtras++;
-                        whereExtras += (columnaTipo.First(c=>c.COLUMN_NAME== filtros.Text).DATA_TYPE.Contains("char")? $"{filtros.Text}.Contains(@{indexExtras - 1})": columnaTipo.First(c => c.COLUMN_NAME == filtros.Text).DATA_TYPE=="bit"? $"{filtros.Text}=={filtros.Value}" : $"{filtros.Text}==@{indexExtras - 1}");
+                        switch (columnaTipo.First(c => c.COLUMN_NAME == filtros.Columna).DATA_TYPE)
+                        {
+                            case "varchar":
+                            case "nvarchar":
+                                condicion = $"{filtros.Columna}.Contains(@{indexExtras - 1})";
+                                break;
+                            case "int":
+                                condicion = $"{filtros.Columna}{filtros.Condicion}@{indexExtras - 1}";
+                                break;
+                            case "bit":
+                                condicion = $"{filtros.Columna}=={filtros.Valor}";
+                                break;
+                            case "datetime":
+                            case "date":
+                                condicion = $"{filtros.Columna}==@{indexExtras - 1}";
+                                break;                            
+                        }
+                        whereExtras += condicion;
                         whereExtras += (indexExtras < filtrosEx.Count() ? " and " : "");
                     }
                 }

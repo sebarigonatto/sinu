@@ -184,12 +184,12 @@
      
         columns.push({
             data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint', render: function (data, type, row) {
-                return `<div class="d-flex justify-content-around"><a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${row.IdPersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a></div>`;
+                return `<div class="d-flex justify-content-around"><a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${row[0]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a></div>`;
             }
         });
 
         //filtro por defecto
-        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));       
+        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosExtras, Newtonsoft.Json.Formatting.Indented));       
         
         
         var input_filter_value;
@@ -208,9 +208,7 @@
                 data: function (data) {
                     if (primerCarga) {
                         primerCarga = false;
-
                         data.search.value = sessionStorage.searchTablaDelPost;
-
                     };
 
                     sessionStorage.searchTablaDelPost == undefined ? sessionStorage.searchTablaDelPost = "" : null;
@@ -219,12 +217,12 @@
 
                     data.filtrosExtras = [
                         {
-                            Text: "Etapa",
-                            Value: sessionStorage.EtapasPost
+                            Columna: "Etapa",
+                            Valor: sessionStorage.EtapasPost
                         },
                         {
-                            Text: "Estado",
-                            Value: sessionStorage.EstadosPost
+                            Columna: "Estado",
+                            Valor: sessionStorage.EstadosPost
                         }];
                     $.each(filtroInicial, function (index,item) {
                         data.filtrosExtras.push(item);
@@ -475,10 +473,6 @@
                 table.search(sessionStorage.searchTablaDelPost).ajax.reload();
                                 
             });
-
-            
-
-          
         });
     </script>
     }

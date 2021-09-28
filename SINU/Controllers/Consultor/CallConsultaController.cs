@@ -47,9 +47,9 @@ namespace SINU.Controllers.Consultor
                 ConsultaProgramadaVm = db.ConsultaProgramada.Where(m => m.IdConsulta != 9).OrderBy(m => m.OrdenConsulta).ToList(),
                 EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m => m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1),// db.vSecuencia_EtapaEstado.Select(m=>new SelectListItem {Text= m.Estado, Value=m.Estado,Group= new SelectListGroup { Name=m.Etapa } }).ToList(),
                 TablaVista = "vInscripcionEtapaEstadoUltimoEstado",//"vInscripcionDetalleUltInsc",
-                filtrosIniciales = new List<SelectListItem>
+                filtrosExtras = new List<filtroExtra>
                 {
-                    new SelectListItem{Text="Activa" ,Value= "true"}
+                    new filtroExtra{Columna="Activa" ,Valor= "true"}
                 },
                 Columnas = new List<Column> {
                     ColumnaDTAjax("IdPersona", noPrint:true),
@@ -138,15 +138,15 @@ namespace SINU.Controllers.Consultor
             };
             if (ModalidadElegida == "TODOS")
             {
-                datosTabla.filtrosIniciales = new List<SelectListItem> { new SelectListItem { Text = "ESTADO", Value = "ACTIVA" } };
+                datosTabla.filtrosExtras = new List<filtroExtra> { new filtroExtra { Columna = "ESTADO", Valor = "ACTIVA" } };
                 ViewBag.ModalidadElegida = "Todas las Modalidades";
                 ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.ESTADO == "ACTIVA").Count();
             }
             else
             {
-                datosTabla.filtrosIniciales = new List<SelectListItem> {
-                    new SelectListItem { Text = "sexo", Value = Genero },
-                    new SelectListItem { Text="IdModalidad",Value=ModalidadElegida } 
+                datosTabla.filtrosExtras = new List<filtroExtra> {
+                    new filtroExtra { Columna = "sexo", Valor = Genero },
+                    new filtroExtra { Columna="IdModalidad",Valor=ModalidadElegida } 
                 };
                 ViewBag.modalidadElegida = ModalidadElegida+ " - Genero: "+ Genero;
                 ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.sexo == Genero && m.IdModalidad==ModalidadElegida).Count();
@@ -231,9 +231,9 @@ namespace SINU.Controllers.Consultor
                                 ColumnaDTAjax("Celular"),
                                 ColumnaDTAjax("ESTADO",noPrint:true)
                 },
-                filtrosIniciales = new List<SelectListItem>() {
-                                   new SelectListItem {Text="IdOficinasYDelegaciones", Value=idDeleOfi.ToString() },
-                                   new SelectListItem {Text="ESTADO", Value="ACTIVA" },
+                filtrosExtras = new List<filtroExtra>() {
+                                   new filtroExtra {Columna="IdOficinasYDelegaciones", Valor=idDeleOfi.ToString() },
+                                   new filtroExtra {Columna="ESTADO", Valor="ACTIVA" },
                 }
             };
             //db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today && m.Delegacion == DelegacionSeleccionada).ToList();
@@ -332,8 +332,8 @@ namespace SINU.Controllers.Consultor
                                 ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular"),
                                 ColumnaDTAjax("Celular")
                         },
-                        filtrosIniciales = new List<SelectListItem>() {
-                                    new SelectListItem {Text="IdConvocatoria", Value=IdConvocatoria.ToString() }
+                        filtrosExtras = new List<filtroExtra>() {
+                                    new filtroExtra {Columna="IdConvocatoria", Valor=IdConvocatoria.ToString() }
                         }
                     }    
                 };

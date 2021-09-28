@@ -24,12 +24,19 @@ namespace SINU.Models
 
     }
 
+    public class filtroExtra
+    {
+        public string Columna { get; set; }
+        public string Valor { get; set; }
+        public string Condicion { get; set; } = "==";
+    }
+
     public class DataTableVM
     {
         public List<AjaxDataTableModel.Column> Columnas { get; set; }
         public string TablaVista { get; set; }
 
-        public List<SelectListItem> filtrosIniciales { get; set; } = new List<SelectListItem>() { new SelectListItem()};
+        public List<filtroExtra> filtrosExtras { get; set; } = new List<filtroExtra>() { new filtroExtra()};
     }
 
     public class AjaxDataTableModel
@@ -57,19 +64,7 @@ namespace SINU.Models
                 className = noPrint ? "noPrint" : ""
             };
         }
-
-        public static string TablaDTAjax(string nombreTablaVista, List<Column> columnas, List<SelectListItem> filtrosIniciales)
-        {
-            DataTableVM tabla = new DataTableVM
-            {
-                Columnas = columnas,
-                filtrosIniciales = filtrosIniciales,
-                TablaVista = nombreTablaVista
-            };
-            return JsonSerializer.Serialize(tabla);
-        }
-             
-
+        
         public class DataTableAjaxPostModel
         {
             // properties are not capital due to json mapping
@@ -79,7 +74,7 @@ namespace SINU.Models
             public List<Column> columns { get; set; }
             public Search search { get; set; }
             public List<Order> order { get; set; }
-            public List<SelectListItem> filtrosExtras { get; set; }
+            public List<filtroExtra> filtrosExtras { get; set; }
             public string tablaVista { get; set; }
         }
         /// <summary>

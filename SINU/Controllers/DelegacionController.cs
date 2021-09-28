@@ -10,6 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Ajax.Utilities;
 using System.Collections;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Controllers
 {
@@ -30,6 +31,36 @@ namespace SINU.Controllers
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
+
+                var tabla = new DataTableVM
+                {
+                    TablaVista= "vConsultaInscripciones",
+                    Columnas= new List<Column>
+                    {
+                        ColumnaDTAjax("IdPersona",noPrint:true),
+                        ColumnaDTAjax("IdInscripcionEtapaEstado",noPrint:true),
+                        ColumnaDTAjax("IdDelegacionOficinaIngresoInscribio",noPrint:true),
+                        //ColumnaDTAjax("Activa",noPrint:true),
+                        ColumnaDTAjax("Fecha",true),
+                        ColumnaDTAjax("Email",true),
+                        ColumnaDTAjax("Nombres",true),
+                        ColumnaDTAjax("Apellido",true),
+                        ColumnaDTAjax("Modalidad_Siglas",true,nombreDisplay:"Modalidad"),
+                        ColumnaDTAjax("Etapa",true),
+                        ColumnaDTAjax("Estado",true)
+                    }
+                };
+
+                var listaTablas = new List<DataTableVM> {
+                    tabla,
+                    tabla,
+                    tabla,
+                    tabla,
+                    tabla
+                };
+
+                
+
                 DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
                 {
                     ///PostulantesIncriptosVM-> se utlizan view models para poder filtrar segun la "Etapa" que se encuentran los postulantes 
