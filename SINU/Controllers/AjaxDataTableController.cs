@@ -85,7 +85,8 @@ namespace SINU.Models
         {
             try
             {
-                
+                //HttpContext.Server.ScriptTimeout = 120000;
+
                 resultAjaxTable result = new resultAjaxTable();
 
                 string dirSort = sortDir ? "ASC" : "DESC";
@@ -179,7 +180,9 @@ namespace SINU.Models
                     whereExtras = "true";
                 }
 
-                
+                db.Database.CommandTimeout = 36000;
+
+
                 result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
                                            .Where(whereExtras, searchWhereExtras)
                                            .Count();
@@ -194,17 +197,22 @@ namespace SINU.Models
                 result.filteredResultsCount = registrosWhere.Count();
 
                 result.result = registrosWhere.Skip(skip)
-                                            .Take(take>0?take: result.totalResultsCount)
+                                            .Take(take > 0 ? take : result.totalResultsCount)
                                             .ToList();
                 return result;
             }
             catch (Exception ex)
-             {
+            {
 
                 throw;
             }
 
+
         }
+          
 
     }
+
+
+
 }

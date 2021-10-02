@@ -33,7 +33,7 @@
           <Property Name="IdActividadMilitar" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.AgrupacionCarreraOficio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.AgrupacionCarreraOficio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="AgrupacionCarreraOficio">
           <Key>
             <PropertyRef Name="IdGrupoCarrOficio" />
@@ -150,7 +150,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.AgrupacionCarreraOficio' no tiene d
           <Property Name="IdConfiguracion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.ConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="ConfiguracionAdmin">
           <Key>
             <PropertyRef Name="IdConfiguracion" />
@@ -318,7 +318,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.ConfiguracionAdmin' no tiene defini
           <Property Name="Personal" Type="varchar" MaxLength="2" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.GrupoCarrOficioResGrupo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.GrupoCarrOficioResGrupo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="GrupoCarrOficioResGrupo">
           <Key>
             <PropertyRef Name="IdGrupoCarrOficio" />
@@ -344,7 +344,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.GrupoCarrOficioResGrupo' no tiene d
           <Property Name="IdCarreraOficio" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.InscripcionEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="InscripcionEtapaEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -453,7 +453,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.InscripcionEtapaEstado' no tiene de
           <Property Name="IdPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.PersonaActividadMilitar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.PersonaActividadMilitar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonaActividadMilitar">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -463,7 +463,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaActividadMilitar' no tiene d
           <Property Name="IdActividadMilitar" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.PersonaEstudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.PersonaEstudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonaEstudio">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -492,7 +492,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaEstudio' no tiene definida n
           <Property Name="IdInteres" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.PersonaSituacionOcupacional' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PersonaSituacionOcupacional">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -640,7 +640,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.PersonaSituacionOcupacional' no tie
           <Property Name="fechaCierre" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vConfiguracionAdmin' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vConfiguracionAdmin">
           <Key>
             <PropertyRef Name="NombreDato" />
@@ -654,7 +654,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConfiguracionAdmin' no tiene defin
           <Property Name="IdConfiguracion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vConsultaInscripciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vConsultaInscripciones">
           <Key>
             <PropertyRef Name="Modalidad_Siglas" />
@@ -687,10 +687,11 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConsultaInscripciones' no tiene de
           <Property Name="Fecha_Inicio_Proceso" Type="date" />
           <Property Name="Fecha_Fin_Proceso" Type="date" />
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
+          <Property Name="ACTIVA" Type="bit" />
           <Property Name="FechaInscripcion" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vConvocatoriaDetalles' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vConvocatoriaDetalles">
           <Key>
             <PropertyRef Name="FechaInicio" />
@@ -717,7 +718,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vConvocatoriaDetalles' no tiene def
           <Property Name="IdGrupoCarrOficio" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vDataProblemaEncontrado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vDataProblemaEncontrado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vDataProblemaEncontrado">
           <Key>
             <PropertyRef Name="Apellido_Y_Nombres" />
@@ -740,7 +741,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vDataProblemaEncontrado' no tiene d
           <Property Name="Pantalla" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vDelegacion_EstablecExamen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vDelegacion_EstablecExamen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vDelegacion_EstablecExamen">
           <Key>
             <PropertyRef Name="Direccion" />
@@ -762,7 +763,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vDelegacion_EstablecExamen' no tien
           <Property Name="ACTIVO" Type="bit" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vEntrevistaLugarFecha' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFecha">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -790,7 +791,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFecha' no tiene def
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFechaUltInscripc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vEntrevistaLugarFechaUltInscripc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEntrevistaLugarFechaUltInscripc">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -819,7 +820,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEntrevistaLugarFechaUltInscripc' n
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vEstCivil' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vEstCivil">
           <Key>
             <PropertyRef Name="Codigo_n" />
@@ -829,7 +830,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vEstCivil' no tiene definida ningun
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacionDatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vExportacionDatosBasicos">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -837,6 +838,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene 
             <PropertyRef Name="sexo" />
             <PropertyRef Name="DNI" />
             <PropertyRef Name="celular_carac" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="EstadoEtapa" />
             <PropertyRef Name="||" />
             <PropertyRef Name="IdInscripcion" />
             <PropertyRef Name="IdConvocatoria" />
@@ -854,6 +857,8 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene 
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="celular_carac" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Celular" Type="varchar" MaxLength="15" />
+          <Property Name="Etapa" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EstadoEtapa" Type="varchar" MaxLength="25" Nullable="false" />
           <Property Name="||" Type="varchar" MaxLength="2" Nullable="false" />
           <Property Name="IdPostulantePersona" Type="int" />
           <Property Name="IdInscripcion" Type="int" Nullable="false" />
@@ -866,7 +871,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vExportacionDatosBasicos' no tiene 
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vGruposYCarreras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vGruposYCarreras' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vGruposYCarreras">
           <Key>
             <PropertyRef Name="EstadoCivil" />
@@ -889,7 +894,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vGruposYCarreras' no tiene definida
           <Property Name="IdResGrupo" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscripcionDetalle' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionDetalle">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -934,7 +939,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalle' no tiene defin
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalleUltInsc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscripcionDetalleUltInsc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionDetalleUltInsc">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -983,7 +988,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionDetalleUltInsc' no tien
           <Property Name="IdOficinasYDelegaciones" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscripcionEtapaEstadoUltimoEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscripcionEtapaEstadoUltimoEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -1021,7 +1026,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscripcionEtapaEstadoUltimoEstado
           <Property Name="Fecha_Fin_Proceso" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosCantYTODASConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosCantYTODASConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosCantYTODASConvocatorias">
           <Key>
             <PropertyRef Name="IdModalidad" />
@@ -1042,7 +1047,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosCantYTODASConvocatorias'
           <Property Name="CantInscriptos" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosconTitulosProblemas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosconTitulosProblemas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosconTitulosProblemas">
           <Key>
             <PropertyRef Name="IdPostulantePersona" />
@@ -1073,7 +1078,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosconTitulosProblemas' no 
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosConTitulosProblemasCount' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosConTitulosProblemasCount' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosConTitulosProblemasCount">
           <Key>
             <PropertyRef Name="Idconvocatoria" />
@@ -1090,7 +1095,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosConTitulosProblemasCount
           <Property Name="CantInscXProblema" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosYConvocatorias' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosYConvocatorias">
           <Key>
             <PropertyRef Name="IdInscripcion" />
@@ -1116,7 +1121,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYConvocatorias' no tiene
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYRestriccionesCheck' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosYRestriccionesCheck' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosYRestriccionesCheck">
           <Key>
             <PropertyRef Name="Apellido" />
@@ -1166,7 +1171,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYRestriccionesCheck' no 
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYRestriccionesCount' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInscriptosYRestriccionesCount' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInscriptosYRestriccionesCount">
           <Key>
             <PropertyRef Name="FechaInicio" />
@@ -1197,7 +1202,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInscriptosYRestriccionesCount' no 
           <Property Name="EstadoCivilCheck" Type="varchar" MaxLength="35" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionesConvocadasYCarrerasAsociadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInstitucionesConvocadasYCarrerasAsociadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInstitucionesConvocadasYCarrerasAsociadas">
           <Key>
             <PropertyRef Name="IdInstitucion" />
@@ -1215,7 +1220,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionesConvocadasYCarrerasAs
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionModalidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vInstitucionModalidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vInstitucionModalidad">
           <Key>
             <PropertyRef Name="IdInstitucion" />
@@ -1230,7 +1235,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vInstitucionModalidad' no tiene def
           <Property Name="IdInstitucion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vLOCALIDAD' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vLOCALIDAD">
           <Key>
             <PropertyRef Name="IdLocalidad" />
@@ -1242,7 +1247,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vLOCALIDAD' no tiene definida ningu
           <Property Name="IdLocalidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vModalidadYDocumento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vModalidadYDocumento' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vModalidadYDocumento">
           <Key>
             <PropertyRef Name="Tipo" />
@@ -1257,7 +1262,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vModalidadYDocumento' no tiene defi
           <Property Name="IdTipoDocPresentado" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vOficDeleg_EstablecimientoRindExamen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vOficDeleg_EstablecimientoRindExamen' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vOficDeleg_EstablecimientoRindExamen">
           <Key>
             <PropertyRef Name="IdOficinasYDelegaciones" />
@@ -1272,7 +1277,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vOficDeleg_EstablecimientoRindExame
           <Property Name="IdEstablecimientoRindeExamen" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vParam_Grados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParam_Grados">
           <Key>
             
@@ -1285,7 +1290,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vParam_Grados' no tiene definida ni
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="150" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vParentesco' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vParentesco">
           <Key>
             <PropertyRef Name="idParentesco" />
@@ -1299,7 +1304,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vParentesco' no tiene definida ning
           <Property Name="Relacion" Type="varchar" MaxLength="60" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPeriodosInscrip">
           <Key>
             <PropertyRef Name="FechaInicio" />
@@ -1314,7 +1319,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPeriodosInscrip' no tiene definida
           <Property Name="Titulo" Type="varchar" MaxLength="100" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_ActividadMilitar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_ActividadMilitar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_ActividadMilitar">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1333,7 +1338,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_ActividadMilitar' no tiene
           <Property Name="FechaBaja" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Antropometria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_Antropometria' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_Antropometria">
           <Key>
             <PropertyRef Name="Genero" />
@@ -1356,7 +1361,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Antropometria' no tiene de
           <Property Name="IdPersona" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_DatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_DatosBasicos">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1393,7 +1398,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosBasicos' no tiene def
           <Property Name="Etapa_Estado" Type="varchar" MaxLength="76" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_DatosPer' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_DatosPer">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1422,7 +1427,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer' no tiene definid
           <Property Name="Nacionalidad" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer_UltInscripc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_DatosPer_UltInscripc' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_DatosPer_UltInscripc">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1453,7 +1458,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_DatosPer_UltInscripc' no t
           <Property Name="Nacionalidad" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Domicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_Domicilio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_Domicilio">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1490,7 +1495,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Domicilio' no tiene defini
           <Property Name="IdDomicilioActual" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.VPersona_Estudio' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VPersona_Estudio">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1516,7 +1521,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersona_Estudio' no tiene definida
           <Property Name="Localidad" Type="varchar" MaxLength="60" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_Familiar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_Familiar">
           <Key>
             <PropertyRef Name="IdPersonaPostulante" />
@@ -1547,7 +1552,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Familiar' no tiene definid
           <Property Name="FechaCasamiento" Type="date" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_Idioma' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_Idioma">
           <Key>
             <PropertyRef Name="Habla" />
@@ -1572,7 +1577,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_Idioma' no tiene definida 
           <Property Name="IdPersonaIdioma" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPersona_SituacionOcupacional' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPersona_SituacionOcupacional">
           <Key>
             <PropertyRef Name="IdPersona" />
@@ -1594,7 +1599,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPersona_SituacionOcupacional' no t
           <Property Name="DescInteres" Type="varchar" MaxLength="1000" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.VPersonaProblema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.VPersonaProblema' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="VPersonaProblema">
           <Key>
             <PropertyRef Name="IdPostulantePersona" />
@@ -1605,7 +1610,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.VPersonaProblema' no tiene definida
           <Property Name="Descripcion" Type="varchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPostPersonaEtapaEstadoUltimoEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPostPersonaEtapaEstadoUltimoEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPostPersonaEtapaEstadoUltimoEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -1643,7 +1648,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostPersonaEtapaEstadoUltimoEstado
           <Property Name="FechaFinalINSC" Type="date" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vPostulanteEtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vPostulanteEtapaEstado">
           <Key>
             <PropertyRef Name="IdInscripcion" />
@@ -1663,7 +1668,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vPostulanteEtapaEstado' no tiene de
           <Property Name="Estado" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vProvincia_Depto_Localidad' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vProvincia_Depto_Localidad">
           <Key>
             <PropertyRef Name="IdLocalidad" />
@@ -1675,7 +1680,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vProvincia_Depto_Localidad' no tien
           <Property Name="IdLocalidad" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vRELIGION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vRELIGION' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vRELIGION">
           <Key>
             <PropertyRef Name="CODIGO" />
@@ -1684,7 +1689,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRELIGION' no tiene definida ningun
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="112" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vRestriccionesGrupo' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vRestriccionesGrupo">
           <Key>
             <PropertyRef Name="EdadMinCAutoriz" />
@@ -1707,7 +1712,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupo' no tiene defin
           <Property Name="IdResGrupo" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupoLista' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vRestriccionesGrupoLista' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vRestriccionesGrupoLista">
           <Key>
             <PropertyRef Name="Restriccion" />
@@ -1717,7 +1722,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesGrupoLista' no tiene 
           <Property Name="IdResGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vRestriccionesPorConvYFechaPeriodosInscrip' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vRestriccionesPorConvYFechaPeriodosInscrip">
           <Key>
             <PropertyRef Name="FInicioPeriodo" />
@@ -1749,7 +1754,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vRestriccionesPorConvYFechaPeriodos
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSecuencia_EtapaEstado' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSecuencia_EtapaEstado">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -1771,7 +1776,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstado' no tiene de
           <Property Name="Siguiente" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoNoRechazados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSecuencia_EtapaEstadoNoRechazados' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSecuencia_EtapaEstadoNoRechazados">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -1791,7 +1796,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoNoRechazados'
           <Property Name="Siguiente" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoRECHAZADOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSecuencia_EtapaEstadoRECHAZADOS' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSecuencia_EtapaEstadoRECHAZADOS">
           <Key>
             <PropertyRef Name="IdSecuencia" />
@@ -1811,7 +1816,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSecuencia_EtapaEstadoRECHAZADOS' n
           <Property Name="Siguiente" Type="int" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSeguridad_Grupos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSeguridad_Grupos">
           <Key>
             <PropertyRef Name="codGrupo" />
@@ -1824,7 +1829,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos' no tiene definid
           <Property Name="codAplicacion" Type="char" MaxLength="30" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSeguridad_Grupos_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSeguridad_Grupos_Usuarios">
           <Key>
             <PropertyRef Name="codUsuario" />
@@ -1838,7 +1843,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Grupos_Usuarios' no tien
           <Property Name="codAplicacion" Type="char" MaxLength="30" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vSeguridad_Usuarios' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vSeguridad_Usuarios">
           <Key>
             <PropertyRef Name="codUsuario" />
@@ -1854,7 +1859,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vSeguridad_Usuarios' no tiene defin
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vUsuariosAdministrativos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vUsuariosAdministrativos">
           <Key>
             <PropertyRef Name="Email" />
@@ -1874,7 +1879,7 @@ advertencia 6002: La tabla o vista 'SINU.dbo.vUsuariosAdministrativos' no tiene 
           <Property Name="FechUltimaAct" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'SINU.dbo.vVerificacionPantallasYDatosAVerificar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+advertencia 6002: La tabla o vista 'SINU21.dbo.vVerificacionPantallasYDatosAVerificar' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="vVerificacionPantallasYDatosAVerificar">
           <Key>
             <PropertyRef Name="Descripcion" />
@@ -3152,6 +3157,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConsultaInscripciones].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
     [vConsultaInscripciones].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
     [vConsultaInscripciones].[IdConvocatoria] AS [IdConvocatoria], 
+    [vConsultaInscripciones].[ACTIVA] AS [ACTIVA], 
     [vConsultaInscripciones].[FechaInscripcion] AS [FechaInscripcion]
     FROM [dbo].[vConsultaInscripciones] AS [vConsultaInscripciones]</DefiningQuery>
           </EntitySet>
@@ -3255,6 +3261,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacionDatosBasicos].[Email] AS [Email], 
     [vExportacionDatosBasicos].[celular_carac] AS [celular_carac], 
     [vExportacionDatosBasicos].[Celular] AS [Celular], 
+    [vExportacionDatosBasicos].[Etapa] AS [Etapa], 
+    [vExportacionDatosBasicos].[EstadoEtapa] AS [EstadoEtapa], 
     [vExportacionDatosBasicos].[||] AS [||], 
     [vExportacionDatosBasicos].[IdPostulantePersona] AS [IdPostulantePersona], 
     [vExportacionDatosBasicos].[IdInscripcion] AS [IdInscripcion], 
@@ -6630,6 +6638,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="Fecha_Fin_Proceso" Type="DateTime" Precision="0" />
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
+          <Property Name="ACTIVA" Type="Boolean" />
         </EntityType>
         <ComplexType Name="sp_ConsultaInscriptosModalidadGenero_Result">
           <Property Type="Int64" Name="ID" Nullable="true" />
@@ -7516,6 +7525,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="IdConvocatoria" />
             <PropertyRef Name="ESTADO" />
             <PropertyRef Name="IdOficinasYDelegaciones" />
+            <PropertyRef Name="Etapa" />
+            <PropertyRef Name="EstadoEtapa" />
           </Key>
           <Property Name="nroinscripto" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -7538,6 +7549,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
           <Property Name="ESTADO" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
+          <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoEtapa" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -8746,6 +8759,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vConsultaInscripciones">
             <EntityTypeMapping TypeName="SINUModel.vConsultaInscripciones">
               <MappingFragment StoreEntitySet="vConsultaInscripciones">
+                <ScalarProperty Name="ACTIVA" ColumnName="ACTIVA" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
                 <ScalarProperty Name="Fecha_Fin_Proceso" ColumnName="Fecha_Fin_Proceso" />
@@ -9474,6 +9488,8 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vExportacionDatosBasicos">
             <EntityTypeMapping TypeName="SINUModel.vExportacionDatosBasicos">
               <MappingFragment StoreEntitySet="vExportacionDatosBasicos">
+                <ScalarProperty Name="EstadoEtapa" ColumnName="EstadoEtapa" />
+                <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
                 <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
