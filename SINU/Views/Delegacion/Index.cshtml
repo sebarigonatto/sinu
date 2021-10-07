@@ -281,7 +281,6 @@ Prueba de una nueva barra de menu para los postulantes
             tab = $(this).children("a").attr("href");
             sessionStorage.tabDelegacion = tab;
         })
-        var tablas = {};
 
         $(document).ready(function () {
 
@@ -292,9 +291,56 @@ Prueba de una nueva barra de menu para los postulantes
                 sessionStorage.tabDelegacion = "#Total";
             };
 
-            listaTablasJson= @Html.tablaToJson(Model)
+            var listaTablasJson = @Html.tablaToJson(Model);
 
-           // armadoDataTable(listaTablasJson)
+            //Botones
+
+
+            //funcion que devuelve el boton o botones que apareceran en la opciones
+            const renderBtn = function (row) {
+                //botones
+                const boton1 = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "IdPersona" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
+                const boton2 = '@Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Asignar fecha de entrevista" })'
+                const boton3 = '@Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Reasignar fecha de entrevista" })'
+                const boton4 = '@Html.ActionLink(" ", "Postular", new { id = "IdInscripcionEtapaEstado" }, new { @class = "btn btn-info far fa-user", @title = "Validar Postulante" })'
+                const boton5 = '@Html.ActionLink(" ", "Postular", new { id = "IdInscripcionEtapaEstado" }, new { @class = "btn btn-info fa fa-reply", @title = "Retroceder a la etapa anterior" })'
+                const boton6 = '@Html.ActionLink(" ", "Documentacion", new { id = "IdPersona" }, new { @class = "btn btn-info fa fa-check-circle", @title = "Validar la documentacion del postulante" })'
+                const boton7 = '@Html.ActionLink(" ", "Details", new { id = "IdPersona" }, new { @class = "fa fa-reply", @style = "color:#0072ff", @title = "Restaurar postulante" })'
+                const boton8 = '@Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Asignar fecha de presentacion" })'
+                const boton9 = '@Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Reasignar fecha de presentacion" })'
+
+                let botones=''
+                //armado de botones de Opciones                
+                switch (`${row.Etapa}-${row.Estado}`) {
+                    case 'ENTREVISTA-A Asignar':
+                        botones = boton2
+                        break;
+                    case 'ENTREVISTA-Pendiente':
+                        botones = boton3+boton4
+                        break;
+                    case 'ENTREVISTA-No Postulado':
+                        botones = boton5
+                        break;
+                    case 'DOCUMENTACION-A Validar':
+                        botones = boton6
+                        break;
+                    case 'DOCUMENTACION-No Validado':
+                        botones = boton7
+                        break;
+                    case 'PRESENTACION-A Asignar':
+                        botones = boton8
+                        break;
+                    case 'PRESENTACION-Asignada':
+                        botones = boton9
+                        break;                    
+                }
+
+                return boton1 + botones
+            }
+
+
+            armadoDataTable(listaTablasJson, renderBtn)
+            
 
             //var prefijo = 'tabla';
 

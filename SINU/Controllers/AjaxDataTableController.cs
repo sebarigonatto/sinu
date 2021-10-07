@@ -96,21 +96,36 @@ namespace SINU.Models
                 var columnaTipo = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='{model.tablaVista}'").ToList();
 
                 //armo un string con las columnas requeridad para relizar un select
-                string selectColumn = "";
+                string selectColumn = "",select="";
 
                 int columnCount = 0;
 
                 foreach (var columna in model.columns)
                 {
+                    switch (columnaTipo.First(c => c.COLUMN_NAME == columna.data).DATA_TYPE)
+                    {
+                        case "varchar":
+                        case "nvarchar":
+                        case "bit":
+                            select = columna.data;
+                            break;
+                        case "int":
+                            select = $"(Int32({ columna.data})).ToString() as { columna.data}";
+                            break; 
+                        case "date":
+                        case "datetime":
+                            select = $"(DateTime({columna.data})).ToString() as {columna.data}";
+                            break;                                                       
+                    }
+
                     columnCount++;
-                    //tipo de dato
-                    string tipo = columnaTipo.First(c => c.COLUMN_NAME == columna.data).DATA_TYPE;
-                    selectColumn += (tipo == "int" ? $"(Int32({columna.data})).ToString() as {columna.data}" : tipo=="date"? $"(DateTime({columna.data})).ToString() as {columna.data}" : columna.data) + (columnCount < model.columns.Count() ? "," : "");
+                   
+                    selectColumn += $"{select} {(columnCount < model.columns.Count() ? ',' : ' ')}";
                 }
 
 
                 //armo el where 
-               string[] searchWhereDT = new string[] { };
+                string[] searchWhereDT = new string[] { };
                 string whereDT = "";
 
                 // where con la variable searchBy
@@ -180,7 +195,7 @@ namespace SINU.Models
                     whereExtras = "true";
                 }
 
-                db.Database.CommandTimeout = 36000;
+               db.Database.CommandTimeout = 36000;
 
 
                 result.totalResultsCount = db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
@@ -188,8 +203,8 @@ namespace SINU.Models
                                            .Count();
 
                 var registrosWhere = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({selectColumn})")
-                                     .Where(whereDT, searchWhereDT)
                                      .Where(whereExtras, searchWhereExtras)
+                                     .Where(whereDT, searchWhereDT)                                     
                                      .OrderBy($"{sortBy} {dirSort}")
                                      .ToListAsync();
 

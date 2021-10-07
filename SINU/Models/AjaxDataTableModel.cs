@@ -24,6 +24,14 @@ namespace SINU.Models
 
     }
 
+    public class opcionDTAjax
+    {
+        public string action { get; set; }
+        public string constroller { get; set; }
+        public string columna { get; set; }
+        public string className { get; set; }
+    }
+
     public class filtroExtra
     {
         public string Columna { get; set; }
@@ -77,16 +85,7 @@ namespace SINU.Models
             public List<filtroExtra> filtrosExtras { get; set; }
             public string tablaVista { get; set; }
         }
-        /// <summary>
-        /// Clase para declarar las columnas de las distintas Tablas correspondiente a las vistas o tabs.
-        /// </summary>
-        /// <param name="data">Nombre del campo correspondiente de la Tablas o Vista a trabajar</param>
-        /// <param name="name">Nombre del controlador donde ocurrio el Problema</param>
-        /// <param name="defaultContent">Nombre de la Acción donde ocurrió el problema</param>
-        /// <param name="searchable">Mensaje que deseo que aparezca principalmente</param>
-        /// <param name="orderable">Nombre del controlador donde ocurrio el Problema</param>
-        /// <param name="visible">Nombre de la Acción donde ocurrió el problema</param>
-        /// <returns></returns>
+       
         public class Column
         {
             public string data { get; set; }

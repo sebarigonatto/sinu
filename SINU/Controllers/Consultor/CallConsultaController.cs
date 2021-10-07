@@ -47,9 +47,9 @@ namespace SINU.Controllers.Consultor
                 ConsultaProgramadaVm = db.ConsultaProgramada.Where(m => m.IdConsulta != 9).OrderBy(m => m.OrdenConsulta).ToList(),
                 EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m => m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1),// db.vSecuencia_EtapaEstado.Select(m=>new SelectListItem {Text= m.Estado, Value=m.Estado,Group= new SelectListGroup { Name=m.Etapa } }).ToList(),
                 TablaVista = "vExportacionDatosBasicos",//"vInscripcionDetalleUltInsc",
-                filtrosIniciales = new List<SelectListItem>
+                filtrosExtras = new List<filtroExtra>
                 {
-                    new SelectListItem{Text="Activa" ,Value= "true"}
+                    new filtroExtra{Columna="ESTADO" ,Valor= "ACTIVA"}
                 },
                 Columnas = new List<Column> {
 
@@ -158,9 +158,9 @@ namespace SINU.Controllers.Consultor
             }
             else
             {
-                datosTabla.filtrosIniciales = new List<SelectListItem> {
-                    new SelectListItem { Text = "sexo", Value = Genero },
-                    new SelectListItem { Text="IdModalidad",Value=ModalidadElegida }
+                datosTabla.filtrosExtras = new List<filtroExtra> {
+                    new filtroExtra { Columna = "sexo", Valor = Genero },
+                    new filtroExtra { Columna="IdModalidad",Valor=ModalidadElegida }
                 };
                 ViewBag.modalidadElegida = ModalidadElegida + " - Genero: " + Genero;
                 ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.sexo == Genero && m.IdModalidad == ModalidadElegida).Count();

@@ -281,7 +281,7 @@
         });
 
         //filtro por defecto
-        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosIniciales, Newtonsoft.Json.Formatting.Indented));
+        filtroInicial = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.filtrosExtras, Newtonsoft.Json.Formatting.Indented));
 
         var input_filter_value;
         var input_filter_timeout = null;

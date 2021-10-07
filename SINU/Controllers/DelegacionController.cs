@@ -26,27 +26,32 @@ namespace SINU.Controllers
         {
             try
             {
+                var control = typeof(DelegacionController);
                 //busco la delegacion que pertenece al usuario con perfil de delegacion            
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
 
-
-                var Columnas = new List<Column>
+                List<Column> Columnas = new List<Column>
                 {
                         ColumnaDTAjax("IdPersona",noPrint:true),
                         ColumnaDTAjax("IdInscripcionEtapaEstado",noPrint:true),
                         ColumnaDTAjax("IdDelegacionOficinaIngresoInscribio",noPrint:true),
                         ColumnaDTAjax("IdSecuencia",noPrint:true),
-                        //ColumnaDTAjax("Activa",noPrint:true),
-                        ColumnaDTAjax("Fecha",true),
-                        ColumnaDTAjax("Email",true),
-                        ColumnaDTAjax("Nombres",true),
-                        ColumnaDTAjax("Apellido",true),
-                        ColumnaDTAjax("Modalidad_Siglas",true,nombreDisplay:"Modalidad"),
-                        ColumnaDTAjax("Etapa",true),
-                        ColumnaDTAjax("Estado",true)
+                        ColumnaDTAjax("ACTIVA",noPrint:true),
+                        ColumnaDTAjax("Fecha",true,true),
+                        ColumnaDTAjax("Email",true,true),
+                        ColumnaDTAjax("Nombres",true,true),
+                        ColumnaDTAjax("Apellido",true,true),
+                        ColumnaDTAjax("Modalidad_Siglas",true,true,nombreDisplay:"Modalidad"),
+                        ColumnaDTAjax("Etapa",true,true),
+                        ColumnaDTAjax("Estado",true,true)
+                };
+
+                List<filtroExtra> filtros = new List<filtroExtra>{
+                    new filtroExtra{Columna="ACTIVA",Valor="true"},
+                    new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString(), }
                 };
 
                 var listaTablas = new List<DataTableVM> {
@@ -54,55 +59,35 @@ namespace SINU.Controllers
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras=new List<filtroExtra>
-                        {
-                            new filtroExtra{Columna="IdSecuencia",Condicion=">=",Valor="5"},
-                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
-                        },
+                        filtrosExtras= filtros.Append(new filtroExtra{Columna="IdSecuencia",Condicion=">=",Valor="5"}).ToList(),
                         IdTabla="InscriptosTODOS"
                     },
                       new DataTableVM
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras=new List<filtroExtra>
-                        {
-                            new filtroExtra{Columna="Etapa",Valor="DATOS BASICOS"},
-                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
-                        },
+                        filtrosExtras= filtros.Append(new filtroExtra{Columna="Etapa",Valor="DATOS BASICOS"}).ToList(),                      
                         IdTabla="InscriptosDATOSBASICOS"
                     },
                         new DataTableVM
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras=new List<filtroExtra>
-                        {
-                            new filtroExtra{Columna="Etapa",Valor="ENTREVISTA"},
-                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
-                        },
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="ENTREVISTA"}).ToList(),
                         IdTabla="InscriptosENTREVISTA"
                     },
                           new DataTableVM
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras=new List<filtroExtra>
-                        {
-                            new filtroExtra{Columna="Etapa",Valor="DOCUMENTACION"},
-                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
-                        },
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="DOCUMENTACION"}).ToList(),
                         IdTabla="InscriptosDOCUMENTACION"
                     },
                             new DataTableVM
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras=new List<filtroExtra>
-                        {
-                            new filtroExtra{Columna="Etapa",Valor="PRESENTACION"},
-                            new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString() }
-                        },
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="PRESENTACION"}).ToList(),
                         IdTabla="InscriptosPRESENTACION"
                     },
                 }; 

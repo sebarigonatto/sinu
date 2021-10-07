@@ -50,8 +50,9 @@ namespace SINU.Helpers
 
         public static MvcHtmlString tablaToJson<TModel>(this HtmlHelper<TModel> htmlHelper, dynamic tabla)
         {
-            var asda = Newtonsoft.Json.JsonConvert.SerializeObject(tabla, Newtonsoft.Json.Formatting.Indented);
-            return MvcHtmlString.Create(asda);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(tabla, Newtonsoft.Json.Formatting.Indented);
+            return MvcHtmlString.Create(json);
         }
+
     }
 }

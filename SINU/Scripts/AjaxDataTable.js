@@ -1,4 +1,5 @@
 ﻿/// <reference path="jquery-3.3.1.js" />
+
 //Recibo listado de la Clase "DataTableVM", presentados como un objeto
 //Contienen: 
 //"TablaVista": nombre de la tabla/vista
@@ -10,33 +11,80 @@
 /**
  * Armado de Tabla con DATATABLES
  * @param {any} modeloTabla Tabla o listado de las Tablas a armar, Ej: "@Model.tabla"
+ * @param {any} armdadoBtn Botones Opcionales, en string o function
  */
-
-function armadoDataTable(modeloTabla) {
+function armadoDataTable(modeloTabla, armdadoBtn) {
     //alert(Array.isArray(modeloTabla))
     //veo si el objeto recibido es un array de Tablas 
     if (Array.isArray(modeloTabla)) {
 
-        $.each(modeloTabla, (index, item) => tablaArmado(item))
+        $.each(modeloTabla, (index, item) => tablaArmado(item, armdadoBtn))
 
     } else {
 
-        tablaArmado(modeloTabla)
+        tablaArmado(modeloTabla, armdadoBtn)
     }        
 }
 
 listadoDataTable = []
 
+
+//$.each(json.data, function (index, item) {
+
+//    botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item[Object.keys(item)[0]]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
+
+//    item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
+//});
+
+
 //obeto que contiene la columna de opciones que se agregara a la tabla
-const opcionColumna = { data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' }
 
-function tablaArmado(tabla) {
 
-    var idTabla = tabla.IdTabla ?? tabla.TablaVista;
+function tablaArmado(tabla, armadoBtn) {
 
-    titleTable = $(`#dataTable-${idTabla}`).prev(':header').html();
+    //Armado de la Columna "Opcion"
+    //const startIndex = boton1.lastIndexOf('=')
+    //const endIndex = boton1.lastIndexOf('"')
+    //const columnBtn= boton1.substring(boton1.lastIndexOf('=')+1,boton1.lastIndexOf('"'))
+
+    //alert(typeof(armadoBtn))
+
+
+
+    const opcionColumna = {
+        data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint', render: function (data, type, row, meta) {
+
+            let btnString = typeof (armadoBtn) == "function" ? armadoBtn(row) : armadoBtn;
+            let div = $('<div class="d-flex justify-content-around btnOptions"></d>')
+            //reemplazo de columna por dato
+            let btnList = btnString.split('<a')
+            btnList.shift()
+            for ( let btn  of btnList ) {
+                btn = $(`<a ${btn.toString()}`);
+                let href = $(btn).attr('href')
+                let href1 = href.substring(0, href.indexOf('?') + 1)
+                let href2 = href.substring(href.indexOf('?') + 1, href.length)
+                let params1 = new URLSearchParams(href2)
+                let params2 = new URLSearchParams()
+                for (let param of params1) {
+
+                    param[1] = 65454
+                    params2.append(param[0], param[1])
+                }
+                console.log(params2.toString())              
+            }
+          
+            return `<div class="d-flex justify-content-around btnOptions"><a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${row[0]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a></div>`;
+        }
+    }
+
+    const idTabla = tabla.IdTabla ?? tabla.TablaVista;
+
+    const titleTable = $(`#dataTable-${idTabla}`).prev(':header').html();
+
 
     tabla.Columnas.push(opcionColumna)
+
     listadoDataTable[`dataTable-${idTabla}`] = $(`#dataTable-${idTabla}`).DataTable({
         "serverSide": true,
         "processing": true,
@@ -63,14 +111,7 @@ function tablaArmado(tabla) {
                 data.columns.pop();
             },
             dataSrc: function (json) {
-               
-                $.each(json.data, function (index, item) {
-
-                    botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item[Object.keys(item)[0]]}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
-
-                    item.Opciones = `<div class="d-flex justify-content-around">${botonDetalle}</div>`
-                });
-
+             
                 return json.data;
             }
         },
