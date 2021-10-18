@@ -96,26 +96,29 @@ namespace SINU.Models
                 var columnaTipo = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='{model.tablaVista}'").ToList();
 
                 //armo un string con las columnas requeridad para relizar un select
-                string selectColumn = "",select="";
+                string selectColumn = "",select;
 
                 int columnCount = 0;
 
                 foreach (var columna in model.columns)
                 {
+                    select = "";
                     switch (columnaTipo.First(c => c.COLUMN_NAME == columna.data).DATA_TYPE)
                     {
                         case "varchar":
                         case "nvarchar":
                         case "bit":
+                        case "nchar":
                             select = columna.data;
                             break;
                         case "int":
+                        case "decimal":
                             select = $"(Int32({ columna.data})).ToString() as { columna.data}";
                             break; 
                         case "date":
                         case "datetime":
                             select = $"(DateTime({columna.data})).ToString() as {columna.data}";
-                            break;                                                       
+                            break;                       
                     }
 
                     columnCount++;
@@ -173,6 +176,7 @@ namespace SINU.Models
                         {
                             case "varchar":
                             case "nvarchar":
+                            case "nchar": 
                                 condicion = $"{filtros.Columna}.Contains(@{indexExtras - 1})";
                                 break;
                             case "int":
@@ -218,7 +222,6 @@ namespace SINU.Models
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 

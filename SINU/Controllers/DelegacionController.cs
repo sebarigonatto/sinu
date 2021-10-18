@@ -32,18 +32,17 @@ namespace SINU.Controllers
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
-
                 List<Column> Columnas = new List<Column>
                 {
                         ColumnaDTAjax("IdPersona",noPrint:true),
                         ColumnaDTAjax("IdInscripcionEtapaEstado",noPrint:true),
                         ColumnaDTAjax("IdDelegacionOficinaIngresoInscribio",noPrint:true),
                         ColumnaDTAjax("IdSecuencia",noPrint:true),
-                        ColumnaDTAjax("ACTIVA",noPrint:true),
-                        ColumnaDTAjax("Fecha",true,true),
-                        ColumnaDTAjax("Email",true,true),
+                        ColumnaDTAjax("ACTIVA",noPrint:true),                        
                         ColumnaDTAjax("Nombres",true,true),
-                        ColumnaDTAjax("Apellido",true,true),
+                        ColumnaDTAjax("Apellido",true,true),                    
+                        ColumnaDTAjax("Email",true,true,className:"truncate"),
+                        ColumnaDTAjax("Fecha2",visible:true,nombreDisplay:"Fecha"),
                         ColumnaDTAjax("Modalidad_Siglas",true,true,nombreDisplay:"Modalidad"),
                         ColumnaDTAjax("Etapa",true,true),
                         ColumnaDTAjax("Estado",true,true)
@@ -59,7 +58,7 @@ namespace SINU.Controllers
                     {
                         TablaVista="vConsultaInscripciones",
                         Columnas= Columnas,
-                        filtrosExtras= filtros.Append(new filtroExtra{Columna="IdSecuencia",Condicion=">=",Valor="5"}).ToList(),
+                        filtrosExtras= filtros.Append(new filtroExtra{Columna="IdSecuencia",Condicion="!=",Valor="4"}).ToList(),
                         IdTabla="InscriptosTODOS"
                     },
                       new DataTableVM

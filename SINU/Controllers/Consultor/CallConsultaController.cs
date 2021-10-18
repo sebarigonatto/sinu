@@ -78,6 +78,34 @@ namespace SINU.Controllers.Consultor
             //return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
 
+        /// <summary>
+        /// Exportacion de datos para las Escuelas
+        /// </summary>   
+        public ActionResult exportacionEscuelas()
+        {
+            var columnasTotal = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='vExportacion_Escuelas'").ToList();
+            var columanVisibles = new List<Column>
+            {
+                ColumnaDTAjax("idaspirante"),
+                ColumnaDTAjax("Nroinscripcion",true,true,orderable:true),
+                ColumnaDTAjax("apellido",true,true,orderable:true),                
+                ColumnaDTAjax("nombre",true,true,orderable:true),
+                ColumnaDTAjax("dni",true,true,orderable:true),
+                ColumnaDTAjax("Modalidad",true,true,orderable:true),
+                ColumnaDTAjax("Email",true,true,orderable:true,className:"truncate")
+            };
+            columanVisibles.AddRange(columnasTotal.Where(m=>!columanVisibles.Select(m => m.data).ToList().Contains(m.COLUMN_NAME)).Select(m=> ColumnaDTAjax(m.COLUMN_NAME)).ToList());
+
+            DataTableVM data = new DataTableVM
+            {
+                TablaVista = "vExportacion_Escuelas",
+                Columnas = columanVisibles
+            };
+            return View(data);          
+        }
+
+
+
         /// <summary>FaltaCrearNuevoAction Es una rutina modelo 
         /// que se usa como plantilla para crear nuevas actions para nuevas CONSULTAS PRINCIPALES.
         /// Tiene asociada una View que solo emite el mensaje que falta desarrollar elementos.

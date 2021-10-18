@@ -47,12 +47,7 @@
         font-weight: bold;
         font-size: initial;
     }
-    .truncate {
-        max-width: 120px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+ 
 </style>
 <br />
 <div class="container p-0 ">
@@ -145,7 +140,7 @@
 @section Scripts{
     <script type="text/javascript">
 
-                var vistas =  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ConsultaProgramadaVm, Newtonsoft.Json.Formatting.Indented));
+        var vistas =  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ConsultaProgramadaVm, Newtonsoft.Json.Formatting.Indented));
 
         $.each(vistas, async function (index, item) {
 

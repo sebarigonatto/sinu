@@ -41,7 +41,7 @@ namespace SINU.Helpers
 
             //TABLA
             var table = new TagBuilder("table");
-            table.AddCssClass("table table-filters table-bordered table-light table-hover w-100");
+            table.AddCssClass("table table-bordered table-hover nowrap w-100");
             table.Attributes.Add("id",$"dataTable-{idTablaVista}" );
             table.InnerHtml = Thead.ToString()+Tbody.ToString();
             

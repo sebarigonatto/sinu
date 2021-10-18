@@ -43,7 +43,7 @@ namespace SINU.Models
     {
         public List<Column> Columnas { get; set; }
         public string TablaVista { get; set; }
-        public string IdTabla { get; set; } = "";
+        public string IdTabla { get; set; } = null;
         public List<filtroExtra> filtrosExtras { get; set; } = new List<filtroExtra>() { new filtroExtra()};
     }
 
@@ -60,7 +60,7 @@ namespace SINU.Models
         /// <param name="noPrint">Indica si la columna sera exportada, ya sea en PDF, EXCEL o para imprimir</param>
         /// <param name="orderable">Columna ordenable, por defecto es false</param>
         /// <returns></returns>
-        public static Column ColumnaDTAjax(string nombreColumna, bool visible = false, bool searchable = false, string nombreDisplay = null, bool noPrint = false, bool orderable = false)
+        public static Column ColumnaDTAjax(string nombreColumna, bool visible = false, bool searchable = false, string nombreDisplay = null, bool noPrint = false, bool orderable = false, string className="")
         {
             return new Column
             {
@@ -69,7 +69,7 @@ namespace SINU.Models
                 searchable = searchable,
                 orderable = orderable,
                 visible = visible,
-                className = noPrint ? "noPrint" : ""
+                className = noPrint ? "noPrint "+className : className
             };
         }
         

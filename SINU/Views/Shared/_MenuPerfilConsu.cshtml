@@ -15,9 +15,10 @@ ESTE MENU Y TODOS LOS ARCHIVOS DE MENU DEBEN SER MEJORADOS/REVISADOS:
 <!--
 TODO EL STYLE DEBE IR EN OTRO ARCHIVO CSS
 -->
-<li class="nav-item">@Html.ActionLink("Principal", "Index", "Consultor", new { id=9}, htmlAttributes: new { @class = "nav-link" })</li>
+<li class="nav-item">@Html.ActionLink("Principal", "Index", "Consultor", new { id = 9 }, htmlAttributes: new { @class = "nav-link" })</li>
+<li class="nav-item">@Html.ActionLink("Exportación Escuelas", "exportacionEscuelas", "CallConsulta",null, htmlAttributes: new { @class = "nav-link" })</li>
 
-<!-- ESTE LINK "TABLA" ES TRANSITORIO Y DEBERÁ SER ELIMINADO UNA VEZ FINALIZADA LA CREACION DE ESTA APLICACION 
+<!-- ESTE LINK "TABLA" ES TRANSITORIO Y DEBERÁ SER ELIMINADO UNA VEZ FINALIZADA LA CREACION DE ESTA APLICACION
     ES SOLO A LOS FINES DE CARGAR Y MODIFICAR LA TABLA PARA NUEVOAS CONSULTAS-->
 @*Acceso directo a la tabla*@
 @*<li class="nav-item">@Html.ActionLink("TABLA", "Index", "ConsultaProgramadas", null, htmlAttributes: new { @class = "nav-link" })</li>*@

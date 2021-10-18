@@ -683,6 +683,7 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vConsultaInscripciones' no tiene 
           <Property Name="IdInscripcionEtapaEstado" Type="int" Nullable="false" />
           <Property Name="IdSecuencia" Type="int" Nullable="false" />
           <Property Name="Fecha" Type="datetime" />
+          <Property Name="Fecha2" Type="nvarchar" MaxLength="4000" />
           <Property Name="IdDelegacionOficinaIngresoInscribio" Type="int" />
           <Property Name="Fecha_Inicio_Proceso" Type="date" />
           <Property Name="Fecha_Fin_Proceso" Type="date" />
@@ -828,6 +829,187 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vEstCivil' no tiene definida ning
           <Property Name="Codigo" Type="varchar" MaxLength="50" />
           <Property Name="Codigo_n" Type="varchar" MaxLength="8" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="112" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacion_Escuelas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="vExportacion_Escuelas">
+          <Key>
+            <PropertyRef Name="idaspirante" />
+            <PropertyRef Name="NRODDNN" />
+            <PropertyRef Name="NROMOD" />
+            <PropertyRef Name="ModalidadDescrip" />
+            <PropertyRef Name="nroinscripto" />
+            <PropertyRef Name="apellido" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="Localidad" />
+            <PropertyRef Name="idprovincia" />
+            <PropertyRef Name="Provincia" />
+            <PropertyRef Name="cpostal" />
+            <PropertyRef Name="Loc_Prov_CP" />
+            <PropertyRef Name="caracteristica" />
+            <PropertyRef Name="opcioncuerpo1" />
+            <PropertyRef Name="opcioncuerpo2" />
+            <PropertyRef Name="sexo" />
+            <PropertyRef Name="iddelegacion" />
+            <PropertyRef Name="Deleg" />
+            <PropertyRef Name="dni" />
+            <PropertyRef Name="nacidoen" />
+            <PropertyRef Name="nativo" />
+            <PropertyRef Name="poropcion" />
+            <PropertyRef Name="cuil_a" />
+            <PropertyRef Name="cuil_dv" />
+            <PropertyRef Name="CUIL" />
+            <PropertyRef Name="celular_carac" />
+            <PropertyRef Name="calle_ev" />
+            <PropertyRef Name="numero_ev" />
+            <PropertyRef Name="piso_ev" />
+            <PropertyRef Name="unidad_ev" />
+            <PropertyRef Name="localidad_ev" />
+            <PropertyRef Name="idprovincia_ev" />
+            <PropertyRef Name="PROV_ev" />
+            <PropertyRef Name="cpostal_ev" />
+            <PropertyRef Name="Tiene_Hijos" />
+            <PropertyRef Name="Cant_Varones" />
+            <PropertyRef Name="Cant_Mujeres" />
+            <PropertyRef Name="convive" />
+            <PropertyRef Name="ifaa" />
+            <PropertyRef Name="edadenanos" />
+            <PropertyRef Name="edadenmeses" />
+            <PropertyRef Name="id_provincia_esta" />
+            <PropertyRef Name="orientacion" />
+            <PropertyRef Name="solicitoesnm" />
+            <PropertyRef Name="ingresoesnm" />
+            <PropertyRef Name="causadenoingreso" />
+            <PropertyRef Name="causadebaja" />
+            <PropertyRef Name="motivobaja" />
+            <PropertyRef Name="fechanoingresobaja" />
+            <PropertyRef Name="alumnomilitar" />
+            <PropertyRef Name="institutomilitar" />
+            <PropertyRef Name="causabajainst" />
+            <PropertyRef Name="motivobajainst" />
+            <PropertyRef Name="fechabajainst" />
+            <PropertyRef Name="textoorientacion" />
+            <PropertyRef Name="permanenciad" />
+            <PropertyRef Name="permanenciam" />
+            <PropertyRef Name="permanenciaa" />
+            <PropertyRef Name="jerarquiaa" />
+            <PropertyRef Name="permanenciafd" />
+            <PropertyRef Name="permanenciafm" />
+            <PropertyRef Name="permanenciafa" />
+            <PropertyRef Name="jerarquiafa" />
+            <PropertyRef Name="oficio" />
+            <PropertyRef Name="viajesext" />
+            <PropertyRef Name="textopais" />
+            <PropertyRef Name="motivoingreso" />
+            <PropertyRef Name="gradoactual" />
+            <PropertyRef Name="destinoactual" />
+            <PropertyRef Name="bajaactual" />
+            <PropertyRef Name="fuerzaactual" />
+            <PropertyRef Name="agrupacivil" />
+          </Key>
+          <Property Name="idaspirante" Type="int" Nullable="false" />
+          <Property Name="Nroinscripcion" Type="int" />
+          <Property Name="NRODDNN" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="NomDeleg" Type="varchar" MaxLength="100" />
+          <Property Name="NROMOD" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Modalidad" Type="varchar" MaxLength="10" />
+          <Property Name="ModalidadDescrip" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nroinscripto" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Calle" Type="nchar" MaxLength="100" />
+          <Property Name="Numero" Type="varchar" MaxLength="10" />
+          <Property Name="Piso" Type="nchar" MaxLength="3" />
+          <Property Name="Unidad" Type="nchar" MaxLength="5" />
+          <Property Name="Localidad" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="idprovincia" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Provincia" Type="varchar" MaxLength="112" Nullable="false" />
+          <Property Name="cpostal" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PAIS" Type="varchar" MaxLength="255" />
+          <Property Name="Loc_Prov_CP" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="caracteristica" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="telefono" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="opcioncuerpo1" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="opcioncuerpo2" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="sexo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="iddelegacion" Type="int" Nullable="false" />
+          <Property Name="Deleg" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="dni" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="nacidoen" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="fechanac" Type="date" />
+          <Property Name="nacionalidad" Type="varchar" MaxLength="50" />
+          <Property Name="rindeen" Type="varchar" MaxLength="201" />
+          <Property Name="fecha_alta" Type="date" />
+          <Property Name="nativo" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="poropcion" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="cuil_a" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="cuil_dv" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="CUIL" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="celular_carac" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="celular" Type="varchar" MaxLength="15" />
+          <Property Name="calle_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="numero_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="piso_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="unidad_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="localidad_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="idprovincia_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="PROV_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="cpostal_ev" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Tiene_Hijos" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="Cant_Varones" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="Cant_Mujeres" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="convive" Type="varchar" MaxLength="19" Nullable="false" />
+          <Property Name="ifaa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="Cod_Estad_Civ" Type="varchar" MaxLength="8" />
+          <Property Name="EstadoCivil" Type="varchar" MaxLength="112" />
+          <Property Name="edadenanos" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="edadenmeses" Type="varchar" MaxLength="17" Nullable="false" />
+          <Property Name="religion" Type="varchar" MaxLength="112" />
+          <Property Name="nrocalzado" Type="int" />
+          <Property Name="nrocuello" Type="int" />
+          <Property Name="Altura" Type="int" />
+          <Property Name="Peso" Type="decimal" Precision="4" Scale="1" />
+          <Property Name="perimetrotorax" Type="int" />
+          <Property Name="perimetrocintura" Type="int" />
+          <Property Name="LargoPantalon" Type="int" />
+          <Property Name="largoentrepierna" Type="int" />
+          <Property Name="LargoFalda" Type="int" />
+          <Property Name="id_provincia_esta" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="orientacion" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="solicitoesnm" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="ingresoesnm" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="causadenoingreso" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="causadebaja" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="motivobaja" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="fechanoingresobaja" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="alumnomilitar" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="institutomilitar" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="causabajainst" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="motivobajainst" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="fechabajainst" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
+          <Property Name="textoorientacion" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciad" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciam" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciaa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="jerarquiaa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciafd" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciafm" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="permanenciafa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="jerarquiafa" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="situaciono" Type="varchar" MaxLength="60" />
+          <Property Name="oficio" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="textooficio" Type="varchar" MaxLength="60" />
+          <Property Name="viajesext" Type="int" Nullable="false" />
+          <Property Name="textopais" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="VIAJES" Type="nvarchar(max)" />
+          <Property Name="motivoingreso" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="gradoactual" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="destinoactual" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="bajaactual" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="fuerzaactual" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="agrupacivil" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacionDatosBasicos' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -3153,6 +3335,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vConsultaInscripciones].[IdInscripcionEtapaEstado] AS [IdInscripcionEtapaEstado], 
     [vConsultaInscripciones].[IdSecuencia] AS [IdSecuencia], 
     [vConsultaInscripciones].[Fecha] AS [Fecha], 
+    [vConsultaInscripciones].[Fecha2] AS [Fecha2], 
     [vConsultaInscripciones].[IdDelegacionOficinaIngresoInscribio] AS [IdDelegacionOficinaIngresoInscribio], 
     [vConsultaInscripciones].[Fecha_Inicio_Proceso] AS [Fecha_Inicio_Proceso], 
     [vConsultaInscripciones].[Fecha_Fin_Proceso] AS [Fecha_Fin_Proceso], 
@@ -3247,6 +3430,113 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vEstCivil].[Codigo_n] AS [Codigo_n], 
     [vEstCivil].[Descripcion] AS [Descripcion]
     FROM [dbo].[vEstCivil] AS [vEstCivil]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vExportacion_Escuelas" EntityType="Self.vExportacion_Escuelas" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vExportacion_Escuelas].[idaspirante] AS [idaspirante], 
+    [vExportacion_Escuelas].[Nroinscripcion] AS [Nroinscripcion], 
+    [vExportacion_Escuelas].[NRODDNN] AS [NRODDNN], 
+    [vExportacion_Escuelas].[NomDeleg] AS [NomDeleg], 
+    [vExportacion_Escuelas].[NROMOD] AS [NROMOD], 
+    [vExportacion_Escuelas].[Modalidad] AS [Modalidad], 
+    [vExportacion_Escuelas].[ModalidadDescrip] AS [ModalidadDescrip], 
+    [vExportacion_Escuelas].[nroinscripto] AS [nroinscripto], 
+    [vExportacion_Escuelas].[apellido] AS [apellido], 
+    [vExportacion_Escuelas].[nombre] AS [nombre], 
+    [vExportacion_Escuelas].[Calle] AS [Calle], 
+    [vExportacion_Escuelas].[Numero] AS [Numero], 
+    [vExportacion_Escuelas].[Piso] AS [Piso], 
+    [vExportacion_Escuelas].[Unidad] AS [Unidad], 
+    [vExportacion_Escuelas].[Localidad] AS [Localidad], 
+    [vExportacion_Escuelas].[idprovincia] AS [idprovincia], 
+    [vExportacion_Escuelas].[Provincia] AS [Provincia], 
+    [vExportacion_Escuelas].[cpostal] AS [cpostal], 
+    [vExportacion_Escuelas].[PAIS] AS [PAIS], 
+    [vExportacion_Escuelas].[Loc_Prov_CP] AS [Loc_Prov_CP], 
+    [vExportacion_Escuelas].[caracteristica] AS [caracteristica], 
+    [vExportacion_Escuelas].[telefono] AS [telefono], 
+    [vExportacion_Escuelas].[Email] AS [Email], 
+    [vExportacion_Escuelas].[opcioncuerpo1] AS [opcioncuerpo1], 
+    [vExportacion_Escuelas].[opcioncuerpo2] AS [opcioncuerpo2], 
+    [vExportacion_Escuelas].[sexo] AS [sexo], 
+    [vExportacion_Escuelas].[iddelegacion] AS [iddelegacion], 
+    [vExportacion_Escuelas].[Deleg] AS [Deleg], 
+    [vExportacion_Escuelas].[dni] AS [dni], 
+    [vExportacion_Escuelas].[nacidoen] AS [nacidoen], 
+    [vExportacion_Escuelas].[fechanac] AS [fechanac], 
+    [vExportacion_Escuelas].[nacionalidad] AS [nacionalidad], 
+    [vExportacion_Escuelas].[rindeen] AS [rindeen], 
+    [vExportacion_Escuelas].[fecha_alta] AS [fecha_alta], 
+    [vExportacion_Escuelas].[nativo] AS [nativo], 
+    [vExportacion_Escuelas].[poropcion] AS [poropcion], 
+    [vExportacion_Escuelas].[cuil_a] AS [cuil_a], 
+    [vExportacion_Escuelas].[cuil_dv] AS [cuil_dv], 
+    [vExportacion_Escuelas].[CUIL] AS [CUIL], 
+    [vExportacion_Escuelas].[celular_carac] AS [celular_carac], 
+    [vExportacion_Escuelas].[celular] AS [celular], 
+    [vExportacion_Escuelas].[calle_ev] AS [calle_ev], 
+    [vExportacion_Escuelas].[numero_ev] AS [numero_ev], 
+    [vExportacion_Escuelas].[piso_ev] AS [piso_ev], 
+    [vExportacion_Escuelas].[unidad_ev] AS [unidad_ev], 
+    [vExportacion_Escuelas].[localidad_ev] AS [localidad_ev], 
+    [vExportacion_Escuelas].[idprovincia_ev] AS [idprovincia_ev], 
+    [vExportacion_Escuelas].[PROV_ev] AS [PROV_ev], 
+    [vExportacion_Escuelas].[cpostal_ev] AS [cpostal_ev], 
+    [vExportacion_Escuelas].[Tiene_Hijos] AS [Tiene_Hijos], 
+    [vExportacion_Escuelas].[Cant_Varones] AS [Cant_Varones], 
+    [vExportacion_Escuelas].[Cant_Mujeres] AS [Cant_Mujeres], 
+    [vExportacion_Escuelas].[convive] AS [convive], 
+    [vExportacion_Escuelas].[ifaa] AS [ifaa], 
+    [vExportacion_Escuelas].[Cod_Estad_Civ] AS [Cod_Estad_Civ], 
+    [vExportacion_Escuelas].[EstadoCivil] AS [EstadoCivil], 
+    [vExportacion_Escuelas].[edadenanos] AS [edadenanos], 
+    [vExportacion_Escuelas].[edadenmeses] AS [edadenmeses], 
+    [vExportacion_Escuelas].[religion] AS [religion], 
+    [vExportacion_Escuelas].[nrocalzado] AS [nrocalzado], 
+    [vExportacion_Escuelas].[nrocuello] AS [nrocuello], 
+    [vExportacion_Escuelas].[Altura] AS [Altura], 
+    [vExportacion_Escuelas].[Peso] AS [Peso], 
+    [vExportacion_Escuelas].[perimetrotorax] AS [perimetrotorax], 
+    [vExportacion_Escuelas].[perimetrocintura] AS [perimetrocintura], 
+    [vExportacion_Escuelas].[LargoPantalon] AS [LargoPantalon], 
+    [vExportacion_Escuelas].[largoentrepierna] AS [largoentrepierna], 
+    [vExportacion_Escuelas].[LargoFalda] AS [LargoFalda], 
+    [vExportacion_Escuelas].[id_provincia_esta] AS [id_provincia_esta], 
+    [vExportacion_Escuelas].[orientacion] AS [orientacion], 
+    [vExportacion_Escuelas].[solicitoesnm] AS [solicitoesnm], 
+    [vExportacion_Escuelas].[ingresoesnm] AS [ingresoesnm], 
+    [vExportacion_Escuelas].[causadenoingreso] AS [causadenoingreso], 
+    [vExportacion_Escuelas].[causadebaja] AS [causadebaja], 
+    [vExportacion_Escuelas].[motivobaja] AS [motivobaja], 
+    [vExportacion_Escuelas].[fechanoingresobaja] AS [fechanoingresobaja], 
+    [vExportacion_Escuelas].[alumnomilitar] AS [alumnomilitar], 
+    [vExportacion_Escuelas].[institutomilitar] AS [institutomilitar], 
+    [vExportacion_Escuelas].[causabajainst] AS [causabajainst], 
+    [vExportacion_Escuelas].[motivobajainst] AS [motivobajainst], 
+    [vExportacion_Escuelas].[fechabajainst] AS [fechabajainst], 
+    [vExportacion_Escuelas].[OcupacionActual] AS [OcupacionActual], 
+    [vExportacion_Escuelas].[textoorientacion] AS [textoorientacion], 
+    [vExportacion_Escuelas].[permanenciad] AS [permanenciad], 
+    [vExportacion_Escuelas].[permanenciam] AS [permanenciam], 
+    [vExportacion_Escuelas].[permanenciaa] AS [permanenciaa], 
+    [vExportacion_Escuelas].[jerarquiaa] AS [jerarquiaa], 
+    [vExportacion_Escuelas].[permanenciafd] AS [permanenciafd], 
+    [vExportacion_Escuelas].[permanenciafm] AS [permanenciafm], 
+    [vExportacion_Escuelas].[permanenciafa] AS [permanenciafa], 
+    [vExportacion_Escuelas].[jerarquiafa] AS [jerarquiafa], 
+    [vExportacion_Escuelas].[situaciono] AS [situaciono], 
+    [vExportacion_Escuelas].[oficio] AS [oficio], 
+    [vExportacion_Escuelas].[textooficio] AS [textooficio], 
+    [vExportacion_Escuelas].[viajesext] AS [viajesext], 
+    [vExportacion_Escuelas].[textopais] AS [textopais], 
+    [vExportacion_Escuelas].[VIAJES] AS [VIAJES], 
+    [vExportacion_Escuelas].[motivoingreso] AS [motivoingreso], 
+    [vExportacion_Escuelas].[gradoactual] AS [gradoactual], 
+    [vExportacion_Escuelas].[destinoactual] AS [destinoactual], 
+    [vExportacion_Escuelas].[bajaactual] AS [bajaactual], 
+    [vExportacion_Escuelas].[fuerzaactual] AS [fuerzaactual], 
+    [vExportacion_Escuelas].[agrupacivil] AS [agrupacivil]
+    FROM [dbo].[vExportacion_Escuelas] AS [vExportacion_Escuelas]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vExportacionDatosBasicos" EntityType="Self.vExportacionDatosBasicos" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -5985,6 +6275,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <Parameter Name="AnulaFechaEntrevista" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="vExportacionDatosBasicos" EntityType="SINUModel.vExportacionDatosBasicos" />
+          <EntitySet Name="vExportacion_Escuelas" EntityType="SINUModel.vExportacion_Escuelas" />
           </EntityContainer>
         <ComplexType Name="Aprender01_Result">
           <Property Type="Int32" Name="IdSecuencia" Nullable="false" />
@@ -6639,6 +6930,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdConvocatoria" Type="Int32" Nullable="false" />
           <Property Name="FechaInscripcion" Type="DateTime" Precision="0" />
           <Property Name="ACTIVA" Type="Boolean" />
+          <Property Name="Fecha2" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="sp_ConsultaInscriptosModalidadGenero_Result">
           <Property Type="Int64" Name="ID" Nullable="true" />
@@ -7551,6 +7843,185 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EstadoEtapa" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="vExportacion_Escuelas">
+          <Key>
+            <PropertyRef Name="idaspirante" />
+            <PropertyRef Name="NRODDNN" />
+            <PropertyRef Name="NROMOD" />
+            <PropertyRef Name="ModalidadDescrip" />
+            <PropertyRef Name="nroinscripto" />
+            <PropertyRef Name="apellido" />
+            <PropertyRef Name="nombre" />
+            <PropertyRef Name="Localidad" />
+            <PropertyRef Name="idprovincia" />
+            <PropertyRef Name="Provincia" />
+            <PropertyRef Name="cpostal" />
+            <PropertyRef Name="Loc_Prov_CP" />
+            <PropertyRef Name="caracteristica" />
+            <PropertyRef Name="opcioncuerpo1" />
+            <PropertyRef Name="opcioncuerpo2" />
+            <PropertyRef Name="sexo" />
+            <PropertyRef Name="iddelegacion" />
+            <PropertyRef Name="Deleg" />
+            <PropertyRef Name="dni" />
+            <PropertyRef Name="nacidoen" />
+            <PropertyRef Name="nativo" />
+            <PropertyRef Name="poropcion" />
+            <PropertyRef Name="cuil_a" />
+            <PropertyRef Name="cuil_dv" />
+            <PropertyRef Name="CUIL" />
+            <PropertyRef Name="celular_carac" />
+            <PropertyRef Name="calle_ev" />
+            <PropertyRef Name="numero_ev" />
+            <PropertyRef Name="piso_ev" />
+            <PropertyRef Name="unidad_ev" />
+            <PropertyRef Name="localidad_ev" />
+            <PropertyRef Name="idprovincia_ev" />
+            <PropertyRef Name="PROV_ev" />
+            <PropertyRef Name="cpostal_ev" />
+            <PropertyRef Name="Tiene_Hijos" />
+            <PropertyRef Name="Cant_Varones" />
+            <PropertyRef Name="Cant_Mujeres" />
+            <PropertyRef Name="convive" />
+            <PropertyRef Name="ifaa" />
+            <PropertyRef Name="edadenanos" />
+            <PropertyRef Name="edadenmeses" />
+            <PropertyRef Name="id_provincia_esta" />
+            <PropertyRef Name="orientacion" />
+            <PropertyRef Name="solicitoesnm" />
+            <PropertyRef Name="ingresoesnm" />
+            <PropertyRef Name="causadenoingreso" />
+            <PropertyRef Name="causadebaja" />
+            <PropertyRef Name="motivobaja" />
+            <PropertyRef Name="fechanoingresobaja" />
+            <PropertyRef Name="alumnomilitar" />
+            <PropertyRef Name="institutomilitar" />
+            <PropertyRef Name="causabajainst" />
+            <PropertyRef Name="motivobajainst" />
+            <PropertyRef Name="fechabajainst" />
+            <PropertyRef Name="textoorientacion" />
+            <PropertyRef Name="permanenciad" />
+            <PropertyRef Name="permanenciam" />
+            <PropertyRef Name="permanenciaa" />
+            <PropertyRef Name="jerarquiaa" />
+            <PropertyRef Name="permanenciafd" />
+            <PropertyRef Name="permanenciafm" />
+            <PropertyRef Name="permanenciafa" />
+            <PropertyRef Name="jerarquiafa" />
+            <PropertyRef Name="oficio" />
+            <PropertyRef Name="viajesext" />
+            <PropertyRef Name="textopais" />
+            <PropertyRef Name="motivoingreso" />
+            <PropertyRef Name="gradoactual" />
+            <PropertyRef Name="destinoactual" />
+            <PropertyRef Name="bajaactual" />
+            <PropertyRef Name="fuerzaactual" />
+            <PropertyRef Name="agrupacivil" />
+          </Key>
+          <Property Name="idaspirante" Type="Int32" Nullable="false" />
+          <Property Name="Nroinscripcion" Type="Int32" />
+          <Property Name="NRODDNN" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="NomDeleg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NROMOD" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Modalidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ModalidadDescrip" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="nroinscripto" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Calle" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Numero" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Piso" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="Unidad" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="Localidad" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="idprovincia" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Provincia" Type="String" Nullable="false" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="cpostal" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAIS" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Loc_Prov_CP" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="caracteristica" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="opcioncuerpo1" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="opcioncuerpo2" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="sexo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="iddelegacion" Type="Int32" Nullable="false" />
+          <Property Name="Deleg" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="dni" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="nacidoen" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fechanac" Type="DateTime" Precision="0" />
+          <Property Name="nacionalidad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rindeen" Type="String" MaxLength="201" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_alta" Type="DateTime" Precision="0" />
+          <Property Name="nativo" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="poropcion" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="cuil_a" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="cuil_dv" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="CUIL" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="celular_carac" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="celular" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="calle_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="numero_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="piso_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="unidad_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="localidad_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="idprovincia_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="PROV_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="cpostal_ev" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Tiene_Hijos" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="Cant_Varones" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="Cant_Mujeres" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="convive" Type="String" Nullable="false" MaxLength="19" FixedLength="false" Unicode="false" />
+          <Property Name="ifaa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Cod_Estad_Civ" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="EstadoCivil" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="edadenanos" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="edadenmeses" Type="String" Nullable="false" MaxLength="17" FixedLength="false" Unicode="false" />
+          <Property Name="religion" Type="String" MaxLength="112" FixedLength="false" Unicode="false" />
+          <Property Name="nrocalzado" Type="Int32" />
+          <Property Name="nrocuello" Type="Int32" />
+          <Property Name="Altura" Type="Int32" />
+          <Property Name="Peso" Type="Decimal" Precision="4" Scale="1" />
+          <Property Name="perimetrotorax" Type="Int32" />
+          <Property Name="perimetrocintura" Type="Int32" />
+          <Property Name="LargoPantalon" Type="Int32" />
+          <Property Name="largoentrepierna" Type="Int32" />
+          <Property Name="LargoFalda" Type="Int32" />
+          <Property Name="id_provincia_esta" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="orientacion" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="solicitoesnm" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ingresoesnm" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="causadenoingreso" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="causadebaja" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="motivobaja" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fechanoingresobaja" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="alumnomilitar" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="institutomilitar" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="causabajainst" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="motivobajainst" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="fechabajainst" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="OcupacionActual" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="textoorientacion" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciad" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciam" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciaa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="jerarquiaa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciafd" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciafm" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="permanenciafa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="jerarquiafa" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="situaciono" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="oficio" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="textooficio" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="viajesext" Type="Int32" Nullable="false" />
+          <Property Name="textopais" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="VIAJES" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="motivoingreso" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="gradoactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="destinoactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="bajaactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="fuerzaactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="agrupacivil" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -8759,6 +9230,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vConsultaInscripciones">
             <EntityTypeMapping TypeName="SINUModel.vConsultaInscripciones">
               <MappingFragment StoreEntitySet="vConsultaInscripciones">
+                <ScalarProperty Name="Fecha2" ColumnName="Fecha2" />
                 <ScalarProperty Name="ACTIVA" ColumnName="ACTIVA" />
                 <ScalarProperty Name="FechaInscripcion" ColumnName="FechaInscripcion" />
                 <ScalarProperty Name="IdConvocatoria" ColumnName="IdConvocatoria" />
@@ -9511,6 +9983,115 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="nroinscripto" ColumnName="nroinscripto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vExportacion_Escuelas">
+            <EntityTypeMapping TypeName="SINUModel.vExportacion_Escuelas">
+              <MappingFragment StoreEntitySet="vExportacion_Escuelas">
+                <ScalarProperty Name="agrupacivil" ColumnName="agrupacivil" />
+                <ScalarProperty Name="fuerzaactual" ColumnName="fuerzaactual" />
+                <ScalarProperty Name="bajaactual" ColumnName="bajaactual" />
+                <ScalarProperty Name="destinoactual" ColumnName="destinoactual" />
+                <ScalarProperty Name="gradoactual" ColumnName="gradoactual" />
+                <ScalarProperty Name="motivoingreso" ColumnName="motivoingreso" />
+                <ScalarProperty Name="VIAJES" ColumnName="VIAJES" />
+                <ScalarProperty Name="textopais" ColumnName="textopais" />
+                <ScalarProperty Name="viajesext" ColumnName="viajesext" />
+                <ScalarProperty Name="textooficio" ColumnName="textooficio" />
+                <ScalarProperty Name="oficio" ColumnName="oficio" />
+                <ScalarProperty Name="situaciono" ColumnName="situaciono" />
+                <ScalarProperty Name="jerarquiafa" ColumnName="jerarquiafa" />
+                <ScalarProperty Name="permanenciafa" ColumnName="permanenciafa" />
+                <ScalarProperty Name="permanenciafm" ColumnName="permanenciafm" />
+                <ScalarProperty Name="permanenciafd" ColumnName="permanenciafd" />
+                <ScalarProperty Name="jerarquiaa" ColumnName="jerarquiaa" />
+                <ScalarProperty Name="permanenciaa" ColumnName="permanenciaa" />
+                <ScalarProperty Name="permanenciam" ColumnName="permanenciam" />
+                <ScalarProperty Name="permanenciad" ColumnName="permanenciad" />
+                <ScalarProperty Name="textoorientacion" ColumnName="textoorientacion" />
+                <ScalarProperty Name="OcupacionActual" ColumnName="OcupacionActual" />
+                <ScalarProperty Name="fechabajainst" ColumnName="fechabajainst" />
+                <ScalarProperty Name="motivobajainst" ColumnName="motivobajainst" />
+                <ScalarProperty Name="causabajainst" ColumnName="causabajainst" />
+                <ScalarProperty Name="institutomilitar" ColumnName="institutomilitar" />
+                <ScalarProperty Name="alumnomilitar" ColumnName="alumnomilitar" />
+                <ScalarProperty Name="fechanoingresobaja" ColumnName="fechanoingresobaja" />
+                <ScalarProperty Name="motivobaja" ColumnName="motivobaja" />
+                <ScalarProperty Name="causadebaja" ColumnName="causadebaja" />
+                <ScalarProperty Name="causadenoingreso" ColumnName="causadenoingreso" />
+                <ScalarProperty Name="ingresoesnm" ColumnName="ingresoesnm" />
+                <ScalarProperty Name="solicitoesnm" ColumnName="solicitoesnm" />
+                <ScalarProperty Name="orientacion" ColumnName="orientacion" />
+                <ScalarProperty Name="id_provincia_esta" ColumnName="id_provincia_esta" />
+                <ScalarProperty Name="LargoFalda" ColumnName="LargoFalda" />
+                <ScalarProperty Name="largoentrepierna" ColumnName="largoentrepierna" />
+                <ScalarProperty Name="LargoPantalon" ColumnName="LargoPantalon" />
+                <ScalarProperty Name="perimetrocintura" ColumnName="perimetrocintura" />
+                <ScalarProperty Name="perimetrotorax" ColumnName="perimetrotorax" />
+                <ScalarProperty Name="Peso" ColumnName="Peso" />
+                <ScalarProperty Name="Altura" ColumnName="Altura" />
+                <ScalarProperty Name="nrocuello" ColumnName="nrocuello" />
+                <ScalarProperty Name="nrocalzado" ColumnName="nrocalzado" />
+                <ScalarProperty Name="religion" ColumnName="religion" />
+                <ScalarProperty Name="edadenmeses" ColumnName="edadenmeses" />
+                <ScalarProperty Name="edadenanos" ColumnName="edadenanos" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="Cod_Estad_Civ" ColumnName="Cod_Estad_Civ" />
+                <ScalarProperty Name="ifaa" ColumnName="ifaa" />
+                <ScalarProperty Name="convive" ColumnName="convive" />
+                <ScalarProperty Name="Cant_Mujeres" ColumnName="Cant_Mujeres" />
+                <ScalarProperty Name="Cant_Varones" ColumnName="Cant_Varones" />
+                <ScalarProperty Name="Tiene_Hijos" ColumnName="Tiene_Hijos" />
+                <ScalarProperty Name="cpostal_ev" ColumnName="cpostal_ev" />
+                <ScalarProperty Name="PROV_ev" ColumnName="PROV_ev" />
+                <ScalarProperty Name="idprovincia_ev" ColumnName="idprovincia_ev" />
+                <ScalarProperty Name="localidad_ev" ColumnName="localidad_ev" />
+                <ScalarProperty Name="unidad_ev" ColumnName="unidad_ev" />
+                <ScalarProperty Name="piso_ev" ColumnName="piso_ev" />
+                <ScalarProperty Name="numero_ev" ColumnName="numero_ev" />
+                <ScalarProperty Name="calle_ev" ColumnName="calle_ev" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="celular_carac" ColumnName="celular_carac" />
+                <ScalarProperty Name="CUIL" ColumnName="CUIL" />
+                <ScalarProperty Name="cuil_dv" ColumnName="cuil_dv" />
+                <ScalarProperty Name="cuil_a" ColumnName="cuil_a" />
+                <ScalarProperty Name="poropcion" ColumnName="poropcion" />
+                <ScalarProperty Name="nativo" ColumnName="nativo" />
+                <ScalarProperty Name="fecha_alta" ColumnName="fecha_alta" />
+                <ScalarProperty Name="rindeen" ColumnName="rindeen" />
+                <ScalarProperty Name="nacionalidad" ColumnName="nacionalidad" />
+                <ScalarProperty Name="fechanac" ColumnName="fechanac" />
+                <ScalarProperty Name="nacidoen" ColumnName="nacidoen" />
+                <ScalarProperty Name="dni" ColumnName="dni" />
+                <ScalarProperty Name="Deleg" ColumnName="Deleg" />
+                <ScalarProperty Name="iddelegacion" ColumnName="iddelegacion" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="opcioncuerpo2" ColumnName="opcioncuerpo2" />
+                <ScalarProperty Name="opcioncuerpo1" ColumnName="opcioncuerpo1" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="caracteristica" ColumnName="caracteristica" />
+                <ScalarProperty Name="Loc_Prov_CP" ColumnName="Loc_Prov_CP" />
+                <ScalarProperty Name="PAIS" ColumnName="PAIS" />
+                <ScalarProperty Name="cpostal" ColumnName="cpostal" />
+                <ScalarProperty Name="Provincia" ColumnName="Provincia" />
+                <ScalarProperty Name="idprovincia" ColumnName="idprovincia" />
+                <ScalarProperty Name="Localidad" ColumnName="Localidad" />
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Piso" ColumnName="Piso" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Calle" ColumnName="Calle" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nroinscripto" ColumnName="nroinscripto" />
+                <ScalarProperty Name="ModalidadDescrip" ColumnName="ModalidadDescrip" />
+                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
+                <ScalarProperty Name="NROMOD" ColumnName="NROMOD" />
+                <ScalarProperty Name="NomDeleg" ColumnName="NomDeleg" />
+                <ScalarProperty Name="NRODDNN" ColumnName="NRODDNN" />
+                <ScalarProperty Name="Nroinscripcion" ColumnName="Nroinscripcion" />
+                <ScalarProperty Name="idaspirante" ColumnName="idaspirante" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
