@@ -975,8 +975,19 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacion_Escuelas' no tiene d
           <Property Name="LargoPantalon" Type="int" />
           <Property Name="largoentrepierna" Type="int" />
           <Property Name="LargoFalda" Type="int" />
+          <Property Name="finalizoestudiossec" Type="bit" />
+          <Property Name="establecimiento" Type="varchar" MaxLength="701" />
+          <Property Name="local_esta" Type="varchar" MaxLength="60" />
           <Property Name="id_provincia_esta" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="PROV_Esta" Type="varchar" MaxLength="25" />
           <Property Name="orientacion" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="debematerias" Type="int" />
+          <Property Name="deudamat" Type="int" />
+          <Property Name="nivelestudios" Type="varchar" MaxLength="50" />
+          <Property Name="anioscursados" Type="int" />
+          <Property Name="carrera" Type="varchar" MaxLength="60" />
+          <Property Name="otrosestable" Type="varchar" MaxLength="701" />
+          <Property Name="otralocalidad" Type="varchar" MaxLength="60" />
           <Property Name="solicitoesnm" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="ingresoesnm" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="causadenoingreso" Type="varchar" MaxLength="4" Nullable="false" />
@@ -990,6 +1001,7 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacion_Escuelas' no tiene d
           <Property Name="fechabajainst" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
           <Property Name="textoorientacion" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="TituloSec" Type="varchar" MaxLength="60" />
           <Property Name="permanenciad" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="permanenciam" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="permanenciaa" Type="varchar" MaxLength="4" Nullable="false" />
@@ -1047,6 +1059,7 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacionDatosBasicos' no tien
           <Property Name="IdConvocatoria" Type="int" Nullable="false" />
           <Property Name="IdModalidad" Type="varchar" MaxLength="10" />
           <Property Name="IdCarreraOficio" Type="int" />
+          <Property Name="CarreraUoficio" Type="varchar" MaxLength="100" />
           <Property Name="FechaInscripcion" Type="date" />
           <Property Name="FechaNacimiento" Type="date" />
           <Property Name="ESTADO" Type="varchar" MaxLength="7" Nullable="false" />
@@ -3501,8 +3514,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacion_Escuelas].[LargoPantalon] AS [LargoPantalon], 
     [vExportacion_Escuelas].[largoentrepierna] AS [largoentrepierna], 
     [vExportacion_Escuelas].[LargoFalda] AS [LargoFalda], 
+    [vExportacion_Escuelas].[finalizoestudiossec] AS [finalizoestudiossec], 
+    [vExportacion_Escuelas].[establecimiento] AS [establecimiento], 
+    [vExportacion_Escuelas].[local_esta] AS [local_esta], 
     [vExportacion_Escuelas].[id_provincia_esta] AS [id_provincia_esta], 
+    [vExportacion_Escuelas].[PROV_Esta] AS [PROV_Esta], 
     [vExportacion_Escuelas].[orientacion] AS [orientacion], 
+    [vExportacion_Escuelas].[debematerias] AS [debematerias], 
+    [vExportacion_Escuelas].[deudamat] AS [deudamat], 
+    [vExportacion_Escuelas].[nivelestudios] AS [nivelestudios], 
+    [vExportacion_Escuelas].[anioscursados] AS [anioscursados], 
+    [vExportacion_Escuelas].[carrera] AS [carrera], 
+    [vExportacion_Escuelas].[otrosestable] AS [otrosestable], 
+    [vExportacion_Escuelas].[otralocalidad] AS [otralocalidad], 
     [vExportacion_Escuelas].[solicitoesnm] AS [solicitoesnm], 
     [vExportacion_Escuelas].[ingresoesnm] AS [ingresoesnm], 
     [vExportacion_Escuelas].[causadenoingreso] AS [causadenoingreso], 
@@ -3516,6 +3540,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacion_Escuelas].[fechabajainst] AS [fechabajainst], 
     [vExportacion_Escuelas].[OcupacionActual] AS [OcupacionActual], 
     [vExportacion_Escuelas].[textoorientacion] AS [textoorientacion], 
+    [vExportacion_Escuelas].[TituloSec] AS [TituloSec], 
     [vExportacion_Escuelas].[permanenciad] AS [permanenciad], 
     [vExportacion_Escuelas].[permanenciam] AS [permanenciam], 
     [vExportacion_Escuelas].[permanenciaa] AS [permanenciaa], 
@@ -3559,6 +3584,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacionDatosBasicos].[IdConvocatoria] AS [IdConvocatoria], 
     [vExportacionDatosBasicos].[IdModalidad] AS [IdModalidad], 
     [vExportacionDatosBasicos].[IdCarreraOficio] AS [IdCarreraOficio], 
+    [vExportacionDatosBasicos].[CarreraUoficio] AS [CarreraUoficio], 
     [vExportacionDatosBasicos].[FechaInscripcion] AS [FechaInscripcion], 
     [vExportacionDatosBasicos].[FechaNacimiento] AS [FechaNacimiento], 
     [vExportacionDatosBasicos].[ESTADO] AS [ESTADO], 
@@ -7843,6 +7869,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="IdOficinasYDelegaciones" Type="Int32" Nullable="false" />
           <Property Name="Etapa" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EstadoEtapa" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="CarreraUoficio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="vExportacion_Escuelas">
           <Key>
@@ -8022,6 +8049,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="bajaactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="fuerzaactual" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="agrupacivil" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="finalizoestudiossec" Type="Boolean" />
+          <Property Name="establecimiento" Type="String" MaxLength="701" FixedLength="false" Unicode="false" />
+          <Property Name="local_esta" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="PROV_Esta" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="debematerias" Type="Int32" />
+          <Property Name="deudamat" Type="Int32" />
+          <Property Name="nivelestudios" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="anioscursados" Type="Int32" />
+          <Property Name="carrera" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="otrosestable" Type="String" MaxLength="701" FixedLength="false" Unicode="false" />
+          <Property Name="otralocalidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="TituloSec" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -9960,6 +9999,7 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vExportacionDatosBasicos">
             <EntityTypeMapping TypeName="SINUModel.vExportacionDatosBasicos">
               <MappingFragment StoreEntitySet="vExportacionDatosBasicos">
+                <ScalarProperty Name="CarreraUoficio" ColumnName="CarreraUoficio" />
                 <ScalarProperty Name="EstadoEtapa" ColumnName="EstadoEtapa" />
                 <ScalarProperty Name="Etapa" ColumnName="Etapa" />
                 <ScalarProperty Name="IdOficinasYDelegaciones" ColumnName="IdOficinasYDelegaciones" />
@@ -9989,6 +10029,18 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vExportacion_Escuelas">
             <EntityTypeMapping TypeName="SINUModel.vExportacion_Escuelas">
               <MappingFragment StoreEntitySet="vExportacion_Escuelas">
+                <ScalarProperty Name="TituloSec" ColumnName="TituloSec" />
+                <ScalarProperty Name="otralocalidad" ColumnName="otralocalidad" />
+                <ScalarProperty Name="otrosestable" ColumnName="otrosestable" />
+                <ScalarProperty Name="carrera" ColumnName="carrera" />
+                <ScalarProperty Name="anioscursados" ColumnName="anioscursados" />
+                <ScalarProperty Name="nivelestudios" ColumnName="nivelestudios" />
+                <ScalarProperty Name="deudamat" ColumnName="deudamat" />
+                <ScalarProperty Name="debematerias" ColumnName="debematerias" />
+                <ScalarProperty Name="PROV_Esta" ColumnName="PROV_Esta" />
+                <ScalarProperty Name="local_esta" ColumnName="local_esta" />
+                <ScalarProperty Name="establecimiento" ColumnName="establecimiento" />
+                <ScalarProperty Name="finalizoestudiossec" ColumnName="finalizoestudiossec" />
                 <ScalarProperty Name="agrupacivil" ColumnName="agrupacivil" />
                 <ScalarProperty Name="fuerzaactual" ColumnName="fuerzaactual" />
                 <ScalarProperty Name="bajaactual" ColumnName="bajaactual" />

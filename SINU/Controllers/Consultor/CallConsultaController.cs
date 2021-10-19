@@ -362,27 +362,30 @@ namespace SINU.Controllers.Consultor
                     {
                         TablaVista = "vExportacionDatosBasicos",
                         Columnas = new List<Column> {
-                               ColumnaDTAjax("IdPostulantePersona",noPrint:true),
-                     ColumnaDTAjax("IdConvocatoria",noPrint:true),
-                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
-                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
-                     ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
-                     ColumnaDTAjax("Nombres", true,true,orderable:true),
-                     ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
-                     ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
-                     ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
-                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
-                     ColumnaDTAjax("Telefono"),
-                     ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true),
-                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
-                     ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
-                     ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
-                     ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
-                     ColumnaDTAjax("Celular"),
-                     ColumnaDTAjax("ESTADO",noPrint:true)
+                             ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                             ColumnaDTAjax("IdCarreraOficio",noPrint:true),
+                             ColumnaDTAjax("IdConvocatoria",noPrint:true),
+                             ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                             ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
+                             ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
+                             ColumnaDTAjax("Nombres", true,true,orderable:true),
+                             ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
+                             ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
+                             ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
+                             ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                             ColumnaDTAjax("Telefono"),
+                             ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true,className:"truncate"),
+                             ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                             ColumnaDTAjax("CarreraUoficio",true, nombreDisplay:"Carrera/Oficio",noPrint:true),
+                             ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
+                             ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
+                             ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
+                             ColumnaDTAjax("Celular"),
+                             ColumnaDTAjax("ESTADO",noPrint:true)
                         },
                         filtrosExtras = new List<filtroExtra>() {
-                                    new filtroExtra {Columna="IdConvocatoria", Valor=IdConvocatoria.ToString() }
+                                    new filtroExtra {Columna="IdConvocatoria", Valor=IdConvocatoria.ToString() },
+                                    new filtroExtra {Columna="IdCarreraOficio", Condicion="!=", Valor="null" }
                         }
                     }
                 };

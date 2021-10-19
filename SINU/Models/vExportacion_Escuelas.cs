@@ -117,5 +117,17 @@ namespace SINU.Models
         public string bajaactual { get; set; }
         public string fuerzaactual { get; set; }
         public string agrupacivil { get; set; }
+        public Nullable<bool> finalizoestudiossec { get; set; }
+        public string establecimiento { get; set; }
+        public string local_esta { get; set; }
+        public string PROV_Esta { get; set; }
+        public Nullable<int> debematerias { get; set; }
+        public Nullable<int> deudamat { get; set; }
+        public string nivelestudios { get; set; }
+        public Nullable<int> anioscursados { get; set; }
+        public string carrera { get; set; }
+        public string otrosestable { get; set; }
+        public string otralocalidad { get; set; }
+        public string TituloSec { get; set; }
     }
 }

@@ -37,5 +37,6 @@ namespace SINU.Models
         public int IdOficinasYDelegaciones { get; set; }
         public string Etapa { get; set; }
         public string EstadoEtapa { get; set; }
+        public string CarreraUoficio { get; set; }
     }
 }

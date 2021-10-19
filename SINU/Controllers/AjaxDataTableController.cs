@@ -164,7 +164,8 @@ namespace SINU.Models
                 var filtrosEx = model.filtrosExtras.Where(m => m.Valor != null).ToList();
                 if (filtrosEx.Count() > 0)
                 {
-
+                    filtrosEx.Where(m => m.Valor == "null").ToList().ForEach(m => m.Valor = "");
+                   
                     searchWhereExtras = filtrosEx.Select(m => m.Valor).ToArray();
                     //clausula where
                     int indexExtras = 0;
@@ -172,6 +173,7 @@ namespace SINU.Models
                     foreach (var filtros in filtrosEx)
                     {
                         indexExtras++;
+                      
                         switch (columnaTipo.First(c => c.COLUMN_NAME == filtros.Columna).DATA_TYPE)
                         {
                             case "varchar":
