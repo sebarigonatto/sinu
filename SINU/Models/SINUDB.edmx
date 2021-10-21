@@ -888,7 +888,18 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacion_Escuelas' no tiene d
             <PropertyRef Name="causabajainst" />
             <PropertyRef Name="motivobajainst" />
             <PropertyRef Name="fechabajainst" />
+            <PropertyRef Name="prestaservicioffaa" />
+            <PropertyRef Name="fuerza" />
+            <PropertyRef Name="gradodestinobaja" />
+            <PropertyRef Name="fechabajafuerza" />
             <PropertyRef Name="textoorientacion" />
+            <PropertyRef Name="idioma1" />
+            <PropertyRef Name="idioma1habla" />
+            <PropertyRef Name="idioma1lee" />
+            <PropertyRef Name="idioma1escribe" />
+            <PropertyRef Name="idioma2" />
+            <PropertyRef Name="idioma2habla" />
+            <PropertyRef Name="idioma2lee" />
             <PropertyRef Name="permanenciad" />
             <PropertyRef Name="permanenciam" />
             <PropertyRef Name="permanenciaa" />
@@ -999,9 +1010,22 @@ advertencia 6002: La tabla o vista 'SINU21.dbo.vExportacion_Escuelas' no tiene d
           <Property Name="causabajainst" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="motivobajainst" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="fechabajainst" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="prestaservicioffaa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fuerza" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="gradodestinobaja" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="fechabajafuerza" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ActividadMilitar" Type="nvarchar(max)" />
           <Property Name="OcupacionActual" Type="varchar" MaxLength="60" />
           <Property Name="textoorientacion" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="TituloSec" Type="varchar" MaxLength="60" />
+          <Property Name="idioma1" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma1habla" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma1lee" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma1escribe" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma2" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma2habla" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="idioma2lee" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="Idiomas" Type="nvarchar(max)" />
           <Property Name="permanenciad" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="permanenciam" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="permanenciaa" Type="varchar" MaxLength="4" Nullable="false" />
@@ -3538,9 +3562,22 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
     [vExportacion_Escuelas].[causabajainst] AS [causabajainst], 
     [vExportacion_Escuelas].[motivobajainst] AS [motivobajainst], 
     [vExportacion_Escuelas].[fechabajainst] AS [fechabajainst], 
+    [vExportacion_Escuelas].[prestaservicioffaa] AS [prestaservicioffaa], 
+    [vExportacion_Escuelas].[fuerza] AS [fuerza], 
+    [vExportacion_Escuelas].[gradodestinobaja] AS [gradodestinobaja], 
+    [vExportacion_Escuelas].[fechabajafuerza] AS [fechabajafuerza], 
+    [vExportacion_Escuelas].[ActividadMilitar] AS [ActividadMilitar], 
     [vExportacion_Escuelas].[OcupacionActual] AS [OcupacionActual], 
     [vExportacion_Escuelas].[textoorientacion] AS [textoorientacion], 
     [vExportacion_Escuelas].[TituloSec] AS [TituloSec], 
+    [vExportacion_Escuelas].[idioma1] AS [idioma1], 
+    [vExportacion_Escuelas].[idioma1habla] AS [idioma1habla], 
+    [vExportacion_Escuelas].[idioma1lee] AS [idioma1lee], 
+    [vExportacion_Escuelas].[idioma1escribe] AS [idioma1escribe], 
+    [vExportacion_Escuelas].[idioma2] AS [idioma2], 
+    [vExportacion_Escuelas].[idioma2habla] AS [idioma2habla], 
+    [vExportacion_Escuelas].[idioma2lee] AS [idioma2lee], 
+    [vExportacion_Escuelas].[Idiomas] AS [Idiomas], 
     [vExportacion_Escuelas].[permanenciad] AS [permanenciad], 
     [vExportacion_Escuelas].[permanenciam] AS [permanenciam], 
     [vExportacion_Escuelas].[permanenciaa] AS [permanenciaa], 
@@ -7945,6 +7982,17 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
             <PropertyRef Name="bajaactual" />
             <PropertyRef Name="fuerzaactual" />
             <PropertyRef Name="agrupacivil" />
+            <PropertyRef Name="idioma1" />
+            <PropertyRef Name="idioma1habla" />
+            <PropertyRef Name="idioma1lee" />
+            <PropertyRef Name="idioma1escribe" />
+            <PropertyRef Name="idioma2" />
+            <PropertyRef Name="idioma2habla" />
+            <PropertyRef Name="idioma2lee" />
+            <PropertyRef Name="prestaservicioffaa" />
+            <PropertyRef Name="fuerza" />
+            <PropertyRef Name="gradodestinobaja" />
+            <PropertyRef Name="fechabajafuerza" />
           </Key>
           <Property Name="idaspirante" Type="Int32" Nullable="false" />
           <Property Name="Nroinscripcion" Type="Int32" />
@@ -8061,6 +8109,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <Property Name="otrosestable" Type="String" MaxLength="701" FixedLength="false" Unicode="false" />
           <Property Name="otralocalidad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
           <Property Name="TituloSec" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="idioma1" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma1habla" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma1lee" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma1escribe" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma2" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma2habla" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="idioma2lee" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Idiomas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="prestaservicioffaa" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fuerza" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="gradodestinobaja" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="fechabajafuerza" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ActividadMilitar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -10029,6 +10090,19 @@ advertencia 6035: La relación 'FK_Usuario_OficyDeleg_AspNetUsers' tiene columna
           <EntitySetMapping Name="vExportacion_Escuelas">
             <EntityTypeMapping TypeName="SINUModel.vExportacion_Escuelas">
               <MappingFragment StoreEntitySet="vExportacion_Escuelas">
+                <ScalarProperty Name="ActividadMilitar" ColumnName="ActividadMilitar" />
+                <ScalarProperty Name="fechabajafuerza" ColumnName="fechabajafuerza" />
+                <ScalarProperty Name="gradodestinobaja" ColumnName="gradodestinobaja" />
+                <ScalarProperty Name="fuerza" ColumnName="fuerza" />
+                <ScalarProperty Name="prestaservicioffaa" ColumnName="prestaservicioffaa" />
+                <ScalarProperty Name="Idiomas" ColumnName="Idiomas" />
+                <ScalarProperty Name="idioma2lee" ColumnName="idioma2lee" />
+                <ScalarProperty Name="idioma2habla" ColumnName="idioma2habla" />
+                <ScalarProperty Name="idioma2" ColumnName="idioma2" />
+                <ScalarProperty Name="idioma1escribe" ColumnName="idioma1escribe" />
+                <ScalarProperty Name="idioma1lee" ColumnName="idioma1lee" />
+                <ScalarProperty Name="idioma1habla" ColumnName="idioma1habla" />
+                <ScalarProperty Name="idioma1" ColumnName="idioma1" />
                 <ScalarProperty Name="TituloSec" ColumnName="TituloSec" />
                 <ScalarProperty Name="otralocalidad" ColumnName="otralocalidad" />
                 <ScalarProperty Name="otrosestable" ColumnName="otrosestable" />

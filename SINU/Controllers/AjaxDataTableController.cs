@@ -5,6 +5,7 @@ using System.Linq.Dynamic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using static SINU.Models.AjaxDataTableModel;
+using System.Text;
 
 namespace SINU.Models
 {
@@ -230,7 +231,6 @@ namespace SINU.Models
 
         }
           
-
     }
 
 

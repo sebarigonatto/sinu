@@ -129,5 +129,18 @@ namespace SINU.Models
         public string otrosestable { get; set; }
         public string otralocalidad { get; set; }
         public string TituloSec { get; set; }
+        public string idioma1 { get; set; }
+        public string idioma1habla { get; set; }
+        public string idioma1lee { get; set; }
+        public string idioma1escribe { get; set; }
+        public string idioma2 { get; set; }
+        public string idioma2habla { get; set; }
+        public string idioma2lee { get; set; }
+        public string Idiomas { get; set; }
+        public string prestaservicioffaa { get; set; }
+        public string fuerza { get; set; }
+        public string gradodestinobaja { get; set; }
+        public string fechabajafuerza { get; set; }
+        public string ActividadMilitar { get; set; }
     }
 }

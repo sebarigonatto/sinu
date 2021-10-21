@@ -8,9 +8,9 @@
 //https://datatables.net/
 
 //funcion para exportar todos los registros sin necesidad de mostrar las totalidad de los mismos
-  function newexportaction(e, dt, button, config) {
-            var self = this;
-            var oldStart = dt.settings()[0]._iDisplayStart;
+function newexportaction(e, dt, button, config) { 
+      var self = this;
+      var oldStart = dt.settings()[0]._iDisplayStart;
       dt.one('preXhr', function (e, s, data) {
           // Just this once, load all data from the server...
           data.start = 0;
@@ -174,8 +174,11 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         $.each(exportBtn, function (index, btn) {
             let boton = {}
             boton.exportOptions= {
-                columns: ':not(.noPrint)'
+                columns: ':not(.noPrint)',
+              
             }
+            boton.charset = 'UTF-8'
+            boton.bom=true
             boton.text = btn.todos ? `${btn.boton} - Total`: btn.boton
             switch (btn.boton) {
                 case 'Copiar':
@@ -192,7 +195,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
                     break;
                 case 'Csv':
                     boton.extend = 'csv'
-                    boton.fieldSeparator=';'
+                    boton.fieldSeparator = ';'
                     break;
             };
             btn.todos ? boton.action = newexportaction : null
