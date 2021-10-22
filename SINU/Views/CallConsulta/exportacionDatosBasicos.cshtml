@@ -1,0 +1,20 @@
+﻿@model SINU.Models.DataTableVM
+
+
+@{
+    ViewBag.Title = "exportacionDatosBasicos";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="text-center">Exportación de Datos Basicos</h3>
+
+<br />
+@Html.TablaHelper(Model.TablaVista, "dark")
+@section scripts{
+    <script src="~/Scripts/AjaxDataTable.js"></script>
+    <script type="text/javascript">
+        const tabla = @Html.tablaToJson(Model)
+        const btn = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "IdPostulantePersona" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
+        armadoDataTable(tabla, btn, [/*{ boton: 'Excel', todos: false }, */{ boton: 'Csv', todos: false },/*{ boton: 'Excel', todos: true },*/ { boton: 'Csv', todos: true }])
+    </script>
+}
