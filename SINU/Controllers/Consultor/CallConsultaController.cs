@@ -53,7 +53,7 @@ namespace SINU.Controllers.Consultor
                 },
                 Columnas = new List<Column> {
 
-                      ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                     ColumnaDTAjax("IdPostulantePersona",noPrint:true),
                      ColumnaDTAjax("IdConvocatoria",noPrint:true),
                      ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
                      ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
@@ -308,12 +308,12 @@ namespace SINU.Controllers.Consultor
 
         public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
         {
-            int idDeleOfi = db.OficinasYDelegaciones.FirstOrDefault(m => m.Nombre == DelegacionSeleccionada).IdOficinasYDelegaciones;
+                int idDeleOfi = db.OficinasYDelegaciones.FirstOrDefault(m => m.Nombre == DelegacionSeleccionada).IdOficinasYDelegaciones;
             DataTableVM datosTabla = new DataTableVM
             {
                 TablaVista = "vExportacionDatosBasicos",
                 Columnas = new List<Column> {
-                               ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                     ColumnaDTAjax("IdPostulantePersona",noPrint:true),
                      ColumnaDTAjax("IdConvocatoria",noPrint:true),
                      ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
                      ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
@@ -341,6 +341,7 @@ namespace SINU.Controllers.Consultor
             ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.ESTADO == "ACTIVA" && m.IdOficinasYDelegaciones == idDeleOfi).Count();
             ViewBag.delegacionSeleccionada = DelegacionSeleccionada;
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
+            ViewBag.EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m => m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1);
 
             return View(datosTabla);
         }
