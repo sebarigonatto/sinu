@@ -86,13 +86,13 @@
         //datatablesAjax
         tablaDatos = @Html.tablaToJson(Model)
 
-            idInputSearchDelegacion = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
+        idInputSearchDelegacion = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
         $(":input[type='search']").on("keyup", async function () {
             sessionStorage.setItem(idInputSearchDelegacion, $(this).val());
         });
         columns = tablaDatos.Columnas;
         columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
-        filtroInicialDelegacion = tablaDatos.filtrosIniciales;
+        filtroInicialDelegacion = tablaDatos.filtrosExtras;
         var input_filter_value;
         var input_filter_timeout = null;
         primerCarga = true;
@@ -118,14 +118,15 @@
                     sessionStorage.getItem(idInputSearchDelegacion) == undefined ? sessionStorage.setItem(idInputSearchDelegacion, "") : null;
                     sessionStorage.EtapasPostDelegacion == undefined ? sessionStorage.EtapasPostDelegacion = "" : null;
                     sessionStorage.EstadosPostDelegacion == undefined ? sessionStorage.EstadosPostDelegacion = "" : null;
+
                     data.filtrosExtras = [
                         {
-                            Text: "Etapa",
-                            Value: sessionStorage.EtapasPostDelegacion
+                            Columna: "Etapa",
+                            Valor: sessionStorage.EtapasPostDelegacion
                         },
                         {
-                            Text: "EstadoEtapa",
-                            Value: sessionStorage.EstadosPostDelegacion
+                            Columna: "EstadoEtapa",
+                            Valor: sessionStorage.EstadosPostDelegacion
                         }];
 
                     $.each(filtroInicialDelegacion, function (ConsultaPorDelegacion,item) {
@@ -303,13 +304,14 @@
 
             //establesco parametro de busqueda para al almacenamineto en el lado del cliente
             table.on('search.dt', function () {
-                sessionStorage.searchTablaDelPostDelegacion = table.search();
+                sessionStorage.SarchTablaDelPostDelegacion = table.search();
             });
 
             //esatblesco en el input la ultima busqueda realizada
             table.on('draw', function () {
 
-                table.search(sessionStorage.searchTablaDelPostDelegacion);
+                table.search(sessionStorage.SarchTablaDelPostDelegacion);
+
             });
 
             //guarda las seleciones de los combos
