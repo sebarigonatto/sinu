@@ -81,7 +81,7 @@ namespace SINU.Controllers.Consultor
         /// <summary>
         /// Exportacion de datos para las Escuelas
         /// </summary>   
-        public ActionResult exportacionEscuelas()
+        public ActionResult exportacionDatosPersonales()
         {
             var columnasTotal = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='vExportacion_Escuelas'").ToList();
             var columanVisibles = new List<Column>

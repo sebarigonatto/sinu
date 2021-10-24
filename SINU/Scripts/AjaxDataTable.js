@@ -7,54 +7,6 @@
 //"filtrosIniciales": array con pre-filtros sobre los datos a mostrar en la Tabla
 //https://datatables.net/
 
-//funcion para exportar csv con el total de los registros, el armado del csv se realia del lado del servidor
-
-
-//funcion para exportar todos los registros sin necesidad de mostrar las totalidad de los mismos
-function newexportaction(e, dt, button, config) {
-   
-      var self = this;
-      var oldStart = dt.settings()[0]._iDisplayStart;
-      dt.one('preXhr', function (e, s, data) {
-          // Just this once, load all data from the server...
-          data.start = 0;
-          data.length = -1;
-
-          dt.one('preDraw', function (e, settings) {
-             
-              // Call the original action function
-              if (button[0].className.indexOf('buttons-copy') >= 0) {
-                  $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-              } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-                  $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-                      $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-                      $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-              } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-                  alert("asdasd")
-                 
-              } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-                  $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-                      $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-                      $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-              } else if (button[0].className.indexOf('buttons-print') >= 0) {
-                  $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-              }
-              dt.one('preXhr', function (e, s, data) {
-                  // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-                  // Set the property to what it was before exporting.
-                  settings._iDisplayStart = oldStart;
-                  data.start = oldStart;
-              });
-              // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-              setTimeout(dt.ajax.reload, 0);
-              // Prevent rendering of the full data to the DOM
-              return false;
-          });
-      });
-      // Requery the server with the new one-time export settings
-      dt.ajax.reload();
-};
-
 
 //declaro un array que contendra las distintas tablas armadas
 var listadoDataTable = []
@@ -66,9 +18,9 @@ var jsonStoreageDataTable = JSON.parse(sessionStorage['storageDataTables'])
 //funcion para aplicar el plug-in DataTabla a las tablas indicadas
 /**
  * Armado de Tabla con DATATABsLES
- * @param {any} modeloTabla Tabla o listado de las Tablas a armar, Ej: "@Model.tabla"
- * @param {any} armadoBtn Botones Opcionales, string con las etiquetas "a" o funcion que devuelve las etiquetas 'a', en caso contrario enviar "null"
- * @param {any} exportBtn Array con los Botones a mostrar y si exporta el total de registro, botones disponibles "Copiar, Excel,Pdf,Imprimir", . Ej: "[{boton:'copy',todos:true},{boton:'Imprimir',todos:false}]". Por defecto muestra los botones predefinidos de "DataTables" que exportan
+ * @param {JSON} modeloTabla Json, Tabla o listado de las Tablas a armar, Ej: "@Html.tablaToJson(Model)"
+ * @param {string} armadoBtn Botones Opcionales, string con las etiquetas "a" o funcion que devuelve las etiquetas 'a', en caso contrario enviar "null"
+ * @param {[]} exportBtn Array de objetos, con los Botones a mostrar y si exporta el total de registro, botones disponibles "Copiar, Excel,Pdf,Imprimir", . Ej: "[{boton:'copy',todos:true},{boton:'Imprimir',todos:false}]". Por defecto muestra los botones predefinidos de "DataTables" que exportan
  */
 function armadoDataTable(modeloTabla, armadoBtn, exportBtn) {
     //console.log(Array.isArray(modeloTabla))
@@ -140,6 +92,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         titulo: titleTable
     }
 
+    //function para la exportacion de datos en CSV
     function getCvsServer(e, dt, button, config) {
         $(`#dataTable-${idTabla}_processing`).css('display','block')
         var data = jsonStoreageDataTable[idTabla].data;
@@ -179,6 +132,54 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         jsonStoreageDataTable[idTabla].data.length = oldLength
         
     }
+
+    //funcion para exportar todos los registros sin necesidad de mostrar las totalidad de los mismos
+    function newexportaction(e, dt, button, config) {
+
+        var self = this;
+        var oldStart = dt.settings()[0]._iDisplayStart;
+        dt.one('preXhr', function (e, s, data) {
+            // Just this once, load all data from the server...
+            data.start = 0;
+            data.length = -1;
+
+            dt.one('preDraw', function (e, settings) {
+
+                // Call the original action function
+                if (button[0].className.indexOf('buttons-copy') >= 0) {
+                    $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-excel') >= 0) {
+                    $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-csv') >= 0) {
+                    $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
+                    $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
+                        $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
+                        $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
+                } else if (button[0].className.indexOf('buttons-print') >= 0) {
+                    $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+                }
+                dt.one('preXhr', function (e, s, data) {
+                    // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+                    // Set the property to what it was before exporting.
+                    settings._iDisplayStart = oldStart;
+                    data.start = oldStart;
+                });
+                // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+                setTimeout(dt.ajax.reload, 0);
+                // Prevent rendering of the full data to the DOM
+                return false;
+            });
+        });
+        // Requery the server with the new one-time export settings
+        dt.ajax.reload();
+    };
+
+    //Array con los botones de exportacion de defecto, EXCEL, PDF, COPIAR, IMPRIMIR
     const botonesPorDefecto = [
         {
             extend: 'copyHtml5',
@@ -244,14 +245,14 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
                     boton.fieldSeparator = ';'
                     break;
             };
-            btn.todos ? boton.action = getCvsServer : null
+            btn.todos ? boton.action = btn.boton == "Csv" ? getCvsServer : newexportaction : null
             boton.title= titleTable
             btns.push(boton)
         })
         return btns
     }
-    let Botones = !exportBtn ? botonesPorDefecto : armadoBtnExport(exportBtn)    
-  
+
+    let Botones = !exportBtn ? botonesPorDefecto : armadoBtnExport(exportBtn)     
     
     //aplico a la tabla actual "DataTable"
     listadoDataTable[`dataTable-${idTabla}`] = $(`#dataTable-${idTabla}`).DataTable({
@@ -261,7 +262,6 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         "ajax": {
             url: "/AjaxDataTable/CustomServerSideSearchActionAsync",
             type: "POST",
-            //async: false,
             data: (data) => {
 
                 data.search.value = jsonStoreageDataTable[idTabla].search != '' ? jsonStoreageDataTable[idTabla].search : '';
@@ -276,7 +276,6 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
                 jsonStoreageDataTable[idTabla].data=data
             },
             dataSrc: function (json) {
-
                 return json.data;
             }
         },
@@ -325,10 +324,8 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         jsonStoreageDataTable[idTabla].search = listadoDataTable[`dataTable-${idTabla}`].search();
     }).on('draw', () => {        
         listadoDataTable[`dataTable-${idTabla}`].search(jsonStoreageDataTable[idTabla].search);
-    })
-    
+    })    
 }
-
 
 //guardo la busqueda en 
 $("div.dataTables_filter input").unbind();
@@ -338,7 +335,6 @@ $("div.dataTables_filter input").keyup( (e)=> {
     input_filter_timeout = setTimeout( ()=> {
         table.search(input_filter_value).draw();
     }, table.context[0].searchDelay);
-
 });
 
 $(document).ready( ()=> {
@@ -355,13 +351,6 @@ $(document).ready( ()=> {
         .attr("placeholder", "dni, nombre, apellido, email")
 
     $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
-
-    //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-    //table;
-
-    //esatblesco en el input la ultima busqueda realizada
-    //table;
-      
 
 });
 

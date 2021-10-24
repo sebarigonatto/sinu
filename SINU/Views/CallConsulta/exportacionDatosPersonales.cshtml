@@ -12,6 +12,7 @@
     <script type="text/javascript">
         const tabla = @Html.tablaToJson(Model)
         const btn = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "idaspirante" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
-        armadoDataTable(tabla, btn, [/*{ boton: 'Excel', todos: false }, */{ boton: 'Csv', todos: false },/*{ boton: 'Excel', todos: true },*/ { boton: 'Csv', todos: true }])
+        const btnExport = [/*{ boton: 'Excel', todos: false }, { boton: 'Excel', todos: true },*/{ boton: 'Csv', todos: false }, { boton: 'Csv', todos: true }]
+        armadoDataTable(tabla, btn, btnExport)
     </script>
 }
