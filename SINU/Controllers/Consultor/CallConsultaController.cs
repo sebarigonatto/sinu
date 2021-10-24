@@ -127,7 +127,41 @@ namespace SINU.Controllers.Consultor
         }
 
 
+        public ActionResult exportacionDatosBasicos()
+        {
 
+            DataTableVM datosTabla = new DataTableVM
+            {
+                TablaVista = "vExportacionDatosBasicos",
+                Columnas = new List<Column> {
+                     ColumnaDTAjax("IdPostulantePersona",nombreDisplay:"N Postulante"),
+                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                     ColumnaDTAjax("IdCarreraOficio",noPrint:true),
+                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"N Inscricion"),
+                     ColumnaDTAjax("Apellido", true,true, orderable:true),
+                     ColumnaDTAjax("Nombres", true,true,orderable:true),
+                     ColumnaDTAjax("sexo",nombreDisplay:"Genero"),          
+                     ColumnaDTAjax("DNI",true, true, orderable:true),
+                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                     ColumnaDTAjax("Telefono"),
+                     ColumnaDTAjax("Celular"),
+                     ColumnaDTAjax("Email", true, true, orderable:true),
+                     ColumnaDTAjax("IdConvocatoria",nombreDisplay:"N Convocatoria"),
+                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                     ColumnaDTAjax("CarreraUoficio",true,true,"Carrera/Oficio", orderable:true),
+                     ColumnaDTAjax("Deleg",true,true,"Delegacion", orderable:true),
+                     ColumnaDTAjax("FechaInscripcion",nombreDisplay:"Fecha de Inscripcion"),
+                     ColumnaDTAjax("Etapa"),
+                     ColumnaDTAjax("EstadoEtapa"),
+                     ColumnaDTAjax("ESTADO",noPrint:true)
+   
+                },
+                 
+            };
+          
+            return View(datosTabla);
+
+        }
         /// <summary>FaltaCrearNuevoAction Es una rutina modelo 
         /// que se usa como plantilla para crear nuevas actions para nuevas CONSULTAS PRINCIPALES.
         /// Tiene asociada una View que solo emite el mensaje que falta desarrollar elementos.

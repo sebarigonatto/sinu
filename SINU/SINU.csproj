@@ -1419,6 +1419,7 @@
     <Content Include="Views\PostulanteEliminar\Edit.cshtml" />
     <Content Include="Views\PostulanteEliminar\Index.cshtml" />
     <Content Include="Views\CallConsulta\exportacionEscuelas.cshtml" />
+    <Content Include="Views\CallConsulta\exportacionDatosBasicos.cshtml" />
     <None Include="Web References\RefWebCPA\CleansingService.wsdl" />
     <None Include="Web References\RefWebCPA\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
