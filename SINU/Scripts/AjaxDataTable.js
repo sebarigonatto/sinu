@@ -130,25 +130,28 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
     const idTabla = tabla.IdTabla ?? tabla.TablaVista;
 
     //titulo que aparecera en la exportaciones
-    const titleTable = $(`#dataTable-${idTabla}`).prev(':header').html();
+    const titleTable = $(`#dataTable-${idTabla}`).prevAll(":header").first().html();
 
     //verifico si la tabla a armar posee un elemento con sus datos dentro del objeto "jsonStoreageDataTable", caso contrario agrego al objeto "jsonStoreageDataTable" el elemento correspondiente a la tabla a armar
     //console.log(jsonStoreageDataTable[idTabla])
     jsonStoreageDataTable[idTabla] ??= {
         search: '',
-        data: {}
+        data: {},
+        titulo: titleTable
     }
 
     function getCvsServer(e, dt, button, config) {
         $(`#dataTable-${idTabla}_processing`).css('display','block')
         var data = jsonStoreageDataTable[idTabla].data;
+        var titulo = jsonStoreageDataTable[idTabla].titulo
         oldLength = data.length
-        data.length=-1
+        data.length = -1
+        recordsTotal=dt.page.info().recordsTotal
         $.ajax({
             type: 'POST',
             url: '/AjaxDataTable/DataTableToCSV',
             dataType: 'json',
-            data: data,
+            data: { model: data, recordsTotal: recordsTotal, titulo: titulo},
             success: function (data) {
                               
                 var blob = new Blob([`\uFEFF${data.content}`], {

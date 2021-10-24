@@ -248,6 +248,7 @@ namespace SINU.Models
 
         }
 
+
         public async Task<int> getCountAsync(string nombreTablaVista, List<dynamic> SWW)
         {
            return db.Set(Type.GetType($"{tableClassNameSpace}.{nombreTablaVista}"))
@@ -256,10 +257,11 @@ namespace SINU.Models
                                                                       .Count();
         }
 
-        public async Task<JsonResult> DataTableToCSV(DataTableAjaxPostModel model)
+        public async Task<JsonResult> DataTableToCSV(DataTableAjaxPostModel model,int recordsTotal, string titulo)
         {
             try
             {
+                
                 StringBuilder sb = new StringBuilder();
                 var SWW = await createSWWAsync(model);
                 string sortBy = "";
@@ -273,12 +275,12 @@ namespace SINU.Models
                 }
                 string dirSort = sortDir ? "ASC" : "DESC";
 
-                var registrosWhere = await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({(string)SWW[0]})")
-                                   .Where((string)SWW[3], (string[])SWW[4])
-                                    .Where((string)SWW[1], (string[])SWW[2])
-                                    .OrderBy($"{sortBy} {dirSort}")
-                                    .ToListAsync();
-
+                var registrosWhere =await db.Set(Type.GetType($"{tableClassNameSpace}.{model.tablaVista}")).Select($"new({(string)SWW[0]})")
+                                     .Where((string)SWW[3], (string[])SWW[4])
+                                     .Where((string)SWW[1], (string[])SWW[2])
+                                     .OrderBy($"{sortBy} {dirSort}")                                 
+                                     .ToListAsync();
+             
                 for (int i = 0; i < model.columns.Count; i++)
                 {
                     sb.Append($"\"{model.columns[i].data}\"");
@@ -300,13 +302,16 @@ namespace SINU.Models
                     } 
                     sb.AppendLine();
                 }
-                var jsonResult = Json(new { content = sb.ToString(), charset = "text/csv;charset=utf-8;", nameFile = "Exportacion Escuelas.csv" });
+                var jsonResult = Json(new { 
+                                            content = sb.ToString(), 
+                                            charset = "text/csv;charset=utf-8;", 
+                                            nameFile = $"{titulo}.csv"
+                });
                 jsonResult.MaxJsonLength = int.MaxValue;
                 return jsonResult;
             }
             catch (Exception ex)
             {
-
                 throw;
             }
            
