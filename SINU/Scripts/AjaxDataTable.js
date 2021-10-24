@@ -7,15 +7,21 @@
 //"filtrosIniciales": array con pre-filtros sobre los datos a mostrar en la Tabla
 //https://datatables.net/
 
+//funcion para exportar csv con el total de los registros, el armado del csv se realia del lado del servidor
+
+
 //funcion para exportar todos los registros sin necesidad de mostrar las totalidad de los mismos
-function newexportaction(e, dt, button, config) { 
+function newexportaction(e, dt, button, config) {
+   
       var self = this;
       var oldStart = dt.settings()[0]._iDisplayStart;
       dt.one('preXhr', function (e, s, data) {
           // Just this once, load all data from the server...
           data.start = 0;
           data.length = -1;
+
           dt.one('preDraw', function (e, settings) {
+             
               // Call the original action function
               if (button[0].className.indexOf('buttons-copy') >= 0) {
                   $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
@@ -24,9 +30,8 @@ function newexportaction(e, dt, button, config) {
                       $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
                       $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
               } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-                  $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
-                      $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
-                      $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
+                  alert("asdasd")
+                 
               } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
                   $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
                       $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
@@ -130,9 +135,47 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
     //verifico si la tabla a armar posee un elemento con sus datos dentro del objeto "jsonStoreageDataTable", caso contrario agrego al objeto "jsonStoreageDataTable" el elemento correspondiente a la tabla a armar
     //console.log(jsonStoreageDataTable[idTabla])
     jsonStoreageDataTable[idTabla] ??= {
-        search: ''
+        search: '',
+        data: {}
     }
 
+    function getCvsServer(e, dt, button, config) {
+        $(`#dataTable-${idTabla}_processing`).css('display','block')
+        var data = jsonStoreageDataTable[idTabla].data;
+        oldLength = data.length
+        data.length=-1
+        $.ajax({
+            type: 'POST',
+            url: '/AjaxDataTable/DataTableToCSV',
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                              
+                var blob = new Blob([`\uFEFF${data.content}`], {
+                    encoding: "UTF-8",
+                    type: "text/csv;charset=utf-8"
+                });
+                var blobUrl = window.URL.createObjectURL(blob);
+
+                //console.log(blob);
+                //console.log(blobUrl);
+
+                //ie (naturally) does things differently
+                var csvLink = document.createElement("a");
+                if (!window.navigator.msSaveOrOpenBlob) {
+                    csvLink.href = blobUrl;
+                    csvLink.download = data.nameFile;
+                }               
+                csvLink.click()
+                $(`#dataTable-${idTabla}_processing`).css('display', 'none')
+            },
+            error: function (ex) {
+                alert(ex)
+            }
+        })
+        jsonStoreageDataTable[idTabla].data.length = oldLength
+        
+    }
     const botonesPorDefecto = [
         {
             extend: 'copyHtml5',
@@ -198,7 +241,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
                     boton.fieldSeparator = ';'
                     break;
             };
-            btn.todos ? boton.action = newexportaction : null
+            btn.todos ? boton.action = getCvsServer : null
             boton.title= titleTable
             btns.push(boton)
         })
@@ -227,7 +270,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
 
                 data.tablaVista = tabla.TablaVista;
                 if (armadoBtn != null) { data.columns.pop();}
-               
+                jsonStoreageDataTable[idTabla].data=data
             },
             dataSrc: function (json) {
 

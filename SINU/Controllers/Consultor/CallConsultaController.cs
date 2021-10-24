@@ -89,7 +89,7 @@ namespace SINU.Controllers.Consultor
                 ColumnaDTAjax("idaspirante"),
                 ColumnaDTAjax("Nroinscripcion",true,true,orderable:true,nombreDisplay:"N° Inscripción"),
                 ColumnaDTAjax("NRODDNN"),
-                ColumnaDTAjax("NomDeleg",true),
+                ColumnaDTAjax("NomDeleg",true,true,"Delegación"),
                 ColumnaDTAjax("NROMOD"),
                 ColumnaDTAjax("Modalidad",true,true,orderable:true),
                 ColumnaDTAjax("ModalidadDescrip"),

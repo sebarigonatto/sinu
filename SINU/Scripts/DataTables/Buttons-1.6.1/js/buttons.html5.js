@@ -1234,12 +1234,12 @@ DataTable.ext.buttons.excelHtml5 = {
 				text: _sheetname(config)+'!$A$'+dataStartRow+':'+createCellPos(data.header.length-1)+dataEndRow
 			} ) );
 		}
-
+		
 		// Let the developer customise the document if they want to
 		if ( config.customize ) {
 			config.customize( xlsx, config, dt );
 		}
-
+		
 		// Excel doesn't like an empty mergeCells tag
 		if ( $('mergeCells', rels).children().length === 0 ) {
 			$('mergeCells', rels).remove();
