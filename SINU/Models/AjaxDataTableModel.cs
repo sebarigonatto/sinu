@@ -72,6 +72,7 @@ namespace SINU.Models
                 className = noPrint ? "noPrint "+className : className
             };
         }
+
         
         public class DataTableAjaxPostModel
         {
