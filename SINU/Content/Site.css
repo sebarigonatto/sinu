@@ -113,6 +113,9 @@ input, select, textarea ,.bootstrap-select{
     z-index: 1050 !important;
 }
 
+.btn-group, .btn-group-vertical {
+    display:inline-table !important;
+}
 div.dataTables_wrapper div.dataTables_info {
     white-space: break-spaces !important;
 }

@@ -118,6 +118,9 @@ namespace SINU.Controllers.Consultor
             };
             columanVisibles.AddRange(columnasTotal.Where(m=>!columanVisibles.Select(m => m.data).ToList().Contains(m.COLUMN_NAME)).Select(m=> ColumnaDTAjax(m.COLUMN_NAME)).ToList());
 
+            ViewBag.Modalidad = new SelectList(db.Modalidad.ToList(), "IdModalidad", "IdModalidad");
+            ViewBag.Delegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "Nombre", "Nombre");
+
             DataTableVM data = new DataTableVM
             {
                 TablaVista = "vExportacion_Escuelas",

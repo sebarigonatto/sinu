@@ -54,5 +54,12 @@ namespace SINU.Helpers
             return MvcHtmlString.Create(json);
         }
 
+        //public static MvcHtmlString armadoDivSelect<TModel>(this HtmlHelper<TModel> htmlHelper, string idTablaVista,string[] btns)
+        //{
+        //    var divContent = new TagBuilder("div");
+        //    divContent.AddCssClass("");
+        //    var json = Newtonsoft.Json.JsonConvert.SerializeObject(tabla, Newtonsoft.Json.Formatting.Indented);
+        //    return MvcHtmlString.Create(json);
+        //}
     }
 }

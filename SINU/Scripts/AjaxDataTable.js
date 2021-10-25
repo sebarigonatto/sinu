@@ -7,7 +7,6 @@
 //"filtrosIniciales": array con pre-filtros sobre los datos a mostrar en la Tabla
 //https://datatables.net/
 
-
 //declaro un array que contendra las distintas tablas armadas
 var listadoDataTable = []
 
@@ -21,17 +20,18 @@ var jsonStoreageDataTable = JSON.parse(sessionStorage['storageDataTables'])
  * @param {JSON} modeloTabla Json, Tabla o listado de las Tablas a armar, Ej: "@Html.tablaToJson(Model)"
  * @param {string} armadoBtn Botones Opcionales, string con las etiquetas "a" o funcion que devuelve las etiquetas 'a', en caso contrario enviar "null"
  * @param {[]} exportBtn Array de objetos, con los Botones a mostrar y si exporta el total de registro, botones disponibles "Copiar, Excel,Pdf,Imprimir", . Ej: "[{boton:'copy',todos:true},{boton:'Imprimir',todos:false}]". Por defecto muestra los botones predefinidos de "DataTables" que exportan
+ * @param {string} selectOptions Id del div con los select para el filtro extras.
+
  */
-function armadoDataTable(modeloTabla, armadoBtn, exportBtn) {
+function armadoDataTable(modeloTabla, armadoBtn, exportBtn, selectOptions) {
     //console.log(Array.isArray(modeloTabla))
     //veo si el objeto recibido es un array de Tablas 
-    Array.isArray(modeloTabla) ? $.each(modeloTabla, async (index, tabla) => tablaArmado(tabla, armadoBtn, exportBtn)) : tablaArmado(modeloTabla, armadoBtn, exportBtn)
+    Array.isArray(modeloTabla) ? $.each(modeloTabla, async (index, tabla) => tablaArmado(tabla, armadoBtn, exportBtn, selectOptions)) : tablaArmado(modeloTabla, armadoBtn, exportBtn, selectOptions)
 }
 
-function tablaArmado(tabla, armadoBtn, exportBtn) {
+function tablaArmado(tabla, armadoBtn, exportBtn, selectOptions=null) {
 
 
-    //console.log(typeof(armadoBtn))
     //Armado de la Columna "Opcion"
     if (armadoBtn!=null) {
         const opcionColumna = {
@@ -89,6 +89,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
     jsonStoreageDataTable[idTabla] ??= {
         search: '',
         data: {},
+        filtrosSelect: {},
         titulo: titleTable
     }
 
@@ -252,8 +253,26 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         return btns
     }
 
-    let Botones = !exportBtn ? botonesPorDefecto : armadoBtnExport(exportBtn)     
-    
+    let Botones = !exportBtn ? botonesPorDefecto : armadoBtnExport(exportBtn)
+
+    //preparacion de los select para realizar el fltrado en los DataTable
+    var selectList
+    if (selectOptions) {       
+        selectList = $(`div #${selectOptions} select`)
+        $.each(selectList, (index, select) => {
+            $(select).attr("tabla", idTabla)
+            if (!jsonStoreageDataTable[idTabla].filtrosSelect[`${$(select).attr('id')}`]) {
+                //alert("select nuevo")
+                jsonStoreageDataTable[idTabla].filtrosSelect[`${$(select).attr('id')}`] = {
+                    Columna: $(select).attr("selectOption"),
+                    Valor: "",
+                    Condicion: "=="
+                }
+            }
+                             
+        })
+    }
+
     //aplico a la tabla actual "DataTable"
     listadoDataTable[`dataTable-${idTabla}`] = $(`#dataTable-${idTabla}`).DataTable({
         "serverSide": true,
@@ -264,22 +283,31 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
             type: "POST",
             data: (data) => {
 
-                data.search.value = jsonStoreageDataTable[idTabla].search != '' ? jsonStoreageDataTable[idTabla].search : '';
+                data.search.value = jsonStoreageDataTable[idTabla].search
 
                 data.filtrosExtras = [];
+                //agrego filtros extras por defecto de la tabla
                 $.each(tabla.filtrosExtras, (index, item) => {
                     data.filtrosExtras.push(item);
                 })
+                //agrego filtros de os selects
+                $.each($(`select[tabla='${idTabla}']`), function (index,selectFiltro) {
+                    data.filtrosExtras.push(jsonStoreageDataTable[idTabla].filtrosSelect[$(selectFiltro).attr('id')])
+                })
 
                 data.tablaVista = tabla.TablaVista;
-                if (armadoBtn != null) { data.columns.pop();}
-                jsonStoreageDataTable[idTabla].data=data
+                if (armadoBtn != null) { data.columns.pop(); }
+                //guardo la variable data, para poder aceder desde otra funcion
+                jsonStoreageDataTable[idTabla].data = data
+                //alert(JSON.stringify(jsonStoreageDataTable))
+                sessionStorage['storageDataTables'] = JSON.stringify(jsonStoreageDataTable)
+
             },
             dataSrc: function (json) {
                 return json.data;
             }
         },
-        dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"lB><"col-md-6 col-sm-12 d-flex justify-content-md-end"f><"container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12 blockquote"i><"col-md-6 col-sm-12"p>>',
+        dom: '<"container row m-0 col-12  d-flex justify-content-center justify-content-sm-between"lBf<"container row m-0 col-12  d-flex justify-content-center justify-content-sm-between divContentSelect">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12 blockquote"i><"col-md-6 col-sm-12"p>>',
 
         "language":
         {
@@ -315,16 +343,49 @@ function tablaArmado(tabla, armadoBtn, exportBtn) {
         responsive: true,
 
     }).on('processing.dt', (e, settings, processing) => {
+        //desahnilito la tabla cundo se reacliza una actualizacion de la tabla
         if (processing) {
-            $(".dataTables_wrapper").addClass("disabled");
+            $(`.dataTables${idTabla}_wrapper`).addClass("disabled");
         } else {
-            $(".dataTables_wrapper").removeClass("disabled");
+            $(`.dataTables${idTabla}_wrapper`).removeClass("disabled");
         }
     }).on('search.dt', async () => {
+        //guardo la busqueda realizada en el json de la tabla
         jsonStoreageDataTable[idTabla].search = listadoDataTable[`dataTable-${idTabla}`].search();
-    }).on('draw', () => {        
+    }).on('draw', () => {
+        //coloco en el input de busqueda la busuqeda guardada
         listadoDataTable[`dataTable-${idTabla}`].search(jsonStoreageDataTable[idTabla].search);
-    })    
+    })
+
+    //si existen select a agregar a la tabla
+    if (selectOptions) {
+        let divPri= $('<div></div>')
+        $.each($(`#${selectOptions} select`), function (index,select) {
+            let div = $('<div class="col-md-4 col-sm-12 mb-2 p-0"><div class="col-md-12"></div></div>')
+            div.append($(select))
+            $(select).val(jsonStoreageDataTable[idTabla].filtrosSelect[`${$(select).attr('id')}`].Valor)
+            $(divPri).append(div)
+        })        
+        $(`#dataTable-${idTabla}_wrapper .divContentSelect`).append(divPri.html());
+        $.each($(`#dataTable-${idTabla}_wrapper .divContentSelect select`), function (index,select) {
+            $(select).val(jsonStoreageDataTable[idTabla].filtrosSelect[$(select).attr('id')].Valor).selectpicker('refresh')
+        })
+        $(`#dataTable-${idTabla}_wrapper .divContentSelect`).append(`<div class="col-md-4 col-sm-12 mb-2 p-0"><div class="col-md-12"><button class="btn btn-dark form-control" onclick="limpiar('${idTabla}')">Limpiar filtros</button></div></div>`)
+    }        
+
+    //al detectar un cambio de los select de una tabla actualizo los registros mostrados
+    $(`select[tabla='${idTabla}']`).on("change", function () {
+        alert('cambio select')
+        jsonStoreageDataTable[idTabla].filtrosSelect[$(this).attr('id')].Valor = $(this).val()
+        listadoDataTable[`dataTable-${idTabla}`].search(jsonStoreageDataTable[idTabla].search).draw()
+    })
+}
+
+function limpiar(idtabla) { 
+    $(`#dataTable-${idtabla}_wrapper .divContentSelect select`).val("").change()
+    $(`#dataTable-${idtabla}_wrapper .divContentSelect select`).selectpicker('refresh')
+    $(`#dataTable-${idtabla}_wrapper input[type='search']`).val("")
+    listadoDataTable[`dataTable-${idtabla}`].search('').draw()
 }
 
 //guardo la busqueda en 
@@ -349,12 +410,6 @@ $(document).ready( ()=> {
         .removeClass("form-control-sm").addClass("form-control")
         .css("width", "225px")
         .attr("placeholder", "dni, nombre, apellido, email")
-
     $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
 
 });
-
-//detecto cuando se quiere salir de la pagina actual, para guardar el objeto "jsonStoreageDataTable" en una sessioStorage
-$(window).on('beforeunload',  () =>{
-    sessionStorage['storageDataTables']= JSON.stringify(jsonStoreageDataTable)
-})
