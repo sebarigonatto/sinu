@@ -127,7 +127,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn, selectOptions=null) {
                 $(`#dataTable-${idTabla}_processing`).css('display', 'none')
             },
             error: function (ex) {
-                alert(ex)
+                alert('ERROR, actualice la pagina.')
             }
         })
         jsonStoreageDataTable[idTabla].data.length = oldLength
@@ -375,7 +375,7 @@ function tablaArmado(tabla, armadoBtn, exportBtn, selectOptions=null) {
 
     //al detectar un cambio de los select de una tabla actualizo los registros mostrados
     $(`select[tabla='${idTabla}']`).on("change", function () {
-        alert('cambio select')
+        //alert('cambio select')
         jsonStoreageDataTable[idTabla].filtrosSelect[$(this).attr('id')].Valor = $(this).val()
         listadoDataTable[`dataTable-${idTabla}`].search(jsonStoreageDataTable[idTabla].search).draw()
     })

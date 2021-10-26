@@ -257,12 +257,12 @@
 
     $(window).on('load', function () {
         $(".navMenu li a").each(function (a) {
-            if (window.location.href.indexOf($(this).attr("href")) > -1) {
-                if ($(this).hasClass("dropdown-item")) {
-                   
+            var herfList = $(this).attr("href").split('/')
+            if (window.location.href.indexOf(herfList[herfList.length-1]) > -1) {
+                if ($(this).hasClass("dropdown-item")) {                   
                     $(this).addClass(" bg-dark text-white").closest(".nav-item.dropdown").children("a").addClass("text-white");
                 } else {
-                    $(this).css("color", "white");
+                    $(this).addClass("text-white");
                 }
                 
             }

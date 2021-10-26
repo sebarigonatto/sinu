@@ -222,49 +222,47 @@
             });
 
         });
+        var dataTabla = {}
+        function getCvsServer(e, dt, button, config) {
+            $(`#PostulanteConsultor_processing`).css('display', 'block')
+            var data = dataTabla;
+            var titulo = 'Inscriptos Detalle'
+            oldLength = data.length
+            data.length = -1
+            recordsTotal = dt.page.info().recordsTotal
+            $.ajax({
+                type: 'POST',
+                url: '/AjaxDataTable/DataTableToCSV',
+                dataType: 'json',
+                data: { model: data, recordsTotal: recordsTotal, titulo: titulo },
+                success: function (data) {
+
+                    var blob = new Blob([`\uFEFF${data.content}`], {
+                        encoding: "UTF-8",
+                        type: "text/csv;charset=utf-8"
+                    });
+                    var blobUrl = window.URL.createObjectURL(blob);
+
+                    //console.log(blob);
+                    //console.log(blobUrl);
+
+                    //ie (naturally) does things differently
+                    var csvLink = document.createElement("a");
+                    if (!window.navigator.msSaveOrOpenBlob) {
+                        csvLink.href = blobUrl;
+                        csvLink.download = data.nameFile;
+                    }
+                    csvLink.click()
+                    $(`#PostulanteConsultor_processing`).css('display', 'none')
+                },
+                error: function (ex) {
+                    alert('ERROR, actualice la pagina.')
+                }
+            })
 
 
-        //function newexportaction(e, dt, button, config) {
-        //    var self = this;
-        //    var oldStart = dt.settings()[0]._iDisplayStart;
-        //    dt.one('preXhr', function (e, s, data) {
-        //        // Just this once, load all data from the server...
-        //        data.start = 0;
-        //        data.length = -1;
-        //        dt.one('preDraw', function (e, settings) {
-        //            // Call the original action function
-        //            if (button[0].className.indexOf('buttons-copy') >= 0) {
-        //                $.fn.dataTable.ext.buttons.copyHtml5.action.call(self, e, dt, button, config);
-        //            } else if (button[0].className.indexOf('buttons-excel') >= 0) {
-        //                $.fn.dataTable.ext.buttons.excelHtml5.available(dt, config) ?
-        //                    $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config) :
-        //                    $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-        //            } else if (button[0].className.indexOf('buttons-csv') >= 0) {
-        //                $.fn.dataTable.ext.buttons.csvHtml5.available(dt, config) ?
-        //                    $.fn.dataTable.ext.buttons.csvHtml5.action.call(self, e, dt, button, config) :
-        //                    $.fn.dataTable.ext.buttons.csvFlash.action.call(self, e, dt, button, config);
-        //            } else if (button[0].className.indexOf('buttons-pdf') >= 0) {
-        //                $.fn.dataTable.ext.buttons.pdfHtml5.available(dt, config) ?
-        //                    $.fn.dataTable.ext.buttons.pdfHtml5.action.call(self, e, dt, button, config) :
-        //                    $.fn.dataTable.ext.buttons.pdfFlash.action.call(self, e, dt, button, config);
-        //            } else if (button[0].className.indexOf('buttons-print') >= 0) {
-        //                $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-        //            }
-        //            dt.one('preXhr', function (e, s, data) {
-        //                // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-        //                // Set the property to what it was before exporting.
-        //                settings._iDisplayStart = oldStart;
-        //                data.start = oldStart;
-        //            });
-        //            // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-        //            setTimeout(dt.ajax.reload, 0);
-        //            // Prevent rendering of the full data to the DOM
-        //            return false;
-        //        });
-        //    });
-        //    // Requery the server with the new one-time export settings
-        //    dt.ajax.reload();
-        //};
+        }
+
 
         columns = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Columnas, Newtonsoft.Json.Formatting.Indented));
         columns[11].className = 'truncate';
@@ -317,6 +315,7 @@
                     data.tablaVista = '@Model.TablaVista';
 
                     data.columns.pop()
+                    dataTabla=data
                 },
                 //dataSrc: function (json) {
 
@@ -367,7 +366,7 @@
                     extend: 'excelHtml5',
                     exportOptions: {
                         columns: ':not(.noPrint)'
-                    },                    
+                    },
                     title: "Inscriptos Detalles",
                     //action: newexportaction
 
@@ -391,6 +390,15 @@
                     title: "Inscriptos Detalles",
                 //    action: newexportaction
                 },
+                {
+                    extend: 'csv',
+                    text: 'Csv - Todos',
+                    exportOptions: {
+                        columns: ':not(.noPrint)'
+                    },
+                    title: "Inscriptos Detalles",
+                    action: getCvsServer
+                }
             ],
             "columns":columns,
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],

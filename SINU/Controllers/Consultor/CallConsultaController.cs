@@ -89,9 +89,9 @@ namespace SINU.Controllers.Consultor
                 ColumnaDTAjax("idaspirante"),
                 ColumnaDTAjax("Nroinscripcion",true,true,orderable:true,nombreDisplay:"N° Inscripción"),
                 ColumnaDTAjax("NRODDNN"),
-                ColumnaDTAjax("NomDeleg",true,true,"Delegación"),
+                ColumnaDTAjax("NomDeleg",true,nombreDisplay:"Delegación"),
                 ColumnaDTAjax("NROMOD"),
-                ColumnaDTAjax("Modalidad",true,true,orderable:true),
+                ColumnaDTAjax("Modalidad",true,orderable:true),
                 ColumnaDTAjax("ModalidadDescrip"),
                 ColumnaDTAjax("nroinscripto"),
                 ColumnaDTAjax("apellido",true,true,orderable:true, nombreDisplay:"Apellido"),                
@@ -161,7 +161,8 @@ namespace SINU.Controllers.Consultor
                 },
                  
             };
-          
+            ViewBag.Modalidad = new SelectList(db.Modalidad.ToList(), "IdModalidad", "IdModalidad");
+            ViewBag.Delegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "Nombre", "Nombre");
             return View(datosTabla);
 
         }
