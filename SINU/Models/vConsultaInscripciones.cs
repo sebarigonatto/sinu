@@ -33,5 +33,7 @@ namespace SINU.Models
         public Nullable<System.DateTime> Fecha_Fin_Proceso { get; set; }
         public int IdConvocatoria { get; set; }
         public Nullable<System.DateTime> FechaInscripcion { get; set; }
+        public Nullable<bool> ACTIVA { get; set; }
+        public string Fecha2 { get; set; }
     }
 }

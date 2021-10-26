@@ -22,4 +22,5 @@ namespace SINU.ViewModels
         public DataTableVM tablaModel { get; set; }
     }
 
+
 }

@@ -1,0 +1,25 @@
+﻿@model SINU.Models.DataTableVM
+
+
+@{
+    ViewBag.Title = "Exportación de Datos Basicos";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 class="text-center">@ViewBag.Title</h3>
+
+<br />
+@Html.TablaHelper(Model.TablaVista, "dark")
+
+<div id="selectTabla">
+    @Html.DropDownList("name1", (SelectList)ViewBag.Modalidad, "Seleccione una Modalidad", new { @class = "form-control", @id = "selectModalidad", @selectOption = "IdModalidad", @selectGroup = "" })
+    @Html.DropDownList("name2", (SelectList)ViewBag.Delegacion, "Seleccione una Delegacion", new { @class = "form-control", @id = "selectDelegacion", @selectOption = "Deleg", @selectGroup = "" })
+</div>
+
+@section scripts{
+    <script src="~/Scripts/AjaxDataTable.js"></script>
+    <script type="text/javascript">
+        const tabla = @Html.tablaToJson(Model)
+        const btn = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "IdPostulantePersona" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
+        armadoDataTable(tabla, btn, [/*{ boton: 'Excel', todos: false }, */{ boton: 'Csv', todos: false },/*{ boton: 'Excel', todos: true },*/ { boton: 'Csv', todos: true }],'selectTabla')
+    </script>
+}

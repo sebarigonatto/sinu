@@ -107,7 +107,7 @@
 else
 {
 <div class="d-flex justify-content-center">
-    <h2>La Convocatoria actual no posee Inscriptos.</h2>
+    <h2>La Convocatoria actual no posee Inscriptos que haya seleccionado una Carrera u Oficio.</h2>
 
 </div>
 }
@@ -214,7 +214,7 @@ else
 
         columns = tablaDatos.Columnas;
         columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
-        filtroInicial = tablaDatos.filtrosIniciales;
+        filtroInicial = tablaDatos.filtrosExtras;
 
 
         var input_filter_value;
@@ -239,7 +239,7 @@ else
 
                     sessionStorage.getItem(idInputSearch) == undefined ? sessionStorage.setItem(idInputSearch, "") : null;
                     data.filtrosExtras = [];
-                    $.each(filtroInicial, function (index,item) {
+                    $.each(filtroInicial, function (index, item) {
                         data.filtrosExtras.push(item);
                     })
 

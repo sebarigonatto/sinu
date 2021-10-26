@@ -2288,6 +2288,12 @@ namespace SINU.Controllers
 
                 //mando como true el primer parametro  del 'spCreaPostulante', para indicar que se va a realizar  un reinscripcion
                 //CORREO PARA EL POSTULANTE
+                //verifico que el postulante no posea una inscripcion ACTIVA
+                if ((bool)db.sp_InvestigaDNI(postulante.Persona.DNI).First().Convocatoria_Activa)
+                {
+                    Session["IncripcionNueva"] = "Se realizó correctamente la nueva inscripción en la Covocatoria seleccionada.";
+                    return RedirectToAction("Index");
+                }
                 var result = db.spCreaPostulante(true, postulante.IdPersona, postulante.Persona.Apellido, postulante.Persona.Nombres, postulante.Persona.DNI,
                                                  postulante.Persona.Email, id_institucion, postulante.Inscripcion.First().IdDelegacionOficinaIngresoInscribio);
 

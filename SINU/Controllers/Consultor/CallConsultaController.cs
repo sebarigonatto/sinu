@@ -46,21 +46,31 @@ namespace SINU.Controllers.Consultor
             {
                 ConsultaProgramadaVm = db.ConsultaProgramada.Where(m => m.IdConsulta != 9).OrderBy(m => m.OrdenConsulta).ToList(),
                 EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m => m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1),// db.vSecuencia_EtapaEstado.Select(m=>new SelectListItem {Text= m.Estado, Value=m.Estado,Group= new SelectListGroup { Name=m.Etapa } }).ToList(),
-                TablaVista = "vInscripcionEtapaEstadoUltimoEstado",//"vInscripcionDetalleUltInsc",
-                filtrosIniciales = new List<SelectListItem>
+                TablaVista = "vExportacionDatosBasicos",//"vInscripcionDetalleUltInsc",
+                filtrosExtras = new List<filtroExtra>
                 {
-                    new SelectListItem{Text="Activa" ,Value= "true"}
+                    new filtroExtra{Columna="ESTADO" ,Valor= "ACTIVA"}
                 },
                 Columnas = new List<Column> {
-                    ColumnaDTAjax("IdPersona", noPrint:true),
-                    ColumnaDTAjax("Activa", noPrint:true),
-                    ColumnaDTAjax( "IdModalidad"),
-                    ColumnaDTAjax( "Nombres",visible: true,true),
-                    ColumnaDTAjax( "Apellido",visible:true,true),
-                    ColumnaDTAjax("DNI",visible:true,true),
-                    ColumnaDTAjax("Email",visible: true,true ),
-                    ColumnaDTAjax("Etapa",visible:true),
-                    ColumnaDTAjax("Estado", visible:true )
+
+                     ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                     ColumnaDTAjax("IdConvocatoria",noPrint:true),
+                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
+                     ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("Nombres", true,true,orderable:true),
+                     ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
+                     ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
+                     ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                     ColumnaDTAjax("Telefono"),
+                     ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                     ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
+                     ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
+                     ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
+                     ColumnaDTAjax("Celular"),
+                     ColumnaDTAjax("ESTADO",noPrint:true)
                 }
             };
             //oculta las Consultas que no estan realizadas
@@ -68,6 +78,94 @@ namespace SINU.Controllers.Consultor
             //return View(db.ConsultaProgramada.OrderBy(m => m.OrdenConsulta).ToList());
         }
 
+        /// <summary>
+        /// Exportacion de datos para las Escuelas
+        /// </summary>   
+        public ActionResult exportacionDatosPersonales()
+        {
+            var columnasTotal = db.Database.SqlQuery<tipoColumna>($"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS where table_name ='vExportacion_Escuelas'").ToList();
+            var columanVisibles = new List<Column>
+            {
+                ColumnaDTAjax("idaspirante"),
+                ColumnaDTAjax("Nroinscripcion",true,true,orderable:true,nombreDisplay:"N° Inscripción"),
+                ColumnaDTAjax("NRODDNN"),
+                ColumnaDTAjax("NomDeleg",true,nombreDisplay:"Delegación"),
+                ColumnaDTAjax("NROMOD"),
+                ColumnaDTAjax("Modalidad",true,orderable:true),
+                ColumnaDTAjax("ModalidadDescrip"),
+                ColumnaDTAjax("nroinscripto"),
+                ColumnaDTAjax("apellido",true,true,orderable:true, nombreDisplay:"Apellido"),                
+                ColumnaDTAjax("nombre",true,true,orderable:true,nombreDisplay:"Nombre"),
+                ColumnaDTAjax("Calle"),
+                ColumnaDTAjax("Numero"),
+                ColumnaDTAjax("Piso"),
+                ColumnaDTAjax("Unidad"),
+                ColumnaDTAjax("Localidad"),
+                ColumnaDTAjax("idprovincia"),
+                ColumnaDTAjax("Provincia"),
+                ColumnaDTAjax("cpostal"),
+                ColumnaDTAjax("PAIS"),
+                ColumnaDTAjax("Loc_Prov_CP"),
+                ColumnaDTAjax("caracteristica"),
+                ColumnaDTAjax("telefono"),
+                ColumnaDTAjax("Email",true,true,orderable:true,className:"truncate"),
+                ColumnaDTAjax("opcioncuerpo1"),
+                ColumnaDTAjax("opcioncuerpo2"),
+                ColumnaDTAjax("sexo"),
+                ColumnaDTAjax("iddelegacion"),
+                ColumnaDTAjax("Deleg"),
+                ColumnaDTAjax("dni",true,true,orderable:true,nombreDisplay:"DNI"),                
+            };
+            columanVisibles.AddRange(columnasTotal.Where(m=>!columanVisibles.Select(m => m.data).ToList().Contains(m.COLUMN_NAME)).Select(m=> ColumnaDTAjax(m.COLUMN_NAME)).ToList());
+
+            ViewBag.Modalidad = new SelectList(db.Modalidad.ToList(), "IdModalidad", "IdModalidad");
+            ViewBag.Delegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "Nombre", "Nombre");
+
+            DataTableVM data = new DataTableVM
+            {
+                TablaVista = "vExportacion_Escuelas",
+                Columnas = columanVisibles
+            };
+            return View(data);          
+        }
+
+
+        public ActionResult exportacionDatosBasicos()
+        {
+
+            DataTableVM datosTabla = new DataTableVM
+            {
+                TablaVista = "vExportacionDatosBasicos",
+                Columnas = new List<Column> {
+                     ColumnaDTAjax("IdPostulantePersona",nombreDisplay:"N Postulante"),
+                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                     ColumnaDTAjax("IdCarreraOficio",noPrint:true),
+                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"N Inscricion"),
+                     ColumnaDTAjax("Apellido", true,true, orderable:true),
+                     ColumnaDTAjax("Nombres", true,true,orderable:true),
+                     ColumnaDTAjax("sexo",nombreDisplay:"Genero"),          
+                     ColumnaDTAjax("DNI",true, true, orderable:true),
+                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                     ColumnaDTAjax("Telefono"),
+                     ColumnaDTAjax("Celular"),
+                     ColumnaDTAjax("Email", true, true, orderable:true),
+                     ColumnaDTAjax("IdConvocatoria",nombreDisplay:"N Convocatoria"),
+                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                     ColumnaDTAjax("CarreraUoficio",true,true,"Carrera/Oficio", orderable:true),
+                     ColumnaDTAjax("Deleg",true,true,"Delegacion", orderable:true),
+                     ColumnaDTAjax("FechaInscripcion",nombreDisplay:"Fecha de Inscripcion"),
+                     ColumnaDTAjax("Etapa"),
+                     ColumnaDTAjax("EstadoEtapa"),
+                     ColumnaDTAjax("ESTADO",noPrint:true)
+   
+                },
+                 
+            };
+            ViewBag.Modalidad = new SelectList(db.Modalidad.ToList(), "IdModalidad", "IdModalidad");
+            ViewBag.Delegacion = new SelectList(db.OficinasYDelegaciones.ToList(), "Nombre", "Nombre");
+            return View(datosTabla);
+
+        }
         /// <summary>FaltaCrearNuevoAction Es una rutina modelo 
         /// que se usa como plantilla para crear nuevas actions para nuevas CONSULTAS PRINCIPALES.
         /// Tiene asociada una View que solo emite el mensaje que falta desarrollar elementos.
@@ -115,41 +213,45 @@ namespace SINU.Controllers.Consultor
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "TotalesPorModalidadyGenero").Select(m => m.IdConsulta).FirstOrDefault();
             //si la modalidad elegida es string, el signo ?? Verifica si esta nula dicha var, asignandole lo q sigue a ella, en este caso "" , de lo contrario queda con su valor original
             ModalidadElegida = ModalidadElegida ?? "";
-            DataTableVM datosTabla=new DataTableVM
+            
+            DataTableVM datosTabla = new DataTableVM
             {
-                TablaVista= "vExportacionDatosBasicos",
+                TablaVista = "vExportacionDatosBasicos",
                 Columnas = new List<Column> {
-                                ColumnaDTAjax("IdPostulantePersona",noPrint:true),
-                                ColumnaDTAjax("IdConvocatoria",noPrint:true),
-                                ColumnaDTAjax("IdModalidad",noPrint:true),
-                                ColumnaDTAjax("ESTADO",noPrint:true),
-                                ColumnaDTAjax("IdInscripcion",visible:true, nombreDisplay:"Id Inscripción"),
-                                ColumnaDTAjax("Apellido",visible: true,searchable: true),
-                                ColumnaDTAjax("Nombres", true,true),                                
-                                ColumnaDTAjax("sexo",nombreDisplay:"Genero"),
-                                ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
-                                ColumnaDTAjax("DNI",visible: true,searchable: true),
-                                ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
-                                ColumnaDTAjax("Telefono"),
-                                ColumnaDTAjax("Email",visible: true,searchable: true),
-                                ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular"),
-                                ColumnaDTAjax("Celular"),
-                }                
+                     ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                     ColumnaDTAjax("IdConvocatoria",noPrint:true),
+                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
+                     ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("Nombres", true,true,orderable:true),
+                     ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
+                     ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
+                     ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                     ColumnaDTAjax("Telefono"),
+                     ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                     ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
+                     ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
+                     ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
+                     ColumnaDTAjax("Celular"),
+                     ColumnaDTAjax("ESTADO",noPrint:true)
+                }
             };
             if (ModalidadElegida == "TODOS")
             {
-                datosTabla.filtrosIniciales = new List<SelectListItem> { new SelectListItem { Text = "ESTADO", Value = "ACTIVA" } };
+                datosTabla.filtrosExtras = new List<filtroExtra> { new filtroExtra { Columna = "ESTADO", Valor = "ACTIVA" } };
                 ViewBag.ModalidadElegida = "Todas las Modalidades";
                 ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.ESTADO == "ACTIVA").Count();
             }
             else
             {
-                datosTabla.filtrosIniciales = new List<SelectListItem> {
-                    new SelectListItem { Text = "sexo", Value = Genero },
-                    new SelectListItem { Text="IdModalidad",Value=ModalidadElegida } 
+                datosTabla.filtrosExtras = new List<filtroExtra> {
+                    new filtroExtra { Columna = "sexo", Valor = Genero },
+                    new filtroExtra { Columna="IdModalidad",Valor=ModalidadElegida }
                 };
-                ViewBag.modalidadElegida = ModalidadElegida+ " - Genero: "+ Genero;
-                ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.sexo == Genero && m.IdModalidad==ModalidadElegida).Count();
+                ViewBag.modalidadElegida = ModalidadElegida + " - Genero: " + Genero;
+                ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.sexo == Genero && m.IdModalidad == ModalidadElegida).Count();
             }
             return View(datosTabla);
         }
@@ -210,40 +312,43 @@ namespace SINU.Controllers.Consultor
 
         public ActionResult ConsultaPorDelegacion(string DelegacionSeleccionada)
         {
-            int idDeleOfi = db.OficinasYDelegaciones.FirstOrDefault(m => m.Nombre == DelegacionSeleccionada).IdOficinasYDelegaciones;
+                int idDeleOfi = db.OficinasYDelegaciones.FirstOrDefault(m => m.Nombre == DelegacionSeleccionada).IdOficinasYDelegaciones;
             DataTableVM datosTabla = new DataTableVM
             {
                 TablaVista = "vExportacionDatosBasicos",
                 Columnas = new List<Column> {
-                                ColumnaDTAjax("IdPostulantePersona",noPrint:true),
-                                ColumnaDTAjax("IdConvocatoria",noPrint:true),
-                                ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
-                                ColumnaDTAjax("IdInscripcion",visible:true, nombreDisplay:"Id Inscripción"),
-                                ColumnaDTAjax( "Apellido",visible: true,searchable: true),
-                                ColumnaDTAjax( "Nombres", true,true),
-                                ColumnaDTAjax("sexo",nombreDisplay:"Genero"),
-                                ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
-                                ColumnaDTAjax("DNI",visible: true,searchable: true),
-                                ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
-                                ColumnaDTAjax("Telefono"),
-                                ColumnaDTAjax("Email",visible: true,searchable: true),
-                                ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular"),
-                                ColumnaDTAjax("Celular"),
-                                ColumnaDTAjax("ESTADO",noPrint:true)
+                     ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                     ColumnaDTAjax("IdConvocatoria",noPrint:true),
+                     ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                     ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
+                     ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("Nombres", true,true,orderable:true),
+                     ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
+                     ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
+                     ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                     ColumnaDTAjax("Telefono"),
+                     ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true),
+                     ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                     ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
+                     ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
+                     ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
+                     ColumnaDTAjax("Celular"),
+                     ColumnaDTAjax("ESTADO",noPrint:true)
                 },
-                filtrosIniciales = new List<SelectListItem>() {
-                                   new SelectListItem {Text="IdOficinasYDelegaciones", Value=idDeleOfi.ToString() },
-                                   new SelectListItem {Text="ESTADO", Value="ACTIVA" },
+                filtrosExtras = new List<filtroExtra>() {
+                                   new filtroExtra {Columna="IdOficinasYDelegaciones", Valor=idDeleOfi.ToString() },
+                                   new filtroExtra {Columna="ESTADO", Valor="ACTIVA" },
                 }
             };
             //db.vConsultaInscripciones.Where(m => m.Fecha_Fin_Proceso >= DateTime.Today && m.Fecha_Inicio_Proceso <= DateTime.Today && m.Delegacion == DelegacionSeleccionada).ToList();
-            ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.ESTADO=="ACTIVA" && m.IdOficinasYDelegaciones == idDeleOfi).Count();
+            ViewBag.CantReg = db.vExportacionDatosBasicos.Where(m => m.ESTADO == "ACTIVA" && m.IdOficinasYDelegaciones == idDeleOfi).Count();
             ViewBag.delegacionSeleccionada = DelegacionSeleccionada;
             ViewBag.ActivarId = db.ConsultaProgramada.Where(m => m.Action == "ConsultaDelegacionPrincipal").Select(m => m.IdConsulta).FirstOrDefault();
+            ViewBag.EstadosEtapas = new SelectList(db.vSecuencia_EtapaEstado.Where(m => m.Estacional).ToList(), "Estado", "Estado", "Etapa", 1);
 
             return View(datosTabla);
         }
-
 
         /// <summary>Esta Action es llamada desde la consulta PRINCIPAL de TODOS LOS POSTULANTES :ConsultaTotalPostulantes
         /// Esta action es una SUBCONSULTA de ConsultaTotalPostulantes
@@ -318,24 +423,32 @@ namespace SINU.Controllers.Consultor
                     {
                         TablaVista = "vExportacionDatosBasicos",
                         Columnas = new List<Column> {
-                                ColumnaDTAjax("IdPostulantePersona",noPrint:true),
-                                ColumnaDTAjax("IdConvocatoria",noPrint:true),
-                                ColumnaDTAjax("IdInscripcion",visible:true, nombreDisplay:"Id Inscripción"),
-                                ColumnaDTAjax( "Apellido",visible: true,searchable: true),
-                                ColumnaDTAjax( "Nombres", true,true),
-                                ColumnaDTAjax("sexo",nombreDisplay:"Genero"),
-                                ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
-                                ColumnaDTAjax("DNI",visible: true,searchable: true),
-                                ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
-                                ColumnaDTAjax("Telefono"),
-                                ColumnaDTAjax("Email",visible: true,searchable: true),
-                                ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular"),
-                                ColumnaDTAjax("Celular")
+                             ColumnaDTAjax("IdPostulantePersona",noPrint:true),
+                             ColumnaDTAjax("IdCarreraOficio",noPrint:true),
+                             ColumnaDTAjax("IdConvocatoria",noPrint:true),
+                             ColumnaDTAjax("IdOficinasYDelegaciones",noPrint:true),
+                             ColumnaDTAjax("IdInscripcion", nombreDisplay:"Id"),
+                             ColumnaDTAjax("Apellido",visible: true,searchable: true, orderable:true),
+                             ColumnaDTAjax("Nombres", true,true,orderable:true),
+                             ColumnaDTAjax("sexo",nombreDisplay:"Genero",noPrint:true),
+                             ColumnaDTAjax("Deleg",nombreDisplay:"Delegación"),
+                             ColumnaDTAjax("DNI",visible: true,searchable: true, orderable:true),
+                             ColumnaDTAjax("fechanac",nombreDisplay:"Fecha de Nacimiento"),
+                             ColumnaDTAjax("Telefono"),
+                             ColumnaDTAjax("Email",visible: true,searchable: true, orderable:true,className:"truncate"),
+                             ColumnaDTAjax("IdModalidad",true,true,"Modalidad", orderable:true),
+                             ColumnaDTAjax("CarreraUoficio",true,true, nombreDisplay:"Carrera/Oficio",noPrint:true),
+                             ColumnaDTAjax("Etapa",true,true,"Etapa", orderable:true),
+                             ColumnaDTAjax("EstadoEtapa",true,true,"Estado", orderable:true),
+                             ColumnaDTAjax("celular_carac",nombreDisplay:"Caracteristica Celular",noPrint:true),
+                             ColumnaDTAjax("Celular"),
+                             ColumnaDTAjax("ESTADO",noPrint:true)
                         },
-                        filtrosIniciales = new List<SelectListItem>() {
-                                    new SelectListItem {Text="IdConvocatoria", Value=IdConvocatoria.ToString() }
+                        filtrosExtras = new List<filtroExtra>() {
+                                    new filtroExtra {Columna="IdConvocatoria", Valor=IdConvocatoria.ToString() },
+                                    new filtroExtra {Columna="IdCarreraOficio", Condicion="!=", Valor="null" }
                         }
-                    }    
+                    }
                 };
                 ViewBag.poseeInscriptos = data.restriccionesConvocatoria.Count() > 1;
                 //busco el id que le corresponde a la consulta original TotalizarPorConvocatoria
@@ -345,10 +458,8 @@ namespace SINU.Controllers.Consultor
             }
             catch (Exception ex)
             {
-
                 throw;
             }
-
         }
 
         [HttpGet]
@@ -394,5 +505,9 @@ namespace SINU.Controllers.Consultor
 
 
         }
+
+
+
+
     }
 }

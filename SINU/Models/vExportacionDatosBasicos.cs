@@ -35,5 +35,8 @@ namespace SINU.Models
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public string ESTADO { get; set; }
         public int IdOficinasYDelegaciones { get; set; }
+        public string Etapa { get; set; }
+        public string EstadoEtapa { get; set; }
+        public string CarreraUoficio { get; set; }
     }
 }

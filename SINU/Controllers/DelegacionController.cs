@@ -10,6 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Ajax.Utilities;
 using System.Collections;
+using static SINU.Models.AjaxDataTableModel;
 
 namespace SINU.Controllers
 {
@@ -25,21 +26,72 @@ namespace SINU.Controllers
         {
             try
             {
+                var control = typeof(DelegacionController);
                 //busco la delegacion que pertenece al usuario con perfil de delegacion            
                 UsuarioDelegacion = db.Usuario_OficyDeleg.Find(User.Identity.Name).OficinasYDelegaciones;
                 ViewBag.Delegacion = UsuarioDelegacion.Nombre;
                 // tomara los datos de incripciones correspondiente a la Delegacion /cuenta usario Asociado
                 //cargo todos los registros que hayan validado la cuenta, y esten en la carga de los datos basicos, pero además que pertenezcan a la delegacion del usuario actual.
-                DelegacionPostulanteVM datos = new DelegacionPostulanteVM()
+                List<Column> Columnas = new List<Column>
                 {
-                    ///PostulantesIncriptosVM-> se utlizan view models para poder filtrar segun la "Etapa" que se encuentran los postulantes 
-                    PostulantesIncriptosVM = db.vConsultaInscripciones.Where(m => m.IdSecuencia >= 5 && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    cargadatosbasicosVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DATOS BASICOS" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    EntrevistaVM = db.vConsultaInscripciones.Where(m => m.Etapa == "ENTREVISTA" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    DocumentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "DOCUMENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
-                    PresentacionVM = db.vConsultaInscripciones.Where(m => m.Etapa == "PRESENTACION" && m.IdDelegacionOficinaIngresoInscribio == UsuarioDelegacion.IdOficinasYDelegaciones && m.Fecha_Inicio_Proceso <= DateTime.Now && m.Fecha_Fin_Proceso >= DateTime.Now).ToList(),
+                        ColumnaDTAjax("IdPersona",noPrint:true),
+                        ColumnaDTAjax("IdInscripcionEtapaEstado",noPrint:true),
+                        ColumnaDTAjax("IdDelegacionOficinaIngresoInscribio",noPrint:true),
+                        ColumnaDTAjax("IdSecuencia",noPrint:true),
+                        ColumnaDTAjax("ACTIVA",noPrint:true),                        
+                        ColumnaDTAjax("Nombres",true,true),
+                        ColumnaDTAjax("Apellido",true,true),                    
+                        ColumnaDTAjax("Email",true,true,className:"truncate"),
+                        ColumnaDTAjax("Fecha2",visible:true,nombreDisplay:"Fecha"),
+                        ColumnaDTAjax("Modalidad_Siglas",true,true,nombreDisplay:"Modalidad"),
+                        ColumnaDTAjax("Etapa",true,true),
+                        ColumnaDTAjax("Estado",true,true)
                 };
-                return View("Index", datos);
+
+                List<filtroExtra> filtros = new List<filtroExtra>{
+                    new filtroExtra{Columna="ACTIVA",Valor="true"},
+                    new filtroExtra{Columna="IdDelegacionOficinaIngresoInscribio",Valor=UsuarioDelegacion.IdOficinasYDelegaciones.ToString(), }
+                };
+
+                var listaTablas = new List<DataTableVM> {
+                    new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras= filtros.Append(new filtroExtra{Columna="IdSecuencia",Condicion="!=",Valor="4"}).ToList(),
+                        IdTabla="InscriptosTODOS"
+                    },
+                      new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras= filtros.Append(new filtroExtra{Columna="Etapa",Valor="DATOS BASICOS"}).ToList(),                      
+                        IdTabla="InscriptosDATOSBASICOS"
+                    },
+                        new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="ENTREVISTA"}).ToList(),
+                        IdTabla="InscriptosENTREVISTA"
+                    },
+                          new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="DOCUMENTACION"}).ToList(),
+                        IdTabla="InscriptosDOCUMENTACION"
+                    },
+                            new DataTableVM
+                    {
+                        TablaVista="vConsultaInscripciones",
+                        Columnas= Columnas,
+                        filtrosExtras=filtros.Append(new filtroExtra{Columna="Etapa",Valor="PRESENTACION"}).ToList(),
+                        IdTabla="InscriptosPRESENTACION"
+                    },
+                }; 
+               
+                return View("Index", listaTablas);
 
             }
             catch (System.Exception ex)

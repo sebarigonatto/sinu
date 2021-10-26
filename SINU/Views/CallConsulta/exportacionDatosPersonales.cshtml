@@ -1,0 +1,33 @@
+﻿@model SINU.Models.DataTableVM
+
+@{
+    ViewBag.Title = "Exportación de Datos Personales";
+}
+
+<h3 class="text-center">@ViewBag.Title</h3>
+
+<br />
+@Html.TablaHelper(Model.TablaVista, "dark")
+
+@* Div con los select a agregar para el filtro de la tabla *@
+<div id="selectTabla">
+    @Html.DropDownList("name1", (SelectList)ViewBag.Modalidad, "Seleccione una Modalidad", new { @class = "form-control", @id = "selectModalidad", @selectOption = "Modalidad", @selectGroup = "" })
+    @Html.DropDownList("name2", (SelectList)ViewBag.Delegacion, "Seleccione una Delegacion", new { @class = "form-control", @id = "selectDelegacion", @selectOption = "NomDeleg", @selectGroup = "" })
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/AjaxDataTable.js"></script>
+    <script type="text/javascript">
+        //json de los datos para el armado de la tabla
+        const tabla = @Html.tablaToJson(Model)
+        //botones para la culumna Opciones de la Tabla
+        const btnOptions = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "idaspirante" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
+        //botones que se mostrar para la exporatacion de los datos
+        const btnExport = [/*{ boton: 'Excel', todos: false }, { boton: 'Excel', todos: true },*/{ boton: 'Csv', todos: false }, { boton: 'Csv', todos: true }]
+
+        //llamo la funcion para el armado de la tabla y su correspondientes parametros
+        armadoDataTable(tabla, btnOptions, btnExport,"selectTabla")
+
+    </script>
+}

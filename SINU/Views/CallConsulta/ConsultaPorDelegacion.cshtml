@@ -1,9 +1,12 @@
 ﻿@model SINU.Models.DataTableVM
+@using SINU.ViewModels;
+
 @{
     ViewBag.Title = "Inscriptos Por Delegación: " + ViewBag.delegacionSeleccionada;
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
+
     ViewBag.Title2 = "Total de Inscriptos: " + ViewBag.CantReg;
+    SelectList Drop = ViewBag.EstadosEtapas;
 }
 
 
@@ -17,15 +20,55 @@
         @ViewBag.Title2
     </h2>*@
 
-<div>
-    <!-- en esta linea estoy llamando al Index de ConsultaProgramadas
-        con el id de la consulta que deseo se encuentre activa
-        cuando arme el menú lateral de consultas-->
+
+
+<div class="col-md-9 borderdiv1">
     @Html.ActionLink("Atras", "Index", "CallConsulta", new { id = ViewBag.ActivarId }, new { @class = "btn btn-primary w-80  btn-dark" })
+
+    <div class="tab-content TABMovil" id="TabDocumentacion">
+            <!--TABLA DE TOTAL DE POSTULANTES A REVISAR-->
+            <div id="opcionesExtrasDT1">
+                <div class="col-md-4 col-sm-12 mb-2 p-0 text-center pt-1">
+                    <div class="col-md-12">
+                        <label>Etapa: <b id="ETAPA">----</b></label>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-2 p-0">
+                    <div class="col-md-12">
+                        @Html.DropDownList("EstadosEtapasPost", Drop , "Seleccione Etapa/Estado", new { @class = "form-control selectpicker" })
+         
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-2 p-0">
+
+                    <div class="col-md-12">
+                        <button class="btn btn-dark form-control" onclick="limpiar()">Limpiar filtros</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <table class="table table-filters table-bordered table-light table-hover ajaxTabla" id="PostulanteConsultor" style="width:100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <!--Encabezados generados dinamicamente-->
+                    </tr>
+                </thead>
+                @*<tbody>
+                    <tr>
+                        <td class="text-center">Ningún dato disponible en esta tabla</td>
+                    </tr>
+                </tbody>*@
+            </table>
+
+    </div>
+
+
 
 </div>
 
-@Html.TablaHelper(Model.TablaVista,"dark")
+@Html.TablaHelper(Model.TablaVista, "dark")
+
+
 
 
 <!-- ***********************************************************************-->
@@ -40,17 +83,16 @@
 @section Scripts {
     <script type="text/javascript">
 
-
         //datatablesAjax
-        tablaDatos= @Html.tablaToJson(Model)
+        tablaDatos = @Html.tablaToJson(Model)
 
-        idInputSearch = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
+        idInputSearchDelegacion = `searchText${window.location.pathname}-${tablaDatos.TablaVista}`
         $(":input[type='search']").on("keyup", async function () {
-            sessionStorage.setItem(idInputSearch, $(this).val());
+            sessionStorage.setItem(idInputSearchDelegacion, $(this).val());
         });
         columns = tablaDatos.Columnas;
         columns.push({ data: "Opciones", searchable: false, orderable: false, title: 'Opciones', className: 'noPrint' });
-        filtroInicial = tablaDatos.filtrosIniciales;
+        filtroInicialDelegacion = tablaDatos.filtrosExtras;
         var input_filter_value;
         var input_filter_timeout = null;
         primerCarga = true;
@@ -69,13 +111,25 @@
                     if (primerCarga) {
                         primerCarga = false;
 
-                        data.search.value = sessionStorage.getItem(idInputSearch);
+                        data.search.value = sessionStorage.getItem(idInputSearchDelegacion);
 
                     };
 
-                    sessionStorage.getItem(idInputSearch) == undefined ? sessionStorage.setItem(idInputSearch, "") : null;
-                    data.filtrosExtras = [];
-                    $.each(filtroInicial, function (index,item) {
+                    sessionStorage.getItem(idInputSearchDelegacion) == undefined ? sessionStorage.setItem(idInputSearchDelegacion, "") : null;
+                    sessionStorage.EtapasPostDelegacion == undefined ? sessionStorage.EtapasPostDelegacion = "" : null;
+                    sessionStorage.EstadosPostDelegacion == undefined ? sessionStorage.EstadosPostDelegacion = "" : null;
+
+                    data.filtrosExtras = [
+                        {
+                            Columna: "Etapa",
+                            Valor: sessionStorage.EtapasPostDelegacion
+                        },
+                        {
+                            Columna: "EstadoEtapa",
+                            Valor: sessionStorage.EstadosPostDelegacion
+                        }];
+
+                    $.each(filtroInicialDelegacion, function (ConsultaPorDelegacion,item) {
                         data.filtrosExtras.push(item);
                     })
 
@@ -85,7 +139,7 @@
                 },
                 dataSrc: function (json) {
 
-                    $.each(json.data, function (index, item) {
+                    $.each(json.data, function (ConsultaPorDelegacion, item) {
 
                         botonDetalle = `<a class='mr-1 btn btn-info fas fa-bars load-submit' href='/Postulante?ID_Postulante=${item.IdPostulantePersona}'  data-toggle='tooltip' data-placement='top' title='Detalles'></a>`;
 
@@ -94,8 +148,12 @@
                     return json.data;
                 }
             },
-            dom: '<"container row justify-content-center m-0"<"col-md-6 col-sm-12"lB><"col-md-6 col-sm-12"f><"container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
-             buttons: [
+
+            "deferRender": true,
+
+            dom: '<"container row justify-content-center m-0"<"col-12 mb-2"B><"col-md-6 col-sm-12"l><"col-md-6 col-sm-12"f><"opcionesExtrasDT2 container  row mt-1">>r<"col-sm-12"t><"container row  d-flex"<"col-md-6 col-sm-12"i><"col-md-6 col-sm-12"p>>',
+
+            buttons: [
                  {
                      extend: 'copyHtml5',
                      text: 'Copiar' ,
@@ -183,19 +241,93 @@
 
         });
 
+        function limpiar() {
+            sessionStorage.EtapasPostDelegacion = "";
+            sessionStorage.EstadosPostDelegacion = "";
+            $("#EstadosPost").find("optgroup").removeAttr("hidden");
+            $("#ETAPA").html("---")
+            $("select.selectpicker").val("").selectpicker("refresh");
 
-        //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-        table.on('search.dt', function () {
-            sessionStorage.setItem(idInputSearch,table.search());
+            table.search("").ajax.reload();
+        };
+
+        $("div.dataTables_filter input").unbind();
+        $("div.dataTables_filter input").keyup(function (e) {
+            input_filter_value = this.value;
+            clearTimeout(input_filter_timeout);
+            input_filter_timeout = setTimeout(function () {
+                table.search(input_filter_value).draw();
+            }, table.context[0].searchDelay);
+
         });
+
+
+        //establesco parametro de busqueda para al almacenamineto en el lado del cliente'
+
+        //table.on('search.dt', function () {
+        //    sessionStorage.setItem(idInputSearch,table.search());
+        //});
+
+
         $(document).ready(function () {
-            if (sessionStorage.getItem(idInputSearch) != undefined) {
-                table.search(sessionStorage.getItem(idInputSearch)).draw();
-                if (sessionStorage.getItem(idInputSearch) != "") {
+
+            $("table thead tr th").last().width(100);
+
+            $("button div div div.filter-option-inner-inner").css("color", "black");
+
+            jQuery("#opcionesExtrasDT1 div.mb-2")
+                .detach()
+                .appendTo('.opcionesExtrasDT2')
+
+            $("#le-filters_filter label")
+                .addClass("float-md-right")
+                .children("input")
+                .removeClass("form-control-sm").addClass("form-control")
+                .css("width", "225px")
+                .attr("placeholder", "dni, nombre, apellido, email")
+
+            $("[name='le-filters_length']").css({ "width": "180px", "font-size": "100%" }).removeClass("form-control-sm")
+
+            $("#EstadosEtapasPost").find(`optgroup[label="${sessionStorage.EtapasPostDelegacion}"]`).find(`option[value="${sessionStorage.EstadosPostDelegacion}"]`).attr("selected", true);
+            $("#EstadosEtapasPost").selectpicker("refresh");
+            $("#ETAPA").html(sessionStorage.EtapasPostDelegacion == undefined || sessionStorage.EtapasPostDelegacion == "" ? "---" : sessionStorage.EtapasPostDelegacion);
+
+
+            if (sessionStorage.getItem(idInputSearchDelegacion) != undefined) {
+                table.search(sessionStorage.getItem(idInputSearchDelegacion)).draw();
+                if (sessionStorage.getItem(idInputSearchDelegacion) != "") {
                     $("#dataTable-vExportacionDatosBasicos_filter input").focus()
                 }
 
             };
+
+
+            //establesco parametro de busqueda para al almacenamineto en el lado del cliente
+            table.on('search.dt', function () {
+                sessionStorage.SarchTablaDelPostDelegacion = table.search();
+            });
+
+            //esatblesco en el input la ultima busqueda realizada
+            table.on('draw', function () {
+
+                table.search(sessionStorage.SarchTablaDelPostDelegacion);
+
+            });
+
+            //guarda las seleciones de los combos
+            $("#EstadosEtapasPost").on("change", function () {
+                if ($(this).val() == null) {
+                    alert("null")
+                }
+                sessionStorage.EtapasPostDelegacion = $(this).find("option:selected").closest("optgroup").prop("label");
+                $("#ETAPA").html(sessionStorage.EtapasPostDelegacion == undefined ? "---" : $(this).find("option:selected").closest("optgroup").prop("label"))
+                sessionStorage.EstadosPostDelegacion = $(this).val()
+                table.search(sessionStorage.getItem(idInputSearchDelegacion)).ajax.reload();
+
+            });
+
+
         })
+
     </script>
-    }
+}

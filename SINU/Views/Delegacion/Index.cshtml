@@ -1,4 +1,4 @@
-﻿@model SINU.ViewModels.DelegacionPostulanteVM
+﻿@model IList<SINU.Models.DataTableVM>
 
 <!-- LA PECULIARIDAD DE ESTA VISTA ES QUE LLAMA A LA PARTIALVIEW _LISTADO.CSHTML
 
@@ -14,434 +14,444 @@
 <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
 <!-- INCORRECTO COLOCAR LOS STYLES AQUI-->
 <style>
-    @@media (min-width: 576px) {
-        .rounded-nav {
-            border-radius: 50rem !important;
+
+
+    input:-internal-autofill-selected {
+        background-color: #f5f5f5 !important
+    }
+
+    .dataTables_filter {
+        display: flex !important;
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        cursor: no-drop;
+    }
+
+    .text-danger {
+        font-size: 80%;
+    }
+
+
+
+
+    .tab-pane {
+        padding: 1px 0px 0px 0px;
+    }
+
+    #ContieneTabs {
+        box-shadow: 0px 4px 4px 1px #00000036;
+    }
+
+        #ContieneTabs .container {
+            padding-left: 0px !important;
+            padding-right: 0px !important;
         }
+
+   
+    #TabSecundarioContent nav {
+        background-color: #08495f !important;
+        border-radius: 3px
+    }
+    /*------------------------------------*/
+    .nav .nav-tabs .left-tabs {
+        border-right: 2px solid #08495f
     }
 
-    @@media (min-width: 576px) {
-        .rounded-nav .nav-link {
-            border-radius: 50rem !important;
+    .left-tabs.nav-tabs, .right-tabs.nav-tabs {
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .left-tabs.nav-tabs {
+        border-right: 2px solid #08495f;
+        border-bottom: none;
+    }
+
+    .left-tabs .nav-link {
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        margin-right: -2px;
+        text-align: left;
+        border-right: 2px solid #08495f;
+        background-color: #08495f;
+        color: #fff !important;
+        border-bottom: 1px solid #fff;
+        border-top: 1px solid #fff;
+        margin-bottom: 0.3px
+    }
+
+        .left-tabs .nav-link:hover {
+            border-color: #fff;
+            border-right: #fff;
+            background-color: #2b82ad
         }
+
+        .left-tabs .nav-link.active i {
+            color: #08495f !important;
+        }
+
+        .left-tabs .nav-link.active {
+            border-top: 2px solid #08495f;
+            border-right: 2px solid transparent;
+            border-bottom: 2px solid #08495f;
+            border-left: 8px solid #08495f;
+            background-color: #fff;
+            margin-left: -8px;
+            /*font-size: 1.3rem;*/
+            font-weight: 600;
+            color: #08495f !important;
+        }
+
+    #TABPrincipal p {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        font-size: 1rem !important;
+        font-weight: 400 !important;
+        display: inline !important;
     }
+    /*    OCULTA TEXTO DE TAB EN CASO DE SER MOBIL      */
+    @@media screen and (max-width: 576px) {
+        #ModalEIA .modal-body {
+            overflow: auto;
+            height: 30rem;
+        }
 
-    /* With arrow tabs */
+            #ModalEIA .modal-body::-webkit-scrollbar {
+                -webkit-appearance: none;
+            }
 
-    .with-arrow .nav-link.active {
-        position: relative;
-    }
+                #ModalEIA .modal-body::-webkit-scrollbar:vertical {
+                    width: 10px;
+                }
 
-        .with-arrow .nav-link.active::after {
-            content: '';
-            border-left: 6px solid transparent !important;
-            border-right: 6px solid transparent !important;
-            border-top: 6px solid #052240 !important;
-            position: absolute !important;
-            bottom: -6px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
+            #ModalEIA .modal-body::-webkit-scrollbar-button:increment, .modal-body::-webkit-scrollbar-button {
+                display: none;
+            }
+
+            #ModalEIA .modal-body::-webkit-scrollbar:horizontal {
+                height: 10px;
+            }
+
+            #ModalEIA .modal-body::-webkit-scrollbar-thumb {
+                background-color: #797979;
+                border-radius: 20px;
+                border: 2px solid #f1f2f3;
+            }
+
+            #ModalEIA .modal-body::-webkit-scrollbar-track {
+                border-radius: 10px;
+            }
+
+        #TABPrincipal p {
+            display: none !important
+        }
+
+        #TABPrincipal .nav-tabs a.active p,
+        #TABPrincipal .nav-tabs a.active:hover p {
+            display: inline-block !important;
+            margin-bottom: 1px
+        }
+
+        #TABPrincipal .nav-tabs a.active p {
+            font-size: 1rem !important
+        }
+
+        #TabSecundario {
+            display: none !important
+        }
+
+        .tab-nav {
             display: block !important;
+            opacity: 100 !important
         }
 
-    /* lined tabs */
-
-    .lined .nav-link {
-        border: none !important;
-        border-bottom: 2px solid transparent !important;
-    }
-
-        .lined .nav-link:hover {
-            border: none;
-            border-bottom: 2px #555 solid !important;
+        .navbar-brand {
+            font-size: 1rem !important
         }
 
-        .lined .nav-link.active {
-            background: none !important;
-            color: #000000 !important;
-            border-color: #052240 !important;
+        #TabSecundarioContent, .nav-tab {
+            padding: 0rem 1rem 0rem 1rem !important;
         }
 
-    .atab {
-        color: #052240 !important;
-    }
-
-    .borderdiv1 {
-        border-left: 1px solid #000000 !important;
-        margin-left: 15px;
-        padding-left: 10px;
-    }
-
-    @@media screen and (max-width: 768px) {
-        .tabb {
-            flex-wrap: nowrap !important;
-        }
-
-        .borderdiv1 {
-            border-left: 0px !important;
+        .oculto {
+            display: none !important
         }
     }
 
-    .bli {
-        border-bottom: 1px solid #555 !important;
-    }
+    @@media screen and (min-width: 576px) {
+        #TabSecundarioContent nav.navbar {
+            display: none !important;
+        }
 
-    .Tabdesabilitado {
-        pointer-events: none;
-    }
+        div.TABMovil > div.pos-f-t > div.nav-tab > br:first-child {
+            display: none !important;
+        }
 
-    @@media (min-width: 1200px) {
-        .container {
-            max-width: 95% !important;
+        .nav-tab {
+            display: block !important;
+            opacity: 100 !important
         }
     }
-
-    @@media (min-width: 992px) {
-        .container {
-            max-width: 95% !important;
-        }
+    /* nav version mobil*/
+    .navbar-toggler {
+        background: none;
+        border: none;
     }
 
-    @@media (min-width: 768px) {
-        .container {
-            max-width: 95% !important;
+        .navbar-toggler:active,
+        .navbar-toggler:focus {
+            outline: 0;
         }
+
+        .navbar-toggler .icon-bar {
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 1px;
+            margin: 4px 0 4px 0;
+            transition: all 0.3s;
+        }
+
+    .navbar-dark .navbar-toggler .icon-bar {
+        background: #ffffff;
     }
 
-    @@media (min-width: 576px) {
-        .container {
-            max-width: 95% !important;
+    .navbar-toggler .icon-bar:nth-of-type(1) {
+        transform: translate3d(1px,0,0) rotate(-45deg);
+        transform-origin: center center;
+        width: 11px;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(2) {
+        transform: rotate(-90deg);
+        transform-origin: center center;
+    }
+
+    .navbar-toggler .icon-bar:nth-of-type(3) {
+        transform: translate3d(0px,-14px,0) rotate(-135deg);
+        transform-origin: right top;
+        width: 11px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(1) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(2) {
+        transform: translate3d(0,0,0) rotate(0deg);
+    }
+
+    .navbar-toggler.collapsed .icon-bar:nth-of-type(3) {
+        transform: translate3d(0,0,0) rotate(0deg);
+        width: 22px;
+    }
+
+    .container {
+        padding-left: 5px !important;
+        padding-right: 5px !important
+    }
+
+    #TabSecundario a.TABValida {
+        color: yellow !important;
+        font-size: larger;
+    }
+
+        #TabSecundario a.TABValida.active {
+            color: #08495f !important;
+            font-size: larger;
         }
+
+
+    #TabSecundario a.active i.adver {
+        color: #08495f !important;
+        font-size: larger;
+        display: block !important;
+    }
+
+    #autoresizing {
+        display: block;
+        overflow: hidden;
+        resize: none;
+        align-content: center;
     }
 </style>
-<h2 class="text-center ">@ViewBag.Delegacion</h2>
+<h3 class="text-center">@ViewBag.Delegacion</h3>
+<hr />
 <br />
-<div class="container d-none d-lg-block">
-    <div class="row">
-        <div class="col-md-2 mr-2  bd-sidebar">
-            <ul class="nav nav-tabs with-arrow lined  flex-md-column text-center tabb mb-1 d-none d-md-block d-lg-block" id="myTab" role="tablist" style="border-bottom:0px solid; color:white">
 
-                <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0 active atab" data-toggle="tab" href="#Total" role="tab" aria-controls="profile" aria-selected="false">
-                        Inscriptos - Todos
-                    </a>
-                </li>
-                <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#DatoBasico" role="tab" aria-controls="home" aria-selected="true">
-                        Datos Basicos
-                    </a>
-                </li>
+<div class="container">
 
-                <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#Entrevista" role="tab" aria-controls="home" aria-selected="true">
-                        Entrevista
-                    </a>
-                </li>
-                <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#Documentacion" role="tab" aria-controls="home" aria-selected="true">
-                        Documentacion
-                    </a>
-                </li>
-                <li class="nav-item flex-sm-fill bli">
-                    <a class="nav-link text-uppercase font-weight-bold  rounded-0  atab" id="home-tab" data-toggle="tab" href="#Presentacion" role="tab" aria-controls="home" aria-selected="true">
-                        Presentacion
-                    </a>
-                </li>
-                @*<li class="nav-item flex-sm-fill bli">
-                        <a class="nav-link text-uppercase font-weight-bold rounded-0 atab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-                    </li>*@
-            </ul>
-        </div>
-        <div class="col-sm-9 borderdiv1">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active pt-2" id="Total" role="tabpanel" aria-labelledby="profile-tab">
-                    @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
+    <div class="col-12">
+        <div class="row">
+
+            <div class="col-md-2" id="TabSecundario">
+                <div class="nav nav-tabs left-tabs">
+                    <a class="nav-item nav-link active show" href="#inscriptosTodos" data-toggle="tab">Inscriptos - Todos</a>
+                    <a class="nav-item nav-link" href="#datosBasicos" data-toggle="tab">Datos Basicos</a>
+                    <a class="nav-item nav-link" href="#entrevista" data-toggle="tab">Entrevista</a>
+                    <a class="nav-item nav-link" href="#documentacion" data-toggle="tab">Documentación</a>
+                    <a class="nav-item nav-link" href="#presentacion" data-toggle="tab">Presentación</a>
+                    <br />
                 </div>
+            </div>
 
-                <div class="tab-pane fade " id="DatoBasico" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
-                </div>
-                <div class="tab-pane fade " id="Entrevista" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
-                    <div class="col-sm-3 col-lg-2">
-                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
+            <div class="col-md-10 p-2 pl-sm-4 pr-sm-4" id="TabSecundarioContent">
+                    <div class="tab-content TABMovil">
+
+                        <div class="pos-f-t collapse tab-pane fade show active tab-nav" id="inscriptosTodos">
+                          
+                            <nav class="navbar navbar-dark bg-dark ">
+                                <a class="navbar-brand" href="#">Inscriptos - Todos</a>
+                                <button id="BTinscriptosTodosNAV" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#inscriptosTodosNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </nav>
+                            <div class="collapse tab-pane fade show active nav-tab pt-0 " id="inscriptosTodosNAV">
+                                <h2 class="d-none d-sm-block text-center ">Inscriptos - Todos</h2>
+                                <br />
+                                @Html.TablaHelper(Model[0].IdTabla, "dark")
+
+                            </div>
+                        </div>  
+                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="datosBasicos">
+                            <nav class="navbar navbar-dark bg-dark ">
+                                <a class="navbar-brand" href="#">Datos Basicos</a>
+                                <button id="BTdatosBasicosNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#datosBasicosNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </nav>
+                            <div class="collapse tab-pane fade nav-tab pt-0 " id="datosBasicosNAV">
+                                <h2 class="d-none d-sm-block text-center ">Datos Basicos</h2><br />
+                                @Html.TablaHelper(Model[1].IdTabla, "dark")
+
+                            </div>
+                        </div>
+                        <div class="pos-f-t collapse tab-pane fade tab-nav" id="entrevista">
+                            <nav class="navbar navbar-dark bg-dark ">
+                                <a class="navbar-brand" href="#">Entrevista</a>
+                                <button id="BTentrevistaNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#entrevistaNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </nav>
+                            <div class="collapse tab-pane fade nav-tab pt-0 " id="entrevistaNAV">
+                                <h2 class="d-none d-sm-block text-center ">Entrevista</h2><br />
+                                @Html.TablaHelper(Model[2].IdTabla, "dark")
+
+                            </div>
+                        </div>
+                        <div class="pos-f-t collapse tab-pane fade  tab-nav" id="documentacion">
+                            <nav class="navbar navbar-dark bg-dark ">
+                                <a class="navbar-brand" href="#">Documentación</a>
+                                <button id="BTdocumentacionNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#documentacionNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </nav>
+                            <div class="collapse tab-pane fade  nav-tab pt-0 " id="documentacionNAV">
+                                <h2 class="d-none d-sm-block text-center ">Documentación</h2><br />
+                                @Html.TablaHelper(Model[3].IdTabla, "dark")
+
+                            </div>
+                        </div>
+                        <div class="pos-f-t collapse tab-pane fade  tab-nav" id="presentacion">
+                            <nav class="navbar navbar-dark bg-dark ">
+                                <a class="navbar-brand" href="#">Presentación</a>
+                                <button id="BTpresentacionNAV" class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#presentacionNAV" role="tabpanel" aria-labelledby="DatosPersonalesNAV-tab" aria-controls="DatosPersonalesNAV" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </nav>
+                            <div class="collapse tab-pane fade nav-tab pt-0 " id="presentacionNAV">
+                                <h2 class="d-none d-sm-block text-center ">Presentación</h2><br />
+                                @Html.TablaHelper(Model[4].IdTabla, "dark")
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="tab-pane fade " id="Documentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
-                </div>
-                <div class="tab-pane fade " id="Presentacion" role="tabpanel" aria-labelledby="home-tab">
-                    @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                    <div class="col-sm-3 col-lg-2">
-                        @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+
+
 </div>
-Prueba de una nueva barra de menu para los postulantes
-<div class="accordion d-lg-none d-xl-none" id="accordionExample">
-    <div class="card">
-        <div class="card-header" id="headingInscriptos">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseInscriptos" aria-expanded="true" aria-controls="collapseInscriptos">
-                    Inscriptos - Todos
-                </button>
-            </h2>
-        </div>
-        <div id="collapseInscriptos" class="collapse show" aria-labelledby="headingInscriptos" data-parent="#accordionInscriptos">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.PostulantesIncriptosVM)
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingDatos">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDatos" aria-expanded="false" aria-controls="collapseDatos">
-                    Datos Basicos
-                </button>
-            </h2>
-        </div>
-        <div id="collapseDatos" class="collapse" aria-labelledby="headingDatos" data-parent="#accordionDatos">
-            <div class="card-body" id="MyTableRefresh">
-                @Html.Partial("_ListadoPostulante", Model.cargadatosbasicosVM)
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingEntrevista">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseEntrevista" aria-expanded="false" aria-controls="collapseEntrevista">
-                    Entrevista
-                </button>
-            </h2>
-        </div>
-        <div id="collapseEntrevista" class="collapse" aria-labelledby="headingEntrevista" data-parent="#accordionEntrevista">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.EntrevistaVM)
-                <div class="col-sm-3 col-lg-2">
-                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVariosEntrevista", "Delegacion", new { @class = "btn btn-primary" })
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingDocumentacion">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseDocumentacion" aria-expanded="false" aria-controls="collapseDocumentacion">
-                    Documentacion
-                </button>
-            </h2>
-        </div>
-        <div id="collapseDocumentacion" class="collapse" aria-labelledby="headingDocumentacion" data-parent="#accordionDocumentacion">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.DocumentacionVM)
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" id="headingPresentacion">
-            <h2 class="mb-0">
-                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapsePresentacion" aria-expanded="false" aria-controls="collapsePresentacion">
-                    Presentacion
-                </button>
-            </h2>
-        </div>
-        <div id="collapsePresentacion" class="collapse" aria-labelledby="headingPresentacion" data-parent="#accordionPresentacion">
-            <div class="card-body">
-                @Html.Partial("_ListadoPostulante", Model.PresentacionVM)
-                <div class="col-sm-3 col-lg-2">
-                    @Html.ActionLink("Asignar fecha a varios", "AsignarFechaVarios", "Delegacion", new { @class = "btn btn-primary" })
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ***********************************************************************-->
-<!-- COPIAR TODO ESTE SCRIPT DE DATATABLE PARA TODAS LAS TABLAS DEL SISTEMA-->
-<!-- ***********************************************************************-->
-<!--Para establecer Formato de Tabla-->
-<!-- Establecer la tabla  <table class="table table-filters" id="le-filters">-->
-<!-- Agregar en las columnas que no deseo ordenar  <th class="no-sort"> -->
-<!-- Agregar en las columnas que no deseo ordenar ni buscar  <th class="ni-o-ni-bu"> -->
-<!-- Rodear la tr de las th con <thead> </thead>-->
-<!-- Rodear el contenido de la tabla con <tbody>-->
+          
 @section Scripts {
+    <script src="~/Scripts/AjaxDataTable.js"></script>
     <script type="text/javascript">
         //scrip que permite buscar por cualquier campo en la tabla para su uso requiere que tabla tenga la propiedad id=myTable
-           $("#myTab li").on("click", function () {
-                tab = $(this).children("a").attr("href");
-                sessionStorage.tabDelegacion= tab;
-            })
-        var tablas = {};
+        $("#TabSecundario div a").on("click", function () {
+            tab = $(this).attr("href");
+            sessionStorage.tabDelegacion = tab;
+            $(this).children('table').resize()
+        })
 
         $(document).ready(function () {
-           
-            if (sessionStorage.tabDelegacion!= undefined) {
+
+            if (sessionStorage.tabDelegacion != undefined) {
                 $(`a[href='${sessionStorage.tabDelegacion}']`).tab("show");
+            } 
 
-            } else {
-                sessionStorage.tabDelegacion= "#Total";
-            };
+            var listaTablasJson = @Html.tablaToJson(Model);
 
-            var prefijo = 'tabla';
+            //Botones
+            //funcion que devuelve el boton o botones que apareceran en la columna de opciones
+            const renderBtn = function (row) {
+                //botones
+                const boton1 = '@Html.ActionLink(" ", "Index", "Postulante", new { ID_Postulante = "IdPersona" }, new { @class = "btn btn-info far fa-list-alt", @title = "Detalles" })'
+                const boton2 = '@Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Asignar fecha de entrevista" })'
+                const boton3 = '@Html.ActionLink(" ", "EntrevistaAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Reasignar fecha de entrevista" })'
+                const boton4 = '@Html.ActionLink(" ", "Postular", new { id = "IdInscripcionEtapaEstado" }, new { @class = "btn btn-info far fa-user", @title = "Validar Postulante" })'
+                const boton5 = '@Html.ActionLink(" ", "Postular", new { id = "IdInscripcionEtapaEstado" }, new { @class = "btn btn-info fa fa-reply", @title = "Retroceder a la etapa anterior" })'
+                const boton6 = '@Html.ActionLink(" ", "Documentacion", new { id = "IdPersona" }, new { @class = "btn btn-info fa fa-check-circle", @title = "Validar la documentacion del postulante" })'
+                const boton7 = '@Html.ActionLink(" ", "Details", new { id = "IdPersona" }, new { @class = "btn btn-info fa fa-reply", @style = "color:#0072ff", @title = "Restaurar postulante" })'
+                const boton8 = '@Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Asignar fecha de presentacion" })'
+                const boton9 = '@Html.ActionLink(" ", "PresentacionAsignaFecha", new { id = "IdPersona" }, new { @class = "btn btn-info far fa-calendar-alt", @title = "Reasignar fecha de presentacion" })'
 
-            $.each($(".table-filters"), function (index, item) {
-
-                id = $(item).closest("div.tab-pane").attr("id");
-
-                if (id !== undefined || id !== null) {
-                    tablas[prefijo + id] = $(item).DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel', 'pdf',//'colvis',
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                        //    extend: 'columnVisibility',
-                        //    text: 'Show secondary',
-                        //    visibility: true,
-                        //    columns: '.secondary'
-                        //},
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                        //    extend: 'columnVisibility',
-                        //    text: 'Hide secondary',
-                        //    visibility: false,
-                        //    columns: '.secondary'
-                        //},
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
-                        },
-                        {
-                            extend: 'copy',
-                            text: 'copiar',
-                        }
-
-
-                    ],
-                    responsive: true,
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false
-                    },
-                    {
-                        "targets": 'ni-o-ni-bu',
-                        "searchable": false,
-                        "orderable": false
-                    }]
-
-                });
-                } else {
-                    $(item).DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'excel', 'pdf',//'colvis',
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary"
-                        //    extend: 'columnVisibility',
-                        //    text: 'Show secondary',
-                        //    visibility: true,
-                        //    columns: '.secondary'
-                        //},
-                        //{//ocultar columnas definidas en la tabla como secundarias declarando en la columna class="secondary" ej:  <th class="secondary"> Html.DisplayNameFor(model => model[0].Estado)   </th>
-                        //    extend: 'columnVisibility',
-                        //    text: 'Hide secondary',
-                        //    visibility: false,
-                        //    columns: '.secondary'
-                        //},
-                        {
-                            extend: 'print',
-                            text: 'Imprimir',
-                            messageTop: 'Armada Argentina'
-                        },
-                        {
-                            extend: 'copy',
-                            text: 'copiar',
-                        }
-
-
-                    ],
-                    responsive: true,
-                    "language":
-                    {
-                        "sProcessing": "Procesando...",
-                        "sLengthMenu": "Mostrar _MENU_ registros",
-                        "sZeroRecords": "No se encontraron resultados",
-                        "sEmptyTable": "Ningún dato disponible en esta tabla",
-                        //"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                        //"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                        "sInfoPostFix": "",
-                        "sSearch": "Buscar:",
-                        "sUrl": "",
-                        "sInfoThousands": ",",
-                        "sLoadingRecords": "Cargando...",
-                        "oPaginate": {
-                            "sFirst": "Primero",
-                            "sLast": "Último",
-                            "sNext": "Siguiente",
-                            "sPrevious": "Anterior"
-                        },
-                        "oAria": {
-                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                        }
-                    },
-                    "columnDefs": [{
-                        "targets": 'no-sort',
-                        "orderable": false
-                    },
-                    {
-                        "targets": 'ni-o-ni-bu',
-                        "searchable": false,
-                        "orderable": false
-                    }]
-
-                });
+                let botones=''
+                //armado de botones de Opciones
+                switch (`${row.Etapa}-${row.Estado}`) {
+                    case 'ENTREVISTA-A Asignar':
+                        botones = boton2
+                        break;
+                    case 'ENTREVISTA-Pendiente':
+                        botones = boton3+boton4
+                        break;
+                    case 'ENTREVISTA-No Postulado':
+                        botones = boton5
+                        break;
+                    case 'DOCUMENTACION-A Validar':
+                        botones = boton6
+                        break;
+                    case 'DOCUMENTACION-No Validado':
+                        botones = boton7
+                        break;
+                    case 'PRESENTACION-A Asignar':
+                        botones = boton8
+                        break;
+                    case 'PRESENTACION-Asignada':
+                        botones = boton9
+                        break;
                 }
-                
 
-            })
+                return boton1 + botones
+            }
 
-            //$("#le-filters_filter input").on("keyup", function () {
-            //    $(this).val("asdasd")
-
-            //    //alert($(this).val())
-            //    id = $(this).closest("div.tab-pane").attr("id");
-            //    tablas[`tabla${id}`].search().draw()
-            //})
-            //establesco parametro de busqueda para al almacenamineto en el lado del cliente
-            //table.on('search.dt', function () {
-            //    localStorage.setItem("searchDelegacion", table.search());
-            //});
+            //llamo funcion para el armado de las tablas, envio como parametros los datos de las tablas y los botones a implementar
+            armadoDataTable(listaTablasJson, renderBtn, null)
+            
         });
-
+    
     </script>
 }
 
